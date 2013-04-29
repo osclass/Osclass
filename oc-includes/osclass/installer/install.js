@@ -37,8 +37,8 @@ function check_cat(id, check) {
 }
 
 function check(id) {
-    if( !$('#'+id).attr('checked') )
-        $('#'+id).attr('checked',true);
+    if( !$('#'+id).prop('checked') )
+        $('#'+id).prop('checked',true);
 
     var category_id = id.replace('category-','');
     var categories = $("#cat" + category_id + " input");
@@ -48,7 +48,7 @@ function check(id) {
            sum++;
     });
     if(sum == 0)
-        $("#category-" + category_id ).attr('checked', false);
+        $("#category-" + category_id ).prop('checked', false);
 }
 
 function validate_form() {

@@ -47,6 +47,8 @@ INSERT INTO /*TABLE_PREFIX*/t_preference VALUES
     ,('osclass', 'mailserver_port', '', 'INTEGER')
     ,('osclass', 'mailserver_username', '', 'STRING')
     ,('osclass', 'mailserver_password', '', 'STRING')
+    ,('osclass', 'mailserver_mail_from', '', 'STRING')
+    ,('osclass', 'mailserver_name_from', '', 'STRING')
     ,('osclass', 'mailserver_type', 'custom', 'STRING')
     ,('osclass', 'mailserver_auth', '', 'BOOLEAN')
     ,('osclass', 'mailserver_pop', '', 'BOOLEAN')

@@ -20,12 +20,14 @@
  */
 
 function osc_meta_publish($catId = null) {
+    osc_enqueue_script('php-date');
     echo '<div class="row">';
         FieldForm::meta_fields_input($catId);
     echo '</div>';
 }
 
 function osc_meta_edit($catId = null, $item_id = null) {
+    osc_enqueue_script('php-date');
     echo '<div class="row">';
         FieldForm::meta_fields_input($catId, $item_id);
     echo '</div>';
@@ -33,6 +35,115 @@ function osc_meta_edit($catId = null, $item_id = null) {
 
 osc_add_hook('item_form', 'osc_meta_publish');
 osc_add_hook('item_edit', 'osc_meta_edit');
+
+/**
+ *
+ * All CF will be searchable
+ *
+ */
+function osc_meta_search($catId = null) {
+    FieldForm::meta_fields_search($catId);
+}
+osc_add_hook('search_form', 'osc_meta_search');
+
+function osc_customfields_search_conditions($params) {
+
+    if(isset($params['meta']) && is_array($params['meta'])) {
+        $table = DB_TABLE_PREFIX.'t_item_meta';
+
+        $addTable = false;
+        foreach($params['meta'] as $key => $aux) {
+            if(is_numeric($key)) {
+                $field = Field::newInstance()->findByPrimaryKey($key);
+                switch ($field['e_type']) {
+                    case 'TEXTAREA':
+                    case 'TEXT':
+                    case 'URL':
+                        if($aux!='') {
+                            $aux = "%$aux%";
+                            $sql = "SELECT fk_i_item_id FROM $table WHERE ";
+                            $str_escaped = Search::newInstance()->dao->escape($aux);
+                            $sql .= $table.'.fk_i_field_id = '.$key.' AND ';
+                            $sql .= $table.".s_value LIKE ".$str_escaped;
+                            Search::newInstance()->addConditions('pk_i_id IN ('.$sql.')');
+                            $addTable = true;
+                        }
+                        break;
+                    case 'DROPDOWN':
+                    case 'RADIO':
+                        if($aux!='') {
+                            $sql = "SELECT fk_i_item_id FROM $table WHERE ";
+                            $str_escaped = Search::newInstance()->dao->escape($aux);
+                            $sql .= $table.'.fk_i_field_id = '.$key.' AND ';
+                            $sql .= $table.".s_value = ".$str_escaped;
+                            Search::newInstance()->addConditions('pk_i_id IN ('.$sql.')');
+                            $addTable = true;
+                        }
+                        break;
+                    case 'CHECKBOX':
+                        if($aux!='') {
+                            $sql = "SELECT fk_i_item_id FROM $table WHERE ";
+                            $sql .= $table.'.fk_i_field_id = '.$key.' AND ';
+                            $sql .= $table.".s_value = 1";
+                            Search::newInstance()->addConditions('pk_i_id IN ('.$sql.')');
+                            $addTable = true;
+                        }
+                        break;
+                    case 'DATE':
+                        if($aux!='') {
+                            $aux = $aux;
+
+                            $y = (int)date('Y', $aux);
+                            $m = (int)date('n', $aux);
+                            $d = (int)date('j', $aux);
+
+                            $start = mktime('0', '0', '0', $m, $d, $y);
+                            $end   = mktime('23', '59', '59', $m, $d, $y);
+
+                            $start = $start;
+                            $end   = $end;
+
+                            $sql = "SELECT fk_i_item_id FROM $table WHERE ";
+                            $sql .= $table.'.fk_i_field_id = '.$key.' AND ';
+                            $sql .= $table.".s_value >= ".($start)." AND ";
+                            $sql .= $table.".s_value <= ".$end;
+
+                            Search::newInstance()->addConditions('pk_i_id IN ('.$sql.')');
+                            $addTable = true;
+                        }
+                        break;
+                    case 'DATEINTERVAL':
+                        if( is_array($aux) && (!empty($aux['from']) && !empty($aux['to'])) ) {
+
+                            $from = $aux['from'];
+                            $to   = $aux['to'];
+
+                            $start = $from;
+                            $end   = $to;
+
+                            $sql = "SELECT fk_i_item_id FROM $table WHERE ";
+                            $sql .= $table.'.fk_i_field_id = '.$key.' AND ';
+                            $sql .= $start." >= ".$table.".s_value AND s_multi = 'from'";
+
+                            $sql1 = "SELECT fk_i_item_id FROM $table WHERE ";
+                            $sql1 .= $table.".fk_i_field_id = ".$key." AND ";
+                            $sql1 .= $end." <= ".$table.".s_value AND s_multi = 'to'";
+
+                            $sql_interval = "select a.fk_i_item_id from (".$sql.") a where a.fk_i_item_id IN (".$sql1.")";
+
+                            Search::newInstance()->addConditions('pk_i_id IN ('.$sql_interval.')');
+                            $addTable = true;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+    }
+}
+// When searching, add some conditions
+osc_add_hook('search_conditions', 'osc_customfields_search_conditions');
 
 function search_title() {
     $region   = osc_search_region();
@@ -275,7 +386,9 @@ function osc_search_footer_links() {
     $regionID = '';
     if( osc_search_region() != '' ) {
         $aRegion  = Region::newInstance()->findByName(osc_search_region());
-        $regionID = $aRegion['pk_i_id'];
+        if(isset($aRegion['pk_i_id'])) {
+            $regionID = $aRegion['pk_i_id'];
+        }
     }
 
     $conn = DBConnectionClass::newInstance();
@@ -292,6 +405,9 @@ function osc_search_footer_links() {
     }
     $comm->where('i.pk_i_id = l.fk_i_item_id');
     $comm->where('i.b_enabled = 1');
+    $comm->where('i.b_active = 1');
+    $comm->where(sprintf("dt_expiration >= '%s'", date('Y-m-d H:i:s')));
+
     $comm->where('l.fk_i_region_id IS NOT NULL');
     $comm->where('l.fk_i_city_id IS NOT NULL');
     if( $regionID != '' ) {

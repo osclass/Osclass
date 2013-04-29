@@ -154,8 +154,11 @@
                         osc_add_flash_error_message( $success);
                         $this->redirectTo( osc_item_post_url() );
                     } else {
-                        Session::newInstance()->_dropkeepForm('meta_'.$key);
-
+                        if(is_array($meta)) {
+                            foreach( $meta as $key => $value ) {
+                                Session::newInstance()->_dropkeepForm('meta_'.$key);
+                            }
+                        }
                         if($success==1) {
                             osc_add_flash_ok_message( _m('Check your inbox to validate your listing') );
                         } else {
@@ -217,6 +220,7 @@
                         $meta = Params::getParam('meta');
                         if(is_array($meta)) {
                             foreach( $meta as $key => $value ) {
+                                error_log(print_r($value, true ));
                                 Session::newInstance()->_setForm('meta_'.$key, $value);
                                 Session::newInstance()->_keepForm('meta_'.$key);
                             }
@@ -389,6 +393,15 @@
                         }
                     }
 
+                    $banned = osc_is_banned(Params::getParam('yourEmail'));
+                    if($banned==1) {
+                        osc_add_flash_error_message( _m('Your current email is not allowed'));
+                        $this->redirectTo(osc_item_url());
+                    } else if($banned==2) {
+                        osc_add_flash_error_message( _m('Your current IP is not allowed'));
+                        $this->redirectTo(osc_item_url());
+                    }
+
                     if( osc_isExpired($item['dt_expiration']) ) {
                         osc_add_flash_error_message( _m("We're sorry, but the listing has expired. You can't contact the seller") );
                         $this->redirectTo(osc_item_url());
@@ -498,15 +511,19 @@
                     }
 
                     if ($item['b_active'] != 1) {
-                        if( ($this->userId == $item['fk_i_user_id']) && ($this->userId != '') ) {
+                        if( ($this->userId == $item['fk_i_user_id']) && ($this->userId != '') || osc_is_admin_user_logged_in()) {
                             osc_add_flash_warning_message( _m("The listing hasn't been validated. Please validate it in order to make it public") );
                         } else {
                             $this->do400();
                             return;
                         }
                     } else if ($item['b_enabled'] == 0) {
-                        $this->do400();
-                        return;
+                        if( osc_is_admin_user_logged_in() ) {
+                            osc_add_flash_warning_message( _m("The listing hasn't been enabled. Please enable it in order to make it public") );
+                        } else {
+                            $this->do400();
+                            return;
+                        }
                     }
 
                     if(!osc_is_admin_user_logged_in() && !($item['fk_i_user_id']!='' && $item['fk_i_user_id']==osc_logged_user_id())) {

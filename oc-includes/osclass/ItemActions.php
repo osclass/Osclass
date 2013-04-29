@@ -28,13 +28,41 @@
             $this->manager = Item::newInstance();
         }
 
+        private function _akismet_text( $title, $description, $author, $email )
+        {
+            $spam = false;
+            foreach($title as $k => $_data){
+                $_title         = $title[$k];
+                $_description   = $description[$k];
+                $content        = $_title. ' ' .$_description;
+                if (osc_akismet_key()) {
+                    require_once LIB_PATH . 'Akismet.class.php';
+                    $akismet = new Akismet(osc_base_url(), osc_akismet_key());
+
+                    $akismet->setCommentContent($content);
+                    $akismet->setCommentAuthor($author);
+                    $akismet->setCommentAuthorEmail($email);
+                    $akismet->setUserIP( get_ip() );
+
+                    $status  = '';
+                    $status = $akismet->isCommentSpam() ? 'SPAM' : $status;
+                    if($status == 'SPAM') {
+                        $spam = true;
+                        break;
+                    }
+                }
+            }
+            return $spam;
+        }
+
         /**
          * @return boolean
          */
         public function add()
         {
             $aItem       = $this->data;
-
+            $is_spam     = 0;
+            $enabled     = 1;
             $code        = osc_genRandomPassword();
             $flash_error = '';
 
@@ -68,6 +96,7 @@
 
             $title_message = '';
             foreach(@$aItem['title'] as $key => $value) {
+
                 if( osc_validate_text($value, 1) && osc_validate_max($value, 100) ) {
                     $title_message = '';
                     break;
@@ -92,6 +121,11 @@
             }
             $flash_error .= $desc_message;
 
+            // akismet check spam ...
+            if( $this->_akismet_text( $aItem['title'], $aItem['description'] , $contactName, $contactEmail) ) {
+                $is_spam     = 1;
+            }
+
             $flash_error .=
                 ((!osc_validate_category($aItem['catId'])) ? _m("Category invalid.") . PHP_EOL : '' ) .
                 ((!osc_validate_number($aItem['price'])) ? _m("Price must be a number.") . PHP_EOL : '' ) .
@@ -112,9 +146,11 @@
 
             $_meta = Field::newInstance()->findByCategory($aItem['catId']);
             $meta = Params::getParam("meta");
+
             foreach($_meta as $_m) {
                 $meta[$_m['pk_i_id']] = (isset($meta[$_m['pk_i_id']]))?$meta[$_m['pk_i_id']]:'';
             }
+
             if($meta!='' && count($meta)>0) {
                 $mField = Field::newInstance();
                 foreach($meta as $k => $v) {
@@ -125,7 +161,7 @@
                         }
                     }
                 }
-            };
+            }
 
             // hook pre add or edit
             osc_run_hook('pre_item_post');
@@ -150,8 +186,9 @@
                     's_contact_email'       => $contactEmail,
                     's_secret'              => $code,
                     'b_active'              => ($active=='ACTIVE'?1:0),
-                    'b_enabled'             => 1,
+                    'b_enabled'             => $enabled,
                     'b_show_email'          => $aItem['showEmail'],
+                    'b_spam'                => $is_spam,
                     's_ip'                  => $aItem['s_ip']
                 ));
 
@@ -171,11 +208,6 @@
 
                 // INSERT title and description locales
                 $this->insertItemLocales('ADD', $aItem['title'], $aItem['description'], $itemId );
-                // INSERT location item
-                // when id location is null, check locations_name
-//                if($aItem['countryId']==''){
-//                    $aItem['countryId'] = Country::newInstance();
-//                }
 
                 $location = array(
                     'fk_i_item_id'      => $itemId,
@@ -195,10 +227,7 @@
                 $this->uploadItemResources( $aItem['photos'] , $itemId);
 
                 // update dt_expiration at t_item
-                $_category = Category::newInstance()->findByPrimaryKey($aItem['catId']);
-                // update dt_expiration
-                $i_expiration_days = $_category['i_expiration_days'];
-                $dt_expiration = Item::newInstance()->updateExpirationDate($itemId, $i_expiration_days);
+                $dt_expiration = Item::newInstance()->updateExpirationDate($itemId, $aItem['dt_expiration']);
 
                 /**
                  * META FIELDS
@@ -206,6 +235,10 @@
                 if($meta!='' && count($meta)>0) {
                     $mField = Field::newInstance();
                     foreach($meta as $k => $v) {
+                        // if dateinterval
+                        if(is_array($v) && !isset($v['from']) && !isset($v['to']) ) {
+                            $v = implode(',', $v);
+                        }
                         $mField->replace($itemId, $k, $v);
                     }
                 }
@@ -222,6 +255,7 @@
                 if(!$this->is_admin) {
                     $this->sendEmails($aItem);
                 }
+
                 if($active=='INACTIVE') {
                     $success = 1;
                 } else {
@@ -232,7 +266,10 @@
                         'fk_i_region_id'    => $location['fk_i_region_id'],
                         'fk_i_city_id'      => $location['fk_i_city_id']
                     );
-                    $this->_increaseStats($aAux);
+                    // if is_spam not increase stats
+                    if($is_spam == 0) {
+                        $this->_increaseStats($aAux);
+                    }
                     $success = 2;
                 }
 
@@ -397,30 +434,23 @@
                 if($meta!='' && count($meta)>0) {
                     $mField = Field::newInstance();
                     foreach($meta as $k => $v) {
+                        // if dateinterval
+                        if( is_array($v) && !isset($v['from']) && !isset($v['to']) ) {
+                            $v = implode(',', $v);
+                        }
                         $mField->replace($aItem['idItem'], $k, $v);
                     }
                 }
 
                 $oldIsExpired = osc_isExpired($old_item['dt_expiration']);
-                $newIsExpired = $oldIsExpired;
-
-                $dt_expiration = $old_item['dt_expiration'];
-                // recalculate dt_expiration t_item
-                if( $result==1 && $old_item['fk_i_category_id'] != $aItem['catId'] ) {
-                    $_category = Category::newInstance()->findByPrimaryKey($aItem['catId']);
-                    // update dt_expiration
-                    $i_expiration_days = $_category['i_expiration_days'];
-                    $dt_expiration = Item::newInstance()->updateExpirationDate($aItem['idItem'], $i_expiration_days);
-                    $newIsExpired = osc_isExpired($dt_expiration);
-                }
+                $dt_expiration = Item::newInstance()->updateExpirationDate($aItem['idItem'], $aItem['dt_expiration'], false);
+                $newIsExpired = osc_isExpired($dt_expiration);
 
                 // Recalculate stats related with items
                 $this->_updateStats($result, $old_item, $oldIsExpired, $old_item_location, $aItem, $newIsExpired, $location);
 
                 unset($old_item);
 
-                // THIS HOOK IS DEPRECATED, IT WILL NOT BE AVAILABLE IN 3.2
-                osc_run_hook('item_edit_post', $aItem['catId'], $aItem['idItem']);
                 // THIS HOOK IS FINE, YAY!
                 osc_run_hook('edited_item', Item::newInstance()->findByPrimaryKey($aItem['idItem']));
                 $success = $result;
@@ -1088,6 +1118,21 @@
             $aItem['description']   = Params::getParam('description');
             $aItem['photos']        = Params::getFiles('photos');
             $aItem['s_ip']          = get_ip();
+
+            if($is_add || $this->is_admin) {
+                $dt_expiration = Params::getParam('dt_expiration');
+                if($dt_expiration==-1) {
+                    $aItem['dt_expiration'] = '';
+                } else if($dt_expiration!='' && (preg_match('|^([0-9]+)$|', $dt_expiration, $match) || preg_match('|([0-9]{4})-([0-9]{2})-([0-9]{2}) ([0-9]{2}):([0-9]{2}):([0-9]{2})|', $dt_expiration, $match))) {
+                    $aItem['dt_expiration'] = $dt_expiration;
+                } else {
+                    $_category = Category::newInstance()->findByPrimaryKey($aItem['catId']);
+                    $aItem['dt_expiration'] = $_category['i_expiration_days'];
+                }
+                unset($dt_expiration);
+            } else {
+                $aItem['dt_expiration'] = '';
+            };
 
             // check params
             $country = Country::newInstance()->findByCode($aItem['countryId']);

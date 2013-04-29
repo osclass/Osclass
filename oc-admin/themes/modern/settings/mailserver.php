@@ -29,8 +29,8 @@
                         $('input[name="mailserver_username"]').val('');
                         $('input[name="mailserver_password"]').val('');
                         $('input[name="mailserver_ssl"]').val('ssl');
-                        $('input[name="mailserver_auth"]').attr('checked', true);
-                        $('input[name="mailserver_pop"]').attr('checked', false);
+                        $('input[name="mailserver_auth"]').prop('checked', true);
+                        $('input[name="mailserver_pop"]').prop('checked', false);
                     } else {
                         $('input[name="mailserver_host"]').attr('readonly', false);
                         $('input[name="mailserver_port"]').attr('readonly', false);
@@ -104,6 +104,18 @@
                                 <div class="form-label"><?php _e('Hostname'); ?></div>
                                 <div class="form-controls">
                                     <input type="text" class="input-large" name="mailserver_host" value="<?php echo osc_esc_html(osc_mailserver_host()); ?>" />
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-label"><?php _e('Mail from'); ?></div>
+                                <div class="form-controls">
+                                    <input type="text" class="input-large" name="mailserver_mail_from" value="<?php echo osc_esc_html(osc_mailserver_mail_from()); ?>" />
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-label"><?php _e('Name from'); ?></div>
+                                <div class="form-controls">
+                                    <input type="text" class="input-large" name="mailserver_name_from" value="<?php echo osc_esc_html(osc_mailserver_name_from()); ?>" />
                                 </div>
                             </div>
                             <div class="form-row">

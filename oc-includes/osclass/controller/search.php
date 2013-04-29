@@ -69,12 +69,14 @@
                         $this->do404();
                     }
                     Params::setParam('sRegion', $region['pk_i_id']);
+                    Params::setParam('sCategory', preg_replace('|(.*?)_.*?-r[0-9]+|', '$01', $search_uri));
                 } else if( preg_match('|-c([0-9]+)$|', $search_uri, $c) ) {
                     $city = City::newInstance()->findByPrimaryKey($c[1]);
                     if( !$city ) {
                         $this->do404();
                     }
                     Params::setParam('sCity', $city['pk_i_id']);
+                    Params::setParam('sCategory', preg_replace('|(.*?)_.*?-c[0-9]+|', '$01', $search_uri));
                 } else {
                     $aCategory = explode('/', $search_uri);
                     $category  = Category::newInstance()->findBySlug($aCategory[count($aCategory)-1]);
@@ -188,6 +190,15 @@
                 }
             }
 
+            $p_sLocale     = Params::getParam('sLocale');
+            if(!is_array($p_sLocale)) {
+                if($p_sLocale == '') {
+                    $p_sLocale = '';
+                } else {
+                    $p_sLocale = explode(",", $p_sLocale);
+                }
+            }
+
             $p_sPattern   = strip_tags(Params::getParam('sPattern'));
 
             // ADD TO THE LIST OF LAST SEARCHES
@@ -208,7 +219,6 @@
 
             //WE CAN ONLY USE THE FIELDS RETURNED BY Search::getAllowedColumnsForSorting()
             $p_sOrder     = Params::getParam('sOrder');
-
             if(!in_array($p_sOrder, Search::getAllowedColumnsForSorting())) {
                 $p_sOrder = osc_default_order_field_at_search();
             }
@@ -308,6 +318,9 @@
             if($p_sUser != '') {
                 $this->mSearch->fromUser($p_sUser);
             }
+
+            // FILTERING LOCALE
+            $this->mSearch->addLocale($p_sLocale);
 
             // FILTERING IF WE ONLY WANT ITEMS WITH PICS
             if($p_bPic) {

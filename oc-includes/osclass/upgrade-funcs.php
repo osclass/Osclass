@@ -49,6 +49,7 @@
             }
         }
     }
+
     $aMessages = array();
     Preference::newInstance()->update(array('s_value' => time()), array( 's_section' => 'osclass', 's_name' => 'last_version_check'));
 
@@ -417,6 +418,12 @@ CREATE TABLE %st_item_description_tmp (
         @mkdir(CONTENT_PATH.'uploads/page-images');
 
     }
+
+    if(osc_version() < 320) {
+        osc_set_preference('osclass', 'mailserver_mail_from', '', 'STRING');
+        osc_set_preference('osclass', 'mailserver_name_from', '', 'STRING');
+    }
+
 
     osc_changeVersionTo(311);
 

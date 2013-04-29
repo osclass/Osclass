@@ -348,13 +348,20 @@ function osc_sendMail($params) {
         $mail->Port = $smtpPort;
     }
 
+    $from = osc_mailserver_mail_from();
+    if(empty($from)) {
     $from = 'osclass@' . osc_get_domain();
     if( array_key_exists('from', $params) ) {
         $from = $params['from'];
     }
+    }
+
+    $from_name = osc_mailserver_name_from();
+    if(empty($from_name)) {
     $from_name = osc_page_title();
     if( array_key_exists('from_name', $params) ) {
         $from_name = $params['from_name'];
+    }
     }
 
     $mail->From     = osc_apply_filter('mail_from', $from);
@@ -895,6 +902,10 @@ function strip_slashes_extended($array) {
  * @param string $file Full path of the zip file
  * @param string $to Full path where it is going to be unzipped
  * @return int
+ *  0 - destination folder not writable (or not exist and cannot be created)
+ *  1 - everything was OK
+ *  2 - zip is empty
+ *  -1 : file could not be created (or error reading the file from the zip)
  */
 function osc_unzip_file($file, $to) {
     if (!file_exists($to)) {
@@ -1053,7 +1064,7 @@ function _zip_folder_ziparchive($archive_folder, $archive_name) {
 
             $dh = opendir($dir);
             while (false !== ($_file = readdir($dh))) {
-                if ($_file != '.' && $_file != '..') {
+                if ($_file != '.' && $_file != '..' && stripos($_file, 'Osclass_backup.')===FALSE) {
                     if (is_file($dir.$_file)) {
                         $zip -> addFile($dir.$_file, str_replace(ABS_PATH, '', $dir.$_file));
                     } elseif (is_dir($dir.$_file)) {
@@ -1422,23 +1433,18 @@ function osc_update_cat_stats() {
 function osc_update_cat_stats_id($id)
 {
     // get sub categorias
-    if( !Category::newInstance()->isRoot($id) ) {
-        $auxCat = Category::newInstance()->findRootCategory($id);
-        $id = $auxCat['pk_i_id'];
-    }
-
     $aCategories    = Category::newInstance()->findSubcategories($id);
     $categoryTotal  = 0;
+    $category  = Category::newInstance()->findByPrimaryKey($id);
 
     if( count($aCategories) > 0 ) {
         // sumar items de la categoría
-        foreach($aCategories as $category) {
-            $total     = Item::newInstance()->numItems($category, true, true);
+        foreach($aCategories as $subcategory) {
+            $total     = Item::newInstance()->numItems($subcategory, true, true);
             $categoryTotal += $total;
         }
-        $categoryTotal += Item::newInstance()->numItems(Category::newInstance()->findByPrimaryKey($id), true, true);
+        $categoryTotal += Item::newInstance()->numItems($category, true, true);
     } else {
-        $category  = Category::newInstance()->findByPrimaryKey($id);
         $total     = Item::newInstance()->numItems($category, true, true);
         $categoryTotal += $total;
     }
@@ -1446,6 +1452,10 @@ function osc_update_cat_stats_id($id)
     $sql = 'REPLACE INTO '.DB_TABLE_PREFIX.'t_category_stats (fk_i_category_id, i_num_items) VALUES ';
     $sql .= " (".$id.", ".$categoryTotal.")";
     $result = CategoryStats::newInstance()->dao->query($sql);
+
+    if($category['fk_i_parent_id']!=0) {
+        osc_update_cat_stats_id($category['fk_i_parent_id']);
+    }
 }
 
 
@@ -1454,53 +1464,69 @@ function osc_update_cat_stats_id($id)
  *
  * @since 3.1
  */
-function osc_update_location_stats() {
-    $aCountries     = Country::newInstance()->listAll();
-    $aCountryValues = array();
+function osc_update_location_stats($force = false, $limit = 1000) {
 
-    $aRegions       = array();
-    $aRegionValues  = array();
+    $loctmp = LocationsTmp::newInstance();
+    $workToDo = $loctmp->count();
 
-    $aCities        = array();
-    $aCityValues    = array();
-
-    foreach($aCountries as $country){
-        $id = $country['pk_c_code'];
-        $numItems = CountryStats::newInstance()->calculateNumItems( $id );
-        array_push($aCountryValues, "('$id', $numItems)" );
-        unset($numItems);
-
-        $aRegions = Region::newInstance()->findByCountry($id);
-        foreach($aRegions as $region) {
-            $id = $region['pk_i_id'];
-            $numItems = RegionStats::newInstance()->calculateNumItems( $id );
-            array_push($aRegionValues, "($id, $numItems)" );
-            unset($numItems);
-
-            $aCities = City::newInstance()->findByRegion($id);
-            foreach($aCities as $city) {
-                $id = $city['pk_i_id'];
-                $numItems = CityStats::newInstance()->calculateNumItems( $id );
-                array_push($aCityValues, "($id, $numItems)" );
-                unset($numItems);
+    if( $workToDo > 0 ) {
+        // there are wotk to do
+        if($limit=='auto') {
+            $total_cities = City::newInstance()->count();
+            $limit = max(1000, ceil($total_cities/22));
+        }
+        $aLocations = $loctmp->getLocations($limit);
+        foreach($aLocations as $location) {
+            $id     = $location['id_location'];
+            $type   = $location['e_type'];
+            $data   = 0;
+            // update locations stats
+            switch ( $type ) {
+                case 'COUNTRY':
+                    $numItems = CountryStats::newInstance()->calculateNumItems( $id );
+                    $data = CountryStats::newInstance()->setNumItems($id, $numItems);
+                    unset($numItems);
+                    break;
+                case 'REGION' :
+                    $numItems = RegionStats::newInstance()->calculateNumItems( $id );
+                    $data = RegionStats::newInstance()->setNumItems($id, $numItems);
+                    unset($numItems);
+                    break;
+                case 'CITY' :
+                    $numItems = CityStats::newInstance()->calculateNumItems( $id );
+                    $data = CityStats::newInstance()->setNumItems($id, $numItems);
+                    unset($numItems);
+                    break;
+                default:
+                    break;
+            }
+            if($data >= 0) {
+                $loctmp->delete(array('e_type' => $location['e_type'], 'id_location' => $location['id_location']) );
             }
         }
+    } else if($force) {
+        // we need populate location tmp table
+        $aCountry  = Country::newInstance()->listAll();
+
+        foreach($aCountry as $country) {
+            $aRegionsCountry = Region::newInstance()->findByCountry( $country['pk_c_code'] );
+            $loctmp->insert(array('id_location' => $country['pk_c_code'], 'e_type' => 'COUNTRY') );
+            foreach($aRegionsCountry as $region) {
+                $aCitiesRegion = City::newInstance()->findByRegion( $region['pk_i_id'] );
+                $loctmp->insert(array('id_location' => $region['pk_i_id'], 'e_type' => 'REGION') );
+                $batchCities = array();
+                foreach($aCitiesRegion as $city) {
+                    $batchCities[] = $city['pk_i_id'];
+                }
+                unset($aCitiesRegion);
+                $loctmp->batchInsert($batchCities, 'CITY');
+                unset($batchCities);
+            } unset($aRegionsCountry);
+        } unset($aCountry);
+        Preference::newInstance()->replace('location_todo', LocationsTmp::newInstance()->count() );
     }
-
-    // insert Country stats
-    $sql_country  = 'REPLACE INTO '.DB_TABLE_PREFIX.'t_country_stats (fk_c_country_code, i_num_items) VALUES ';
-    $sql_country .= implode(',', $aCountryValues);
-    CountryStats::newInstance()->dao->query($sql_country);
-    // insert Region stats
-    $sql_region   = 'REPLACE INTO '.DB_TABLE_PREFIX.'t_region_stats (fk_i_region_id, i_num_items) VALUES ';
-    $sql_region  .= implode(',', $aRegionValues);
-    RegionStats::newInstance()->dao->query($sql_region);
-    // insert City stats
-    $sql_city     = 'REPLACE INTO '.DB_TABLE_PREFIX.'t_city_stats (fk_i_city_id, i_num_items) VALUES ';
-    $sql_city    .= implode(',', $aCityValues);
-    CityStats::newInstance()->dao->query($sql_city);
+    return LocationsTmp::newInstance()->count();
 }
-
 
 function get_ip() {
     if( !empty($_SERVER['HTTP_CLIENT_IP']) ) {
@@ -1521,7 +1547,12 @@ function get_ip() {
 /***********************
  * CSRFGUARD functions *
  ***********************/
-function osc_csrfguard_generate_token($unique_form_name) {
+function osc_csrfguard_generate_token() {
+    $token_name = Session::newInstance()->_get('token_name');
+    if($token_name!='' && Session::newInstance()->_get($token_name)!='') {
+        return array($token_name, Session::newInstance()->_get($token_name));
+    }
+    $unique_token_name = osc_csrf_name()."_".mt_rand(0,mt_getrandmax());
     if(function_exists("hash_algos") and in_array("sha512",hash_algos())) {
         $token = hash("sha512",mt_rand(0,mt_getrandmax()));
     } else {
@@ -1536,23 +1567,19 @@ function osc_csrfguard_generate_token($unique_form_name) {
             $token.=$c;
         }
     }
-    Session::newInstance()->_set($unique_form_name, $token);
-    Session::newInstance()->_set("lf_".$unique_form_name, time());
-    return $token;
+    Session::newInstance()->_set('token_name', $unique_token_name);
+    Session::newInstance()->_set($unique_token_name, $token);
+    return array($unique_token_name, $token);
 }
 
 
-function osc_csrfguard_validate_token($unique_form_name, $token_value, $drop = true) {
+function osc_csrfguard_validate_token($unique_form_name, $token_value) {
+    $name = Session::newInstance()->_get('token_name');
     $token = Session::newInstance()->_get($unique_form_name);
-    if($token===$token_value) {
-        $result = true;
+    if($name===$unique_form_name && $token===$token_value) {
+        return true;
     } else {
-        $result = false;
-    }
-    // Ajax request should not drop the token for 1 hour, yeah it's not the most secure thing out there,
-    if($drop || ((int)Session::newInstance()->_get("lf_".$unique_form_name)-time())>(3600)) {
-        Session::newInstance()->_drop($unique_form_name);
-        Session::newInstance()->_drop("lf_".$unique_form_name);
+        return false;
     }
     return $result;
 }
@@ -1571,7 +1598,6 @@ function osc_csrfguard_replace_forms($form_data_html) {
 
 
 function osc_csrfguard_inject() {
-    global $mtime;
     $data = ob_get_clean();
     $data = osc_csrfguard_replace_forms($data);
     echo $data;
@@ -1580,7 +1606,10 @@ function osc_csrfguard_inject() {
 
 function osc_csrfguard_start() {
     ob_start();
-    register_shutdown_function('osc_csrfguard_inject');
+    $functions = osc_apply_filter('shutdown_functions', array('osc_csrfguard_inject'));
+    foreach($functions as $f) {
+        register_shutdown_function($f);
+    }
 }
 
 function osc_redirect_to($url) {
@@ -1590,6 +1619,5 @@ function osc_redirect_to($url) {
     header("Location: ".$url);
     exit;
 }
-
 
 ?>

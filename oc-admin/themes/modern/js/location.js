@@ -280,6 +280,8 @@
             selectFirst: true
         });
 
+        $('.ui-autocomplete').css('zIndex', 10000);
+
         $("#b_new_country").click(function(){
             renderNewCountry();
         });

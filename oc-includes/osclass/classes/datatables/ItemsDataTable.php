@@ -68,7 +68,8 @@
                 'rep'   => 'i_num_repeated',
                 'off'   => 'i_num_offensive',
                 'exp'   => 'i_num_expired',
-                'date'  => 'dt_pub_date'
+                'date'  => 'dt_pub_date',
+                'expiration'  => 'dt_expiration'
                 );
             // column sort
             if( !key_exists($sort, $arraySortColumns) ) {
@@ -115,6 +116,12 @@
                     $arg_date .= '&direction=asc';
                 };
             }
+            $arg_expiration = '&sort=expiration';
+            if(Params::getParam('sort') == 'expiration') {
+                if(Params::getParam('direction') == 'desc') {
+                    $arg_expiration .= '&direction=asc';
+                };
+            }
 
             Rewrite::newInstance()->init();
             $url_base = preg_replace('|&direction=([^&]*)|', '', preg_replace('|&sort=([^&]*)|', '', osc_base_url().Rewrite::newInstance()->get_request_uri()));
@@ -127,6 +134,7 @@
             $this->addColumn('region', __('Region'));
             $this->addColumn('city', __('City'));
             $this->addColumn('date', '<a href="'.$url_base.$arg_date.'">'.__('Date').'</a>');
+            $this->addColumn('expiration', '<a href="'.$url_base.$arg_expiration.'">'.__('Expiration date').'</a>');
 
             $dummy = &$this;
             osc_run_hook("admin_items_table", $dummy);
@@ -140,6 +148,7 @@
             $arg_spam   = '&sort=spam'; $arg_bad    = '&sort=bad';
             $arg_rep    = '&sort=rep';  $arg_off    = '&sort=off';
             $arg_exp    = '&sort=exp';  $arg_date   = '&sort=date';
+            $arg_expiration = '&sort=expiration';
             $sort       = Params::getParam("sort");
             $direction  = Params::getParam("direction");
 
@@ -162,6 +171,9 @@
                 case('date'):
                     if($direction == 'desc' || $direction == '') $arg_date .= '&direction=asc';
                     break;
+                case('expiration'):
+                    if($direction == 'desc' || $direction == '') $arg_expiration .= '&direction=asc';
+                    break;
                 default:
                     break;
             }
@@ -172,7 +184,8 @@
             $url_off = $url_base.$arg_off;
             $url_exp = $url_base.$arg_exp;
             $url_date = $url_base.$arg_date;
-            
+            $url_expiration = $url_base.$arg_expiration;
+
             $this->addColumn('bulkactions', '<input id="check_all" type="checkbox" />');
             $this->addColumn('title', __('Title'));
             $this->addColumn('user', __('User'));
@@ -182,6 +195,7 @@
             $this->addColumn('exp', '<a id="order_exp" href="'.$url_exp.'">'.__('Expired').'</a>');
             $this->addColumn('off', '<a id="order_off" href="'.$url_off.'">'.__('Offensive').'</a>');
             $this->addColumn('date', '<a id="order_date" href="'.$url_date.'">'.__('Date').'</a>');
+            $this->addColumn('expiration', '<a id="order_expiration" href="'.$url_expiration.'">'.__('Expiration date').'</a>');
 
             $dummy = &$this;
             osc_run_hook("admin_items_reported_table", $dummy);
@@ -202,6 +216,10 @@
                     if($title != $aRow['s_title']) {
                         $title .= '...';
                     }
+
+                    //icon open add new window
+                    $title .= '<span class="icon-new-window"></span>';
+
                     // show more options
                     $options_more = array();
                     if($aRow['b_active']) {
@@ -266,7 +284,8 @@
                     $row['country'] = $aRow['s_country'];
                     $row['region'] = $aRow['s_region'];
                     $row['city'] = $aRow['s_city'];
-                    $row['date'] = $aRow['dt_pub_date'];
+                    $row['date'] = osc_format_date($aRow['dt_pub_date']);
+                    $row['expiration'] = osc_format_date($aRow['dt_expiration']);
 
                     $row = osc_apply_filter('items_processing_row', $row, $aRow);
 
@@ -332,7 +351,8 @@
                     $row['rep'] = $aRow['i_num_repeated'];
                     $row['exp'] = $aRow['i_num_expired'];
                     $row['off'] = $aRow['i_num_offensive'];
-                    $row['date'] = $aRow['dt_pub_date'];
+                    $row['date'] = osc_format_date($aRow['dt_pub_date']);
+                    $row['expiration'] = osc_format_date($aRow['dt_expiration']);
 
                     $row = osc_apply_filter('items_processing_reported_row', $row, $aRow);
 

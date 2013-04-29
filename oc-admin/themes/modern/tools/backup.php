@@ -74,7 +74,7 @@
                             </div>
                             <div class="form-actions">
                                 <input type="button" id="backup_sql" onclick="javascript:submitForm(this.form, 'sql');" value="<?php echo osc_esc_html( __('Backup SQL (store on server)') ); ?>" class="btn btn-submit" />
-                                <input type="button" id="backup_sql_file" onclick="javascript:submitForm(this.form, 'sql_file');" value="<?php echo osc_esc_html( __('Backup files (download file)') ); ?>" class="btn btn-submit" />
+                                <input type="button" id="backup_sql_file" onclick="javascript:submitForm(this.form, 'sql_file');" value="<?php echo osc_esc_html( __('Backup SQL (download file)') ); ?>" class="btn btn-submit" />
                                 <input type="button" id="backup_zip" onclick="javascript:submitForm(this.form, 'zip');" value="<?php echo osc_esc_html( __('Backup files (store on server)') ); ?>" class="btn btn-submit" />
                             </div>
                         </div>

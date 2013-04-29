@@ -100,18 +100,19 @@
             $this->user_ids  = null;
             $this->itemId    = null;
 
-            $this->city_areas   = array();
-            $this->cities       = array();
-            $this->regions      = array();
-            $this->countries    = array();
-            $this->categories   = array();
-            $this->conditions   = array();
-            $this->tables       = array();
-            $this->tables_join  = array();
-            $this->search_fields = array();
+            $this->city_areas       = array();
+            $this->cities           = array();
+            $this->regions          = array();
+            $this->countries        = array();
+            $this->categories       = array();
+            $this->conditions       = array();
+            $this->tables           = array();
+            $this->tables_join      = array();
+            $this->search_fields    = array();
             $this->itemConditions   = array();
-            $this->groupBy      = '';
-            $this->having       = '';
+            $this->locale_code      = array();
+            $this->groupBy          = '';
+            $this->having           = '';
 
             $this->order();
             $this->limit();
@@ -130,9 +131,6 @@
             // get all item_location data
             if(OC_ADMIN) {
                 $this->addField(sprintf('%st_item_location.*', DB_TABLE_PREFIX) );
-                $this->locale_code = osc_current_admin_locale();
-            } else {
-                $this->locale_code = osc_current_user_locale();
             }
 
         }
@@ -144,7 +142,7 @@
          */
         public static function getAllowedColumnsForSorting()
         {
-            return( array('i_price', 'dt_pub_date') );
+            return( array('i_price', 'dt_pub_date', 'dt_expiration') );
         }
 
         /**
@@ -216,6 +214,28 @@
                     if(!in_array($conditions, $this->itemConditions)) {
                         $this->itemConditions[] = $conditions;
                     }
+                }
+            }
+        }
+
+        /**
+         * Add locale conditions to the search
+         *
+         * @access public
+         * @since 3.2
+         * @param string $locale
+         */
+        public function addLocale($locale)
+        {
+            if(is_array($locale)) {
+                foreach($locale as $l) {
+                    if($l!='') {
+                        $this->locale_code[$l] = $l;
+                    }
+                }
+            } else {
+                if($locale!='') {
+                    $this->locale_code[$locale] = $locale;
                 }
             }
         }
@@ -369,7 +389,7 @@
                         if(is_numeric($c)) {
                             $this->city_areas[] = sprintf("%st_item_location.fk_i_city_area_id = %d ", DB_TABLE_PREFIX, $c);
                         } else {
-                            $this->city_areas[] = sprintf("%st_item_location.s_city_area LIKE '%%%s%%' ", DB_TABLE_PREFIX, $c);
+                            $this->city_areas[] = sprintf("%st_item_location.s_city_area LIKE '%s' ", DB_TABLE_PREFIX, $c);
                         }
                     }
                 }
@@ -379,7 +399,7 @@
                     if(is_numeric($city_area)) {
                         $this->city_areas[] = sprintf("%st_item_location.fk_i_city_area_id = %d ", DB_TABLE_PREFIX, $city_area);
                     } else {
-                        $this->city_areas[] = sprintf("%st_item_location.s_city_area LIKE '%%%s%%' ", DB_TABLE_PREFIX, $city_area);
+                        $this->city_areas[] = sprintf("%st_item_location.s_city_area LIKE '%s' ", DB_TABLE_PREFIX, $city_area);
                     }
                 }
             }
@@ -401,7 +421,7 @@
                         if(is_numeric($c)) {
                             $this->cities[] = sprintf("%st_item_location.fk_i_city_id = %d ", DB_TABLE_PREFIX, $c);
                         } else {
-                            $this->cities[] = sprintf("%st_item_location.s_city LIKE '%%%s%%' ", DB_TABLE_PREFIX, $c);
+                            $this->cities[] = sprintf("%st_item_location.s_city LIKE '%s' ", DB_TABLE_PREFIX, $c);
                         }
                     }
                 }
@@ -411,7 +431,7 @@
                     if(is_numeric($city)) {
                         $this->cities[] = sprintf("%st_item_location.fk_i_city_id = %d ", DB_TABLE_PREFIX, $city);
                     } else {
-                        $this->cities[] = sprintf("%st_item_location.s_city LIKE '%%%s%%' ", DB_TABLE_PREFIX, $city);
+                        $this->cities[] = sprintf("%st_item_location.s_city LIKE '%s' ", DB_TABLE_PREFIX, $city);
                     }
                 }
             }
@@ -433,7 +453,7 @@
                         if(is_numeric($r)) {
                             $this->regions[] = sprintf("%st_item_location.fk_i_region_id = %d ", DB_TABLE_PREFIX, $r);
                         } else {
-                            $this->regions[] = sprintf("%st_item_location.s_region LIKE '%%%s%%' ", DB_TABLE_PREFIX, $r);
+                            $this->regions[] = sprintf("%st_item_location.s_region LIKE '%s' ", DB_TABLE_PREFIX, $r);
                         }
                     }
                 }
@@ -443,7 +463,7 @@
                     if(is_numeric($region)) {
                         $this->regions[] = sprintf("%st_item_location.fk_i_region_id = %d ", DB_TABLE_PREFIX, $region);
                     } else {
-                        $this->regions[] = sprintf("%st_item_location.s_region LIKE '%%%s%%' ", DB_TABLE_PREFIX, $region);
+                        $this->regions[] = sprintf("%st_item_location.s_region LIKE '%s' ", DB_TABLE_PREFIX, $region);
                     }
                 }
             }
@@ -465,7 +485,7 @@
                         if(strlen($c)==2) {
                             $this->countries[] = sprintf("%st_item_location.fk_c_country_code = '%s' ", DB_TABLE_PREFIX, strtolower($c));
                         } else {
-                            $this->countries[] = sprintf("%st_item_location.s_country LIKE '%%%s%%' ", DB_TABLE_PREFIX, $c);
+                            $this->countries[] = sprintf("%st_item_location.s_country LIKE '%s' ", DB_TABLE_PREFIX, $c);
                         }
                     }
                 }
@@ -475,7 +495,7 @@
                     if(strlen($country)==2) {
                         $this->countries[] = sprintf("%st_item_location.fk_c_country_code = '%s' ", DB_TABLE_PREFIX, strtolower($country));
                     } else {
-                        $this->countries[] = sprintf("%st_item_location.s_country LIKE '%%%s%%' ", DB_TABLE_PREFIX, $country);
+                        $this->countries[] = sprintf("%st_item_location.s_country LIKE '%s' ", DB_TABLE_PREFIX, $country);
                     }
                 }
             }
@@ -766,7 +786,14 @@
                 $this->dao->from(DB_TABLE_PREFIX . 't_item_description as d');
                 $this->dao->where(sprintf("MATCH(d.s_title, d.s_description) AGAINST('%s' IN BOOLEAN MODE)", $this->sPattern));
 
-                $this->dao->where(sprintf("d.fk_c_locale_code LIKE '%s'", $this->locale_code));
+                if(empty($this->locale_code)) {
+                    if(OC_ADMIN) {
+                        $this->locale_code[osc_current_admin_locale()] = osc_current_admin_locale();
+                    } else {
+                        $this->locale_code[osc_current_user_locale()] = osc_current_user_locale();
+                    }
+                }
+                $this->dao->where(sprintf("( d.fk_c_locale_code LIKE '%s' )", implode("' d.fk_c_locale_code LIKE '", $this->locale_code)));
 
                 $subSelect = $this->dao->_getSelect();
                 $this->dao->_resetSelect();
@@ -871,7 +898,14 @@
                 if ($this->withPattern ) {
                     $this->dao->join(DB_TABLE_PREFIX.'t_item_description as d','d.fk_i_item_id = '.DB_TABLE_PREFIX.'t_item.pk_i_id','LEFT');
                     $this->dao->where(sprintf("MATCH(d.s_title, d.s_description) AGAINST('%s' IN BOOLEAN MODE)", $this->sPattern) );
-                    $this->dao->where(sprintf("d.fk_c_locale_code LIKE '%s'", $this->locale_code));
+                    if(empty($this->locale_code)) {
+                        if(OC_ADMIN) {
+                            $this->locale_code[osc_current_admin_locale()] = osc_current_admin_locale();
+                        } else {
+                            $this->locale_code[osc_current_user_locale()] = osc_current_user_locale();
+                        }
+                    }
+                    $this->dao->where(sprintf("( d.fk_c_locale_code LIKE '%s' )", implode("' d.fk_c_locale_code LIKE '", $this->locale_code)));
                 }
 
                 // item conditions

@@ -52,8 +52,7 @@
      * @return string
      */
     function osc_csrf_token_form() {
-        $name = osc_csrf_name()."_".mt_rand(0,mt_getrandmax());
-        $token = osc_csrfguard_generate_token($name);
+        list($name, $token) = osc_csrfguard_generate_token();
         return "<input type='hidden' name='CSRFName' value='".$name."' />
         <input type='hidden' name='CSRFToken' value='".$token."' />";
     }
@@ -65,8 +64,7 @@
      * @return string
      */
     function osc_csrf_token_url() {
-        $name = osc_csrf_name()."_".mt_rand(0,mt_getrandmax());
-        $token = osc_csrfguard_generate_token($name);
+        list($name, $token) = osc_csrfguard_generate_token();
         return "CSRFName=".$name."&CSRFToken=".$token;
     }
 
@@ -75,14 +73,48 @@
      *
      * @since 3.1
      */
-    function osc_csrf_check($drop = true) {
+
+    function osc_csrf_check() {
+        $error      = false;
+        $str_error  = '';
         if(Params::getParam('CSRFName')=='' || Params::getParam('CSRFToken')=='') {
-            exit(__("Probable invalid request."));
+            $str_error = _m('Probable invalid request.') ;
+            $error = true;
+        } else {
+            $name   = Params::getParam('CSRFName');
+            $token  = Params::getParam('CSRFToken');
+            if (!osc_csrfguard_validate_token($name, $token)) {
+                $str_error = _m('Invalid CSRF token.');
+                $error = true;
+            }
         }
-        $name = Params::getParam('CSRFName');
-        $token = Params::getParam('CSRFToken');
-        if (!osc_csrfguard_validate_token($name, $token, $drop)) {
-            exit(__("Invalid CSRF token."));
+
+        if($error && IS_AJAX) {
+            echo json_encode(array(
+                'error' => 1,
+                'msg'   => $str_error
+            ));
+            exit;
+        }
+
+        // ¿ check if is ajax request ?
+        if($error) {
+            if(OC_ADMIN) {
+                osc_add_flash_error_message($str_error, 'admin');
+            } else {
+                osc_add_flash_error_message($str_error);
+            }
+
+            $url = osc_get_http_referer();
+            if($url!='') {
+                osc_redirect_to($url);
+            }
+
+            if(OC_ADMIN) {
+                osc_redirect_to( osc_admin_base_url(true) );
+            } else {
+                osc_redirect_to( osc_base_url(true) );
+            }
         }
     }
 
