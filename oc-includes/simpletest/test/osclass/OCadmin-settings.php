@@ -137,9 +137,20 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("//a[@id='settings_media']");
         $this->selenium->waitForPageToLoad("10000");
+        //$this->selenium->click("//input[@id='watermark_image']");
+        sleep(2);
+        /*$string = $this->selenium->_path(LIB_PATH."simpletest/test/osclass/img_test1.png");
+        $l = strlen($string);
+        for($s=0;$s<$l;$s++) {
+            $this->selenium->keyDown("//input[@id='watermark_image_file']", substr($string, $s, 1));
+        } */
+        $this->selenium->type("//input[@id='watermark_image_file']", $this->selenium->_path(LIB_PATH."simpletest/test/osclass/img_test1.png"));
+        //$this->selenium->click("//input[@id='watermark_image_file']");
+        sleep(2);
+        //sleep(20);
+        //sleep(20);
         $this->selenium->click("//input[@id='watermark_image']");
-        sleep(4);
-        $this->selenium->type("//input[@name='watermark_image']", $this->selenium->_path(LIB_PATH."simpletest/test/osclass/img_test1.png"));
+
         $this->selenium->click("//input[@id='save_changes']");
         $this->selenium->waitForPageToLoad("10000");
 

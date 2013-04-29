@@ -93,7 +93,7 @@ class AllTests extends TestSuite {
                 $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/Frontend-seo.php');
             }
         }
-
+         /*
         // FRONTEND WITH PERMALINKS
         if(isset($tests['frontend'])) {
             require_once(dirname(__FILE__).'/../../../../oc-load.php');
@@ -128,7 +128,7 @@ class AllTests extends TestSuite {
             // deactivate permalinks
             $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/Frontend-offPermalinks.php');
         }
-
+          */
         // ADMIN
         if(isset($tests['admin'])) {
             require_once(dirname(__FILE__).'/../../../../oc-load.php');

@@ -131,7 +131,7 @@ class OCadmin_tools extends OCadminTest {
         $this->selenium->click("//a[@id='tools_location']");
         $this->selenium->waitForPageToLoad("10000");
         $this->selenium->click("//input[@type='submit']");
-        $this->selenium->waitForPageToLoad("300000");
+        $this->selenium->waitForPageToLoad("30000");
         $complete = 0;
         $max_time_limit = 0; // Add a time limit of 10 minutes to execute this while, in other case is infinite (if the ajax to get the percent is wrong!)!
         while($complete!='100' && $max_time_limit<40) {
@@ -307,8 +307,8 @@ class OCadmin_tools extends OCadminTest {
         $this->selenium->type("contactName" , $user);
         $this->selenium->type("contactEmail", $email);
 
-        $this->selenium->select("parentCatId", "label=regexp:\\s*".$pcat);
-        $this->selenium->select("catId", "label=regexp:\\s*".$cat);
+        $this->selenium->select("select_1", "label=regexp:\\s*".$pcat);
+        $this->selenium->select("select_2", "label=regexp:\\s*".$cat);
         $this->selenium->type("title[en_US]", $title);
         $this->selenium->type("description[en_US]", $description);
         $this->selenium->type("price", $price);

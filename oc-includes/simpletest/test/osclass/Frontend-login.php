@@ -24,30 +24,30 @@ class Frontend_login extends FrontendTest {
         $this->assertTrue( $this->selenium->isTextPresent("Your account has been created successfully"), "Register an user.");
 
         $this->loginWith(NULL, 'foobar');
-        $this->selenium->waitForPageToLoad("30000");
+        $this->selenium->waitForPageToLoad("10000");
         $this->assertTrue( $this->selenium->isTextPresent("The password is incorrect"), 'Testing, Login user with incorrect password' );
 
         $this->loginWith('some@mail.com', NULL);
-        $this->selenium->waitForPageToLoad("30000");
+        $this->selenium->waitForPageToLoad("10000");
         $this->assertTrue( $this->selenium->isTextPresent("The user doesn't exist"), 'Testing, Login user with incorrect username' );
 
         $this->loginWith();
-        $this->selenium->waitForPageToLoad("30000");
+        $this->selenium->waitForPageToLoad("10000");
         $this->assertTrue( $this->selenium->isTextPresent("My account"), 'Testing, Login user.' );
 
         $this->logout();
-        $this->selenium->waitForPageToLoad("30000");
+        $this->selenium->waitForPageToLoad("10000");
         $this->assertTrue( $this->selenium->isTextPresent("Log in"), "Do Logout frontend." );
 
        // recover password
         $this->selenium->open( osc_base_url() );
         $this->selenium->click("login_open");
         $this->selenium->click("link=Forgot password?");
-        $this->selenium->waitForPageToLoad("30000");
+        $this->selenium->waitForPageToLoad("10000");
 
         $this->selenium->type("s_email",$this->_email);
         $this->selenium->click("xpath=//span/button[text()='Send me a new password']");
-        $this->selenium->waitForPageToLoad("30000");
+        $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue($this->selenium->isTextPresent("We have sent you an email with the instructions to reset your password"),"Can't recover password. ERROR");
 

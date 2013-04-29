@@ -223,7 +223,7 @@ class OCadmin_users extends OCadminTest {
         $this->selenium->type('s_password2' , 'asdfasdf');
         $this->selenium->type('s_email'     , 'test@osclass.org');
 
-        $this->selenium->click("xpath=//span/button[text()='Create']");
+        $this->selenium->click("//button[text()='Create']");
         $this->selenium->waitForPageToLoad("30000");
 
         $this->assertTrue( $this->selenium->isTextPresent("Your current email is not allowed") , "Can register email so to ban rule failed. ERROR");
@@ -233,7 +233,7 @@ class OCadmin_users extends OCadminTest {
         $this->selenium->type('s_password2' , 'asdfasdf');
         $this->selenium->type('s_email'     , 'testok@osclass.org');
 
-        $this->selenium->click("xpath=//span/button[text()='Create']");
+        $this->selenium->click("//button[text()='Create']");
         $this->selenium->waitForPageToLoad("30000");
 
         $this->assertTrue( ($this->selenium->isTextPresent("Your account has been created successfully") || $this->selenium->isTextPresent("The user has been created")), "Can't register email due to ban rule. ERROR");
@@ -359,11 +359,9 @@ class OCadmin_users extends OCadminTest {
         $this->selenium->type("cityArea"        ,"city area");
         $this->selenium->type("address"         ,"address user");
 
-        $this->selenium->select("countryId"     , "label=Spain");
-        sleep(1);
-        $this->selenium->select("regionId"      , "label=Barcelona");
-        sleep(1);
-        $this->selenium->select("cityId"        , "label=Barcelona");
+        $this->selenium->select("countryId", "label=Spain");
+        $this->selenium->type("region"      , "Barcelona");
+        $this->selenium->type("city"        , "Barcelona");
         $this->selenium->select("b_company"     , "label=User");
         
         $this->selenium->click("//input[@type='submit']");
@@ -385,12 +383,14 @@ class OCadmin_users extends OCadminTest {
         
         // add item for testing purposes
         $this->selenium->open(osc_base_url(true) . '?page=item&action=item_add' );
-        $this->selenium->select("catId", "label=regexp:\\s*Animals");
+        $this->selenium->select("select_1", "label=regexp:\\s*For sale");
+        $this->selenium->select("select_2", "label=regexp:\\s*Animals");
 
         $this->selenium->type("title[en_US]", 'Title new add test');
         $this->selenium->type("description[en_US]", "description new add");
         $this->selenium->type("price", '11');
 
+        //$this->selenium->select("countryId", "label=Spain");
         $this->selenium->select("countryId", "label=Spain");
         $this->selenium->type("region", "Barcelona");
         $this->selenium->type("city", "Barcelona");
@@ -423,6 +423,7 @@ class OCadmin_users extends OCadminTest {
         // check autofill locations when user add nen advert
         $this->selenium->open(osc_base_url(true) . '?page=item&action=item_add');
         $this->assertTrue( ($this->selenium->getSelectedLabel('id=countryId') == 'Spain'), 'Country auto fill');
+        //$this->assertTrue( ($this->selenium->getValue('id=country') == 'Spain'), 'Country auto fill');
         $this->assertTrue( ($this->selenium->getValue('id=region')  == 'Barcelona'), 'Region auto fill');
         $this->assertTrue( ($this->selenium->getValue('id=city')  == 'Barcelona'), 'City auto fill');
         $this->assertTrue( ($this->selenium->getValue('id=cityArea') == 'city area'), 'City area auto fill');

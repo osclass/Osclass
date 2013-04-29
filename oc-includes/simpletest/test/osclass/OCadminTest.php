@@ -32,9 +32,9 @@ abstract class OCadminTest extends MyWebTestCase {
             's_secret' => 'mvqdnrpt',
             's_email' => $this->_email
         ));
-        
 
-        $this->selenium = new Testing_Selenium( $browser, "http://localhost/");
+
+        $this->selenium = new Testing_Selenium( $browser, $entry_point); //"http://localhost/");
         $this->selenium->start();
         $this->selenium->setSpeed( $speed );
     }

@@ -197,6 +197,7 @@ class Frontend_items extends FrontendTest {
         // create new item
         require dirname(__FILE__).'/ItemData.php';
         $item = array(
+            "parentCatId"   => 'Vehicles',
             "catId"         => 'Cars',
             'title'         => '2000 Ford Focus',
             'description'   => '2000 Ford Focus ZX3 Hatchback 2D Good Condition Clean Great Car Mileage: 175000 Passed BMV Emissions Clear Title Call me or Text if interested- Crystal 219',
@@ -316,7 +317,9 @@ class Frontend_items extends FrontendTest {
         // edit first item
         $this->selenium->click("xpath=//div[@class='item'][1]/p[@class='options']/strong/a[text()='Edit']");
         $this->selenium->waitForPageToLoad("30000");
-        $this->selenium->select("catId", "label=regexp:\\s*Car Parts");
+        $this->selenium->select("select_1", "label=regexp:\\s*Vehicles");
+        sleep(2);
+        $this->selenium->select("select_2", "label=regexp:\\s*Car Parts");
 
         $this->selenium->type("title[en_US]", "New title new item");
         $this->selenium->type("description[en_US]", "New description new item new item new item");
@@ -342,7 +345,9 @@ class Frontend_items extends FrontendTest {
         // edit first item
         $this->selenium->click("xpath=//div[@class='item'][1]/p[@class='options']/strong/a[text()='Edit']");
         $this->selenium->waitForPageToLoad("30000");
-        $this->selenium->select("catId", "label=regexp:\\s*Car Parts");
+        $this->selenium->select("select_1", "label=regexp:\\s*Vehicles");
+        sleep(2);
+        $this->selenium->select("select_2", "label=regexp:\\s*Car Parts");
 
         $this->selenium->type("title[en_US]", "New title new item NEW ");
         $this->selenium->type("description[en_US]", "New description new item new item new item NEW ");
