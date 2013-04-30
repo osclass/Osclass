@@ -15,6 +15,7 @@ class AllFrontEndTests extends TestSuite {
         $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/Frontend-page.php');
         $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/Frontend-users.php');
         $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/Frontend-seo.php');
+        $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/Frontend-csrf.php');
     }
 
 }

@@ -5,7 +5,7 @@ require_once(dirname(__FILE__).'/../../test_case.php');
 class AllAdminTests extends TestSuite {
     function AllAdminTests() {
         $this->TestSuite('All tests');
-        
+
         // OC-CONTENT / LANGUAGES & PLUGINS need to be writable
 
         $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-settings.php');
@@ -20,12 +20,13 @@ class AllAdminTests extends TestSuite {
         $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-items.php');
         $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-moderator.php');
         $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-market.php');
+        $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-csrf.php');
 
         // TO DO
         //$this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-customfields.php');    // NOT FINISHED LOT OF FAILS
-        //$this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/test_admin_category.php');           // TODO 
+        //$this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/test_admin_category.php');           // TODO
 
-        
+
 
     }
 }

@@ -184,6 +184,9 @@ class AllTests extends TestSuite {
             if(isset($tests['admin']['customfields']) || $tests['admin']=='') {
                 $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-customfields.php');
             }
+            if(isset($tests['admin']['csrf']) || $tests['admin']=='') {
+                $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-csrf.php');
+            }
         }
 
     }
