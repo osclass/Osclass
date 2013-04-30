@@ -92,6 +92,9 @@ class AllTests extends TestSuite {
             if(isset($tests['frontend']['seo']) || $tests['frontend']=='') {
                 $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/Frontend-seo.php');
             }
+            if(isset($tests['frontend']['csrf']) || $tests['frontend']=='') {
+                $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/Frontend-csrf.php');
+            }
         }
          /*
         // FRONTEND WITH PERMALINKS

@@ -6,7 +6,7 @@ require_once dirname(__FILE__).'/../../../../oc-load.php';
 class Frontend_csrf extends FrontendTest {
 
     /*
-     *
+     * Test redirection when errors with csrf token
      */
     function testCsrfRedirect()
     {
