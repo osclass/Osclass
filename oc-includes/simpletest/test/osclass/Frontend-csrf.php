@@ -11,7 +11,6 @@ class Frontend_csrf extends FrontendTest {
     function testCsrfRedirect()
     {
         // redirect to contact page adding &http_referer=_URL_
-
         // Probable invalid request
         $this->selenium->open( osc_base_url(true) . '?page=login&http_referer=index.php?page=contact' );
         $this->selenium->waitForPageToLoad("30000");
@@ -27,11 +26,9 @@ class Frontend_csrf extends FrontendTest {
 
         $this->assertTrue($this->selenium->isTextPresent("Probable invalid request"), 'Testing, CSRFName, CSRFToken empty.');
         // check redirection
-//        $this->assertTrue($this->selenium->isTextPresent("Access to your account"), 'Testing, CSRF redirect to $_SERVER[\'HTTP_REFERER\'].');
         $this->assertTrue($this->selenium->isTextPresent("Contact us"), 'Testing, CSRF redirection using GET param http_referer.');
 
         // Invalid CSRF token
-        error_log('------------------------------------------------');
         $this->selenium->open( osc_base_url(true) . '?page=login' );
         $this->selenium->waitForPageToLoad("30000");
 
@@ -46,7 +43,6 @@ class Frontend_csrf extends FrontendTest {
 
         $this->assertTrue($this->selenium->isTextPresent("Invalid CSRF token"), 'Testing, CSRFName, CSRFToken incorrect.');
         // check no redirection
-//        $this->assertTrue($this->selenium->isTextPresent("Contact us"), 'Testing, CSRF redirection using GET param http_referer.');
         $this->assertTrue($this->selenium->isTextPresent("Access to your account"), 'Testing, CSRF redirect to $_SERVER[\'HTTP_REFERER\'].');
 
     }
