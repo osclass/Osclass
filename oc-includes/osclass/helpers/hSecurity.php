@@ -88,13 +88,15 @@
                 $error = true;
             }
         }
-
-        if($error && IS_AJAX) {
-            echo json_encode(array(
-                'error' => 1,
-                'msg'   => $str_error
-            ));
-            exit;
+        
+        if( !defined('IS_AJAX') ) {
+            if($error && IS_AJAX === true ) {
+                echo json_encode(array(
+                    'error' => 1,
+                    'msg'   => $str_error
+                ));
+                exit;
+            }
         }
 
         // ¿ check if is ajax request ?
