@@ -108,6 +108,8 @@
             }
 
             $url = osc_get_http_referer();
+            // be sure that drop session referer
+            Session::newInstance()->_dropReferer();
             if($url!='') {
                 osc_redirect_to($url);
             }
