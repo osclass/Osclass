@@ -90,7 +90,7 @@
             }
         }
 
-        if( !defined('IS_AJAX') ) {
+        if( defined('IS_AJAX') ) {
             if($error && IS_AJAX === true ) {
                 echo json_encode(array(
                     'error' => 1,
