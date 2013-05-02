@@ -135,9 +135,11 @@
             $ip = $_SERVER['REMOTE_ADDR'];
         }
         $rules = BanRule::newInstance()->listAll();
-        $result = osc_is_ip_banned($ip, $rules);
-        if(!$result && $email!=null) {
-            return osc_is_email_banned($email, $rules)?1:0; // 1:Email is banned, 0:not banned
+        if(!osc_is_ip_banned($ip, $rules)) {
+            if($email!=null) {
+                return osc_is_email_banned($email, $rules)?1:0; // 1:Email is banned, 0:not banned
+            }
+            return 0;
         }
         return 2; //IP is banned
     }
@@ -178,7 +180,6 @@
                     }
                 }
             }
-            return false;
         }
         return false;
     }
