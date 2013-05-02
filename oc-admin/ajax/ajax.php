@@ -163,6 +163,18 @@
                                     $slug = $slug_tmp."_".$slug_k;
                                 }
                             }
+
+                            // trim options
+                            $s_options = '';
+                            $aux  = Params::getParam('s_options');
+                            $aAux = explode(',', $aux);
+
+                            foreach($aAux as &$option) {
+                                $option = trim($option);
+                            }
+
+                            $s_options = implode(',', $aAux);
+
                             $res = Field::newInstance()->update(
                                     array(
                                         's_name'        => Params::getParam("s_name"),
@@ -170,9 +182,10 @@
                                         's_slug'        => $slug,
                                         'b_required'    => Params::getParam("field_required") == "1" ? 1 : 0,
                                         'b_searchable'  => Params::getParam("field_searchable") == "1" ? 1 : 0,
-                                        's_options'     => Params::getParam('s_options')),
+                                        's_options'     => $s_options,
                                     array('pk_i_id' => Params::getParam("id"))
-                                    );
+                                    ));
+
                             if(is_bool($res) && !$res) {
                                 $error = 1;
                             }
