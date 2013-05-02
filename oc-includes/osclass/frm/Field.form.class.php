@@ -228,9 +228,9 @@ FB;
                         echo '<label for="meta_'.$field['s_slug'].'">'.$field['s_name'].': </label>';
                     }
                     // timestamp/1000 (javascript timestamp)
-                    echo '<input type="hidden" id="date_'.$field['pk_i_id'].'" name="meta['.$field['pk_i_id'].']" value=""/>';
-                    echo '<input type="text" id="" class="date_'.$field['pk_i_id'].'" value=""/>';
-                    FieldForm::initDatePicker('date_'.$field['pk_i_id'], osc_date_format(), $field['s_value']);
+                    echo '<input type="hidden" id="meta_'.$field['s_slug'].'" name="meta['.$field['pk_i_id'].']" value=""/>';
+                    echo '<input type="text" id="" class="meta_'.$field['s_slug'].'" value=""/>';
+                    FieldForm::initDatePicker('meta_'.$field['s_slug'], osc_date_format(), $field['s_value']);
 
                 } else if($field['e_type']=="DATEINTERVAL") {
                     if($search) {
@@ -240,14 +240,14 @@ FB;
                     }
 
                     echo __('from'). ' ';
-                    echo '<input type="hidden" id="date_'.$field['pk_i_id'].'_from" name="meta['.$field['pk_i_id'].'][from]" value="'.$field['s_value']['from'].'"/>';
-                    echo '<input type="text" id="" class="date_'.$field['pk_i_id'].'_from" value=""/>';
-                    FieldForm::initDatePicker('date_'.$field['pk_i_id'].'_from', osc_date_format(), $field['s_value']['from'], 'from');
+                    echo '<input type="hidden" id="meta_'.$field['s_slug'].'_from" name="meta['.$field['pk_i_id'].'][from]" value="'.$field['s_value']['from'].'"/>';
+                    echo '<input type="text" id="" class="meta_'.$field['s_slug'].'_from" value=""/>';
+                    FieldForm::initDatePicker('meta_'.$field['s_slug'].'_from', osc_date_format(), $field['s_value']['from'], 'from');
 
                     echo ' ' . __('to'). ' ';
-                    echo '<input type="hidden" id="date_'.$field['pk_i_id'].'_to" name="meta['.$field['pk_i_id'].'][to]" value="'.$field['s_value']['to'].'"/>';
-                    echo '<input type="text" id="" class="date_'.$field['pk_i_id'].'_to" value=""/>';
-                    FieldForm::initDatePicker('date_'.$field['pk_i_id'].'_to', osc_date_format(), $field['s_value']['to'], 'to');
+                    echo '<input type="hidden" id="meta_'.$field['s_slug'].'_to" name="meta['.$field['pk_i_id'].'][to]" value="'.$field['s_value']['to'].'"/>';
+                    echo '<input type="text" id="" class="meta_'.$field['s_slug'].'_to" value=""/>';
+                    FieldForm::initDatePicker('meta_'.$field['s_slug'].'_to', osc_date_format(), $field['s_value']['to'], 'to');
 
                 } else {
                     if($search) {
