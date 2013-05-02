@@ -182,9 +182,9 @@
                                         's_slug'        => $slug,
                                         'b_required'    => Params::getParam("field_required") == "1" ? 1 : 0,
                                         'b_searchable'  => Params::getParam("field_searchable") == "1" ? 1 : 0,
-                                        's_options'     => $s_options,
+                                        's_options'     => $s_options),
                                     array('pk_i_id' => Params::getParam("id"))
-                                    ));
+                                    );
 
                             if(is_bool($res) && !$res) {
                                 $error = 1;
