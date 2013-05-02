@@ -177,11 +177,18 @@ FB;
                         echo '<textarea id="meta_' . $field['s_slug'] . '" name="meta['.$field['pk_i_id'].']" rows="10">' . ((isset($field) && isset($field["s_value"])) ? $field["s_value"] : "") . '</textarea>';
                     }
                 } else if($field['e_type']=="DROPDOWN") {
-                    echo '<label for="meta_'.$field['s_slug'].'">'.$field['s_name'].': </label>';
+                    if($search) {
+                        echo '<h6>'.$field['s_name'].'</h6>';
+                    } else {
+                        echo '<label for="meta_'.$field['s_slug'].'">'.$field['s_name'].': </label>';
+                    }
                     if(isset($field) && isset($field['s_options'])) {
                         $options = explode(",", $field['s_options']);
                         if(count($options)>0) {
                             echo '<select name="meta['.$field['pk_i_id'].']" id="meta_' . $field['s_slug'] . '">';
+                            if($search) {
+                                echo '<option value=""></option>';
+                            }
                             foreach($options as $option) {
                                 echo '<option value="'.osc_esc_html($option).'" '.($field['s_value']==$option?'selected="selected"':'').'>'.$option.'</option>';
                             }
@@ -218,8 +225,8 @@ FB;
                     }
                 } else if($field['e_type']=="CHECKBOX") {
                     if(isset($field) && isset($field['s_options'])) {
-                        echo '<input type="checkbox" name="meta['.$field['pk_i_id'].']" id="meta_' . $field['s_slug'] . '_'.$field['s_name'].'" value="1" '.((isset($field) && isset($field['s_value']) && $field['s_value']==1)?'checked="checked"':'').' />';
-                        echo '<label for="meta_'.$field['s_slug'] . '_'.$field['s_name'].'">'. $field['s_name'].' </label>';
+                        echo '<input type="checkbox" name="meta['.$field['pk_i_id'].']" id="meta_' . $field['s_slug'] .'" value="1" '.((isset($field) && isset($field['s_value']) && $field['s_value']==1)?'checked="checked"':'').' />';
+                        echo '<label for="meta_'.$field['s_slug'].'">'. $field['s_name'].' </label>';
                     }
                 } else if($field['e_type']=="DATE") {
                     if($search) {
@@ -228,9 +235,9 @@ FB;
                         echo '<label for="meta_'.$field['s_slug'].'">'.$field['s_name'].': </label>';
                     }
                     // timestamp/1000 (javascript timestamp)
-                    echo '<input type="hidden" id="date_'.$field['pk_i_id'].'" name="meta['.$field['pk_i_id'].']" value=""/>';
-                    echo '<input type="text" id="" class="date_'.$field['pk_i_id'].'" value=""/>';
-                    FieldForm::initDatePicker('date_'.$field['pk_i_id'], osc_date_format(), $field['s_value']);
+                    echo '<input type="hidden" id="meta_'.$field['s_slug'].'" name="meta['.$field['pk_i_id'].']" value=""/>';
+                    echo '<input type="text" id="" class="meta_'.$field['s_slug'].'" value=""/>';
+                    FieldForm::initDatePicker('meta_'.$field['s_slug'], osc_date_format(), $field['s_value']);
 
                 } else if($field['e_type']=="DATEINTERVAL") {
                     if($search) {
@@ -240,14 +247,14 @@ FB;
                     }
 
                     echo __('from'). ' ';
-                    echo '<input type="hidden" id="date_'.$field['pk_i_id'].'_from" name="meta['.$field['pk_i_id'].'][from]" value="'.$field['s_value']['from'].'"/>';
-                    echo '<input type="text" id="" class="date_'.$field['pk_i_id'].'_from" value=""/>';
-                    FieldForm::initDatePicker('date_'.$field['pk_i_id'].'_from', osc_date_format(), $field['s_value']['from'], 'from');
+                    echo '<input type="hidden" id="meta_'.$field['s_slug'].'_from" name="meta['.$field['pk_i_id'].'][from]" value="'.$field['s_value']['from'].'"/>';
+                    echo '<input type="text" id="" class="meta_'.$field['s_slug'].'_from" value=""/>';
+                    FieldForm::initDatePicker('meta_'.$field['s_slug'].'_from', osc_date_format(), $field['s_value']['from'], 'from');
 
                     echo ' ' . __('to'). ' ';
-                    echo '<input type="hidden" id="date_'.$field['pk_i_id'].'_to" name="meta['.$field['pk_i_id'].'][to]" value="'.$field['s_value']['to'].'"/>';
-                    echo '<input type="text" id="" class="date_'.$field['pk_i_id'].'_to" value=""/>';
-                    FieldForm::initDatePicker('date_'.$field['pk_i_id'].'_to', osc_date_format(), $field['s_value']['to'], 'to');
+                    echo '<input type="hidden" id="meta_'.$field['s_slug'].'_to" name="meta['.$field['pk_i_id'].'][to]" value="'.$field['s_value']['to'].'"/>';
+                    echo '<input type="text" id="" class="meta_'.$field['s_slug'].'_to" value=""/>';
+                    FieldForm::initDatePicker('meta_'.$field['s_slug'].'_to', osc_date_format(), $field['s_value']['to'], 'to');
 
                 } else {
                     if($search) {
