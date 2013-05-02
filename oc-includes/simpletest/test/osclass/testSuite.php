@@ -21,9 +21,9 @@ class AllAdminTests extends TestSuite {
         $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-moderator.php');
         $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-market.php');
         $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-csrf.php');
+        $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-customfields.php');    // NOT FINISHED LOT OF FAILS
 
         // TO DO
-        //$this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-customfields.php');    // NOT FINISHED LOT OF FAILS
         //$this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/test_admin_category.php');           // TODO
 
 

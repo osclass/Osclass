@@ -15,15 +15,15 @@ abstract class OCadminTest extends MyWebTestCase {
     function __construct($label = false) {
         parent::__construct($label);
     }
-    
+
     function setUp()
     {
         include dirname(__FILE__).'/config_test.php';
-        
+
         $this->_adminUser = "testadmin";
         $this->_email    = "testing+testadmin@osclass.org";
         $this->_password = $password_admin;
-        
+
         Admin::newInstance()->delete(array('s_email' => $this->_email));
         Admin::newInstance()->insert(array(
             's_name' => 'Test Admin',
@@ -52,15 +52,16 @@ abstract class OCadminTest extends MyWebTestCase {
     {
         if( is_null($mail) ) $mail = $this->_adminUser;
         if( is_null($pass) ) $pass = $this->_password;
-        
+
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->waitForPageToLoad(10000);
         $this->selenium->type('user', $mail);
         $this->selenium->type('password', $pass);
+        sleep(4);
         $this->selenium->click('submit');
         $this->selenium->waitForPageToLoad(1000);
     }
-    
+
     /**
      * Do logout at frontend, via logout link at header.
      */
@@ -71,7 +72,7 @@ abstract class OCadminTest extends MyWebTestCase {
         $this->selenium->click("//a[@id='osc_toolbar_logout']");
         $this->selenium->waitForPageToLoad(10000);
     }
-    
+
     function _lastItemId()
     {
         // get last id from t_item.
@@ -79,7 +80,7 @@ abstract class OCadminTest extends MyWebTestCase {
         $aItem  = $item->result();
         return $aItem[0]['pk_i_id'];
     }
-    
+
     function _lastItem()
     {
         // get last id from t_item.
