@@ -177,11 +177,18 @@ FB;
                         echo '<textarea id="meta_' . $field['s_slug'] . '" name="meta['.$field['pk_i_id'].']" rows="10">' . ((isset($field) && isset($field["s_value"])) ? $field["s_value"] : "") . '</textarea>';
                     }
                 } else if($field['e_type']=="DROPDOWN") {
-                    echo '<label for="meta_'.$field['s_slug'].'">'.$field['s_name'].': </label>';
+                    if($search) {
+                        echo '<h6>'.$field['s_name'].'</h6>';
+                    } else {
+                        echo '<label for="meta_'.$field['s_slug'].'">'.$field['s_name'].': </label>';
+                    }
                     if(isset($field) && isset($field['s_options'])) {
                         $options = explode(",", $field['s_options']);
                         if(count($options)>0) {
                             echo '<select name="meta['.$field['pk_i_id'].']" id="meta_' . $field['s_slug'] . '">';
+                            if($search) {
+                                echo '<option value=""></option>';
+                            }
                             foreach($options as $option) {
                                 echo '<option value="'.osc_esc_html($option).'" '.($field['s_value']==$option?'selected="selected"':'').'>'.$option.'</option>';
                             }
