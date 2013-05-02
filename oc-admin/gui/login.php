@@ -49,7 +49,7 @@
                         <input type="password" name="password" id="user_pass" class="input" value="<?php if( defined('DEMO') ) { echo 'admin'; }?>" size="20" tabindex="20" />
                     </label>
                 </p>
-                <?php oec_run_hook('login_admin_form'); ?>
+                <?php osc_run_hook('login_admin_form'); ?>
                 <?php $locales = osc_all_enabled_locales_for_admin(); ?>
                 <?php if(count($locales) > 1) { ?>
                     <p>
