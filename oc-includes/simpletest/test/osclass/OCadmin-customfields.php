@@ -5,184 +5,184 @@ define("MAX_FIELDS", 8);
 
 class OCadmin_customfields extends OCadminTest
 {
-//    function testCustomAdd()
-//    {
-//        $this->loginWith() ;
-//
-//        $this->selenium->open( osc_admin_base_url(true) );
-//        $this->selenium->click("xpath=//a[@id='items_cfields']");
-//        $this->selenium->waitForPageToLoad("10000");
-//
-//        // ------------    text    ------------
-//        $this->selenium->click("//a[@id='add-button']");
-//        sleep(4);
-//        $this->selenium->selectFrame("edit-custom-field-frame");
-//        $this->selenium->type("s_name", "extra_field_1");
-//        $this->selenium->select("field_type", "TEXT");
-//        $this->selenium->click("//div[@id='advanced_fields_iframe']");
-//        $this->selenium->type('field_slug','my_extra_field');
-//
-//        $this->selenium->click("xpath=//input[@id='cfield_save']");
-//        sleep(3);
-//        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Add field");
-//
-//        $this->assertTrue($this->selenium->isTextPresent("extra_field_1"), "Add field");
-//
-//        // ------------    textarea    ------------
-//        $this->selenium->click("//a[@id='add-button']");
-//        sleep(4);
-//        $this->selenium->selectFrame("edit-custom-field-frame");
-//        $this->selenium->type("s_name", "extra_field_2");
-//        $this->selenium->select("field_type", "TEXTAREA");
-//        $this->selenium->click("//div[@id='advanced_fields_iframe']");
-//        $this->selenium->type('field_slug','my_extra_field_2');
-//
-//        $this->selenium->click("xpath=//input[@id='cfield_save']");
-//        sleep(3);
-//        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Add field");
-//
-//        $this->assertTrue($this->selenium->isTextPresent("extra_field_2"), "Add field");
-//
-//        // ------------    DROPDOWN    ------------
-//        $this->selenium->click("//a[@id='add-button']");
-//        sleep(4);
-//        $this->selenium->selectFrame("edit-custom-field-frame");
-//        $this->selenium->type("s_name", "extra_field_3");
-//        $this->selenium->select("field_type", "DROPDOWN");
-//        $this->selenium->type("s_options", "");
-//        $this->selenium->click("xpath=//input[@id='cfield_save']");
-//        sleep(3);
-//        $this->assertTrue($this->selenium->isTextPresent("At least one option is required"), "Add field check s_option empty");
-//
-//        $this->selenium->type("s_options", "one,two,tree");
-//        $this->selenium->click("//div[@id='advanced_fields_iframe']");
-//        $this->selenium->type('field_slug','my_extra_field_3');
-//
-//        $this->selenium->click("xpath=//input[@id='cfield_save']");
-//        sleep(3);
-//        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Add field");
-//
-//        $this->assertTrue($this->selenium->isTextPresent("extra_field_3"), "Add field");
-//
-//        // ------------    RADIO    ------------
-//        $this->selenium->click("//a[@id='add-button']");
-//        sleep(4);
-//        $this->selenium->selectFrame("edit-custom-field-frame");
-//        $this->selenium->type("s_name", "extra_field_4");
-//        $this->selenium->select("field_type", "RADIO");
-//        $this->selenium->type("s_options", "");
-//        $this->selenium->click("xpath=//input[@id='cfield_save']");
-//        sleep(3);
-//        $this->assertTrue($this->selenium->isTextPresent("At least one option is required"), "Add field check s_option empty");
-//
-//        $this->selenium->type("s_options", "four, five, six");
-//        $this->selenium->click("//div[@id='advanced_fields_iframe']");
-//        $this->selenium->type('field_slug','my_extra_field_4');
-//
-//        $this->selenium->click("xpath=//input[@id='cfield_save']");
-//        sleep(3);
-//        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Add field");
-//
-//        $this->assertTrue($this->selenium->isTextPresent("extra_field_4"), "Add field");
-//
-//        // ------------    CHECKBOX    ------------
-//        $this->selenium->click("//a[@id='add-button']");
-//        sleep(4);
-//        $this->selenium->selectFrame("edit-custom-field-frame");
-//        $this->selenium->type("s_name", "extra_field_5");
-//        $this->selenium->select("field_type", "CHECKBOX");
-//        $this->selenium->type("s_options", "seven, eight, nine");
-//        $this->selenium->click("//div[@id='advanced_fields_iframe']");
-//        $this->selenium->type('field_slug','my_extra_field_5');
-//
-//        $this->selenium->click("xpath=//input[@id='cfield_save']");
-//        sleep(3);
-//        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Add field");
-//
-//        $this->assertTrue($this->selenium->isTextPresent("extra_field_5"), "Add field");
-//
-//        // ------------    URL    ------------
-//        $this->selenium->click("//a[@id='add-button']");
-//        sleep(4);
-//        $this->selenium->selectFrame("edit-custom-field-frame");
-//        $this->selenium->type("s_name", "extra_field_6");
-//        $this->selenium->select("field_type", "URL");
-//        $this->selenium->click("//input[@id='field_required']");
-//        $this->selenium->click("//div[@id='advanced_fields_iframe']");
-//        $this->selenium->type('field_slug','my_extra_field_6');
-//
-//        $this->selenium->click("xpath=//input[@id='cfield_save']");
-//        sleep(3);
-//        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Add field");
-//
-//        $this->assertTrue($this->selenium->isTextPresent("extra_field_6"), "Add field");
-//
-//        // ------------    DATE    ------------
-//        $this->selenium->click("//a[@id='add-button']");
-//        sleep(4);
-//        $this->selenium->selectFrame("edit-custom-field-frame");
-//        $this->selenium->type("s_name", "extra_field_7");
-//        $this->selenium->select("field_type", "DATE");
-//        $this->selenium->click("//div[@id='advanced_fields_iframe']");
-//        $this->selenium->type('field_slug','my_extra_field_7');
-//
-//        $this->selenium->click("xpath=//input[@id='cfield_save']");
-//        sleep(3);
-//        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Add field");
-//
-//        $this->assertTrue($this->selenium->isTextPresent("extra_field_7"), "Add field");
-//
-//        // ------------    DATEINTERVAL    ------------
-//        $this->selenium->click("//a[@id='add-button']");
-//        sleep(4);
-//        $this->selenium->selectFrame("edit-custom-field-frame");
-//        $this->selenium->type("s_name", "extra_field_8");
-//        $this->selenium->select("field_type", "DATE INTERVAL");
-//        $this->selenium->click("//div[@id='advanced_fields_iframe']");
-//        $this->selenium->type('field_slug','my_extra_field_8');
-//
-//        $this->selenium->click("xpath=//input[@id='cfield_save']");
-//        sleep(3);
-//        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Add field");
-//
-//        $this->assertTrue($this->selenium->isTextPresent("extra_field_8"), "Add field");
-//
-//    }
+    function testCustomAdd()
+    {
+        $this->loginWith() ;
+
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("xpath=//a[@id='items_cfields']");
+        $this->selenium->waitForPageToLoad("10000");
+
+        // ------------    text    ------------
+        $this->selenium->click("//a[@id='add-button']");
+        sleep(4);
+        $this->selenium->selectFrame("edit-custom-field-frame");
+        $this->selenium->type("s_name", "extra_field_1");
+        $this->selenium->select("field_type", "TEXT");
+        $this->selenium->click("//div[@id='advanced_fields_iframe']");
+        $this->selenium->type('field_slug','my_extra_field');
+
+        $this->selenium->click("xpath=//input[@id='cfield_save']");
+        sleep(3);
+        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Add field");
+
+        $this->assertTrue($this->selenium->isTextPresent("extra_field_1"), "Add field");
+
+        // ------------    textarea    ------------
+        $this->selenium->click("//a[@id='add-button']");
+        sleep(4);
+        $this->selenium->selectFrame("edit-custom-field-frame");
+        $this->selenium->type("s_name", "extra_field_2");
+        $this->selenium->select("field_type", "TEXTAREA");
+        $this->selenium->click("//div[@id='advanced_fields_iframe']");
+        $this->selenium->type('field_slug','my_extra_field_2');
+
+        $this->selenium->click("xpath=//input[@id='cfield_save']");
+        sleep(3);
+        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Add field");
+
+        $this->assertTrue($this->selenium->isTextPresent("extra_field_2"), "Add field");
+
+        // ------------    DROPDOWN    ------------
+        $this->selenium->click("//a[@id='add-button']");
+        sleep(4);
+        $this->selenium->selectFrame("edit-custom-field-frame");
+        $this->selenium->type("s_name", "extra_field_3");
+        $this->selenium->select("field_type", "DROPDOWN");
+        $this->selenium->type("s_options", "");
+        $this->selenium->click("xpath=//input[@id='cfield_save']");
+        sleep(3);
+        $this->assertTrue($this->selenium->isTextPresent("At least one option is required"), "Add field check s_option empty");
+
+        $this->selenium->type("s_options", "one,two,tree");
+        $this->selenium->click("//div[@id='advanced_fields_iframe']");
+        $this->selenium->type('field_slug','my_extra_field_3');
+
+        $this->selenium->click("xpath=//input[@id='cfield_save']");
+        sleep(3);
+        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Add field");
+
+        $this->assertTrue($this->selenium->isTextPresent("extra_field_3"), "Add field");
+
+        // ------------    RADIO    ------------
+        $this->selenium->click("//a[@id='add-button']");
+        sleep(4);
+        $this->selenium->selectFrame("edit-custom-field-frame");
+        $this->selenium->type("s_name", "extra_field_4");
+        $this->selenium->select("field_type", "RADIO");
+        $this->selenium->type("s_options", "");
+        $this->selenium->click("xpath=//input[@id='cfield_save']");
+        sleep(3);
+        $this->assertTrue($this->selenium->isTextPresent("At least one option is required"), "Add field check s_option empty");
+
+        $this->selenium->type("s_options", "four, five, six");
+        $this->selenium->click("//div[@id='advanced_fields_iframe']");
+        $this->selenium->type('field_slug','my_extra_field_4');
+
+        $this->selenium->click("xpath=//input[@id='cfield_save']");
+        sleep(3);
+        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Add field");
+
+        $this->assertTrue($this->selenium->isTextPresent("extra_field_4"), "Add field");
+
+        // ------------    CHECKBOX    ------------
+        $this->selenium->click("//a[@id='add-button']");
+        sleep(4);
+        $this->selenium->selectFrame("edit-custom-field-frame");
+        $this->selenium->type("s_name", "extra_field_5");
+        $this->selenium->select("field_type", "CHECKBOX");
+        $this->selenium->type("s_options", "seven, eight, nine");
+        $this->selenium->click("//div[@id='advanced_fields_iframe']");
+        $this->selenium->type('field_slug','my_extra_field_5');
+
+        $this->selenium->click("xpath=//input[@id='cfield_save']");
+        sleep(3);
+        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Add field");
+
+        $this->assertTrue($this->selenium->isTextPresent("extra_field_5"), "Add field");
+
+        // ------------    URL    ------------
+        $this->selenium->click("//a[@id='add-button']");
+        sleep(4);
+        $this->selenium->selectFrame("edit-custom-field-frame");
+        $this->selenium->type("s_name", "extra_field_6");
+        $this->selenium->select("field_type", "URL");
+        $this->selenium->click("//input[@id='field_required']");
+        $this->selenium->click("//div[@id='advanced_fields_iframe']");
+        $this->selenium->type('field_slug','my_extra_field_6');
+
+        $this->selenium->click("xpath=//input[@id='cfield_save']");
+        sleep(3);
+        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Add field");
+
+        $this->assertTrue($this->selenium->isTextPresent("extra_field_6"), "Add field");
+
+        // ------------    DATE    ------------
+        $this->selenium->click("//a[@id='add-button']");
+        sleep(4);
+        $this->selenium->selectFrame("edit-custom-field-frame");
+        $this->selenium->type("s_name", "extra_field_7");
+        $this->selenium->select("field_type", "DATE");
+        $this->selenium->click("//div[@id='advanced_fields_iframe']");
+        $this->selenium->type('field_slug','my_extra_field_7');
+
+        $this->selenium->click("xpath=//input[@id='cfield_save']");
+        sleep(3);
+        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Add field");
+
+        $this->assertTrue($this->selenium->isTextPresent("extra_field_7"), "Add field");
+
+        // ------------    DATEINTERVAL    ------------
+        $this->selenium->click("//a[@id='add-button']");
+        sleep(4);
+        $this->selenium->selectFrame("edit-custom-field-frame");
+        $this->selenium->type("s_name", "extra_field_8");
+        $this->selenium->select("field_type", "DATE INTERVAL");
+        $this->selenium->click("//div[@id='advanced_fields_iframe']");
+        $this->selenium->type('field_slug','my_extra_field_8');
+
+        $this->selenium->click("xpath=//input[@id='cfield_save']");
+        sleep(3);
+        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Add field");
+
+        $this->assertTrue($this->selenium->isTextPresent("extra_field_8"), "Add field");
+
+    }
 
     /**
      * edit custom fields, update category -> check-all
      */
-//    function testCustomEdit()
-//    {
-//        $this->loginWith() ;
-//
-//        $this->selenium->open( osc_admin_base_url(true) );
-//        $this->selenium->click("xpath=//a[@id='items_cfields']");
-//        $this->selenium->waitForPageToLoad("10000");
-//
-//
-//        for($k=MAX_FIELDS;$k>0;$k--) {
-//            $this->selenium->click("xpath=(//div[@class='cfield-div']/div[@class='actions-edit-cfield']/a[contains(.,'Edit')])[".$k."]");
-//            sleep(4);
-//            // check all
-//            $this->selenium->click("link=Check all");
-//            sleep(4);
-//            $this->assertTrue($this->selenium->isChecked("categories[]"), "Check all categories" );
-//            // make all custom fields searchables
-//            $this->selenium->click("//div[@id='advanced_fields_iframe']");
-//            $this->selenium->click("//input[@id='field_searchable']");
-//            $this->selenium->click("//input[@type='submit']");
-//            sleep(4);
-//            $this->assertTrue($this->selenium->isTextPresent("Saved"), "Edit field");
-//        }
-//    }
+    function testCustomEdit()
+    {
+        $this->loginWith() ;
 
-//    function testCustomOnWebsite()
-//    {
-//        $this->loginWith() ;
-//        $this->customOnFrontEnd();
-//        $this->customOnAdminPanel();
-//    }
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("xpath=//a[@id='items_cfields']");
+        $this->selenium->waitForPageToLoad("10000");
+
+
+        for($k=MAX_FIELDS;$k>0;$k--) {
+            $this->selenium->click("xpath=(//div[@class='cfield-div']/div[@class='actions-edit-cfield']/a[contains(.,'Edit')])[".$k."]");
+            sleep(4);
+            // check all
+            $this->selenium->click("link=Check all");
+            sleep(4);
+            $this->assertTrue($this->selenium->isChecked("categories[]"), "Check all categories" );
+            // make all custom fields searchables
+            $this->selenium->click("//div[@id='advanced_fields_iframe']");
+            $this->selenium->click("//input[@id='field_searchable']");
+            $this->selenium->click("//input[@type='submit']");
+            sleep(4);
+            $this->assertTrue($this->selenium->isTextPresent("Saved"), "Edit field");
+        }
+    }
+
+    function testCustomOnWebsite()
+    {
+        $this->loginWith() ;
+        $this->customOnFrontEnd();
+        $this->customOnAdminPanel();
+    }
 
     function testCustomSearch()
     {
@@ -223,7 +223,7 @@ class OCadmin_customfields extends OCadminTest
         $this->selenium->click("xpath=//span/button[text()='Apply']");
         $this->selenium->waitForPageToLoad("30000");
 
-        $this->selenium->select("id=my_extra_field_4", "four");
+        $this->selenium->select("id=meta_my_extra_field_4", "four");
         $this->selenium->click("xpath=//span/button[text()='Apply']");
         $this->selenium->waitForPageToLoad("30000");
         $count = $this->selenium->getXpathCount('//table/tbody/tr/td[2]');
@@ -233,44 +233,62 @@ class OCadmin_customfields extends OCadminTest
         $this->selenium->click("xpath=//span/button[text()='Apply']");
         $this->selenium->waitForPageToLoad("30000");
 
-        $this->selenium->click("id=my_extra_field_5");
+        $this->selenium->click("id=meta_my_extra_field_5");
         $this->selenium->click("xpath=//span/button[text()='Apply']");
         $this->selenium->waitForPageToLoad("30000");
         $count = $this->selenium->getXpathCount('//table/tbody/tr/td[2]');
-        $this->assertTrue($count == 1 , "Search by custom field - RADIO BUTTON.");
+        $this->assertTrue($count == 1 , "Search by custom field - CHECKBOX BUTTON.");
 //        DATE
-
+        $this->selenium->open( osc_search_url() );
+        $this->selenium->click("xpath=//span/button[text()='Apply']");
+        $this->selenium->waitForPageToLoad("30000");
+        $d1  = '1367359200';
+        $this->selenium->runScript("javascript{ this.browserbot.getCurrentWindow().document.getElementById('meta_my_extra_field_7').value = '".$d1."'; }");
+        $this->selenium->click("xpath=//span/button[text()='Apply']");
+        $this->selenium->waitForPageToLoad("30000");
+        $count = $this->selenium->getXpathCount('//table/tbody/tr/td[2]');
+        $this->assertTrue($count == 1 , "Search by custom field - DATE.");
 //        DATEINTERVAL
-
+        $this->selenium->open( osc_search_url() );
+        $this->selenium->click("xpath=//span/button[text()='Apply']");
+        $this->selenium->waitForPageToLoad("30000");
+        $d1  = '1367704800';  // May 5, 2013
+        $d2  = '1369173599';  // May 21, 2013
+        $this->selenium->runScript("javascript{ this.browserbot.getCurrentWindow().document.getElementById('meta_my_extra_field_8_from').value = '".$d1."'; }");
+        $this->selenium->runScript("javascript{ this.browserbot.getCurrentWindow().document.getElementById('meta_my_extra_field_8_to').value = '".$d2."'; }");
+        $this->selenium->click("xpath=//span/button[text()='Apply']");
+        $this->selenium->waitForPageToLoad("30000");
+        $count = $this->selenium->getXpathCount('//table/tbody/tr/td[2]');
+        $this->assertTrue($count == 1 , "Search by custom field - DATE INTERVAL.");
     }
 
-//    function testSearchCustomFields()
-//    {
-//        $this->loginWith();
-//        // search through custom fields
-//        $this->deleteAllItems();
-//    }
+    function testDeleteAllItems()
+    {
+        $this->loginWith();
+        // search through custom fields
+        $this->deleteAllItems();
+    }
 
     /**
      * delete custom fields
      */
-//    function testCustomDelete()
-//    {
-//        $this->loginWith() ;
-//
-//        $this->selenium->open( osc_admin_base_url(true) );
-//        $this->selenium->click("xpath=//a[@id='items_cfields']");
-//        $this->selenium->waitForPageToLoad("10000");
-//
-//        for($k=MAX_FIELDS;$k>0;$k--) {
-//            $this->selenium->click("xpath=(//div[@class='cfield-div']/div[@class='actions-edit-cfield']/a[contains(.,'Delete')])[1]");
-//            sleep(2);
-//            $this->selenium->click("//a[@id='field-delete-submit']");
-//            sleep(3);
-//            $this->assertTrue($this->selenium->isTextPresent("The custom field has been deleted"), "Delete field");
-//            sleep(2);
-//        }
-//    }
+    function testCustomDelete()
+    {
+        $this->loginWith() ;
+
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("xpath=//a[@id='items_cfields']");
+        $this->selenium->waitForPageToLoad("10000");
+
+        for($k=MAX_FIELDS;$k>0;$k--) {
+            $this->selenium->click("xpath=(//div[@class='cfield-div']/div[@class='actions-edit-cfield']/a[contains(.,'Delete')])[1]");
+            sleep(2);
+            $this->selenium->click("//a[@id='field-delete-submit']");
+            sleep(3);
+            $this->assertTrue($this->selenium->isTextPresent("The custom field has been deleted"), "Delete field");
+            sleep(2);
+        }
+    }
 
     private function customOnFrontEnd()
     {
