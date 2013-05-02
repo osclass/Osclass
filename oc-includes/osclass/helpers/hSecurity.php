@@ -76,13 +76,50 @@
      * @since 3.1
      */
     function osc_csrf_check($drop = true) {
+        $error      = false;
+        $str_error  = '';
         if(Params::getParam('CSRFName')=='' || Params::getParam('CSRFToken')=='') {
-            exit(__("Probable invalid request."));
+            $str_error = _m('Probable invalid request.') ;
+            $error = true;
+        } else {
+            $name   = Params::getParam('CSRFName');
+            $token  = Params::getParam('CSRFToken');
+            if (!osc_csrfguard_validate_token($name, $token, $drop)) {
+                $str_error = _m('Invalid CSRF token.');
+                $error = true;
+            }
         }
-        $name = Params::getParam('CSRFName');
-        $token = Params::getParam('CSRFToken');
-        if (!osc_csrfguard_validate_token($name, $token, $drop)) {
-            exit(__("Invalid CSRF token."));
+
+        if( defined('IS_AJAX') ) {
+            if($error && IS_AJAX === true ) {
+                echo json_encode(array(
+                    'error' => 1,
+                    'msg'   => $str_error
+                ));
+                exit;
+            }
+        }
+
+        // ¿ check if is ajax request ?
+        if($error) {
+            if(OC_ADMIN) {
+                osc_add_flash_error_message($str_error, 'admin');
+            } else {
+                osc_add_flash_error_message($str_error);
+            }
+
+            $url = osc_get_http_referer();
+            // be sure that drop session referer
+            Session::newInstance()->_dropReferer();
+            if($url!='') {
+                osc_redirect_to($url);
+            }
+
+            if(OC_ADMIN) {
+                osc_redirect_to( osc_admin_base_url(true) );
+            } else {
+                osc_redirect_to( osc_base_url(true) );
+            }
         }
     }
 
