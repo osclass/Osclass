@@ -177,11 +177,36 @@ class OCadmin_customfields extends OCadminTest
 //        }
 //    }
 
-    function testCustomOnWebsite()
+//    function testCustomOnWebsite()
+//    {
+//        $this->loginWith() ;
+//        $this->customOnFrontEnd();
+//        $this->customOnAdminPanel();
+//    }
+
+    function testCustomSearch()
     {
         $this->loginWith() ;
-        $this->customOnFrontEnd();
-        $this->customOnAdminPanel();
+        // search via custom fields
+        $this->selenium->open( osc_search_url() );
+        $this->selenium->click("xpath=//span/button[text()='Apply']");
+        $this->selenium->waitForPageToLoad("30000");
+//        TEXT
+//        TEXTAREA
+//        URL
+        $this->selenium->type("id=meta_my_extra_field", "ocadmincustom2");
+        $this->selenium->click("xpath=//span/button[text()='Apply']");
+        $this->selenium->waitForPageToLoad("30000");
+        $count = $this->selenium->getXpathCount('//table/tbody/tr/td[2]');
+        $this->assertTrue($count == 1 , "Search by custom field - TEXT.");
+
+//        RADIO BUTTON
+//        CHECKBOX
+
+//        DATE
+//        DATEINTERVAL
+
+
     }
 
 //    function testSearchCustomFields()
@@ -333,13 +358,15 @@ class OCadmin_customfields extends OCadminTest
 
         // radio button value = four
         $this->selenium->click("id=meta_my_extra_field_4_0");
+        // check checkbox
+        $this->selenium->click("id=meta_my_extra_field_5");
 
 
         $this->selenium->click("//input[@value='Add listing']");
         $this->selenium->waitForPageToLoad("10000");
         $this->assertTrue($this->selenium->isTextPresent("extra_field_6 field is required.","Field required") );
 
-        $this->selenium->type("id=meta_my_extra_field_6"      , "custom6");
+        $this->selenium->type("id=meta_my_extra_field_6"      , "ocadmincustom6");
 
         $this->selenium->click("//input[@value='Add listing']");
         $this->selenium->waitForPageToLoad("10000");
