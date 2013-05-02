@@ -1,7 +1,7 @@
 <?php
 require_once dirname(__FILE__).'/../../../../oc-load.php';
 
-define("MAX_FIELDS", 6);
+define("MAX_FIELDS", 8);
 
 class OCadmin_customfields extends OCadminTest
 {
@@ -117,6 +117,36 @@ class OCadmin_customfields extends OCadminTest
 
         $this->assertTrue($this->selenium->isTextPresent("extra_field_6"), "Add field");
 
+        // ------------    DATE    ------------
+        $this->selenium->click("//a[@id='add-button']");
+        sleep(4);
+        $this->selenium->selectFrame("edit-custom-field-frame");
+        $this->selenium->type("s_name", "extra_field_7");
+        $this->selenium->select("field_type", "DATE");
+        $this->selenium->click("//div[@id='advanced_fields_iframe']");
+        $this->selenium->type('field_slug','my_extra_field_7');
+
+        $this->selenium->click("xpath=//input[@id='cfield_save']");
+        sleep(3);
+        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Add field");
+
+        $this->assertTrue($this->selenium->isTextPresent("extra_field_7"), "Add field");
+
+        // ------------    DATEINTERVAL    ------------
+        $this->selenium->click("//a[@id='add-button']");
+        sleep(4);
+        $this->selenium->selectFrame("edit-custom-field-frame");
+        $this->selenium->type("s_name", "extra_field_8");
+        $this->selenium->select("field_type", "DATEINTERVAL");
+        $this->selenium->click("//div[@id='advanced_fields_iframe']");
+        $this->selenium->type('field_slug','my_extra_field_8');
+
+        $this->selenium->click("xpath=//input[@id='cfield_save']");
+        sleep(3);
+        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Add field");
+
+        $this->assertTrue($this->selenium->isTextPresent("extra_field_8"), "Add field");
+
     }
 
     /**
@@ -142,44 +172,42 @@ class OCadmin_customfields extends OCadminTest
             sleep(4);
             $this->assertTrue($this->selenium->isTextPresent("Saved"), "Edit field");
         }
-
-
     }
-
-
 
     function testCustomOnWebsite()
     {
         $this->loginWith() ;
         $this->customOnFrontEnd();
         $this->customOnAdminPanel();
-        $this->deleteAllItems();
-
     }
+
+//    function testSearchCustomFields()
+//    {
+//        $this->loginWith();
+//        // search through custom fields
+//        $this->deleteAllItems();
+//    }
 
     /**
      * delete custom fields
      */
-    function testCustomDelete()
-    {
-        $this->loginWith() ;
-
-        $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("xpath=//a[@id='items_cfields']");
-        $this->selenium->waitForPageToLoad("10000");
-
-        for($k=MAX_FIELDS;$k>0;$k--) {
-            $this->selenium->click("xpath=(//div[@class='cfield-div']/div[@class='actions-edit-cfield']/a[contains(.,'Delete')])[1]");
-            sleep(2);
-            $this->selenium->click("//a[@id='field-delete-submit']");
-            sleep(3);
-            $this->assertTrue($this->selenium->isTextPresent("The custom field has been deleted"), "Delete field");
-            sleep(2);
-        }
-
-    }
-
-
+//    function testCustomDelete()
+//    {
+//        $this->loginWith() ;
+//
+//        $this->selenium->open( osc_admin_base_url(true) );
+//        $this->selenium->click("xpath=//a[@id='items_cfields']");
+//        $this->selenium->waitForPageToLoad("10000");
+//
+//        for($k=MAX_FIELDS;$k>0;$k--) {
+//            $this->selenium->click("xpath=(//div[@class='cfield-div']/div[@class='actions-edit-cfield']/a[contains(.,'Delete')])[1]");
+//            sleep(2);
+//            $this->selenium->click("//a[@id='field-delete-submit']");
+//            sleep(3);
+//            $this->assertTrue($this->selenium->isTextPresent("The custom field has been deleted"), "Delete field");
+//            sleep(2);
+//        }
+//    }
 
     private function customOnFrontEnd()
     {
@@ -206,9 +234,19 @@ class OCadmin_customfields extends OCadminTest
         $this->selenium->type('id=contactName' , 'foobar');
         $this->selenium->type('id=contactEmail', 'foobar@mail.com');
 
-        $this->assertTrue($this->selenium->isTextPresent("extra_field_1"), "Custom fields at frontend");
+        $this->assertTrue($this->selenium->isTextPresent("extra_field_1")    , "Custom fields at frontend");
         $this->assertTrue($this->selenium->isTextPresent("extra_field_2")    , "Custom fields at frontend");
         $this->assertTrue($this->selenium->isTextPresent("extra_field_3")    , "Custom fields at frontend");
+
+        /**
+         * DATE / DATEINTERVAL Notes:
+         *
+         */
+
+        // DATE
+        $this->selenium->runScript("javascript{ this.browserbot.getCurrentWindow().document.getElementsByName('CSRFName')[0].value = ''; }");
+        // DATE INTERVAL
+        $this->selenium->runScript("javascript{ this.browserbot.getCurrentWindow().document.getElementsByName('CSRFName')[0].value = ''; }");
 
         $this->selenium->type("id=meta_my_extra_field"  , "custom2");
         $this->selenium->type("id=meta_my_extra_field_2"  , "custom3");
