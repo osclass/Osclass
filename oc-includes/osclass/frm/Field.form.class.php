@@ -218,8 +218,8 @@ FB;
                     }
                 } else if($field['e_type']=="CHECKBOX") {
                     if(isset($field) && isset($field['s_options'])) {
-                        echo '<input type="checkbox" name="meta['.$field['pk_i_id'].']" id="meta_' . $field['s_slug'] . '_'.$field['s_name'].'" value="1" '.((isset($field) && isset($field['s_value']) && $field['s_value']==1)?'checked="checked"':'').' />';
-                        echo '<label for="meta_'.$field['s_slug'] . '_'.$field['s_name'].'">'. $field['s_name'].' </label>';
+                        echo '<input type="checkbox" name="meta['.$field['pk_i_id'].']" id="meta_' . $field['s_slug'] .'" value="1" '.((isset($field) && isset($field['s_value']) && $field['s_value']==1)?'checked="checked"':'').' />';
+                        echo '<label for="meta_'.$field['s_slug'].'">'. $field['s_name'].' </label>';
                     }
                 } else if($field['e_type']=="DATE") {
                     if($search) {
