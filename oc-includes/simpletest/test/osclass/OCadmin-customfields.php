@@ -186,26 +186,61 @@ class OCadmin_customfields extends OCadminTest
 
     function testCustomSearch()
     {
+//        search via custom fields
         $this->loginWith() ;
-        // search via custom fields
+//        TEXT  --
         $this->selenium->open( osc_search_url() );
         $this->selenium->click("xpath=//span/button[text()='Apply']");
         $this->selenium->waitForPageToLoad("30000");
-//        TEXT
-//        TEXTAREA
-//        URL
+
         $this->selenium->type("id=meta_my_extra_field", "ocadmincustom2");
         $this->selenium->click("xpath=//span/button[text()='Apply']");
         $this->selenium->waitForPageToLoad("30000");
         $count = $this->selenium->getXpathCount('//table/tbody/tr/td[2]');
         $this->assertTrue($count == 1 , "Search by custom field - TEXT.");
+//        TEXTAREA --
+        $this->selenium->open( osc_search_url() );
+        $this->selenium->click("xpath=//span/button[text()='Apply']");
+        $this->selenium->waitForPageToLoad("30000");
 
-//        RADIO BUTTON
+        $this->selenium->type("id=meta_my_extra_field_2", "ocadmincustom3");
+        $this->selenium->click("xpath=//span/button[text()='Apply']");
+        $this->selenium->waitForPageToLoad("30000");
+        $count = $this->selenium->getXpathCount('//table/tbody/tr/td[2]');
+        $this->assertTrue($count == 1 , "Search by custom field - TEXTAREA.");
+//        URL --
+        $this->selenium->open( osc_search_url() );
+        $this->selenium->click("xpath=//span/button[text()='Apply']");
+        $this->selenium->waitForPageToLoad("30000");
+
+        $this->selenium->type("id=meta_my_extra_field_6", "ocadmincustom6");
+        $this->selenium->click("xpath=//span/button[text()='Apply']");
+        $this->selenium->waitForPageToLoad("30000");
+        $count = $this->selenium->getXpathCount('//table/tbody/tr/td[2]');
+        $this->assertTrue($count == 1 , "Search by custom field - URL.");
+//        RADIO BUTTON --
+        $this->selenium->open( osc_search_url() );
+        $this->selenium->click("xpath=//span/button[text()='Apply']");
+        $this->selenium->waitForPageToLoad("30000");
+
+        $this->selenium->select("id=my_extra_field_4", "four");
+        $this->selenium->click("xpath=//span/button[text()='Apply']");
+        $this->selenium->waitForPageToLoad("30000");
+        $count = $this->selenium->getXpathCount('//table/tbody/tr/td[2]');
+        $this->assertTrue($count == 1 , "Search by custom field - RADIO BUTTON.");
 //        CHECKBOX
+        $this->selenium->open( osc_search_url() );
+        $this->selenium->click("xpath=//span/button[text()='Apply']");
+        $this->selenium->waitForPageToLoad("30000");
 
+        $this->selenium->click("id=my_extra_field_5");
+        $this->selenium->click("xpath=//span/button[text()='Apply']");
+        $this->selenium->waitForPageToLoad("30000");
+        $count = $this->selenium->getXpathCount('//table/tbody/tr/td[2]');
+        $this->assertTrue($count == 1 , "Search by custom field - RADIO BUTTON.");
 //        DATE
-//        DATEINTERVAL
 
+//        DATEINTERVAL
 
     }
 
