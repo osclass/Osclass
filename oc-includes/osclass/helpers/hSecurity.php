@@ -130,13 +130,13 @@
      * @since 3.1
      * @return int 0: not banned, 1: email is banned, 2: IP is banned
      */
-    function osc_is_banned($email = null, $ip = null) {
+    function osc_is_banned($email = '', $ip = null) {
         if($ip==null) {
             $ip = $_SERVER['REMOTE_ADDR'];
         }
         $rules = BanRule::newInstance()->listAll();
         if(!osc_is_ip_banned($ip, $rules)) {
-            if($email!=null) {
+            if($email!='') {
                 return osc_is_email_banned($email, $rules)?1:0; // 1:Email is banned, 0:not banned
             }
             return 0;
