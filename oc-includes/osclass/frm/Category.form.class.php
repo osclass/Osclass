@@ -27,6 +27,11 @@
             parent::generic_input_hidden("id", $category["pk_i_id"]);
         }
 
+        static public function parent_cat_input_hidden($category)
+        {
+            parent::generic_input_hidden("pCategory", 1);
+        }
+
         static public function category_select($categories, $category, $default_item = null, $name = "sCategory")
         {
             echo '<select name="' . $name . '" id="' . $name . '">';
@@ -97,6 +102,11 @@
             if($category['fk_i_parent_id']==NULL) {
                 parent::generic_input_checkbox("apply_changes_to_subcategories", "1", true);
             }
+        }
+
+        static public function price_enabled_for_category($category = null)
+        {
+			parent::generic_input_checkbox("b_price_enabled", "1", (isset($category) && isset($category['b_price_enabled']) && $category["b_price_enabled"] == 1) ? true : false);
         }
 
         static public function multilanguage_name_description($locales, $category = null)

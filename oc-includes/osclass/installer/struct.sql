@@ -170,6 +170,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_category (
     i_expiration_days INT(3) UNSIGNED NOT NULL DEFAULT 0,
     i_position INT(2) UNSIGNED NOT NULL DEFAULT 0,
     b_enabled TINYINT(1) NOT NULL DEFAULT 1,
+    b_price_enabled TINYINT(1) NOT NULL DEFAULT 1,
     s_icon VARCHAR(250) NULL,
 
         PRIMARY KEY (pk_i_id),

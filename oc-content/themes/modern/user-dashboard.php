@@ -47,7 +47,7 @@
                             </div>
                             <div class="userItemData" >
                             <?php _e('Publication date', 'modern'); ?>: <?php echo osc_format_date(osc_item_pub_date()); ?><br />
-                                    <?php if( osc_price_enabled_at_items() ) { _e('Price', 'modern'); ?>: <?php echo osc_format_price(osc_item_price()); } ?>
+                                    <?php if( osc_price_enabled_at_items() && osc_item_category_price_enabled() ) { _e('Price', 'modern'); ?>: <?php echo osc_format_price(osc_item_price()); } ?>
                                     <p class="options">
                                         <strong><a href="<?php echo osc_item_url(); ?>"><?php _e('View listing', 'modern'); ?></a></strong>
                                         <span>|</span>
