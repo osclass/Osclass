@@ -229,13 +229,13 @@
      * @param string $locale
      * @return string
      */
-    function osc_item_category_price_enabled($catId = null) {
+    function osc_item_category_price_enabled() {
 		if($catId == null) {
 			$category = Category::newInstance()->findByPrimaryKey( osc_item_category_id() ) ;
 		} else {
 			$category = Category::newInstance()->findByPrimaryKey($catId) ;
 		}
-        return $category['b_price_enabled'];
+        return $category['b_price_enabled']==1?true:false;
     }
 
     /**
