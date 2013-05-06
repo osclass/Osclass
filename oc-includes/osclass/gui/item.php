@@ -23,7 +23,6 @@
     osc_enqueue_style('fancybox', osc_assets_url('js/fancybox/jquery.fancybox.css'));
     osc_enqueue_script('jquery-validate');
 
-    osc_enqueue_style('fancybox', osc_current_web_theme_js_url('fancybox/jquery.fancybox.css'));
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()); ?>">
@@ -54,7 +53,7 @@
         <div class="content item">
             <div id="item_head">
                 <div class="inner">
-                    <h1><?php if( osc_price_enabled_at_items() ) { ?><span class="price"><?php echo osc_item_formated_price(); ?></span> <?php } ?><strong><?php echo osc_item_title() . ' ' . osc_item_city(); ?></strong></h1>
+                    <h1><?php if( osc_price_enabled_at_items() && osc_item_category_price_enabled() ) { ?><span class="price"><?php echo osc_item_formated_price(); ?></span> <?php } ?><strong><?php echo osc_item_title() . ' ' . osc_item_city(); ?></strong></h1>
                     <?php if(osc_is_web_user_logged_in() && osc_logged_user_id()==osc_item_user_id()) { ?>
                         <p id="edit_item_view">
                             <strong>

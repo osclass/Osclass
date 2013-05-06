@@ -737,7 +737,7 @@
         }
 
         /**
-         * Update categories' order
+         * Update categories' expiration
          *
          * @access public
          * @since unknown
@@ -762,6 +762,20 @@
             }
             return $this->dao->update($this->tableName, array('i_expiration_days' => $expiration), array('pk_i_id'  => $pk_i_id));
 
+        }
+
+        /**
+         * Update categories' price enabled
+         *
+         * @access public
+         * @since unknown
+         * @param integer $pk_i_id
+         * @param integer $pEnabled
+         * @return bool true on pass, false on fail
+         */
+        public function updatePriceEnabled($pk_i_id, $pEnabled)
+        {
+            return $this->dao->update($this->tableName, array('b_price_enabled' => $pEnabled), array('pk_i_id'  => $pk_i_id));
         }
 
         /**

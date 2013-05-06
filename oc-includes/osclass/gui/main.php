@@ -18,6 +18,20 @@
      *      You should have received a copy of the GNU Affero General Public
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
+
+function drawSubcategory($category) {
+    if ( osc_count_subcategories2() > 0 ) {
+        osc_category_move_to_children();
+        ?>
+        <ul>
+            <?php while ( osc_has_categories() ) { ?>
+                <li><a class="category cat_<?php echo osc_category_id(); ?>" href="<?php echo osc_search_category_url(); ?>"><?php echo osc_category_name(); ?></a> <span>(<?php echo osc_category_total_items(); ?>)</span><?php drawSubcategory(osc_category()); ?></li>
+            <?php } ?>
+        </ul>
+    <?php
+        osc_category_move_to_parent();
+    }
+}
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()); ?>">
@@ -52,13 +66,14 @@
                     <?php while ( osc_has_categories() ) { ?>
                         <div class="category">
                             <h1><strong><a class="category cat_<?php echo osc_category_id(); ?>" href="<?php echo osc_search_category_url(); ?>"><?php echo osc_category_name(); ?></a> <span>(<?php echo osc_category_total_items(); ?>)</span></strong></h1>
-                            <?php if ( osc_count_subcategories() > 0 ) { ?>
+                            <?php drawSubcategory(osc_category()); ?>
+                            <?php /* if ( osc_count_subcategories() > 0 ) { ?>
                                 <ul>
                                     <?php while ( osc_has_subcategories() ) { ?>
                                         <li><a class="category cat_<?php echo osc_category_id(); ?>" href="<?php echo osc_search_category_url(); ?>"><?php echo osc_category_name(); ?></a> <span>(<?php echo osc_category_total_items(); ?>)</span></li>
                                     <?php } ?>
                                 </ul>
-                            <?php } ?>
+                            <?php }*/ ?>
                         </div>
                         <?php
                             if (($col==1 && $i==$col1_max_cat) || ($col==2 && $i==$col2_max_cat) || ($col==3 && $i==$col3_max_cat)) {
@@ -98,9 +113,9 @@
                                         <?php } ?>
                                          <td class="text">
                                              <h3><a href="<?php echo osc_item_url(); ?>"><?php echo osc_item_title(); ?></a></h3>
-                                             <p><strong><?php if( osc_price_enabled_at_items() ) { echo osc_item_formated_price(); ?> - <?php } echo osc_item_city(); ?> (<?php echo osc_item_region();?>) - <?php echo osc_format_date(osc_item_pub_date()); ?></strong></p>
+                                             <p><strong><?php if( osc_price_enabled_at_items() && osc_item_category_price_enabled() ) { echo osc_item_formated_price(); ?> - <?php } echo osc_item_city(); ?> (<?php echo osc_item_region();?>) - <?php echo osc_format_date(osc_item_pub_date()); ?></strong></p>
                                              <p><?php echo osc_highlight( strip_tags( osc_item_description() ) ); ?></p>
-                                         </td>                                       
+                                         </td>
                                      </tr>
                                     <?php $class = ($class == 'even') ? 'odd' : 'even'; ?>
                                 <?php } ?>

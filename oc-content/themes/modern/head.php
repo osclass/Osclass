@@ -45,7 +45,6 @@
 <?php
 osc_enqueue_style('style', osc_current_web_theme_url('style.css'));
 osc_enqueue_style('tabs', osc_current_web_theme_url('tabs.css'));
-osc_enqueue_style('jquery-ui-datepicker', osc_assets_url('css/jquery-ui/jquery-ui.css'));
 
 osc_register_script('jquery-uniform', osc_current_web_theme_js_url('jquery.uniform.js'), 'jquery');
 osc_register_script('global', osc_current_web_theme_js_url('global.js'));
@@ -55,13 +54,6 @@ osc_enqueue_script('jquery-ui');
 osc_enqueue_script('jquery-uniform');
 osc_enqueue_script('tabber');
 osc_enqueue_script('global');
-
-osc_enqueue_script('php-date');
-
 ?>
 
 <?php osc_run_hook('header'); ?>
-
-<?php
-FieldForm::i18n_datePicker();
-?>
