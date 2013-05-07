@@ -418,7 +418,7 @@ CREATE TABLE %st_item_description_tmp (
 
     }
 
-    osc_changeVersionTo(311);
+    osc_changeVersionTo(312);
 
     echo '<div class="well ui-rounded-corners separate-top-medium">';
     echo '<p>'.__('Osclass &raquo; Updated correctly').'</p>';

@@ -134,8 +134,9 @@
                             }
 
                             if( $b_city ) {
+                                //print_r("~~~~~~~~~~~~~~~~~~~".$city."~~~~~~~~~~~~~~~~~~~~");
                                 $aCity = City::newInstance()->findByName($city);
-                                if( count($aCity) != 0 ) {
+                                if( count($aCity) == 0 ) {
                                     $params['sCity'] = $city;
                                     $l = array(
                                         'url'   => osc_search_url($params),

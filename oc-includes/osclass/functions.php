@@ -275,7 +275,9 @@ function osc_search_footer_links() {
     $regionID = '';
     if( osc_search_region() != '' ) {
         $aRegion  = Region::newInstance()->findByName(osc_search_region());
-        $regionID = $aRegion['pk_i_id'];
+        if(isset($aRegion['pk_i_id'])) {
+            $regionID = $aRegion['pk_i_id'];
+        }
     }
 
     $conn = DBConnectionClass::newInstance();
@@ -292,6 +294,9 @@ function osc_search_footer_links() {
     }
     $comm->where('i.pk_i_id = l.fk_i_item_id');
     $comm->where('i.b_enabled = 1');
+    $comm->where('i.b_active = 1');
+    $comm->where(sprintf("dt_expiration >= '%s'", date('Y-m-d H:i:s')));
+
     $comm->where('l.fk_i_region_id IS NOT NULL');
     $comm->where('l.fk_i_city_id IS NOT NULL');
     if( $regionID != '' ) {

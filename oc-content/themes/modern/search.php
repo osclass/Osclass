@@ -197,9 +197,9 @@
                                 foreach($orders as $label => $params) {
                                     $orderType = ($params['iOrderType'] == 'asc') ? '0' : '1'; ?>
                                     <?php if(osc_search_order() == $params['sOrder'] && osc_search_order_type() == $orderType) { ?>
-                                        <a class="current" href="<?php echo osc_update_search_url($params); ?>"><?php echo $label; ?></a>
+                                        <a class="current" href="<?php echo osc_esc_html(osc_update_search_url($params)); ?>"><?php echo $label; ?></a>
                                     <?php } else { ?>
-                                        <a href="<?php echo osc_update_search_url($params); ?>"><?php echo $label; ?></a>
+                                        <a href="<?php echo osc_esc_html(osc_update_search_url($params)); ?>"><?php echo $label; ?></a>
                                     <?php } ?>
                                     <?php if ($i != count($orders)-1) { ?>
                                         <span>|</span>
@@ -232,10 +232,10 @@
                 <div class="filters">
                     <form action="<?php echo osc_base_url(true); ?>" method="get" onsubmit="return doSearch()" class="nocsrf">
                         <input type="hidden" name="page" value="search" />
-                        <input type="hidden" name="sOrder" value="<?php echo osc_search_order(); ?>" />
-                        <input type="hidden" name="iOrderType" value="<?php $allowedTypesForSorting = Search::getAllowedTypesForSorting(); echo $allowedTypesForSorting[osc_search_order_type()]; ?>" />
+                        <input type="hidden" name="sOrder" value="<?php echo osc_esc_html(osc_search_order()); ?>" />
+                        <input type="hidden" name="iOrderType" value="<?php $allowedTypesForSorting = Search::getAllowedTypesForSorting(); echo osc_esc_html($allowedTypesForSorting[osc_search_order_type()]); ?>" />
                         <?php foreach(osc_search_user() as $userId) { ?>
-                        <input type="hidden" name="sUser[]" value="<?php echo $userId; ?>" />
+                            <input type="hidden" name="sUser[]" value="<?php echo osc_esc_html($userId); ?>" />
                         <?php } ?>
                         <fieldset class="box location">
                             <h3><strong><?php _e('Your search', 'modern'); ?></strong></h3>
@@ -267,9 +267,9 @@
                             <div class="row two_input">
                                 <h6><?php _e('Price', 'modern'); ?></h6>
                                 <div><?php _e('Min', 'modern'); ?>.</div>
-                                <input type="text" id="priceMin" name="sPriceMin" value="<?php echo osc_search_price_min(); ?>" size="6" maxlength="6" />
+                                <input type="text" id="priceMin" name="sPriceMin" value="<?php echo osc_esc_html(osc_search_price_min()); ?>" size="6" maxlength="6" />
                                 <div><?php _e('Max', 'modern'); ?>.</div>
-                                <input type="text" id="priceMax" name="sPriceMax" value="<?php echo osc_search_price_max(); ?>" size="6" maxlength="6" />
+                                <input type="text" id="priceMax" name="sPriceMax" value="<?php echo osc_esc_html(osc_search_price_max()); ?>" size="6" maxlength="6" />
                             </div>
                             <?php } ?>
                             <?php  osc_get_non_empty_categories(); ?>

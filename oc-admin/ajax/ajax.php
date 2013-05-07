@@ -203,7 +203,19 @@
                                     $slug = $slug_tmp."_".$slug_k;
                                 }
                             }
-                            $res = Field::newInstance()->update(array('s_name' => Params::getParam("s_name"), 'e_type' => Params::getParam("field_type"), 's_slug' => $slug, 'b_required' => Params::getParam("field_required") == "1" ? 1 : 0, 's_options' => Params::getParam('s_options')), array('pk_i_id' => Params::getParam("id")));
+
+                            // trim options
+                            $s_options = '';
+                            $aux  = Params::getParam('s_options');
+                            $aAux = explode(',', $aux);
+
+                            foreach($aAux as &$option) {
+                                $option = trim($option);
+                            }
+
+                            $s_options = implode(',', $aAux);
+
+                            $res = Field::newInstance()->update(array('s_name' => Params::getParam("s_name"), 'e_type' => Params::getParam("field_type"), 's_slug' => $slug, 'b_required' => Params::getParam("field_required") == "1" ? 1 : 0, 's_options' => $s_options), array('pk_i_id' => Params::getParam("id")));
                             if(is_bool($res) && !$res) {
                                 $error = 1;
                             }
@@ -948,40 +960,10 @@
                     break;
                 case 'location_stats':
                     osc_csrf_check(false);
-                    $workToDo = LocationsTmp::newInstance()->count();
+                    $workToDo = osc_update_location_stats();
                     if( $workToDo > 0 ) {
-                        // there are wotk to do
-                        $aLocations = LocationsTmp::newInstance()->getLocations(1000);
-                        foreach($aLocations as $location) {
-                            $id     = $location['id_location'];
-                            $type   = $location['e_type'];
-                            $data   = 0;
-                            // update locations stats
-                            switch ( $type ) {
-                                case 'COUNTRY':
-                                    $numItems = CountryStats::newInstance()->calculateNumItems( $id );
-                                    $data = CountryStats::newInstance()->setNumItems($id, $numItems);
-                                    unset($numItems);
-                                break;
-                                case 'REGION' :
-                                    $numItems = RegionStats::newInstance()->calculateNumItems( $id );
-                                    $data = RegionStats::newInstance()->setNumItems($id, $numItems);
-                                    unset($numItems);
-                                break;
-                                case 'CITY' :
-                                    $numItems = CityStats::newInstance()->calculateNumItems( $id );
-                                    $data = CityStats::newInstance()->setNumItems($id, $numItems);
-                                    unset($numItems);
-                                break;
-                                default:
-                                break;
-                            }
-                            if($data >= 0) {
-                                LocationsTmp::newInstance()->delete(array('e_type' => $location['e_type'], 'id_location' => $location['id_location']) );
-                            }
-                        }
                         $array['status']  = 'more';
-                        $array['pending'] = $workToDo = LocationsTmp::newInstance()->count();
+                        $array['pending'] = $workToDo;
                         echo json_encode($array);
                     } else {
                         $array['status']  = 'done';

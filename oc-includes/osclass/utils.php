@@ -1454,53 +1454,69 @@ function osc_update_cat_stats_id($id)
  *
  * @since 3.1
  */
-function osc_update_location_stats() {
-    $aCountries     = Country::newInstance()->listAll();
-    $aCountryValues = array();
+function osc_update_location_stats($force = false, $limit = 1000) {
 
-    $aRegions       = array();
-    $aRegionValues  = array();
+    $loctmp = LocationsTmp::newInstance();
+    $workToDo = $loctmp->count();
 
-    $aCities        = array();
-    $aCityValues    = array();
-
-    foreach($aCountries as $country){
-        $id = $country['pk_c_code'];
-        $numItems = CountryStats::newInstance()->calculateNumItems( $id );
-        array_push($aCountryValues, "('$id', $numItems)" );
-        unset($numItems);
-
-        $aRegions = Region::newInstance()->findByCountry($id);
-        foreach($aRegions as $region) {
-            $id = $region['pk_i_id'];
-            $numItems = RegionStats::newInstance()->calculateNumItems( $id );
-            array_push($aRegionValues, "($id, $numItems)" );
-            unset($numItems);
-
-            $aCities = City::newInstance()->findByRegion($id);
-            foreach($aCities as $city) {
-                $id = $city['pk_i_id'];
-                $numItems = CityStats::newInstance()->calculateNumItems( $id );
-                array_push($aCityValues, "($id, $numItems)" );
-                unset($numItems);
+    if( $workToDo > 0 ) {
+        // there are wotk to do
+        if($limit=='auto') {
+            $total_cities = City::newInstance()->count();
+            $limit = max(1000, ceil($total_cities/22));
+        }
+        $aLocations = $loctmp->getLocations($limit);
+        foreach($aLocations as $location) {
+            $id     = $location['id_location'];
+            $type   = $location['e_type'];
+            $data   = 0;
+            // update locations stats
+            switch ( $type ) {
+                case 'COUNTRY':
+                    $numItems = CountryStats::newInstance()->calculateNumItems( $id );
+                    $data = CountryStats::newInstance()->setNumItems($id, $numItems);
+                    unset($numItems);
+                    break;
+                case 'REGION' :
+                    $numItems = RegionStats::newInstance()->calculateNumItems( $id );
+                    $data = RegionStats::newInstance()->setNumItems($id, $numItems);
+                    unset($numItems);
+                    break;
+                case 'CITY' :
+                    $numItems = CityStats::newInstance()->calculateNumItems( $id );
+                    $data = CityStats::newInstance()->setNumItems($id, $numItems);
+                    unset($numItems);
+                    break;
+                default:
+                    break;
+            }
+            if($data >= 0) {
+                $loctmp->delete(array('e_type' => $location['e_type'], 'id_location' => $location['id_location']) );
             }
         }
+    } else if($force) {
+        // we need populate location tmp table
+        $aCountry  = Country::newInstance()->listAll();
+
+        foreach($aCountry as $country) {
+            $aRegionsCountry = Region::newInstance()->findByCountry( $country['pk_c_code'] );
+            $loctmp->insert(array('id_location' => $country['pk_c_code'], 'e_type' => 'COUNTRY') );
+            foreach($aRegionsCountry as $region) {
+                $aCitiesRegion = City::newInstance()->findByRegion( $region['pk_i_id'] );
+                $loctmp->insert(array('id_location' => $region['pk_i_id'], 'e_type' => 'REGION') );
+                $batchCities = array();
+                foreach($aCitiesRegion as $city) {
+                    $batchCities[] = $city['pk_i_id'];
+                }
+                unset($aCitiesRegion);
+                $loctmp->batchInsert($batchCities, 'CITY');
+                unset($batchCities);
+            } unset($aRegionsCountry);
+        } unset($aCountry);
+        Preference::newInstance()->replace('location_todo', LocationsTmp::newInstance()->count() );
     }
-
-    // insert Country stats
-    $sql_country  = 'REPLACE INTO '.DB_TABLE_PREFIX.'t_country_stats (fk_c_country_code, i_num_items) VALUES ';
-    $sql_country .= implode(',', $aCountryValues);
-    CountryStats::newInstance()->dao->query($sql_country);
-    // insert Region stats
-    $sql_region   = 'REPLACE INTO '.DB_TABLE_PREFIX.'t_region_stats (fk_i_region_id, i_num_items) VALUES ';
-    $sql_region  .= implode(',', $aRegionValues);
-    RegionStats::newInstance()->dao->query($sql_region);
-    // insert City stats
-    $sql_city     = 'REPLACE INTO '.DB_TABLE_PREFIX.'t_city_stats (fk_i_city_id, i_num_items) VALUES ';
-    $sql_city    .= implode(',', $aCityValues);
-    CityStats::newInstance()->dao->query($sql_city);
+    return LocationsTmp::newInstance()->count();
 }
-
 
 function get_ip() {
     if( !empty($_SERVER['HTTP_CLIENT_IP']) ) {

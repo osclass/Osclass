@@ -96,6 +96,7 @@
         public function saveToFile($imagePath) {
             if(file_exists($imagePath) && !is_writable($imagePath)) throw new Exception("$imagePath is not writable!");
             if(osc_use_imagick()) {
+                $this->im->setImageFormat('jpeg');
                 $this->im->setImageFileName($imagePath);
                 $this->im->writeImage($imagePath);
             } else {

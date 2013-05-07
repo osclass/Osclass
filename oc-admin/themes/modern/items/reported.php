@@ -113,7 +113,7 @@
 <div class="relative">
     <div id="listing-toolbar">
         <div class="float-right">
-            <form method="get" action="<?php echo osc_admin_base_url(true); ?>"  class="inline select-items-per-page">
+            <form method="get" action="<?php echo osc_admin_base_url(true); ?>"  class="inline">
                 <?php foreach( Params::getParamsAsArray('get') as $key => $value ) { ?>
                 <?php if( $key != 'iDisplayLength' ) { ?>
                 <input type="hidden" name="<?php echo $key; ?>" value="<?php echo osc_esc_html($value); ?>" />
