@@ -1,3 +1,12 @@
+Osclass 3.1.2 2012-05-07
+------------------------
+- CSRF errors now show a flash message instead of a blank page
+- Csrf error ajax, return json with error message
+- Memory peak usage in osc_update_location_stats fixed
+- Issues using Imagick instead of GD when uploading images fixedsi si
+- XSS vulnerability in search page fixed
+- Minor bug fixes and improvements
+
 Osclass 3.1.1 2012-03-20
 ------------------------
 - Fixed breadcrumd in public profile
