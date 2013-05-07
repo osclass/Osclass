@@ -426,8 +426,7 @@ CREATE TABLE %st_item_description_tmp (
         $comm->query(sprintf("ALTER TABLE  %st_category ADD  `b_price_enabled` TINYINT(1) NOT NULL DEFAULT 1", DB_TABLE_PREFIX));
     }
 
-
-    osc_changeVersionTo(311);
+    osc_changeVersionTo(312);
 
     echo '<div class="well ui-rounded-corners separate-top-medium">';
     echo '<p>'.__('Osclass &raquo; Updated correctly').'</p>';

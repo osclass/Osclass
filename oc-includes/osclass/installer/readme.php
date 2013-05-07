@@ -26,7 +26,7 @@
                             <img src="<?php echo osc_getAbsoluteWebURL(); ?>/oc-includes/images/osclass-logo.png" alt="Osclass" title="Osclass" />
                         </a>
                         <br/>
-                        Version 3.1.1
+                        Version 3.1.2
                     </h1>
                 </div>
                 <div id="content">
