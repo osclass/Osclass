@@ -310,7 +310,33 @@
     function osc_search_url($params = null) {
         if(osc_rewrite_enabled()) {
             $url = osc_base_url().osc_get_preference('rewrite_search_url');
-            if($params!=null) {
+
+            $countP = count($params);
+            if($countP==1 && isset($params['sRegion'])) {
+                $url = osc_base_url();
+                if( osc_get_preference('seo_url_search_prefix') != '' ) {
+                    $url .= osc_get_preference('seo_url_search_prefix') . '/';
+                }
+                if(osc_list_region_id()==$params['sRegion']) {
+                    $url .= osc_sanitizeString(osc_list_region_name()) . '-r' . osc_list_region_id();
+                } else {
+                    $region = Region::newInstance()->findByPrimaryKey($params['sRegion']);
+                    $url .= osc_sanitizeString($region['s_name']) . '-r' . $region['pk_i_id'];
+                }
+                return $url;
+            } else if($countP==1 && isset($params['sCity'])) {
+                    $url = osc_base_url();
+                    if( osc_get_preference('seo_url_search_prefix') != '' ) {
+                        $url .= osc_get_preference('seo_url_search_prefix') . '/';
+                    }
+                    if(osc_list_region_id()==$params['sCity']) {
+                        $url .= osc_sanitizeString(osc_list_city_name()) . '-c' . osc_list_city_id();
+                    } else {
+                        $city = City::newInstance()->findByPrimaryKey($params['sCity']);
+                        $url .= osc_sanitizeString($city['s_name']) . '-c' . $city['pk_i_id'];
+                    }
+                    return $url;
+            } else if($params!=null) {
                 $url .= "/";
                 foreach($params as $k => $v) {
                     switch($k) {
@@ -561,16 +587,7 @@
      * @return string
      */
     function osc_list_region_url() {
-        if ( osc_rewrite_enabled() ) {
-            $url = osc_base_url();
-            if( osc_get_preference('seo_url_search_prefix') != '' ) {
-                $url .= osc_get_preference('seo_url_search_prefix') . '/';
-            }
-            $url .= osc_sanitizeString(osc_list_region_name()) . '-r' . osc_list_region_id();
-            return $url;
-        } else {
-            return osc_search_url( array( 'sRegion' => osc_list_region_id() ) );
-        }
+        return osc_search_url( array( 'sRegion' => osc_list_region_id() ) );
     }
 
     // city attributes
@@ -607,16 +624,7 @@
      * @return string
      */
     function osc_list_city_url() {
-        if ( osc_rewrite_enabled() ) {
-            $url = osc_base_url();
-            if( osc_get_preference('seo_url_search_prefix') != '' ) {
-                $url .= osc_get_preference('seo_url_search_prefix') . '/';
-            }
-            $url .= osc_sanitizeString(osc_list_city_name()) . '-c' . osc_list_city_id();
-            return $url;
-        } else {
-            return osc_search_url(array('sCity' => osc_list_city_id()));
-        }
+        return osc_search_url(array('sCity' => osc_list_city_id()));
     }
 
     /**********************

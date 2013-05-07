@@ -229,7 +229,7 @@
      * @param string $locale
      * @return string
      */
-    function osc_item_category_price_enabled() {
+    function osc_item_category_price_enabled($catId = null) {
 		if($catId == null) {
 			$category = Category::newInstance()->findByPrimaryKey( osc_item_category_id() ) ;
 		} else {
