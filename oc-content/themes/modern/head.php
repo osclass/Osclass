@@ -56,12 +56,8 @@ osc_enqueue_script('jquery-uniform');
 osc_enqueue_script('tabber');
 osc_enqueue_script('global');
 
-osc_enqueue_script('php-date');
+osc_run_hook('header');
 
-?>
-
-<?php osc_run_hook('header'); ?>
-
-<?php
 FieldForm::i18n_datePicker();
+
 ?>

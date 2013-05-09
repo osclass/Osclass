@@ -128,6 +128,11 @@
                 break;
                 case 'category_edit_iframe':
                     $this->_exportVariableToView( 'category', Category::newInstance()->findByPrimaryKey( Params::getParam("id") ) );
+                    if(count(Category::newInstance()->findSubcategories( Params::getParam("id") ) )>0) {
+                        $this->_exportVariableToView( 'has_subcategories', true);
+                    } else {
+                        $this->_exportVariableToView( 'has_subcategories', false);
+                    };
                     $this->_exportVariableToView( 'languages', OSCLocale::newInstance()->listAllEnabled() );
                     $this->doView("categories/iframe.php");
                     break;
@@ -348,6 +353,8 @@
                     osc_csrf_check(false);
                     $id = Params::getParam("id");
                     $fields['i_expiration_days'] = (Params::getParam("i_expiration_days") != '') ? Params::getParam("i_expiration_days") : 0;
+                    $fields['b_price_enabled'] = (Params::getParam('b_price_enabled') != '') ? 1 : 0;
+                    $apply_changes_to_subcategories = Params::getParam('apply_changes_to_subcategories')==1?true:false;
 
                     $error = 0;
                     $has_one_title = 0;
@@ -373,18 +380,13 @@
                     if ($error==0 || ($error==1 && $has_one_title==1)) {
                         $categoryManager = Category::newInstance();
                         $res = $categoryManager->updateByPrimaryKey(array('fields' => $fields, 'aFieldsDescription' => $aFieldsDescription), $id);
-                        $categoryManager->updateExpiration($id, $fields['i_expiration_days']);
+                        $categoryManager->updateExpiration($id, $fields['i_expiration_days'], $apply_changes_to_subcategories);
+                        $categoryManager->updatePriceEnabled($id, $fields['b_price_enabled'], $apply_changes_to_subcategories);
                         if( is_bool($res) ) {
                             $error = 2;
                         }
                     }
 
-                    if(Params::getParam('apply_changes_to_subcategories')==1) {
-                        $subcategories = $categoryManager->findSubcategories($id);
-                        foreach($subcategories as $subc) {
-                            $categoryManager->updateExpiration($subc['pk_i_id'], $fields['i_expiration_days']);
-                        };
-                    };
                     if($error==0) {
                         $msg = __("Category updated correctly");
                     } else if($error==1) {

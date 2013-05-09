@@ -237,6 +237,12 @@
                         }
                         $("#catId").attr("value", $(this).val());
                         $("#catId").change();
+                        if(catPriceEnabled[$('#catId').val()] == 1) {
+							$('.price').show();
+						} else {
+							$('.price').hide();
+							$('#price').val('') ;
+						}
                         if((depth==1 && $(this).val()!=0) || (depth>1 && $(this).val()!=$("#select_"+(depth-1)).val())) {
                             draw_select(depth+1, $(this).val());
                         }
@@ -268,7 +274,7 @@
         <?php
         }
 
-        
+
         static public function subcategory_select($categories, $item, $default_item = null, $deep = 0)
         {
             // Did user select a specific category to post in?
@@ -292,7 +298,7 @@
                 }
             }
         }
-        
+
         static public function user_select($users = null, $item = null, $default_item = null)
         {
             if($users==null) { $users = User::newInstance()->listAll(); };
@@ -379,13 +385,13 @@
             parent::generic_input_text($name . '[' . $locale . ']', $value);
             return true;
         }
-        
+
         static public function description_textarea($name, $locale = 'en_US', $value = '')
         {
             parent::generic_textarea($name . '[' . $locale . ']', $value);
             return true;
         }
-        
+
         static public function multilanguage_title_description($locales = null, $item = null) {
             if($locales==null) { $locales = osc_get_locales(); }
             if($item==null) { $item = osc_item(); }
@@ -421,7 +427,7 @@
              }
              if($num_locales>1) { echo '</div>'; };
         }
-        
+
         static public function price_input_text($item = null)
         {
             if($item==null) { $item = osc_item(); };
@@ -430,7 +436,7 @@
             }
             parent::generic_input_text('price', (isset($item['i_price'])) ? osc_prepare_price($item['i_price']) : null);
         }
-        
+
         static public function currency_select($currencies = null, $item = null) {
             if( $currencies == null ) { $currencies = osc_get_currencies(); }
             if( $item == null) { $item = osc_item(); }
@@ -452,7 +458,7 @@
                 echo $currencies[0]['s_description'];
             }
         }
-        
+
         static public function country_select($countries = null, $item = null) {
             if($countries==null) { $countries = osc_get_countries(); };
             if($item==null) { $item = osc_item(); };
@@ -470,7 +476,7 @@
                 return true;
             }
         }
-        
+
         static public function country_text($item = null) {
             if($item==null) { $item = osc_item(); };
             if( Session::newInstance()->_getForm('country') != "" ) {
@@ -489,7 +495,7 @@
             parent::generic_input_hidden('countryId', (isset($item['fk_c_country_code']) && $item['fk_c_country_code']!=null)?$item['fk_c_country_code']:'');
             return true;
         }
-        
+
         static public function region_select($regions = null, $item = null) {
 
             if($item==null) { $item = osc_item(); };
@@ -515,7 +521,7 @@
             }
         }
 
-        
+
         static public function city_select($cities = null, $item = null) {
 
             if($item==null) { $item = osc_item(); };
@@ -560,7 +566,7 @@
             parent::generic_input_hidden('cityId', (isset($item['fk_i_city_id']) && $item['fk_i_city_id']!=null)?$item['fk_i_city_id']:'');
             return true;
         }
-        
+
         static public function city_area_text($item = null) {
             if($item==null) { $item = osc_item(); };
             if( Session::newInstance()->_getForm('cityArea') != "" ) {
@@ -570,7 +576,7 @@
             parent::generic_input_hidden('cityAreaId', (isset($item['fk_i_city_area_id']) && $item['fk_i_city_area_id']!=null)?$item['fk_i_city_area_id']:'');
             return true;
         }
-        
+
         static public function address_text($item = null) {
             if($item==null) { $item = osc_item(); };
             if( Session::newInstance()->_getForm('address') != "" ) {
@@ -579,7 +585,7 @@
             parent::generic_input_text('address', (isset($item['s_address'])) ? $item['s_address'] : null);
             return true;
         }
-        
+
         static public function contact_name_text($item = null) {
             if($item==null) { $item = osc_item(); };
             if( Session::newInstance()->_getForm('contactName') != "" ) {
@@ -608,7 +614,7 @@
                 return false;
             }
         }
-        
+
         static public function show_email_checkbox($item = null) {
             if($item==null) { $item = osc_item(); };
             if( Session::newInstance()->_getForm('showEmail') != 0) {
@@ -1185,6 +1191,16 @@
         static public function plugin_post_item($case = 'form') {
 ?>
 <script type="text/javascript">
+	var catPriceEnabled = new Array();
+	<?php
+	$categories = Category::newInstance()->listAll(false);
+	foreach($categories as $c) {
+		?>
+		//creat the array for the price enabled
+		catPriceEnabled[<?php echo $c['pk_i_id']; ?>] = <?php echo $c['b_price_enabled']; ?>;
+		<?php
+	}
+	?>
     $("#catId").change(function(){
         var cat_id = $(this).val();
         <?php if(OC_ADMIN) { ?>
@@ -1195,6 +1211,13 @@
         var result = '';
 
         if(cat_id != '') {
+			if(catPriceEnabled[cat_id] == 1) {
+				$("#price").closest("div").show();
+			} else {
+				$("#price").closest("div").hide();
+				$('#price').val('') ;
+			}
+
             $.ajax({
                 type: "POST",
                 url: url,
@@ -1216,6 +1239,13 @@
         var result = '';
 
         if(cat_id != '') {
+			if(catPriceEnabled[cat_id] == 1) {
+				$("#price").closest("div").show();
+			} else {
+				$("#price").closest("div").hide();
+				$('#price').val('') ;
+			}
+
             $.ajax({
                 type: "POST",
                 url: url,

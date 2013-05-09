@@ -224,6 +224,21 @@
     }
 
     /**
+     * Checks to see if the price is enabled for this category.
+     *
+     * @param string $locale
+     * @return string
+     */
+    function osc_item_category_price_enabled($catId = null) {
+		if($catId == null) {
+			$category = Category::newInstance()->findByPrimaryKey( osc_item_category_id() ) ;
+		} else {
+			$category = Category::newInstance()->findByPrimaryKey($catId) ;
+		}
+        return $category['b_price_enabled']==1?true:false;
+    }
+
+    /**
      * Gets publication date of current item
      *
      * @return string
