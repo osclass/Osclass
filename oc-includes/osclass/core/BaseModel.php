@@ -29,13 +29,27 @@
 
         function __construct()
         {
-            if( parse_url(WEB_PATH, PHP_URL_HOST) !== $_SERVER['HTTP_HOST'] ) {
+            // this is necessary because if HTTP_HOST doesn't have the PORT the parse_url is null
+            $current_host = parse_url($_SERVER['HTTP_HOST'], PHP_URL_HOST);
+            if( $current_host === null ) {
+                $current_host = $_SERVER['HTTP_HOST'];
+            }
+
+            if( parse_url(WEB_PATH, PHP_URL_HOST) !== $current_host ) {
+                // first check if it's http or https
                 $url = 'http://';
                 if( $this->is_ssl() ) {
                     $url = 'https://';
                 }
-
-                $url .= parse_url(WEB_PATH, PHP_URL_HOST) . $_SERVER['REQUEST_URI'];
+                // append the domain
+                $url .= parse_url(WEB_PATH, PHP_URL_HOST);
+                // append the port number if it's necessary
+                $http_port = parse_url($_SERVER['HTTP_HOST'], PHP_URL_PORT);
+                if( $http_port !== 80 ) {
+                    $url .= ':' . parse_url($_SERVER['HTTP_HOST'], PHP_URL_PORT);
+                }
+                // append the request
+                $url .= $_SERVER['REQUEST_URI'];
                 $this->redirectTo($url);
             }
 
