@@ -29,7 +29,7 @@
     bender_add_boddy_class('search');
     $listClass = '';
     $buttonClass = '';
-    if(osc_search_show_as() == 'gallery'){
+    if(osc_default_show_as_at_search() == 'gallery' || osc_search_show_as() == 'gallery'){
           $listClass = 'listing-grid';
           $buttonClass = 'active';
     }
