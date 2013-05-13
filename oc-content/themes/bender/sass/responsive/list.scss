@@ -1,0 +1,48 @@
+.listing-grid .listing-card,
+body.search .listing-grid .listing-card{
+    width: 32%;
+    padding: 0%;
+    border: 0;
+    margin: 1%;
+}
+.listing-grid .listing-detail{
+    border:solid 1px #ECECEC;
+}
+.listing-grid .listing-thumb{
+    float:none;
+}
+.listing-grid .listing-thumb img{
+    height:auto;
+    width: 92%;
+    margin: 4%;
+    float: left;
+}
+.listing-grid .listing-cell {
+    display: block;
+    width: 92%;
+    padding: 4%;
+}
+.listing-grid .listing-basicinfo p{
+    display:none;
+}
+.listing-grid .listing-basicinfo a{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    display: block;
+}
+.listing-grid .listing-card:nth-child(3n),
+body.search .listing-card:nth-child(3n){
+    margin-right:0%;
+}
+.listing-grid .listing-card:nth-child(3n+1),
+body.search .listing-grid .listing-card:nth-child(3n+1){
+    margin-left:0%;
+    clear:both;
+}
+body.not-found .categories h2,
+body.not-found .categories h3{
+    float:none;
+    width:100%;
+}

@@ -1,0 +1,39 @@
+body.item-post #footer .resp-toogle{
+    display:none;
+}
+body.display-cat .r-list{
+    display:block;
+}
+body.display-search .main-search,
+body.home .main-search{
+    display: table;
+}
+body.display-search #header,
+body.home #header{
+    margin-bottom:80px;
+}
+.resp-toogle{
+    display:block;
+}
+body.display-filters div#sidebar{
+    display:block;
+}
+.show-filters-btn{
+    display:inline-block;
+    border:solid 1px darken($widgetbordercolor,10%);
+    background-color:$widgetbackground;
+
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    cursor: pointer;
+    font-size: 1em;
+    line-height:16px;
+    font-weight: bold;
+    text-align: center;
+    white-space: nowrap;
+    height: 16px;
+    outline: 0;
+    padding: 5px 6px;
+    text-decoration: none;
+    color:darken($widgetbordercolor,30%);
+}

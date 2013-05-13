@@ -1,0 +1,217 @@
+.r-list{
+    display:none;
+    margin:0px 40px 0 0;
+    padding: 0;
+    list-style: none;
+
+}
+.latest_ads{
+    padding-top:25px;
+}
+.latest_ads h1{
+    float:left;
+}
+.latest_ads .actions{
+    float:right;
+    margin-top:5px;
+}
+body.home .r-list{
+    display:block;
+}
+body.home #main{
+    width: 640px;
+    float: left;
+    margin-top: -20px 40px 0 0;
+}
+.r-list li{
+    float:left;
+    width:30%;
+    margin-right:3%;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.r-list li li{
+    float:none;
+    width:100%;
+}
+.r-list > li:nth-child(4n),
+.clear{
+    clear:both
+}
+ul.r-list li h1{
+    margin:25px 0 10px 0;
+    padding:0;
+    font-size: 1em;
+}
+ul.r-list li a,
+ul.r-list li span{
+    text-decoration:none;
+    font-size: 0.8125em;
+}
+ul.r-list li h1 a{
+    font-size: 1em;
+}
+ul.r-list li h1 span{
+    font-weight: normal;
+}
+ul.r-list li ul{
+    list-style: none;
+    margin:0;
+    padding:0;
+}
+.list-header{
+    margin-bottom:15px;
+}
+
+
+.listing-card-list{
+    margin:0;
+    padding:0;
+    list-style:none;
+    clear:both;
+}
+.listing-grid .last{
+    margin-right:0px;
+}
+.listing-card{
+    clear:both;
+    padding:10px 0;
+    margin: 0;
+    border: 0;
+    border-bottom: 1px solid #ECECEC;
+    position: relative;
+    width: 100%;
+    display: table;
+}
+.listing-card .listing-basicinfo,
+.listing-card .listing-attributes{
+    display: block;//table-cell;
+    vertical-align: top;
+    width:auto;
+}
+.listing-card .listing-attributes{
+    width:auto;
+}
+.listing-card .currency-value{
+    white-space: nowrap;
+    font-weight: bold;
+    color:#78c042;
+}
+.listing-card .listing-data{
+    display:table-row;
+    width:100%;
+}
+.listing-card .listing-detail{
+    width:auto;
+    margin-left:105px;
+}
+.listing-card .listing-cell{
+    display: table;
+    width: 100%;
+}
+.listing-card .listing-thumb{
+    float:left;
+}
+.listing-card .listing-thumb img{
+    height: 85px;
+    width: 95px;
+}
+.listing-card .listing-attributes{
+    font-size: 0.78em;
+    color: #777;
+    padding: 4px 0 8px;
+    line-height: 1em;
+}
+.listing-card .listing-attributes a{
+    color: #777;
+    font-weight: bold;
+}
+@include underlinke-hover(".listing-card .listing-attributes a");
+.listing-grid .listing-card{
+    float: left;
+    width: 190px;
+    padding: 6px;
+    background-color: #FFF;
+    border: 1px solid #ECECEC;
+    margin: 0 9px 9px 0;
+    position: relative;
+    display: block;
+    clear:none;
+}
+.listing-grid .listing-card .listing-attributes .location{
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.listing-grid .listing-card .listing-attributes .location a{
+    display: inline;
+}
+.listing-grid .currency-value{
+    display:block;
+}
+.listing-grid .listing-detail{
+    margin-left:0;
+}
+.listing-grid .listing-basicinfo,
+.listing-grid .listing-data{
+    width:100%;
+    display: block;
+}
+.listing-grid .listing-thumb{
+    width:100%;
+}
+.listing-grid .listing-detail{}
+.listing-grid .listing-detail{}
+.listing-grid .listing-card img{
+    width: 100%;
+    height: auto;
+    float:none;
+}
+.listing-card .listing-data p{
+    font-size: .8125em;
+    line-height: 1em;
+    margin-top:0;
+}
+
+.listing-grid  .listing-cell {
+    display:block;
+}
+.listing-grid .listing-basicinfo p{
+    display:none
+}
+.listing-grid .listing-basicinfo a{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    display: block;
+}
+.listing-grid .g-hide{
+    display:none;
+}
+body.search .listing-grid .last{
+    margin-right:0px;
+}
+body.search .listing-grid .listing-card{
+    width: 161px;
+}
+body.home .listing-grid .first{
+    clear:both;
+}
+.see_more_link{
+    clear:both;
+}
+#related-searches{
+    padding-top:25px;
+}
+#related-searches h5{
+    margin-bottom:10px;
+    font-size: 1em;
+}
+.counter-search{
+    float:left;
+    line-height: 32px;
+}

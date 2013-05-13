@@ -1,0 +1,13 @@
+.paginate { padding:25px; text-align:center; clear: both; }
+.paginate li { display: inline; list-style-type: none; }
+.paginate a, .paginate span { text-decoration:none; margin:0 1px; padding:5px 10px; border:1px solid #EEE; @include border-radius(3px); }
+.paginate a.previous { margin-right:15px; }
+.paginate a.next { margin-left:15px; }
+.paginate strong { border:1px solid #EEE; color:#F30; margin:0 1px; padding:5px 10px; }
+.paginate em { border:1px solid #EEE; color:#AAA; font-style:normal; margin:0 1px; padding:5px 10px; text-decoration:none; }
+.paginate em.previous { margin-right:15px; }
+.paginate em.next { margin-left:15px; }
+.paginate .searchPaginationSelected,
+.paginate a:hover { background-color: $maincolor; color:white; }
+.paginate .searchPaginationSelected,
+.paginate a:hover { font-weight: bold; }

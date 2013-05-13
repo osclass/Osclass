@@ -1,0 +1,140 @@
+#sidebar{
+    width:300px;
+    float:right;
+}
+.widget-box{
+    background-color: $widgetbackground;
+    padding: 10px;
+    margin-bottom: 15px;
+    //border: solid 1px #D9DDE2;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+}
+.widget-box h3{
+    margin:0;
+}
+.widget-box ul{
+    margin:0;
+    padding:0;
+    list-style:none;
+}
+.widget-box li{
+    //padding:1px 0;
+    //border-bottom: solid 1px #D9D9D9;
+}
+.widget-box li a{
+    text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+    font-weight: normal;
+    font-size:0.8125em;
+    display: block;
+    padding:4px 5px;
+    border-radius: 0px;
+    margin:-1px 0;
+
+    position: relative;
+    border-bottom: solid 1px $widgetbordercolor;
+    border-top:solid 1px $widgetbordercolor;
+
+    //@include r-list-style(true);
+    //margin-top:1px;
+
+}
+.widget-box li a:hover{
+    background-color:lighten($maincolor,20%);
+    border-color:$widgetbackground;
+    @include constrasted-text($maincolor);
+    z-index: 2;
+    border-radius: 3px;
+    //@include r-list-style(true);
+}
+
+
+#sidebar fieldset{
+    margin:0;
+    padding:0;
+    border:none;
+}
+#sidebar h3{
+    margin: 0;
+margin-bottom: 10px;
+line-height: 1em;
+font-size: 1em;
+
+}
+#sidebar fieldset{
+    padding:14px 0 16px;
+    border-bottom:solid 1px $widgetbordercolor;
+    font-size: 0.8125em;
+    line-height: 0.8125em;
+
+}
+#sidebar input{
+    vertical-align: bottom;
+}
+#sidebar .input-text{
+    @include input-style(#fff);
+
+    width: 80%;
+    padding: 0 10%;
+    height: 24px;
+    line-height: 24px;
+}
+#sidebar ul.category,
+#sidebar ul.category ul,
+ul.sidebar-list,
+ul.user_menu{
+    padding:0;
+    margin:0;
+    list-style:none;
+}
+body.user #sidebar{
+    border-right:solid 1px $widgetbordercolor;
+}
+#sidebar ul.category li,
+ul.sidebar-list li,
+ul.user_menu li{
+    padding:3px 0;
+    line-height: 1.15em
+}
+ul.user_menu li{
+    padding:0 0 12px;
+    font-size: 0.8125em;
+    line-height: 0.8125em;
+}
+#sidebar .category ul{
+    display:none;
+}
+#sidebar ul.category .show-sub ul.sub{
+    display:block;
+    padding-left:15px;
+}
+#sidebar .show-sub a{
+    font-weight:bold;
+}
+#sidebar .show-sub li a{
+    font-weight:normal;
+}
+#sidebar .price-slice input{
+    width: 50px;
+    padding: 0 5px;
+    margin-right:5px;
+}
+#sidebar .price-slice span{
+    margin-right:0px;
+}
+#sidebar button{
+    @include button-style($maincolor);
+    line-height: 30px;
+    font-size:0.85em;
+}
+#sidebar .actions{
+    padding: 20px 0;
+}
+@include underlinke-hover("#sidebar a");
