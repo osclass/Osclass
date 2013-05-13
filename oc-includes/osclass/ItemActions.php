@@ -273,10 +273,6 @@
                     $success = 2;
                 }
 
-                // THIS HOOK IS DEPRECATED, IT WILL NOT BE AVAILABLE IN 3.2
-                osc_run_hook('item_form_post', $aItem['catId'], $itemId);
-                // THIS HOOK IS DEPRECATED, IT WILL NOT BE AVAILABLE IN 3.2
-                osc_run_hook('after_item_post');
                 // THIS HOOK IS FINE, YAY!
                 osc_run_hook('posted_item', $item);
 
