@@ -401,6 +401,12 @@
                 $order = -1;
             }
 
+            if($aFields['b_link'] == '') {
+				if($aFields['b_indelible'] == 1) {
+					$aFields['b_link'] = 0;
+				}
+			}
+
             $this->dao->insert($this->tableName, array(
                 's_internal_name' => $aFields['s_internal_name']
                 ,'b_indelible' => $aFields['b_indelible']
@@ -525,7 +531,7 @@
 
             return $this->dao->update($this->tableName, $fields, $where);
         }
-        
+
         /**
          * It changes the b_link of a page. Here you don't check if in indelible or not the page.
          *
