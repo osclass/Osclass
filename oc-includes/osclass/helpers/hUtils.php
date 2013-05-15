@@ -209,7 +209,7 @@
         $txt = strip_tags($txt);
         $txt = str_replace("\n", '', $txt);
         $txt = trim($txt);
-        if( strlen($txt) > $len ) {
+        if( mb_strlen($txt, 'utf8') > $len ) {
             $txt = mb_substr($txt, 0, $len, 'utf-8') . "...";
         }
         $query = osc_search_pattern();
