@@ -253,6 +253,10 @@ function meta_keywords( ) {
 }
 
 function osc_search_footer_links() {
+    if( !osc_rewrite_enabled() ) {
+        return array();
+    }
+
     $categoryID = '';
     if( osc_search_category_id() ) {
         $categoryID = osc_search_category_id();
