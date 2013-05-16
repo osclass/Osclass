@@ -207,6 +207,7 @@
                         if(isset($categories)) {
                             Plugins::addToCategoryPlugin($categories, $plugin_short_name);
                         }
+                        osc_run_hook('plugin_categories', $plugin_short_name, $categories);
                         osc_add_flash_ok_message( _m('Configuration was saved'), 'admin');
                         $this->redirectTo(osc_get_http_referer());
                     }
