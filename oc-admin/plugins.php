@@ -207,9 +207,9 @@
                         if(isset($categories)) {
                             Plugins::addToCategoryPlugin($categories, $plugin_short_name);
                         }
-                        osc_run_hook('plugin_categories', $plugin_short_name, $categories);
+                        osc_run_hook('plugin_categories_'.Params::getParam('plugin'), $categories);
                         osc_add_flash_ok_message( _m('Configuration was saved'), 'admin');
-                        $this->redirectTo(osc_get_http_referer());
+                        $this->redirectTo(osc_admin_base_url(true)."?page=plugins");
                     }
 
                     osc_add_flash_error_message( _m('No plugin selected'), 'admin');
