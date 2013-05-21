@@ -163,7 +163,7 @@ switch( $step ) {
                         <div class="form-table">
                             <?php if( count($locales) > 1 ) { ?>
                                 <div>
-                                    <label><?php _e('Choose language'); ?></label>
+                                    <label for="install_locale"><?php _e('Choose language'); ?></label>
                                     <select name="install_locale" id="install_locale" onchange="window.location.href='?install_locale='+document.getElementById(this.id).value">
                                         <?php foreach($locales as $k => $locale) {?>
                                         <option value="<?php echo osc_esc_html($k); ?>" <?php if( $k == $current_locale ) { echo 'selected="selected"'; } ?>><?php echo $locale['name']; ?></option>
@@ -181,7 +181,7 @@ switch( $step ) {
                                     <li><?php echo $v['solution']; ?></li>
                                     <?php } ?>
                                 <?php } ?>
-                                    <li><a href="http://forums.osclass.org/"><?php _e('Need more help?');?></a></li>
+                                    <li><a href="http://forums.osclass.org/" hreflang="en"><?php _e('Need more help?');?></a></li>
                                 </ul>
                             </div>
                             <?php } else { ?>
@@ -235,13 +235,13 @@ switch( $step ) {
                 <div id="footer">
                     <ul>
                         <li>
-                            <a href="<?php echo get_absolute_url(); ?>/oc-includes/osclass/installer/readme.php" target="_blank"><?php _e('Readme'); ?></a>
+                            <a href="<?php echo get_absolute_url(); ?>/oc-includes/osclass/installer/readme.php" target="_blank" hreflang="en"><?php _e('Readme'); ?></a>
                         </li>
                         <li>
-                            <a href="http://admin.osclass.org/feedback.php" target="_blank"><?php _e('Feedback'); ?></a>
+                            <a href="http://admin.osclass.org/feedback.php" target="_blank" hreflang="en"><?php _e('Feedback'); ?></a>
                         </li>
                         <li>
-                            <a href="http://forums.osclass.org/index.php" target="_blank"><?php _e('Forums');?></a>
+                            <a href="http://forums.osclass.org/index.php" target="_blank" hreflang="en"><?php _e('Forums');?></a>
                         </li>
                     </ul>
                 </div>
