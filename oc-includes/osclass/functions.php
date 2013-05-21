@@ -53,7 +53,7 @@ function search_title() {
         $result .= osc_get_preference('seo_title_keyword') . ' ';
     }
 
-    if($b_category && is_array($category) && count($category) > 0) {
+    if($b_category && is_array($category) && count($category) == 1) {
         $cat = Category::newInstance()->findByPrimaryKey($category[0]);
         if( $cat ) {
             $result .= strtolower($cat['s_name']) . ' ';
