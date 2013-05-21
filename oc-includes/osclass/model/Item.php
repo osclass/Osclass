@@ -273,11 +273,11 @@
          *
          * @access public
          * @since unknown
-         * @param type $categoryId
-         * @param string $active
+         * @param int $categoryId
+         * @param mixed $options could be a string with | separator or an array with the options
          * @return int total items
          */
-        public function totalItems($categoryId = null, $active = null)
+        public function totalItems($categoryId = null, $options = null)
         {
             $this->dao->select('count(*) as total');
             $this->dao->from($this->getTableName().' i');
@@ -286,24 +286,35 @@
                 $this->dao->where('i.fk_i_category_id', $categoryId);
             }
 
-            $conditions = '';
-            if (!is_null($active)) {
-                switch ($active) {
+            if(!is_array($options)) {
+                $options = explode("|", $options);
+            }
+            foreach($options as $option) {
+                switch ($option) {
                     case 'ACTIVE':
-                        $this->dao->where('b_active', 1);
-                    break;
+                        $this->dao->where('i.b_active', 1);
+                        break;
                     case 'INACTIVE':
-                        $this->dao->where('b_active', 0);
-                    break;
+                        $this->dao->where('i.b_active', 0);
+                        break;
                     case 'ENABLE':
-                        $this->dao->where('b_enabled', 1);
-                    break;
+                        $this->dao->where('i.b_enabled', 1);
+                        break;
                     case 'DISABLED':
-                        $this->dao->where('b_enabled', 0);
-                    break;
+                        $this->dao->where('i.b_enabled', 0);
+                        break;
                     case 'SPAM':
-                        $this->dao->where('b_spam', 1);
-                    break;
+                        $this->dao->where('i.b_spam', 1);
+                        break;
+                    case 'EXPIRED':
+                        $this->dao->where( '( i.b_premium = 0 && i.dt_expiration < \'' . date('Y-m-d H:i:s') .'\' )' );
+                        break;
+                    case 'NOTEXPIRED':
+                        $this->dao->where( '( i.b_premium = 1 || i.dt_expiration >= \'' . date('Y-m-d H:i:s') .'\' )' );
+                        break;
+                    case 'TODAY':
+                        $this->dao->where('DATEDIFF(\''.date('Y-m-d H:i:s').'\', i.dt_pub_date) < 1');
+                        break;
                     default:
                 }
             }
