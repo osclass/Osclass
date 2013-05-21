@@ -57,26 +57,37 @@
                    <a href="<?php echo osc_update_search_url(array('sShowAs'=> 'list')); ?>" class="list-button" data-class-toggle="listing-grid" data-destination="#listing-card-list"><span><?php _e('List','bender'); ?></span></a>
                    <a href="<?php echo osc_update_search_url(array('sShowAs'=> 'gallery')); ?>" class="grid-button" data-class-toggle="listing-grid" data-destination="#listing-card-list"><span><?php _e('Grid','bender'); ?></span></a>
               </span>
+            <!--     START sort by       -->
+            <span class="see_by">
+              <span><?php _e('Sort by', 'bender'); ?>:</span>
+              <?php
+              $orders = osc_list_orders();
+              $current = '';
+              foreach($orders as $label => $params) {
+                  $orderType = ($params['iOrderType'] == 'asc') ? '0' : '1';
+                  if(osc_search_order() == $params['sOrder'] && osc_search_order_type() == $orderType) {
+                      $current = $label;
+                  }
+              }
+              ?>
+              <label><?php echo $current; ?><b class="arrow-envelope"><b class="arrow-down"></b></b></label>
+              <?php $i = 0; ?>
+              <ul>
+                  <?php
+                  foreach($orders as $label => $params) {
+                      $orderType = ($params['iOrderType'] == 'asc') ? '0' : '1'; ?>
+                      <?php if(osc_search_order() == $params['sOrder'] && osc_search_order_type() == $orderType) { ?>
+                          <li><a class="current" href="<?php echo osc_esc_html(osc_update_search_url($params)); ?>"><?php echo $label; ?></a></li>
+                      <?php } else { ?>
+                          <li><a href="<?php echo osc_esc_html(osc_update_search_url($params)); ?>"><?php echo $label; ?></a></li>
+                      <?php } ?>
+                      <?php $i++; ?>
+                  <?php } ?>
+                </ul>
+            </span>
+            <!--     END sort by       -->
             </div>
-<!--     START sort by       -->
-              <p class="see_by">
-                <?php _e('Sort by', 'bender'); ?>:
-                <?php $i = 0; ?>
-                <?php $orders = osc_list_orders();
-                foreach($orders as $label => $params) {
-                    $orderType = ($params['iOrderType'] == 'asc') ? '0' : '1'; ?>
-                    <?php if(osc_search_order() == $params['sOrder'] && osc_search_order_type() == $orderType) { ?>
-                        <a class="current" href="<?php echo osc_esc_html(osc_update_search_url($params)); ?>"><?php echo $label; ?></a>
-                    <?php } else { ?>
-                        <a href="<?php echo osc_esc_html(osc_update_search_url($params)); ?>"><?php echo $label; ?></a>
-                    <?php } ?>
-                    <?php if ($i != count($orders)-1) { ?>
-                        <span>|</span>
-                    <?php } ?>
-                    <?php $i++; ?>
-                <?php } ?>
-            </p>
-<!--     END sort by       -->
+
             <?php } ?>
           </div>
      </div>

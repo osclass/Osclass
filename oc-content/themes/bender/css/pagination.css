@@ -1,13 +1,13 @@
 /*
 Syntax error: Undefined mixin 'border-radius'.
-        on line 3 of /Users/feralou/git/public/osclass-themes/bender/sass/pagination.scss, in `border-radius'
-        from line 3 of /Users/feralou/git/public/osclass-themes/bender/sass/pagination.scss
+        on line 3 of /Users/feralou/htdocs/osclass/develop/oc-content/themes/bender/sass/pagination.scss, in `border-radius'
+        from line 3 of /Users/feralou/htdocs/osclass/develop/oc-content/themes/bender/sass/pagination.scss
 
-1: /Users/feralou/git/public/osclass-themes/bender/sass/pagination.scss
+1: /Users/feralou/htdocs/osclass/develop/oc-content/themes/bender/sass/pagination.scss
 
 Backtrace:
-/Users/feralou/git/public/osclass-themes/bender/sass/pagination.scss:3:in `border-radius'
-/Users/feralou/git/public/osclass-themes/bender/sass/pagination.scss:3
+/Users/feralou/htdocs/osclass/develop/oc-content/themes/bender/sass/pagination.scss:3:in `border-radius'
+/Users/feralou/htdocs/osclass/develop/oc-content/themes/bender/sass/pagination.scss:3
 /Users/feralou/.rvm/gems/ruby-2.0.0-p0/gems/sass-3.2.7/lib/sass/tree/visitors/perform.rb:253:in `visit_mixin'
 /Users/feralou/.rvm/gems/ruby-2.0.0-p0/gems/sass-3.2.7/lib/sass/tree/visitors/base.rb:37:in `visit'
 /Users/feralou/.rvm/gems/ruby-2.0.0-p0/gems/sass-3.2.7/lib/sass/tree/visitors/perform.rb:100:in `visit'
@@ -82,4 +82,4 @@ Backtrace:
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Syntax error: Undefined mixin 'border-radius'.\A         on line 3 of /Users/feralou/git/public/osclass-themes/bender/sass/pagination.scss, in `border-radius'\A         from line 3 of /Users/feralou/git/public/osclass-themes/bender/sass/pagination.scss\A \A 1: /Users/feralou/git/public/osclass-themes/bender/sass/pagination.scss"; }
+  content: "Syntax error: Undefined mixin 'border-radius'.\A         on line 3 of /Users/feralou/htdocs/osclass/develop/oc-content/themes/bender/sass/pagination.scss, in `border-radius'\A         from line 3 of /Users/feralou/htdocs/osclass/develop/oc-content/themes/bender/sass/pagination.scss\A \A 1: /Users/feralou/htdocs/osclass/develop/oc-content/themes/bender/sass/pagination.scss"; }

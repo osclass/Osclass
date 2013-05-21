@@ -197,5 +197,46 @@ button{
 .photos_div a{
     display:block;
 }
+.arrow-up {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent !important;
+    border-right: 5px solid transparent !important;
+
+    border-bottom: 5px solid black;
+}
+
+.arrow-down {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent !important;
+    border-right: 5px solid transparent !important;
+
+    border-top: 5px solid #f00;
+}
+
+.arrow-right {
+    width: 0;
+    height: 0;
+    border-top: 5px solid transparent !important;
+    border-bottom: 5px solid transparent !important;
+
+    border-left: 5px solid green;
+}
+
+.arrow-left {
+    width: 0;
+    height: 0;
+    border-top: 5px solid transparent !important;
+    border-bottom: 5px solid transparent !important;
+
+    border-right:5px solid blue;
+}
+.arrow-up,
+.arrow-down,
+.arrow-right,
+.arrow-left{
+    border-color:$maincolor;
+}
 @import "pagination.scss";
 @import "flashmessage-error.scss";
