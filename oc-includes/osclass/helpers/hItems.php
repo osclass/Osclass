@@ -1209,8 +1209,7 @@
      * @return string
      */
     function osc_total_active_items() {
-        $search = new Search(false);
-        return $search->count();
+        return Item::newInstance()->totalItems(null, 'ACTIVE|ENABLED|NOTEXPIRED');
     }
 
     /**
@@ -1219,8 +1218,7 @@
      * @return string
      */
     function osc_total_items() {
-        $search = new Search(true);
-        return $search->count();
+        return Item::newInstance()->totalItems(null);
     }
 
     /**
@@ -1229,9 +1227,7 @@
      * @return string
      */
     function osc_total_active_items_today() {
-        $search = new Search(false);
-        $search->addConditions(sprintf('DATEDIFF(\'%s\', %st_item.dt_pub_date) < 1', date('Y-m-d H:i:s'), DB_TABLE_PREFIX));
-        return $search->count();
+        return Item::newInstance()->totalItems(null, 'ACTIVE|ENABLED|NOTEXPIRED|TODAY');
     }
 
     /**
@@ -1240,9 +1236,7 @@
      * @return string
      */
     function osc_total_items_today() {
-        $search = new Search(true);
-        $search->addConditions(sprintf('DATEDIFF(\'%s\', %st_item.dt_pub_date) < 1', date('Y-m-d H:i:s'), DB_TABLE_PREFIX));
-        return $search->count();
+        return Item::newInstance()->totalItems(null, 'TODAY');
     }
 
 
