@@ -61,6 +61,7 @@ function validate_form() {
     if( !pattern.test(email.value) ) {
         email.setAttribute('style', 'color:red;');
         error.setAttribute('style', 'display:block;');
+        error.setAttribute('aria-hidden', 'false');
         num_error = num_error + 1;
     }
 
@@ -68,6 +69,7 @@ function validate_form() {
     var pattern_notnull=/^[a-zA-Z0-9]+$/;
     if( !pattern_notnull.test(admin_user.value) ) {
         error_admin_user.setAttribute('style', 'display:block;');
+        error_admin_user.setAttribute('aria-hidden', 'false');
         num_error = num_error + 1;
     }
 
@@ -118,7 +120,7 @@ function validate_form() {
             }
         },
         error: function(data) {
-            $("#lightbox").css('display','none');
+            $("#lightbox").css('display','none').attr('aria-hidden', 'true');
         }
     });
     return false;
@@ -131,7 +133,7 @@ function no_internet() {
     $('#icountry').attr('disabled', true );
     $('#worlwide').attr('disabled', true );
     $('#d_country span').remove();
-    $('#location-error').css('display','block');
+    $('#location-error').css('display','block').attr('aria-hidden', 'false');
 }
 
 function more_size(input, event) {
@@ -205,11 +207,17 @@ function get_cities(region) {
 $(document).ready(function(){
     $("#email").focus(function() {
         $("#email").attr('style', '');
-        $('#email-error').attr('style', 'display:none;');
+        $('#email-error').attr({ 
+            'style'         : 'display:none;',
+            'aria-hidden'   : 'true'
+        });
     });
 
     $("#admin_user").focus(function() {
-        $('#admin-user-error').attr('style', 'display:none;');
+        $('#admin-user-error').attr({ 
+            'style'         : 'display:none;',
+            'aria-hidden'   : 'true'
+        });
     });
     
     $("#country_select").change(function(){
