@@ -27,6 +27,7 @@ oc-inlcudes/simpletest/test/osclass/custom_config.php
 #themes
 oc-content/themes/*
 !oc-content/themes/modern/
+!oc-content/themes/bender/
 
 #plugins
 oc-content/plugins/*
