@@ -93,6 +93,7 @@
                  bender_draw_item($class); ?>
           <?php } ?>
      </ul>
+     <div class="clear"></div>
       <?php
       if(osc_rewrite_enabled()){
       $footerLinks = osc_search_footer_links(); ?>

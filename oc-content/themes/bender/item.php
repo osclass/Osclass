@@ -142,6 +142,7 @@
                         bender_draw_item($class); ?>
                 <?php } ?>
             </ul>
+            <div class="clear"></div>
         </div>
     <?php } ?>
     <?php if( osc_comments_enabled() ) { ?>

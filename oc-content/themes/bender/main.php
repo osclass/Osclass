@@ -58,6 +58,7 @@
             }
         ?>
     </ul>
+    <div class="clear"></div>
     <?php if( osc_count_latest_items() == osc_max_latest_items() ) { ?>
         <p class="see_more_link"><a href="<?php echo osc_search_show_all_url() ; ?>">
             <strong><?php _e('See all offers', 'bender') ; ?> &raquo;</strong></a>
