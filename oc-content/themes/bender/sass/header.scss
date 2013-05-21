@@ -38,7 +38,7 @@ body.has-searchbox #header{
     @if $maincolor == #000000{
         @include button-style(#ffffff);
     } @else {
-        @include button-style(complement(darken($maincolor,20%)));
+        @include button-style(complement(darken($maincolor,$buttonDarken)));
     }
 
 }
