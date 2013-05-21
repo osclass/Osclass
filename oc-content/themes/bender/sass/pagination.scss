@@ -11,3 +11,77 @@
 .paginate a:hover { background-color: $maincolor; color:white; }
 .paginate .searchPaginationSelected,
 .paginate a:hover { font-weight: bold; }
+
+
+.see_by{
+    float:right;
+
+    border: solid 1px #D1D1D1;
+    background-color: #F7F7F7;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    cursor: default;
+    font-size: 13px;
+    font-weight:400;
+    text-align: center;
+    white-space: nowrap;
+    height: 16px;
+    outline: 0;
+    padding: 5px 6px;
+    display: block;
+    margin-right:10px;
+    position: relative;
+}
+.see_by span{
+    float:left;
+}
+.see_by label{
+    float:right;
+    margin: 0;
+    padding: 0 18px 0 5px;
+    color:darken($maincolor,20%);
+}
+.see_by ul{
+    position: absolute;
+    right:-1px;
+    margin:22px 0 0;
+    padding:8px 10px;
+    list-style: none;
+    text-align: right;
+    background-color:$maincolor;
+    border:solid 1px darken($maincolor,10%);
+    @include border-radius(2px);
+    display: none;
+}
+.see_by ul a{
+    font-size: 1em;
+    font-weight:500;
+        color:#fff;
+}
+.arrow-envelope,{
+    position:absolute;
+    right:-1px;
+    top: -1px;
+}
+.hover .arrow-envelope{
+    background-color:$maincolor;
+    border:solid 1px darken($maincolor,10%);
+    width: 21px;
+    height: 28px;
+    border-bottom: none;
+    z-index: 3;
+}
+.see_by .arrow-up,
+.see_by .arrow-down,
+.see_by .arrow-right,
+.see_by .arrow-left{
+    position:absolute;
+    right:6px;
+    top: 11px;
+}
+.hover .arrow-envelope b{
+    border-color:white;
+}
+.hover ul{
+    display: block;
+}

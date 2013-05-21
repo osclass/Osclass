@@ -90,6 +90,7 @@
                     bender_draw_item($class); ?>
             <?php } ?>
         </ul>
+        <div class="clear"></div>
     </div>
     <?php } ?>
 </div>

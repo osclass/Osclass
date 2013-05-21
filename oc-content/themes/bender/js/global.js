@@ -107,6 +107,11 @@ $(document).ready(function(event){
             return false;
         }
     });
+    $('.see_by').hover(function(){
+        $(this).addClass('hover');
+    },function(){
+        $(this).removeClass('hover');
+    })
     //OK
     bender.toggleClass('data-bclass-toggle','body',true);
     //OK
