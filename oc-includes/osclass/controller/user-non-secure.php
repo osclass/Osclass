@@ -120,14 +120,14 @@
 
                     $itemsPerPage = Params::getParam('itemsPerPage')!='' ? Params::getParam('itemsPerPage') : 10;
                     $page         = Params::getParam('iPage') > 0 ? Params::getParam('iPage') -1 : 0;
-                    $total_items  = Item::newInstance()->countItemTypesByUserID($user['pk_i_id'], $itemType);
+                    $total_items  = Item::newInstance()->countItemTypesByUserID($user['pk_i_id'], 'active');
 
                     if($itemsPerPage == 'all') {
                         $total_pages = 1;
-                        $items = Item::newInstance()->findItemTypesByUserID($user['pk_i_id'], 0, null, $itemType = "active");
+                        $items = Item::newInstance()->findItemTypesByUserID($user['pk_i_id'], 0, null, 'active');
                     } else {
                         $total_pages  = ceil($total_items/$itemsPerPage);
-                        $items = Item::newInstance()->findItemTypesByUserID($user['pk_i_id'], $page*$itemsPerPage, $itemsPerPage, $itemType = "active");
+                        $items = Item::newInstance()->findItemTypesByUserID($user['pk_i_id'], $page*$itemsPerPage, $itemsPerPage, 'active');
                     }
 
                     View::newInstance()->_exportVariableToView( 'user', $user );
