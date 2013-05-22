@@ -1,11 +1,11 @@
 /*
 Syntax error: Undefined mixin 'underlinke-hover'.
-        on line 131 of /Users/feralou/git/public/osclass-themes/bender/sass/list.scss, in `underlinke-hover'
-        from line 131 of /Users/feralou/git/public/osclass-themes/bender/sass/list.scss
+        on line 133 of /Users/feralou/htdocs/osclass/develop/oc-content/themes/bender/sass/list.scss, in `underlinke-hover'
+        from line 133 of /Users/feralou/htdocs/osclass/develop/oc-content/themes/bender/sass/list.scss
 
 Backtrace:
-/Users/feralou/git/public/osclass-themes/bender/sass/list.scss:131:in `underlinke-hover'
-/Users/feralou/git/public/osclass-themes/bender/sass/list.scss:131
+/Users/feralou/htdocs/osclass/develop/oc-content/themes/bender/sass/list.scss:133:in `underlinke-hover'
+/Users/feralou/htdocs/osclass/develop/oc-content/themes/bender/sass/list.scss:133
 /Users/feralou/.rvm/gems/ruby-2.0.0-p0/gems/sass-3.2.7/lib/sass/tree/visitors/perform.rb:253:in `visit_mixin'
 /Users/feralou/.rvm/gems/ruby-2.0.0-p0/gems/sass-3.2.7/lib/sass/tree/visitors/base.rb:37:in `visit'
 /Users/feralou/.rvm/gems/ruby-2.0.0-p0/gems/sass-3.2.7/lib/sass/tree/visitors/perform.rb:100:in `visit'
@@ -70,4 +70,4 @@ Backtrace:
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Syntax error: Undefined mixin 'underlinke-hover'.\A         on line 131 of /Users/feralou/git/public/osclass-themes/bender/sass/list.scss, in `underlinke-hover'\A         from line 131 of /Users/feralou/git/public/osclass-themes/bender/sass/list.scss"; }
+  content: "Syntax error: Undefined mixin 'underlinke-hover'.\A         on line 133 of /Users/feralou/htdocs/osclass/develop/oc-content/themes/bender/sass/list.scss, in `underlinke-hover'\A         from line 133 of /Users/feralou/htdocs/osclass/develop/oc-content/themes/bender/sass/list.scss"; }
