@@ -571,12 +571,15 @@
      * @param int $page
      * @return string
      */
-    function osc_user_list_items_url($page = '') {
+    function osc_user_list_items_url($page = '', $typeItem = '') {
         if ( osc_rewrite_enabled() ) {
+
             if($page=='') {
-                return osc_base_url() . osc_get_preference('rewrite_user_items');
+                $typeItem = $typeItem != '' ? "?itemType=" . $typeItem : "";
+                return osc_base_url() . osc_get_preference('rewrite_user_items') . $typeItem ;
             } else {
-                return osc_base_url() . osc_get_preference('rewrite_user_items') . '?iPage='.$page;
+                $typeItem = $typeItem != '' ? "&itemType=" . $typeItem  : "";
+                return osc_base_url() . osc_get_preference('rewrite_user_items') . "?iPage=" . $page . $typeItem ;
             }
         } else {
             if($page=='') {
@@ -964,6 +967,36 @@
         }
         return false;
     }
+
+    /**
+     * Get if the user is on public profile page
+     *
+     * @return boolean
+     */
+    function osc_is_public_profile() {
+        $location = Rewrite::newInstance()->get_location();
+        $section  = Rewrite::newInstance()->get_section();
+        if( $location === 'user' && $section === 'pub_profile' ) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Get if the user is on items page
+     *
+     * @return boolean
+     */
+    function osc_is_list_items() {
+        $location = Rewrite::newInstance()->get_location();
+        $section  = Rewrite::newInstance()->get_section();
+        if( $location === 'user' && $section === 'items' ) {
+            return true;
+        }
+        return false;
+    }
+
+
 
     /**
      * Get location

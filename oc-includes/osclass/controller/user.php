@@ -192,16 +192,18 @@
                                                 $this->redirectTo( osc_user_profile_url() );
                 break;
                 case 'items':                   // view items user
-                                                $itemsPerPage = (Params::getParam('itemsPerPage')!='')?Params::getParam('itemsPerPage'):5;
-                                                $page = (Params::getParam('iPage')!='')?Params::getParam('iPage'):0;
-                                                $total_items = Item::newInstance()->countByUserIDEnabled($_SESSION['userId']);
-                                                $total_pages = ceil($total_items/$itemsPerPage);
-                                                $items = Item::newInstance()->findByUserIDEnabled($_SESSION['userId'], $page*$itemsPerPage, $itemsPerPage);
+                                                $itemsPerPage = (Params::getParam('itemsPerPage')!='')?Params::getParam('itemsPerPage'):10;
+                                                $page         = (Params::getParam('iPage') > 0) ? Params::getParam('iPage') -1 : 0;
+                                                $itemType     = (Params::getParam('itemType')!='') ? Params::getParam('itemType'): 'active' ;
+                                                $total_items  = Item::newInstance()->countItemTypesByUserID($_SESSION['userId'], $itemType);
+                                                $total_pages  = ceil($total_items/$itemsPerPage);
+                                                $items        = Item::newInstance()->findItemTypesByUserID($_SESSION['userId'], $page*$itemsPerPage, $itemsPerPage, $itemType);
 
                                                 $this->_exportVariableToView('items', $items);
                                                 $this->_exportVariableToView('list_total_pages', $total_pages);
                                                 $this->_exportVariableToView('list_total_items', $total_items);
                                                 $this->_exportVariableToView('items_per_page', $itemsPerPage);
+                                                $this->_exportVariableToView('items_type', $itemType);
                                                 $this->_exportVariableToView('list_page', $page);
 
                                                 $this->doView('user-items.php');
