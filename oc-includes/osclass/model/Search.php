@@ -1070,50 +1070,39 @@
          * number of items returned.
          *
          * @param int $numItems
-         * @param mixed $category int or array(int)
+         * @param mixed $options
          * @param bool $withPicture
          * @return array
          */
-        public function getLatestItems($numItems = 10, $category = array(), $withPicture = false)
+        public function getLatestItems($numItems = 10, $options = array(), $withPicture = false)
         {
-            $this->dao->select(DB_TABLE_PREFIX.'t_item.* ');
-            // from + tables
-            $this->dao->from( DB_TABLE_PREFIX.'t_item use index (PRIMARY)' );
+            $this->set_rpp($numItems);
             if($withPicture) {
-                $this->dao->from(sprintf('%st_item_resource', DB_TABLE_PREFIX));
-                $this->dao->where(sprintf("%st_item_resource.s_content_type LIKE '%%image%%' AND %st_item.pk_i_id = %st_item_resource.fk_i_item_id", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX));
+                $this->withPicture();
             }
-
-            // where
-            $whe  = DB_TABLE_PREFIX.'t_item.b_active = 1 AND ';
-            $whe .= DB_TABLE_PREFIX.'t_item.b_enabled = 1 AND ';
-            $whe .= DB_TABLE_PREFIX.'t_item.b_spam = 0 AND ';
-
-            $whe .= '('.DB_TABLE_PREFIX.'t_item.b_premium = 1 || '.DB_TABLE_PREFIX.'t_item.dt_expiration >= \''. date('Y-m-d H:i:s').'\') ';
-
-            //$whe .= 'AND '.DB_TABLE_PREFIX.'t_category.b_enabled = 1 ';
-            if( is_array($category) && (count($category) > 0) ) {
-                $listCategories = implode(',', $category );
-                $whe .= ' AND '.DB_TABLE_PREFIX.'t_item.fk_i_category_id IN ('.$listCategories.') ';
+            if(isset($options['category'])) {
+                $this->addCategory($options['category']);
             }
-            $this->dao->where( $whe );
-
-            // group by & order & limit
-            $this->dao->groupBy(DB_TABLE_PREFIX.'t_item.pk_i_id');
-            $this->dao->orderBy(DB_TABLE_PREFIX.'t_item.pk_i_id', 'DESC');
-            $this->dao->limit(0, $numItems);
-
-            $rs = $this->dao->get();
-
-            if($rs === false){
-                return array();
+            if(isset($options['country'])) {
+                $this->addCountry($options['country']);
             }
-            if( $rs->numRows() == 0 ) {
-                return array();
+            if(isset($options['region'])) {
+                $this->addRegion($options['region']);
             }
-
-            $items = $rs->result();
-            return Item::newInstance()->extendData($items);
+            if(isset($options['city'])) {
+                $this->addCity($options['city']);
+            }
+            if(isset($options['user'])) {
+                if(is_numeric($options['user'])) {
+                    $this->fromUser($options['user']);
+                } else {
+                    $user = User::newInstance()->findByUsername($options['user']);
+                    if(isset($user['pk_i_id'])) {
+                        $this->fromUser($user['pk_i_id']);
+                    }
+                }
+            }
+            return $this->doSearch();
         }
 
         /**

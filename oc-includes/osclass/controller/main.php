@@ -27,6 +27,12 @@
         //Business Layer...
         function doModel()
         {
+            Params::_view();
+            print_r("######################".PHP_EOL);
+            print_r(Params::getParam('sCategory'));
+            print_r("######################".PHP_EOL);
+            print_r($_REQUEST);
+            print_r($_SERVER);
             switch($this->action) {
                 case('logout'):         // unset only the required parameters in Session
                                         osc_run_hook("logout");

@@ -101,7 +101,6 @@
                 }
                 $request_uri = preg_replace('@^' . REL_WEB_URL . '@', "", urldecode($_SERVER['REQUEST_URI']));
                 if(osc_rewrite_enabled()) {
-                    $this->extractParams($request_uri);
                     $tmp_ar = explode("?", $request_uri);
                     $request_uri = $tmp_ar[0];
                     foreach($this->rules as $match => $uri) {
@@ -134,7 +133,6 @@
         public function extractParams($uri = '')
         {
             $uri_array = explode('?', $uri);
-            $url = substr($uri_array[0], 1);
             $length_i = count($uri_array);
             for($var_i = 1;$var_i<$length_i;$var_i++) {
                 if(preg_match_all('|&([^=]+)=([^&]*)|', '&'.$uri_array[$var_i].'&', $matches)) {
@@ -142,6 +140,11 @@
                     for($var_k = 0;$var_k<$length;$var_k++) {
                         Params::setParam($matches[1][$var_k], $matches[2][$var_k]);
                     }
+                }
+            }
+            if(preg_match_all('|&([^=]+)=([^&]*)|', '&'.urldecode(@$_SERVER['QUERY_STRING']).'&', $match)) {
+                foreach($match[1] as $k => $key) {
+                    Params::setParam($key, $match[2][$k]);
                 }
             }
         }

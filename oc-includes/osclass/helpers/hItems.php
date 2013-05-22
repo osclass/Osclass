@@ -946,13 +946,13 @@
      *
      * @return array
      */
-    function osc_has_latest_items($total_latest_items = null, $category = array()) {
+    function osc_has_latest_items($total_latest_items = null, $options = array()) {
         if ( !View::newInstance()->_exists('latestItems') ) {
             $search = Search::newInstance();
             if( !is_numeric($total_latest_items) ) {
                 $total_latest_items = osc_max_latest_items();
             }
-            View::newInstance()->_exportVariableToView('latestItems', $search->getLatestItems($total_latest_items, $category));
+            View::newInstance()->_exportVariableToView('latestItems', $search->getLatestItems($total_latest_items, $options));
         }
         if ( View::newInstance()->_exists('resources') ) {
             View::newInstance()->_erase('resources');
@@ -982,13 +982,15 @@
      *
      * @return int
      */
-    function osc_count_latest_items($total_latest_items = null, $category = array()) {
+    function osc_count_latest_items($total_latest_items = null, $options = array()) {
         if ( !View::newInstance()->_exists('latestItems') ) {
             $search = Search::newInstance();
             if( !is_numeric($total_latest_items) ) {
                 $total_latest_items = osc_max_latest_items();
             }
-            View::newInstance()->_exportVariableToView('latestItems', $search->getLatestItems($total_latest_items, $category));
+            View::newInstance()->_exportVariableToView('latestItems', $search->getLatestItems($total_latest_items, $options));
+            $s = new Search();
+            $s->doSearch(true, false);
         };
         return (int) View::newInstance()->_count('latestItems');
     }
