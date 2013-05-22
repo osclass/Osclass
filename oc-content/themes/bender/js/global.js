@@ -115,7 +115,7 @@ $(document).ready(function(event){
     //OK
     bender.toggleClass('data-bclass-toggle','body',true);
     //OK
-    $('.doublebutton a').click(function (event) {
+    /*$('.doublebutton a').click(function (event) {
         var thisParent = $(this).parent();
         if($(this).hasClass('grid-button')){
             thisParent.addClass('active');
@@ -129,7 +129,7 @@ $(document).ready(function(event){
         }
         event.preventDefault();
         return;
-    });
+    });*/
 
 
     /////// STARTS PLACE HOLDER
