@@ -23,10 +23,25 @@ body.home #main{
     float: left;
     margin-top: -20px 40px 0 0;
 }
-.r-list li{
+.tbl{
+    display: block;
+    width: 100%;
+}
+div.first_cel ul{
+    margin:0;
+}
+.cell_3{
+    width:33%;
     float:left;
+}
+.cell_3 ul{
+    margin:0;
+    margin-left:20px;
+}
+.r-list li{
+    /*float:left;
     width:30%;
-    margin-right:3%;
+    margin-right:3%;*/
 
     white-space: nowrap;
     overflow: hidden;
@@ -44,6 +59,9 @@ ul.r-list li h1{
     margin:25px 0 10px 0;
     padding:0;
     font-size: 1em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
 }
 ul.r-list li a,
 ul.r-list li span{
@@ -216,4 +234,10 @@ body.home .listing-grid .first{
 .counter-search{
     float:left;
     line-height: 32px;
+}
+#main h5{
+    margin-bottom:10px;
+}
+.premium-list  li.listing-card{
+    background-color: #FCFCD7;
 }
