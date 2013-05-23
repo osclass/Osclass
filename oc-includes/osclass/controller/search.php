@@ -26,6 +26,7 @@
         function __construct()
         {
             parent::__construct();
+
             $this->mSearch = Search::newInstance();
             $this->uri = preg_replace('|^' . REL_WEB_URL . '|', '', $_SERVER['REQUEST_URI']);
 
@@ -265,7 +266,6 @@
             $successCat = false;
             if(count($p_sCategory) > 0) {
                 foreach($p_sCategory as $category) {
-
                     $successCat = ($this->mSearch->addCategory($category) || $successCat);
                 }
             } else {

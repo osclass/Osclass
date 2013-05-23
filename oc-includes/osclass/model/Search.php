@@ -622,12 +622,26 @@
                 $this->withUserId = true;
                 $ids = array();
                 foreach($id as $_id) {
-                    $ids[] = sprintf("%st_item.fk_i_user_id = %d ", DB_TABLE_PREFIX, $_id);
+                    if(!is_numeric($_id)) {
+                        $user = User::newInstance()->findByUsername($_id);
+                        if(isset($user['pk_i_id'])) {
+                            $ids[] = sprintf("%st_item.fk_i_user_id = %d ", DB_TABLE_PREFIX, $user['pk_i_id']);
+                        }
+                    } else {
+                        $ids[] = sprintf("%st_item.fk_i_user_id = %d ", DB_TABLE_PREFIX, $_id);
+                    }
                 }
                 $this->user_ids = $ids;
             } else {
                 $this->withUserId = true;
-                $this->user_ids = $id;
+                if(!is_numeric($id)) {
+                    $user = User::newInstance()->findByUsername($id);
+                    if(isset($user['pk_i_id'])) {
+                        $this->user_ids = $user['pk_i_id'];
+                    }
+                } else {
+                    $this->user_ids = $id;
+                }
             }
         }
 
@@ -1080,27 +1094,20 @@
             if($withPicture) {
                 $this->withPicture();
             }
-            if(isset($options['category'])) {
-                $this->addCategory($options['category']);
+            if(isset($options['sCategory'])) {
+                $this->addCategory($options['sCategory']);
             }
-            if(isset($options['country'])) {
-                $this->addCountry($options['country']);
+            if(isset($options['sCountry'])) {
+                $this->addCountry($options['sCountry']);
             }
-            if(isset($options['region'])) {
-                $this->addRegion($options['region']);
+            if(isset($options['sRegion'])) {
+                $this->addRegion($options['sRegion']);
             }
-            if(isset($options['city'])) {
-                $this->addCity($options['city']);
+            if(isset($options['sCity'])) {
+                $this->addCity($options['sCity']);
             }
-            if(isset($options['user'])) {
-                if(is_numeric($options['user'])) {
-                    $this->fromUser($options['user']);
-                } else {
-                    $user = User::newInstance()->findByUsername($options['user']);
-                    if(isset($user['pk_i_id'])) {
-                        $this->fromUser($user['pk_i_id']);
-                    }
-                }
+            if(isset($options['sUser'])) {
+                $this->fromUser($options['sUser']);
             }
             return $this->doSearch();
         }
@@ -1167,7 +1174,7 @@
          */
         public function listCityAreas($city = null, $zero = ">", $order = "items DESC")
         {
-           $aOrder = split(' ', $order);
+           $aOrder = explode(' ', $order);
             $nOrder = count($aOrder);
 
             if($nOrder == 2) $this->dao->orderBy($aOrder[0], $aOrder[1]);

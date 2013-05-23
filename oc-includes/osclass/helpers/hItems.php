@@ -952,6 +952,7 @@
             if( !is_numeric($total_latest_items) ) {
                 $total_latest_items = osc_max_latest_items();
             }
+
             View::newInstance()->_exportVariableToView('latestItems', $search->getLatestItems($total_latest_items, $options));
         }
         if ( View::newInstance()->_exists('resources') ) {
@@ -987,6 +988,11 @@
             $search = Search::newInstance();
             if( !is_numeric($total_latest_items) ) {
                 $total_latest_items = osc_max_latest_items();
+            }
+            if(is_array($options) && empty($options)) {
+                $options = osc_get_subdomain_params();
+            } else if($options==null) {
+                $options = array();
             }
             View::newInstance()->_exportVariableToView('latestItems', $search->getLatestItems($total_latest_items, $options));
             $s = new Search();

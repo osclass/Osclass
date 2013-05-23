@@ -94,6 +94,7 @@
             $this->add_submenu( 'settings', __('Mail server'), osc_admin_base_url(true) .'?page=settings&action=mailserver', 'settings_mailserver', 'administrator');
             $this->add_submenu( 'settings', __('Media'), osc_admin_base_url(true) .'?page=settings&action=media', 'settings_media', 'administrator');
             $this->add_submenu( 'settings', __('Latest searches'), osc_admin_base_url(true) .'?page=settings&action=latestsearches', 'settings_searches', 'administrator');
+            $this->add_submenu( 'settings', __('Subdomain settings'), osc_admin_base_url(true) .'?page=settings&action=subdomain', 'settings_subdomain', 'administrator');
 
             $this->add_menu( __('Pages'), osc_admin_base_url(true) .'?page=pages', 'pages', 'administrator' );
 
