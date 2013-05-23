@@ -127,25 +127,39 @@ FUNCTIONS
         }
     }
     if( !function_exists('bender_draw_item') ) {
-        function bender_draw_item($class = false,$admin = false) {
-            require WebThemes::newInstance()->getCurrentThemePath().'loop-single.php';
+        function bender_draw_item($class = false,$admin = false, $premium = false) {
+            $premiumSlug = '';
+            if($premium){
+                $premiumSlug = '-premium';
+            }
+            require WebThemes::newInstance()->getCurrentThemePath().'loop-single'.$premiumSlug.'.php';
         }
     }
     if( !function_exists('bender_draw_categories_list') ) {
         function bender_draw_categories_list(){ ?>
         <?php if(!osc_is_home_page()){ echo '<div class="resp-wrapper">'; } ?>
-        <ul class="r-list">
          <?php
+         //cell_3
+        $total_categories   = osc_count_categories();
+        $col1_max_cat       = ceil($total_categories/3);
+
          osc_goto_first_category();
-         $i= 0;
+         $i      = 0;
+
          while ( osc_has_categories() ) {
-            $liClass = '';
-            if($i%3 == 0){
-                $liClass = 'clear';
-            }
-            $i++;
          ?>
-             <li<?php if($liClass){ echo " class='$liClass'"; } ?>>
+        <?php
+            if($i%$col1_max_cat == 0){
+                if($i > 0) { echo '</div>'; }
+                if($i == 0) {
+                   echo '<div class="cell_3 first_cel">';
+                } else {
+                    echo '<div class="cell_3">';
+                }
+            }
+        ?>
+        <ul class="r-list">
+             <li>
                  <h1><a class="category <?php echo osc_category_slug() ; ?>" href="<?php echo osc_search_category_url() ; ?>"><?php echo osc_category_name() ; ?></a> <span>(<?php echo osc_category_total_items() ; ?>)</span></h1>
                  <?php /**/if ( osc_count_subcategories() > 0 ) { ?>
                    <ul>
@@ -158,8 +172,12 @@ FUNCTIONS
                    </ul>
                  <?php } ?>
              </li>
-        <?php } ?>
         </ul>
+        <?php
+                $i++;
+            }
+            echo '</div>';
+        ?>
         <?php if(!osc_is_home_page()){ echo '</div>'; } ?>
         <?php
         }

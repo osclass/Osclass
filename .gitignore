@@ -30,7 +30,6 @@ oc-content/themes/*
 !oc-content/themes/bender/
 oc-content/themes/bender/.sass-cache*
 
-
 #plugins
 oc-content/plugins/*
 !oc-content/plugins/index.php

@@ -91,6 +91,26 @@
             <?php } ?>
           </div>
      </div>
+        <?php
+            $i = 0;
+            osc_get_premiums();
+            if(osc_count_premiums() > 0) {
+                //echo '<h5>Premium listings</h5>';
+                echo '<ul class="listing-card-list '.$listClass.' premium-list" id="listing-card-list">';
+                while ( osc_has_premiums() ) {
+                    $class = '';
+                    if($i%3 == 0){
+                        $class = 'first';
+                    }
+                    bender_draw_item($class,false,true);
+                    $i++;
+                    if($i == 3){
+                        break;
+                    }
+                }
+                echo '</ul>';
+            }
+        ?>
      <?php if(osc_count_items() > 0) { ?>
      <ul class="listing-card-list <?php echo $listClass; ?>" id="listing-card-list">
           <?php
