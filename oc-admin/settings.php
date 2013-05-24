@@ -26,11 +26,6 @@
         function doModel()
         {
             switch($this->action) {
-                case('subdomain'):
-                case('subdomain_post'):
-                    require_once(osc_admin_base_path() . 'controller/settings/subdomain.php');
-                    $do = new CAdminSettingsSubdomain();
-                break;
                 case('comments'):
                 case('comments_post'):
                     require_once(osc_admin_base_path() . 'controller/settings/comments.php');

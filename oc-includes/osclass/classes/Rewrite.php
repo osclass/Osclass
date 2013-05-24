@@ -142,11 +142,6 @@
                     }
                 }
             }
-            if(preg_match_all('|&([^=]+)=([^&]*)|', '&'.urldecode(@$_SERVER['QUERY_STRING']).'&', $match)) {
-                foreach($match[1] as $k => $key) {
-                    Params::setParam($key, $match[2][$k]);
-                }
-            }
         }
 
         public function removeRule($regexp)

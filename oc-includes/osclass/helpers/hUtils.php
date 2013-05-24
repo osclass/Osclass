@@ -266,9 +266,6 @@
             if(Params::getParam('sCategory')!='') {
                 $options['sCategory'] = Params::getParam('sCategory');
             }
-            if(Params::getParam('sUser')!='') {
-                $options['sUser'] = Params::getParam('sUser');
-            }
         }
         return $options;
     }
