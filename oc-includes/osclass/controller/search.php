@@ -20,7 +20,6 @@
     class CWebSearch extends BaseModel
     {
         var $mSearch;
-        var $nice_url;
         var $uri;
 
         function __construct()
@@ -28,13 +27,7 @@
             parent::__construct();
             $this->mSearch = Search::newInstance();
             $this->uri = preg_replace('|^' . REL_WEB_URL . '|', '', $_SERVER['REQUEST_URI']);
-
-            $this->nice_url = false;
-            if( !stripos($_SERVER['REQUEST_URI'], 'search') && osc_rewrite_enabled() ) {
-                $this->nice_url = true;
-            }
-
-            if( $this->nice_url ) {
+            if( stripos($_SERVER['REQUEST_URI'], osc_get_preference('rewrite_search_url'))===false && osc_rewrite_enabled() && !Params::existParam('sFeed')) {
                 // redirect if it ends with a slash
                 if( preg_match('|/$|', $this->uri) ) {
                     $redirectURL = osc_base_url() . $this->uri;
