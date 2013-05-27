@@ -75,7 +75,7 @@
                         $url_submenu   = str_replace(osc_admin_base_url(true).'?', '', $url_submenu);
                         $url_submenu   = str_replace(osc_admin_base_url(), '', $url_submenu);
 
-                        if( strpos($actual_url, $url_submenu, 0) === 0 && $priority<=2  && $url_menu != '') {
+                        if( strpos($actual_url, $url_submenu, 0) === 0 && $priority<=2  && $url_submenu != '') {
 
                             if( $urlLenght<strlen($url_submenu) ) {
                                 $urlLenght = strlen($url_submenu);
