@@ -194,16 +194,6 @@ define('__OSC_LOADED__', true);
 // Moved from BaseModel, since we need some session magic on index.php;)
 Session::newInstance()->session_start();
 
-if( OC_ADMIN ) {
-    $functions_path = AdminThemes::newInstance()->getCurrentThemePath() . 'functions.php';
-    if( file_exists($functions_path) ) {
-        require_once $functions_path;
-    }
-} else {
-    // init Rewrite class only if it's the frontend
-    Rewrite::newInstance()->init();
-}
-
 if( osc_timezone() != '' ) {
     date_default_timezone_set(osc_timezone());
 }
@@ -262,7 +252,13 @@ osc_csrfguard_start();
 if( OC_ADMIN ) {
     // init admin menu
     AdminMenu::newInstance()->init();
+    $functions_path = AdminThemes::newInstance()->getCurrentThemePath() . 'functions.php';
+    if( file_exists($functions_path) ) {
+        require_once $functions_path;
+    }
 }
+
+Rewrite::newInstance()->init();
 
 if( !class_exists('PHPMailer') ) {
     require_once osc_lib_path() . 'phpmailer/class.phpmailer.php';

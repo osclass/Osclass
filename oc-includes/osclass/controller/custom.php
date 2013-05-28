@@ -28,10 +28,23 @@
         //Business Layer...
         function doModel()
         {
+
+            $request_uri = "index.php?page=custom";
+            Params::setParam('route', $match);
+            $l = count($m);
+            for($p=1;$p<$l;$p++) {
+                if(isset($route['params'][$p])) {
+                    Params::setParam($route['params'][$p], $m[$p]);
+                } else {
+                    Params::setParam('route_param_'.$p, $m[$p]);
+                }
+            }
+
+
             $file = Params::getParam('file');
 
             // valid file?
-            if( stripos($file, '../') !== false ) {
+            if( stripos($file, '../') !== false || stripos($file, '/admin/') !== false ) { //If the file is inside an "admin" folder, it should NOT be opened in frontend
                 $this->do404();
                 return;
             }
