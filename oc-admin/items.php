@@ -596,8 +596,8 @@
                                             $url = osc_admin_base_url(true) . "?page=items";
                                             // if Referer is saved that means referer is ManageListings or ReportListings
                                             if(Session::newInstance()->_get('osc_admin_referer')!='') {
-                                                Session::newInstance()->_drop('osc_admin_referer');
                                                 $url = Session::newInstance()->_get('osc_admin_referer');
+                                                Session::newInstance()->_drop('osc_admin_referer');
                                             }
                                             Session::newInstance()->_clearVariables();
                                             if(is_array($meta)) {
