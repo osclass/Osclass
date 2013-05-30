@@ -39,10 +39,7 @@
             $this->section = '';
             $this->http_referer = '';
             $this->routes = array();
-            if(!OC_ADMIN) { //Save time, unserialize is expensive
-                $this->rules = $this->getRules();
-            }
-            osc_run_hook('rewrite_init');
+            $this->rules = $this->getRules();
         }
 
         public static function newInstance()
@@ -95,12 +92,12 @@
             }
         }
 
-        public function addRoute($regexp, $file, $params)
+        public function addRoute($id, $regexp, $url, $file)
         {
             $regexp = trim($regexp);
             $uri = trim($file);
             if($regexp!='' && $file!='') {
-                $this->routes[$regexp] = array('regexp' => $regexp, 'file' => $file, 'params' => $params);
+                $this->routes[$id] = array('regexp' => $regexp, 'url' => $url, 'file' => $file);
             }
         }
 
@@ -119,11 +116,23 @@
                 }
                 $request_uri = preg_replace('@^' . REL_WEB_URL . '@', "", urldecode($_SERVER['REQUEST_URI']));
                 $route_used = false;
-                foreach($this->routes as $match => $route) {
+                foreach($this->routes as $id => $route) {
                     // UNCOMMENT TO DEBUG
                     //echo 'Request URI: '.$request_uri." # Match : ".$match." # URI to go : ".$uri." <br />";
-                    if(preg_match('#^'.$match.'#', $request_uri, $m)) {
+                    if(preg_match('#^'.$route['regexp'].'#', $request_uri, $m)) {
+                        if(!preg_match_all('#\{([^\}]+)\}#', $route['url'], $args)) {
+                            $args[1] = array();
+                        }
+                        $l = count($m);
+                        for($p=1;$p<$l;$p++) {
+                            if(isset($args[1][$p-1])) {
+                                Params::setParam($args[1][$p-1], $m[$p]);
+                            } else {
+                                Params::setParam('route_param_'.$p, $m[$p]);
+                            }
+                        }
                         Params::setParam('page', 'custom');
+                        Params::setParam('route', $id);
                         $route_used = true;
                         break;
                     }

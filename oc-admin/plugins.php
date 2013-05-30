@@ -166,23 +166,33 @@
                     Plugins::runHook('admin_post');
                     break;
                 case 'renderplugin':
-                    $file = Params::getParam("file");
-                    if($file!="") {
+
+                    if(Params::existParam('route')) {
+                        $request_uri = preg_replace('@^' . REL_WEB_URL . '@', "", urldecode($_SERVER['REQUEST_URI']));
+                        $routes = Rewrite::newInstance()->getRoutes();
+                        $rid = Params::getParam('route');
+                        $file = '../';
+                        if(isset($routes[$rid]) && isset($routes[$rid]['file'])) {
+                            $file = $routes[$rid]['file'];
+                        }
+                    } else {
+                        // DEPRECATED: Disclosed path in URL is deprecated, use routes instead
+                        // This will be REMOVED in 3.4
+                        $file = Params::getParam('file');
                         // We pass the GET variables (in case we have somes)
                         if(preg_match('|(.+?)\?(.*)|', $file, $match)) {
                             $file = $match[1];
                             if(preg_match_all('|&([^=]+)=([^&]*)|', urldecode('&'.$match[2].'&'), $get_vars)) {
                                 for($var_k=0;$var_k<count($get_vars[1]);$var_k++) {
-                                    //$_GET[$get_vars[1][$var_k]] = $get_vars[2][$var_k];
-                                    //$_REQUEST[$get_vars[1][$var_k]] = $get_vars[2][$var_k];
                                     Params::setParam($get_vars[1][$var_k], $get_vars[2][$var_k]);
                                 }
                             }
                         } else {
                             $file = $_REQUEST['file'];
                         };
+                    }
+                    if(stripos($file, '../')===false && $file!="") {
                         $this->_exportVariableToView("file", osc_plugins_path() . $file);
-                        //osc_renderPluginView($file);
                         $this->doView("plugins/view.php");
                     }
                     break;

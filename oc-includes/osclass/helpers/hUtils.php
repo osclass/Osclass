@@ -248,8 +248,9 @@
         return '';
     }
 
-    function osc_add_route($regexp, $file, $params = array()) {
-        Rewrite::newInstance()->addRoute($regexp, $file, $params);
+    function osc_add_route($id, $regexp, $url, $file) {
+        Rewrite::newInstance()->addRoute($id, $regexp, $url, $file);
     }
+
 
 ?>

@@ -256,9 +256,9 @@ if( OC_ADMIN ) {
     if( file_exists($functions_path) ) {
         require_once $functions_path;
     }
+} else {
+    Rewrite::newInstance()->init();
 }
-
-Rewrite::newInstance()->init();
 
 if( !class_exists('PHPMailer') ) {
     require_once osc_lib_path() . 'phpmailer/class.phpmailer.php';
