@@ -778,7 +778,47 @@
             return osc_base_url(true)."?page=item&action=send_friend&id=".osc_item_id();
         }
     }
-    /////////////////////////////////////
+
+    /**
+     * @param $id
+     * @param $args
+     * @since 3.2
+     */
+    function osc_route_url($id, $args = array()) {
+        $routes = Rewrite::newInstance()->getRoutes();
+        if(!isset($routes[$id])) { return ''; };
+        if ( osc_rewrite_enabled() ) {
+            $uri = $routes[$id]['url'];
+            foreach($args as $k => $v) {
+                $uri = str_ireplace('{'.$k.'}', $v, $uri);
+            }
+            return osc_base_url().$uri;
+        } else {
+            $params_url = '';
+            foreach($args as $k => $v) {
+                $params_url .= '&'.$k.'='.$v;
+            }
+            return osc_base_url(true)."?page=custom&route=".$id.$params_url;
+        }
+    }
+
+    /**
+     * @param $id
+     * @param $args
+     * @since 3.2
+     */
+    function osc_route_admin_url($id, $args = array()) {
+        $routes = Rewrite::newInstance()->getRoutes();
+        if(!isset($routes[$id])) { return ''; };
+        $params_url = '';
+        foreach($args as $k => $v) {
+            $params_url .= '&'.$k.'='.$v;
+        }
+        return osc_admin_base_url(true)."?page=plugins&action=renderplugin&route=".$id.$params_url;
+    }
+
+
+/////////////////////////////////////
     //functions for locations & search //
     /////////////////////////////////////
 

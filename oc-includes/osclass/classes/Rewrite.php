@@ -24,6 +24,7 @@
     {
         private static $instance;
         private $rules;
+        private $routes;
         private $request_uri;
         private $uri;
         private $location;
@@ -32,13 +33,13 @@
 
         public function __construct()
         {
-            $this->rules = $this->getRules();
             $this->request_uri = '';
             $this->uri = '';
             $this->location = '';
             $this->section = '';
             $this->http_referer = '';
-            //parent::__construct();
+            $this->routes = array();
+            $this->rules = $this->getRules();
         }
 
         public static function newInstance()
@@ -53,13 +54,13 @@
 
         public function getRules()
         {
-            return unserialize(osc_rewrite_rules());
+            return osc_unserialize(osc_rewrite_rules());
         }
 
         public function setRules()
         {
             Preference::newInstance()->update(
-                    array('s_value' => serialize($this->rules))
+                    array('s_value' => osc_serialize($this->rules))
                     ,array('s_name' => 'rewrite_rules')
             );
         }
@@ -91,6 +92,20 @@
             }
         }
 
+        public function addRoute($id, $regexp, $url, $file)
+        {
+            $regexp = trim($regexp);
+            $uri = trim($file);
+            if($regexp!='' && $file!='') {
+                $this->routes[$id] = array('regexp' => $regexp, 'url' => $url, 'file' => $file);
+            }
+        }
+
+        public function getRoutes()
+        {
+            return $this->routes;
+        }
+
         public function init()
         {
             // $_SERVER is not supported by Params Class... we should fix that
@@ -100,24 +115,47 @@
                     $_SERVER['REQUEST_URI'] = preg_replace('|[\?&]{1}http_referer=(.*)$|', "", urldecode($_SERVER['REQUEST_URI']));
                 }
                 $request_uri = preg_replace('@^' . REL_WEB_URL . '@', "", urldecode($_SERVER['REQUEST_URI']));
-                if(osc_rewrite_enabled()) {
-                    $this->extractParams($request_uri);
-                    $tmp_ar = explode("?", $request_uri);
-                    $request_uri = $tmp_ar[0];
-                    foreach($this->rules as $match => $uri) {
-                        // UNCOMMENT TO DEBUG
-                        //echo 'Request URI: '.$request_uri." # Match : ".$match." # URI to go : ".$uri." <br />";
-                        if(preg_match('#'.$match.'#', $request_uri, $m)) {
-                            $request_uri = preg_replace('#'.$match.'#', $uri, $request_uri);
-                            break;
+                $route_used = false;
+                foreach($this->routes as $id => $route) {
+                    // UNCOMMENT TO DEBUG
+                    //echo 'Request URI: '.$request_uri." # Match : ".$match." # URI to go : ".$uri." <br />";
+                    if(preg_match('#^'.$route['regexp'].'#', $request_uri, $m)) {
+                        if(!preg_match_all('#\{([^\}]+)\}#', $route['url'], $args)) {
+                            $args[1] = array();
                         }
+                        $l = count($m);
+                        for($p=1;$p<$l;$p++) {
+                            if(isset($args[1][$p-1])) {
+                                Params::setParam($args[1][$p-1], $m[$p]);
+                            } else {
+                                Params::setParam('route_param_'.$p, $m[$p]);
+                            }
+                        }
+                        Params::setParam('page', 'custom');
+                        Params::setParam('route', $id);
+                        $route_used = true;
+                        break;
                     }
                 }
-                $this->extractParams($request_uri);
-                $this->request_uri = $request_uri;
+                if(!$route_used) {
+                    if(osc_rewrite_enabled()) {
+                        $tmp_ar = explode("?", $request_uri);
+                        $request_uri = $tmp_ar[0];
+                        foreach($this->rules as $match => $uri) {
+                            // UNCOMMENT TO DEBUG
+                            //echo 'Request URI: '.$request_uri." # Match : ".$match." # URI to go : ".$uri." <br />";
+                            if(preg_match('#^'.$match.'#', $request_uri, $m)) {
+                                $request_uri = preg_replace('#'.$match.'#', $uri, $request_uri);
+                                break;
+                            }
+                        }
+                    }
+                    $this->extractParams($request_uri);
+                    $this->request_uri = $request_uri;
 
-                if(Params::getParam('page')!='') { $this->location = Params::getParam('page'); };
-                if(Params::getParam('action')!='') { $this->section = Params::getParam('action'); };
+                    if(Params::getParam('page')!='') { $this->location = Params::getParam('page'); };
+                    if(Params::getParam('action')!='') { $this->section = Params::getParam('action'); };
+                }
             }
         }
 

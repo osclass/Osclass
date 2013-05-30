@@ -28,10 +28,22 @@
         //Business Layer...
         function doModel()
         {
-            $file = Params::getParam('file');
+            if(Params::existParam('route')) {
+                $request_uri = preg_replace('@^' . REL_WEB_URL . '@', "", urldecode($_SERVER['REQUEST_URI']));
+                $routes = Rewrite::newInstance()->getRoutes();
+                $rid = Params::getParam('route');
+                $file = '../';
+                if(isset($routes[$rid]) && isset($routes[$rid]['file'])) {
+                    $file = $routes[$rid]['file'];
+                }
+            } else {
+                // DEPRECATED: Disclosed path in URL is deprecated, use routes instead
+                // This will be REMOVED in 3.4
+                $file = Params::getParam('file');
+            }
 
             // valid file?
-            if( stripos($file, '../') !== false ) {
+            if( stripos($file, '../') !== false || stripos($file, '/admin/') !== false ) { //If the file is inside an "admin" folder, it should NOT be opened in frontend
                 $this->do404();
                 return;
             }
