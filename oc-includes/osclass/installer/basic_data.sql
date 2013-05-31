@@ -95,6 +95,8 @@ INSERT INTO /*TABLE_PREFIX*/t_preference VALUES
     ,('osclass', 'rewrite_user_change_email', 'email/change', 'STRING')
     ,('osclass', 'rewrite_user_change_username', 'username/change', 'STRING')
     ,('osclass', 'rewrite_user_change_email_confirm', 'email/confirm', 'STRING')
+    ,('osclass', 'subdomain_type', '', 'STRING')
+    ,('osclass', 'subdomain_host', '', 'STRING')
     ,('osclass', 'enableField#f_price@items', '1', 'BOOLEAN')
     ,('osclass', 'enableField#images@items', '1', 'BOOLEAN')
     ,('osclass', 'numImages@items', '4', 'INTEGER')
