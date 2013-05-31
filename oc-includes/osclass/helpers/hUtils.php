@@ -252,5 +252,27 @@
         Rewrite::newInstance()->addRoute($id, $regexp, $url, $file);
     }
 
+    /**
+     *
+     */
+    function osc_get_subdomain_params() {
+        $options = array();
+        if(Params::getParam('subdomain')==1) {
+            if(Params::getParam('sCountry')!='') {
+                $options['sCountry'] = Params::getParam('sCountry');
+            }
+            if(Params::getParam('sRegion')!='') {
+                $options['sRegion'] = Params::getParam('sRegion');
+            }
+            if(Params::getParam('sCity')!='') {
+                $options['sCity'] = Params::getParam('sCity');
+            }
+            if(Params::getParam('sCategory')!='') {
+                $options['sCategory'] = Params::getParam('sCategory');
+            }
+        }
+        return $options;
+    }
+
 
 ?>

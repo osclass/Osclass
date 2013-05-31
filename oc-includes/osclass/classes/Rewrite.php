@@ -172,7 +172,6 @@
         public function extractParams($uri = '')
         {
             $uri_array = explode('?', $uri);
-            $url = substr($uri_array[0], 1);
             $length_i = count($uri_array);
             for($var_i = 1;$var_i<$length_i;$var_i++) {
                 if(preg_match_all('|&([^=]+)=([^&]*)|', '&'.$uri_array[$var_i].'&', $matches)) {

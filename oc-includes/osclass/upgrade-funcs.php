@@ -424,6 +424,9 @@ CREATE TABLE %st_item_description_tmp (
         osc_set_preference('mailserver_name_from', '');
 
         $comm->query(sprintf("ALTER TABLE  %st_category ADD  `b_price_enabled` TINYINT(1) NOT NULL DEFAULT 1", DB_TABLE_PREFIX));
+
+        osc_set_preference('subdomain_type', '');
+        osc_set_preference('subdomain_host', '');
     }
 
     osc_changeVersionTo(312);

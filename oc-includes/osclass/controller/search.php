@@ -25,6 +25,7 @@
         function __construct()
         {
             parent::__construct();
+
             $this->mSearch = Search::newInstance();
             $this->uri = preg_replace('|^' . REL_WEB_URL . '|', '', $_SERVER['REQUEST_URI']);
             if( stripos($_SERVER['REQUEST_URI'], osc_get_preference('rewrite_search_url'))===false && osc_rewrite_enabled() && !Params::existParam('sFeed')) {
@@ -258,7 +259,6 @@
             $successCat = false;
             if(count($p_sCategory) > 0) {
                 foreach($p_sCategory as $category) {
-
                     $successCat = ($this->mSearch->addCategory($category) || $successCat);
                 }
             } else {

@@ -26,6 +26,11 @@
         function doModel()
         {
             switch($this->action) {
+                case('advanced'):
+                case('advanced_post'):
+                    require_once(osc_admin_base_path() . 'controller/settings/advanced.php');
+                    $do = new CAdminSettingsAdvanced();
+                break;
                 case('comments'):
                 case('comments_post'):
                     require_once(osc_admin_base_path() . 'controller/settings/comments.php');
