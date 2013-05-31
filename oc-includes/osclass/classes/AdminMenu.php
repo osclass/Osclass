@@ -113,6 +113,7 @@
             $this->add_submenu( 'tools', __('Location stats'), osc_admin_base_url(true) .'?page=tools&action=locations', 'tools_location', 'administrator');
             $this->add_submenu( 'tools', __('Category stats'), osc_admin_base_url(true) .'?page=tools&action=category', 'tools_category', 'administrator');
             $this->add_submenu( 'tools', __('Maintenance mode'), osc_admin_base_url(true) .'?page=tools&action=maintenance', 'tools_maintenance', 'administrator');
+            osc_run_hook('admin_menu_init');
         }
 
         /**
