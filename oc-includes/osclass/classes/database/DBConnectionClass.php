@@ -266,7 +266,10 @@
             if ( $conn == false ) {
                 $this->errorConnection();
                 $this->releaseOsclassDb();
-                return false;
+                require_once LIB_PATH . 'osclass/helpers/hErrors.php';
+                $title    = 'Osclass &raquo; Error';
+                $message  = 'Osclass database server is not available. <a href="http://forums.osclass.org/">Need more help?</a></p>';
+                osc_die($title, $message);
             }
 
             $this->_setCharset('utf8', $this->db);
@@ -279,7 +282,10 @@
             if ( $selectDb == false ) {
                 $this->errorReport();
                 $this->releaseOsclassDb();
-                return false;
+                require_once LIB_PATH . 'osclass/helpers/hErrors.php';
+                $title    = 'Osclass &raquo; Error';
+                $message  = 'Osclass database is not available. <a href="http://forums.osclass.org/">Need more help?</a></p>';
+                osc_die($title, $message);
             }
 
             return true;
@@ -527,11 +533,7 @@
                 return true;
             }
 
-            if( !$connId->close() ) {
-                return false; 
-            }
-
-            return true;
+            return @$connId->close();
         }
 
         /**
