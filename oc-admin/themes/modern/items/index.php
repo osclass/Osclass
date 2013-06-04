@@ -82,7 +82,7 @@
                 $("#dialog-item-delete").dialog({
                     autoOpen: false,
                     modal: true,
-                    title: '<?php echo osc_esc_js( 'admin_dialog_elete_listing_title', osc_apply_filter( __('Delete listing') ) ); ?>'
+                    title: '<?php echo osc_esc_js( osc_apply_filter( 'admin_dialog_elete_listing_title', __('Delete listing') ) ); ?>'
                 });
 
                 // dialog bulk actions
