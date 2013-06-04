@@ -70,7 +70,9 @@ require_once LIB_PATH . 'osclass/model/Preference.php';
 require_once LIB_PATH . 'osclass/helpers/hPreference.php';
 
 // check if Osclass is installed
-if( !getBoolPreference('osclass_installed') ) {
+if( !getBoolPreference('osclass_installed') && MULTISITE ) {
+    header('Location: ' . WEB_PATH); die;
+} else if( !getBoolPreference('osclass_installed') ) {
     require_once LIB_PATH . 'osclass/helpers/hErrors.php';
 
     $title    = 'Osclass &raquo; Error';
