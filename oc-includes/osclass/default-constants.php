@@ -48,6 +48,10 @@
         define('TRANSLATIONS_PATH', CONTENT_PATH . 'languages/');
     }
 
+    if( !defined('UPLOADS_PATH') ) {
+        define('UPLOADS_PATH', CONTENT_PATH . 'uploads/');
+    }
+
     if( !defined('OSC_DEBUG_DB') ) {
         define('OSC_DEBUG_DB', false);
     }

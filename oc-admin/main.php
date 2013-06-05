@@ -60,7 +60,7 @@
                                     }
 
                                     if(function_exists('disk_free_space')) {
-                                        $freedisk = @disk_free_space(osc_content_path()."uploads/");
+                                        $freedisk = @disk_free_space(osc_uploads_path());
                                         if($freedisk!==false && $freedisk<52428800) { //52428800 = 50*1024*1024
                                             osc_add_flash_error_message(_m('You have very few free space left, users will not be able to upload pictures'), 'admin');
                                         }

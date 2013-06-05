@@ -75,7 +75,7 @@
                                         foreach($aResources as $resource) {
                                             osc_run_hook('regenerate_image', $resource);
 
-                                            $path = osc_content_path() . 'uploads/';
+                                            $path = osc_uploads_path();
                                             // comprobar que no haya original
                                             $img_original = $path . $resource['pk_i_id']. "_original*";
                                             $aImages = glob($img_original);
@@ -100,7 +100,7 @@
                                                 $extension = $matches[1];
 
                                                 // Create normal size
-                                                $path_normal = $path = osc_content_path() . 'uploads/' . $resource['pk_i_id'] . '.jpg';
+                                                $path_normal = $path = osc_uploads_path() . $resource['pk_i_id'] . '.jpg';
                                                 $size = explode('x', osc_normal_dimensions());
                                                 ImageResizer::fromFile($image_tmp)->resizeTo($size[0], $size[1])->saveToFile($path);
 
@@ -111,31 +111,31 @@
                                                 }
 
                                                 // Create preview
-                                                $path = osc_content_path(). 'uploads/' . $resource['pk_i_id'] . '_preview.jpg';
+                                                $path = osc_uploads_path() . $resource['pk_i_id'] . '_preview.jpg';
                                                 $size = explode('x', osc_preview_dimensions());
                                                 ImageResizer::fromFile($path_normal)->resizeTo($size[0], $size[1])->saveToFile($path);
 
                                                 // Create thumbnail
-                                                $path = osc_content_path(). 'uploads/' . $resource['pk_i_id'] . '_thumbnail.jpg';
+                                                $path = osc_uploads_path() . $resource['pk_i_id'] . '_thumbnail.jpg';
                                                 $size = explode('x', osc_thumbnail_dimensions());
                                                 ImageResizer::fromFile($path_normal)->resizeTo($size[0], $size[1])->saveToFile($path);
 
                                                 // update resource info
                                                 ItemResource::newInstance()->update(
-                                                                        array(
-                                                                            's_path'            => 'oc-content/uploads/'
-                                                                            ,'s_name'           => osc_genRandomPassword()
-                                                                            ,'s_extension'      => 'jpg'
-                                                                            ,'s_content_type'   => 'image/jpeg'
-                                                                        )
-                                                                        ,array(
-                                                                            'pk_i_id'       => $resource['pk_i_id']
-                                                                        )
+                                                    array(
+                                                        's_path'          => str_replace(osc_base_path(), '', osc_uploads_path())
+                                                        ,'s_name'         => osc_genRandomPassword()
+                                                        ,'s_extension'    => 'jpg'
+                                                        ,'s_content_type' => 'image/jpeg'
+                                                    )
+                                                    ,array(
+                                                        'pk_i_id'       => $resource['pk_i_id']
+                                                    )
                                                 );
                                                 osc_run_hook('regenerated_image', ItemResource::newInstance()->findByPrimaryKey($resource['pk_i_id']));
                                                 // si extension es direfente a jpg, eliminar las imagenes con $extension si hay
                                                 if( $extension != 'jpg' ) {
-                                                    $files_to_remove = osc_content_path(). 'uploads/' . $resource['pk_i_id'] . "*" . $extension;
+                                                    $files_to_remove = osc_uploads_path() . $resource['pk_i_id'] . "*" . $extension;
                                                     $fs = glob( $files_to_remove );
                                                     if(is_array($fs)) {
                                                         array_map( "unlink", $fs );

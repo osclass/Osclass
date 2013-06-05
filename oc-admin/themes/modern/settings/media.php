@@ -279,7 +279,7 @@
                         <div class="form-controls">
                             <input type="file" name="watermark_image"/>
                             <?php if(osc_is_watermark_image()!='') { ?>
-                                <div class="help-box"><img width="100px" src="<?php echo osc_base_url()."oc-content/uploads/watermark.png" ?>" /></div>
+                                <div class="help-box"><img width="100px" src="<?php echo osc_base_url() . str_replace(osc_base_path(), '', osc_uploads_path()) . "watermark.png" ?>" /></div>
                             <?php }; ?>
                             <div class="help-box"><?php _e("It has to be a .PNG image"); ?></div>
                             <div class="help-box"><?php _e("Osclass doesn't check the watermark image size"); ?></div>

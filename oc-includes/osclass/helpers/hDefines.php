@@ -127,6 +127,19 @@
     }
 
     /**
+    * Gets the translations path
+    *
+    * @return string
+    */
+    function osc_uploads_path() {
+        if( MULTISITE && osc_multisite_upload_path() !== '' ) {
+            return osc_multisite_upload_path();
+        }
+
+        return(UPLOADS_PATH);
+    }
+
+    /**
     * Gets the current oc-admin theme
     *
     * @return string

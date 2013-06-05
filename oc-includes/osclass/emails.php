@@ -649,9 +649,9 @@
             $attachment   = Params::getFiles('attachment');
             $resourceName = $attachment['name'];
             $tmpName      = $attachment['tmp_name'];
-            $path         = osc_content_path() . 'uploads/' . time() . '_' . $resourceName;
+            $path         = osc_uploads_path() . time() . '_' . $resourceName;
 
-            if( !is_writable(osc_content_path() . 'uploads/') ) {
+            if( !is_writable(osc_uploads_path()) ) {
                 osc_add_flash_error_message( _m('There has been some errors sending the message') );
             }
 
