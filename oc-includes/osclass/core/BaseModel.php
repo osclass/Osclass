@@ -35,14 +35,14 @@
                 $current_host = $_SERVER['HTTP_HOST'];
             }
 
-            if( parse_url(WEB_PATH, PHP_URL_HOST) !== $current_host ) {
+            if( parse_url(osc_base_url(), PHP_URL_HOST) !== $current_host ) {
                 // first check if it's http or https
                 $url = 'http://';
                 if( $this->is_ssl() ) {
                     $url = 'https://';
                 }
                 // append the domain
-                $url .= parse_url(WEB_PATH, PHP_URL_HOST);
+                $url .= parse_url(osc_base_url(), PHP_URL_HOST);
                 // append the port number if it's necessary
                 $http_port = parse_url($_SERVER['HTTP_HOST'], PHP_URL_PORT);
                 if( $http_port !== 80 ) {

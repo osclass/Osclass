@@ -80,7 +80,7 @@
                 $("#dialog-item-delete").dialog({
                     autoOpen: false,
                     modal: true,
-                    title: '<?php echo osc_esc_js( __('Delete listing') ); ?>'
+                    title: '<?php echo osc_esc_js( osc_apply_filter( 'admin_dialog_elete_listing_title', __('Delete listing') ) ); ?>'
                 });
 
                 // dialog bulk actions
@@ -394,7 +394,7 @@
     <input type="hidden" name="id[]" value="" />
     <div class="form-horizontal">
         <div class="form-row">
-            <?php _e('Are you sure you want to delete this listing?'); ?>
+            <?php osc_apply_filter('admin_dialog_delete_listing_text', _e('Are you sure you want to delete this listing?')); ?>
         </div>
         <div class="form-actions">
             <div class="wrapper">
