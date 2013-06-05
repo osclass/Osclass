@@ -396,7 +396,7 @@
     <input type="hidden" name="id[]" value="" />
     <div class="form-horizontal">
         <div class="form-row">
-            <?php osc_apply_filter('admin_dialog_delete_listing_text', _e('Are you sure you want to delete this listing?')); ?>
+            <?php echo osc_apply_filter('admin_dialog_delete_listing_text', __('Are you sure you want to delete this listing?')); ?>
         </div>
         <div class="form-actions">
             <div class="wrapper">
