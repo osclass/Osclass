@@ -415,7 +415,7 @@ CREATE TABLE %st_item_description_tmp (
         osc_set_preference('rewrite_user_change_username', 'username/change');
         osc_set_preference('csrf_name', 'CSRF'.mt_rand(0,mt_getrandmax()));
 
-        @mkdir(CONTENT_PATH.'uploads/page-images');
+        @mkdir(osc_uploads_path() . 'page-images');
 
     }
 

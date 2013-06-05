@@ -69,6 +69,19 @@ require_once LIB_PATH . 'osclass/helpers/hDatabaseInfo.php';
 require_once LIB_PATH . 'osclass/model/Preference.php';
 require_once LIB_PATH . 'osclass/helpers/hPreference.php';
 
+// check if Osclass is installed
+if( !getBoolPreference('osclass_installed') && MULTISITE ) {
+    header('Location: ' . WEB_PATH); die;
+} else if( !getBoolPreference('osclass_installed') ) {
+    require_once LIB_PATH . 'osclass/helpers/hErrors.php';
+
+    $title    = 'Osclass &raquo; Error';
+    $message  = 'Osclass isn\'t installed. <a href="http://forums.osclass.org/">Need more help?</a></p>';
+    $message .= '<p><a class="button" href="' . osc_get_absolute_url() .'oc-includes/osclass/install.php">Install</a></p>';
+
+    osc_die($title, $message);
+}
+
 require_once LIB_PATH . 'osclass/helpers/hDefines.php';
 require_once LIB_PATH . 'osclass/helpers/hLocale.php';
 require_once LIB_PATH . 'osclass/helpers/hMessages.php';
@@ -255,4 +268,5 @@ if( !class_exists('PHPMailer') ) {
 if( !class_exists('SMTP') ) {
     require_once osc_lib_path() . 'phpmailer/class.smtp.php';
 }
+
 /* file end: ./oc-load.php */
