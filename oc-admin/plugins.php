@@ -90,8 +90,8 @@
                     if( is_array($installed) ) {
                         switch($installed['error_code']) {
                             case('error_output'):
-                                osc_add_flash_error_message( sprintf( _m('The plugin generated %d characters of <strong>unexpected output</strong> during the installation'), strlen($installed['output']) ), 'admin');
-                            break;
+                                osc_add_flash_error_message( sprintf( _m('The plugin generated %d characters of <strong>unexpected output</strong> during the installation. Output: "%s"'), strlen($installed['output']), $installed['output'] ), 'admin');
+                                break;
                             case('error_installed'):
                                 osc_add_flash_error_message( _m('Plugin is already installed'), 'admin');
                             break;
@@ -316,22 +316,15 @@
                             if( $enabled ) {
                                 $sEnable = '<a href="' . osc_admin_base_url(true) . '?page=plugins&amp;action=disable&amp;plugin=' . $pInfo['filename'] . "&amp;" . osc_csrf_token_url() . '">' . __('Disable') . '</a>';
                             } else {
-                                $sEnable = '<a href="' . osc_admin_base_url(true) . '?page=plugins&amp;
-                                action=enable&amp;plugin=' . $pInfo['filename'] . "&amp;" . osc_csrf_token_url() . '">'
-                                    . __('Enable') . '</a>';
+                                $sEnable = '<a href="' . osc_admin_base_url(true) . '?page=plugins&amp;action=enable&amp;plugin=' . $pInfo['filename'] . "&amp;" . osc_csrf_token_url() . '">' . __('Enable') . '</a>';
                             }
                         }
                         // prepare row 6
                         $sInstall  = '';
                         if( $installed ) {
-                            $sInstall = '<a onclick="javascript:return uninstall_dialog(\'' . $pInfo['filename'] .
-                                '\');" href="' . osc_admin_base_url(true) . '?page=plugins&amp;action=uninstall&amp;
-                                plugin=' . $pInfo['filename'] . "&amp;" . osc_csrf_token_url() . '">' . __
-                            ('Uninstall') . '</a>';
+                            $sInstall = '<a onclick="javascript:return uninstall_dialog(\'' . $pInfo['filename'] . '\');" href="' . osc_admin_base_url(true) . '?page=plugins&amp;action=uninstall&amp;plugin=' . $pInfo['filename'] . "&amp;" . osc_csrf_token_url() . '">' . __('Uninstall') . '</a>';
                         } else {
-                            $sInstall = '<a href="' . osc_admin_base_url(true) . '?page=plugins&amp;
-                            action=install&amp;plugin=' . $pInfo['filename'] . "&amp;" . osc_csrf_token_url() . '">' .
-                                __('Install') . '</a>';
+                            $sInstall = '<a href="' . osc_admin_base_url(true) . '?page=plugins&amp;action=install&amp;plugin=' . $pInfo['filename'] . "&amp;" . osc_csrf_token_url() . '">' . __('Install') . '</a>';
                         }
 
                         $row[] = '<input type="hidden" name="installed" value="' . $installed . '" enabled="' . $enabled . '" />' . $pInfo['plugin_name'] . '<div>' . $sUpdate . '</div>';
