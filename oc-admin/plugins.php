@@ -159,11 +159,11 @@
                 case 'admin':
                     $plugin = Params::getParam("plugin");
                     if($plugin != "") {
-                        Plugins::runHook($plugin.'_configure');
+                        osc_run_hook($plugin.'_configure');
                     }
                     break;
                 case 'admin_post':
-                    Plugins::runHook('admin_post');
+                    osc_run_hook('admin_post');
                     break;
                 case 'renderplugin':
 
