@@ -1319,7 +1319,7 @@
 
                             $freedisk = 4*osc_max_size_kb()*1024;
                             if(function_exists('disk_free_space')) {
-                                $freedisk = @disk_free_space(osc_content_path() . 'uploads/');
+                                $freedisk = @disk_free_space(osc_uploads_path());
                             }
 
                             if($freedisk!=false) {
@@ -1368,27 +1368,27 @@
                                     ));
                                     $resourceId = $itemResourceManager->dao->insertedId();
 
-                                    osc_copy($tmpName.'_normal', osc_content_path() . 'uploads/' . $resourceId . '.jpg');
-                                    osc_copy($tmpName.'_preview', osc_content_path() . 'uploads/' . $resourceId . '_preview.jpg');
-                                    osc_copy($tmpName.'_thumbnail', osc_content_path() . 'uploads/' . $resourceId . '_thumbnail.jpg');
+                                    osc_copy($tmpName.'_normal', osc_uploads_path() . $resourceId . '.jpg');
+                                    osc_copy($tmpName.'_preview', osc_uploads_path() . $resourceId . '_preview.jpg');
+                                    osc_copy($tmpName.'_thumbnail', osc_uploads_path() . $resourceId . '_thumbnail.jpg');
                                     if( osc_keep_original_image() ) {
-                                        $path = osc_content_path() . 'uploads/' . $resourceId.'_original.jpg';
+                                        $path = osc_uploads_path() . $resourceId.'_original.jpg';
                                         move_uploaded_file($tmpName, $path);
                                     }
 
-                                    $s_path = 'oc-content/uploads/';
+                                    $s_path = str_replace(osc_base_path(), '', osc_uploads_path());
                                     $resourceType = 'image/jpeg';
                                     $itemResourceManager->update(
-                                                            array(
-                                                                's_path'            => $s_path
-                                                                ,'s_name'           => osc_genRandomPassword()
-                                                                ,'s_extension'      => 'jpg'
-                                                                ,'s_content_type'   => $resourceType
-                                                            )
-                                                            ,array(
-                                                                'pk_i_id'       => $resourceId
-                                                                ,'fk_i_item_id' => $itemId
-                                                            )
+                                        array(
+                                            's_path'          => $s_path
+                                            ,'s_name'         => osc_genRandomPassword()
+                                            ,'s_extension'    => 'jpg'
+                                            ,'s_content_type' => $resourceType
+                                        )
+                                        ,array(
+                                            'pk_i_id'       => $resourceId
+                                            ,'fk_i_item_id' => $itemId
+                                        )
                                     );
                                     osc_run_hook('uploaded_file', ItemResource::newInstance()->findByPrimaryKey($resourceId));
                                 } else {

@@ -61,7 +61,7 @@
         {
             $this->setTableName('tbl_sites');
             $this->setPrimaryKey('s_site');
-            $this->setFields( array('s_site', 'dt_date', 'fk_i_user_id', 's_db_name', 's_db_host', 's_db_user', 's_db_password') );
+            $this->setFields( array('s_site', 'dt_date', 'fk_i_user_id', 's_db_name', 's_db_host', 's_db_user', 's_db_password', 's_upload_path') );
 
             $conn = new DBConnectionClass(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
             $conn->connectToMetadataDb();

@@ -20,7 +20,7 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
-    define('CACHE_PATH', CONTENT_PATH . 'uploads/');
+    define('CACHE_PATH', osc_uploads_path());
 
     /**
      * This is the simplest cache service on earth.
