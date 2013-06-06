@@ -208,25 +208,36 @@
                     }
                 break;
                 case 'custom': // Execute via AJAX custom file
-                    $ajaxFile = Params::getParam("ajaxfile");
+                    if(Params::existParam('route')) {
+                        $routes = Rewrite::newInstance()->getRoutes();
+                        $rid = Params::getParam('route');
+                        $file = '../';
+                        if(isset($routes[$rid]) && isset($routes[$rid]['file'])) {
+                            $file = $routes[$rid]['file'];
+                        }
+                    } else {
+                        // DEPRECATED: Disclosed path in URL is deprecated, use routes instead
+                        // This will be REMOVED in 3.4
+                        $file = Params::getParam('ajaxfile');
+                    }
 
-                    if($ajaxFile == '') {
+                    if($file == '') {
                         echo json_encode(array('error' => 'no action defined'));
                         break;
                     }
 
                     // valid file?
-                    if( stripos($ajaxFile, '../') !== false ) {
+                    if( stripos($file, '../') !== false  || stripos($file, '/admin/') !== false ) { //If the file is inside an "admin" folder, it should NOT be opened in frontend
                         echo json_encode(array('error' => 'no valid ajaxFile'));
                         break;
                     }
 
-                    if( !file_exists(osc_plugins_path() . $ajaxFile) ) {
+                    if( !file_exists(osc_plugins_path() . $file) ) {
                         echo json_encode(array('error' => "ajaxFile doesn't exist"));
                         break;
                     }
 
-                    require_once osc_plugins_path() . $ajaxFile;
+                    require_once osc_plugins_path() . $file;
                 break;
                 case 'check_username_availability':
                     $username = osc_sanitize_username(Params::getParam('s_username'));

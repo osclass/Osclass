@@ -29,7 +29,6 @@
         function doModel()
         {
             if(Params::existParam('route')) {
-                $request_uri = preg_replace('@^' . REL_WEB_URL . '@', "", urldecode($_SERVER['REQUEST_URI']));
                 $routes = Rewrite::newInstance()->getRoutes();
                 $rid = Params::getParam('route');
                 $file = '../';
