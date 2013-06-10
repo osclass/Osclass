@@ -98,6 +98,7 @@
                                 $this->pageManager->updateInternalName($id, $s_internal_name);
                                 $this->pageManager->updateLink($id,$b_link);
                             }
+                            osc_run_hook('edit_page', $id);
                             Session::newInstance()->_clearVariables();
                             osc_add_flash_ok_message(_m('The page has been updated'), 'admin');
                             $this->redirectTo(osc_admin_base_url(true)."?page=pages");
