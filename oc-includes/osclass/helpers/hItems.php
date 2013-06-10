@@ -1304,6 +1304,9 @@
         }
         foreach($params as $key => $value) {
             switch($key) {
+                case 'id':
+                    $mSearch->addItemId($value);
+                    break;
                 case 'author':
                     $tmp = explode(",", $value);
                     foreach($tmp as $t) {
