@@ -420,6 +420,15 @@
     }
 
     /**
+     * Gets type (company/user) of current user
+     *
+     * @return float
+     */
+    function osc_user_is_company() {
+        return (bool) osc_user_field("b_company");
+    }
+
+    /**
      * Gets number of items validated of current user
      *
      * @return int
