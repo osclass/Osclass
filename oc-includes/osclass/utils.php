@@ -78,12 +78,18 @@ function osc_deleteResource( $id , $admin) {
  * @return true on success.
  */
 function osc_deleteDir($path) {
-    if (!is_dir($path))
+    if(strpos($path, "../")!==false) {
         return false;
+    }
+
+    if (!is_dir($path)) {
+        return false;
+    }
 
     $fd = @opendir($path);
-    if (!$fd)
+    if (!$fd) {
         return false;
+    }
 
     while ($file = @readdir($fd)) {
         if ($file != '.' && $file != '..') {
@@ -106,9 +112,14 @@ function osc_deleteDir($path) {
 
 /**
  * Unpack a ZIP file into the specific path in the second parameter.
+ * @DEPRECATED : TO BE REMOVED IN 3.3
  * @return true on success.
  */
 function osc_packageExtract($zipPath, $path) {
+    if(strpos($path, "../")!==false) {
+        return false;
+    }
+
     if(!file_exists($path)) {
         if (!@mkdir($path, 0666)) {
             return false;
@@ -799,6 +810,10 @@ function download_fsockopen($sourceFile, $fileout = null)
 
 function osc_downloadFile($sourceFile, $downloadedFile)
 {
+    if(strpos($downloadedFile, "../")!==false) {
+        return false;
+    }
+
     if ( testCurl() ) {
         @set_time_limit(0);
         $fp = @fopen (osc_content_path() . 'downloads/' . $downloadedFile, 'w+');
@@ -897,6 +912,10 @@ function strip_slashes_extended($array) {
  * @return int
  */
 function osc_unzip_file($file, $to) {
+    if(strpos($to, "../")!==false) {
+        return 0;
+    }
+
     if (!file_exists($to)) {
         if (!@mkdir($to, 0766)) {
             return 0;
@@ -925,6 +944,10 @@ function osc_unzip_file($file, $to) {
  * @return int
  */
 function _unzip_file_ziparchive($file, $to) {
+    if(strpos($to, "../")!==false) {
+        return 0;
+    }
+
     $zip = new ZipArchive();
     $zipopen = $zip->open($file, 4);
 
@@ -980,6 +1003,10 @@ function _unzip_file_ziparchive($file, $to) {
  * @return int
  */
 function _unzip_file_pclzip($zip_file, $to) {
+    if(strpos($to, "../")!==false) {
+        return false;
+    }
+
     // first, we load the library
     require_once LIB_PATH . 'pclzip/pclzip.lib.php';
 
@@ -1026,6 +1053,10 @@ function _unzip_file_pclzip($zip_file, $to) {
  * @return int
  */
 function osc_zip_folder($archive_folder, $archive_name) {
+    if(strpos($archive_folder, "../")!==false || strpos($archive_name,"../")!==false) {
+        return false;
+    }
+
     if (class_exists('ZipArchive')) {
         return _zip_folder_ziparchive($archive_folder, $archive_name);
     }
@@ -1041,6 +1072,9 @@ function osc_zip_folder($archive_folder, $archive_name) {
  * @return int
  */
 function _zip_folder_ziparchive($archive_folder, $archive_name) {
+    if(strpos($archive_folder, "../")!==false || strpos($archive_name,"../")!==false) {
+        return false;
+    }
 
     $zip = new ZipArchive;
     if ($zip -> open($archive_name, ZipArchive::CREATE) === TRUE) {
@@ -1080,6 +1114,9 @@ function _zip_folder_ziparchive($archive_folder, $archive_name) {
  * @return int
  */
 function _zip_folder_pclzip($archive_folder, $archive_name) {
+    if(strpos($archive_folder, "../")!==false || strpos($archive_name,"../")!==false) {
+        return false;
+    }
 
     // first, we load the library
     require_once LIB_PATH . 'pclzip/pclzip.lib.php';
@@ -1123,6 +1160,10 @@ function osc_check_recaptcha() {
 }
 
 function osc_check_dir_writable( $dir = ABS_PATH ) {
+    if(strpos($dir, "../")!==false) {
+        return false;
+    }
+
     clearstatcache();
     if ($dh = opendir($dir)) {
         while (($file = readdir($dh)) !== false) {
@@ -1162,6 +1203,10 @@ function osc_check_dir_writable( $dir = ABS_PATH ) {
 
 
 function osc_change_permissions( $dir = ABS_PATH ) {
+    if(strpos($dir, "../")!==false) {
+        return false;
+    }
+
     clearstatcache();
     if ($dh = opendir($dir)) {
         while (($file = readdir($dh)) !== false) {
@@ -1207,6 +1252,10 @@ function osc_change_permissions( $dir = ABS_PATH ) {
 }
 
 function osc_save_permissions( $dir = ABS_PATH ) {
+    if(strpos($dir, "../")!==false) {
+        return false;
+    }
+
     $perms = array();
     $perms[$dir] = fileperms($dir);
     clearstatcache();
