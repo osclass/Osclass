@@ -188,7 +188,7 @@
      * @param type $array
      * @param type $id_menu
      */
-    function osc_add_admin_menu_page( $menu_title, $url, $menu_id, $capability = null, $icon_url = null, $position = null )
+    function osc_add_admin_menu_page( $menu_title, $url, $menu_id, $capability = 'administrator', $icon_url = null, $position = null )
     {
         AdminMenu::newInstance()->add_menu($menu_title, $url, $menu_id, $capability, $icon_url = null, $position);
     }
@@ -215,7 +215,7 @@
      * @param type $array
      * @param type $id_menu
      */
-    function osc_add_admin_submenu_page( $menu_id, $submenu_title, $url, $submenu_id, $capability = null)
+    function osc_add_admin_submenu_page( $menu_id, $submenu_title, $url, $submenu_id, $capability = 'administrator')
     {
         AdminMenu::newInstance()->add_submenu( $menu_id, $submenu_title, $url, $submenu_id, $capability);
     }
