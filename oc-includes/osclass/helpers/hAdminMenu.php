@@ -69,7 +69,9 @@
                 $aSubmenu = $value['sub'];
                 foreach($aSubmenu as $aSub) {
                     $credential_sub = isset($aSub[4])?$aSub[4]:$aSub[3];
+
                     if(!$is_moderator || $is_moderator && $credential_sub == 'moderator') { // show
+                        if($credential_sub=='moderator' && $is_moderator)
 
                         $url_submenu   = $aSub[1];
                         $url_submenu   = str_replace(osc_admin_base_url(true).'?', '', $url_submenu);
@@ -168,9 +170,9 @@
         $sMenu .= '</ul>'. PHP_EOL;
 
         $sMenu .= '<div id="show-more">'.PHP_EOL;
-    $sMenu .= '<h3><a id="stats" href="#"><div class="ico ico-48 ico-more"></div>' . __('Show more') . '</a></h3>'.PHP_EOL;
-    $sMenu .= '<ul id="hidden-menus">'.PHP_EOL;
-    $sMenu .= '</ul>'.PHP_EOL;
+        $sMenu .= '<h3><a id="stats" href="#"><div class="ico ico-48 ico-more"></div>' . __('Show more') . '</a></h3>'.PHP_EOL;
+        $sMenu .= '<ul id="hidden-menus">'.PHP_EOL;
+        $sMenu .= '</ul>'.PHP_EOL;
         $sMenu .= '</div>'.PHP_EOL;
         $sMenu .= '<div class="osc_switch_mode"><a id="osc_toolbar_switch_mode" href="'.osc_admin_base_url(true).'?page=ajax&action=runhook&hook=compactmode"><div class="background"></div><div class="skin"></div><div class="trigger"></div></a><h3>'.__('Compact').'</h3></div>'.PHP_EOL;
 
@@ -185,9 +187,9 @@
      * @param type $array
      * @param type $id_menu
      */
-    function osc_add_admin_menu_page( $menu_title, $url, $menu_id, $icon_url = null, $capability = null , $position = null )
+    function osc_add_admin_menu_page( $menu_title, $url, $menu_id, $capability = null, $icon_url = null, $position = null )
     {
-        AdminMenu::newInstance()->add_menu($menu_title, $url, $menu_id, $icon_url = null, $capability, $position);
+        AdminMenu::newInstance()->add_menu($menu_title, $url, $menu_id, $capability, $icon_url = null, $position);
     }
 
     /**
