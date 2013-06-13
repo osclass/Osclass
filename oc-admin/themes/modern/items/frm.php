@@ -212,7 +212,10 @@ function customPageHeader() { ?>
 
                         <div class="well ui-rounded-corners input-separate-top">
                             <h3 class="label">Location</h3>
-                            <?php ItemForm::country_select(); ?>
+                            <div class="input-has-placeholder input-separate-top">
+                                <label><?php _e('Country'); ?></label>
+                                <?php ItemForm::country_select(); ?>
+                            </div>
                             <div class="input-has-placeholder input-separate-top">
                                 <label><?php _e('Region'); ?></label>
                                 <?php ItemForm::region_text(); ?>
