@@ -71,8 +71,7 @@
                 foreach($aSubmenu as $aSub) {
                     $credential_sub = isset($aSub[4])?$aSub[4]:$aSub[3];
 
-                    if(!$is_moderator || $is_moderator && $credential_sub == 'moderator') { // show
-                        if($credential_sub=='moderator' && $is_moderator)
+                    if(!$is_moderator || ($is_moderator && $credential_sub == 'moderator')) { // show
 
                         $url_submenu   = $aSub[1];
                         $url_submenu   = str_replace(osc_admin_base_url(true).'?', '', $url_submenu);
