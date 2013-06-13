@@ -26,7 +26,7 @@
             parent::__construct();
             $this->ajax = true;
             if( $this->isModerator() ) {
-                if( !in_array($this->action, array('items', 'media', 'comments', 'custom')) ) {
+                if( !in_array($this->action, array('items', 'media', 'comments', 'custom', 'runhook')) ) {
                     $this->action = 'error_permissions';
                 }
             }
