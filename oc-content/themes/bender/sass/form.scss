@@ -16,7 +16,8 @@
 .form-container{
 
 }
-.form-container .controls input{
+.form-container .controls input,
+.form-container .meta input{
     @include input-style(#fff);
     width: 280px;
     padding: 0 10px;
@@ -75,7 +76,8 @@
     margin-left: 180px;
     line-height: 32px;
 }
-.form-horizontal .control-group{
+.form-horizontal .control-group,
+.form-horizontal .meta_list .meta{
     clear:both;
     margin-bottom: 10px;
 }

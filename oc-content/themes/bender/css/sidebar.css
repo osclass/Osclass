@@ -1,11 +1,11 @@
 /*
 Syntax error: Undefined variable: "$widgetbackground".
-        on line 6 of /Users/feralou/git/public/osclass-themes/bender/sass/sidebar.scss
+        on line 6 of /Users/feralou/htdocs/osclass/develop/oc-content/themes/bender/sass/sidebar.scss
 
-1: /Users/feralou/git/public/osclass-themes/bender/sass/sidebar.scss
+1: /Users/feralou/htdocs/osclass/develop/oc-content/themes/bender/sass/sidebar.scss
 
 Backtrace:
-/Users/feralou/git/public/osclass-themes/bender/sass/sidebar.scss:6
+/Users/feralou/htdocs/osclass/develop/oc-content/themes/bender/sass/sidebar.scss:6
 /Users/feralou/.rvm/gems/ruby-2.0.0-p0/gems/sass-3.2.7/lib/sass/script/variable.rb:49:in `_perform'
 /Users/feralou/.rvm/gems/ruby-2.0.0-p0/gems/sass-3.2.7/lib/sass/script/node.rb:40:in `perform'
 /Users/feralou/.rvm/gems/ruby-2.0.0-p0/gems/sass-3.2.7/lib/sass/tree/visitors/perform.rb:298:in `visit_prop'
@@ -82,4 +82,4 @@ Backtrace:
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Syntax error: Undefined variable: \"$widgetbackground\".\A         on line 6 of /Users/feralou/git/public/osclass-themes/bender/sass/sidebar.scss\A \A 1: /Users/feralou/git/public/osclass-themes/bender/sass/sidebar.scss"; }
+  content: "Syntax error: Undefined variable: \"$widgetbackground\".\A         on line 6 of /Users/feralou/htdocs/osclass/develop/oc-content/themes/bender/sass/sidebar.scss\A \A 1: /Users/feralou/htdocs/osclass/develop/oc-content/themes/bender/sass/sidebar.scss"; }

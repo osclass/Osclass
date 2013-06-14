@@ -1,11 +1,11 @@
 /*
 Syntax error: Undefined mixin 'input-style'.
-        on line 20 of /Users/feralou/git/public/osclass-themes/bender/sass/form.scss, in `input-style'
-        from line 20 of /Users/feralou/git/public/osclass-themes/bender/sass/form.scss
+        on line 21 of /Users/feralou/htdocs/osclass/develop/oc-content/themes/bender/sass/form.scss, in `input-style'
+        from line 21 of /Users/feralou/htdocs/osclass/develop/oc-content/themes/bender/sass/form.scss
 
 Backtrace:
-/Users/feralou/git/public/osclass-themes/bender/sass/form.scss:20:in `input-style'
-/Users/feralou/git/public/osclass-themes/bender/sass/form.scss:20
+/Users/feralou/htdocs/osclass/develop/oc-content/themes/bender/sass/form.scss:21:in `input-style'
+/Users/feralou/htdocs/osclass/develop/oc-content/themes/bender/sass/form.scss:21
 /Users/feralou/.rvm/gems/ruby-2.0.0-p0/gems/sass-3.2.7/lib/sass/tree/visitors/perform.rb:253:in `visit_mixin'
 /Users/feralou/.rvm/gems/ruby-2.0.0-p0/gems/sass-3.2.7/lib/sass/tree/visitors/base.rb:37:in `visit'
 /Users/feralou/.rvm/gems/ruby-2.0.0-p0/gems/sass-3.2.7/lib/sass/tree/visitors/perform.rb:100:in `visit'
@@ -80,4 +80,4 @@ Backtrace:
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Syntax error: Undefined mixin 'input-style'.\A         on line 20 of /Users/feralou/git/public/osclass-themes/bender/sass/form.scss, in `input-style'\A         from line 20 of /Users/feralou/git/public/osclass-themes/bender/sass/form.scss"; }
+  content: "Syntax error: Undefined mixin 'input-style'.\A         on line 21 of /Users/feralou/htdocs/osclass/develop/oc-content/themes/bender/sass/form.scss, in `input-style'\A         from line 21 of /Users/feralou/htdocs/osclass/develop/oc-content/themes/bender/sass/form.scss"; }

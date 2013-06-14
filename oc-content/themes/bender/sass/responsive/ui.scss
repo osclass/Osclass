@@ -51,7 +51,7 @@ ul.r-list{
     width: 100%;
     float: none;
     margin:0;
-    margin-bottom:20px;
+    //margin-bottom:20px;
     padding:0;
     list-style: none;
     @include r-list-style(reset);
@@ -65,8 +65,8 @@ ul.r-list:after {
     height: 0;
 }
 ul.r-list li {
-    float: left;
-    width: 50%;
+    //float: left;
+    //width: 50%;
     position: relative;
     margin-bottom: 5px;
     margin-right:0;
@@ -138,7 +138,10 @@ ul.r-list li ul li{
     float: none;
     width: 100%;
 }
-
+div.cell_3:nth-child(2n){
+    margin:0 1%;
+    width: 31%;
+}
 
 .select-box{
     width:100%;

@@ -63,8 +63,8 @@
         </fieldset>
         <?php } ?>
         <?php  osc_get_non_empty_categories(); ?>
-        <?php  if ( osc_count_categories() ) { ?>
         <fieldset>
+            <?php  if ( osc_count_categories() ) { ?>
             <div class="row ">
                 <h3><?php _e('Category', 'bender') ; ?></h3>
                 <ul class="category">
@@ -88,14 +88,16 @@
                 </ul>
             </div>
             <?php } ?>
+        </fieldset>
+        <div class="plugin-hooks">
             <?php
             if(osc_search_category_id()) {
                 osc_run_hook('search_form', osc_search_category_id()) ;
             } else {
                 osc_run_hook('search_form') ;
             }
-        ?>
-        </fieldset>
+            ?>
+        </div>
         <div class="actions">
             <button type="submit"><?php _e('Apply', 'bender') ; ?></button>
         </div>

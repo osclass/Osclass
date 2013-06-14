@@ -1,13 +1,13 @@
 /*
 Syntax error: Undefined mixin 'border-bottom-radius'.
-        on line 30 of /Users/feralou/git/public/osclass-themes/bender/sass/responsive/header.scss, in `border-bottom-radius'
-        from line 30 of /Users/feralou/git/public/osclass-themes/bender/sass/responsive/header.scss
-        from line 44 of /Users/feralou/git/public/osclass-themes/bender/sass/responsive/740.scss
+        on line 30 of /Users/feralou/htdocs/osclass/develop/oc-content/themes/bender/sass/responsive/header.scss, in `border-bottom-radius'
+        from line 30 of /Users/feralou/htdocs/osclass/develop/oc-content/themes/bender/sass/responsive/header.scss
+        from line 44 of /Users/feralou/htdocs/osclass/develop/oc-content/themes/bender/sass/responsive/740.scss
 
 Backtrace:
-/Users/feralou/git/public/osclass-themes/bender/sass/responsive/header.scss:30:in `border-bottom-radius'
-/Users/feralou/git/public/osclass-themes/bender/sass/responsive/header.scss:30
-/Users/feralou/git/public/osclass-themes/bender/sass/responsive/740.scss:44
+/Users/feralou/htdocs/osclass/develop/oc-content/themes/bender/sass/responsive/header.scss:30:in `border-bottom-radius'
+/Users/feralou/htdocs/osclass/develop/oc-content/themes/bender/sass/responsive/header.scss:30
+/Users/feralou/htdocs/osclass/develop/oc-content/themes/bender/sass/responsive/740.scss:44
 /Users/feralou/.rvm/gems/ruby-2.0.0-p0/gems/sass-3.2.7/lib/sass/tree/visitors/perform.rb:253:in `visit_mixin'
 /Users/feralou/.rvm/gems/ruby-2.0.0-p0/gems/sass-3.2.7/lib/sass/tree/visitors/base.rb:37:in `visit'
 /Users/feralou/.rvm/gems/ruby-2.0.0-p0/gems/sass-3.2.7/lib/sass/tree/visitors/perform.rb:100:in `visit'
@@ -87,4 +87,4 @@ Backtrace:
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Syntax error: Undefined mixin 'border-bottom-radius'.\A         on line 30 of /Users/feralou/git/public/osclass-themes/bender/sass/responsive/header.scss, in `border-bottom-radius'\A         from line 30 of /Users/feralou/git/public/osclass-themes/bender/sass/responsive/header.scss\A         from line 44 of /Users/feralou/git/public/osclass-themes/bender/sass/responsive/740.scss"; }
+  content: "Syntax error: Undefined mixin 'border-bottom-radius'.\A         on line 30 of /Users/feralou/htdocs/osclass/develop/oc-content/themes/bender/sass/responsive/header.scss, in `border-bottom-radius'\A         from line 30 of /Users/feralou/htdocs/osclass/develop/oc-content/themes/bender/sass/responsive/header.scss\A         from line 44 of /Users/feralou/htdocs/osclass/develop/oc-content/themes/bender/sass/responsive/740.scss"; }
