@@ -1379,14 +1379,14 @@ function _get_market_url($type, $update_uri) {
     }
 }
 
-function _need_update($uri, $version, $operator = '>') {
+function _need_update($uri, $version) {
     if(false===($json=@osc_file_get_contents($uri))) {
         return false;
     } else {
         $data = json_decode($json , true);
         if(isset($data['s_version']) ) {
             $result = version_compare2($data['s_version'], $version);
-            if( $result == -1 ) {
+            if( $result == 1 ) {
                 return true;
             }
         }
@@ -1401,8 +1401,8 @@ function _need_update($uri, $version, $operator = '>') {
  *      1  if A > B, and
  *      -1 if B < A.
  *
- * @param type $a
- * @param type $b
+ * @param type $a -> from market
+ * @param type $b -> installed version
  * @return type
  */
 function version_compare2($a, $b)
