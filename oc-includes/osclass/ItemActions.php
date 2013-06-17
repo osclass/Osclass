@@ -405,7 +405,6 @@
                     ,'fk_i_category_id'   => $aItem['catId']
                     ,'i_price'            => $aItem['price']
                     ,'fk_c_currency_code' => $aItem['currency']
-                    ,'s_ip'               => $aItem['s_ip']
                 );
 
                 // only can change the user if you're an admin
@@ -413,6 +412,8 @@
                     $aUpdate['fk_i_user_id']    = $aItem['userId'];
                     $aUpdate['s_contact_name']  = $aItem['contactName'];
                     $aUpdate['s_contact_email'] = $aItem['contactEmail'];
+                } else {
+                    $aUpdate['s_ip'] = $aItem['s_ip'];
                 }
 
                 $result = $this->manager->update( $aUpdate, array('pk_i_id'  => $aItem['idItem'],
