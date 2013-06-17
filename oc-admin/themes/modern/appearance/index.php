@@ -183,7 +183,7 @@
 </form>
 <script type="text/javascript">
     $(function() {
-        $( "#tabs" ).tabs({ selected: -1 });
+        $( "#tabs" ).tabs({ active: -1 });
 
         $("#market_cancel").on("click", function(){
             $(".ui-dialog-content").dialog("close");
