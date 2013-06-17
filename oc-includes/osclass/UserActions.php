@@ -324,6 +324,7 @@
                     $mItem->enable($item['pk_i_id']);
                 }
             }
+            osc_run_hook('activate_user', $user);
 
             return true;
         }
@@ -347,6 +348,7 @@
                     $mItem->disable($item['pk_i_id']);
                 }
             }
+            osc_run_hook('deactivate_user', $user);
 
             return true;
         }
@@ -370,6 +372,7 @@
                     $mItem->enable($item['pk_i_id']);
                 }
             }
+            osc_run_hook('enable_user', $user);
 
             return true;
         }
@@ -393,6 +396,7 @@
                     $mItem->disable($item['pk_i_id']);
                 }
             }
+            osc_run_hook('disable_user', $user);
 
             return true;
         }
