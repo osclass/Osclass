@@ -50,84 +50,80 @@
                     <?php } ?>
                         <h2><?php _e('General Information', 'bender'); ?></h2>
                         <div class="control-group">
-                          <label class="control-label" for="select_1"><?php _e('Category', 'bender'); ?></label>
-                          <div class="controls">
+                            <label class="control-label" for="select_1"><?php _e('Category', 'bender'); ?></label>
+                            <div class="controls">
                                 <?php ItemForm::category_select(null, null, __('Select a category', 'bender')); ?>
-                          </div>
+                            </div>
                         </div>
                         <div class="control-group">
-                          <label class="control-label" for="title[<?php echo osc_locale_code(); ?>]"><?php _e('Title', 'bender'); ?></label>
-                          <div class="controls">
+                            <label class="control-label" for="title[<?php echo osc_locale_code(); ?>]"><?php _e('Title', 'bender'); ?></label>
+                            <div class="controls">
                                 <?php ItemForm::title_input('title',osc_locale_code(), osc_esc_html( bender_item_title() )); ?>
-                          </div>
+                            </div>
                         </div>
                         <div class="control-group">
-                          <label class="control-label" for="description[<?php echo osc_locale_code(); ?>]"><?php _e('Description', 'bender'); ?></label>
-                          <div class="controls">
+                            <label class="control-label" for="description[<?php echo osc_locale_code(); ?>]"><?php _e('Description', 'bender'); ?></label>
+                            <div class="controls">
                                 <?php ItemForm::description_textarea('description',osc_locale_code(), osc_esc_html( bender_item_description() )); ?>
-                          </div>
+                            </div>
                         </div>
-
                         <?php if( osc_price_enabled_at_items() ) { ?>
                         <div class="control-group">
-                          <label class="control-label" for="price"><?php _e('Price', 'bender'); ?></label>
-                          <div class="controls">
-                            <?php ItemForm::price_input_text(); ?>
-                            <?php ItemForm::currency_select(); ?>
-                          </div>
+                            <label class="control-label" for="price"><?php _e('Price', 'bender'); ?></label>
+                            <div class="controls">
+                                <?php ItemForm::price_input_text(); ?>
+                                <?php ItemForm::currency_select(); ?>
+                            </div>
                         </div>
                         <?php } ?>
-
                         <?php if( osc_images_enabled_at_items() ) { ?>
                         <div class="box photos">
                             <h2><?php _e('Photos', 'bender'); ?></h2>
-
                             <div class="control-group">
-                              <label class="control-label" for="photos[]"><?php _e('Photos', 'bender'); ?></label>
-                              <div class="controls">
-                                <div id="photos">
-                                    <?php ItemForm::photos(); ?>
+                                <label class="control-label" for="photos[]"><?php _e('Photos', 'bender'); ?></label>
+                                <div class="controls">
+                                    <div id="photos">
+                                        <?php ItemForm::photos(); ?>
+                                    </div>
                                 </div>
-                              </div>
-                              <div class="controls">
-                                <a href="#" onclick="addNewPhoto(); return false;"><?php _e('Add new photo', 'bender'); ?></a>
-                              </div>
+                                <div class="controls">
+                                    <a href="#" onclick="addNewPhoto(); return false;"><?php _e('Add new photo', 'bender'); ?></a>
+                                </div>
                             </div>
-
                         </div>
                         <?php } ?>
                         <div class="box location">
                             <h2><?php _e('Listing Location', 'bender'); ?></h2>
 
                             <div class="control-group">
-                              <label class="control-label" for="country"><?php _e('Country', 'bender'); ?></label>
-                              <div class="controls">
-                                <?php ItemForm::country_select(osc_get_countries(), osc_user()); ?>
-                              </div>
+                                <label class="control-label" for="country"><?php _e('Country', 'bender'); ?></label>
+                                <div class="controls">
+                                    <?php ItemForm::country_select(osc_get_countries(), osc_user()); ?>
+                                </div>
                             </div>
                             <div class="control-group">
-                              <label class="control-label" for="region"><?php _e('Region', 'bender'); ?></label>
-                              <div class="controls">
-                                <?php ItemForm::region_text(osc_user()); ?>
-                              </div>
+                                <label class="control-label" for="region"><?php _e('Region', 'bender'); ?></label>
+                                <div class="controls">
+                                  <?php ItemForm::region_text(osc_user()); ?>
+                                </div>
+                                    </div>
+                                    <div class="control-group">
+                                <label class="control-label" for="city"><?php _e('City', 'bender'); ?></label>
+                                <div class="controls">
+                                    <?php ItemForm::city_text(osc_user()); ?>
+                                </div>
                             </div>
                             <div class="control-group">
-                              <label class="control-label" for="city"><?php _e('City', 'bender'); ?></label>
-                              <div class="controls">
-                                <?php ItemForm::city_text(osc_user()); ?>
-                              </div>
+                                <label class="control-label" for="cityArea"><?php _e('City Area', 'bender'); ?></label>
+                                <div class="controls">
+                                    <?php ItemForm::city_area_text(osc_user()); ?>
+                                </div>
                             </div>
                             <div class="control-group">
-                              <label class="control-label" for="cityArea"><?php _e('City Area', 'bender'); ?></label>
-                              <div class="controls">
-                                <?php ItemForm::city_area_text(osc_user()); ?>
-                              </div>
-                            </div>
-                            <div class="control-group">
-                              <label class="control-label" for="address"><?php _e('Address', 'bender'); ?></label>
-                              <div class="controls">
-                                <?php ItemForm::address_text(osc_user()); ?>
-                              </div>
+                                <label class="control-label" for="address"><?php _e('Address', 'bender'); ?></label>
+                                <div class="controls">
+                                  <?php ItemForm::address_text(osc_user()); ?>
+                                </div>
                             </div>
                         </div>
                         <!-- seller info -->
@@ -135,35 +131,41 @@
                         <div class="box seller_info">
                             <h2><?php _e("Seller's information", 'bender'); ?></h2>
                             <div class="control-group">
-                              <label class="control-label" for="contactName"><?php _e('Name', 'bender'); ?></label>
-                              <div class="controls">
-                                <?php ItemForm::contact_name_text(); ?>
-                              </div>
+                                <label class="control-label" for="contactName"><?php _e('Name', 'bender'); ?></label>
+                                <div class="controls">
+                                    <?php ItemForm::contact_name_text(); ?>
+                                </div>
                             </div>
                             <div class="control-group">
-                              <label class="control-label" for="contactEmail"><?php _e('E-mail', 'bender'); ?></label>
-                              <div class="controls">
-                                <?php ItemForm::contact_email_text(); ?>
-                              </div>
+                                <label class="control-label" for="contactEmail"><?php _e('E-mail', 'bender'); ?></label>
+                                <div class="controls">
+                                    <?php ItemForm::contact_email_text(); ?>
+                                </div>
                             </div>
                             <div class="control-group">
-                              <div class="controls checkbox">
-                                <?php ItemForm::show_email_checkbox(); ?> <label for="showEmail"><?php _e('Show e-mail on the listing page', 'bender'); ?></label>
-                              </div>
+                                <div class="controls checkbox">
+                                    <?php ItemForm::show_email_checkbox(); ?> <label for="showEmail"><?php _e('Show e-mail on the listing page', 'bender'); ?></label>
+                                </div>
                             </div>
                         </div>
-                        <?php }; ?>
-                        <?php ItemForm::plugin_post_item(); ?>
-                            <div class="control-group">
-                            <?php if( osc_recaptcha_items_enabled() ) {?>
+                        <?php
+                        }
+                        if($edit) {
+                            ItemForm::plugin_edit_item();
+                        } else {
+                            ItemForm::plugin_post_item();
+                        }
+                        ?>
+                        <div class="control-group">
+                            <?php if( osc_recaptcha_items_enabled() ) { ?>
                                 <div class="controls">
                                     <?php osc_show_recaptcha(); ?>
                                 </div>
-                                <?php }?>
-                                <div class="controls">
-                                    <button type="submit" class="ui-button ui-button-middle ui-button-main"><?php if($edit) { _e("Update", 'bender'); } else { _e("Publish", 'bender'); } ?></button>
-                                </div>
+                            <?php }?>
+                            <div class="controls">
+                                <button type="submit" class="ui-button ui-button-middle ui-button-main"><?php if($edit) { _e("Update", 'bender'); } else { _e("Publish", 'bender'); } ?></button>
                             </div>
+                        </div>
                     </fieldset>
                 </form>
             </div>
@@ -186,7 +188,6 @@
             <?php }; ?>
             $("#price").prop("value", price);
         });
-
     });
     <?php }; ?>
 </script>
