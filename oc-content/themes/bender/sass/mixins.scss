@@ -135,3 +135,34 @@
   }
   @return $color;
 }
+@mixin arrow($direction:"up") {
+    $b1: "left";
+    $b2: "right";
+    $b3: "bottom";
+    $borderWidth:5px;
+    $borderStyle: solid;
+
+    @if $direction == "left" or $direction == "right" {
+        $b1: "top";
+        $b2: "bottom";
+    }
+    @if $direction == "down" {
+        $b3: "top";
+    }
+    @if $direction == "left" {
+        $b3: "right";
+    }
+    @if $direction == "right" {
+        $b3: "left";
+    }
+    .arrow-#{$direction}{
+        width: 0;
+        height: 0;
+        border-#{$b1}: $borderWidth $borderStyle transparent;
+        border-#{$b2}: $borderWidth $borderStyle  transparent;
+        border-#{$b3}: $borderWidth $borderStyle $maincolor;
+    }
+    .hover .arrow-#{$direction}{
+        border-#{$b3}-color: white;
+    }
+}

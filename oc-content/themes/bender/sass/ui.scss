@@ -1,25 +1,22 @@
-
 .has-placeholder{
     position: relative;
-
     display: block;
     float: left;
-}
-.has-placeholder label{
-    position: absolute;
-    top:0;
-    left:0;
 
-    vertical-align: middle;
-    color:#646464;
-    line-height: 43px;
-    height: 100%;
-    width:100%;
-    text-decoration: none;
-    padding:0 15px;
-    text-shadow: 0 1px 0 #ffffff;
-    overflow: hidden;
-
+    label{
+        position: absolute;
+        top:0;
+        left:0;
+        vertical-align: middle;
+        color:#646464;
+        line-height: 43px;
+        height: 100%;
+        width:100%;
+        text-decoration: none;
+        padding:0 15px;
+        text-shadow: 0 1px 0 #ffffff;
+        overflow: hidden;
+    }
 }
 
 textarea{
@@ -41,9 +38,8 @@ textarea{
     @include button-style(#f9f9f9);
     padding:0px;
     overflow: hidden;
-    //padding-right:15px;
-}
-    .select-box .select-box-label{
+
+    .select-box-label{
         height: 16px;
         overflow: hidden;
         display: block;
@@ -52,27 +48,25 @@ textarea{
         position: absolute;
         top:0;
         color:#bababa;
-
         padding:0px 15px;
         height: 100%;
-
-
         color:#646464;
         line-height: 30px;
         text-shadow: 0 1px 0 #ffffff;
     }
-.select-box a:hover{
-    text-decoration:none;
-}
-.select-box select{
-    position:relative;
-    left:0px;
-    top:0px;
-    width:100%;
-    height: 30px;
-    -webkit-appearance:none;
-    z-index:1003;
-    padding-right:45px;
+    a:hover{
+        text-decoration:none;
+    }
+    select{
+        position:relative;
+        left:0px;
+        top:0px;
+        width:100%;
+        height: 30px;
+        -webkit-appearance:none;
+        z-index:1003;
+        padding-right:45px;
+    }
 }
 .select-box-icon{
     z-index:0;
@@ -111,60 +105,62 @@ a.ui-button{
 }
 .doublebutton{
     float:right;
+
+    a{
+        border:solid 1px darken($widgetbordercolor,10%);
+        background-color:$widgetbackground;
+        -webkit-border-radius: 2px;
+        border-radius: 2px;
+        cursor: default;
+        font-size: 11px;
+        font-weight: bold;
+        text-align: center;
+        white-space: nowrap;
+        height: 16px;
+        outline: 0;
+        padding: 5px 6px;
+        display: block;
+        float:left;
+    }
+    a span{
+        text-indent: -9999px;
+        float:left;
+        width:16px;
+        height: 16px;
+        background-image:url(../images/icons.png);
+        cursor:pointer;
+    }
+    .list-button{
+        margin-right:-1px;
+        @include border-right-radius(0px);
+        border-right:none;
+
+        span{
+            background-position:-16px -16px;
+        }
+    }
+    .grid-button{
+        @include border-left-radius(0px);
+        border-left:none;
+    }
 }
-.doublebutton a{
-    border:solid 1px darken($widgetbordercolor,10%);
-    background-color:$widgetbackground;
-    -webkit-border-radius: 2px;
-    border-radius: 2px;
-    cursor: default;
-    font-size: 11px;
-    font-weight: bold;
-    text-align: center;
-    white-space: nowrap;
-    height: 16px;
-    outline: 0;
-    padding: 5px 6px;
-    display: block;
-    float:left;
-}
-.doublebutton a span{
-    text-indent: -9999px;
-    float:left;
-    width:16px;
-    height: 16px;
-    background-image:url(../images/icons.png);
-    cursor:pointer;
-}
-.doublebutton .list-button span{
-    background-position:0px -16px;
-}
-.doublebutton .list-button{
-    margin-right:-1px;
-    @include border-right-radius(0px);
-    border-right:none;
-}
-.doublebutton .grid-button{
-    @include border-left-radius(0px);
-    border-left:none;
+
+.active{
+    a.grid-button span{
+        background-position:-16px 0;
+    }
+    a.list-button{
+        background-color:$widgetbackground;
+        border:solid 1px darken($widgetbordercolor,10%);
+        span{
+            background-position:-0 -16px
+        }
+    }
 }
 .active a.grid-button,
 .doublebutton a.list-button{
     background-color:$maincolor;
     border-color:darken($maincolor,10%)
-}
-.active a.grid-button span{
-    background-position:-16px 0;
-}
-.active a.list-button{
-    background-color:$widgetbackground;
-    border:solid 1px darken($widgetbordercolor,10%);
-}
-.doublebutton a.list-button span{
-    background-position:-16px -16px
-}
-.active a.list-button span{
-    background-position:-0 -16px
 }
 @import "form.scss";
 button{
@@ -181,62 +177,29 @@ button{
     @include border-radius(4px);
     padding:10px;
     font-size:0.75em;
+
+    h2{
+        font-size:1.2em;
+        margin-top:0;
+        font-family:$helvetica;
+        font-weight: bold;
+    }
 }
-.bordered-box h2{
-    font-size:1.2em;
-    margin-top:0;
-    font-family:$helvetica;
-    font-weight: bold;
-}
-.form-container .photos input{
-    width:100%;
-}
-.form-container .photos img{
-    width:120px;
+.form-container .photos{
+    input{
+        width:100%;
+    }
+    .form-container .photos img{
+        width:120px;
+    }
 }
 .photos_div a{
     display:block;
 }
-.arrow-up {
-    width: 0;
-    height: 0;
-    border-left: 5px solid transparent !important;
-    border-right: 5px solid transparent !important;
 
-    border-bottom: 5px solid black;
-}
-
-.arrow-down {
-    width: 0;
-    height: 0;
-    border-left: 5px solid transparent !important;
-    border-right: 5px solid transparent !important;
-
-    border-top: 5px solid #f00;
-}
-
-.arrow-right {
-    width: 0;
-    height: 0;
-    border-top: 5px solid transparent !important;
-    border-bottom: 5px solid transparent !important;
-
-    border-left: 5px solid green;
-}
-
-.arrow-left {
-    width: 0;
-    height: 0;
-    border-top: 5px solid transparent !important;
-    border-bottom: 5px solid transparent !important;
-
-    border-right:5px solid blue;
-}
-.arrow-up,
-.arrow-down,
-.arrow-right,
-.arrow-left{
-    border-color:$maincolor;
-}
+@include arrow("up");
+@include arrow("down");
+@include arrow("left");
+@include arrow("right");
 @import "pagination.scss";
 @import "flashmessage-error.scss";
