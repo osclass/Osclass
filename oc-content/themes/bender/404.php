@@ -1,7 +1,7 @@
 <?php
     // meta tag robots
     osc_add_hook('header','bender_nofollow_construct');
-    bender_add_boddy_class('error not-found');
+    bender_add_body_class('error not-found');
     osc_current_web_theme_path('header.php') ;
 ?>
 <div class="flashmessage-404">

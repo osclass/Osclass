@@ -23,7 +23,7 @@
     osc_add_hook('header','bender_nofollow_construct');
 
     osc_enqueue_script('jquery-validate');
-    bender_add_boddy_class('item item-post');
+    bender_add_body_class('item item-post');
     $action = 'item_add_post';
     $edit = false;
     if(Params::getParam('action') == 'item_edit'){

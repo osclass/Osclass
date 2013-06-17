@@ -47,7 +47,7 @@
 
     osc_enqueue_script('jquery-validate');
 
-    bender_add_boddy_class('user-public-profile');
+    bender_add_body_class('user-public-profile');
     osc_add_hook('after-main','sidebar');
     function sidebar(){
         osc_current_web_theme_path('user-public-sidebar.php');

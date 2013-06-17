@@ -22,7 +22,7 @@
     // meta tag robots
     osc_add_hook('header','bender_nofollow_construct');
 
-    bender_add_boddy_class('user user-dashboard');
+    bender_add_body_class('user user-dashboard');
     osc_add_hook('before-main','sidebar');
     function sidebar(){
         osc_current_web_theme_path('user-sidebar.php');

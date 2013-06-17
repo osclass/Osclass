@@ -22,7 +22,7 @@
     // meta tag robots
     osc_add_hook('header','bender_nofollow_construct');
 
-    bender_add_boddy_class('register');
+    bender_add_body_class('register');
     osc_enqueue_script('jquery-validate');
     osc_current_web_theme_path('header.php') ;
 ?>

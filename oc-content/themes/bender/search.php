@@ -26,7 +26,7 @@
         osc_add_hook('header','bender_follow_construct');
     }
 
-    bender_add_boddy_class('search');
+    bender_add_body_class('search');
     $listClass = '';
     $buttonClass = '';
     if(osc_search_show_as() == 'gallery'){

@@ -23,7 +23,7 @@
     osc_add_hook('header','bender_nofollow_construct');
 
     osc_enqueue_script('jquery-validate');
-    bender_add_boddy_class('contact');
+    bender_add_body_class('contact');
     osc_current_web_theme_path('header.php');
 ?>
 <div class="form-container form-horizontal form-container-box">

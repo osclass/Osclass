@@ -22,7 +22,7 @@
     // meta tag robots
     osc_add_hook('header','bender_nofollow_construct');
 
-    bender_add_boddy_class('forgot');
+    bender_add_body_class('forgot');
     osc_current_web_theme_path('header.php');
 ?>
 <div class="form-container form-horizontal form-container-box">

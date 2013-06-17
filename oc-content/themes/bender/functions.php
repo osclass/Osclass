@@ -69,8 +69,8 @@ FUNCTIONS
             return $classes;
         }
     }
-    if(!function_exists('bender_boddy_class')) {
-        function bender_boddy_class($echo = true){
+    if(!function_exists('bender_body_class')) {
+        function bender_body_class($echo = true){
             /**
             * Print body classes.
             *
@@ -86,8 +86,8 @@ FUNCTIONS
             }
         }
     }
-    if(!function_exists('bender_add_boddy_class')) {
-        function bender_add_boddy_class($class){
+    if(!function_exists('bender_add_body_class')) {
+        function bender_add_body_class($class){
             /**
             * Add new body class to body class array.
             *
@@ -445,7 +445,7 @@ if(osc_is_home_page()){
 }
 
 if(osc_is_home_page() || osc_is_search_page()){
-    bender_add_boddy_class('has-searchbox');
+    bender_add_body_class('has-searchbox');
 }
 
 

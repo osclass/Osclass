@@ -22,7 +22,7 @@
     // meta tag robots
     osc_add_hook('header','bender_follow_construct');
 
-    bender_add_boddy_class('home');
+    bender_add_body_class('home');
 
 
     $buttonClass = '';
