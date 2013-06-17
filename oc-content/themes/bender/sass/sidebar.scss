@@ -78,7 +78,8 @@
 #sidebar input{
     vertical-align: bottom;
 }
-#sidebar .input-text{
+#sidebar .input-text,
+#sidebar input[type="text"]{
     @include input-style(#fff);
 
     width: 80%;
@@ -143,7 +144,11 @@ ul.user_menu li{
         margin: 0;
         margin-bottom: 10px;
         line-height: 1em;
-        font-size: 0.7215em;
+        font-size: 1em;
+
+        font-weight: normal;
+        font-family: "Osclass";
+        color: #666;
     }
     .plugin-hooks .row{
         margin-bottom:10px
