@@ -1180,7 +1180,7 @@
                 return '';
             }
         } else {
-            return htmlentities(osc_field(osc_item_meta(), 's_value', ''), ENT_COMPAT, "UTF-8");
+            return nl2br(htmlentities(osc_field(osc_item_meta(), 's_value', ''), ENT_COMPAT, "UTF-8"));
         }
     }
 
