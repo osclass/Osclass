@@ -30,27 +30,18 @@ html{
   color:#404040
 }
 .icons{
-    /*position: absolute;
-    right: 0;
-    top: 0;*/
     font-size: 32px;
     line-height: 32px;
-    /*height: 100%;
-    width: 1.125em;
-    line-height: 52px;
-    padding: 0 10px;
-    background: white;*/
+    :after{
+        display:inline-block;
+        font-family: "icons";
+    }
 }
-.icons:after{
-    display:inline-block;
-    font-family: "icons";
+@mixin icon($label,$content) {
+    .ico-#{$label}:after{
+        content:"#{$content}";
+    }
 }
-.ico-search:after{
-    content:"s";
-}
-.ico-menu:after{
-    content:"m";
-}
-.ico-grid:after{
-    content:"g";
-}
+@include icon("search","s");
+@include icon("menu","m");
+@include icon("grid","g");

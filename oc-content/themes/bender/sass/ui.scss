@@ -145,18 +145,20 @@ a.ui-button{
     }
 }
 
-.active{
+span.active{
     a.grid-button span{
         background-position:-16px 0;
     }
     a.list-button{
-        background-color:$widgetbackground;
         border:solid 1px darken($widgetbordercolor,10%);
+        background-color:$widgetbackground;
         span{
+
             background-position:-0 -16px
         }
     }
 }
+
 .active a.grid-button,
 .doublebutton a.list-button{
     background-color:$maincolor;
@@ -189,14 +191,13 @@ button{
     input{
         width:100%;
     }
-    .form-container .photos img{
+    img{
         width:120px;
     }
 }
 .photos_div a{
     display:block;
 }
-
 @include arrow("up");
 @include arrow("down");
 @include arrow("left");
