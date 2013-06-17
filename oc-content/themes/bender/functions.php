@@ -31,6 +31,8 @@ DEFINES
     osc_register_script('fancybox', osc_current_web_theme_url('js/fancybox/jquery.fancybox.pack.js'), array('jquery'));
     osc_enqueue_style('fancybox', osc_current_web_theme_url('js/fancybox/jquery.fancybox.css'));
     osc_enqueue_script('fancybox');
+    // used for date/dateinterval custom fields
+    osc_enqueue_script('php-date');
 
 /**
 
