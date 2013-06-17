@@ -947,6 +947,9 @@
                 }
                 $this->_priceRange();
 
+                // add joinTables
+                $this->_joinTable();
+
                 // PLUGINS TABLES !!
                 if( !empty($this->tables) ) {
                     $tables = implode(', ', $this->tables);
