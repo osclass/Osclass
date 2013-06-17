@@ -477,6 +477,91 @@
         }
 
         /**
+         * Find enable items according the type
+         *
+         * @access public
+         * @since unknown
+         * @param int $userId User id
+         * @param int $start beginning from $start
+         * @param int $end ending
+         * @param string $itemType type item(active, expired, pending validate, premium, all)
+         * @return array of items
+         */
+        public function findItemTypesByUserID($userId, $start = 0, $end = null, $itemType = false)
+        {
+            $this->dao->from($this->getTableName());
+            $this->dao->where('b_enabled', 1);
+            $this->dao->where("fk_i_user_id = $userId");
+
+            if($itemType == 'active') {
+                $this->dao->where('b_active', 1);
+                $this->dao->where('dt_expiration > \'' . date('Y-m-d H:i:s') . '\'');
+
+            } elseif($itemType == 'expired'){
+                $this->dao->where('dt_expiration < \'' . date('Y-m-d H:i:s') . '\'');
+
+            } elseif($itemType == 'pending_validate'){
+                $this->dao->where('b_active', 0);
+
+            } elseif($itemType == 'premium'){
+                  $this->dao->where('b_premium', 1);
+            }
+
+            $this->dao->orderBy('pk_i_id', 'DESC');
+            if($end!=null) {
+                $this->dao->limit($start, $end);
+            } else if ($start > 0 ) {
+                $this->dao->limit($start);
+            }
+
+            $result = $this->dao->get();
+            if($result == false) {
+                return array();
+            }
+            $items  = $result->result();
+            return $this->extendData($items);
+        }
+
+        /**
+         * Count enabled items according the type
+         *
+         * @access public
+         * @since unknown
+         * @param int $userId User id
+         * @param string $itemType (active, expired, pending validate, premium, all)
+         * @return int number of items
+         */
+        public function countItemTypesByUserID($userId, $itemType = false)
+        {
+            $this->dao->select('count(pk_i_id) as total');
+            $this->dao->from($this->getTableName());
+            $this->dao->where('b_enabled', 1);
+            $this->dao->where("fk_i_user_id = $userId");
+            $this->dao->orderBy('pk_i_id', 'DESC');
+
+            if($itemType == 'active') {
+                $this->dao->where('b_active', 1);
+                $this->dao->where("dt_expiration > '" . date('Y-m-d H:i:s') . "'");
+
+            } elseif($itemType == 'expired'){
+                $this->dao->where("dt_expiration <= '" . date('Y-m-d H:i:s') . "'");
+
+            } elseif($itemType == 'pending_validate'){
+                $this->dao->where('b_active', 0);
+
+            } elseif($itemType == 'premium'){
+                  $this->dao->where('b_premium', 1);
+            }
+
+            $result = $this->dao->get();
+            if($result == false) {
+                return array();
+            }
+            $items  = $result->row();
+            return $items['total'];
+        }
+
+        /**
          * Count enabled items belong to an user given its id
          *
          * @access public
