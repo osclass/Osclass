@@ -243,13 +243,13 @@
 </form>
 <script>
     $(function() {
-        var tab_id = unescape(self.document.location.hash.substring(1));
+        var tab_id = decodeURI(self.document.location.hash.substring(1));
         if(tab_id != '') {
             $( "#tabs" ).tabs();
         } else {
             $( "#tabs" ).tabs({ selected: <?php echo $tab_index; ?> });
         }
-        $( "#tabs" ).tabs({ active: 1 });
+        $( "#tabs" ).tabs({ active: -1 });
 
         $("#market_cancel").on("click", function(){
             $(".ui-dialog-content").dialog("close");
