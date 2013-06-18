@@ -88,11 +88,13 @@
 }
 // Border Radius
 @mixin border-radius($radius) {
-  @include border-top-radius($radius);
-  @include border-bottom-radius($radius);
-  @include border-left-radius($radius);
-  @include border-right-radius($radius);
-
+  -webkit-border-radius: $radius;
+  -moz-border-radius:    $radius;
+  border-radius:         $radius;
+  // @include border-top-radius($radius);
+  // @include border-bottom-radius($radius);
+  // @include border-left-radius($radius);
+  // @include border-right-radius($radius);
 }
 // Drop shadows
 @mixin box-shadow($shadow) {

@@ -223,7 +223,7 @@ ul.r-list{
             overflow: hidden;
             text-overflow: ellipsis;
             width: 100%;
-            display: block;
+            display: inline-block; // change from block to inline-block for firefox
         }
     }
     .g-hide{

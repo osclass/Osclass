@@ -109,8 +109,7 @@ a.ui-button{
     a{
         border:solid 1px darken($widgetbordercolor,10%);
         background-color:$widgetbackground;
-        -webkit-border-radius: 2px;
-        border-radius: 2px;
+        @include border-radius(2px);
         cursor: default;
         font-size: 11px;
         font-weight: bold;

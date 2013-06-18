@@ -1,5 +1,4 @@
-.wrapper,
-#footer{
+.wrapper{
     padding-left:10px;
     padding-right:10px;
     width:auto;
@@ -28,11 +27,11 @@ body.user-public-profile #main{
 }
 #footer{
     text-align:center;
-}
-#footer ul{
-    float:none;
-    font-size:1.15em;
-    margin-bottom:15px;
+    ul{
+        float:none;
+        font-size:1.15em;
+        margin-bottom:15px;
+    }
 }
 .flashmessage{
     padding:15px 40px 15px 15px;
