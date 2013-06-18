@@ -477,6 +477,52 @@
         }
 
         /**
+         * Find enabled items which are going to expired
+         *
+         * @access public
+         * @since 3.2
+         * @param int $hours
+         * @return array of items
+         */
+        public function findByHourExpiration($hours = 24)
+        {
+            $this->dao->select('l.*, i.*, TIMESTAMPDIFF(HOUR, NOW(), i.dt_expiration) as hourdiff ');
+            $this->dao->from($this->getTableName().' i, '.DB_TABLE_PREFIX.'t_item_location l');
+            $this->dao->where('l.fk_i_item_id = i.pk_i_id');
+            $this->dao->where('hourdiff = '.$hours);
+
+            $result = $this->dao->get();
+            if($result == false) {
+                return array();
+            }
+            $items  = $result->result();
+            return $this->extendData($items);
+        }
+
+        /**
+         * Find enabled items which are going to expired
+         *
+         * @access public
+         * @since 3.2
+         * @param int $days
+         * @return array of items
+         */
+        public function findByDayExpiration($days = 1)
+        {
+            $this->dao->select('l.*, i.*, TIMESTAMPDIFF(HOUR, NOW(), i.dt_expiration) as daydiff ');
+            $this->dao->from($this->getTableName().' i, '.DB_TABLE_PREFIX.'t_item_location l');
+            $this->dao->where('l.fk_i_item_id = i.pk_i_id');
+            $this->dao->where('daydiff = '.$days);
+
+            $result = $this->dao->get();
+            if($result == false) {
+                return array();
+            }
+            $items  = $result->result();
+            return $this->extendData($items);
+        }
+
+        /**
          * Count enabled items belong to an user given its id
          *
          * @access public

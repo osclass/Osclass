@@ -55,6 +55,15 @@
     }
 
     /**
+     * Gets number of days to warn about an ad being expired
+     *
+     * @return int
+     */
+    function osc_warn_expiration() {
+        return (getPreference('warn_expiration'));
+    }
+
+    /**
      * Gets comments per page
      *
      * @return int

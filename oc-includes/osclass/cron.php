@@ -42,6 +42,16 @@
                 LatestSearches::newInstance()->purgeNumber($purge);
             }
             osc_update_location_stats(true, 'auto');
+
+            // WARN EXPIRATION EACH HOUR (COMMENT TO DISABLE)
+            // NOTE: IF THIS IS ENABLE, SAME CODE SHOULD BE DISABLE ON CRON DAILY
+            if(is_numeric(osc_warn_expiration()) && osc_warn_expiration()>0) {
+                $items = Item::newInstance()->findByHourExpiration(24*osc_warn_expiration());
+                foreach($items as $item) {
+                    osc_run_hook('hook_email_warn_expiration', $item);
+                }
+            }
+
             osc_run_hook('cron_hourly');
         }
     }
@@ -64,6 +74,16 @@
             }
             osc_runAlert('DAILY');
             osc_update_cat_stats();
+
+            // WARN EXPIRATION EACH DAY (UNCOMMENT TO ENABLE)
+            // NOTE: IF THIS IS ENABLE, SAME CODE SHOULD BE DISABLE ON CRON HOURLY
+            /*if(is_numeric(osc_warn_expiration()) && osc_warn_expiration()>0) {
+                $items = Item::newInstance()->findByDayExpiration(osc_warn_expiration());
+                foreach($items as $item) {
+                    osc_run_hook('hook_email_warn_expiration', $item);
+                }
+            }*/
+
             osc_run_hook('cron_daily');
         }
     }
