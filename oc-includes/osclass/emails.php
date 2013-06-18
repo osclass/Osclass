@@ -1167,5 +1167,51 @@
     }
     osc_add_hook('hook_email_new_comment_user', 'fn_email_new_comment_user');
 
+    function fn_email_new_admin($data) {
+
+        $name       = trim($data['s_name']);
+        $name       = strip_tags($name);
+        $username   = trim($data['s_username']);
+        $username   = strip_tags($username);
+
+        $mPages = new Page();
+        $aPage = $mPages->findByInternalName('email_new_admin');
+        $locale = osc_current_user_locale();
+
+        $content = array();
+        if(isset($aPage['locale'][$locale]['s_title'])) {
+            $content = $aPage['locale'][$locale];
+        } else {
+            $content = current($aPage['locale']);
+        }
+
+        $words   = array();
+        $words[] = array(
+            '{ADMIN_NAME}',
+            '{USERNAME}',
+            '{PASSWORD}',
+            '{WEB_ADMIN_LINK}'
+        );
+        $words[] = array(
+            $data['s_name'],
+            $data['s_username'],
+            $data['s_password'],
+            '<a href="' . osc_admin_base_url() . '">' . osc_page_title() . '</a>',
+        );
+        $title_email = osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_new_admin_title', $content['s_title'])), $words);
+        $body_email  = osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_new_admin_description', $content['s_text'])), $words);
+
+        $emailParams = array(
+            'from'      => osc_contact_email(),
+            'subject'   => $title_email,
+            'to'        => $data['s_email'],
+            'to_name'   => $data['s_name'],
+            'body'      => $body_email,
+            'alt_body'  => $body_email
+        );
+        osc_sendMail($emailParams);
+    }
+    osc_add_hook('hook_email_new_admin', 'fn_email_new_admin');
+
     /* file end: ./oc-includes/osclass/emails.php */
 ?>
