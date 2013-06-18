@@ -40,7 +40,8 @@ $(function(){
         $('[name*="'+currentLocale+'"], .'+currentLocale).parent().show();
         osc.locales.current = currentLocale;
         return false;
-    }).triggerHandler('click');
+    });
+    $('#language-tab li a[href="#'+osc.locales._default+'"]').triggerHandler("click");
     //Row actions
     $('.table .actions').each(function(){
         var $actions = $(this);

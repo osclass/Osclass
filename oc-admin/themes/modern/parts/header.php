@@ -28,6 +28,7 @@
     }
 ?>
         osc.locales = {};
+        osc.locales._default = '<?php echo osc_language(); ?>';
         osc.locales.current = '<?php echo osc_current_admin_locale(); ?>';
         osc.locales.codes   = new Array(<?php echo join(',', $codes); ?>);
         osc.locales.string  = '[name*="' + osc.locales.codes.join('"],[name*="') + '"],.' + osc.locales.codes.join(',.');
