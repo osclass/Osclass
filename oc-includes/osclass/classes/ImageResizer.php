@@ -55,43 +55,113 @@
             }
         }
 
-        public function resizeTo($width, $height, $upscale = true) {
-            if(osc_use_imagick()) {
+     public function resizeTo($width, $height, $upscale = true, $fill = false) {
+        if (osc_use_imagick()) {
+            if ($fill) {
+                $geometry = $this->im->getImageGeometry();
+                $w = $geometry['width'];
+                $h = $geometry['height'];
+                if($upscale or (($w > $width) and ($h > $height))) {
+                    if (($w / $width) < ($h / $height)) {
+                        $this->im->cropImage($w, floor($height * $w / $width), 0, (($h - ($height * $w / $width)) / 4));
+                    } else {
+                        $this->im->cropImage(ceil($width * $h / $height), $h, (($w - ($width * $h / $height)) / 2), 0);
+                    }
+                    $this->im->ThumbnailImage($width, $height, true);
+                } else {
+                    $newW = ($w > $width) ? $width : $w;
+                    $newH = ($h > $height) ? $height : $h;
+                    if (($w / $width) < ($h / $height)) {
+                        $cropedW = $w;
+                        $cropedH = ($w > $width) ? ceil($w * $height / $width) : $newH;
+                    } else {
+                        $cropedH = $h;
+                        $cropedW = ($h > $height) ? ceil($h * $width / $height) : $newW;
+                    }
+                    $offsetx = ($w - $cropedW) / 2;
+                    $offsety = ($h - $cropedH) / 4;
+                    $this->im->cropImage($cropedW, $cropedH, $offsetx, $offsety);
+                    $bg = new Imagick();
+                    $bg->newImage($width, $height, 'white');
+                    $x = ceil($width  - $newW) / 2;
+                    $y = ceil($height - $newH) / 2;
+                    $bg->compositeImage($this->im, imagick::COMPOSITE_OVER, $x, $y);
+                    $this->im = $bg;
+                }
+            } else {
                 $bg = new Imagick();
                 $bg->newImage($width, $height, 'white');
-                
-                $this->im->thumbnailImage($width, $height, true);
                 $geometry = $this->im->getImageGeometry();
+                if ($upscale or ($geometry['width'] > $width) or ($geometry['height'] > $height)) {
+                    $this->im->thumbnailImage($width, $height, true);
+                    $geometry = $this->im->getImageGeometry();
+                } 
+                $x = ceil($width - $geometry['width']) / 2;
+                $y = ceil($height - $geometry['height']) / 2;
 
-                $x = ceil( $width - $geometry['width'] ) / 2;
-                $y = ceil( $height - $geometry['height'] ) / 2;
-
-                $bg->compositeImage( $this->im, imagick::COMPOSITE_OVER, $x, $y );
+                $bg->compositeImage($this->im, imagick::COMPOSITE_OVER, $x, $y);
                 $this->im = $bg;
+            }
+        } else {
+            $w = imagesx($this->im);
+            $h = imagesy($this->im);
+            /* edited robby begin
+             */
+            /* TODO: upscale */
+            if ($fill) {
+                if($upscale) { 
+                    $newW = $width;
+                    $newH = $height;
+                } else {    
+                    $newW = ($w > $width) ? $width : $w;
+                    $newH = ($h > $height) ? $height : $h;
+                }    
+                if (($w / $h) < ($width / $height)) {
+                    //$newW = $width;
+                    $cropedW = $w;
+                    if($upscale){
+                        $cropedH = ceil($w * $height / $width);
+                    } else {
+                        $cropedH = ($w > $width) ? ceil($w * $height / $width) : $newH;
+                    }
+                    $offsetx = 0;
+                    $offsety = ($h - $cropedH) / 4;
+                } else {
+                    //$newH = $height;
+                    $cropedH = $h;
+                    if($upscale){
+                        $cropedW = ceil($h * $width / $height);
+                    } else {
+                        $cropedW = ($h > $height) ? ceil($h * $width / $height) : $newW;
+                    }
+                    $offsetx = ($w - $cropedW) / 2;
+                    $offsety = 0;
+                }
             } else {
-                $w = imagesx($this->im);
-                $h = imagesy($this->im);
-
                 if(($w/$h)>=($width/$height)) {
-                    if($upscale) { $newW = $width; } else { $newW = ($w > $width)? $width : $w; };
+                    if($upscale){ $newW = $width; } else { $newW = ($w > $width)? $width : $w; };
                     $newH = ceil($h * ($newW / $w));
                 } else {
                     if($upscale) { $newH = $height; } else { $newH = ($h > $height)? $height : $h; };
                     $newW = ceil($w * ($newH / $h));
                 }
+                $cropedW = $w;
+                $cropedH = $h;
+                $offsetx = 0;
+                $offsety = 0;
+            }    
+            $newIm = imagecreatetruecolor($width, $height);
+            imagealphablending($newIm, false);
+            $colorTransparent = imagecolorallocatealpha($newIm, 255, 255, 255, 127);
+            imagefill($newIm, 0, 0, $colorTransparent);
+            imagesavealpha($newIm, true);
+            imagecopyresampled($newIm, $this->im, floor(($width - $newW) / 2), floor(($height - $newH) / 2), $offsetx, $offsety, $newW, $newH, $cropedW, $cropedH);
+            imagedestroy($this->im);
 
-                $newIm = imagecreatetruecolor($width,$height);
-                imagealphablending($newIm, false);
-                $colorTransparent = imagecolorallocatealpha($newIm, 255, 255, 255, 127);
-                imagefill($newIm, 0, 0, $colorTransparent);
-                imagesavealpha($newIm, true);
-                imagecopyresampled($newIm, $this->im, floor(($width-$newW)/2), floor(($height-$newH)/2), 0, 0, $newW, $newH, $w, $h);
-                imagedestroy($this->im);
-
-                $this->im = $newIm;
-            }
-            return $this;
+            $this->im = $newIm;
         }
+        return $this;
+    }
 
         public function saveToFile($imagePath) {
             if(file_exists($imagePath) && !is_writable($imagePath)) { throw new Exception("$imagePath is not writable!"); };

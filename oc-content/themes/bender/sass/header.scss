@@ -66,8 +66,7 @@ body.has-searchbox #header{
 
     position: relative;
     margin-top:15px;
-    @include border-left-radius($radius);
-    @include border-right-radius($radius);
+    @include border-radius($radius);
 }
 
 .main-search .has-placeholder{

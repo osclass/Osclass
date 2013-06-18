@@ -439,9 +439,14 @@
                 }
 
                 $oldIsExpired = osc_isExpired($old_item['dt_expiration']);
+                // if exp date not changed then do not change expiration flag.
+                // this is to prevent item location stat decrease on edit.
+                if ($aItem['dt_expiration'] == '') {
+                    $newIsExpired = $oldIsExpired; 
+                } else {
                 $dt_expiration = Item::newInstance()->updateExpirationDate($aItem['idItem'], $aItem['dt_expiration'], false);
                 $newIsExpired = osc_isExpired($dt_expiration);
-
+                }
                 // Recalculate stats related with items
                 $this->_updateStats($result, $old_item, $oldIsExpired, $old_item_location, $aItem, $newIsExpired, $location);
 
@@ -1115,6 +1120,9 @@
             $aItem['photos']        = Params::getFiles('photos');
             $aItem['s_ip']          = get_ip();
 
+            // $dt_expiration == -1     -> No Change
+            // $dt_expiration == ''     -> Without expiration date
+            // $dt_expiration == number -> expiration days
             if($is_add || $this->is_admin) {
                 $dt_expiration = Params::getParam('dt_expiration');
                 if($dt_expiration==-1) {

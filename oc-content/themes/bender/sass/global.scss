@@ -82,10 +82,8 @@ body.search .list-header .actions{
     background-color: #FCF8E3;
     border: solid 1px #FBEED5;
     color: #C09853;
-    border-radius: 5px;
     font-size:15px;
-    -webkit-border-radius:5px;
-    -moz-border-radius:5px;
+    @include border-radius(5px);
     padding:10px 15px;
     margin-top:25px;
 }
