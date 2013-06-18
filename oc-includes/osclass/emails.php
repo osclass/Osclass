@@ -1167,5 +1167,59 @@
     }
     osc_add_hook('hook_email_new_comment_user', 'fn_email_new_comment_user');
 
+
+    function fn_email_warn_expiration($aItem) {
+        $itemId      = $aItem['id'];
+        $admin_email = osc_contact_email();
+
+        View::newInstance()->_exportVariableToView('item', $aItem);
+        $itemURL = osc_item_url();
+        $itemURL = '<a href="'.$itemURL.'" >'.$itemURL.'</a>';
+
+        $mPages = new Page();
+        $aPage = $mPages->findByInternalName('email_warn_expiration');
+        $locale = osc_current_user_locale();
+
+        $content = array();
+        if(isset($aPage['locale'][$locale]['s_title'])) {
+            $content = $aPage['locale'][$locale];
+        } else {
+            $content = current($aPage['locale']);
+        }
+
+        $words   = array();
+        $words[] = array(
+            '{ITEM_TITLE}',
+            '{ITEM_ID}',
+            '{ITEM_EXPIRATION_DATE}',
+            '{ITEM_URL}',
+            '{ITEM_LINK}',
+            '{SELLER_NAME}',
+            '{SELLER_EMAIL}'
+        );
+        $words[] = array(
+            $aItem['s_title'],
+            $itemId,
+            osc_item_url(),
+            $aItem['dt_expiration'],
+            $itemURL,
+            $aItem['s_contact_name'],
+            $aItem['s_contact_email']
+        );
+        $title_email = osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_warn_expiration_title', $content['s_title'])), $words);
+        $body_email = osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_warn_expiration_description', $content['s_text'])), $words);
+
+        $emailParams = array(
+            'from'      => $admin_email,
+            'subject'   => $title_email,
+            'to'        => $aItem['s_contact_email'],
+            'to_name'   => $aItem['s_contact_name'],
+            'body'      => $body_email,
+            'alt_body'  => $body_email
+        );
+        osc_sendMail($emailParams);
+    }
+    osc_add_hook('hook_email_warn_expiration', 'fn_email_warn_expiration');
+
     /* file end: ./oc-includes/osclass/emails.php */
 ?>

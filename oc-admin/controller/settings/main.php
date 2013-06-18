@@ -50,6 +50,7 @@
                     $sNumRssItems      = Params::getParam('num_rss_items');
                     $maxLatestItems    = Params::getParam('max_latest_items_at_home');
                     $numItemsSearch    = Params::getParam('default_results_per_page');
+                    $warnExpiration    = Params::getParam('warn_expiration');
                     $contactAttachment = Params::getParam('enabled_attachment');
                     $selectableParent  = Params::getParam('selectable_parent_categories');
                     $bAutoCron         = Params::getParam('auto_cron');
@@ -67,6 +68,7 @@
                     $sNumRssItems      = (int) strip_tags($sNumRssItems);
                     $maxLatestItems    = (int) strip_tags($maxLatestItems);
                     $numItemsSearch    = (int) $numItemsSearch;
+                    $warnExpiration    = (int) $warnExpiration;
                     $contactAttachment = ($contactAttachment != '' ? true : false);
                     $bAutoCron         = ($bAutoCron != '' ? true : false);
                     $error = "";
@@ -86,6 +88,9 @@
                     }
                     if(!osc_validate_int($numItemsSearch)) {
                         $msg .= _m("Number of listings on search has to be a numeric value")."<br/>";
+                    }
+                    if(!osc_validate_int($warnExpiration)) {
+                        $msg .= _m("Number of expiration days has to be a numeric value")."<br/>";
                     }
                     if($msg!='') {
                         osc_add_flash_error_message( $msg, 'admin');
@@ -159,6 +164,10 @@
                             array('s_value'   => $numItemsSearch),
                             array('s_section' => 'osclass',
                                   's_name'    => 'defaultResultsPerPage@search')
+                    );
+                    $iUpdated += Preference::newInstance()->update(
+                        array('s_value' => $warnExpiration),
+                        array('s_name'  => 'warn_expiration')
                     );
                     $iUpdated += Preference::newInstance()->update(
                         array('s_value' => $contactAttachment),
