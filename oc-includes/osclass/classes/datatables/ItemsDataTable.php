@@ -22,7 +22,7 @@
 
     /**
      * ItemsDataTable class
-     * 
+     *
      * @since 3.1
      * @package Osclass
      * @subpackage classes
@@ -33,18 +33,20 @@
 
         private $mSearch;
         private $withFilters = false;
-        
-               
+
+
         public function table($params)
         {
             $this->addTableHeader();
             $this->mSearch = new Search(true);
             $this->getDBParams($params);
+            // add more conditions here
+            osc_run_hook('manage_item_search_conditions', $this->mSearch);
             // do Search
             $this->processData(Item::newInstance()->extendCategoryName($this->mSearch->doSearch(true)));
             $this->totalFiltered = $this->mSearch->countAll();
             $this->total = $this->mSearch->count();
-            
+
             return $this->getData();
         }
 
@@ -58,9 +60,9 @@
             $arrayDirection = array('desc', 'asc');
             if( !in_array($direction, $arrayDirection) ) {
                 Params::setParam('direction', 'desc');
-                $direction = 'desc'; 
+                $direction = 'desc';
             }
-            
+
             $sort = Params::getParam('sort');
             $arraySortColumns = array(
                 'spam'  => 'i_num_spam',
@@ -82,19 +84,19 @@
                     $this->mSearch->addHaving('i_num_spam > 0 OR i_num_bad_classified > 0 OR i_num_repeated > 0 OR i_num_offensive > 0 OR i_num_expired > 0');
                 }
             }
-            
+
             $this->mSearch->order( $sort, $direction );
-            
+
             $this->mSearch->addTable(sprintf("%st_item_stats s", DB_TABLE_PREFIX));
             $this->mSearch->addField('SUM(s.`i_num_spam`) as i_num_spam');
             $this->mSearch->addField('SUM(s.`i_num_bad_classified`) as i_num_bad_classified');
             $this->mSearch->addField('SUM(s.`i_num_repeated`) as i_num_repeated');
             $this->mSearch->addField('SUM(s.`i_num_offensive`) as i_num_offensive');
             $this->mSearch->addField('SUM(s.`i_num_expired`) as i_num_expired');
-            
+
             // having
-            
-            
+
+
             $this->mSearch->addConditions(sprintf(" %st_item.pk_i_id ", DB_TABLE_PREFIX));
             $this->mSearch->addConditions(sprintf(" %st_item.pk_i_id = s.fk_i_item_id", DB_TABLE_PREFIX));
             $this->mSearch->addGroupBy(sprintf(" %st_item.pk_i_id ", DB_TABLE_PREFIX));
@@ -102,7 +104,7 @@
             $this->processDataReported(Item::newInstance()->extendCategoryName($this->mSearch->doSearch(true)));
             $this->totalFiltered = $this->mSearch->countAll();
             $this->total = $this->mSearch->count();
-            
+
             return $this->getData();
         }
 
@@ -131,7 +133,7 @@
             $dummy = &$this;
             osc_run_hook("admin_items_table", $dummy);
         }
-        
+
         private function addTableHeaderReported()
         {
 
@@ -172,7 +174,7 @@
             $url_off = $url_base.$arg_off;
             $url_exp = $url_base.$arg_exp;
             $url_date = $url_base.$arg_date;
-            
+
             $this->addColumn('bulkactions', '<input id="check_all" type="checkbox" />');
             $this->addColumn('title', __('Title'));
             $this->addColumn('user', __('User'));
@@ -186,7 +188,7 @@
             $dummy = &$this;
             osc_run_hook("admin_items_reported_table", $dummy);
         }
-        
+
         private function processData($items)
         {
             if(!empty($items)) {
@@ -240,7 +242,7 @@
                     $options_more = osc_apply_filter('more_actions_manage_items', $options_more, $aRow);
                     // more actions
                     $moreOptions = '<li class="show-more">'.PHP_EOL.'<a href="#" class="show-more-trigger">'. __('Show more') .'...</a>'. PHP_EOL .'<ul>'. PHP_EOL;
-                    foreach( $options_more as $actual) { 
+                    foreach( $options_more as $actual) {
                         $moreOptions .= '<li>'.$actual."</li>".PHP_EOL;
                     }
                     $moreOptions .= '</ul>'. PHP_EOL .'</li>'.PHP_EOL;
@@ -276,7 +278,7 @@
 
             }
         }
-        
+
         private function processDataReported($items)
         {
             if(!empty($items)) {
@@ -296,7 +298,7 @@
                     $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=clear_stat&amp;id=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url . '&amp;stat=all">' . __('Clear All') .'</a>';
                     if( $aRow['i_num_spam'] > 0 ) {
                         $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=clear_stat&amp;id=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url . '&amp;stat=spam">' . __('Clear Spam') .'</a>';
-                    } 
+                    }
                     if( $aRow['i_num_bad_classified'] > 0 ) {
                         $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=clear_stat&amp;id=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url . '&amp;stat=bad">' . __('Clear Misclassified') .'</a>';
                     }
@@ -342,7 +344,7 @@
 
             }
         }
-        
+
         private function getDBParams($_get)
         {
 
@@ -359,7 +361,7 @@
             } else {
                 $this->iPage = $_get['iPage'];
             }
-            
+
             $withUserId     = false;
             $no_user_email  = '';
             // get & set values
@@ -380,7 +382,7 @@
                     $this->mSearch->addItemId($v);
                     $this->withFilters = true;
                 }
-                
+
                 // si hay id mejor ...
                 if($k == 'countryId' && $v != '') {
                     $this->mSearch->addCountry($v);
@@ -394,7 +396,7 @@
                     $this->mSearch->addCity($v);
                     $this->withFilters = true;
                 }
-                
+
                 if($k == 'country' && $v != '') {
                     $this->mSearch->addCountry($v);
                     $this->withFilters = true;
@@ -403,12 +405,12 @@
                     $this->mSearch->addRegion($v);
                     $this->withFilters = true;
                 }
-                
+
                 if($k == 'city' && $v != '') {
                     $this->mSearch->addCity($v);
                     $this->withFilters = true;
                 }
-                
+
                 if($k == 'catId' && $v != '') {
                     $this->mSearch->addCategory($v);
                     $this->withFilters = true;
@@ -433,27 +435,27 @@
                     $no_user_email = $v;
                 }
             }
-            
+
             // add no registred user email if userId == '' and $no_user_email != ''
             if($no_user_email != '' && !$withUserId) {
                 $this->mSearch->addContactEmail($no_user_email);
                 $this->withFilters = true;
             }
-            
+
             // set start and limit using iPage param
             $start = ($this->iPage - 1) * $_get['iDisplayLength'];
-            
+
             $this->start = intval( $start );
-            $this->limit = intval( $_get['iDisplayLength'] );            
+            $this->limit = intval( $_get['iDisplayLength'] );
             $this->mSearch->limit($this->start, $this->limit);
-            
+
             $direction = $_get['direction'];
             $arrayDirection = array('desc', 'asc');
             if(!in_array($direction, $arrayDirection)) {
                 Params::setParam('direction', 'desc');
-                $direction = 'desc'; 
+                $direction = 'desc';
             }
-            
+
             // column sort
             $sort       = $_get['sort'];
             $arraySortColumns = array('date'  => 'dt_pub_date');
@@ -464,10 +466,10 @@
             }
             // only some fields can be ordered
             $this->mSearch->order($sort, $direction);
-            
-            
+
+
         }
-        
+
         public function withFilters()
         {
             return $this->withFilters;
@@ -477,7 +479,7 @@
         {
             return $this->rawRows;
         }
-        
+
     }
 
 ?>
