@@ -830,6 +830,37 @@
         return osc_admin_base_url(true)."?page=plugins&action=renderplugin&route=".$id.$params_url;
     }
 
+    /**
+     * @param $id
+     * @param $args
+     * @since 3.2
+     */
+    function osc_route_ajax_url($id, $args = array()) {
+        $routes = Rewrite::newInstance()->getRoutes();
+        if(!isset($routes[$id])) { return ''; };
+        $params_url = '';
+        foreach($args as $k => $v) {
+            $params_url .= '&'.$k.'='.$v;
+        }
+        return osc_base_url(true)."?page=ajax&action=custom&route=".$id.$params_url;
+    }
+
+    /**
+     * @param $id
+     * @param $args
+     * @since 3.2
+     */
+    function osc_route_admin_ajax_url($id, $args = array()) {
+        $routes = Rewrite::newInstance()->getRoutes();
+        if(!isset($routes[$id])) { return ''; };
+        $params_url = '';
+        foreach($args as $k => $v) {
+            $params_url .= '&'.$k.'='.$v;
+        }
+        return osc_admin_base_url(true)."?page=ajax&action=custom&route=".$id.$params_url;
+    }
+
+
 
 /////////////////////////////////////
     //functions for locations & search //
