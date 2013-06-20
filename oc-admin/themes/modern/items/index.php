@@ -277,6 +277,7 @@
             </div>
         </div>
         <div class="clear"></div>
+        <?php osc_run_hook('manage_item_search_conditions'); ?>
     </div>
     </div>
     <div class="form-actions">
