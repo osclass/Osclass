@@ -26,6 +26,7 @@
         private $rules;
         private $routes;
         private $request_uri;
+        private $raw_request_uri;
         private $uri;
         private $location;
         private $section;
@@ -34,6 +35,7 @@
         public function __construct()
         {
             $this->request_uri = '';
+            $this->raw_request_uri = '';
             $this->uri = '';
             $this->location = '';
             $this->section = '';
@@ -115,6 +117,7 @@
                     $_SERVER['REQUEST_URI'] = preg_replace('|[\?&]{1}http_referer=(.*)$|', "", urldecode($_SERVER['REQUEST_URI']));
                 }
                 $request_uri = preg_replace('@^' . REL_WEB_URL . '@', "", urldecode($_SERVER['REQUEST_URI']));
+                $this->raw_request_uri = $request_uri;
                 $route_used = false;
                 foreach($this->routes as $id => $route) {
                     // UNCOMMENT TO DEBUG
@@ -197,6 +200,11 @@
         public function get_request_uri()
         {
             return $this->request_uri;
+        }
+
+        public function get_raw_request_uri()
+        {
+            return $this->raw_request_uri;
         }
 
         public function set_location($location)
