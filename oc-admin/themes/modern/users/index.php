@@ -274,8 +274,13 @@
                 <?php if( count($rows) > 0 ) { ?>
                     <?php foreach($rows as $key => $row) {
                     $class = ''; $aU = $aRawRows[$key];
-                        if(!$aU['b_active'])  $class = 'status-spam';
-                        if(!$aU['b_enabled']) $class = 'status-spam';?>
+                        if( !$aU['b_enabled'] ) {
+                            $class = 'status-blocked';
+                        } else if( !$aU['b_active'] ) {
+                            $class = 'status-inactive';
+                        } else {
+                            $class = 'status-active';
+                        } ?>
                         <tr class="<?php echo $class;?>">
                             <?php foreach($row as $k => $v) { ?>
                                 <td class="col-<?php echo $k; ?>"><?php echo $v; ?></td>
