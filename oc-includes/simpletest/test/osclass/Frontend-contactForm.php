@@ -10,8 +10,8 @@ class Frontend_contactForm extends FrontendTest {
     function testContact()
     {
         $this->_contact($this->_email);
+        sleep(2);
         $this->assertTrue($this->selenium->isTextPresent("Your email has been sent properly. Thank you for contacting us!"), 'Testing, contact form.');
-
     }
 
     /**
@@ -35,7 +35,7 @@ class Frontend_contactForm extends FrontendTest {
         $this->selenium->type("message", "message\nto be\nsent");
         $this->selenium->type("yourName", "Carlos");
         $this->selenium->type("yourEmail", $email);
-        $this->selenium->click("xpath=//span/button[text()='Send']");
+        $this->selenium->click("xpath=//button[text()='Send']");
         sleep(2);
     }
 }
