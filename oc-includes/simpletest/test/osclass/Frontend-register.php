@@ -27,7 +27,7 @@ class Frontend_register extends FrontendTest {
 
         $this->doRegisterUser();
         $this->assertTrue( $this->selenium->isTextPresent('The user has been created. An activation email has been sent'), 'Register new user with validation.');
-        
+
         $this->removeUserByMail($this->_email);
 
         $uSettings->set_enabled_users($old_enabled_users);
@@ -59,7 +59,7 @@ class Frontend_register extends FrontendTest {
 
         unset($uSettings);
     }
-    
+
     /*
      * insert same user twice.
      */
@@ -74,6 +74,9 @@ class Frontend_register extends FrontendTest {
         $this->doRegisterUser();
         $this->assertTrue( $this->selenium->isTextPresent('Your account has been created successfully'), 'Register new user without validation.');
 
+        // auto login, Bender default
+        $this->logout();
+
         // register again, same user
         $this->doRegisterUser();
         $this->assertTrue( $this->selenium->isTextPresent('The specified e-mail is already in use'), 'Register user twice.');
@@ -87,7 +90,7 @@ class Frontend_register extends FrontendTest {
         unset($uSettings);
     }
 
-    
+
    function testRegisterUserEmptyPasswords()
     {
         $uSettings = new utilSettings();
@@ -97,9 +100,12 @@ class Frontend_register extends FrontendTest {
         $old_enabled_user_validation    = $uSettings->set_enabled_user_validation(0);
 
         $this->doRegisterUser($this->_email, '', '');
+
         // js validation
-        $this->assertTrue( $this->selenium->isTextPresent('The password cannot be empty'), 'Register new user, empty passwords.');
-        //$this->assertTrue( $this->selenium->isTextPresent('regexpi:Second password: this field is required.'), 'Register new user, empty passwords.');
+        $this->assertTrue( $this->selenium->isTextPresent('Password: this field is required.'), 'Register new user, empty passwords.');
+        $this->assertTrue( $this->selenium->isTextPresent('Second password: this field is required.'), 'Register new user, empty passwords.');
+        // modern theme
+//        $this->assertTrue( $this->selenium->isTextPresent('The password cannot be empty'), 'Register new user, empty passwords.');
 
         $uSettings->set_enabled_users($old_enabled_users);
         $uSettings->set_enabled_user_registration($old_enabled_users_registration);
@@ -107,7 +113,7 @@ class Frontend_register extends FrontendTest {
 
         unset($uSettings);
     }
-    
+
     /*
      * insert new  user, passwords don't match
      */
@@ -152,7 +158,7 @@ class Frontend_register extends FrontendTest {
         $this->selenium->waitForPageToLoad("1000");
         $this->assertTrue( $this->selenium->isTextPresent('regexpi:The link is not valid anymore. Sorry for the inconvenience!'), 'Validate user. Go to wrong user validation link.');
         // goto correct validation link
-        
+
         $url_validate = osc_user_activate_url($user['pk_i_id'], $user['s_secret']);
         $this->selenium->open( $url_validate );
         $this->selenium->waitForPageToLoad("1000");
@@ -166,6 +172,6 @@ class Frontend_register extends FrontendTest {
 
         unset($uSettings);
     }
-    
+
 }
 ?>
