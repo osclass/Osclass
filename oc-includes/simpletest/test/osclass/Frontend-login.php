@@ -2,7 +2,7 @@
 require_once dirname(__FILE__).'/../../../../oc-load.php';
 
 class Frontend_login extends FrontendTest {
-    
+
     /*
      * Insert new user, without confirmation.
      * login :
@@ -20,8 +20,11 @@ class Frontend_login extends FrontendTest {
 
         // register a new user.
         $this->doRegisterUser();
-        
+
         $this->assertTrue( $this->selenium->isTextPresent("Your account has been created successfully"), "Register an user.");
+
+        // auto login - included in Bender default theme
+        $this->logout();
 
         $this->loginWith(NULL, 'foobar');
         $this->selenium->waitForPageToLoad("10000");
@@ -37,7 +40,7 @@ class Frontend_login extends FrontendTest {
 
         $this->logout();
         $this->selenium->waitForPageToLoad("10000");
-        $this->assertTrue( $this->selenium->isTextPresent("Log in"), "Do Logout frontend." );
+        $this->assertTrue( $this->selenium->isTextPresent("Login"), "Do Logout frontend." );
 
        // recover password
         $this->selenium->open( osc_base_url() );
@@ -46,7 +49,7 @@ class Frontend_login extends FrontendTest {
         $this->selenium->waitForPageToLoad("10000");
 
         $this->selenium->type("s_email",$this->_email);
-        $this->selenium->click("xpath=//span/button[text()='Send me a new password']");
+        $this->selenium->click("xpath=//button[text()='Send me a new password']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue($this->selenium->isTextPresent("We have sent you an email with the instructions to reset your password"),"Can't recover password. ERROR");
