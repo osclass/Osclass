@@ -376,12 +376,14 @@
             $url = osc_base_url(true) . '?page=search';
             if($params!=null) {
                 foreach($params as $k => $v) {
-                    if( is_array($v) ) {
-                        foreach($v as $aux) {
-                            $url .= "&" . $k . "[]=" . $aux;
+                    if($k!='page') {
+                        if( is_array($v) ) {
+                            foreach($v as $aux) {
+                                $url .= "&" . $k . "[]=" . $aux;
+                            }
+                        } else {
+                            $url .= "&" . $k . "=" . $v;
                         }
-                    } else {
-                        $url .= "&" . $k . "=" . $v;
                     }
                 }
             }

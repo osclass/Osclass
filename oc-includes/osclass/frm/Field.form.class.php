@@ -287,7 +287,7 @@ FB;
             }
 
             if(count($aCustomFields)>0) {
-                echo '<filedset>';
+                echo '<fieldset>';
                 foreach($aCustomFields as $field) {
                     if($field['e_type']=='DATEINTERVAL') {
                         echo '<div class="row two_input">';
@@ -299,7 +299,7 @@ FB;
                     FieldForm::meta($field, true);
                     echo '</div>';
                 }
-                echo '</filedset>';
+                echo '</fieldset>';
             }
         }
 

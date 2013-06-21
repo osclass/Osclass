@@ -209,7 +209,7 @@
         $txt = strip_tags($txt);
         $txt = str_replace("\n", '', $txt);
         $txt = trim($txt);
-        if( strlen($txt) > $len ) {
+        if( mb_strlen($txt, 'utf8') > $len ) {
             $txt = mb_substr($txt, 0, $len, 'utf-8') . "...";
         }
         $query = osc_search_pattern();
@@ -247,5 +247,32 @@
         }
         return '';
     }
+
+    function osc_add_route($id, $regexp, $url, $file) {
+        Rewrite::newInstance()->addRoute($id, $regexp, $url, $file);
+    }
+
+    /**
+     *
+     */
+    function osc_get_subdomain_params() {
+        $options = array();
+        if(Params::getParam('subdomain')==1) {
+            if(Params::getParam('sCountry')!='') {
+                $options['sCountry'] = Params::getParam('sCountry');
+            }
+            if(Params::getParam('sRegion')!='') {
+                $options['sRegion'] = Params::getParam('sRegion');
+            }
+            if(Params::getParam('sCity')!='') {
+                $options['sCity'] = Params::getParam('sCity');
+            }
+            if(Params::getParam('sCategory')!='') {
+                $options['sCategory'] = Params::getParam('sCategory');
+            }
+        }
+        return $options;
+    }
+
 
 ?>

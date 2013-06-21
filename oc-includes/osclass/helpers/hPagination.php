@@ -59,6 +59,28 @@
         }
     }
 
+    function osc_pagination_items($extraParams = array(), $field = false)
+    {
+        if(osc_is_public_profile()) {
+            $url = osc_user_list_items_pub_profile_url('{PAGE}', $field);
+        } elseif(osc_is_list_items()) {
+            $url = osc_user_list_items_url('{PAGE}', $field);
+        }
+
+        $params = array('total'    => osc_list_total_pages(),
+                        'selected' => osc_list_page(),
+                        'url'      => $url
+                  );
+
+        if(is_array($extraParams) && !empty($extraParams)) {
+            foreach($extraParams as $key => $value) {
+                $params[$key] = $value;
+            }
+        }
+        $pagination = new Pagination($params);
+        return $pagination->doPagination();
+    }
+
     /**
      * Gets generic pagination links
      *

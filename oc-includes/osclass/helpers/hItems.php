@@ -946,13 +946,14 @@
      *
      * @return array
      */
-    function osc_has_latest_items($total_latest_items = null, $category = array()) {
+    function osc_has_latest_items($total_latest_items = null, $options = array()) {
         if ( !View::newInstance()->_exists('latestItems') ) {
             $search = Search::newInstance();
             if( !is_numeric($total_latest_items) ) {
                 $total_latest_items = osc_max_latest_items();
             }
-            View::newInstance()->_exportVariableToView('latestItems', $search->getLatestItems($total_latest_items, $category));
+
+            View::newInstance()->_exportVariableToView('latestItems', $search->getLatestItems($total_latest_items, $options));
         }
         if ( View::newInstance()->_exists('resources') ) {
             View::newInstance()->_erase('resources');
@@ -982,13 +983,20 @@
      *
      * @return int
      */
-    function osc_count_latest_items($total_latest_items = null, $category = array()) {
+    function osc_count_latest_items($total_latest_items = null, $options = array()) {
         if ( !View::newInstance()->_exists('latestItems') ) {
             $search = Search::newInstance();
             if( !is_numeric($total_latest_items) ) {
                 $total_latest_items = osc_max_latest_items();
             }
-            View::newInstance()->_exportVariableToView('latestItems', $search->getLatestItems($total_latest_items, $category));
+            if(is_array($options) && empty($options)) {
+                $options = osc_get_subdomain_params();
+            } else if($options==null) {
+                $options = array();
+            }
+            View::newInstance()->_exportVariableToView('latestItems', $search->getLatestItems($total_latest_items, $options));
+            $s = new Search();
+            $s->doSearch(true, false);
         };
         return (int) View::newInstance()->_count('latestItems');
     }
@@ -1163,16 +1171,16 @@
             }
         } else if($meta['e_type']=="URL") {
             if(osc_field(osc_item_meta(), 's_value', '')!='') {
-                if (stripos(osc_field(osc_item_meta(), 's_value', ''),'http://')===false) {
-                    return '<a href="http://'.htmlentities(osc_field(osc_item_meta(), 's_value', ''), ENT_COMPAT, "UTF-8").'" >'.htmlentities(osc_field(osc_item_meta(), 's_value', ''), ENT_COMPAT, "UTF-8").'</a>';
-                } else{
+                if(stripos(osc_field(osc_item_meta(), 's_value', ''),'http://')!==false || stripos(osc_field(osc_item_meta(), 's_value', ''),'https://')!==false) {
                     return '<a href="'.htmlentities(osc_field(osc_item_meta(), 's_value', ''), ENT_COMPAT, "UTF-8").'" >'.htmlentities(osc_field(osc_item_meta(), 's_value', ''), ENT_COMPAT, "UTF-8").'</a>';
+                } else {
+                    return '<a href="http://'.htmlentities(osc_field(osc_item_meta(), 's_value', ''), ENT_COMPAT, "UTF-8").'" >'.htmlentities(osc_field(osc_item_meta(), 's_value', ''), ENT_COMPAT, "UTF-8").'</a>';
                 }
             } else {
                 return '';
             }
         } else {
-            return htmlentities(osc_field(osc_item_meta(), 's_value', ''), ENT_COMPAT, "UTF-8");
+            return nl2br(htmlentities(osc_field(osc_item_meta(), 's_value', ''), ENT_COMPAT, "UTF-8"));
         }
     }
 
@@ -1209,8 +1217,7 @@
      * @return string
      */
     function osc_total_active_items() {
-        $search = new Search(false);
-        return $search->count();
+        return Item::newInstance()->totalItems(null, 'ACTIVE|ENABLED|NOTEXPIRED');
     }
 
     /**
@@ -1219,8 +1226,7 @@
      * @return string
      */
     function osc_total_items() {
-        $search = new Search(true);
-        return $search->count();
+        return Item::newInstance()->totalItems(null);
     }
 
     /**
@@ -1229,9 +1235,7 @@
      * @return string
      */
     function osc_total_active_items_today() {
-        $search = new Search(false);
-        $search->addConditions(sprintf('DATEDIFF(\'%s\', %st_item.dt_pub_date) < 1', date('Y-m-d H:i:s'), DB_TABLE_PREFIX));
-        return $search->count();
+        return Item::newInstance()->totalItems(null, 'ACTIVE|ENABLED|NOTEXPIRED|TODAY');
     }
 
     /**
@@ -1240,9 +1244,7 @@
      * @return string
      */
     function osc_total_items_today() {
-        $search = new Search(true);
-        $search->addConditions(sprintf('DATEDIFF(\'%s\', %st_item.dt_pub_date) < 1', date('Y-m-d H:i:s'), DB_TABLE_PREFIX));
-        return $search->count();
+        return Item::newInstance()->totalItems(null, 'TODAY');
     }
 
 
@@ -1302,6 +1304,9 @@
         }
         foreach($params as $key => $value) {
             switch($key) {
+                case 'id':
+                    $mSearch->addItemId($value);
+                    break;
                 case 'author':
                     $tmp = explode(",", $value);
                     foreach($tmp as $t) {

@@ -118,15 +118,25 @@
                         return;
                     }
 
+                    $itemsPerPage = Params::getParam('itemsPerPage')!='' ? Params::getParam('itemsPerPage') : 10;
+                    $page         = Params::getParam('iPage') > 0 ? Params::getParam('iPage') -1 : 0;
+                    $total_items  = Item::newInstance()->countItemTypesByUserID($user['pk_i_id'], 'active');
+
+                    if($itemsPerPage == 'all') {
+                        $total_pages = 1;
+                        $items = Item::newInstance()->findItemTypesByUserID($user['pk_i_id'], 0, null, 'active');
+                    } else {
+                        $total_pages  = ceil($total_items/$itemsPerPage);
+                        $items = Item::newInstance()->findItemTypesByUserID($user['pk_i_id'], $page*$itemsPerPage, $itemsPerPage, 'active');
+                    }
+
                     View::newInstance()->_exportVariableToView( 'user', $user );
-                    $mSearch = Search::newInstance();
-                    $mSearch->fromUser($user['pk_i_id']);
-
-                    $items = $mSearch->doSearch();
-                    $count = $mSearch->count();
-
-                    View::newInstance()->_exportVariableToView( 'items', $items );
-                    View::newInstance()->_exportVariableToView( 'search_total_items', $count );
+                    $this->_exportVariableToView('items', $items);
+                    $this->_exportVariableToView('list_total_pages', $total_pages);
+                    $this->_exportVariableToView('list_total_items', $total_items);
+                    $this->_exportVariableToView('items_per_page', $itemsPerPage);
+                    $this->_exportVariableToView('list_page', $page);
+                    $this->_exportVariableToView('canonical', osc_user_public_profile_url());
 
                     $this->doView('user-public-profile.php');
                 break;

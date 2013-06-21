@@ -72,6 +72,15 @@
         return getSiteInfo('s_site', '');
     }
 
+    /**
+     * Gets multisite url
+     *
+     * @return string
+     */
+    function osc_multisite_upload_path() {
+        return getSiteInfo('s_upload_path', '');
+    }
+
     //PRIVATE FUNCTION FOR GETTING NO BOOLEAN INFORMATION (if there was a class :P)
     /**
      * Gets site info

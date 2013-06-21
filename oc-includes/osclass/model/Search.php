@@ -622,12 +622,26 @@
                 $this->withUserId = true;
                 $ids = array();
                 foreach($id as $_id) {
-                    $ids[] = sprintf("%st_item.fk_i_user_id = %d ", DB_TABLE_PREFIX, $_id);
+                    if(!is_numeric($_id)) {
+                        $user = User::newInstance()->findByUsername($_id);
+                        if(isset($user['pk_i_id'])) {
+                            $ids[] = sprintf("%st_item.fk_i_user_id = %d ", DB_TABLE_PREFIX, $user['pk_i_id']);
+                        }
+                    } else {
+                        $ids[] = sprintf("%st_item.fk_i_user_id = %d ", DB_TABLE_PREFIX, $_id);
+                    }
                 }
                 $this->user_ids = $ids;
             } else {
                 $this->withUserId = true;
-                $this->user_ids = $id;
+                if(!is_numeric($id)) {
+                    $user = User::newInstance()->findByUsername($id);
+                    if(isset($user['pk_i_id'])) {
+                        $this->user_ids = $user['pk_i_id'];
+                    }
+                } else {
+                    $this->user_ids = $id;
+                }
             }
         }
 
@@ -933,6 +947,9 @@
                 }
                 $this->_priceRange();
 
+                // add joinTables
+                $this->_joinTable();
+
                 // PLUGINS TABLES !!
                 if( !empty($this->tables) ) {
                     $tables = implode(', ', $this->tables);
@@ -1070,50 +1087,32 @@
          * number of items returned.
          *
          * @param int $numItems
-         * @param mixed $category int or array(int)
+         * @param mixed $options
          * @param bool $withPicture
          * @return array
          */
-        public function getLatestItems($numItems = 10, $category = array(), $withPicture = false)
+        public function getLatestItems($numItems = 10, $options = array(), $withPicture = false)
         {
-            $this->dao->select(DB_TABLE_PREFIX.'t_item.* ');
-            // from + tables
-            $this->dao->from( DB_TABLE_PREFIX.'t_item use index (PRIMARY)' );
+            $this->set_rpp($numItems);
             if($withPicture) {
-                $this->dao->from(sprintf('%st_item_resource', DB_TABLE_PREFIX));
-                $this->dao->where(sprintf("%st_item_resource.s_content_type LIKE '%%image%%' AND %st_item.pk_i_id = %st_item_resource.fk_i_item_id", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX));
+                $this->withPicture();
             }
-
-            // where
-            $whe  = DB_TABLE_PREFIX.'t_item.b_active = 1 AND ';
-            $whe .= DB_TABLE_PREFIX.'t_item.b_enabled = 1 AND ';
-            $whe .= DB_TABLE_PREFIX.'t_item.b_spam = 0 AND ';
-
-            $whe .= '('.DB_TABLE_PREFIX.'t_item.b_premium = 1 || '.DB_TABLE_PREFIX.'t_item.dt_expiration >= \''. date('Y-m-d H:i:s').'\') ';
-
-            //$whe .= 'AND '.DB_TABLE_PREFIX.'t_category.b_enabled = 1 ';
-            if( is_array($category) && (count($category) > 0) ) {
-                $listCategories = implode(',', $category );
-                $whe .= ' AND '.DB_TABLE_PREFIX.'t_item.fk_i_category_id IN ('.$listCategories.') ';
+            if(isset($options['sCategory'])) {
+                $this->addCategory($options['sCategory']);
             }
-            $this->dao->where( $whe );
-
-            // group by & order & limit
-            $this->dao->groupBy(DB_TABLE_PREFIX.'t_item.pk_i_id');
-            $this->dao->orderBy(DB_TABLE_PREFIX.'t_item.pk_i_id', 'DESC');
-            $this->dao->limit(0, $numItems);
-
-            $rs = $this->dao->get();
-
-            if($rs === false){
-                return array();
+            if(isset($options['sCountry'])) {
+                $this->addCountry($options['sCountry']);
             }
-            if( $rs->numRows() == 0 ) {
-                return array();
+            if(isset($options['sRegion'])) {
+                $this->addRegion($options['sRegion']);
             }
-
-            $items = $rs->result();
-            return Item::newInstance()->extendData($items);
+            if(isset($options['sCity'])) {
+                $this->addCity($options['sCity']);
+            }
+            if(isset($options['sUser'])) {
+                $this->fromUser($options['sUser']);
+            }
+            return $this->doSearch();
         }
 
         /**
@@ -1178,7 +1177,7 @@
          */
         public function listCityAreas($city = null, $zero = ">", $order = "items DESC")
         {
-           $aOrder = split(' ', $order);
+           $aOrder = explode(' ', $order);
             $nOrder = count($aOrder);
 
             if($nOrder == 2) $this->dao->orderBy($aOrder[0], $aOrder[1]);

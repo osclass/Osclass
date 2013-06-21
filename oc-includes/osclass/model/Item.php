@@ -273,11 +273,11 @@
          *
          * @access public
          * @since unknown
-         * @param type $categoryId
-         * @param string $active
+         * @param int $categoryId
+         * @param mixed $options could be a string with | separator or an array with the options
          * @return int total items
          */
-        public function totalItems($categoryId = null, $active = null)
+        public function totalItems($categoryId = null, $options = null)
         {
             $this->dao->select('count(*) as total');
             $this->dao->from($this->getTableName().' i');
@@ -286,24 +286,35 @@
                 $this->dao->where('i.fk_i_category_id', $categoryId);
             }
 
-            $conditions = '';
-            if (!is_null($active)) {
-                switch ($active) {
+            if(!is_array($options)) {
+                $options = explode("|", $options);
+            }
+            foreach($options as $option) {
+                switch ($option) {
                     case 'ACTIVE':
-                        $this->dao->where('b_active', 1);
-                    break;
+                        $this->dao->where('i.b_active', 1);
+                        break;
                     case 'INACTIVE':
-                        $this->dao->where('b_active', 0);
-                    break;
+                        $this->dao->where('i.b_active', 0);
+                        break;
                     case 'ENABLE':
-                        $this->dao->where('b_enabled', 1);
-                    break;
+                        $this->dao->where('i.b_enabled', 1);
+                        break;
                     case 'DISABLED':
-                        $this->dao->where('b_enabled', 0);
-                    break;
+                        $this->dao->where('i.b_enabled', 0);
+                        break;
                     case 'SPAM':
-                        $this->dao->where('b_spam', 1);
-                    break;
+                        $this->dao->where('i.b_spam', 1);
+                        break;
+                    case 'EXPIRED':
+                        $this->dao->where( '( i.b_premium = 0 && i.dt_expiration < \'' . date('Y-m-d H:i:s') .'\' )' );
+                        break;
+                    case 'NOTEXPIRED':
+                        $this->dao->where( '( i.b_premium = 1 || i.dt_expiration >= \'' . date('Y-m-d H:i:s') .'\' )' );
+                        break;
+                    case 'TODAY':
+                        $this->dao->where('DATEDIFF(\''.date('Y-m-d H:i:s').'\', i.dt_pub_date) < 1');
+                        break;
                     default:
                 }
             }
@@ -466,6 +477,53 @@
         }
 
         /**
+         * Find enabled items which are going to expired
+         *
+         * @access public
+         * @since 3.2
+         * @param int $hours
+         * @return array of items
+         */
+        public function findByHourExpiration($hours = 24)
+        {
+            $this->dao->select('l.*, i.*, TIMESTAMPDIFF(HOUR, NOW(), i.dt_expiration) as hourdiff ');
+            $this->dao->from($this->getTableName().' i, '.DB_TABLE_PREFIX.'t_item_location l');
+            $this->dao->where('l.fk_i_item_id = i.pk_i_id');
+            $this->dao->where('hourdiff = '.$hours);
+
+            $result = $this->dao->get();
+            if($result == false) {
+                return array();
+            }
+            $items  = $result->result();
+            return $this->extendData($items);
+        }
+
+        /**
+         * Find enabled items which are going to expired
+         *
+         * @access public
+         * @since 3.2
+         * @param int $days
+         * @return array of items
+         */
+        public function findByDayExpiration($days = 1)
+        {
+            $this->dao->select('l.*, i.*, TIMESTAMPDIFF(HOUR, NOW(), i.dt_expiration) as daydiff ');
+            $this->dao->from($this->getTableName().' i, '.DB_TABLE_PREFIX.'t_item_location l');
+            $this->dao->where('l.fk_i_item_id = i.pk_i_id');
+            $this->dao->where('daydiff = '.$days);
+
+            $result = $this->dao->get();
+            if($result == false) {
+                return array();
+            }
+
+            $items  = $result->result();
+            return $this->extendData($items);
+        }
+
+        /**
          * Count enabled items belong to an user given its id
          *
          * @access public
@@ -483,6 +541,91 @@
             );
             $this->dao->where($array_where);
             $this->dao->orderBy('i.pk_i_id', 'DESC');
+
+            $result = $this->dao->get();
+            if($result == false) {
+                return array();
+            }
+            $items  = $result->row();
+            return $items['total'];
+        }
+
+        /**
+         * Find enable items according the type
+         *
+         * @access public
+         * @since unknown
+         * @param int $userId User id
+         * @param int $start beginning from $start
+         * @param int $end ending
+         * @param string $itemType type item(active, expired, pending validate, premium, all)
+         * @return array of items
+         */
+        public function findItemTypesByUserID($userId, $start = 0, $end = null, $itemType = false)
+        {
+            $this->dao->from($this->getTableName());
+            $this->dao->where('b_enabled', 1);
+            $this->dao->where("fk_i_user_id = $userId");
+
+            if($itemType == 'active') {
+                $this->dao->where('b_active', 1);
+                $this->dao->where('dt_expiration > \'' . date('Y-m-d H:i:s') . '\'');
+
+            } elseif($itemType == 'expired'){
+                $this->dao->where('dt_expiration < \'' . date('Y-m-d H:i:s') . '\'');
+
+            } elseif($itemType == 'pending_validate'){
+                $this->dao->where('b_active', 0);
+
+            } elseif($itemType == 'premium'){
+                $this->dao->where('b_premium', 1);
+            }
+
+            $this->dao->orderBy('pk_i_id', 'DESC');
+            if($end!=null) {
+                $this->dao->limit($start, $end);
+            } else if ($start > 0 ) {
+                $this->dao->limit($start);
+            }
+
+            $result = $this->dao->get();
+            if($result == false) {
+                return array();
+            }
+            $items  = $result->result();
+            return $this->extendData($items);
+        }
+
+        /**
+         * Count enabled items according the type
+         *
+         * @access public
+         * @since unknown
+         * @param int $userId User id
+         * @param string $itemType (active, expired, pending validate, premium, all)
+         * @return int number of items
+         */
+        public function countItemTypesByUserID($userId, $itemType = false)
+        {
+            $this->dao->select('count(pk_i_id) as total');
+            $this->dao->from($this->getTableName());
+            $this->dao->where('b_enabled', 1);
+            $this->dao->where("fk_i_user_id = $userId");
+            $this->dao->orderBy('pk_i_id', 'DESC');
+
+            if($itemType == 'active') {
+                $this->dao->where('b_active', 1);
+                $this->dao->where("dt_expiration > '" . date('Y-m-d H:i:s') . "'");
+
+            } elseif($itemType == 'expired'){
+                $this->dao->where("dt_expiration <= '" . date('Y-m-d H:i:s') . "'");
+
+            } elseif($itemType == 'pending_validate'){
+                $this->dao->where('b_active', 0);
+
+            } elseif($itemType == 'premium'){
+                $this->dao->where('b_premium', 1);
+            }
 
             $result = $this->dao->get();
             if($result == false) {

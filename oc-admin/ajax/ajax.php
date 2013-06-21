@@ -26,7 +26,7 @@
             parent::__construct();
             $this->ajax = true;
             if( $this->isModerator() ) {
-                if( !in_array($this->action, array('items', 'media', 'comments', 'custom')) ) {
+                if( !in_array($this->action, array('items', 'media', 'comments', 'custom', 'runhook')) ) {
                     $this->action = 'error_permissions';
                 }
             }
@@ -403,25 +403,34 @@
 
                     break;
                 case 'custom': // Execute via AJAX custom file
-                    $ajaxFile = Params::getParam("ajaxfile");
+                    if(Params::existParam('route')) {
+                        $routes = Rewrite::newInstance()->getRoutes();
+                        $rid = Params::getParam('route');
+                        $file = '../';
+                        if(isset($routes[$rid]) && isset($routes[$rid]['file'])) {
+                            $file = $routes[$rid]['file'];
+                        }
+                    } else {
+                        $file = Params::getParam("ajaxfile");
+                    }
 
-                    if($ajaxFile == '') {
+                    if($file == '') {
                         echo json_encode(array('error' => 'no action defined'));
                         break;
                     }
 
                     // valid file?
-                    if( stripos($ajaxFile, '../') !== false ) {
-                        echo json_encode(array('error' => 'no valid ajaxFile'));
+                    if( stripos($file, '../') !== false ) {
+                        echo json_encode(array('error' => 'no valid file'));
                         break;
                     }
 
-                    if( !file_exists(osc_plugins_path() . $ajaxFile) ) {
-                        echo json_encode(array('error' => "ajaxFile doesn't exist"));
+                    if( !file_exists(osc_plugins_path() . $file) ) {
+                        echo json_encode(array('error' => "file doesn't exist"));
                         break;
                     }
 
-                    require_once osc_plugins_path() . $ajaxFile;
+                    require_once osc_plugins_path() . $file;
                 break;
                 case 'test_mail':
                     $title = sprintf( __('Test email, %s'), osc_page_title() );

@@ -22,7 +22,7 @@
         <meta name="robots" content="noindex, nofollow, noarchive" />
         <meta name="googlebot" content="noindex, nofollow, noarchive" />
         <title><?php echo osc_page_title(); ?> &raquo; <?php _e('Change your password'); ?></title>
-        <script type="text/javascript" src="<?php echo osc_admin_base_url(); ?>themes/modern/js/jquery.min.js"></script>
+        <script type="text/javascript" src="<?php echo osc_assets_url('js/jquery.min.js'); ?>"></script>
         <link type="text/css" href="style/backoffice_login.css" media="screen" rel="stylesheet" />
         <?php osc_run_hook('admin_login_header'); ?>
     </head>

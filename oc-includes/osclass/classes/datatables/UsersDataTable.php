@@ -22,7 +22,7 @@
 
     /**
      * UsersDataTable class
-     * 
+     *
      * @since 3.1
      * @package Osclass
      * @subpackage classes
@@ -35,11 +35,11 @@
         private $search;
         private $order_by;
         private $conditions;
-        
-        
+
+
         public function table($params)
         {
-            
+
             $this->withUserId = false;
             $this->search = '';
             $this->addTableHeader();
@@ -50,7 +50,7 @@
             $this->processData($list_users['users']);
             $this->totalFiltered = $list_users['rows'];
             $this->total = $list_users['total_results'];
-            
+
             return $this->getData();
         }
 
@@ -67,7 +67,7 @@
             $dummy = &$this;
             osc_run_hook("admin_users_table", $dummy);
         }
-        
+
         private function processData($users)
         {
             if(!empty($users)) {
@@ -81,6 +81,7 @@
 
                     $options[]  = '<a href="' . osc_admin_base_url(true) . '?page=users&action=edit&amp;id=' . $aRow['pk_i_id'] . '">' . __('Edit') . '</a>';
                     $options[]  = '<a onclick="return delete_dialog(\'' . $aRow['pk_i_id'] . '\');" href="' . osc_admin_base_url(true) . '?page=users&action=delete&amp;id[]=' . $aRow['pk_i_id'] . '">' . __('Delete') . '</a>';
+                    $options[]  = '<a href="' . osc_user_public_profile_url($aRow['pk_i_id']) . '" targe="_blank">' . __('Public profile') . '</a>';
 
                     if( $aRow['b_active'] == 1 ) {
                         $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=users&action=deactivate&amp;id[]=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url . '">' . __('Deactivate') . '</a>';
@@ -99,7 +100,7 @@
                     $options_more = osc_apply_filter('more_actions_manage_users', $options_more, $aRow);
                     // more actions
                     $moreOptions = '<li class="show-more">'.PHP_EOL.'<a href="#" class="show-more-trigger">'. __('Show more') .'...</a>'. PHP_EOL .'<ul>'. PHP_EOL;
-                    foreach( $options_more as $actual ) { 
+                    foreach( $options_more as $actual ) {
                         $moreOptions .= '<li>'.$actual."</li>".PHP_EOL;
                     }
                     $moreOptions .= '</ul>'. PHP_EOL .'</li>'.PHP_EOL;
@@ -130,10 +131,10 @@
 
             }
         }
-                
+
         private function getDBParams($_get)
         {
-            
+
             if( !isset($_get['iDisplayStart']) ) {
                 $_get['iDisplayStart'] = 0;
             }
@@ -196,13 +197,13 @@
 
             // set start and limit using iPage param
             $start = ($this->iPage - 1) * $_get['iDisplayLength'];
-            
+
             $this->start = intval( $start );
             $this->limit = intval( $_get['iDisplayLength'] );
 
-            
+
         }
-        
+
     }
 
 ?>

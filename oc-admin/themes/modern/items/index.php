@@ -82,7 +82,7 @@
                 $("#dialog-item-delete").dialog({
                     autoOpen: false,
                     modal: true,
-                    title: '<?php echo osc_esc_js( __('Delete listing') ); ?>'
+                    title: '<?php echo osc_esc_js( osc_apply_filter( 'admin_dialog_elete_listing_title', __('Delete listing') ) ); ?>'
                 });
 
                 // dialog bulk actions
@@ -277,6 +277,7 @@
             </div>
         </div>
         <div class="clear"></div>
+        <?php osc_run_hook('filters_manage_item_search'); ?>
     </div>
     </div>
     <div class="form-actions">
@@ -358,11 +359,17 @@
                 <?php if( count($rows) > 0 ) { ?>
                     <?php foreach($rows as $key => $row) {
                         $class = ''; $aI = $aRawRows[$key];
-                        if(!$aI['b_active']) $class = 'status-spam';
-                        if(!$aI['b_active']) $class = 'status-spam';
-                        if(!$aI['b_enabled']) $class = 'status-spam';
-                        if($aI['b_spam']) $class = 'status-spam';
-                        if($aI['b_premium']) $class = 'status-premium';/**/ ?>
+                        if( $aI['b_spam'] ) {
+                            $class = 'status-spam';
+                        } else if( !$aI['b_enabled'] ) {
+                            $class = 'status-blocked';
+                        } else if( !$aI['b_active'] ) {
+                            $class = 'status-inactive';
+                        } else if( $aI['b_premium'] ) {
+                            $class = 'status-premium';
+                        } else {
+                            $class = 'status-active';
+                        } ?>
                         <tr class="<?php echo $class;?>">
                             <?php foreach($row as $k => $v) { ?>
                                 <td class="col-<?php echo $k; ?>"><?php echo $v; ?></td>
@@ -396,7 +403,7 @@
     <input type="hidden" name="id[]" value="" />
     <div class="form-horizontal">
         <div class="form-row">
-            <?php _e('Are you sure you want to delete this listing?'); ?>
+            <?php echo osc_apply_filter('admin_dialog_delete_listing_text', __('Are you sure you want to delete this listing?')); ?>
         </div>
         <div class="form-actions">
             <div class="wrapper">

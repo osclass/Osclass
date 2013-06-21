@@ -111,6 +111,14 @@
                                     $isInserted = $this->adminManager->insert($array);
 
                                     if( $isInserted ) {
+                                        // send email
+                                        osc_run_hook('hook_email_new_admin', array(
+                                            's_name'      => $sName,
+                                            's_username'  => $sUserName,
+                                            's_password'  => $sPassword,
+                                            's_email'     => $sEmail
+                                            )
+                                        );
                                         osc_add_flash_ok_message( _m('The admin has been added'), 'admin');
                                     } else {
                                         osc_add_flash_error_message( _m('There has been an error adding a new admin'), 'admin');

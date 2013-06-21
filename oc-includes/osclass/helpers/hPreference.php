@@ -55,6 +55,15 @@
     }
 
     /**
+     * Gets number of days to warn about an ad being expired
+     *
+     * @return int
+     */
+    function osc_warn_expiration() {
+        return (getPreference('warn_expiration'));
+    }
+
+    /**
      * Gets comments per page
      *
      * @return int
@@ -960,7 +969,25 @@
         return getPreference('watermark_place');
     }
 
-    //PRIVATE FUNCTION (if there was a class :P)
+    /**
+     * Return subdomain type
+     *
+     * @return string
+     */
+    function osc_subdomain_type() {
+        return getPreference('subdomain_type');
+    }
+
+    /**
+     * Return subdomain host
+     *
+     * @return string
+     */
+    function osc_subdomain_host() {
+        return getPreference('subdomain_host');
+    }
+
+//PRIVATE FUNCTION (if there was a class :P)
     /**
      * Gets preference
      *

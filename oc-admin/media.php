@@ -42,7 +42,7 @@
                 case('bulk_actions'):
                                         osc_csrf_check();
                                         switch ( Params::getParam('bulk_actions') ) {
-                                            case 'delete_all':
+                                            case 'delete':
                                                 $ids = Params::getParam("id");
                                                 if( is_array($ids) ) {
                                                     foreach($ids as $id) {

@@ -50,6 +50,10 @@
                 default_results_per_page: {
                     required: true,
                     digits: true
+                },
+                warn_expiration: {
+                    required: true,
+                    digits: true
                 }
             },
             messages: {
@@ -72,6 +76,10 @@
                 default_results_per_page: {
                     required: '<?php echo osc_esc_js(__("The search page shows: this field is required")); ?>.',
                     digits: '<?php echo osc_esc_js(__("The search page shows: this field must only contain numeric characters")); ?>.'
+                },
+                warn_expiration: {
+                    required: '<?php echo osc_esc_js(__("Warn about expiration: this field is required")); ?>.',
+                    digits: '<?php echo osc_esc_js(__("Warn about expiration: this field must only contain numeric characters")); ?>.'
                 }
             },
             wrapper: "li",
@@ -275,6 +283,14 @@
                             <input type="text" class="input-small" name="default_results_per_page" value="<?php echo osc_esc_html(osc_default_results_per_page_at_search()); ?>" />
                             <?php _e('listings at most'); ?>
                         </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-label"><?php _e('Warn about expiration'); ?></div>
+                        <div class="form-controls">
+                            <input type="text" class="input-small" name="warn_expiration" value="<?php echo osc_esc_html(osc_warn_expiration()); ?>" />
+                            <?php _e('days'); ?>
+                        </div>
+                        <span class="help-box"><?php _e('This option will send an email X days before an ad expires to the author. 0 for no email.'); ?></span>
                     </div>
                     <h2 class="render-title separate-top"><?php _e('Category settings'); ?></h2>
                     <div class="form-row">

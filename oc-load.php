@@ -72,7 +72,9 @@ require_once LIB_PATH . 'osclass/model/Preference.php';
 require_once LIB_PATH . 'osclass/helpers/hPreference.php';
 
 // check if Osclass is installed
-if( !getBoolPreference('osclass_installed') ) {
+if( !getBoolPreference('osclass_installed') && MULTISITE ) {
+    header('Location: ' . WEB_PATH); die;
+} else if( !getBoolPreference('osclass_installed') ) {
     require_once LIB_PATH . 'osclass/helpers/hErrors.php';
 
     $title    = 'Osclass &raquo; Error';
@@ -196,18 +198,6 @@ define('__OSC_LOADED__', true);
 // Moved from BaseModel, since we need some session magic on index.php;)
 Session::newInstance()->session_start();
 
-if( OC_ADMIN ) {
-    // init admin menu
-    AdminMenu::newInstance()->init();
-    $functions_path = AdminThemes::newInstance()->getCurrentThemePath() . 'functions.php';
-    if( file_exists($functions_path) ) {
-        require_once $functions_path;
-    }
-} else {
-    // init Rewrite class only if it's the frontend
-    Rewrite::newInstance()->init();
-}
-
 if( osc_timezone() != '' ) {
     date_default_timezone_set(osc_timezone());
 }
@@ -263,6 +253,16 @@ osc_register_script('php-date', osc_assets_url('js/date.js'));
 Plugins::init();
 osc_csrfguard_start();
 
+if( OC_ADMIN ) {
+    // init admin menu
+    AdminMenu::newInstance()->init();
+    $functions_path = AdminThemes::newInstance()->getCurrentThemePath() . 'functions.php';
+    if( file_exists($functions_path) ) {
+        require_once $functions_path;
+    }
+} else {
+    Rewrite::newInstance()->init();
+}
 
 if( !class_exists('PHPMailer') ) {
     require_once osc_lib_path() . 'phpmailer/class.phpmailer.php';
@@ -270,4 +270,5 @@ if( !class_exists('PHPMailer') ) {
 if( !class_exists('SMTP') ) {
     require_once osc_lib_path() . 'phpmailer/class.smtp.php';
 }
+
 /* file end: ./oc-load.php */
