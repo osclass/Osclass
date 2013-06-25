@@ -245,10 +245,10 @@ class Frontend_items extends FrontendTest {
         $this->selenium->open( osc_base_url() );
         $this->selenium->click("link=My account");
         $this->selenium->waitForPageToLoad("30000");
-        $this->selenium->click("xpath=//ul/li/a[text()='Manage your listings']");
+
+        $this->selenium->click("xpath=//span[@class='admin-options']/a[text()='Activate']");
         $this->selenium->waitForPageToLoad("30000");
-        $this->selenium->click("xpath=//div[@class='item']/p/a[text()='Activate']");
-        $this->selenium->waitForPageToLoad("30000");
+
         $this->assertTrue($this->selenium->isTextPresent("The listing has been validated"), "Items, validate user item.");
     }
 
@@ -263,6 +263,7 @@ class Frontend_items extends FrontendTest {
         $old_enabled_users              = $uSettings->set_enabled_users(1);
         $old_enabled_users_registration = $uSettings->set_enabled_user_registration(1);
         $old_enabled_user_validation    = $uSettings->set_enabled_user_validation(0);
+
         $this->doRegisterUser();
         $uSettings->set_logged_user_item_validation( $old_logged_user_item_validation );
         $uSettings->set_enabled_users($old_enabled_users);
@@ -275,13 +276,13 @@ class Frontend_items extends FrontendTest {
         $url = osc_item_activate_url('', $itemId);
         $this->selenium->open($url);
         sleep(1);
-        $this->assertTrue($this->selenium->isTextPresent("Page not found"), "Items, validate item from other user.");
+        $this->assertTrue($this->selenium->isTextPresent("Sorry but I can't find the page you're looking for"), "Items, validate item from other user.");
         // 2
         $this->logout();
         $url = osc_item_activate_url('', $itemId);
         $this->selenium->open($url);
         sleep(1);
-        $this->assertTrue($this->selenium->isTextPresent("Page not found"), "Items, validate item from no user.");
+        $this->assertTrue($this->selenium->isTextPresent("Sorry but I can't find the page you're looking for"), "Items, validate item from no user.");
         // 3
         $item = Item::newInstance()->findByPrimaryKey($itemId);
         $url = osc_item_activate_url($item['s_secret'], $itemId);
@@ -303,20 +304,19 @@ class Frontend_items extends FrontendTest {
     {
         $this->loginWith();
 
+        sleep(5);
+
         $uSettings = new utilSettings();
         $old_moderate_items = $uSettings->set_moderate_items(0);
 
         $this->selenium->open( osc_base_url() );
         $this->selenium->click("link=My account");
         $this->selenium->waitForPageToLoad("30000");
-        $this->selenium->click("xpath=//ul/li/a[text()='Manage your listings']");
-        $this->selenium->waitForPageToLoad("30000");
         // edit first item
-        $this->selenium->click("xpath=//div[@class='item'][1]/p[@class='options']/strong/a[text()='Edit']");
+        $this->selenium->click("xpath=//span[@class='admin-options']/a[text()='Edit item']");
         $this->selenium->waitForPageToLoad("30000");
-        $this->selenium->select("select_1", "label=regexp:\\s*Vehicles");
-        sleep(2);
-        $this->selenium->select("select_2", "label=regexp:\\s*Car Parts");
+
+        $this->selenium->select("catId", "label=regexp:\\s*Car Parts");
 
         $this->selenium->type("title[en_US]", "New title new item");
         $this->selenium->type("description[en_US]", "New description new item new item new item");
@@ -328,7 +328,7 @@ class Frontend_items extends FrontendTest {
         $this->selenium->click('id=ui-active-menuitem');
         $this->selenium->type("cityArea", "New my area");
         $this->selenium->type("address", "New my address");
-        $this->selenium->click("//button[@type='submit']");
+        $this->selenium->click("xpath=//button[@type='submit']");
         $this->selenium->waitForPageToLoad("3000");
 
         $this->assertTrue(  $this->selenium->isTextPresent("Great! We've just updated your listing"), 'Items, edit first item, with validation.' );
@@ -337,13 +337,10 @@ class Frontend_items extends FrontendTest {
         $this->selenium->open( osc_base_url(true) );
         $this->selenium->click("link=My account");
         $this->selenium->waitForPageToLoad("30000");
-        $this->selenium->click("xpath=//ul/li/a[text()='Manage your listings']");
-        $this->selenium->waitForPageToLoad("30000");
         // edit first item
-        $this->selenium->click("xpath=//div[@class='item'][1]/p[@class='options']/strong/a[text()='Edit']");
+        $this->selenium->click("xpath=//span[@class='admin-options']/a[text()='Edit item']");
         $this->selenium->waitForPageToLoad("30000");
-        $this->selenium->select("select_1", "label=regexp:\\s*Vehicles");
-        sleep(2);
+
         $this->selenium->select("select_2", "label=regexp:\\s*Car Parts");
 
         $this->selenium->type("title[en_US]", "New title new item NEW ");
@@ -387,24 +384,21 @@ class Frontend_items extends FrontendTest {
         $this->selenium->click("link=My account");
         $this->selenium->waitForPageToLoad("30000");
 
-        $this->selenium->click("xpath=//ul/li/a[text()='Manage your listings']");
-        $this->selenium->waitForPageToLoad("30000");
-
-        $numItems = $this->selenium->getXpathCount("//div[@class='item']/p/a[text()='Delete']");
+        $numItems = $this->selenium->getXpathCount("//span[@class='admin-options']/a[text()='Delete']");
 
         while($numItems > 0) {
             // delete first item
-            $this->selenium->click("xpath=//div[@class='item']/p/a[text()='Delete']");
+            $this->selenium->click("xpath=//span[@class='admin-options']/a[text()='Delete']");
             $this->selenium->waitForPageToLoad("30000");
             $this->assertTrue($this->selenium->isTextPresent("Your listing has been deleted"), "Can't delete listing. ERROR ");
 
-            $numItems = $this->selenium->getXpathCount("//div[@class='item']/p/a[text()='Delete']");
+            $numItems = $this->selenium->getXpathCount("//span[@class='admin-options']/a[text()='Delete']");
 
             $this->selenium->open( osc_base_url() );
             $this->selenium->click("link=My account");
             $this->selenium->waitForPageToLoad("30000");
 
-            $this->selenium->click("xpath=//ul/li/a[text()='Manage your listings']");
+            $this->selenium->click("link=My account");
             $this->selenium->waitForPageToLoad("30000");
         }
         $this->removeUserByMail();
