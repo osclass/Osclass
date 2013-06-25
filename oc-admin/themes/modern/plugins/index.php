@@ -71,8 +71,9 @@
             });
 
             // dialog delete function
-            function uninstall_dialog(plugin) {
+            function uninstall_dialog(plugin, title) {
                 $("#dialog-uninstall input[name='plugin']").attr('value', plugin);
+                $("#dialog-uninstall").dialog('option', 'title', title);
                 $("#dialog-uninstall").dialog('open');
                 return false;
             }
