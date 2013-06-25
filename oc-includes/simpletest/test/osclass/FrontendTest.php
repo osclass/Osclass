@@ -14,7 +14,7 @@ abstract class FrontendTest extends MyWebTestCase {
     function __construct($label = false) {
         parent::__construct($label);
     }
-    
+
     function setUp()
     {
         include dirname(__FILE__).'/config_test.php';
@@ -25,7 +25,7 @@ abstract class FrontendTest extends MyWebTestCase {
         $this->selenium = new Testing_Selenium( $browser, "http://localhost/");
         $this->selenium->start();
         $this->selenium->setSpeed( $speed );
-        
+
         $this->selenium->windowMaximize();
     }
 
@@ -33,7 +33,7 @@ abstract class FrontendTest extends MyWebTestCase {
     {
         $this->selenium->stop();
     }
-    
+
     /**
      * Do register if exist 'Register for a free account' link
      * @param string $mail
@@ -64,7 +64,7 @@ abstract class FrontendTest extends MyWebTestCase {
 
     /**
      * Do Login at frontend, via login link at header.
-     * 
+     *
      * @param string $mail
      * @param string $pass
      */
@@ -72,7 +72,7 @@ abstract class FrontendTest extends MyWebTestCase {
     {
         if( is_null($mail) ) $mail = $this->_email;
         if( is_null($pass) ) $pass = $this->_password;
-        
+
         $this->selenium->open( osc_base_url() );
         $this->selenium->click("login_open");
         $this->selenium->type("email", $mail);
@@ -80,11 +80,11 @@ abstract class FrontendTest extends MyWebTestCase {
 
         $this->selenium->click("//button[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");
-        
+
         $this->selenium->click("link=My account");
         $this->selenium->waitForPageToLoad("10000");
     }
-    
+
     /**
      * Do logout at frontend, via logout link at header.
      */
@@ -105,7 +105,7 @@ abstract class FrontendTest extends MyWebTestCase {
         $user = User::newInstance()->findByEmail($mail);
         User::newInstance()->deleteUser($user['pk_i_id']);
     }
-    
+
     public function insertItem($parentCat, $cat, $title, $description, $price, $regionId, $cityId, $cityArea, $aPhotos, $user, $email , $logged = 0)
     {
         $this->selenium->open( osc_base_url() );
@@ -113,9 +113,9 @@ abstract class FrontendTest extends MyWebTestCase {
         $this->selenium->click("link=Publish your ad for free");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->selenium->select("select_1", "label=regexp:\\s*$parentCat");
+        $this->selenium->select("catId", "label=regexp:\\s*$cat");
         sleep(2);
-        $this->selenium->select("select_2", "label=regexp:\\s*$cat");
+//        $this->selenium->select("select_2", "label=regexp:\\s*$cat");
         $this->selenium->type("title[en_US]", $title);
         $this->selenium->type("description[en_US]", $description);
         $this->selenium->type("price", "12".osc_locale_thousands_sep()."34".osc_locale_thousands_sep()."56".osc_locale_dec_point()."78".osc_locale_dec_point()."90");
@@ -143,29 +143,29 @@ abstract class FrontendTest extends MyWebTestCase {
                 $this->selenium->click("link=Add new photo");
                 $this->selenium->type("//div[@id='p-0']/div/input", LIB_PATH."simpletest/test/osclass/".$aPhotos[$k]);
             }
-        } 
-        
+        }
+
         $this->selenium->type("contactName" , $user);
         $this->selenium->type("contactEmail", $email);
 
         $this->selenium->click("//button[text()='Publish']");
         $this->selenium->waitForPageToLoad("10000");
     }
-    
+
     function _createAlert($email, $success = true)
     {
         // search only items with picture
         $this->selenium->open( osc_search_url() );
         $this->selenium->click("bPic"); // only items with pictures
-        $this->selenium->click("xpath=//span/button[text()='Apply']");
+        $this->selenium->click("xpath=//button[text()='Apply']");
         $this->selenium->waitForPageToLoad("10000");
-        
+
         // create alert invalid email
         $this->selenium->click('alert_email');
         $this->selenium->type('alert_email', $email);
-        $this->selenium->click("xpath=//span/button[text()='Subscribe now!']");
+        $this->selenium->click("xpath=//button[text()='Subscribe now!']");
         sleep(3);
-        // verify alert 
+        // verify alert
         $aAuxAlert = Alerts::newInstance()->findByEmail($email);
         if( $success ) {
             $this->assertTrue(count($aAuxAlert) == 1, 'Search - create alert');
@@ -173,7 +173,7 @@ abstract class FrontendTest extends MyWebTestCase {
             $this->assertTrue(count($aAuxAlert) == 0, 'Search - create alert');
         }
     }
-    
+
     function _lastItemId()
     {
         // get last id from t_item.
