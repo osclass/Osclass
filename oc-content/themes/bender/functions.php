@@ -301,7 +301,7 @@ FUNCTIONS
             $lang['user_account']           = __('Account', 'bender');
             $lang['user_items']             = __('My listings', 'bender');
             $lang['user_alerts']            = __('My searches', 'bender');
-            $lang['user_profile']           = __('Update my account', 'bender');
+            $lang['user_profile']           = __('Update your account', 'bender');
             $lang['user_change_email']      = __('Change my email', 'bender');
             $lang['user_change_username']   = __('Change my username', 'bender');
             $lang['user_change_password']   = __('Change my password', 'bender');
@@ -336,22 +336,26 @@ FUNCTIONS
             $options[] = array(
                 'name'  => __('Change email', 'bender'),
                 'url'   => osc_change_user_email_url(),
-                'class' => 'opt_account'
+                'class' => 'opt_account',
+                'id' => 'change_email_link'
             );
             $options[] = array(
                 'name'  => __('Change username', 'bender'),
                 'url'   => osc_change_user_username_url(),
-                'class' => 'opt_account'
+                'class' => 'opt_account',
+                'id' => 'change_usename_link'
             );
             $options[] = array(
                 'name'  => __('Change password', 'bender'),
                 'url'   => osc_change_user_password_url(),
-                'class' => 'opt_account'
+                'class' => 'opt_account',
+                'id' => 'change_password_link'
             );
             $options[] = array(
                 'name'  => __('Delete account', 'bender'),
                 'url'   => '#',
-                'class' => 'opt_delete_account'
+                'class' => 'opt_delete_account',
+                'id' => 'delete_account_link'
             );
 
             return $options;
