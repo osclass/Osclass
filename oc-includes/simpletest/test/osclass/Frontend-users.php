@@ -385,10 +385,10 @@ class Frontend_users extends FrontendTest {
     /*
      * Remove user1
      */
-//    function testUser_RemoveNewUser()
-//    {
-//        $this->removeUserByMail($this->_email);
-//    }
+    function testUser_RemoveNewUser()
+    {
+        $this->removeUserByMail($this->_email);
+    }
 }
 
 ?>
