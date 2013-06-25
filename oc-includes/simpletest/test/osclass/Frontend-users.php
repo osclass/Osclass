@@ -49,8 +49,12 @@ class Frontend_users extends FrontendTest {
         $this->selenium->click("xpath=//li[@class='opt_items']/a");
         sleep(1);
         // click to manage items
-        $this->assertTrue( $this->selenium->isTextPresent('Your listings + Post a new listing'), 'User Manage Items');
-        $this->assertTrue( $this->selenium->isTextPresent('You don\'t have any listings yet'), 'User Manage Items, without items');
+        // Bender theme
+        $this->assertTrue( $this->selenium->isTextPresent('My listings'), 'User Manage Items');
+        $this->assertTrue( $this->selenium->isTextPresent('No listings have been added yet'), 'User Manage Items, without items');
+        // modern theme
+//        $this->assertTrue( $this->selenium->isTextPresent('Your listings + Post a new listing'), 'User Manage Items');
+//        $this->assertTrue( $this->selenium->isTextPresent('You don\'t have any listings yet'), 'User Manage Items, without items');
     }
 
     /*
@@ -64,7 +68,8 @@ class Frontend_users extends FrontendTest {
         $this->selenium->click("xpath=//li[@class='opt_alerts']/a");
         sleep(5);
         // click to manage items
-        $this->assertTrue( $this->selenium->isTextPresent('Your alerts'), 'User Manage Alerts');
+        $count = (int)$this->selenium->getXpathCount("//div[@id='main']/div[@class='userItem']");
+        $this->assertTrue($count==0 , "Users Dashboard with one item");
         $this->assertTrue( $this->selenium->isTextPresent('You do not have any alerts yet'), 'User Manage Alerts, without alerts');
     }
 
@@ -87,7 +92,7 @@ class Frontend_users extends FrontendTest {
         // check dashboard
         $this->selenium->open(osc_user_dashboard_url());
         $count = 0;
-        $count = (int)$this->selenium->getXpathCount("//div[@id='main']/div[@class='userItem']");
+        $count = (int)$this->selenium->getXpathCount("//div[@id='main']/ul[id='listing-card-list']");
         $this->assertTrue($count==1 , "Users Dashboard with one item");
         // check manage items
         $this->selenium->click("xpath=//li[@class='opt_items']/a");
@@ -117,8 +122,6 @@ class Frontend_users extends FrontendTest {
         $this->selenium->open( osc_user_dashboard_url() );
 
         $this->selenium->click("xpath=//li[@class='opt_alerts']/a");
-        sleep(1);
-        $this->assertTrue( $this->selenium->isTextPresent('Your alerts'), 'User Manage Alerts with one alert');
 
         $count = 0;
         $count = (int)$this->selenium->getXpathCount("//div[@id='main']/div[@class='userItem']");
@@ -148,7 +151,7 @@ class Frontend_users extends FrontendTest {
         $this->selenium->type('s_website'       , 'www.osclass.org');
         $this->selenium->type('s_info[en_US]'   , 'user description test');
 
-        $this->selenium->click("xpath=//span/button[text()='Update']");
+        $this->selenium->click("xpath=//button[text()='Update']");
         $this->selenium->waitForPageToLoad("3000");
 
         $this->assertTrue( $this->selenium->isTextPresent('Your profile has been updated successfully'), 'User profile update');
@@ -166,10 +169,10 @@ class Frontend_users extends FrontendTest {
         $this->selenium->open( osc_user_public_profile_url($user['pk_i_id']) );
 
         // check values
-        $this->assertTrue( $this->selenium->isTextPresent( 'Full name: updated usertest') );
+        $this->assertTrue( $this->selenium->isTextPresent( 'updated usertest') );
         $this->assertTrue( $this->selenium->isTextPresent( 'Address: address 30, city area') );
-        $this->assertTrue( $this->selenium->isTextPresent( 'User Description: user description test') );
-        $this->assertTrue( $this->selenium->isTextPresent( 'Website: www.osclass.org') );
+        $this->assertTrue( $this->selenium->isTextPresent( 'user description test') );
+        $this->assertTrue( $this->selenium->isTextPresent( 'www.osclass.org') );
 
     }
 
@@ -186,7 +189,7 @@ class Frontend_users extends FrontendTest {
         $this->loginWith();
         $this->assertTrue($this->selenium->isTextPresent("User account manager"), 'Login at website.');
 
-        $this->selenium->click("xpath=//ul/li/a[text()='My profile']");
+        $this->selenium->click("xpath=//ul/li/a[text()='My account']");
         $this->selenium->waitForPageToLoad("30000");
 
         $this->selenium->click("link=Modify password");
@@ -325,9 +328,9 @@ class Frontend_users extends FrontendTest {
     {
         $uSettings = new utilSettings();
 
-        $old_enabled_users           = $uSettings->set_enabled_users(1);
+        $old_enabled_users              = $uSettings->set_enabled_users(1);
         $old_enabled_users_registration = $uSettings->set_enabled_user_registration(1);
-        $old_enabled_user_validation = $uSettings->set_enabled_user_validation(0);
+        $old_enabled_user_validation    = $uSettings->set_enabled_user_validation(0);
 
         // add another user
         $this->doRegisterUser('foo@bar.com', 'password');
@@ -335,7 +338,7 @@ class Frontend_users extends FrontendTest {
         $this->loginWith();
         $this->assertTrue($this->selenium->isTextPresent("User account manager"), 'Login at website.');
 
-        $this->selenium->click("xpath=//ul/li/a[text()='My profile']");
+        $this->selenium->click("xpath=//ul/li/a[text()='My account']");
         $this->selenium->waitForPageToLoad("30000");
 
         $this->selenium->click("link=Modify e-mail");
@@ -382,10 +385,10 @@ class Frontend_users extends FrontendTest {
     /*
      * Remove user1
      */
-    function testUser_RemoveNewUser()
-    {
-        $this->removeUserByMail($this->_email);
-    }
+//    function testUser_RemoveNewUser()
+//    {
+//        $this->removeUserByMail($this->_email);
+//    }
 }
 
 ?>
