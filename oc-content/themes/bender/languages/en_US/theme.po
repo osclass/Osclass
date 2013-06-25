@@ -215,7 +215,7 @@ msgid "My searches"
 msgstr ""
 
 #: /var/www/osclass-themes-git/bender/functions.php:321
-msgid "Update my profile"
+msgid "Update my account"
 msgstr ""
 
 #: /var/www/osclass-themes-git/bender/functions.php:322
