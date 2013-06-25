@@ -111,6 +111,7 @@
                     }
                     echo '<a id="osc_toolbar_'.$value->id.'" '.$meta.' href="'.$value->href.'" ' . ((isset($value->target)) ? 'target="' . $value->target . '"' : '') . '>'.$value->title.'</a>';
                 }
+                osc_run_hook('render_admintoolbar');
                 echo '</div></div>';
             }
         }
