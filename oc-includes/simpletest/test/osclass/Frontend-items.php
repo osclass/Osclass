@@ -176,9 +176,6 @@ class Frontend_items extends FrontendTest {
         unset($uSettings);
     }
 
-
-
-
     /*
      * Try to edit a item with bad id_item
      */
