@@ -21,7 +21,7 @@ class Frontend_csrf extends FrontendTest {
         $this->selenium->runScript("javascript{ this.browserbot.getCurrentWindow().document.getElementsByName('CSRFName')[1].value = ''; }");
         $this->selenium->runScript("javascript{ this.browserbot.getCurrentWindow().document.getElementsByName('CSRFToken')[1].value = ''; }");
 
-        $this->selenium->click("xpath=//span/button[text()='Log in']");
+        $this->selenium->click("xpath=//button[@type='submit']");
         $this->selenium->waitForPageToLoad("30000");
 
         $this->assertTrue($this->selenium->isTextPresent("Probable invalid request"), 'Testing, CSRFName, CSRFToken empty.');
@@ -38,7 +38,7 @@ class Frontend_csrf extends FrontendTest {
         $this->selenium->runScript("javascript{ this.browserbot.getCurrentWindow().document.getElementsByName('CSRFName')[1].value = 'foo'; }");
         $this->selenium->runScript("javascript{ this.browserbot.getCurrentWindow().document.getElementsByName('CSRFToken')[1].value = 'bar'; }");
 
-        $this->selenium->click("xpath=//span/button[text()='Log in']");
+        $this->selenium->click("xpath=//button[@type='submit']");
         $this->selenium->waitForPageToLoad("30000");
 
         $this->assertTrue($this->selenium->isTextPresent("Invalid CSRF token"), 'Testing, CSRFName, CSRFToken incorrect.');
