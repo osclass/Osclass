@@ -209,6 +209,21 @@ $aux = array(
 );
 array_push($aData, $aux);
 
+
+$aux = array(
+    "parentCatId"   => 'For sale',
+    "catId"         => 'Animals',
+    'title'         => 'last item test',
+    'description'   => 'Hello, I am offering private classes I am native Spanish speaker, with 4 years of experience teaching Spanish. I have different teaching methods and will structure classes depending on your knowledge',
+    'price'         => '',
+    'regionId'      => ''  ,
+    'cityId'        => '',
+    'cityArea'      => '',
+    'address'       => '',
+    'photo'         => array(),'contactName'   => 'contact ad 1','contactEmail'  => $email
+);
+array_push($aData, $aux);
+
 $aux = array(
     "parentCatId"   => 'Classes',
     "catId"         => 'Language Classes',
@@ -227,15 +242,4 @@ AdTech Ad
     'photo'         => array( "img_test1.gif","img_test2.gif"),'contactName'   => 'contact ad 1','contactEmail'  => $email
 );
 array_push($aData, $aux);
-
-//$aux = array(
-//    "catId"         => 'Language Classes',
-//    'title'         => '',
-//    'description'   => '',
-//    'price'         => '',
-//    'regionId'      => 'Madrid'  ,'cityId'        => 'Alameda del Valle',
-//    'cityArea'      => ''           ,'address'       => '',
-//    'photo'         => array( "img_test1.gif","img_test2.gif"),'contactName'   => 'contact ad 1','contactEmail'  => $email
-//);
-//array_push($aData, $aux);
 ?>

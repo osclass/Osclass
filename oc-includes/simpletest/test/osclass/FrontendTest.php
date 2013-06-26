@@ -115,7 +115,6 @@ abstract class FrontendTest extends MyWebTestCase {
 
         $this->selenium->select("catId", "label=regexp:\\s*$cat");
         sleep(2);
-//        $this->selenium->select("select_2", "label=regexp:\\s*$cat");
         $this->selenium->type("title[en_US]", $title);
         $this->selenium->type("description[en_US]", $description);
         $this->selenium->type("price", "12".osc_locale_thousands_sep()."34".osc_locale_thousands_sep()."56".osc_locale_dec_point()."78".osc_locale_dec_point()."90");
@@ -124,24 +123,36 @@ abstract class FrontendTest extends MyWebTestCase {
         $this->assertTrue($this->selenium->getValue("price")=="123456".osc_locale_dec_point()."78", "Check price correction input");
         $this->selenium->type("price", $price);
         $this->selenium->select("currency", "label=Euro €");
-        $this->selenium->select("countryId", "label=Spain");
-        $this->selenium->type('id=region', $regionId);
-//        $this->selenium->click('id=ui-active-menuitem');
-        $this->selenium->type('id=city', $cityId);
-//        $this->selenium->click('id=ui-active-menuitem');
+        if($regionId!=NULL) {
+            $this->selenium->select("countryId", "label=Spain");
+            $this->selenium->type('id=region', $regionId);
+    //        $this->selenium->click('id=ui-active-menuitem');
+            $this->selenium->type('id=city', $cityId);
+    //        $this->selenium->click('id=ui-active-menuitem');
+        }
         if($cityArea==NULL) {
             $this->selenium->type("cityArea", "my area");
         } else {
             $this->selenium->type("cityArea", $cityArea);
         }
         $this->selenium->type("address", "my address");
-        if( count($aPhotos) > 0 ){
+        if( count($aPhotos) > 0 ) {
             sleep(2);
+
+            echo LIB_PATH."simpletest/test/osclass/".$aPhotos[0] ;
+            echo "<br/>";
+            flush();
+
             $this->selenium->type("photos[]", LIB_PATH."simpletest/test/osclass/".$aPhotos[0]);
             for($k=1;$k<count($aPhotos);$k++) {
                 sleep(2);
+
+                echo LIB_PATH."simpletest/test/osclass/".$aPhotos[$k];
+                echo "<br/>";
+                flush();
+
                 $this->selenium->click("link=Add new photo");
-                $this->selenium->type("//div[@id='p-0']/div/input", LIB_PATH."simpletest/test/osclass/".$aPhotos[$k]);
+                $this->selenium->type("//div[@id='p-".$k."']/input", LIB_PATH."simpletest/test/osclass/".$aPhotos[$k]);
             }
         }
 
