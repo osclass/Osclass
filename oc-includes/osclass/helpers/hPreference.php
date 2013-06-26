@@ -87,7 +87,7 @@
      * @return boolean
      */
     function osc_reg_user_post_comments() {
-        return (getPreference('reg_user_post_comments'));
+        return (getBoolPreference('reg_user_post_comments'));
     }
 
     /**
