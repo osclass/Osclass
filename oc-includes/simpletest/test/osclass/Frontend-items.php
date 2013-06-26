@@ -276,13 +276,16 @@ class Frontend_items extends FrontendTest {
         $url = osc_item_activate_url('', $itemId);
         $this->selenium->open($url);
         sleep(1);
-        $this->assertTrue($this->selenium->isTextPresent("Sorry but I can't find the page you're looking for"), "Items, validate item from other user.");
+        // body with class='not-found'
+        $count = $this->selenium->getXpathCount("//body[contains(@class,'not-found')]");
+        $this->assertTrue($count == 1 , "Items, validate item from other user.");
         // 2
         $this->logout();
         $url = osc_item_activate_url('', $itemId);
         $this->selenium->open($url);
         sleep(1);
-        $this->assertTrue($this->selenium->isTextPresent("Sorry but I can't find the page you're looking for"), "Items, validate item from no user.");
+        $count = $this->selenium->getXpathCount("//body[contains(@class,'not-found')]");
+        $this->assertTrue($count == 1 , "Items, validate item from no user.");
         // 3
         $item = Item::newInstance()->findByPrimaryKey($itemId);
         $url = osc_item_activate_url($item['s_secret'], $itemId);
