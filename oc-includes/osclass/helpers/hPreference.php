@@ -199,6 +199,15 @@
     }
 
     /**
+     * Force image aspect
+     *
+     * @return boolean
+     */
+    function osc_force_aspect_image() {
+        return (getBoolPreference('force_aspect_image'));
+    }
+
+    /**
      * Gets if autocron is enabled
      *
      * @return boolean

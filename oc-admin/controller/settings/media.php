@@ -53,6 +53,7 @@
                     $dimPreview        = Params::getParam('dimPreview');
                     $dimNormal         = Params::getParam('dimNormal');
                     $keepOriginalImage = Params::getParam('keep_original_image');
+                    $forceAspectImage  = Params::getParam('force_aspect_image');
                     $use_imagick       = Params::getParam('use_imagick');
                     $type_watermark    = Params::getParam('watermark_type');
                     $watermark_color   = Params::getParam('watermark_text_color');
@@ -137,6 +138,7 @@
                     $dimPreview        = strip_tags($dimPreview);
                     $dimNormal         = strip_tags($dimNormal);
                     $keepOriginalImage = ($keepOriginalImage != '' ? true : false);
+                    $forceAspectImage  = ($forceAspectImage != '' ? true : false);
                     $use_imagick       = ($use_imagick != '' ? true : false);
 
                     // is imagick extension loaded?
@@ -175,8 +177,12 @@
                             array('s_name'  => 'dimNormal')
                     );
                     $iUpdated += Preference::newInstance()->update(
-                            array('s_value' => $keepOriginalImage),
-                            array('s_name'  => 'keep_original_image')
+                        array('s_value' => $keepOriginalImage),
+                        array('s_name'  => 'keep_original_image')
+                    );
+                    $iUpdated += Preference::newInstance()->update(
+                        array('s_value' => $forceAspectImage),
+                        array('s_name'  => 'force_aspect_image')
                     );
                     $iUpdated += Preference::newInstance()->update(
                             array('s_value' => $use_imagick),

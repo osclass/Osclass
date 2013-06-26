@@ -43,6 +43,7 @@ INSERT INTO /*TABLE_PREFIX*/t_preference VALUES
     ,('osclass', 'enabled_users','1', 'BOOLEAN')
     ,('osclass', 'enabled_comments', '1', 'BOOLEAN')
     ,('osclass', 'use_imagick', '0', 'BOOLEAN')
+    ,('osclass', 'force_aspect_image', '0', 'BOOLEAN')
     ,('osclass', 'warn_expiration', '0', 'INTEGER')
     ,('osclass', 'mailserver_host', 'localhost', 'STRING')
     ,('osclass', 'mailserver_port', '', 'INTEGER')
