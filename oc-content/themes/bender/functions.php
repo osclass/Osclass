@@ -302,7 +302,7 @@ FUNCTIONS
             $lang['user_items']             = __('Listings', 'bender');
             $lang['user_alerts']            = __('Alerts', 'bender');
             $lang['user_profile']           = __('Update account', 'bender');
-            $lang['user_change_email']      = __('Change my email', 'bender');
+            $lang['user_change_email']      = __('Change email', 'bender');
             $lang['user_change_username']   = __('Change username', 'bender');
             $lang['user_change_password']   = __('Change password', 'bender');
             $lang['login']                  = __('Login', 'bender');
