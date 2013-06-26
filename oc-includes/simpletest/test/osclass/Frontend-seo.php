@@ -49,10 +49,8 @@ class Frontend_seo extends FrontendTest {
 
         // get url from homepage
         $this->selenium->open( osc_base_url() );
-        $xpath      = "xpath=//div[@class='latest_ads']/table/tbody/tr[1]/td[@class='text']/h3/a[1]@href";
+        $xpath      = "xpath=(//div[@class='listing-basicinfo']/a)[1]@href";
         $item_url   = $this->selenium->getAttribute($xpath);
-
-//        error_log('url --- ' . $item_url);
 
         /*
          * visit item -> status 200
