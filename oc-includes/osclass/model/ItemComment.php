@@ -130,7 +130,7 @@
                                 'b_enabled'     => 1);
             $this->dao->where($conditions);
 
-            if( ($page !== 'all') || ($commentsPerPage > 0) ) {
+            if( $page !== 'all' && $commentsPerPage > 0 ) {
                 $this->dao->limit(($page*$commentsPerPage), $commentsPerPage);
             }
 
