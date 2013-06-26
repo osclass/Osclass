@@ -55,9 +55,22 @@
             }
         }
 
-        public function resizeTo($width, $height, $upscale = true) {
+        public function resizeTo($width, $height, $force_aspect = null, $upscale = true) {
+            if($force_aspect==null) {
+                $force_aspect = osc_force_aspect_image();
+            }
             if(osc_use_imagick()) {
                 $bg = new Imagick();
+                $geometry = $this->im->getImageGeometry();
+                if($force_aspect) {
+                    if(($geometry['width']/$geometry['height'])>=($width/$height)) {
+                        if($upscale) { $newW = $width; } else { $newW = ($geometry['width'] > $width)? $width : $geometry['width']; };
+                        $height = ceil($geometry['height'] * ($newW / $geometry['width']));
+                    } else {
+                        if($upscale) { $newH = $height; } else { $newH = ($geometry['height'] > $height)? $height : $geometry['height']; };
+                        $width = ceil($geometry['width'] * ($newH / $geometry['height']));
+                    }
+                }
                 $bg->newImage($width, $height, 'white');
                 
                 $this->im->thumbnailImage($width, $height, true);
@@ -75,9 +88,11 @@
                 if(($w/$h)>=($width/$height)) {
                     if($upscale) { $newW = $width; } else { $newW = ($w > $width)? $width : $w; };
                     $newH = ceil($h * ($newW / $w));
+                    if($force_aspect) { $height = $newH; }
                 } else {
                     if($upscale) { $newH = $height; } else { $newH = ($h > $height)? $height : $h; };
                     $newW = ceil($w * ($newH / $h));
+                    if($force_aspect) { $width = $newW; }
                 }
 
                 $newIm = imagecreatetruecolor($width,$height);
