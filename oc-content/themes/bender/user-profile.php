@@ -29,12 +29,12 @@
     }
     osc_add_filter('meta_title_filter','custom_meta_title');
     function custom_meta_title($data){
-        return __('Update your account', 'bender');;
+        return __('Update account', 'bender');
     }
     osc_current_web_theme_path('header.php') ;
     $osc_user = osc_user();
 ?>
-<h1><?php _e('Update your account', 'bender'); ?></h1>
+<h1><?php _e('Update account', 'bender'); ?></h1>
 <?php UserForm::location_javascript(); ?>
 <div class="form-container form-horizontal">
     <div class="resp-wrapper">

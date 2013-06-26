@@ -299,37 +299,50 @@ FUNCTIONS
             $lang['user_dashboard']         = __('Dashboard', 'bender');
             $lang['user_dashboard_profile'] = __("%s's profile", 'bender');
             $lang['user_account']           = __('Account', 'bender');
-            $lang['user_items']             = __('My listings', 'bender');
-            $lang['user_alerts']            = __('My searches', 'bender');
-            $lang['user_profile']           = __('Update your account', 'bender');
+            $lang['user_items']             = __('Listings', 'bender');
+            $lang['user_alerts']            = __('Alerts', 'bender');
+            $lang['user_profile']           = __('Update account', 'bender');
             $lang['user_change_email']      = __('Change my email', 'bender');
-            $lang['user_change_username']   = __('Change my username', 'bender');
-            $lang['user_change_password']   = __('Change my password', 'bender');
+            $lang['user_change_username']   = __('Change username', 'bender');
+            $lang['user_change_password']   = __('Change password', 'bender');
             $lang['login']                  = __('Login', 'bender');
-            $lang['login_recover']          = __('Recover your password', 'bender');
-            $lang['login_forgot']           = __('Change your password', 'bender');
+            $lang['login_recover']          = __('Recover password', 'bender');
+            $lang['login_forgot']           = __('Change password', 'bender');
             $lang['register']               = __('Create a new account', 'bender');
             $lang['contact']                = __('Contact', 'bender');
-
             return $lang;
         }
+    }
+
+    if(!function_exists('user_dashboard_redirect')) {
+        function user_dashboard_redirect() {
+            $page   = Params::getParam('page');
+            $action = Params::getParam('action');
+            if($page=='user' && $action=='dashboard') {
+                if(ob_get_length()>0) {
+                    ob_end_flush();
+                }
+                header("Location: ".osc_user_list_items_url(), TRUE,301);
+            }
+        }
+        osc_add_hook('init', 'user_dashboard_redirect');
     }
 
     if( !function_exists('get_user_menu') ) {
         function get_user_menu() {
             $options   = array();
             $options[] = array(
-                'name'  => __('Dashboard', 'bender'),
-                'url'   => osc_user_dashboard_url(),
-                'class' => 'opt_dashboard'
+                'name'  => __('Listings', 'bender'),
+                'url'   => osc_user_list_items_url(),
+                'class' => 'opt_items'
             );
             $options[] = array(
-                'name' => __('My searches', 'bender'),
+                'name' => __('Alerts', 'bender'),
                 'url' => osc_user_alerts_url(),
                 'class' => 'opt_alerts'
             );
             $options[] = array(
-                'name'  => __('My account', 'bender'),
+                'name'  => __('Account', 'bender'),
                 'url'   => osc_user_profile_url(),
                 'class' => 'opt_account'
             );

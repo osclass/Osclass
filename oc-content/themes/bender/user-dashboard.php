@@ -27,6 +27,10 @@
     function sidebar(){
         osc_current_web_theme_path('user-sidebar.php');
     }
+    osc_add_filter('meta_title_filter','custom_meta_title');
+    function custom_meta_title($data){
+        return __('Dashboard', 'bender');;
+    }
     osc_current_web_theme_path('header.php') ;
 
     $listClass = '';
@@ -38,7 +42,7 @@
 ?>
 <div class="list-header">
     <?php osc_run_hook('search_ads_listing_top'); ?>
-    <h1><?php _e('My listings', 'bender'); ?></h1>
+    <h1><?php _e('Dashboard', 'bender'); ?></h1>
     <?php if(osc_count_items() == 0) { ?>
         <p class="empty" ><?php _e('No listings have been added yet', 'bender'); ?></p>
     <?php } else { ?>
