@@ -196,6 +196,16 @@
                         </div>
                     </div>
                 </div>
+                <div class="form-row">
+                    <div class="form-label"><?php _e('Force aspect'); ?></div>
+                    <div class="form-controls">
+                        <div class="form-label-checkbox">
+                            <input type="checkbox" id="force_aspect_image" name="force_aspect_image" value="1" <?php echo ( osc_force_aspect_image() ? 'checked="checked"' : '' ); ?> />
+                            <label for="force_aspect_image"><?php _e('Force image aspect.'); ?></label>
+                            <span class="help-box"><?php _e('No white background will be added to keep the size.'); ?></span>
+                        </div>
+                    </div>
+                </div>
                 <h2 class="render-title"><?php _e('Restrictions'); ?></h2>
                 <div class="form-row">
                     <div class="form-label"><?php _e('Maximum size'); ?></div>

@@ -29,12 +29,12 @@
     }
     osc_add_filter('meta_title_filter','custom_meta_title');
     function custom_meta_title($data){
-        return __('Change your password', 'bender');;
+        return __('Change password', 'bender');;
     }
     osc_current_web_theme_path('header.php') ;
     $osc_user = osc_user();
 ?>
-<h1><?php _e('Change your password', 'bender'); ?></h1>
+<h1><?php _e('Change password', 'bender'); ?></h1>
 <div class="form-container form-horizontal">
     <div class="resp-wrapper">
         <ul id="error_list"></ul>

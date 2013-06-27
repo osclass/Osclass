@@ -428,24 +428,28 @@
                     switch ($status) {
                         case -1: $msg = _m('Sorry, we could not save your comment. Try again later');
                                  osc_add_flash_error_message($msg);
-                        break;
+                            break;
                         case 1:  $msg = _m('Your comment is awaiting moderation');
                                  osc_add_flash_info_message($msg);
-                        break;
+                            break;
                         case 2:  $msg = _m('Your comment has been approved');
                                  osc_add_flash_ok_message($msg);
-                        break;
+                            break;
                         case 3:  $msg = _m('Please fill the required field (email)');
                                  osc_add_flash_warning_message($msg);
-                        break;
+                            break;
                         case 4:  $msg = _m('Please type a comment');
                                  osc_add_flash_warning_message($msg);
-                        break;
+                            break;
                         case 5:  $msg = _m('Your comment has been marked as spam');
-                                 osc_add_flash_error_message($msg);
-                        break;
+                            osc_add_flash_error_message($msg);
+                            break;
+                        case 6:  $msg = _m('You need to be logged to comment');
+                            osc_add_flash_error_message($msg);
+                            break;
                     }
 
+                    //View::newInstance()->_exportVariableToView('item', Item::newInstance()->findByPrimaryKey(Params::getParam('id')));
                     $this->redirectTo( osc_item_url() );
                     break;
                 case 'delete_comment':

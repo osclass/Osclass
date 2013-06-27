@@ -87,7 +87,7 @@
      * @return boolean
      */
     function osc_reg_user_post_comments() {
-        return (getPreference('reg_user_post_comments'));
+        return (getBoolPreference('reg_user_post_comments'));
     }
 
     /**
@@ -196,6 +196,15 @@
      */
     function osc_keep_original_image() {
         return (getBoolPreference('keep_original_image'));
+    }
+
+    /**
+     * Force image aspect
+     *
+     * @return boolean
+     */
+    function osc_force_aspect_image() {
+        return (getBoolPreference('force_aspect_image'));
     }
 
     /**

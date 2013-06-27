@@ -22,6 +22,16 @@
     // meta tag robots
     osc_add_hook('header','bender_nofollow_construct');
 
-    osc_current_web_theme_path('user-dashboard.php') ;
+
+    /*
+     *
+     *
+     *  TODO Fernando
+     *
+     *
+     */
+
+
+    osc_current_web_theme_path('user-dashboard.php');
 
 ?>

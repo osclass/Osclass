@@ -887,6 +887,13 @@
 
             Params::setParam('itemURL', $itemURL);
 
+            if(osc_reg_user_post_comments() && !osc_is_web_user_logged_in()) {
+                Session::newInstance()->_setForm('commentAuthorName', $authorName);
+                Session::newInstance()->_setForm('commentTitle', $title);
+                Session::newInstance()->_setForm('commentBody', $body);
+                return 6;
+            }
+
             if( !preg_match('|^.*?@.{2,}\..{2,3}$|', $authorEmail)) {
                 Session::newInstance()->_setForm('commentAuthorName', $authorName);
                 Session::newInstance()->_setForm('commentTitle', $title);

@@ -30,12 +30,12 @@
     }
     osc_add_filter('meta_title_filter','custom_meta_title');
     function custom_meta_title($data){
-        return __('Change your e-mail', 'bender');;
+        return __('Change e-mail', 'bender');;
     }
     osc_current_web_theme_path('header.php') ;
     $osc_user = osc_user();
 ?>
-<h1><?php _e('Change your e-mail', 'bender'); ?></h1>
+<h1><?php _e('Change e-mail', 'bender'); ?></h1>
 <div class="form-container form-horizontal">
     <div class="resp-wrapper">
         <ul id="error_list"></ul>
