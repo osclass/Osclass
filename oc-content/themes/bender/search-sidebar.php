@@ -33,13 +33,13 @@
         <fieldset class="first">
             <h3><?php _e('Your search', 'bender'); ?></h3>
             <div class="row">
-                <input class="input-text" type="text" name="sPattern"  id="query" value="<?php echo osc_search_pattern() ; ?>" />
+                <input class="input-text" type="text" name="sPattern"  id="query" value="<?php echo osc_esc_html(osc_search_pattern()); ?>" />
             </div>
         </fieldset>
         <fieldset>
             <h3><?php _e('City', 'bender'); ?></h3>
             <div class="row">
-                <input class="input-text" type="text" id="sCity" name="sCity" value="<?php echo osc_search_city() ; ?>" />
+                <input class="input-text" type="text" id="sCity" name="sCity" value="<?php echo osc_esc_html(osc_search_city()); ?>" />
             </div>
         </fieldset>
         <?php if( osc_images_enabled_at_items() ) { ?>
@@ -56,9 +56,9 @@
             <div class="row price-slice">
                 <h3><?php _e('Price', 'bender') ; ?></h3>
                 <span><?php _e('Min', 'bender') ; ?>.</span>
-                <input class="input-text" type="text" id="priceMin" name="sPriceMin" value="<?php echo osc_search_price_min() ; ?>" size="6" maxlength="6" />
+                <input class="input-text" type="text" id="priceMin" name="sPriceMin" value="<?php echo osc_esc_html(osc_search_price_min()); ?>" size="6" maxlength="6" />
                 <span><?php _e('Max', 'bender') ; ?>.</span>
-                <input class="input-text" type="text" id="priceMax" name="sPriceMax" value="<?php echo osc_search_price_max() ; ?>" size="6" maxlength="6" />
+                <input class="input-text" type="text" id="priceMax" name="sPriceMax" value="<?php echo osc_esc_html(osc_search_price_max()); ?>" size="6" maxlength="6" />
             </div>
         </fieldset>
         <?php } ?>
@@ -74,7 +74,7 @@
         <?php
         $aCategories = osc_search_category();
         foreach($aCategories as $cat_id) { ?>
-            <input type="hidden" name="sCategory[]" value="<?php echo $cat_id; ?>"/>
+            <input type="hidden" name="sCategory[]" value="<?php echo osc_esc_html($cat_id); ?>"/>
         <?php } ?>
         <div class="actions">
             <button type="submit"><?php _e('Apply', 'bender') ; ?></button>
@@ -96,7 +96,7 @@
                         <ul class="sub">
                             <?php while(osc_has_subcategories()) { ?>
                             <li>
-                                <a id="cat_<?php echo osc_category_id();?>" href="<?php echo osc_update_search_url(array('sCategory'=> osc_category_id())); ?>"><?php if($category['pk_i_id'] == osc_category_id()){ echo '<strong>'.osc_category_name().'</strong>'; } else { echo osc_category_name(); } ?></a>
+                                <a id="cat_<?php echo osc_esc_html(osc_category_id());?>" href="<?php echo osc_update_search_url(array('sCategory'=> osc_esc_html(osc_category_id()))); ?>"><?php if($category['pk_i_id'] == osc_category_id()){ echo '<strong>'.osc_category_name().'</strong>'; } else { echo osc_category_name(); } ?></a>
                             </li>
                             <?php } ?>
                         </ul>
