@@ -91,12 +91,12 @@
                 <?php while(osc_has_categories()) { ?>
                     <?php $parentSelected=false; if (in_array(osc_category_id(), osc_search_category()) || in_array(osc_category_slug()."/", osc_search_category()) || in_array(osc_category_slug(), osc_search_category()) || count(osc_search_category())==0 || $category['fk_i_parent_id'] == osc_category_id()){ $parentSelected=true;} ?>
                     <li class="parent  <?php if($parentSelected && Params::getParam('sCategory') != ''){ echo 'show-sub'; } ?>">
-                        <a href="<?php echo osc_update_search_url(array('sCategory'=> osc_category_id())); ?>"><?php echo osc_category_name(); ?></a>
+                        <a id="cat_<?php echo osc_category_id();?>" href="<?php echo osc_update_search_url(array('sCategory'=> osc_category_id())); ?>"><?php echo osc_category_name(); ?></a>
                         <?php if(osc_count_subcategories() > 0) { ?>
                         <ul class="sub">
                             <?php while(osc_has_subcategories()) { ?>
                             <li>
-                                <a href="<?php echo osc_update_search_url(array('sCategory'=> osc_category_id())); ?>"><?php if($category['pk_i_id'] == osc_category_id()){ echo '<strong>'.osc_category_name().'</strong>'; } else { echo osc_category_name(); } ?></a>
+                                <a id="cat_<?php echo osc_category_id();?>" href="<?php echo osc_update_search_url(array('sCategory'=> osc_category_id())); ?>"><?php if($category['pk_i_id'] == osc_category_id()){ echo '<strong>'.osc_category_name().'</strong>'; } else { echo osc_category_name(); } ?></a>
                             </li>
                             <?php } ?>
                         </ul>
