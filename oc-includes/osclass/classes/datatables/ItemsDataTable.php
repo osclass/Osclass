@@ -126,6 +126,9 @@
             }
 
             Rewrite::newInstance()->init();
+            $page  = (int)Params::getParam('iPage');
+            if($page==0) { $page = 1; };
+            Params::setParam('iPage', $page);
             $url_base = preg_replace('|&direction=([^&]*)|', '', preg_replace('|&sort=([^&]*)|', '', osc_base_url().Rewrite::newInstance()->get_raw_request_uri()));
 
             $this->addColumn('bulkactions', '<input id="check_all" type="checkbox" />');
@@ -146,6 +149,9 @@
         {
 
             Rewrite::newInstance()->init();
+            $page  = (int)Params::getParam('iPage');
+            if($page==0) { $page = 1; };
+            Params::setParam('iPage', $page);
             $url_base = preg_replace('|&direction=([^&]*)|', '', preg_replace('|&sort=([^&]*)|', '', osc_base_url().Rewrite::newInstance()->get_raw_request_uri()));
             $arg_spam   = '&sort=spam'; $arg_bad    = '&sort=bad';
             $arg_rep    = '&sort=rep';  $arg_off    = '&sort=off';
