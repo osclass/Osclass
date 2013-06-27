@@ -14,39 +14,39 @@ class Frontend_search extends FrontendTest {
         parent::__construct($label);
     }
 
-//    /*
-//     * Load items for test propouse.
-//     */
-//    function testLoadItems()
-//    {
-//        // insert items for test
-//        require 'ItemData.php';
-//        $uSettings = new utilSettings();
-//        $old_reg_user_port           = $uSettings->set_reg_user_post(0);
-//        $old_items_wait_time         = $uSettings->set_items_wait_time(0);
-//        $old_enabled_recaptcha_items = $uSettings->set_enabled_recaptcha_items(0);
-//        $old_moderate_items          = $uSettings->set_moderate_items(-1);
-//
-//        foreach($aData as $item) {
-//            echo "insert item -> \n";
-//            $this->insertItem(  $item['parentCatId'], $item['catId'], $item['title'],
-//                                $item['description'], $item['price'],
-//                                $item['regionId'], $item['cityId'],  $item['cityArea'],
-//                                $item['photo'], $item['contactName'],
-//                                $this->_email);
-//
-//            // ------
-//            $this->assertTrue($this->selenium->isTextPresent("Your listing has been published","Insert item.") );
-//        }
-//
-//        $uSettings->set_reg_user_post( $old_reg_user_port );
-//        $uSettings->set_items_wait_time( $old_items_wait_time );
-//        $uSettings->set_enabled_recaptcha_items( $old_enabled_recaptcha_items );
-//        $uSettings->set_moderate_items( $old_moderate_items );
-//
-//        unset($uSettings);
-//    }
-//
+    /*
+     * Load items for test propouse.
+     */
+    function testLoadItems()
+    {
+        // insert items for test
+        require 'ItemData.php';
+        $uSettings = new utilSettings();
+        $old_reg_user_port           = $uSettings->set_reg_user_post(0);
+        $old_items_wait_time         = $uSettings->set_items_wait_time(0);
+        $old_enabled_recaptcha_items = $uSettings->set_enabled_recaptcha_items(0);
+        $old_moderate_items          = $uSettings->set_moderate_items(-1);
+
+        foreach($aData as $item) {
+            echo "insert item -> \n";
+            $this->insertItem(  $item['parentCatId'], $item['catId'], $item['title'],
+                                $item['description'], $item['price'],
+                                $item['regionId'], $item['cityId'],  $item['cityArea'],
+                                $item['photo'], $item['contactName'],
+                                $this->_email);
+
+            // ------
+            $this->assertTrue($this->selenium->isTextPresent("Your listing has been published","Insert item.") );
+        }
+
+        $uSettings->set_reg_user_post( $old_reg_user_port );
+        $uSettings->set_items_wait_time( $old_items_wait_time );
+        $uSettings->set_enabled_recaptcha_items( $old_enabled_recaptcha_items );
+        $uSettings->set_moderate_items( $old_moderate_items );
+
+        unset($uSettings);
+    }
+
     /*
      * Order results by Newly
      */
@@ -147,32 +147,33 @@ class Frontend_search extends FrontendTest {
 
 
 
-//    /*
-//     * Search by category "Classes"
-//     */
-//    function testSPatternCombi4()
-//    {
-//        $this->selenium->open( osc_base_url(true) . "?page=search" );
-//        $this->selenium->click("xpath=//div[@id='cat2_']"); // deselect category 2 (vehicles)
-//        $this->selenium->click("xpath=//button[text()='Apply']");
-//        $this->selenium->waitForPageToLoad("30000");
-//        $count = $this->selenium->getXpathCount("//li[contains(@class,'listing-card')]");
-//        sleep(4);
-//        $this->assertTrue($count == 3 , "Search by sCategory = Classes.");
-//    }
-//
-//    /*
-//     * Search by, only items with pictures
-//     */
-//    function testSPatternCombi5()
-//    {
-//        $this->selenium->open( osc_search_url() );
-//        $this->selenium->click("xpath=//input[@id='withPicture']"); // only items with pictures
-//        $this->selenium->click("xpath=//button[text()='Apply']");
-//        $this->selenium->waitForPageToLoad("30000");
-//        $count = $this->selenium->getXpathCount("//li[contains(@class,'listing-card')]");
-//        $this->assertTrue($count == 9 , "Search by [ Show only items with pictures ].");
-//    }
+    /*
+     * Search by category "Classes"
+     */
+    function testSPatternCombi4()
+    {
+        $this->selenium->open( osc_base_url(true) . "?page=search" );
+        $this->selenium->click("xpath=//div[@id='cat2_']");
+        $this->selenium->waitForPageToLoad("30000");
+        $count = $this->selenium->getXpathCount("//li[contains(@class,'listing-card')]");
+        sleep(4);
+        $this->assertTrue($count == 3 , "Search by sCategory = Classes.");
+    }
+
+
+
+    /*
+     * Search by, only items with pictures
+     */
+    function testSPatternCombi5()
+    {
+        $this->selenium->open( osc_search_url() );
+        $this->selenium->click("xpath=//input[@id='withPicture']"); // only items with pictures
+        $this->selenium->click("xpath=//button[text()='Apply']");
+        $this->selenium->waitForPageToLoad("30000");
+        $count = $this->selenium->getXpathCount("//li[contains(@class,'listing-card')]");
+        $this->assertTrue($count == 9 , "Search by [ Show only items with pictures ].");
+    }
 
     /*
      * Search by userId
