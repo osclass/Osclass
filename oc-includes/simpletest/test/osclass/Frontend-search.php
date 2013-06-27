@@ -156,12 +156,6 @@ class Frontend_search extends FrontendTest {
         $count = $this->selenium->getXpathCount("//li[contains(@class,'listing-card')]");
         $this->assertTrue($count == 1, "Search by sCategory = For sale.");
     }
-
-
-//
-// añadir test filtros + categoria
-//
-
     /*
      * Search by, only items with pictures
      */
@@ -283,6 +277,23 @@ class Frontend_search extends FrontendTest {
         $searchCategory = osc_search_url(array('sCategory'  => '3'));
         $this->selenium->open( $searchCategory );
         $this->assertTrue($this->selenium->isTextPresent("There are no results matching"), "search frontend - there are items ERROR" );
+    }
+
+    //
+    // añadir test filtros + categoria
+    //
+
+    function testHighligthResults()
+    {
+        $this->selenium->open(osc_search_url() );
+        $this->selenium->type("sPattern", "http://www.osclass.org");
+        $this->selenium->click("xpath=//button[text()='Apply']");
+
+        $this->selenium->waitForPageToLoad("30000");
+        $count = $this->selenium->getXpathCount("//li[contains(@class,'listing-card')]");
+        $this->assertTrue($count == 1 , "Search by [ url pattern ].");
+
+        // highlight ? 
     }
 
     /*
