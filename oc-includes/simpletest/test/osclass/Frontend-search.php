@@ -145,22 +145,22 @@ class Frontend_search extends FrontendTest {
         $this->assertTrue($count == 4 , "Search by sCity = Balsareny.");
     }
 
-
-
     /*
-     * Search by category "Classes"
+     * Search by category "For sale"
      */
     function testSPatternCombi4()
     {
         $this->selenium->open( osc_base_url(true) . "?page=search" );
-        $this->selenium->click("xpath=//div[@id='cat2_']");
+        $this->selenium->click("xpath=//a[@id='cat_1']");
         $this->selenium->waitForPageToLoad("30000");
         $count = $this->selenium->getXpathCount("//li[contains(@class,'listing-card')]");
-        sleep(4);
-        $this->assertTrue($count == 3 , "Search by sCategory = Classes.");
+        $this->assertTrue($count == 1, "Search by sCategory = For sale.");
     }
 
 
+//
+// añadir test filtros + categoria
+//
 
     /*
      * Search by, only items with pictures
@@ -217,8 +217,7 @@ class Frontend_search extends FrontendTest {
     {
         $searchCountry  = osc_search_url(array('sCountry'   => 'ES'));
         $this->selenium->open( $searchCountry );
-        $count = $this->selenium->getXpathCount("//li[contains(@class,'listing-card')]");
-        $this->assertTrue($count == 11 , "Search by [ sCountry es ].");
+        $this->assertTrue( $this->selenium->isTextPresent("1 - 12 of 14 listings"), "Insert item." );
 
         $searchRegion   = osc_search_url(array('sRegion'    => 'Valencia'));
         $this->selenium->open( $searchRegion );
@@ -286,18 +285,18 @@ class Frontend_search extends FrontendTest {
         $this->assertTrue($this->selenium->isTextPresent("There are no results matching"), "search frontend - there are items ERROR" );
     }
 
-//    /*
-//     * Remove all items inserted previously
-//     */
-//    function testRemoveLoadedItems()
-//    {
-//        $aItems = Item::newInstance()->findByEmail($this->_email) ;
-//        foreach( $aItems as $item ) {
-//            $url = osc_item_delete_url( $item['s_secret'] , $item['pk_i_id'] );
-//            //echo $url."<br>";
-//            $this->selenium->open( $url );
-//            $this->assertTrue($this->selenium->isTextPresent("Your listing has been deleted"), "Delete item.");
-//        }
-//    }
+    /*
+     * Remove all items inserted previously
+     */
+    function testRemoveLoadedItems()
+    {
+        $aItems = Item::newInstance()->findByEmail($this->_email) ;
+        foreach( $aItems as $item ) {
+            $url = osc_item_delete_url( $item['s_secret'] , $item['pk_i_id'] );
+            //echo $url."<br>";
+            $this->selenium->open( $url );
+            $this->assertTrue($this->selenium->isTextPresent("Your listing has been deleted"), "Delete item.");
+        }
+    }
 }
 ?>
