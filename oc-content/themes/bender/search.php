@@ -37,6 +37,29 @@
     function sidebar(){
         osc_current_web_theme_path('search-sidebar.php');
     }
+    osc_add_hook('footer','autocompleteCity');
+    function autocompleteCity(){ ?>
+    <script type="text/javascript">
+    $(function() {
+                    function log( message ) {
+                        $( "<div/>" ).text( message ).prependTo( "#log" );
+                        $( "#log" ).attr( "scrollTop", 0 );
+                    }
+
+                    $( "#sCity" ).autocomplete({
+                        source: "<?php echo osc_base_url(true); ?>?page=ajax&action=location",
+                        minLength: 2,
+                        select: function( event, ui ) {
+                            $("#sRegion").attr("value", ui.item.region);
+                            log( ui.item ?
+                                "<?php _e('Selected', 'modern'); ?>: " + ui.item.value + " aka " + ui.item.id :
+                                "<?php _e('Nothing selected, input was', 'modern'); ?> " + this.value );
+                        }
+                    });
+                });
+    </script>
+    <?php
+    }
 ?>
 <?php osc_current_web_theme_path('header.php') ; ?>
      <div class="list-header">
