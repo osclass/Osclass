@@ -441,9 +441,17 @@
                 }
 
                 $oldIsExpired = osc_isExpired($old_item['dt_expiration']);
-                $dt_expiration = Item::newInstance()->updateExpirationDate($aItem['idItem'], $aItem['dt_expiration'], false);
-                $newIsExpired = osc_isExpired($dt_expiration);
-
+                // $dt_expiration == -1     -> No Change
+                // $dt_expiration == ''     -> Without expiration date
+                // $dt_expiration == number -> expiration days
+                // if exp date not changed then do not change expiration flag.
+                // this is to prevent item location stat decrease on edit.
+                if ($aItem['dt_expiration'] == '') {
+                    $newIsExpired = $oldIsExpired; 
+                } else {
+                    $dt_expiration = Item::newInstance()->updateExpirationDate($aItem['idItem'], $aItem['dt_expiration'], false);
+                    $newIsExpired = osc_isExpired($dt_expiration);
+                }
                 // Recalculate stats related with items
                 $this->_updateStats($result, $old_item, $oldIsExpired, $old_item_location, $aItem, $newIsExpired, $location);
 
