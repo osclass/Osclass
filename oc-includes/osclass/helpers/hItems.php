@@ -1284,6 +1284,7 @@
      *  city_area_name
      *  category
      *  category_name
+     *  premium
      *  results_per_page
      *  page
      *  offset
@@ -1352,9 +1353,14 @@
                     foreach($tmp as $t) {
                         $mSearch->addCityArea($t);
                     }
+                    break;
 
                 case 'results_per_page':
                     $mSearch->set_rpp($value);
+                    break;
+
+                case 'premium':
+                    $mSearch->onlyPremium(($value==1?true:false));
                     break;
 
                 case 'page':
