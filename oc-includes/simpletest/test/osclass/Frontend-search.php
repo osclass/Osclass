@@ -288,12 +288,46 @@ class Frontend_search extends FrontendTest {
         $this->selenium->open(osc_search_url() );
         $this->selenium->type("sPattern", "http://www.osclass.org");
         $this->selenium->click("xpath=//button[text()='Apply']");
-
         $this->selenium->waitForPageToLoad("30000");
+
+        // URL Highlight
+        $aux = (string)$this->selenium->getEval("var win = this.browserbot.getCurrentWindow(); win.document.querySelectorAll('.listing-basicinfo')[0].getElementsByTagName('strong')[0].innerHTML");
+        $this->assertTrue( ('http://www.osclass.org' == $aux) , "Highligth url pattern" );
         $count = $this->selenium->getXpathCount("//li[contains(@class,'listing-card')]");
         $this->assertTrue($count == 1 , "Search by [ url pattern ].");
 
-        // highlight ? 
+        // pattern with special chars
+        $this->selenium->open(osc_search_url() );
+        $this->selenium->type("sPattern", "(osclass)");
+        $this->selenium->click("xpath=//button[text()='Apply']");
+        $this->selenium->waitForPageToLoad("30000");
+
+        // (Pattern)
+        $this->assertTrue( 'osclass' == $this->selenium->getEval("var win = this.browserbot.getCurrentWindow(); win.document.querySelectorAll('.listing-basicinfo')[0].getElementsByTagName('strong')[0].innerHTML"), "Highligth (XXX) pattern" );
+        $count = $this->selenium->getXpathCount("//li[contains(@class,'listing-card')]");
+        $this->assertTrue($count == 1 , "Search by [ (XXX) pattern ].");
+    }
+
+    function testInputEscapeValue()
+    {
+        $pattern = 'fooo " bar';
+
+        $this->selenium->open(osc_search_url() );
+        $this->selenium->type("sPattern", $pattern );
+        $this->selenium->type("sCity", $pattern );
+        $this->selenium->type("sPriceMin", '33');
+        $this->selenium->type("sPriceMax", '99');
+        $this->selenium->click("xpath=//button[text()='Apply']");
+        $this->selenium->waitForPageToLoad("30000");
+
+        // value
+        $_1 = $this->selenium->getEval("var win = this.browserbot.getCurrentWindow(); win.document.getElementsByName('sPattern')[0].value");
+        echo "$_1";
+
+        $this->assertTrue( $pattern == $this->selenium->getEval("var win = this.browserbot.getCurrentWindow(); win.document.getElementsByName('sPattern')[0].value"), "Correct escape input values sPattern" );
+        $this->assertTrue( $pattern ==$this->selenium->getEval("var win = this.browserbot.getCurrentWindow(); win.document.getElementsByName('sCity')[0].value"), "Correct escape input values sCity" );
+        $this->assertTrue( '33' == $this->selenium->getEval("var win = this.browserbot.getCurrentWindow(); win.document.getElementsByName('sPriceMin')[0].value"), "Correct escape input values sPriceMin" );
+        $this->assertTrue( '99' == $this->selenium->getEval("var win = this.browserbot.getCurrentWindow(); win.document.getElementsByName('sPriceMax')[0].value"), "Correct escape input values sPriceMax" );
     }
 
     /*
