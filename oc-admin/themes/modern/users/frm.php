@@ -285,6 +285,9 @@
                         </div>
                     </div>
                 </div>
+
+                <?php if(!$aux['edit']) { osc_run_hook('user_register_form'); }; ?>
+
                 <div class="clear"></div>
                 <div class="form-actions">
                     <input type="submit" value="<?php echo osc_esc_html($aux['btn_text']); ?>" class="btn btn-submit" />

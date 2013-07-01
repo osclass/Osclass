@@ -20,7 +20,7 @@
      */
 ?>
 <div id="sidebar">
-    <?php if(!osc_is_web_user_logged_in() && osc_logged_user_id()!=osc_item_user_id()) { ?>
+    <?php if(!osc_is_web_user_logged_in() || osc_logged_user_id()!=osc_item_user_id()) { ?>
         <form action="<?php echo osc_base_url(true); ?>" method="post" name="mask_as_form" id="mask_as_form">
             <input type="hidden" name="id" value="<?php echo osc_item_id(); ?>" />
             <input type="hidden" name="as" value="spam" />

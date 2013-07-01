@@ -218,6 +218,7 @@
         } else {
             $category = View::newInstance()->_get('search_category');
         }
+        if(!is_array($categories)) { $categories = array(); }
         return($category);
     }
 

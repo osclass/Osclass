@@ -442,6 +442,9 @@
 
                 $oldIsExpired = osc_isExpired($old_item['dt_expiration']);
                 $dt_expiration = Item::newInstance()->updateExpirationDate($aItem['idItem'], $aItem['dt_expiration'], false);
+                if($dt_expiration===false) {
+                    $dt_expiration = $old_item['dt_expiration'];
+                }
                 $newIsExpired = osc_isExpired($dt_expiration);
 
                 // Recalculate stats related with items
