@@ -80,8 +80,9 @@ class Frontend_users extends FrontendTest {
      */
     function testDashboard()
     {
+        $this->loginWith();
         $this->selenium->open(osc_user_dashboard_url());
-        $this->assertTrue( $this->selenium->isTextPresent('"My listings"'), 'Dashboard redirects to my listings');
+        $this->assertTrue( $this->selenium->isTextPresent('My listings'), 'Dashboard redirects to my listings');
     }
 
     /*
@@ -100,17 +101,11 @@ class Frontend_users extends FrontendTest {
                                 $item['regionId'], $item['cityId'], $item['cityArea'],
                                 $item['photo'], $item['contactName'],
                                 $this->_email);
-        // check dashboard
+        // check dashboard // my listings
         $this->selenium->open(osc_user_dashboard_url());
         $count = 0;
-        $count = (int)$this->selenium->getXpathCount("//div[@id='main']/ul[id='listing-card-list']");
+        $count = (int)$this->selenium->getXpathCount("//li[contains(@class,'listing-card')]");
         $this->assertTrue($count==1 , "My listings, with one item");
-        // check manage items
-        $this->selenium->click("xpath=//li[@class='opt_items']/a");
-        sleep(1);
-        $count = 0;
-        $count = (int)$this->selenium->getXpathCount("//div[@id='main']/div[@class='item']");
-        $this->assertTrue($count==1 , "Users Manage Items with one item (Should be 1, counted ".$count.")");
     }
 
     /*
@@ -184,7 +179,6 @@ class Frontend_users extends FrontendTest {
         $this->assertTrue( $this->selenium->isTextPresent( 'Address: address 30, city area') );
         $this->assertTrue( $this->selenium->isTextPresent( 'user description test') );
         $this->assertTrue( $this->selenium->isTextPresent( 'www.osclass.org') );
-
     }
 
     /*
@@ -198,13 +192,10 @@ class Frontend_users extends FrontendTest {
     function testUsers_ChangePassword()
     {
         $this->loginWith();
-        $this->assertTrue($this->selenium->isTextPresent("User account manager"), 'Login at website.');
+        $this->assertTrue($this->selenium->isTextPresent("My listings"), 'Login at website.');
 
-        $this->selenium->click("xpath=//ul/li/a[text()='My account']");
+        $this->selenium->click("xpath=//ul/li[@class='opt_change_password']/a");
         $this->selenium->waitForPageToLoad("30000");
-
-        $this->selenium->click("link=Modify password");
-        $this->selenium->waitForPageToLoad("3000");
 
         // test - current password don't match
         $this->selenium->type("password"        , "qwerty");
@@ -214,6 +205,8 @@ class Frontend_users extends FrontendTest {
         $this->selenium->waitForPageToLoad("3000");
         $this->assertTrue( $this->selenium->isTextPresent("Current password doesn't match"), "User, change the user password.");
 
+        $this->selenium->click("xpath=//ul/li[@class='opt_change_password']/a");
+        $this->selenium->waitForPageToLoad("30000");
         // test - Passwords can't be empty
         $this->selenium->type("password"        , $this->_password);
         $this->selenium->type("new_password"    , '');
@@ -222,6 +215,8 @@ class Frontend_users extends FrontendTest {
         $this->selenium->waitForPageToLoad("3000");
         $this->assertTrue( $this->selenium->isTextPresent("Password cannot be blank"), "User, change the user password, one blank password field.");
 
+        $this->selenium->click("xpath=//ul/li[@class='opt_change_password']/a");
+        $this->selenium->waitForPageToLoad("30000");
         // test - Passwords don't match
         $this->selenium->type("password"        , $this->_password);
         $this->selenium->type("new_password"    , 'abc');
@@ -243,75 +238,107 @@ class Frontend_users extends FrontendTest {
      */
     function testUsers_ChangeUsername()
     {
+        $url = osc_user_dashboard_url();
         $this->loginWith();
-        $this->assertTrue($this->selenium->isTextPresent("User account manager"), 'Login at website.');
 
-        $this->selenium->click("xpath=//ul/li/a[text()='My profile']");
+        $this->selenium->click("xpath=//ul/li[@class='opt_change_username']/a");
         $this->selenium->waitForPageToLoad("30000");
-
-        $this->selenium->click("link=Modify username");
-        $this->selenium->waitForPageToLoad("3000");
-
         // test - numeric only username
-        $this->selenium->click("//input[@id='s_username']");
-        $this->selenium->type("s_username"        , "12345678");
-        $this->selenium->keyUp("s_username", "a");
-        //sleep(2);
-        //$this->assertTrue( $this->selenium->isTextPresent("The username is NOT available"), "User, change the username.");
-        $this->selenium->click("//button[@type='submit']");
-        $this->selenium->waitForPageToLoad("3000");
-        $this->assertTrue( $this->selenium->isTextPresent("The specified username is not valid, it contains some invalid words"), "User, change the username.");
+        $this->selenium->type("s_username" , "12345678");
+        $this->_keydown_username();
 
-        // test - blacklisted username
-        $this->selenium->click("//input[@id='s_username']");
-        $this->selenium->type("s_username"        , "admin");
-        $this->selenium->keyUp("s_username", "a");
-        //sleep(2);
-        //$this->assertTrue( $this->selenium->isTextPresent("The username is NOT available"), "User, change the username.");
-        $this->selenium->click("//button[@type='submit']");
-        $this->selenium->waitForPageToLoad("3000");
-        $this->assertTrue( $this->selenium->isTextPresent("The specified username is not valid, it contains some invalid words"), "User, change the username.");
+        $aux = (string)$this->selenium->getEval("var win = this.browserbot.getCurrentWindow(); win.document.querySelectorAll('#available')[0].innerHTML");
+        $this->assertTrue( $aux == "The username is NOT available", "User, change the username.");
 
-        // test - blacklisted username
-        $this->selenium->click("//input[@id='s_username']");
-        $this->selenium->type("s_username"        , "Badmin123");
-        $this->selenium->keyUp("s_username", "a");
-        //sleep(2);
-        //$this->assertTrue( $this->selenium->isTextPresent("The username is NOT available"), "User, change the username.");
-        $this->selenium->click("//button[@type='submit']");
-        $this->selenium->waitForPageToLoad("3000");
-        $this->assertTrue( $this->selenium->isTextPresent("The specified username is not valid, it contains some invalid words"), "User, change the username.");
+        $this->selenium->type("s_username" , "12345678a");
+        $this->_keydown_username();
 
-        // test - blacklisted username
-        $this->selenium->click("//input[@id='s_username']");
-        $this->selenium->type("s_username"        , "admin");
-        $this->selenium->keyUp("s_username", "a");
-        //sleep(2);
-        //$this->assertTrue( $this->selenium->isTextPresent("The username is NOT available"), "User, change the username.");
-        $this->selenium->click("//button[@type='submit']");
-        $this->selenium->waitForPageToLoad("3000");
-        $this->assertTrue( $this->selenium->isTextPresent("The specified username is not valid, it contains some invalid words"), "User, change the username.");
+        $aux = (string)$this->selenium->getEval("var win = this.browserbot.getCurrentWindow(); win.document.querySelectorAll('#available')[0].innerHTML");
+        $this->assertTrue( $aux == "The username is available", "User, change the username.");
 
-        // test - blacklisted username
-        $this->selenium->click("//input[@id='s_username']");
-        $this->selenium->type("s_username"        , "mod_user_name");
-        $this->selenium->keyUp("s_username", "a");
-        //sleep(2);
-        //$this->assertTrue( $this->selenium->isTextPresent("The username is NOT available"), "User, change the username.");
-        $this->selenium->click("//button[@type='submit']");
-        $this->selenium->waitForPageToLoad("3000");
-        $this->assertTrue( $this->selenium->isTextPresent("The specified username is not valid, it contains some invalid words"), "User, change the username.");
-
-        // test - correct username
-        $this->selenium->click("//input[@id='s_username']");
-        $this->selenium->type("s_username"        , "some_correct_name");
-        $this->selenium->keyUp("s_username", "a");
-        //sleep(2);
-        //$this->assertTrue( $this->selenium->isTextPresent("The username is available"), "User, change the username.");
         $this->selenium->click("//button[@type='submit']");
         $this->selenium->waitForPageToLoad("3000");
         $this->assertTrue( $this->selenium->isTextPresent("The username was updated"), "User, change the username.");
 
+
+        $this->selenium->open($url);
+        $this->selenium->click("xpath=//ul/li[@class='opt_change_username']/a");
+        $this->selenium->waitForPageToLoad("30000");
+
+        // test - blacklisted username
+        $this->selenium->click("//input[@id='s_username']");
+        $this->selenium->type("s_username" , "admin");
+        $this->_keydown_username();
+        $aux = (string)$this->selenium->getEval("var win = this.browserbot.getCurrentWindow(); win.document.querySelectorAll('#available')[0].innerHTML");
+        $this->assertTrue( $aux == "The username is NOT available", "User, change the username.");
+
+        $this->selenium->click("//button[@type='submit']");
+        $this->selenium->waitForPageToLoad("3000");
+        $this->assertTrue( $this->selenium->isTextPresent("The specified username is not valid, it contains some invalid words"), "User, change the username.");
+
+
+        $this->selenium->open($url);
+        $this->selenium->click("xpath=//ul/li[@class='opt_change_username']/a");
+        $this->selenium->waitForPageToLoad("30000");
+
+        // test - blacklisted username
+        $this->selenium->click("//input[@id='s_username']");
+        $this->selenium->type("s_username" , "Badmin123");
+        $this->_keydown_username();
+        $aux = (string)$this->selenium->getEval("var win = this.browserbot.getCurrentWindow(); win.document.querySelectorAll('#available')[0].innerHTML");
+        $this->assertTrue( $aux == "The username is NOT available", "User, change the username.");
+
+        $this->selenium->click("//button[@type='submit']");
+        $this->selenium->waitForPageToLoad("3000");
+        $this->assertTrue( $this->selenium->isTextPresent("The specified username is not valid, it contains some invalid words"), "User, change the username.");
+
+
+        $this->selenium->open($url);
+        $this->selenium->click("xpath=//ul/li[@class='opt_change_username']/a");
+        $this->selenium->waitForPageToLoad("30000");
+
+        // test - blacklisted username
+        $this->selenium->click("//input[@id='s_username']");
+        $this->selenium->type("s_username" , "admin");
+        $this->_keydown_username();
+        $aux = (string)$this->selenium->getEval("var win = this.browserbot.getCurrentWindow(); win.document.querySelectorAll('#available')[0].innerHTML");
+        $this->assertTrue( $aux == "The username is NOT available", "User, change the username.");
+
+        $this->selenium->click("//button[@type='submit']");
+        $this->selenium->waitForPageToLoad("3000");
+        $this->assertTrue( $this->selenium->isTextPresent("The specified username is not valid, it contains some invalid words"), "User, change the username.");
+
+
+        $this->selenium->open($url);
+        $this->selenium->click("xpath=//ul/li[@class='opt_change_username']/a");
+        $this->selenium->waitForPageToLoad("30000");
+
+        // test - blacklisted username
+        $this->selenium->click("//input[@id='s_username']");
+        $this->selenium->type("s_username" , "mod_user_name");
+        $this->_keydown_username();
+        $aux = (string)$this->selenium->getEval("var win = this.browserbot.getCurrentWindow(); win.document.querySelectorAll('#available')[0].innerHTML");
+        $this->assertTrue( $aux == "The username is NOT available", "User, change the username.");
+
+        $this->selenium->click("//button[@type='submit']");
+        $this->selenium->waitForPageToLoad("3000");
+        $this->assertTrue( $this->selenium->isTextPresent("The specified username is not valid, it contains some invalid words"), "User, change the username.");
+
+
+        $this->selenium->open($url);
+        $this->selenium->click("xpath=//ul/li[@class='opt_change_username']/a");
+        $this->selenium->waitForPageToLoad("30000");
+
+        // test - correct username
+        $this->selenium->click("//input[@id='s_username']");
+        $this->selenium->type("s_username"        , "some_correct_name");
+        $this->_keydown_username();
+        $aux = (string)$this->selenium->getEval("var win = this.browserbot.getCurrentWindow(); win.document.querySelectorAll('#available')[0].innerHTML");
+        $this->assertTrue( $aux == "The username is available", "User, change the username.");
+
+        $this->selenium->click("//button[@type='submit']");
+        $this->selenium->waitForPageToLoad("3000");
+        $this->assertTrue( $this->selenium->isTextPresent("The username was updated"), "User, change the username.");
 
         $this->logout();
 
@@ -321,9 +348,16 @@ class Frontend_users extends FrontendTest {
 
         $url = osc_user_dashboard_url();
         $this->selenium->open($url);
-
-        $this->assertTrue( $this->selenium->isTextPresent('Listings from'), 'User dashboard, without items.');
+        sleep(5);
+        $count = $this->selenium->getXpathCount("//li[contains(@class,'listing-card')]");
+        $this->assertTrue($count == 1 , 'User dashboard, without items.');
         $this->logout();
+    }
+
+    private function _keydown_username()
+    {
+        $this->selenium->getEval("var win = this.browserbot.getCurrentWindow(); win.jQuery('#available').text(''); win.jQuery('#s_username').trigger( 'keydown' ); ");
+        sleep(1);
     }
 
     /*
@@ -337,6 +371,7 @@ class Frontend_users extends FrontendTest {
      */
     function testUser_ChangeEmail()
     {
+        $url = osc_user_dashboard_url();
         $uSettings = new utilSettings();
 
         $old_enabled_users              = $uSettings->set_enabled_users(1);
@@ -347,12 +382,7 @@ class Frontend_users extends FrontendTest {
         $this->doRegisterUser('foo@bar.com', 'password');
 
         $this->loginWith();
-        $this->assertTrue($this->selenium->isTextPresent("User account manager"), 'Login at website.');
-
-        $this->selenium->click("xpath=//ul/li/a[text()='My account']");
-        $this->selenium->waitForPageToLoad("30000");
-
-        $this->selenium->click("link=Modify e-mail");
+        $this->selenium->click("xpath=//ul/li[@class='opt_change_email']/a");
         $this->selenium->waitForPageToLoad("30000");
 
         // test - The specified e-mail is already in use
@@ -369,10 +399,8 @@ class Frontend_users extends FrontendTest {
          */
         $uSettings->set_enabled_user_validation(1);
         // with validation
-        $this->selenium->click("xpath=//ul/li/a[text()='My profile']");
-        $this->selenium->waitForPageToLoad("3000");
-
-        $this->selenium->click("link=Modify e-mail");
+        $this->selenium->open($url);
+        $this->selenium->click("xpath=//ul/li[@class='opt_change_email']/a");
         $this->selenium->waitForPageToLoad("3000");
 
         $this->selenium->type("email"     , $this->_email);
@@ -401,5 +429,4 @@ class Frontend_users extends FrontendTest {
         $this->removeUserByMail($this->_email);
     }
 }
-
 ?>
