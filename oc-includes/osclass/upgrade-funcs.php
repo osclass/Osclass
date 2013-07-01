@@ -422,6 +422,7 @@ CREATE TABLE %st_item_description_tmp (
     if(osc_version() < 320) {
         osc_set_preference('mailserver_mail_from', '');
         osc_set_preference('mailserver_name_from', '');
+        osc_set_preference('seo_url_search_prefix', '');
 
         $comm->query(sprintf("ALTER TABLE  %st_category ADD  `b_price_enabled` TINYINT(1) NOT NULL DEFAULT 1", DB_TABLE_PREFIX));
 
@@ -439,8 +440,6 @@ CREATE TABLE %st_item_description_tmp (
         osc_set_preference('force_aspect_image', '0', 'osclass', 'BOOLEAN');
 
     }
-
-
 
     osc_changeVersionTo(312);
 
