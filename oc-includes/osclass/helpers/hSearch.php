@@ -218,6 +218,7 @@
         } else {
             $category = View::newInstance()->_get('search_category');
         }
+        if(!is_array($categories)) { $categories = array(); }
         return($category);
     }
 
@@ -228,7 +229,6 @@
      */
     function osc_search_category_id() {
         $categories = osc_search_category();
-        if(!is_array($categories)) { $categories = array(); }
         $category   = array();
         $where      = array();
 
