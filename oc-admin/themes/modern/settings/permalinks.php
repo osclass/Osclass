@@ -424,6 +424,15 @@
                                         </div>
                                     </div>
                                     <div class="form-row">
+                                        <div class="form-label"><?php _e('Search prefix URL:'); ?></div>
+                                        <div class="form-controls">
+                                            <input type="text" class="input-large" name="seo_url_search_prefix" value="<?php echo osc_esc_html(osc_get_preference('seo_url_search_prefix')); ?>" />
+                                            <div class="help-box">
+                                                <?php _e('It always appear before the category, region or city url.'); ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
                                         <div class="form-label"><?php _e('Search URL:'); ?></div>
                                         <div class="form-controls">
                                             <input type="text" class="input-large" name="rewrite_search_url" value="<?php echo osc_esc_html(osc_get_preference('rewrite_search_url')); ?>" />
