@@ -54,7 +54,7 @@
                     $contactAttachment = Params::getParam('enabled_attachment');
                     $selectableParent  = Params::getParam('selectable_parent_categories');
                     $bAutoCron         = Params::getParam('auto_cron');
-                    $bMarketSources    = Params::getParam('market_external_sources') == 1 ? 1 : 0;
+                    $bMarketSources    = (Params::getParam('market_external_sources') != '' ? true: false);
 
                     // preparing parameters
                     $sPageTitle        = strip_tags($sPageTitle);
