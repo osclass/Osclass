@@ -117,6 +117,4 @@ $page = array(
     's_internal_name' => 'example_page'
 );
 
-
-
-?>
+// EOF: ./oc-includes/osclass/installer/basic_data.php

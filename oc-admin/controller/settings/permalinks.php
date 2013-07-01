@@ -456,6 +456,8 @@ HTACCESS;
                         //Write rule to DB
                         $rewrite->setRules();
 
+                        osc_set_preference('seo_url_search_prefix', rtrim(Params::getParam('seo_url_search_prefix'), '/'));
+
                         $msg_error = '<br/>'._m('All fields are required.')." ".sprintf(_mn('One field was not updated', '%s fields were not updated', $errors), $errors);
                         switch($status) {
                             case 1:

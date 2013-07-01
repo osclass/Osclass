@@ -349,26 +349,22 @@ FUNCTIONS
             $options[] = array(
                 'name'  => __('Change email', 'bender'),
                 'url'   => osc_change_user_email_url(),
-                'class' => 'opt_account',
-                'id' => 'change_email_link'
+                'class' => 'opt_change_email'
             );
             $options[] = array(
                 'name'  => __('Change username', 'bender'),
                 'url'   => osc_change_user_username_url(),
-                'class' => 'opt_account',
-                'id' => 'change_usename_link'
+                'class' => 'opt_change_username'
             );
             $options[] = array(
                 'name'  => __('Change password', 'bender'),
                 'url'   => osc_change_user_password_url(),
-                'class' => 'opt_account',
-                'id' => 'change_password_link'
+                'class' => 'opt_change_password'
             );
             $options[] = array(
                 'name'  => __('Delete account', 'bender'),
                 'url'   => '#',
-                'class' => 'opt_delete_account',
-                'id' => 'delete_account_link'
+                'class' => 'opt_delete_account'
             );
 
             return $options;
