@@ -73,6 +73,17 @@ class Frontend_users extends FrontendTest {
         $this->assertTrue( $this->selenium->isTextPresent('You do not have any alerts yet'), 'User Manage Alerts, without alerts');
     }
 
+
+    /**
+     * Dashboard user test
+     *
+     */
+    function testDashboard()
+    {
+        $this->selenium->open(osc_user_dashboard_url());
+        $this->assertTrue( $this->selenium->isTextPresent('"My listings"'), 'Dashboard redirects to my listings');
+    }
+
     /*
      * - add an item
      * - check dashboard user
@@ -93,7 +104,7 @@ class Frontend_users extends FrontendTest {
         $this->selenium->open(osc_user_dashboard_url());
         $count = 0;
         $count = (int)$this->selenium->getXpathCount("//div[@id='main']/ul[id='listing-card-list']");
-        $this->assertTrue($count==1 , "Users Dashboard with one item");
+        $this->assertTrue($count==1 , "My listings, with one item");
         // check manage items
         $this->selenium->click("xpath=//li[@class='opt_items']/a");
         sleep(1);
