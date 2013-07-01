@@ -580,7 +580,7 @@
          */
         public function onlyPremium($premium = false)
         {
-            $this->withPicture = $premium;
+            $this->onlyPremium = $premium;
         }
 
         /**

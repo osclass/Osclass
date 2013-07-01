@@ -86,6 +86,13 @@ function selectUi(thatSelect){
     uiSelect.click(function(){
         return false;
     });
+    thatSelect.on('focus',function(){
+        console.log(uiWrap);
+        thatSelect.parent().addClass('select-box-focus');
+    });
+    thatSelect.on('blur',function(){
+        thatSelect.parent().removeClass('select-box-focus');
+    });
     thatSelect.change(function(){
         str = thatSelect.find('option:selected').text().replace(/^\s*/gm, '');
         uiSelected.text(str);

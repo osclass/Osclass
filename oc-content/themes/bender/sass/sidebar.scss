@@ -28,10 +28,11 @@
     input[type="text"]{
         @include input-style(#fff);
 
-        width: 80%;
-        padding: 0 10%;
+        width: 100%;
+        padding: 0 10px;
         height: 24px;
         line-height: 24px;
+        box-sizing: border-box;
     }
     ul.category,
     ul.category ul{

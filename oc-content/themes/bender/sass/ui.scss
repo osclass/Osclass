@@ -27,6 +27,13 @@ textarea{
 
 /* Selectmenu
 ----------------------------------*/
+div.select-box-focus{
+    outline:0;
+    border:1px solid #5B9DD9;
+    -webkit-box-shadow: 0 0 5px 1px #5B9DD9;
+    -moz-box-shadow: 0 0 5px 1px #5B9DD9;
+    box-shadow: 0 0 5px 1px #5B9DD9;
+}
 .select-box{
     z-index:0;
     position: relative;

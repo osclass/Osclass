@@ -26,7 +26,7 @@ DEFINES
 */
     define('BENDER_THEME_VERSION', '1.0');
     if( !osc_get_preference('keyword_placeholder', 'bender_theme') ) {
-        osc_set_preference('keyword_placeholder', __('ie. PHP Programmer', 'bender_theme'), 'bender');
+        osc_set_preference('keyword_placeholder', __('ie. PHP Programmer', 'bender_theme'), 'bender_theme');
     }
     osc_register_script('fancybox', osc_current_web_theme_url('js/fancybox/jquery.fancybox.pack.js'), array('jquery'));
     osc_enqueue_style('fancybox', osc_current_web_theme_url('js/fancybox/jquery.fancybox.css'));
@@ -54,7 +54,7 @@ FUNCTIONS
 
     if(!function_exists('check_install_bender_theme')) {
         function check_install_bender_theme() {
-            $current_version = osc_get_preference('version', 'bender');
+            $current_version = osc_get_preference('version', 'bender_theme');
             //check if current version is installed or need an update<
             if( !$current_version ) {
                 bender_theme_install();
@@ -446,6 +446,15 @@ FUNCTIONS
             break;
         }
     }
+
+    function bender_redirect_user_dashboard()
+    {
+        if( (Rewrite::newInstance()->get_location() === 'user') && (Rewrite::newInstance()->get_section() === 'dashboard') ) {
+            header('Location: ' .osc_user_list_items_url());
+            exit;
+        }
+    }
+    osc_add_hook('init', 'bender_redirect_user_dashboard', 2);
     osc_add_hook('init_admin', 'theme_bender_actions_admin');
     osc_admin_menu_appearance(__('Header logo', 'bender'), osc_admin_render_theme_url('oc-content/themes/bender/admin/header.php'), 'header_bender');
     osc_admin_menu_appearance(__('Theme settings', 'bender'), osc_admin_render_theme_url('oc-content/themes/bender/admin/settings.php'), 'settings_bender');
