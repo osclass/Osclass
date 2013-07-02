@@ -444,6 +444,7 @@
                 $dt_expiration = Item::newInstance()->updateExpirationDate($aItem['idItem'], $aItem['dt_expiration'], false);
                 if($dt_expiration===false) {
                     $dt_expiration = $old_item['dt_expiration'];
+                    $aItem['dt_expiration'] = $old_item['dt_expiration'];
                 }
                 $newIsExpired = osc_isExpired($dt_expiration);
 
