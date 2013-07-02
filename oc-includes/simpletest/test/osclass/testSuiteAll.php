@@ -60,7 +60,12 @@ class AllTests extends TestSuite {
 
         // INSTALLER
         if(isset($tests['installer'])) {
-            $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/Installer-installer.php');
+            if(isset($tests['installer']['install']) || $tests['installer']=='') {
+                $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/Installer-installer.php');
+            }
+            if(isset($tests['installer']['clean']) || $tests['installer']=='') {
+                $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/Installer-clean.php');
+            }
         }
 
 
@@ -96,7 +101,7 @@ class AllTests extends TestSuite {
                 $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/Frontend-csrf.php');
             }
         }
-         /*
+
         // FRONTEND WITH PERMALINKS
         if(isset($tests['frontend'])) {
             require_once(dirname(__FILE__).'/../../../../oc-load.php');
@@ -131,7 +136,7 @@ class AllTests extends TestSuite {
             // deactivate permalinks
             $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/Frontend-offPermalinks.php');
         }
-          */
+
         // ADMIN
         if(isset($tests['admin'])) {
             require_once(dirname(__FILE__).'/../../../../oc-load.php');
