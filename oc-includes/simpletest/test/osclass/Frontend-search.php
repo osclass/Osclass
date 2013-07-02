@@ -294,7 +294,7 @@ class Frontend_search extends FrontendTest {
         $aux = (string)$this->selenium->getEval("var win = this.browserbot.getCurrentWindow(); win.document.querySelectorAll('.listing-basicinfo')[0].getElementsByTagName('strong')[0].innerHTML");
         $this->assertTrue( ('http://www.osclass.org' == $aux) , "Highligth url pattern" );
         $count = $this->selenium->getXpathCount("//li[contains(@class,'listing-card')]");
-        $this->assertTrue($count == 1 , "Search by [ url pattern ].");
+        $this->assertTrue($count == 2 , "Search by [ url pattern ].");
 
         // pattern with special chars
         $this->selenium->open(osc_search_url() );
