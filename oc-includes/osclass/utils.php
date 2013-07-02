@@ -1427,6 +1427,21 @@ function version_compare2($a, $b)
     return (count($a) < count($b)) ? -1 : 0;
 }
 
+function _recursive_category_stats(&$aux, &$categoryTotal)
+{
+    $count_items = 0;
+    if($aux['categories'] == array()) {
+        $total     = Item::newInstance()->numItems($aux, true, true);
+        $categoryTotal[$aux['pk_i_id']] = $total;
+        return $total;
+    } else {
+        foreach($aux['categories'] as &$cat) {
+            $count_items += _recursive_category_stats($cat, $categoryTotal);
+        }
+    }
+    $categoryTotal[$aux['pk_i_id']] = $count_items;
+}
+
 /**
  * Update category stats
  *
@@ -1435,33 +1450,11 @@ function version_compare2($a, $b)
  */
 function osc_update_cat_stats() {
     $categoryTotal = array();
-    $categoryTree  = array();
-    $aCategories   = Category::newInstance()->listAll(false);
+    $aCategories   = Category::newInstance()->toTreeAll();
 
-    // append root categories and get the number of items of each category
-    foreach($aCategories as $category) {
-        $total     = Item::newInstance()->numItems($category, true, true);
-        $category += array('category' => array());
+    foreach($aCategories as &$category) {
         if( is_null($category['fk_i_parent_id']) ) {
-            $categoryTree += array($category['pk_i_id'] => $category);
-        }
-
-        $categoryTotal += array($category['pk_i_id'] => $total);
-    }
-
-    // append childs to root categories
-    foreach($aCategories as $category) {
-        if( !is_null($category['fk_i_parent_id']) ) {
-            $categoryTree[$category['fk_i_parent_id']]['category'][] = $category;
-        }
-    }
-
-    // sum the result of the subcategories and set in the parent category
-    foreach($categoryTree as $category) {
-        if( count( $category['category'] ) > 0 ) {
-            foreach($category['category'] as $subcategory) {
-                $categoryTotal[$category['pk_i_id']] += $categoryTotal[$subcategory['pk_i_id']];
-            }
+            _recursive_category_stats($category, $categoryTotal);
         }
     }
 
