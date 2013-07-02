@@ -60,7 +60,12 @@ class AllTests extends TestSuite {
 
         // INSTALLER
         if(isset($tests['installer'])) {
-            $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/Installer-installer.php');
+            if(isset($tests['installer']['install']) || $tests['installer']=='') {
+                $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/Installer-installer.php');
+            }
+            if(isset($tests['installer']['clean']) || $tests['installer']=='') {
+                $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/Installer-clean.php');
+            }
         }
 
 
