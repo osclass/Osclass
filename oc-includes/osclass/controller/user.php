@@ -194,7 +194,7 @@
                 case 'items':                   // view items user
                                                 $itemsPerPage = (Params::getParam('itemsPerPage')!='')?Params::getParam('itemsPerPage'):10;
                                                 $page         = (Params::getParam('iPage') > 0) ? Params::getParam('iPage') -1 : 0;
-                                                $itemType     = (Params::getParam('itemType')!='') ? Params::getParam('itemType'): 'active' ;
+                                                $itemType     = Params::getParam('itemType');
                                                 $total_items  = Item::newInstance()->countItemTypesByUserID($_SESSION['userId'], $itemType);
                                                 $total_pages  = ceil($total_items/$itemsPerPage);
                                                 $items        = Item::newInstance()->findItemTypesByUserID($_SESSION['userId'], $page*$itemsPerPage, $itemsPerPage, $itemType);

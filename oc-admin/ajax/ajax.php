@@ -693,11 +693,8 @@
                                 }
                             }
 
-                            $filename = $data['s_update_url']."_".$data['s_version'].".zip";
+                            $filename = date('YmdHis')."_".osc_sanitize_string($data['s_title'])."_".$data['s_version'].".zip";
                             $url_source_file = $data['s_source_file'];
-
-//                            error_log('Source file: ' . $url_source_file);
-//                            error_log('Filename: ' . $filename);
 
                             $result   = osc_downloadFile($url_source_file, $filename);
 
@@ -823,7 +820,6 @@
                         $message = __('Missing download URL');
                         $error = 1; // Missing download URL
                     }
-
 
                     echo json_encode(array('error' => $error, 'message' => $message, 'data' => $data));
 

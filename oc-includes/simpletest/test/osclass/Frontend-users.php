@@ -135,7 +135,8 @@ class Frontend_users extends FrontendTest {
 
         // delete
         $this->selenium->click("xpath=//div[@id='main']/div[@class='userItem'][1]/div/a[text()='Delete this alert']");
-        sleep(1);
+        //sleep(3);
+        $this->selenium->waitForPageToLoad("3000");
         $this->assertTrue( $this->selenium->isTextPresent('Unsubscribed correctly'), 'User Manage Alerts, delete alert');
     }
 
@@ -435,11 +436,11 @@ class Frontend_users extends FrontendTest {
 
         $this->loginWith();
         $this->selenium->click("xpath=//ul/li[@class='opt_delete_account']/a");
-        sleep(1);  // delete popup
+        sleep(3);  // delete popup
         $this->selenium->click("xpath=//button/span[contains(text(),'Delete')]");
+        $this->selenium->waitForPageToLoad("3000");
 
-
-        $this->assertTrue( $this->selenium->isTextPresent("User account delete"), "Your account have been deleted");
+        $this->assertTrue( $this->selenium->isTextPresent("Your account have been deleted"), "User account delete");
 
         $uSettings->set_enabled_users($old_enabled_users);
         $uSettings->set_enabled_user_registration($old_enabled_users_registration);
