@@ -174,7 +174,7 @@ abstract class FrontendTest extends MyWebTestCase {
         // create alert invalid email
         $this->selenium->click('alert_email');
         $this->selenium->type('alert_email', $email);
-        $this->selenium->click("xpath=//button[text()='Subscribe now!']");
+        $this->selenium->click("xpath=//form[@id='sub_alert']/button");
         sleep(3);
         // verify alert
         $aAuxAlert = Alerts::newInstance()->findByEmail($email);
