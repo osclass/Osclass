@@ -14,7 +14,7 @@
             <form action="<?php echo osc_base_url(true) ; ?>" method="get" class="search">
                 <input type="hidden" name="page" value="search" />
                 <fieldset class="main">
-                    <input type="text" name="sPattern"  id="query" value="<?php echo ( osc_search_pattern() != '' ) ? osc_search_pattern() : $sQuery; ?>" />
+                    <input type="text" name="sPattern"  id="query" value="" />
                     <button type="submit" class="ui-button ui-button-middle"><?php _e('Search', 'bender') ; ?></button>
                 </fieldset>
             </form>
