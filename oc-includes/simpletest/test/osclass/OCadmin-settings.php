@@ -286,7 +286,7 @@ class OCadmin_generalSettings extends OCadmintest {
         $uSettings = new utilSettings();
 
         $pref = array();
-        $pref['akismet_key']        = $uSettings->findValueByName('akismet_key');
+        $pref['akismet_key']        = $uSettings->findValueByName('akismetKey');
         $pref['recaptchaPrivKey']   = $uSettings->findValueByName('recaptchaPrivKey');
         $pref['recaptchaPubKey']    = $uSettings->findValueByName('recaptchaPubKey');
 
