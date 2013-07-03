@@ -133,7 +133,7 @@
         <?php if( osc_count_items() > 0 ) { ?>
         <div class="similar_ads">
             <h2><?php _e('Related listings', 'bender'); ?></h2>
-            <ul class="listing-card-list <?php echo $class. (osc_item_is_premium()?" premium":"") ; ?>" id="related-card-list">
+            <ul class="listing-card-list <?php echo (osc_item_is_premium()?" premium":"") ; ?>" id="related-card-list">
                 <?php
                 $i = 0;
                 while(osc_has_items()) { $i++; ?>
