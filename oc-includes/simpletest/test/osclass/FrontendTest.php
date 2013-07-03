@@ -167,15 +167,13 @@ abstract class FrontendTest extends MyWebTestCase {
     {
         // search only items with picture
         $this->selenium->open( osc_search_url() );
-        $this->selenium->click("bPic"); // only items with pictures
-        $this->selenium->click("xpath=//button[text()='Apply']");
         $this->selenium->waitForPageToLoad("10000");
 
         // create alert invalid email
         $this->selenium->click('alert_email');
         $this->selenium->type('alert_email', $email);
-        $this->selenium->click("xpath=//button[text()='Subscribe now!']");
-        sleep(3);
+        $this->selenium->click("xpath=//form[@id='sub_alert']/button");
+
         // verify alert
         $aAuxAlert = Alerts::newInstance()->findByEmail($email);
         if( $success ) {

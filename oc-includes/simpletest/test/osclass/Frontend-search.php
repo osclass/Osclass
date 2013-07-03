@@ -294,6 +294,7 @@ class Frontend_search extends FrontendTest {
         $aux = (string)$this->selenium->getEval("var win = this.browserbot.getCurrentWindow(); win.document.querySelectorAll('.listing-basicinfo')[0].getElementsByTagName('strong')[0].innerHTML");
         $this->assertTrue( ('http://www.osclass.org' == $aux) , "Highligth url pattern" );
         $count = $this->selenium->getXpathCount("//li[contains(@class,'listing-card')]");
+
         // THIS COUNT SHOULD BE 1, BUT FULLTEXT SEEMS TO MESS UP SEARCH RESULTS WHEN USING NON NATURAL LANGUAGE, AS URLS
         $this->assertTrue($count == 2 , "Search by [ url pattern ].");
 

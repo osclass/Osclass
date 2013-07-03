@@ -176,6 +176,54 @@ class Frontend_items extends FrontendTest {
         unset($uSettings);
     }
 
+    /**
+     * Force spam detection via akismet.
+     *
+     */
+    function testAkismet_postItem()
+    {
+        // add akismet keys
+        Preference::newInstance()->update(array('s_value' => '9f18f856aa3c') ,array('s_name'  => 'akismetKey'));
+        osc_reset_preferences();
+
+        // add spam item
+        $item = array(
+            "parentCatId"   => 'Vehicles',
+            "catId"         => 'Cars',
+            'title'         => '2000 Ford Focus',
+            'description'   => '2000 Ford Focus ZX3 Hatchback 2D Good Condition Clean Great Car Mileage: 175000 Passed BMV Emissions Clear Title Call me or Text if interested- Crystal 219',
+            'price'         => '101',
+            'regionId'      => 'Barcelona'  ,'cityId'        => 'Terrassa',
+            'cityArea'      => ''           ,'address'       => '',
+            'photo'         => array(),
+            'contactName'   => 'viagra-test-123',
+            'contactEmail'  => 'new@email.com'
+        );
+
+        $uSettings = new utilSettings();
+        $items_wait_time                  = $uSettings->set_items_wait_time(0);
+        $set_selectable_parent_categories = $uSettings->set_selectable_parent_categories(1);
+        $bool_reg_user_post               = $uSettings->set_reg_user_post(0);
+        $bool_enabled_user_validation     = $uSettings->set_moderate_items(-1);
+
+        $old_logged_user_item_validation = $uSettings->set_logged_user_item_validation(1);
+        $this->insertItem($item['parentCatId'], $item['catId'], $item['title'],
+                                $item['description'], $item['price'],
+                                $item['regionId'], $item['cityId'], $item['cityArea'],
+                                $item['photo'], $item['contactName'],
+                                $item['contactEmail']);
+
+        $item_id = $this->_lastItemId();
+
+        // check spam detection
+        $oItem = Item::newInstance()->findByPrimaryKey($item_id);
+        $this->assertTrue($oItem['b_spam']=='1', 'Akismet, detect as spam item.');
+
+        // reset akismet key
+        Preference::newInstance()->update(array('s_value' => '') ,array('s_name'  => 'akismetKey'));
+        osc_reset_preferences();
+    }
+
     /*
      * Try to edit a item with bad id_item
      */
