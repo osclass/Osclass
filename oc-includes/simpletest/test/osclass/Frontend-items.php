@@ -280,7 +280,9 @@ class Frontend_items extends FrontendTest {
         $this->assertTrue($this->selenium->isTextPresent(""),"Sorry, we don't have any listing with that ID") ;
 
         // remove item
-        Item::newInstance()->deleteByPrimaryKey($itemId);
+        $_item = Item::newInstance()->findByPrimaryKey($itemId);
+        $itemAction = new ItemActions(false);
+        $itemAction->delete($_item['s_secret'], $itemId);
     }
 
     /*
@@ -313,9 +315,10 @@ class Frontend_items extends FrontendTest {
         $old_enabled_user_validation    = $uSettings->set_enabled_user_validation(0);
 
         $this->doRegisterUser();
-        $uSettings->set_logged_user_item_validation( $old_logged_user_item_validation );
+//        $uSettings->set_logged_user_item_validation( $old_logged_user_item_validation );
         $uSettings->set_enabled_users($old_enabled_users);
         $uSettings->set_enabled_user_registration($old_enabled_users_registration);
+        $uSettings->set_enabled_user_validation($old_enabled_user_validation);
 
         $itemId = $this->_insertItemToValidate();
 
@@ -340,9 +343,11 @@ class Frontend_items extends FrontendTest {
         $this->selenium->open($url);
         sleep(1);
         $this->assertTrue($this->selenium->isTextPresent("The listing has been validated"), "Items, validate item. (direct url)");
-        // remove all items
-        Item::newInstance()->deleteByPrimaryKey($itemId);
 
+        // remove item
+        $_item = Item::newInstance()->findByPrimaryKey($itemId);
+        $itemAction = new ItemActions(false);
+        $itemAction->delete($_item['s_secret'], $itemId);
     }
 
     /*
