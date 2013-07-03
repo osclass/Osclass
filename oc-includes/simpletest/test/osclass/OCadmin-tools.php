@@ -10,7 +10,7 @@ class OCadmin_tools extends OCadminTest {
      * Import sql
      * Remove imported data
      */
-    function testImportData()
+    function _testImportData()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -36,7 +36,7 @@ class OCadmin_tools extends OCadminTest {
      * Login oc-admin
      * Import bad file.
      */
-    function testImportDataFail()
+    function _testImportDataFail()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -53,7 +53,7 @@ class OCadmin_tools extends OCadminTest {
      * Login oc-admin
      * Backup database
      */
-    function testBackupSql()
+    function _testBackupSql()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -73,7 +73,7 @@ class OCadmin_tools extends OCadminTest {
      * Login oc-admin
      * Backup oclass
      */
-    function testBackupZip()
+    function _testBackupZip()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -90,7 +90,7 @@ class OCadmin_tools extends OCadminTest {
     }
 
 
-    function testMaintenance()
+    function _testMaintenance()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -134,8 +134,8 @@ class OCadmin_tools extends OCadminTest {
         $this->selenium->waitForPageToLoad("30000");
         $complete = 0;
         $max_time_limit = 0; // Add a time limit of 10 minutes to execute this while, in other case is infinite (if the ajax to get the percent is wrong!)!
-        while($complete!='100' && $max_time_limit<40) {
-            sleep(15);
+        while($complete!='100' && $max_time_limit<60) {
+            sleep(20);
             $complete = $this->selenium->getText("//div/p/span[@id='percent']");
             $max_time_limit++;
         }
@@ -178,10 +178,10 @@ class OCadmin_tools extends OCadminTest {
             }
         }
 
-        $this->removeLoadedItems();
+        /*$this->removeLoadedItems();
         $this->removeLoadedItems();
         $this->removeLoadedItems(false);
-        $this->removeLoadedItems(false);
+        $this->removeLoadedItems(false);*/
 
     }
 
@@ -189,7 +189,7 @@ class OCadmin_tools extends OCadminTest {
     /*
      * Test if the http_referer functionality is working on admin
      */
-    function testHTTPReferer()
+    function _testHTTPReferer()
     {
         $this->HTTPReferer( osc_admin_base_url(true)."?page=items" , "Manage listings");
         $this->HTTPReferer( osc_admin_base_url(true)."?page=stats&action=comments" , "Comment Statistics");
