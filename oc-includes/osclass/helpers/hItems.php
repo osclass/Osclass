@@ -1157,11 +1157,19 @@
             $value = osc_field(osc_item_meta(), 's_value', '');
             if(is_array($value)) {
                 // from [date_from] to [date_to]
-                $return  = __('From') . ' ' . htmlentities( date(osc_date_format(), $value['from']), ENT_COMPAT, "UTF-8");
-                $return .= ' ' . __('to') . ' ' . htmlentities( date(osc_date_format(), $value['to']), ENT_COMPAT, "UTF-8");
-                return $return;
+                if(isset($value['from']) && $value['from']!='' && is_int($value['from']) && isset($value['to']) && $value['to']!='' && is_int($value['to'])) {
+                    $return  = __('From') . ' ' . htmlentities( date(osc_date_format(), $value['from']), ENT_COMPAT, "UTF-8");
+                    $return .= ' ' . __('to') . ' ' . htmlentities( date(osc_date_format(), $value['to']), ENT_COMPAT, "UTF-8");
+                    return $return;
+                } else {
+                    return '';
+                }
             } else {
-                return htmlentities( date(osc_date_format(), $value), ENT_COMPAT, "UTF-8");
+                if($value!='' && is_int($value)) {
+                    return htmlentities( date(osc_date_format(), $value), ENT_COMPAT, "UTF-8");
+                } else {
+                    return '';
+                }
             }
         } else if($meta['e_type']=="CHECKBOX") {
             if(osc_field(osc_item_meta(), 's_value', '')==1) {
