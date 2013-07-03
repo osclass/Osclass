@@ -52,9 +52,9 @@ class OCadmin_appearance extends OCadminTest {
         $this->selenium->click("link=Appearance");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->selenium->click("//a[@href[contains(.,'modern')] and text()='Activate']");
+        $this->selenium->click("//a[@href[contains(.,'bender')] and text()='Activate']");
         $this->selenium->waitForPageToLoad("10000");
-        $this->assertTrue('Theme activated correctly', "Activate modern theme.");
+        $this->assertTrue('Theme activated correctly', "Activate bender theme.");
     }
 
     /*

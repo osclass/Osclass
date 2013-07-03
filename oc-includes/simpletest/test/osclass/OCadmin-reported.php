@@ -41,7 +41,7 @@ class OCadmin_reported extends OCadminTest {
         $this->checkOrder('bad', 2 );
         // unmark 1 as ALL
         $this->unmarkAs('all', array(1));
-        $this->checkOrder('all', 3 );
+        $this->checkOrder('all', 2 );
         
         // remove all items or unmarkAs all
         // .. TODO ..
@@ -179,6 +179,7 @@ class OCadmin_reported extends OCadminTest {
             $new_xpath = str_replace('_ID_', $id, $xpath_str);
             
             $this->selenium->open( osc_admin_base_url(true) );
+            $this->selenium->waitForPageToLoad("10000");
             $this->selenium->click("//a[@id='items_reported']");
             $this->selenium->waitForPageToLoad("10000");
             sleep(1);
@@ -225,41 +226,42 @@ class OCadmin_reported extends OCadminTest {
     private function checkOrder($type, $count) 
     {
         $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->waitForPageToLoad("10000");
         $this->selenium->click("//a[@id='items_reported']");
         $this->selenium->waitForPageToLoad("10000");
         $num = 0;
         sleep(1);
         switch ($type) {
             case 'spam':
-                error_log('case spam');
+                //error_log('case spam');
                 $this->selenium->click("//a[@id='order_spam']");
                 sleep(1);
                 $num = $this->selenium->getXpathCount('//table/tbody/tr');
                 $this->assertTrue( ($num == $count) , 'There are the correct rows SPAM ( '.$num.' == '.$count.' )');
                 break;
             case 'exp':
-                error_log('case exp');
+                //error_log('case exp');
                 $this->selenium->click("//a[@id='order_exp']");
                 sleep(1);
                 $num = $this->selenium->getXpathCount('//table/tbody/tr');
                 $this->assertTrue( ($num == $count) , 'There are the correct rows EXPIRED ( '.$num.' == '.$count.' )');
                 break;
             case 'bad':
-                error_log('case bad');
+                //error_log('case bad');
                 $this->selenium->click("//a[@id='order_bad']");
                 sleep(1);
                 $num = $this->selenium->getXpathCount('//table/tbody/tr');
                 $this->assertTrue( ($num == $count) , 'There are the correct rows BAD ( '.$num.' == '.$count.' )');
                 break;
             case 'all':
-                error_log('case all');
+                //error_log('case all');
                 $num = $this->selenium->getXpathCount('//table/tbody/tr');
                 $this->assertTrue( ($num == $count) , 'There are the correct rows (ALL) ( '.$num.' == '.$count.' )');
                 break;
             default:
                 break;
         }
-        error_log($num . " == " . $count);  
+        //error_log($num . " == " . $count);
     }
     
     private function markAs($type, $array)
@@ -268,7 +270,9 @@ class OCadmin_reported extends OCadminTest {
         foreach($array as $id) {
             // go to reported listings
             $this->selenium->open( osc_admin_base_url(true) );
+            $this->selenium->waitForPageToLoad("10000");
             $this->selenium->click("//a[@id='items_manage']");
+            $this->selenium->waitForPageToLoad("10000");
             sleep(2);
             $new_xpath = str_replace('_ID_', $id, $xpath_str);
             $href = $this->selenium->getAttribute($new_xpath);
@@ -303,6 +307,7 @@ class OCadmin_reported extends OCadminTest {
     private function insertItem($bPhotos = FALSE )
     {
         $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->waitForPageToLoad("10000");
         $this->selenium->click("//a[@id='items']");
         $this->selenium->waitForPageToLoad("10000");
         $this->selenium->click("link=Add new");

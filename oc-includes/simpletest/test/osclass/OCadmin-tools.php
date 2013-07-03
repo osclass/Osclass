@@ -10,7 +10,7 @@ class OCadmin_tools extends OCadminTest {
      * Import sql
      * Remove imported data
      */
-    function _testImportData()
+    function testImportData()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -36,7 +36,7 @@ class OCadmin_tools extends OCadminTest {
      * Login oc-admin
      * Import bad file.
      */
-    function _testImportDataFail()
+    function testImportDataFail()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -53,7 +53,7 @@ class OCadmin_tools extends OCadminTest {
      * Login oc-admin
      * Backup database
      */
-    function _testBackupSql()
+    function testBackupSql()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -73,7 +73,7 @@ class OCadmin_tools extends OCadminTest {
      * Login oc-admin
      * Backup oclass
      */
-    function _testBackupZip()
+    function testBackupZip()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -90,7 +90,7 @@ class OCadmin_tools extends OCadminTest {
     }
 
 
-    function _testMaintenance()
+    function testMaintenance()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -144,7 +144,7 @@ class OCadmin_tools extends OCadminTest {
         $countries = CountryStats::newInstance()->listCountries(">=");
         foreach($countries as $c) {
             if($c['country_code']=="ES") {
-                $this->assertTrue(($c['items']==14), "Spain items (should be 14, ".$c['items']." found)");
+                $this->assertTrue(($c['items']==15), "Spain items (should be 15, ".$c['items']." found)");
             } else {
                 $this->assertTrue(($c['items']==0), $c['country_name']." items (should be 0, ".$c['items']." found)");
             }
@@ -178,10 +178,10 @@ class OCadmin_tools extends OCadminTest {
             }
         }
 
-        /*$this->removeLoadedItems();
+        $this->removeLoadedItems();
         $this->removeLoadedItems();
         $this->removeLoadedItems(false);
-        $this->removeLoadedItems(false);*/
+        $this->removeLoadedItems(false);
 
     }
 
@@ -189,7 +189,7 @@ class OCadmin_tools extends OCadminTest {
     /*
      * Test if the http_referer functionality is working on admin
      */
-    function _testHTTPReferer()
+    function testHTTPReferer()
     {
         $this->HTTPReferer( osc_admin_base_url(true)."?page=items" , "Manage listings");
         $this->HTTPReferer( osc_admin_base_url(true)."?page=stats&action=comments" , "Comment Statistics");

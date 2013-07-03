@@ -67,9 +67,7 @@ class OCadmin_market extends OCadminTest {
         $this->selenium->click("//a[@id='market_view_plugins']");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->selenium->click("//div[@class='mk-item mk-item-plugin']/div/div/span[@class='more']");
-        sleep(2);
-        $this->selenium->click("//div[@class='mk-info']/table/tbody/tr/td[@class='actions']/a[contains(.,'Download')]");
+        $this->selenium->click("//div[@class='mk-item mk-item-plugin']/div/div/span[@class='download-btn']");
         sleep(2);
         $textIsPresent = false;
         for($t=0;$t<60;$t++) {

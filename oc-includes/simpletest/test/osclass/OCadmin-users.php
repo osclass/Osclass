@@ -360,8 +360,10 @@ class OCadmin_users extends OCadminTest {
         $this->selenium->type("address"         ,"address user");
 
         $this->selenium->select("countryId", "label=Spain");
-        $this->selenium->type("region"      , "Barcelona");
-        $this->selenium->type("city"        , "Barcelona");
+        $this->selenium->select("regionId", "label=Barcelona");
+        $this->selenium->select("cityId", "label=Barcelona");
+        //$this->selenium->type("region"      , "Barcelona");
+        //$this->selenium->type("city"        , "Barcelona");
         $this->selenium->select("b_company"     , "label=User");
         
         $this->selenium->click("//input[@type='submit']");
@@ -383,8 +385,9 @@ class OCadmin_users extends OCadminTest {
         
         // add item for testing purposes
         $this->selenium->open(osc_base_url(true) . '?page=item&action=item_add' );
-        $this->selenium->select("select_1", "label=regexp:\\s*For sale");
-        $this->selenium->select("select_2", "label=regexp:\\s*Animals");
+        $this->selenium->select("catId", "label=regexp:\\s*Animals");
+        //$this->selenium->select("select_1", "label=regexp:\\s*For sale");
+        //$this->selenium->select("select_2", "label=regexp:\\s*Animals");
 
         $this->selenium->type("title[en_US]", 'Title new add test');
         $this->selenium->type("description[en_US]", "description new add");
@@ -392,8 +395,10 @@ class OCadmin_users extends OCadminTest {
 
         //$this->selenium->select("countryId", "label=Spain");
         $this->selenium->select("countryId", "label=Spain");
-        $this->selenium->type("region", "Barcelona");
-        $this->selenium->type("city", "Barcelona");
+        $this->selenium->select("regionId", "label=Barcelona");
+        $this->selenium->select("cityId", "label=Barcelona");
+        //$this->selenium->type("region", "Barcelona");
+        //$this->selenium->type("city", "Barcelona");
 
         $this->selenium->type('id=contactName', 'foobar');
         $this->selenium->type('id=contactEmail', 'foobar@mail.com');
@@ -422,12 +427,14 @@ class OCadmin_users extends OCadminTest {
         $this->assertTrue($this->selenium->isTextPresent('real name user'),"Login at website");
         // check autofill locations when user add nen advert
         $this->selenium->open(osc_base_url(true) . '?page=item&action=item_add');
+        sleep(30);
         $this->assertTrue( ($this->selenium->getSelectedLabel('id=countryId') == 'Spain'), 'Country auto fill');
         //$this->assertTrue( ($this->selenium->getValue('id=country') == 'Spain'), 'Country auto fill');
         $this->assertTrue( ($this->selenium->getValue('id=region')  == 'Barcelona'), 'Region auto fill');
         $this->assertTrue( ($this->selenium->getValue('id=city')  == 'Barcelona'), 'City auto fill');
         $this->assertTrue( ($this->selenium->getValue('id=cityArea') == 'city area'), 'City area auto fill');
         $this->assertTrue( ($this->selenium->getValue('id=address') == 'address user'), 'Address auto fill');
+        sleep(30);
         // alerts
         $this->selenium->open(osc_base_url(true) . '?page=search');
         $this->assertTrue( ($this->selenium->getValue('id=alert_email') == 'test@mail.com' ), 'Email inserted for alert');
