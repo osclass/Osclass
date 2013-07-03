@@ -13,6 +13,7 @@ class OCadmin_pages extends OCadminTest {
     function testPagesInsert()
     {
         $this->loginWith() ;
+        $this->deletePage('test_page_example', false) ;
         $this->newPage('test_page_example') ;
         $this->assertTrue($this->selenium->isTextPresent('The page has been added'), "Insert page.");
         $this->deletePage('test_page_example') ;
@@ -35,7 +36,7 @@ class OCadmin_pages extends OCadminTest {
      * Create page again
      * Delete page
      */  
-    function testPagesInsertDuplicate()
+    function _testPagesInsertDuplicate()
     {
         $this->loginWith() ;
         $this->newPageWithData('test_page_example',"just a title", "just a description") ;
@@ -53,7 +54,7 @@ class OCadmin_pages extends OCadminTest {
      * Edit page
      * Delete page
      */
-    function testPageEdit()
+    function _testPageEdit()
     {
         $this->loginWith() ;
         $this->newPageWithData('test_page_example',"cos's test", "cos's test") ;
@@ -72,7 +73,7 @@ class OCadmin_pages extends OCadminTest {
      * Edit page
      * Delete page
      */
-    function testPageLinkOnFooter()
+    function _testPageLinkOnFooter()
     {
         $this->loginWith();
         $this->newPageWithData('test_page_example',"My page on the footer", "cos's test") ;
@@ -114,7 +115,7 @@ class OCadmin_pages extends OCadminTest {
      * Login oc-admin
      * insert 10 new pages and delete all the pages.
      */
-    function testMultiplePagesInsert()
+    function _testMultiplePagesInsert()
     {
         $this->loginWith() ;
      
@@ -133,7 +134,7 @@ class OCadmin_pages extends OCadminTest {
      * Login oc-admin
      * Navigate throw pages
      */
-    public function testTableNavigation()
+    public function _testTableNavigation()
     {
         $this->loginWith() ;
 
@@ -257,7 +258,7 @@ class OCadmin_pages extends OCadminTest {
         }
     }
 
-    private function deletePage($internal_name)
+    private function deletePage($internal_name, $check = true)
     {
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("//a[@id='pages']");
@@ -271,11 +272,13 @@ class OCadmin_pages extends OCadminTest {
         // click alert OK
         
         $this->selenium->waitForPageToLoad("30000");
-        
-        if( $this->selenium->isTextPresent('One page has been deleted correctly') ){
-            $this->assertTrue("text present");
-        } else {
-            $this->assertFalse("TEXT NOT PRESENT - One page has been deleted correctly - ");
+
+        if($check) {
+            if( $this->selenium->isTextPresent('One page has been deleted correctly') ){
+                $this->assertTrue("text present");
+            } else {
+                $this->assertFalse("TEXT NOT PRESENT - One page has been deleted correctly - ");
+            }
         }
     }
     

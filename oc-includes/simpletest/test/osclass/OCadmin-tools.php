@@ -134,8 +134,8 @@ class OCadmin_tools extends OCadminTest {
         $this->selenium->waitForPageToLoad("30000");
         $complete = 0;
         $max_time_limit = 0; // Add a time limit of 10 minutes to execute this while, in other case is infinite (if the ajax to get the percent is wrong!)!
-        while($complete!='100' && $max_time_limit<40) {
-            sleep(15);
+        while($complete!='100' && $max_time_limit<60) {
+            sleep(20);
             $complete = $this->selenium->getText("//div/p/span[@id='percent']");
             $max_time_limit++;
         }
@@ -144,7 +144,7 @@ class OCadmin_tools extends OCadminTest {
         $countries = CountryStats::newInstance()->listCountries(">=");
         foreach($countries as $c) {
             if($c['country_code']=="ES") {
-                $this->assertTrue(($c['items']==14), "Spain items (should be 14, ".$c['items']." found)");
+                $this->assertTrue(($c['items']==15), "Spain items (should be 15, ".$c['items']." found)");
             } else {
                 $this->assertTrue(($c['items']==0), $c['country_name']." items (should be 0, ".$c['items']." found)");
             }

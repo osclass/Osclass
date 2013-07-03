@@ -452,13 +452,13 @@ class OCadmin_items extends OCadminTest {
         $this->selenium->waitForPageToLoad("10000");
 
         $this->selenium->mouseOver("//table/tbody/tr/td[contains(text(),'Test B user')]");
-        $this->selenium->click("//table/tbody/tr/td[contains(text(),'Test B user')]/div/ul/li[@class='show-more']/ul/li/a[text()='Activate']");
+        $this->selenium->click("//table/tbody/tr/td[contains(text(),'Test B user')]/div/ul/li/a[text()='Activate']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue($this->selenium->isTextPresent("The comment has been approved"), "Can't activate comment. ERROR" );
 
         $this->selenium->mouseOver("//table/tbody/tr/td[contains(text(),'Test B user')]");
-        $this->selenium->click("//table/tbody/tr/td[contains(text(),'Test B user')]/div/ul/li[@class='show-more']/ul/li/a[text()='Deactivate']");
+        $this->selenium->click("//table/tbody/tr/td[contains(text(),'Test B user')]/div/ul/li/a[text()='Deactivate']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue($this->selenium->isTextPresent("The comment has been disapproved"), "Can't deactivate comment. ERROR" );

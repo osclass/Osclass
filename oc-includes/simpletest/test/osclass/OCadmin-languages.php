@@ -269,7 +269,7 @@ class OCadmin_languages extends OCadminTest {
         $this->selenium->click("link=$lang");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->assertTrue($this->selenium->isTextPresent("Idioma"),"Find $lang strings (website language $lang)");
+        $this->assertTrue($this->selenium->isTextPresent("Publica tu anuncio gratis"),"Find $lang strings (website language $lang)");
     }
 
     private function disableWebsite($lang)
