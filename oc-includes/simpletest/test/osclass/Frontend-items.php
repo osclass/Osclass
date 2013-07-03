@@ -176,6 +176,20 @@ class Frontend_items extends FrontendTest {
         unset($uSettings);
     }
 
+    /**
+     * Force spam detection via akismet.
+     *
+     */
+    function testAkismet_postItem()
+    {
+        // add akismet keys
+        
+        // add spam item
+
+        // check spam detection
+
+    }
+
     /*
      * Try to edit a item with bad id_item
      */
