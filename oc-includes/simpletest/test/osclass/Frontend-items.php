@@ -214,13 +214,14 @@ class Frontend_items extends FrontendTest {
                                 $item['contactEmail']);
 
         $item_id = $this->_lastItemId();
+
         // check spam detection
         $oItem = Item::newInstance()->findByPrimaryKey($item_id);
         $this->assertTrue($oItem['b_spam']=='1', 'Akismet, detect as spam item.');
 
         // reset akismet key
-//        Preference::newInstance()->update(array('s_value' => '') ,array('s_name'  => 'akismetKey'));
-//        osc_reset_preferences();
+        Preference::newInstance()->update(array('s_value' => '') ,array('s_name'  => 'akismetKey'));
+        osc_reset_preferences();
     }
 
 //    /*
