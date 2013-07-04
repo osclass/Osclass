@@ -42,8 +42,9 @@ class Frontend_csrf extends FrontendTest {
         $this->selenium->waitForPageToLoad("30000");
 
         $this->assertTrue($this->selenium->isTextPresent("Invalid CSRF token"), 'Testing, CSRFName, CSRFToken incorrect.');
+        sleep(1);
         // check no redirection
-        $this->assertTrue($this->selenium->isTextPresent("Access to your account"), 'Testing, CSRF redirect to $_SERVER[\'HTTP_REFERER\'].');
+        $this->assertTrue($this->selenium->isTextPresent("Contact"), 'Testing, CSRF redirect to $_SERVER[\'HTTP_REFERER\'].');
 
     }
 }
