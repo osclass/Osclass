@@ -41,7 +41,7 @@
                 </div>
             </div>
             <div class="control-group">
-                <label class="control-label" for="email"><?php _e('Password', 'bender'); ?></label>
+                <label class="control-label" for="password"><?php _e('Password', 'bender'); ?></label>
                 <div class="controls">
                     <?php UserForm::password_login_text(); ?>
                 </div>
