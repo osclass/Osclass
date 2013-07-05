@@ -217,7 +217,7 @@ class OCadmin_items extends OCadminTest {
                 $this->assertTrue("ok");
                 $this->assertTrue(true);
             }else {
-                $this->assertTrue(false);
+                $this->assertTrue(false, 'Logout!');
             }
         }
     }
@@ -441,7 +441,7 @@ class OCadmin_items extends OCadminTest {
         $this->selenium->type("title"           , "I like it");
         $this->selenium->type("body"            , "Can you provide more info please :)");
 
-        $this->selenium->click("//div[@id='comments']/form/fieldset/div/span/button"); // OJO
+        $this->selenium->click("//form[@id='comment_form']/fieldset/div[@class='actions']/button"); // OJO
         $this->selenium->waitForPageToLoad("30000");
 
         // test oc-admin
@@ -623,8 +623,8 @@ class OCadmin_items extends OCadminTest {
 
     private function post_item_website(){
         $this->selenium->open( osc_item_post_url() );
-        $this->selenium->select("select_1", "label=regexp:\\s*For sale");
-        $this->selenium->select("select_2", "label=regexp:\\s*Animals");
+
+        $this->selenium->select("catId", "label=regexp:\\s*Animals");
         $this->selenium->type("id=title[en_US]", "foo title");
         $this->selenium->type("id=description[en_US]","description foo title");
         $this->selenium->select("countryId", "label=Spain");
@@ -857,7 +857,7 @@ class OCadmin_items extends OCadminTest {
         $this->loginWebsite();
         // entrar en la pag de post_item
         $this->selenium->open( osc_item_post_url() );
-        $exist_input_photo = $this->selenium->isElementPresent("xpath=//input[@name='photos[]']") ;
+        $exist_input_photo = $this->selenium->isElementPresent("xpath=//h2[contains(.,'Photos')]") ;
         if($bool == 1) {
             $this->assertTrue($exist_input_photo, "Not exist input photos[]. ERROR");
         } else if ($bool == 0){
@@ -873,6 +873,7 @@ class OCadmin_items extends OCadminTest {
             $this->assertTrue(($num == $num_photo_input), "More or less input photos[]! ERROR") ;
         }
         $user = User::newInstance()->findByEmail($this->_email);
+        // @todo use UserActions::*
         User::newInstance()->deleteUser($user['pk_i_id']);
     }
 
