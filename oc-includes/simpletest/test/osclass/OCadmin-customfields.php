@@ -189,76 +189,69 @@ class OCadmin_customfields extends OCadminTest
 //        search via custom fields
         $this->loginWith() ;
 //        TEXT  --
-        $this->selenium->open( osc_search_url() );
-        $this->selenium->click("xpath=//span/button[text()='Apply']");
+        $this->selenium->open( osc_search_url(array('sCategory' => array('1'))) );
         $this->selenium->waitForPageToLoad("30000");
 
         $this->selenium->type("id=meta_my_extra_field", "ocadmincustom2");
-        $this->selenium->click("xpath=//span/button[text()='Apply']");
+        $this->selenium->click("xpath=//button[text()='Apply']");
         $this->selenium->waitForPageToLoad("30000");
-        $count = $this->selenium->getXpathCount('//table/tbody/tr/td[2]');
+        $count = $this->selenium->getXpathCount("//li[contains(@class,'listing-card')]");
         $this->assertTrue($count == 1 , "Search by custom field - TEXT.");
 //        TEXTAREA --
-        $this->selenium->open( osc_search_url() );
-        $this->selenium->click("xpath=//span/button[text()='Apply']");
+        $this->selenium->open( osc_search_url(array('sCategory' => array('1'))) );
         $this->selenium->waitForPageToLoad("30000");
 
         $this->selenium->type("id=meta_my_extra_field_2", "ocadmincustom3");
-        $this->selenium->click("xpath=//span/button[text()='Apply']");
+        $this->selenium->click("xpath=//button[text()='Apply']");
         $this->selenium->waitForPageToLoad("30000");
-        $count = $this->selenium->getXpathCount('//table/tbody/tr/td[2]');
+        $count = $this->selenium->getXpathCount("//li[contains(@class,'listing-card')]");
         $this->assertTrue($count == 1 , "Search by custom field - TEXTAREA.");
 //        URL --
-        $this->selenium->open( osc_search_url() );
-        $this->selenium->click("xpath=//span/button[text()='Apply']");
+        $this->selenium->open( osc_search_url(array('sCategory' => array('1'))) );
         $this->selenium->waitForPageToLoad("30000");
 
         $this->selenium->type("id=meta_my_extra_field_6", "ocadmincustom6");
-        $this->selenium->click("xpath=//span/button[text()='Apply']");
+        $this->selenium->click("xpath=//button[text()='Apply']");
         $this->selenium->waitForPageToLoad("30000");
-        $count = $this->selenium->getXpathCount('//table/tbody/tr/td[2]');
+        $count = $this->selenium->getXpathCount("//li[contains(@class,'listing-card')]");
         $this->assertTrue($count == 1 , "Search by custom field - URL.");
 //        RADIO BUTTON --
-        $this->selenium->open( osc_search_url() );
-        $this->selenium->click("xpath=//span/button[text()='Apply']");
+        $this->selenium->open( osc_search_url(array('sCategory' => array('1'))) );
         $this->selenium->waitForPageToLoad("30000");
 
         $this->selenium->select("id=meta_my_extra_field_4", "four");
-        $this->selenium->click("xpath=//span/button[text()='Apply']");
+        $this->selenium->click("xpath=//button[text()='Apply']");
         $this->selenium->waitForPageToLoad("30000");
-        $count = $this->selenium->getXpathCount('//table/tbody/tr/td[2]');
+        $count = $this->selenium->getXpathCount("//li[contains(@class,'listing-card')]");
         $this->assertTrue($count == 1 , "Search by custom field - RADIO BUTTON.");
 //        CHECKBOX
-        $this->selenium->open( osc_search_url() );
-        $this->selenium->click("xpath=//span/button[text()='Apply']");
+        $this->selenium->open( osc_search_url(array('sCategory' => array('1'))) );
         $this->selenium->waitForPageToLoad("30000");
 
         $this->selenium->click("id=meta_my_extra_field_5");
-        $this->selenium->click("xpath=//span/button[text()='Apply']");
+        $this->selenium->click("xpath=//button[text()='Apply']");
         $this->selenium->waitForPageToLoad("30000");
-        $count = $this->selenium->getXpathCount('//table/tbody/tr/td[2]');
+        $count = $this->selenium->getXpathCount("//li[contains(@class,'listing-card')]");
         $this->assertTrue($count == 1 , "Search by custom field - CHECKBOX BUTTON.");
 //        DATE
-        $this->selenium->open( osc_search_url() );
-        $this->selenium->click("xpath=//span/button[text()='Apply']");
+        $this->selenium->open( osc_search_url(array('sCategory' => array('1'))) );
         $this->selenium->waitForPageToLoad("30000");
         $d1  = '1367359200';
         $this->selenium->runScript("javascript{ this.browserbot.getCurrentWindow().document.getElementById('meta_my_extra_field_7').value = '".$d1."'; }");
-        $this->selenium->click("xpath=//span/button[text()='Apply']");
+        $this->selenium->click("xpath=//button[text()='Apply']");
         $this->selenium->waitForPageToLoad("30000");
-        $count = $this->selenium->getXpathCount('//table/tbody/tr/td[2]');
+        $count = $this->selenium->getXpathCount("//li[contains(@class,'listing-card')]");
         $this->assertTrue($count == 1 , "Search by custom field - DATE.");
 //        DATEINTERVAL
-        $this->selenium->open( osc_search_url() );
-        $this->selenium->click("xpath=//span/button[text()='Apply']");
+        $this->selenium->open( osc_search_url(array('sCategory' => array('1'))) );
         $this->selenium->waitForPageToLoad("30000");
         $d1  = '1367704800';  // May 5, 2013
         $d2  = '1369173599';  // May 21, 2013
         $this->selenium->runScript("javascript{ this.browserbot.getCurrentWindow().document.getElementById('meta_my_extra_field_8_from').value = '".$d1."'; }");
         $this->selenium->runScript("javascript{ this.browserbot.getCurrentWindow().document.getElementById('meta_my_extra_field_8_to').value = '".$d2."'; }");
-        $this->selenium->click("xpath=//span/button[text()='Apply']");
+        $this->selenium->click("xpath=//button[text()='Apply']");
         $this->selenium->waitForPageToLoad("30000");
-        $count = $this->selenium->getXpathCount('//table/tbody/tr/td[2]');
+        $count = $this->selenium->getXpathCount("//li[contains(@class,'listing-card')]");
         $this->assertTrue($count == 1 , "Search by custom field - DATE INTERVAL.");
     }
 
@@ -301,8 +294,8 @@ class OCadmin_customfields extends OCadminTest
         $this->selenium->waitForPageToLoad("10000");
         $this->selenium->click("link=Publish your ad for free");
         $this->selenium->waitForPageToLoad("10000");
-        $this->selenium->select("select_1", "label=regexp:\\s*For sale");
-        $this->selenium->select("select_2", "label=regexp:\\s*Animals");
+
+        $this->selenium->select("catId", "label=regexp:\\s*Animals");
         sleep(2);
         $this->selenium->type("id=title[en_US]", "foo title");
         $this->selenium->type("id=description[en_US]","description foo title");
