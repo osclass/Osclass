@@ -71,7 +71,10 @@
 
 
     <?php if( osc_images_enabled_at_items() ) { ?>
-        <?php if( osc_count_item_resources() > 0 ) { ?>
+        <?php
+        if( osc_count_item_resources() > 0 ) {
+            $i = 0;
+        ?>
         <div class="item-photos">
             <a href="<?php echo osc_resource_url(); ?>" class="main-photo" rel="image_group" title="<?php _e('Image', 'bender'); ?> <?php echo $i+1;?> / <?php echo osc_count_item_resources();?>">
                 <img src="<?php echo osc_resource_url(); ?>" alt="<?php echo osc_item_title(); ?>" title="<?php echo osc_item_title(); ?>" />
@@ -130,7 +133,7 @@
         <?php if( osc_count_items() > 0 ) { ?>
         <div class="similar_ads">
             <h2><?php _e('Related listings', 'bender'); ?></h2>
-            <ul class="listing-card-list <?php echo $class. (osc_item_is_premium()?" premium":"") ; ?>" id="related-card-list">
+            <ul class="listing-card-list <?php echo (osc_item_is_premium()?" premium":"") ; ?>" id="related-card-list">
                 <?php
                 $i = 0;
                 while(osc_has_items()) { $i++; ?>

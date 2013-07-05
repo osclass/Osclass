@@ -242,20 +242,9 @@ FUNCTIONS
             $mSearch->addItemConditions(sprintf("%st_item.pk_i_id < %s ", DB_TABLE_PREFIX, osc_item_id()));
             $mSearch->limit('0', '3');
 
-            $aItems = $mSearch->doSearch();
-            if( count($aItems) == 3 ) {
-                View::newInstance()->_exportVariableToView('items', $aItems);
-                return $iTotalItems;
-            }
-            unset($mSearch);
-
-            $mSearch = new Search();
-            $mSearch->addCategory(osc_item_category_id());
-            $mSearch->addItemConditions(sprintf("%st_item.pk_i_id < %s ", DB_TABLE_PREFIX, osc_item_id()));
-            $mSearch->limit('0', '3');
-
-            $aItems = $mSearch->doSearch();
-            if( count($aItems) == 3 ) {
+            $aItems      = $mSearch->doSearch();
+            $iTotalItems = count($aItems);
+            if( $iTotalItems == 3 ) {
                 View::newInstance()->_exportVariableToView('items', $aItems);
                 return $iTotalItems;
             }
@@ -267,7 +256,8 @@ FUNCTIONS
             $mSearch->limit('0', '3');
 
             $aItems = $mSearch->doSearch();
-            if( count($aItems) > 0 ) {
+            $iTotalItems = count($aItems);
+            if( $iTotalItems > 0 ) {
                 View::newInstance()->_exportVariableToView('items', $aItems);
                 return $iTotalItems;
             }
