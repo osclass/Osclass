@@ -68,7 +68,7 @@ abstract class FrontendTest extends MyWebTestCase {
      * @param string $mail
      * @param string $pass
      */
-    function loginWith($mail = NULL, $pass = NULL )
+    function loginWith($mail = NULL, $pass = NULL, $myaccount = true)
     {
         if( is_null($mail) ) $mail = $this->_email;
         if( is_null($pass) ) $pass = $this->_password;
@@ -81,8 +81,10 @@ abstract class FrontendTest extends MyWebTestCase {
         $this->selenium->click("//button[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->selenium->click("link=My account");
-        $this->selenium->waitForPageToLoad("10000");
+        if($myaccount) {
+            $this->selenium->click("link=My account");
+            $this->selenium->waitForPageToLoad("10000");
+        }
     }
 
     /**

@@ -103,7 +103,7 @@ class AllTests extends TestSuite {
         }
 
         // FRONTEND WITH PERMALINKS
-        if(isset($tests['frontend'])) {
+        /*if(isset($tests['frontend'])) {
             require_once(dirname(__FILE__).'/../../../../oc-load.php');
 
             // activate permalinks
@@ -135,7 +135,7 @@ class AllTests extends TestSuite {
             }
             // deactivate permalinks
             $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/Frontend-offPermalinks.php');
-        }
+        }*/
 
         // ADMIN
         if(isset($tests['admin'])) {
