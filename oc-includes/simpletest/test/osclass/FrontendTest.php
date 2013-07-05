@@ -75,8 +75,8 @@ abstract class FrontendTest extends MyWebTestCase {
 
         $this->selenium->open( osc_base_url() );
         $this->selenium->click("login_open");
-        $this->selenium->type("email", $mail);
-        $this->selenium->type("password", $pass);
+        $this->selenium->type("id=email", $mail);
+        $this->selenium->type("id=password", $pass);
 
         $this->selenium->click("//button[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");
