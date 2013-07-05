@@ -27,19 +27,15 @@ class Frontend_login extends FrontendTest {
         $this->logout();
 
         $this->loginWith(NULL, 'foobar', false);
-        $this->selenium->waitForPageToLoad("10000");
         $this->assertTrue( $this->selenium->isTextPresent("The password is incorrect"), 'Testing, Login user with incorrect password' );
 
         $this->loginWith('some@mail.com', NULL, false);
-        $this->selenium->waitForPageToLoad("10000");
         $this->assertTrue( $this->selenium->isTextPresent("The user doesn't exist"), 'Testing, Login user with incorrect username' );
 
         $this->loginWith();
-        $this->selenium->waitForPageToLoad("10000");
         $this->assertTrue( $this->selenium->isTextPresent("My account"), 'Testing, Login user.' );
 
         $this->logout();
-        $this->selenium->waitForPageToLoad("10000");
         $this->assertTrue( $this->selenium->isTextPresent("Login"), "Do Logout frontend." );
 
        // recover password
@@ -54,7 +50,7 @@ class Frontend_login extends FrontendTest {
 
         $this->assertTrue($this->selenium->isTextPresent("We have sent you an email with the instructions to reset your password"),"Can't recover password. ERROR");
 
-        //$this->removeUserByMail($this->_email);
+        $this->removeUserByMail($this->_email);
 
         $uSettings->set_enabled_user_validation(1);
     }
