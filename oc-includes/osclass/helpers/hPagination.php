@@ -130,7 +130,7 @@
         <form method="get" action="<?php echo $urlActual; ?>" style="display:inline;">
             <?php foreach( Params::getParamsAsArray('get') as $key => $value ) { ?>
             <?php if($key!='iPage') { ?>
-            <input type="hidden" name="<?php echo $key; ?>" value="<?php echo osc_esc_html($value); ?>" />
+            <input type="hidden" name="<?php echo osc_esc_html($key); ?>" value="<?php echo osc_esc_html($value); ?>" />
             <?php } } ?>
             <ul>
                 <li>
