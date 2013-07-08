@@ -327,6 +327,16 @@
             return true;
         }
 
+        static public function input_expiration($type = 'add' ) {
+            $value = '';
+            if($type=='edit') {
+                $value = '-1';  // default no change expiration date
+            }
+?>
+        <input type="text" id="dt_expiration" name="dt_expiration" value="<?php echo $value;?>"/>
+        <?php
+        }
+
 
         static public function expiration_select($options = null)
         {
