@@ -161,10 +161,74 @@ class OCadmin_items extends OCadminTest {
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue($this->selenium->isTextPresent("The listing has been deleted"), "Can't delete item. ERROR");
-
-
     }
 
+    function testExpirationByItem()
+    {
+        $this->loginWith();
+        // insert item without expiration date
+        $this->insertItem(false);
+        $id = $this->_lastItemId();
+        $item = Item::newInstance()->findByPrimaryKey($id);
+        $correctExpiration = strpos($item['dt_expiration'], '9999-12-31') ;
+        if($correctExpiration!==FALSE){
+            $this->assertTrue(true, 'Expiration date match');
+        } else {
+            $this->assertTrue(false, 'Expiration date match');
+        }
+
+        $aux_days = 2;
+        $this->insertItem(false, $aux_days);
+        $id = $this->_lastItemId();
+        $item = Item::newInstance()->findByPrimaryKey($id);
+        // expiration date = now + X days
+        $expDate = date('Y-m-d', strtotime(date('Y-m-d'). ' + '.$aux_days.' days'));
+
+        $correctExpiration = strpos($item['dt_expiration'], $expDate) ;
+        if($correctExpiration!==FALSE){
+            $this->assertTrue(true, 'Expiration date match');
+        } else {
+            $this->assertTrue(false, 'Expiration date match');
+        }
+
+        // edit item with expiration date +5 days
+        $aux_days = 5;
+        $this->editExpirationDate($aux_days);
+        $item = Item::newInstance()->findByPrimaryKey($id);
+        $expDate = date('Y-m-d', strtotime(date('Y-m-d'). ' + '.$aux_days.' days'));
+        $correctExpiration = strpos($item['dt_expiration'], $expDate) ;
+        if($correctExpiration!==FALSE){
+            $this->assertTrue(true, 'Expiration date match');
+        } else {
+            $this->assertTrue(false, 'Expiration date match');
+        }
+
+        // edit expiration date for fisrt item, with NO expiration date (0days)
+        $aux_days = 0;
+        $this->editExpirationDate($aux_days);
+        $item = Item::newInstance()->findByPrimaryKey($id);
+        $correctExpiration = strpos($item['dt_expiration'], '9999-12-31') ;
+        if($correctExpiration!==FALSE){
+            $this->assertTrue(true, 'Expiration date match');
+        } else {
+            $this->assertTrue(false, 'Expiration date match');
+        }
+
+        // remove all listings
+        $this->loginWith() ;
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("//a[@id='items_manage']");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->selenium->mouseOver("xpath=//table/tbody/tr/td[contains(.,'title item')]");
+        $this->selenium->click("//table/tbody/tr/td[contains(.,'title item')]/div/ul/li/a[text()='Delete']");
+        sleep(1);
+        $this->selenium->click("//input[@id='item-delete-submit']");
+
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->assertTrue($this->selenium->isTextPresent("The listing has been deleted"), "Can't delete item. ERROR");
+    }
 
      /*      PRIVATE FUNCTIONS       */
     private function addUserForTesting()
@@ -233,7 +297,7 @@ class OCadmin_items extends OCadminTest {
     }
 
     // todo test minim lenght title, description , contact email
-    private function insertItem($bPhotos = FALSE )
+    private function insertItem($bPhotos = FALSE, $expiration_days = null )
     {
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("xpath=//a[@id='items']");
@@ -272,6 +336,11 @@ class OCadmin_items extends OCadminTest {
             sleep(0.5);
             $this->selenium->type("//div[@id='p-0']/input", LIB_PATH."simpletest/test/osclass/img_test2.gif");
         }
+
+        if( is_numeric($expiration_days) ) {
+            $this->selenium->type('dt_expiration', $expiration_days);
+        }
+
 
         $this->selenium->click("//input[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");
@@ -362,6 +431,29 @@ class OCadmin_items extends OCadminTest {
         $this->assertTrue($this->selenium->isTextPresent("Changes have been applied"), "Can't mark as premium item. ERROR");
     }
 
+    /**
+     * Edit expiration date of last listing added
+     */
+    private function editExpirationDate($days = 0)
+    {
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("//a[@id='items_manage']");
+        $this->selenium->waitForPageToLoad("10000");
+
+        sleep(2); // time enough to load table data
+
+        $this->selenium->click("//table/tbody/tr/td[contains(.,'title item')]/div/ul/li/a[text()='Edit']");
+        $this->selenium->waitForPageToLoad("10000");
+
+        // update expiration date
+        $this->selenium->click('update_expiration');
+        $this->selenium->type('dt_expiration', $days);
+sleep(10);
+        $this->selenium->click("//input[@type='submit']");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->assertTrue($this->selenium->isTextPresent("Changes saved correctly"), "Can't edit item. ERROR");
+    }
 
     private function editItem()
     {

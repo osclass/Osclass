@@ -185,13 +185,5 @@ abstract class FrontendTest extends MyWebTestCase {
             $this->assertTrue(count($aAuxAlert) == 0, 'Search - create alert');
         }
     }
-
-    function _lastItemId()
-    {
-        // get last id from t_item.
-        $item   = Item::newInstance()->dao->query('select pk_i_id from '.DB_TABLE_PREFIX.'t_item order by pk_i_id DESC limit 0,1');
-        $aItem  = $item->result();
-        return $aItem[0]['pk_i_id'];
-    }
 }
 ?>
