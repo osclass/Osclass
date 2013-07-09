@@ -18,7 +18,7 @@ module.exports = function(grunt) {
                     yuicompress: true
                 },
                 files: {
-                    'oc-admin/themes/modern/css/test2.css': 'oc-admin/themes/modern/less/main.less'
+                    'oc-admin/themes/modern/css/main.css': 'oc-admin/themes/modern/less/main.less'
                 }
             }
         }
