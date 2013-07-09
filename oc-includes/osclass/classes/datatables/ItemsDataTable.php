@@ -34,6 +34,10 @@
         private $mSearch;
         private $withFilters = false;
 
+        public function __construct()
+        {
+            osc_add_filter('datatable_listing_class', array(&$this, 'row_class'));
+        }
 
         public function table($params)
         {
@@ -131,13 +135,13 @@
             Params::setParam('iPage', $page);
             $url_base = preg_replace('|&direction=([^&]*)|', '', preg_replace('|&sort=([^&]*)|', '', osc_base_url().Rewrite::newInstance()->get_raw_request_uri()));
 
+            $this->addColumn('status-border', '');
+            $this->addColumn('status', __('Status'));
             $this->addColumn('bulkactions', '<input id="check_all" type="checkbox" />');
             $this->addColumn('title', __('Title'));
             $this->addColumn('user', __('User'));
             $this->addColumn('category', __('Category'));
-            $this->addColumn('country', __('Country'));
-            $this->addColumn('region', __('Region'));
-            $this->addColumn('city', __('City'));
+            $this->addColumn('location', __('Location'));
             $this->addColumn('date', '<a href="'.$url_base.$arg_date.'">'.__('Date').'</a>');
             $this->addColumn('expiration', '<a href="'.$url_base.$arg_expiration.'">'.__('Expiration date').'</a>');
 
@@ -228,7 +232,7 @@
                     //icon open add new window
                     $title .= '<span class="icon-new-window"></span>';
 
-                    // show more options
+                    // Options of each row
                     $options_more = array();
                     if($aRow['b_active']) {
                         $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status&amp;id=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url . '&amp;value=INACTIVE">' . __('Deactivate') .'</a>';
@@ -286,12 +290,13 @@
 
                     // fill a row
                     $row['bulkactions'] = '<input type="checkbox" name="id[]" value="' . $aRow['pk_i_id'] . '" active="' . $aRow['b_active'] . '" blocked="' . $aRow['b_enabled'] . '"/>';
+                    $status = $this->get_row_status();
+                    $row['status-border'] = '';
+                    $row['status'] = $status['text'];
                     $row['title'] = '<a href="' . osc_item_url().'" target="_blank">' . $title. '</a>'. $actions;
                     $row['user'] = $aRow['s_user_name'];
                     $row['category'] = $aRow['s_category_name'];
-                    $row['country'] = $aRow['s_country'];
-                    $row['region'] = $aRow['s_region'];
-                    $row['city'] = $aRow['s_city'];
+                    $row['location'] = $this->get_row_location();
                     $row['date'] = osc_format_date($aRow['dt_pub_date']);
                     $row['expiration'] = osc_format_date($aRow['dt_expiration']);
 
@@ -506,6 +511,89 @@
             return $this->rawRows;
         }
 
+        public function row_class($class, $rawRow, $row)
+        {
+            View::newInstance()->_exportVariableToView('item', $rawRow);
+            $status = $this->get_row_status();
+            $class[] = $status['class'];
+            View::newInstance()->_erase('item');
+            return $class;
+        }
+
+        /**
+         * Get the status of the row. There are five status:
+         *     - spam
+         *     - blocked
+         *     - inactive
+         *     - premium
+         *     - active
+         *
+         * @since 3.2
+         *
+         * @return array Array with the class and text of the status of the listing in this row. Example:
+         *     array(
+         *         'class' => '',
+         *         'text'  => ''
+         *     )
+         */
+        private function get_row_status()
+        {
+            if( osc_item_is_spam() ) {
+                return array(
+                    'class' => 'status-spam',
+                    'text'  => __('Spam')
+                );
+            }
+
+            if( !osc_item_is_enabled() ) {
+                return array(
+                    'class' => 'status-blocked',
+                    'text'  => __('Blocked')
+                );
+            }
+
+            if( !osc_item_is_active() ) {
+                return array(
+                    'class' => 'status-inactive',
+                    'text'  => __('Inactive')
+                );
+            }
+
+            if( osc_item_is_premium() ) {
+                return array(
+                    'class' => 'status-premium',
+                    'text'  => __('Premium')
+                );
+            }
+
+            return array(
+                'class' => 'status-active',
+                'text'  => __('Active')
+            );
+        }
+
+        /**
+         * Get the location separated by commas of a row
+         *
+         * @since 3.2
+         *
+         * @return string Location separated by commas
+         */
+        private function get_row_location()
+        {
+            $location = array();
+            if( osc_item_city() !== '' ) {
+                $location[] = osc_item_city();
+            }
+            if( osc_item_region() !== '' ) {
+                $location[] = osc_item_region();
+            }
+            if( osc_item_country() !== '' ) {
+                $location[] = osc_item_country();
+            }
+
+            return implode(', ', $location);
+        }
     }
 
 ?>
