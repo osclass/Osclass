@@ -191,7 +191,6 @@
                 $categoryID = $item['fk_i_category_id'];
             }
 
-
             $tmp_categories_tree = Category::newInstance()->toRootTree($categoryID);
             $categories_tree = array();
             foreach($tmp_categories_tree as $t) {
@@ -228,7 +227,14 @@
                 osc.item_post.category_tree_id    = <?php echo json_encode($categories_tree); ?>;
 
                 $(document).ready(function(){
+                    <?php if($categoryID==array()) { ?>
                     draw_select(1,0);
+                    <?php } else { ?>
+                        draw_select(1,0);
+                        <?php for($i=0; $i<count($categories_tree)-1; $i++) { ?>
+                        draw_select(<?php echo ($i+2); ?> ,<?php echo $categories_tree[$i]; ?>);
+                        <?php } ?>
+                    <?php } ?>
                     $('body').on("change", '[name^="select_"]', function() {
                         var depth = parseInt($(this).attr("depth"));
                         for(var d=(depth+1);d<=4;d++) {
@@ -238,11 +244,11 @@
                         $("#catId").attr("value", $(this).val());
                         $("#catId").change();
                         if(catPriceEnabled[$('#catId').val()] == 1) {
-							$('.price').show();
-						} else {
-							$('.price').hide();
-							$('#price').val('') ;
-						}
+                            $('.price').show();
+                        } else {
+                            $('.price').hide();
+                            $('#price').val('') ;
+                        }
                         if((depth==1 && $(this).val()!=0) || (depth>1 && $(this).val()!=$("#select_"+(depth-1)).val())) {
                             draw_select(depth+1, $(this).val());
                         }
