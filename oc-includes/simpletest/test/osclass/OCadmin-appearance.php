@@ -61,14 +61,14 @@ class OCadmin_appearance extends OCadminTest {
      * Login oc-admin
      * Add/Edit/Delete header & footer widgets
      */
-
-    function testWidgets()
-    {
-        $this->loginWith();
-        $this->widgetsHeader();
-        $this->widgetsFooter();
-        $this->editWidgetsHeader();
-    }
+//    BENDER THEME HAS NOT WIDGETS
+//    function testWidgets()
+//    {
+//        $this->loginWith();
+//        $this->widgetsHeader();
+//        $this->widgetsFooter();
+//        $this->editWidgetsHeader();
+//    }
 
     /*
      * Test Market appearance
@@ -84,11 +84,11 @@ class OCadmin_appearance extends OCadminTest {
         $this->selenium->waitForPageToLoad("10000");
         sleep(5);
         // there is more than one themes on market ?
-        $num_market_theme = $this->selenium->getXpathCount("//div[@id='market_themes']/div[@class='theme']");        
+        $num_market_theme = $this->selenium->getXpathCount("//div[@id='market_themes']/div[@class='theme']");
         if($num_market_theme > 0) {
             // get number of themes already downloaded
             $num = $this->selenium->getXpathCount("//a[contains(.,'Already downloaded')]");
-            
+
             $this->assertTrue(true, 'There are themes on market');
             $pos  = 1;
             while( $pos < $num_market_theme) {
@@ -99,7 +99,7 @@ class OCadmin_appearance extends OCadminTest {
                     $pos++;
                 }
             }
-            
+
             // valid position
             if($pos<=$num_market_theme) {
                 // get theme info
@@ -116,14 +116,14 @@ class OCadmin_appearance extends OCadminTest {
                 $new_num = $this->selenium->getXpathCount("//a[contains(.,'Already downloaded')]");
                 echo $num ."  now " . $new_num ."\n";
                 $this->assertTrue( ($num+1 == $new_num) , "Theme downloaded successfully and marked as downloaded theme");
-                
+
                 // TITLE and DESCRIPTION shows in Market are from t_item table and not from the index.php file
                 // Ther is NO way to check them correctly since they could be different, for example
                 // OSClass India theme 1.0 by OSClass team - India theme 1.0.2 by India Theme (which is the same)
                 // check appears at Manage themes
                 //$this->selenium->click("//a[@id='appearance_manage']");
                 //$this->selenium->waitForPageToLoad("10000");
-                
+
                 //$this->assertTrue($this->selenium->isTextPresent($description), "Theme present at Manage themes.");
             }
         } else {
@@ -139,7 +139,7 @@ class OCadmin_appearance extends OCadminTest {
      * add/delete header widget
      */
 
-    private function widgetsHeader() 
+    private function widgetsHeader()
     {
         $this->selenium->open(osc_admin_base_url(true));
         $this->selenium->click("link=Manage widgets");
@@ -217,7 +217,7 @@ class OCadmin_appearance extends OCadminTest {
      * add/edit/delete header widget
      */
 
-    private function editWidgetsHeader() 
+    private function editWidgetsHeader()
     {
         $this->selenium->open(osc_admin_base_url(true));
         $this->selenium->click("link=Manage widgets");
