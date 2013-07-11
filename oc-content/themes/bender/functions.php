@@ -48,6 +48,8 @@ FUNCTIONS
             osc_set_preference('footer_link', '1', 'bender_theme');
             osc_set_preference('donation', '0', 'bender_theme');
             osc_set_preference('default_logo', '1', 'bender_theme');
+            osc_set_preference('defaultShowAs@all', 'list', 'bender_theme');
+            osc_set_preference('defaultShowAs@search', 'list');
             osc_reset_preferences();
         }
     }
@@ -135,6 +137,23 @@ FUNCTIONS
                 $premiumSlug = '-premium';
             }
             require WebThemes::newInstance()->getCurrentThemePath().'loop-single'.$premiumSlug.'.php';
+        }
+    }
+    if( !function_exists('bender_show_as') ){
+        function bender_show_as(){
+
+            $p_sShowAs    = Params::getParam('sShowAs');
+            $aValidShowAsValues = array('list', 'gallery');
+            if (!in_array($p_sShowAs, $aValidShowAsValues)) {
+                $p_sShowAs = bender_default_show_as();
+            }
+
+            return $p_sShowAs;
+        }
+    }
+    if( !function_exists('bender_default_show_as') ){
+        function bender_default_show_as(){
+            return getPreference('defaultShowAs@all','bender_theme');
         }
     }
     if( !function_exists('bender_draw_categories_list') ) {
@@ -405,9 +424,12 @@ FUNCTIONS
             case('settings'):
                 $footerLink  = Params::getParam('footer_link');
                 $defaultLogo = Params::getParam('default_logo');
+
                 osc_set_preference('keyword_placeholder', Params::getParam('keyword_placeholder'), 'bender_theme');
                 osc_set_preference('footer_link', ($footerLink ? '1' : '0'), 'bender_theme');
                 osc_set_preference('default_logo', ($defaultLogo ? '1' : '0'), 'bender_theme');
+                osc_set_preference('defaultShowAs@all', Params::getParam('defaultShowAs@all'), 'bender_theme');
+                osc_set_preference('defaultShowAs@search', Params::getParam('defaultShowAs@all'));
 
                 osc_add_flash_ok_message(__('Theme settings updated correctly', 'bender'), 'admin');
                 osc_redirect_to(osc_admin_render_theme_url('oc-content/themes/bender/admin/settings.php'));

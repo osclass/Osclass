@@ -35,6 +35,15 @@
         public function __construct() {}
 
         function session_start() {
+            $currentCookieParams = session_get_cookie_params();
+            session_set_cookie_params(
+                $currentCookieParams["lifetime"],
+                $currentCookieParams["path"],
+                $currentCookieParams["domain"],
+                $currentCookieParams["secure"],
+                true
+            );
+
             session_name('osclass');
             session_start();
 
