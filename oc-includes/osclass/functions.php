@@ -166,7 +166,7 @@ function search_title() {
 
     if($b_category && is_array($category) && count($category) > 0) {
         $cat = Category::newInstance()->findByPrimaryKey($category[0]);
-        if( $cat ) {
+        if(isset($cat['s_name'])) {
             $result .= strtolower($cat['s_name']) . ' ';
         }
     }
