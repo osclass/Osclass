@@ -4,8 +4,8 @@ require_once dirname(__FILE__).'/../../../../oc-load.php';
 //require_once('FrontendTest.php');
 
 class OCadmin_users extends OCadminTest {
-    
-    
+
+
     /*
      * Create a new user
      */
@@ -16,7 +16,7 @@ class OCadmin_users extends OCadminTest {
         $this->deleteUser();
         flush();
     }
-    
+
     /*
      * Edit an user
      */
@@ -41,155 +41,155 @@ class OCadmin_users extends OCadminTest {
         flush();
     }
 
-    
-    /*
-     * Test settings (users enabled, validation,...)
-     */
-    public function testSettings()
-    {
-        $this->loginWith() ;
-        $this->settings();
-        flush();
-    }
+
+//    /*
+//     * Test settings (users enabled, validation,...)
+//     */
+//    public function testSettings()
+//    {
+//        $this->loginWith() ;
+//        $this->settings();
+//        flush();
+//    }
 
     /*
      * Test bulk actions
      */
-    public function testBulkActions()
-    {
-        $this->loginWith() ;
-
-        $pref = array();
-        $pref['enabled_users'] = Preference::newInstance()->findValueByName('enabled_users') ;
-        if($pref['enabled_users'] == 1){ $pref['enabled_users'] = 'on';} else { $pref['enabled_users'] = 'off'; }
-        $pref['enabled_user_validation'] = Preference::newInstance()->findValueByName('enabled_user_validation') ;
-        if($pref['enabled_user_validation'] == 1){ $pref['enabled_user_validation'] = 'on';} else { $pref['enabled_user_validation'] = 'off'; }
-
-        $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("//a[@id='users_settings']");
-        $this->selenium->waitForPageToLoad("10000");
-
-        // PREPARE SETTINGS
-        if($pref['enabled_users']=='off' || $pref['enabled_user_validation']=='off') {
-            if($pref['enabled_users']=='off') {
-                $this->selenium->click("enabled_users");
-            }
-            if($pref['enabled_user_validation']=='off') {
-                $this->selenium->click("enabled_user_validation");
-            }
-
-            $this->selenium->click("//input[@type='submit']");
-            $this->selenium->waitForPageToLoad("10000");
-
-            $this->assertTrue( $this->selenium->isTextPresent("Users' settings have been updated") , "Can't update user settings. ERROR");
-
-            if( $pref['enabled_users'] == 'on' ){
-                $this->assertEqual( $this->selenium->getValue("//input[@name='enabled_users']"), 'off' ) ;
-            } else {
-                $this->assertEqual( $this->selenium->getValue("//input[@name='enabled_users']"), 'on' ) ;
-            }
-            if( $pref['enabled_user_validation'] == 'on' ){
-                $this->assertEqual( $this->selenium->getValue("//input[@name='enabled_user_validation']"), 'off' ) ;
-            } else {
-                $this->assertEqual( $this->selenium->getValue("//input[@name='enabled_user_validation']"), 'on' ) ;
-            }
-            
-        }
-        
-        
-        $this->insertUser();
-        
-        $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("//a[@id='users_manage']");
-        $this->selenium->waitForPageToLoad("10000");
-        
-        $this->selenium->click("//input[@id='check_all']");
-        $this->selenium->select("action", "label=Deactivate");
-        $this->selenium->click("//input[@id='bulk_apply']");
-        $this->selenium->click("//a[@id='bulk-actions-submit']");
-        
-        $this->selenium->waitForPageToLoad("10000");        
-        $this->assertTrue( $this->selenium->isTextPresent("One user has been deactivated") , "Deactivate user bulk action");
-
-        $this->selenium->click("//a[@id='users_manage']");
-        $this->selenium->waitForPageToLoad("10000");
-        $this->selenium->click("//input[@id='check_all']");
-        $this->selenium->select("action", "label=Resend activation");
-        $this->selenium->click("//input[@id='bulk_apply']");
-        $this->selenium->click("//a[@id='bulk-actions-submit']");
-        $this->selenium->waitForPageToLoad("10000");        
-        $this->assertTrue( $this->selenium->isTextPresent("Activation email sent to one user") , "Resend ACT user bulk action");
-
-        $this->selenium->click("//a[@id='users_manage']");
-        $this->selenium->waitForPageToLoad("10000");
-        $this->selenium->click("//input[@id='check_all']");
-        $this->selenium->select("action", "label=Activate");
-        $this->selenium->click("//input[@id='bulk_apply']");
-        $this->selenium->click("//a[@id='bulk-actions-submit']");
-        $this->selenium->waitForPageToLoad("10000");        
-        $this->assertTrue( $this->selenium->isTextPresent("One user has been activated") , "Activate user bulk action");
-
-        $this->selenium->click("//a[@id='users_manage']");
-        $this->selenium->waitForPageToLoad("10000");
-        $this->selenium->click("//input[@id='check_all']");
-        $this->selenium->select("action", "label=Block");
-        $this->selenium->click("//input[@id='bulk_apply']");
-        $this->selenium->click("//a[@id='bulk-actions-submit']");
-        $this->selenium->waitForPageToLoad("10000");        
-        $this->assertTrue( $this->selenium->isTextPresent("One user has been blocked") , "Block user bulk action");
-
-        $this->selenium->click("//a[@id='users_manage']");
-        $this->selenium->waitForPageToLoad("10000");
-        $this->selenium->click("//input[@id='check_all']");
-        $this->selenium->select("action", "label=Unblock");
-        $this->selenium->click("//input[@id='bulk_apply']");
-        $this->selenium->click("//a[@id='bulk-actions-submit']");
-        $this->selenium->waitForPageToLoad("10000");        
-        $this->assertTrue( $this->selenium->isTextPresent("One user has been unblocked") , "Unblock user bulk action");
-
-        $this->selenium->click("//a[@id='users_manage']");
-        $this->selenium->waitForPageToLoad("10000");
-        $this->selenium->click("//input[@id='check_all']");
-        $this->selenium->select("action", "label=Delete");
-        $this->selenium->click("//input[@id='bulk_apply']");
-        $this->selenium->click("//a[@id='bulk-actions-submit']");
-        $this->selenium->waitForPageToLoad("10000");        
-        $this->assertTrue( $this->selenium->isTextPresent("One user has been deleted") , "Delete user bulk action");
-        
-        
-        
-        // RESET CHANGES
-        if($pref['enabled_users']=='off' || $pref['enabled_user_validation']=='off') {
-            $this->selenium->open( osc_admin_base_url(true) );
-            $this->selenium->click("//a[@id='users_settings']");
-            $this->selenium->waitForPageToLoad("10000");
-
-            if($pref['enabled_users']=='off') {
-                $this->selenium->click("enabled_users");
-            }
-            if($pref['enabled_user_validation']=='off') {
-                $this->selenium->click("enabled_user_validation");
-            }
-
-            $this->selenium->click("//input[@type='submit']");
-            $this->selenium->waitForPageToLoad("10000");
-
-            $this->assertTrue( $this->selenium->isTextPresent("Users' settings have been updated") , "Can't update user settings. ERROR");
-
-            if( $pref['enabled_users'] == 'on' ){
-                $this->assertEqual( $this->selenium->getValue("//input[@name='enabled_users']"), 'off' ) ;
-            } else {
-                $this->assertEqual( $this->selenium->getValue("//input[@name='enabled_users']"), 'on' ) ;
-            }
-            if( $pref['enabled_user_validation'] == 'on' ){
-                $this->assertEqual( $this->selenium->getValue("//input[@name='enabled_user_validation']"), 'off' ) ;
-            } else {
-                $this->assertEqual( $this->selenium->getValue("//input[@name='enabled_user_validation']"), 'on' ) ;
-            }
-        }
-
-        flush();
-    }
+//    public function testBulkActions()
+//    {
+//        $this->loginWith() ;
+//
+//        $pref = array();
+//        $pref['enabled_users'] = Preference::newInstance()->findValueByName('enabled_users') ;
+//        if($pref['enabled_users'] == 1){ $pref['enabled_users'] = 'on';} else { $pref['enabled_users'] = 'off'; }
+//        $pref['enabled_user_validation'] = Preference::newInstance()->findValueByName('enabled_user_validation') ;
+//        if($pref['enabled_user_validation'] == 1){ $pref['enabled_user_validation'] = 'on';} else { $pref['enabled_user_validation'] = 'off'; }
+//
+//        $this->selenium->open( osc_admin_base_url(true) );
+//        $this->selenium->click("//a[@id='users_settings']");
+//        $this->selenium->waitForPageToLoad("10000");
+//
+//        // PREPARE SETTINGS
+//        if($pref['enabled_users']=='off' || $pref['enabled_user_validation']=='off') {
+//            if($pref['enabled_users']=='off') {
+//                $this->selenium->click("enabled_users");
+//            }
+//            if($pref['enabled_user_validation']=='off') {
+//                $this->selenium->click("enabled_user_validation");
+//            }
+//
+//            $this->selenium->click("//input[@type='submit']");
+//            $this->selenium->waitForPageToLoad("10000");
+//
+//            $this->assertTrue( $this->selenium->isTextPresent("Users' settings have been updated") , "Can't update user settings. ERROR");
+//
+//            if( $pref['enabled_users'] == 'on' ){
+//                $this->assertEqual( $this->selenium->getValue("//input[@name='enabled_users']"), 'off' ) ;
+//            } else {
+//                $this->assertEqual( $this->selenium->getValue("//input[@name='enabled_users']"), 'on' ) ;
+//            }
+//            if( $pref['enabled_user_validation'] == 'on' ){
+//                $this->assertEqual( $this->selenium->getValue("//input[@name='enabled_user_validation']"), 'off' ) ;
+//            } else {
+//                $this->assertEqual( $this->selenium->getValue("//input[@name='enabled_user_validation']"), 'on' ) ;
+//            }
+//
+//        }
+//
+//
+//        $this->insertUser();
+//
+//        $this->selenium->open( osc_admin_base_url(true) );
+//        $this->selenium->click("//a[@id='users_manage']");
+//        $this->selenium->waitForPageToLoad("10000");
+//
+//        $this->selenium->click("//input[@id='check_all']");
+//        $this->selenium->select("action", "label=Deactivate");
+//        $this->selenium->click("//input[@id='bulk_apply']");
+//        $this->selenium->click("//a[@id='bulk-actions-submit']");
+//
+//        $this->selenium->waitForPageToLoad("10000");
+//        $this->assertTrue( $this->selenium->isTextPresent("One user has been deactivated") , "Deactivate user bulk action");
+//
+//        $this->selenium->click("//a[@id='users_manage']");
+//        $this->selenium->waitForPageToLoad("10000");
+//        $this->selenium->click("//input[@id='check_all']");
+//        $this->selenium->select("action", "label=Resend activation");
+//        $this->selenium->click("//input[@id='bulk_apply']");
+//        $this->selenium->click("//a[@id='bulk-actions-submit']");
+//        $this->selenium->waitForPageToLoad("10000");
+//        $this->assertTrue( $this->selenium->isTextPresent("Activation email sent to one user") , "Resend ACT user bulk action");
+//
+//        $this->selenium->click("//a[@id='users_manage']");
+//        $this->selenium->waitForPageToLoad("10000");
+//        $this->selenium->click("//input[@id='check_all']");
+//        $this->selenium->select("action", "label=Activate");
+//        $this->selenium->click("//input[@id='bulk_apply']");
+//        $this->selenium->click("//a[@id='bulk-actions-submit']");
+//        $this->selenium->waitForPageToLoad("10000");
+//        $this->assertTrue( $this->selenium->isTextPresent("One user has been activated") , "Activate user bulk action");
+//
+//        $this->selenium->click("//a[@id='users_manage']");
+//        $this->selenium->waitForPageToLoad("10000");
+//        $this->selenium->click("//input[@id='check_all']");
+//        $this->selenium->select("action", "label=Block");
+//        $this->selenium->click("//input[@id='bulk_apply']");
+//        $this->selenium->click("//a[@id='bulk-actions-submit']");
+//        $this->selenium->waitForPageToLoad("10000");
+//        $this->assertTrue( $this->selenium->isTextPresent("One user has been blocked") , "Block user bulk action");
+//
+//        $this->selenium->click("//a[@id='users_manage']");
+//        $this->selenium->waitForPageToLoad("10000");
+//        $this->selenium->click("//input[@id='check_all']");
+//        $this->selenium->select("action", "label=Unblock");
+//        $this->selenium->click("//input[@id='bulk_apply']");
+//        $this->selenium->click("//a[@id='bulk-actions-submit']");
+//        $this->selenium->waitForPageToLoad("10000");
+//        $this->assertTrue( $this->selenium->isTextPresent("One user has been unblocked") , "Unblock user bulk action");
+//
+//        $this->selenium->click("//a[@id='users_manage']");
+//        $this->selenium->waitForPageToLoad("10000");
+//        $this->selenium->click("//input[@id='check_all']");
+//        $this->selenium->select("action", "label=Delete");
+//        $this->selenium->click("//input[@id='bulk_apply']");
+//        $this->selenium->click("//a[@id='bulk-actions-submit']");
+//        $this->selenium->waitForPageToLoad("10000");
+//        $this->assertTrue( $this->selenium->isTextPresent("One user has been deleted") , "Delete user bulk action");
+//
+//
+//
+//        // RESET CHANGES
+//        if($pref['enabled_users']=='off' || $pref['enabled_user_validation']=='off') {
+//            $this->selenium->open( osc_admin_base_url(true) );
+//            $this->selenium->click("//a[@id='users_settings']");
+//            $this->selenium->waitForPageToLoad("10000");
+//
+//            if($pref['enabled_users']=='off') {
+//                $this->selenium->click("enabled_users");
+//            }
+//            if($pref['enabled_user_validation']=='off') {
+//                $this->selenium->click("enabled_user_validation");
+//            }
+//
+//            $this->selenium->click("//input[@type='submit']");
+//            $this->selenium->waitForPageToLoad("10000");
+//
+//            $this->assertTrue( $this->selenium->isTextPresent("Users' settings have been updated") , "Can't update user settings. ERROR");
+//
+//            if( $pref['enabled_users'] == 'on' ){
+//                $this->assertEqual( $this->selenium->getValue("//input[@name='enabled_users']"), 'off' ) ;
+//            } else {
+//                $this->assertEqual( $this->selenium->getValue("//input[@name='enabled_users']"), 'on' ) ;
+//            }
+//            if( $pref['enabled_user_validation'] == 'on' ){
+//                $this->assertEqual( $this->selenium->getValue("//input[@name='enabled_user_validation']"), 'off' ) ;
+//            } else {
+//                $this->assertEqual( $this->selenium->getValue("//input[@name='enabled_user_validation']"), 'on' ) ;
+//            }
+//        }
+//
+//        flush();
+//    }
 
     /*
      * Test settings (users enabled, validation,...)
@@ -319,7 +319,7 @@ class OCadmin_users extends OCadminTest {
 
     /*
      * Create a new user
-     */    
+     */
     private function insertUser()
     {
         $this->selenium->open( osc_admin_base_url(true) );
@@ -327,7 +327,7 @@ class OCadmin_users extends OCadminTest {
         $this->selenium->waitForPageToLoad("10000");
         $this->selenium->click("link=Add new");
         $this->selenium->waitForPageToLoad("10000");
-        
+
         $this->selenium->type("s_email"         ,"");
         $this->selenium->type("s_password"      ,"");
         $this->selenium->type("s_password2"     ,"");
@@ -336,7 +336,7 @@ class OCadmin_users extends OCadminTest {
         $this->assertTrue($this->selenium->isTextPresent("Email: this field is required"),"Add user. JS validation");
         $this->assertTrue($this->selenium->isTextPresent("Password: this field is required"),"Add user. JS validation");
         $this->assertTrue($this->selenium->isTextPresent("Second password: this field is required"),"Add user. JS validation");
-        
+
         $this->selenium->type("s_password"      ,"bsg");
         $this->selenium->type("s_password2"     ,"pegasus");
         $this->selenium->click("//input[@type='submit']");
@@ -365,7 +365,7 @@ class OCadmin_users extends OCadminTest {
         //$this->selenium->type("region"      , "Barcelona");
         //$this->selenium->type("city"        , "Barcelona");
         $this->selenium->select("b_company"     , "label=User");
-        
+
         $this->selenium->click("//input[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");
         sleep(3);
@@ -378,11 +378,11 @@ class OCadmin_users extends OCadminTest {
     private function extraValidations()
     {
         // add item no user logged
-        
+
         $uSettings = new utilSettings();
         $bool_reg_user_post  = $uSettings->set_reg_user_post(0);
         $bool_moderate_items = $uSettings->set_moderate_items(-1);
-        
+
         // add item for testing purposes
         $this->selenium->open(osc_base_url(true) . '?page=item&action=item_add' );
         $this->selenium->select("catId", "label=regexp:\\s*Animals");
@@ -406,6 +406,7 @@ class OCadmin_users extends OCadminTest {
         $this->selenium->select("currency", "label=Euro €");
         $this->selenium->click("//button[text()='Publish']");
         $this->selenium->waitForPageToLoad("30000");
+        // falta un assert
 
         $bool_reg_user_post = $uSettings->set_reg_user_post($bool_reg_user_post);
         $bool_moderate_items = $uSettings->set_moderate_items($bool_moderate_items);
@@ -418,10 +419,6 @@ class OCadmin_users extends OCadminTest {
 
         $this->selenium->click("//button[@type='submit']");
         $this->selenium->waitForPageToLoad("30000");
-
-        if($this->selenium->isTextPresent("User account manager")){
-            $this->assertTrue("User's dashboard");
-        }
 
         // check username at left up corner
         $this->assertTrue($this->selenium->isTextPresent('real name user'),"Login at website");
@@ -445,7 +442,7 @@ class OCadmin_users extends OCadminTest {
 
         $this->assertTrue( ($this->selenium->getValue('id=yourName') == 'real name user'), 'Name auto fill');
         $this->assertTrue( ($this->selenium->getValue('id=yourEmail') == 'test@mail.com'), 'Email auto fill');
-        
+
         // remove item
         $aItems = Item::newInstance()->findByEmail( 'foobar@mail.com' ) ;
         foreach($aItems as $item) {
@@ -470,21 +467,21 @@ class OCadmin_users extends OCadminTest {
         $this->selenium->click("//input[@type='submit']");
         sleep(4);
         $this->assertTrue($this->selenium->isTextPresent("Email: this field is required"),"Edit user. JS validation");
-        
+
         $this->selenium->type("s_password", "bsg");
         $this->selenium->type("s_password2", "bsg");
         $this->selenium->click("//input[@type='submit']");
         sleep(4);
         $this->assertTrue($this->selenium->isTextPresent("Password: enter at least 5 characters"),"Edit user. JS validation");
         $this->assertTrue($this->selenium->isTextPresent("Second password: enter at least 5 characters"),"Edit user. JS validation");
-        
+
         $this->selenium->type("s_password", "galactica");
         $this->selenium->type("s_password2", "pegasus");
         $this->selenium->click("//input[@type='submit']");
         sleep(4);
         $this->assertTrue($this->selenium->isTextPresent("Passwords don't match"),"Edit user. JS validation");
-        
-        
+
+
         $this->selenium->type("s_email"         ,"newtest@mail.com");
         $this->selenium->type("s_password"      ,"newpassword");
         $this->selenium->type("s_password2"     ,"newpassword");
@@ -511,7 +508,7 @@ class OCadmin_users extends OCadminTest {
         $this->assertTrue($this->selenium->isTextPresent("The user has been updated"),"Edit user");
     }
 
-    
+
     /*
      * Delete an user
      */
@@ -589,7 +586,7 @@ class OCadmin_users extends OCadminTest {
         /*
          * Testing deeper
          */
-        
+
     // enabled_users
         Preference::newInstance()->replace('enabled_users', '0',"osclass", 'INTEGER') ;
         $this->checkWebsite_enabled_users(0);
