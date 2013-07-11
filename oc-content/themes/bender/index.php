@@ -25,7 +25,7 @@ Description: bender
 Version: 1.0
 Author: Osclass team
 Author URI: http://www.osclass.org/
-Widgets: header,footer,sidebar
+Widgets:
 Theme update URI:
 */
 
@@ -36,7 +36,7 @@ Theme update URI:
             ,'description' => 'bender'
             ,'author_name' => 'Osclass Team'
             ,'author_url'  => 'http://osclass.org'
-            ,'locations'   => array('header', 'footer','sidebar')
+            ,'locations'   => array()
         );
     }
 
