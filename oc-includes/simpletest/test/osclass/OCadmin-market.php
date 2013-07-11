@@ -70,12 +70,12 @@ class OCadmin_market extends OCadminTest {
         $this->selenium->click("//div[@class='mk-item mk-item-plugin']/div/div/span[@class='download-btn']");
         sleep(2);
         $textIsPresent = false;
-        for($t=0;$t<60;$t++) {
+        for($t=0;$t<120;$t++) {
             sleep(1);
             $textIsPresent = $this->selenium->isTextPresent("The plugin has been downloaded correctly, proceed to install and configure");
-            if($textIsPresent) { break; };
-            break;
+            if($textIsPresent) { echo "text present"; flush(); break; };
         }
+        sleep(10);
         $this->assertTrue($textIsPresent, "Plugin failed downloading");
         sleep(1);
         $this->selenium->click("//div[@id='downloading']/div/p/a[contains(.,'Ok')]");//"//div[@='osc-modal-content']/p/a[@class='btn btn-mini btn-green']");
