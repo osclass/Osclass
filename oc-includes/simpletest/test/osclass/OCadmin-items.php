@@ -148,19 +148,19 @@ class OCadmin_items extends OCadminTest {
         }
 
 
-        $this->loginWith() ;
-        $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("//a[@id='items_manage']");
-        $this->selenium->waitForPageToLoad("10000");
+            $this->loginWith() ;
+            $this->selenium->open( osc_admin_base_url(true) );
+            $this->selenium->click("//a[@id='items_manage']");
+            $this->selenium->waitForPageToLoad("10000");
 
-        $this->selenium->mouseOver("xpath=//table/tbody/tr/td[contains(.,'title item')]");
-        $this->selenium->click("//table/tbody/tr/td[contains(.,'title item')]/div/ul/li/a[text()='Delete']");
-        sleep(1);
-        $this->selenium->click("//input[@id='item-delete-submit']");
+            $this->selenium->mouseOver("xpath=//table/tbody/tr/td[contains(.,'title item')]");
+            $this->selenium->click("//table/tbody/tr/td[contains(.,'title item')]/div/ul/li/a[text()='Delete']");
+            sleep(1);
+            $this->selenium->click("//input[@id='item-delete-submit']");
 
-        $this->selenium->waitForPageToLoad("10000");
+            $this->selenium->waitForPageToLoad("10000");
 
-        $this->assertTrue($this->selenium->isTextPresent("The listing has been deleted"), "Can't delete item. ERROR");
+            $this->assertTrue($this->selenium->isTextPresent("The listing has been deleted"), "Can't delete item. ERROR");
     }
 
     function testExpirationByItem()
@@ -222,11 +222,14 @@ class OCadmin_items extends OCadminTest {
 
         $this->selenium->mouseOver("xpath=//table/tbody/tr/td[contains(.,'title item')]");
         $this->selenium->click("//table/tbody/tr/td[contains(.,'title item')]/div/ul/li/a[text()='Delete']");
-        sleep(1);
         $this->selenium->click("//input[@id='item-delete-submit']");
-
         $this->selenium->waitForPageToLoad("10000");
+        $this->assertTrue($this->selenium->isTextPresent("The listing has been deleted"), "Can't delete item. ERROR");
 
+        $this->selenium->mouseOver("xpath=//table/tbody/tr/td[contains(.,'title item')]");
+        $this->selenium->click("//table/tbody/tr/td[contains(.,'title item')]/div/ul/li/a[text()='Delete']");
+        $this->selenium->click("//input[@id='item-delete-submit']");
+        $this->selenium->waitForPageToLoad("10000");
         $this->assertTrue($this->selenium->isTextPresent("The listing has been deleted"), "Can't delete item. ERROR");
     }
 
@@ -268,9 +271,12 @@ class OCadmin_items extends OCadminTest {
     private function loginWebsite()
     {
         $this->selenium->open( osc_base_url(true) );
+        $this->selenium->waitForPageToLoad("30000");
+
         $bool = $this->selenium->isElementPresent('login_open') ;
         if($bool){
             $this->selenium->click("login_open");
+            $this->selenium->waitForPageToLoad("30000");
             $this->selenium->type("email"   , $this->_email);
             $this->selenium->type("password", $this->_password);
             $this->selenium->click("xpath=//button[@type='submit']");
@@ -278,10 +284,9 @@ class OCadmin_items extends OCadminTest {
             sleep(5);
             if($this->selenium->isTextPresent("Logout")){
                 $this->logged = 1;
-                $this->assertTrue("ok");
-                $this->assertTrue(true);
+                $this->assertTrue(true, "Login website");
             }else {
-                $this->assertTrue(false, 'Logout!');
+                $this->assertTrue(false, "Login website");
             }
         }
     }
