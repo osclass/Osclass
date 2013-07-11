@@ -4,11 +4,11 @@ require_once dirname(__FILE__).'/../../../../oc-load.php';
 //require_once('FrontendTest.php');
 
 class OCadmin_reported extends OCadminTest {
-    
+
     /*
      * Login oc-admin
      * Insert item
-     * 
+     *
      */
     function testInsertItem()
     {
@@ -18,21 +18,21 @@ class OCadmin_reported extends OCadminTest {
         $this->insertItem() ;
         $this->insertItem() ;
         $this->insertItem() ;
-        
+
         // mark as spam item 1, 2, 3, 4
         $this->markAs('spam',array(1,2,3,4) );
         // mark as bad item 1 & 3
         $this->markAs('bad',array(1,3,4) );
         // mark as expire item 1 & 3
         $this->markAs('exp',array(4) );
-        
+
         // go to admin reported listings
         // and sort the table by spam and bad
         // checkOrder($type, $count)
         $this->checkOrder('spam', 4 );
         $this->checkOrder('bad' , 3 );
         $this->checkOrder('exp' , 1 );
-        
+
         // unmark 1 as spam
         $this->unmarkAs('spam', array(2));
         $this->checkOrder('spam', 3 );
@@ -41,10 +41,7 @@ class OCadmin_reported extends OCadminTest {
         $this->checkOrder('bad', 2 );
         // unmark 1 as ALL
         $this->unmarkAs('all', array(1));
-        $this->checkOrder('all', 2 );
-        
-        // remove all items or unmarkAs all
-        // .. TODO ..
+        $this->checkOrder('all', 3 );
     }
 
     function testBulkaction()
@@ -57,18 +54,18 @@ class OCadmin_reported extends OCadminTest {
         $this->selenium->click("//a[@id='items_reported']");
         $this->selenium->waitForPageToLoad("10000");
         sleep(1);
-        // select all 
+        // select all
         $this->selenium->click("xpath=//input[@id='check_all']");
         $this->selenium->select('bulk_actions', 'value=clear_all');
         $this->selenium->click("xpath=//input[@id='bulk_apply']");
         $this->selenium->click("xpath=//a[@id='bulk-actions-submit']");
-        
+
         $this->checkOrder('all', 1);
         $this->assertTrue($this->selenium->isTextPresent("No data available in table"), "BulkActions clear spam. ERROR");
         // markas XX + YY
         $this->markAs('spam', array(1,2));
         $this->markAs('exp', array(2));
-        
+
         $this->checkOrder('spam', 2);
         $this->checkOrder('exp',  1);
         // bulkAction unmark as XX
@@ -82,11 +79,11 @@ class OCadmin_reported extends OCadminTest {
         $this->checkOrder('all', 1);
         $this->assertTrue($this->selenium->isTextPresent("No data available in table"), "BulkActions clear all. ERROR");
     }
-    
+
     function testRemoveAllItems()
     {
         $this->loginWith();
-        
+
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("//a[@id='items_manage']");
         $this->selenium->waitForPageToLoad("10000");
@@ -102,7 +99,7 @@ class OCadmin_reported extends OCadminTest {
             $this->selenium->waitForPageToLoad("10000");
             $this->assertTrue($this->selenium->isTextPresent("listings have been deleted") || $this->selenium->isTextPresent("listing has been deleted")
                     , "BulkActions delete all on delete test. ERROR");
-            
+
             $num = $this->selenium->getXpathCount('//table/tbody/tr');
             $loops++;
             print_r($loops);
@@ -112,14 +109,14 @@ class OCadmin_reported extends OCadminTest {
             }
         }
     }
-    
+
     private function bulkAction($type)
     {
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("//a[@id='items_reported']");
         $this->selenium->waitForPageToLoad("10000");
         sleep(1);
-        // select all 
+        // select all
         $this->selenium->click("xpath=//input[@id='check_all']");
 
         switch ($type) {
@@ -168,16 +165,16 @@ class OCadmin_reported extends OCadminTest {
                 break;
             default:
                 break;
-        } 
+        }
     }
-    
+
     private function unmarkAs($type, $array)
     {
         $xpath_str = "//table/tbody/tr[position()=_ID_]/td/div/ul/li/a[contains(.,'_ACTION_')]";
         foreach($array as $id) {
-            
+
             $new_xpath = str_replace('_ID_', $id, $xpath_str);
-            
+
             $this->selenium->open( osc_admin_base_url(true) );
             $this->selenium->waitForPageToLoad("10000");
             $this->selenium->click("//a[@id='items_reported']");
@@ -185,8 +182,8 @@ class OCadmin_reported extends OCadminTest {
             sleep(1);
             switch ($type) {
                 case 'spam':
-                    // sort by 
-                     $this->selenium->click("//a[@id='order_spam']");
+                    // sort by
+                    $this->selenium->click("//a[@id='order_spam']");
                     sleep(1);
                     $new_xpath = str_replace('_ACTION_', 'Clear Spam', $new_xpath);
                     $this->selenium->click($new_xpath);
@@ -214,7 +211,7 @@ class OCadmin_reported extends OCadminTest {
                     sleep(1);
                     $new_xpath = str_replace('_ACTION_', 'Clear All', $new_xpath);
                     $this->selenium->click($new_xpath);
-                    sleep(1);
+                    sleep(15);
                     $this->assertTrue($this->selenium->isTextPresent("The listing has been unmarked"), "Can't unmark ALL. ERROR");
                     break;
                 default:
@@ -222,8 +219,8 @@ class OCadmin_reported extends OCadminTest {
             }
         }
     }
-    
-    private function checkOrder($type, $count) 
+
+    private function checkOrder($type, $count)
     {
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->waitForPageToLoad("10000");
@@ -263,7 +260,7 @@ class OCadmin_reported extends OCadminTest {
         }
         //error_log($num . " == " . $count);
     }
-    
+
     private function markAs($type, $array)
     {
         $xpath_str = "xpath=//table/tbody/tr[position()=_ID_]/td/a[contains(.,'title item')]@href";
@@ -276,24 +273,24 @@ class OCadmin_reported extends OCadminTest {
             sleep(2);
             $new_xpath = str_replace('_ID_', $id, $xpath_str);
             $href = $this->selenium->getAttribute($new_xpath);
-            
+
             $this->selenium->open($href);
             $this->selenium->waitForPageToLoad("10000");
             sleep(2);
             // item detail -> mark as XXX
             switch ($type) {
                 case 'spam':
-                    $this->selenium->click("//a[@id='item_spam']");
+                    $this->selenium->select("as", "label=regexp:\\s*Mark as spam");
                     $this->selenium->waitForPageToLoad("10000");
                     $this->assertTrue($this->selenium->isTextPresent("Thanks! That's very helpful"), 'Item has been marked');
                     break;
                 case 'exp':
-                    $this->selenium->click("//a[@id='item_expired']");
+                    $this->selenium->select("as", "label=regexp:\\s*Mark as expired");
                     $this->selenium->waitForPageToLoad("10000");
                     $this->assertTrue($this->selenium->isTextPresent("Thanks! That's very helpful"), 'Item has been marked');
                     break;
                 case 'bad':
-                    $this->selenium->click("//a[@id='item_bad_category']");
+                    $this->selenium->select("as", "label=regexp:\\s*Mark as misclassified");
                     $this->selenium->waitForPageToLoad("10000");
                     $this->assertTrue($this->selenium->isTextPresent("Thanks! That's very helpful"), 'Item has been marked');
                     break;
@@ -302,7 +299,7 @@ class OCadmin_reported extends OCadminTest {
             }
         }
     }
-    
+
     // todo test minim lenght title, description , contact email
     private function insertItem($bPhotos = FALSE )
     {
@@ -346,10 +343,10 @@ class OCadmin_reported extends OCadminTest {
             sleep(0.5);
             $this->selenium->type("//div[@id='p-0']/input", LIB_PATH."simpletest/test/osclass/img_test2.gif");
         }
-        
+
         $this->selenium->click("//input[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");
-        
+
         $this->assertTrue($this->selenium->isTextPresent("A new listing has been added"), "Can't insert a new item. ERROR");
     }
 }
