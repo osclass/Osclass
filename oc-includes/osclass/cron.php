@@ -62,6 +62,9 @@
         $i_next = strtotime($cron['d_next_exec']);
 
         if( (CLI && (Params::getParam('cron-type') === 'daily')) || ((($i_now - $i_next) >= 0) && !CLI) ) {
+            // before update, d_last_exec
+            osc_runAlert('DAILY');
+
             // update the next execution time in t_cron
             $d_next = date('Y-m-d H:i:s', $i_now + (24 * 3600));
             Cron::newInstance()->update(array('d_last_exec' => $d_now, 'd_next_exec' => $d_next),
@@ -72,7 +75,6 @@
             if( $purge == 'day' ) {
                 LatestSearches::newInstance()->purgeDate( date('Y-m-d H:i:s', ( time() - (24 * 3600) ) ) );
             }
-            osc_runAlert('DAILY');
             osc_update_cat_stats();
 
             // WARN EXPIRATION EACH DAY (UNCOMMENT TO ENABLE)
