@@ -492,6 +492,15 @@
     }
 
     /**
+     * Gets if current item is enabled
+     *
+     * @return boolean
+     */
+    function osc_item_is_enabled() {
+        return (osc_item_field("b_enabled")==1);
+    }
+
+    /**
      * Gets if item is marked as spam
      *
      * @return boolean

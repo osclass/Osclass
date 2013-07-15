@@ -357,20 +357,8 @@
                 </thead>
                 <tbody>
                 <?php if( count($rows) > 0 ) { ?>
-                    <?php foreach($rows as $key => $row) {
-                        $class = ''; $aI = $aRawRows[$key];
-                        if( $aI['b_spam'] ) {
-                            $class = 'status-spam';
-                        } else if( !$aI['b_enabled'] ) {
-                            $class = 'status-blocked';
-                        } else if( !$aI['b_active'] ) {
-                            $class = 'status-inactive';
-                        } else if( $aI['b_premium'] ) {
-                            $class = 'status-premium';
-                        } else {
-                            $class = 'status-active';
-                        } ?>
-                        <tr class="<?php echo $class;?>">
+                    <?php foreach($rows as $key => $row) { ?>
+                        <tr class="<?php echo implode(' ', osc_apply_filter('datatable_listing_class', array(), $aRawRows[$key], $row)); ?>">
                             <?php foreach($row as $k => $v) { ?>
                                 <td class="col-<?php echo $k; ?>"><?php echo $v; ?></td>
                             <?php }; ?>
