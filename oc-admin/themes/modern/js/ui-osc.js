@@ -50,9 +50,13 @@ $(function(){
             event.preventDefault();
             var $containterOffset = $('.table-contains-actions').offset();
             $thisOffset = $(this).offset();
+            var extra_offset = $('td.col-status-border').outerWidth();
+            extra_offset += $('td.col-status').outerWidth();
+            extra_offset += $('td.col-bulkactions').outerWidth();
             $rowActions.empty().append($actions.clone()).css({
-                width:$(this).width()-85,
-                top:($thisOffset.top-$containterOffset.top)+$(this).height()
+                width: $(this).width() - 85 - extra_offset,
+                top: ($thisOffset.top - $containterOffset.top) + $(this).height(),
+                left: extra_offset
             }).show();
             $('tr').removeClass('collapsed-hover');
             if($(this).parents('div.table-contains-actions').hasClass('table-collapsed')){
