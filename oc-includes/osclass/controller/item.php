@@ -220,7 +220,6 @@
                         $meta = Params::getParam('meta');
                         if(is_array($meta)) {
                             foreach( $meta as $key => $value ) {
-                                error_log(print_r($value, true ));
                                 Session::newInstance()->_setForm('meta_'.$key, $value);
                                 Session::newInstance()->_keepForm('meta_'.$key);
                             }
