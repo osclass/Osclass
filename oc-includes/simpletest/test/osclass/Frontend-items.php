@@ -222,6 +222,11 @@ class Frontend_items extends FrontendTest {
         // reset akismet key
         Preference::newInstance()->update(array('s_value' => '') ,array('s_name'  => 'akismetKey'));
         osc_reset_preferences();
+
+        // delete item
+        $url = osc_item_delete_url( $oItem['s_secret'] , $oItem['pk_i_id'] );
+        $this->selenium->open( $url );
+        $this->assertTrue($this->selenium->isTextPresent("Your listing has been deleted"), "Delete item.");
     }
 
     /*
@@ -281,8 +286,10 @@ class Frontend_items extends FrontendTest {
 
         // remove item
         $_item = Item::newInstance()->findByPrimaryKey($itemId);
-        $itemAction = new ItemActions(false);
-        $itemAction->delete($_item['s_secret'], $itemId);
+
+        $url = osc_item_delete_url( $_item['s_secret'], $itemId );
+        $this->selenium->open( $url );
+        $this->assertTrue($this->selenium->isTextPresent("Your listing has been deleted"), "Delete item.");
     }
 
     /*
@@ -346,8 +353,10 @@ class Frontend_items extends FrontendTest {
 
         // remove item
         $_item = Item::newInstance()->findByPrimaryKey($itemId);
-        $itemAction = new ItemActions(false);
-        $itemAction->delete($_item['s_secret'], $itemId);
+
+        $url = osc_item_delete_url( $_item['s_secret'] , $itemId );
+        $this->selenium->open( $url );
+        $this->assertTrue($this->selenium->isTextPresent("Your listing has been deleted"), "Delete item.");
     }
 
     /*
