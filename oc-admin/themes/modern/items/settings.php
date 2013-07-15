@@ -154,6 +154,14 @@
                             </div>
                         </div>
                         <div class="form-row">
+                            <div class="form-label"><?php _e('Warn about expiration'); ?></div>
+                            <div class="form-controls">
+                                <input type="text" class="input-small" name="warn_expiration" value="<?php echo osc_esc_html(osc_warn_expiration()); ?>" />
+                                <?php _e('days'); ?>
+                            </div>
+                            <span class="help-box"><?php _e('This option will send an email X days before an ad expires to the author. 0 for no email.'); ?></span>
+                        </div>
+                        <div class="form-row">
                             <div class="form-label"> <?php _e('Optional fields'); ?></div>
                             <div class="form-controls">
                                 <div class="form-label-checkbox">
