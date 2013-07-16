@@ -1,3 +1,19 @@
+Osclass 3.2 2013-XX-XX
+------------------------
+- Expiration date for a listing (till now you can do that only for the whole category)
+- Advertising by regions (region1.osclass.org/region2.osclass.org)
+- Custom searchable fields (you will be able to personalize more searches)
+- Bender responsive theme as default theme
+- Akismet for listings, (added akismet filter to new listings)
+- Expiration notice (emails to the users reminding them about the expiration date of each listing)
+- Added search filter to manage users
+- Sending email to new admins created from oc-admin
+- Manage users minor improvements (row colorsStatus , Link to public user profile)
+- Updated JQuery to 1.8
+- New routes for plugins
+- Override email from and email name from
+- Minor bug fixes and improvements
+
 Osclass 3.1.2 2012-05-07
 ------------------------
 - CSRF errors now show a flash message instead of a blank page
