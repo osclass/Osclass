@@ -138,6 +138,7 @@
 
     $columns    = $aData['aColumns'];
     $rows       = $aData['aRows'];
+    $withFilters = __get('withFilters');
 ?>
 <?php osc_current_admin_theme_path( 'parts/header.php' ); ?>
 <form method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" class="has-form-actions hide nocsrf">
