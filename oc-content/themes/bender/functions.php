@@ -255,6 +255,8 @@ FUNCTIONS
     }
     if( !function_exists('related_listings') ) {
         function related_listings() {
+            View::newInstance()->_exportVariableToView('items', array());
+
             $mSearch = new Search();
             $mSearch->addCategory(osc_item_category_id());
             $mSearch->addRegion(osc_item_region());
