@@ -28,7 +28,7 @@
 <div id="header">
     <div class="wrapper">
         <div id="logo">
-            <a href="<?php echo osc_base_url(); ?>"><?php echo logo_header(); ?></a>
+            <?php echo logo_header(); ?>
             <span id="description"><?php echo osc_page_description(); ?></span>
         </div>
         <ul class="nav">
