@@ -49,6 +49,10 @@
 
             $input = $this->prepareData(true);
 
+            if( !$error && $input['s_name']=='' ) {
+                $error = 10;
+            }
+
             if( !$error && !osc_validate_email($input['s_email']) ) {
                 $error = 5;
             }
@@ -144,6 +148,10 @@
                 if(isset($user_email['pk_i_id']) && $user_email['pk_i_id']!=$userId) {
                     return 3;
                 }
+            }
+
+            if($input['s_name']=='') {
+                return 10;
             }
 
             $this->manager->update($input, array('pk_i_id' => $userId));
