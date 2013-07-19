@@ -170,9 +170,11 @@
                 Log::newInstance()->insertLog('user', 'edit', $userId, $user['s_email'], $this->is_admin ? 'admin' : 'user', $this->is_admin ? osc_logged_admin_id() : osc_logged_user_id() );
             }
 
-            Session::newInstance()->_set('userName', $input['s_name']);
-            $phone = ($input['s_phone_mobile'])? $input['s_phone_mobile'] : $input['s_phone_land'];
-            Session::newInstance()->_set('userPhone', $phone);
+            if(!$this->is_admin) {
+                Session::newInstance()->_set('userName', $input['s_name']);
+                $phone = ($input['s_phone_mobile'])? $input['s_phone_mobile'] : $input['s_phone_land'];
+                Session::newInstance()->_set('userPhone', $phone);
+            }
 
             if ( is_array( Params::getParam('s_info') ) ) {
                 foreach (Params::getParam('s_info') as $key => $value) {
