@@ -278,7 +278,7 @@ function checkForm() {
         // Code for form validation
         $("form[name=register]").validate({
             rules: {
-                s_email: {
+                s_name: {
                     required: true
                 },
                 s_email: {
