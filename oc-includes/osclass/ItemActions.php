@@ -957,6 +957,8 @@
                               ,'b_enabled'      => 1
                               ,'fk_i_user_id'   => $userId);
 
+            osc_run_hook('before_add_comment', $aComment);
+
             if( $mComments->insert($aComment) ) {
                 $commentID = $mComments->dao->insertedId();
                 if($status_num == 2 && $userId != null) { // COMMENT IS ACTIVE
