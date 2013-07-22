@@ -319,7 +319,14 @@
      */
     function osc_search_category_url() {
         $path = '';
-        if(osc_rewrite_enabled()) {
+        if(osc_subdomain_type()=='category') {
+            if(isset($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS'])=='on' || $_SERVER['HTTPS']=='1')){
+                $path = "https://";
+            } else {
+                $path = "http://";
+            }
+            $path .= osc_category_slug().".".osc_subdomain_host().REL_WEB_URL;
+        } else if(osc_rewrite_enabled()) {
             $url = osc_get_preference('rewrite_cat_url');
             if( preg_match('|{CATEGORIES}|', $url) ) {
                 $category = Category::newInstance()->hierarchy(osc_category_id());

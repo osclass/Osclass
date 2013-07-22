@@ -146,6 +146,9 @@
                             if(isset($category['pk_i_id'])) {
                                 Params::setParam('subdomain', 1);
                                 Params::setParam('sCategory', $category['pk_i_id']);
+                                if(Params::getParam('page')=='') {
+                                    Params::setParam('page', 'search');
+                                }
                             } else {
                                 $this->do400();
                             }
