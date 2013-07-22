@@ -1166,7 +1166,7 @@
             $value = osc_field(osc_item_meta(), 's_value', '');
             if(is_array($value)) {
                 // from [date_from] to [date_to]
-                if(isset($value['from']) && $value['from']!='' && is_int($value['from']) && isset($value['to']) && $value['to']!='' && is_int($value['to'])) {
+                if(isset($value['from']) && $value['from']!='' && is_numeric($value['from']) && isset($value['to']) && $value['to']!='' && is_numeric($value['to'])) {
                     $return  = __('From') . ' ' . htmlentities( date(osc_date_format(), $value['from']), ENT_COMPAT, "UTF-8");
                     $return .= ' ' . __('to') . ' ' . htmlentities( date(osc_date_format(), $value['to']), ENT_COMPAT, "UTF-8");
                     return $return;
@@ -1174,7 +1174,7 @@
                     return '';
                 }
             } else {
-                if($value!='' && is_int($value)) {
+                if($value!='' && is_numeric($value)) {
                     return htmlentities( date(osc_date_format(), $value), ENT_COMPAT, "UTF-8");
                 } else {
                     return '';
