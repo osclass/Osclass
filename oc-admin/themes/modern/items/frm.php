@@ -213,10 +213,12 @@ function customPageHeader() { ?>
                                     <label><?php _e('E-mail'); ?></label>
                                     <?php ItemForm::contact_email_text(); ?>
                                 </div>
+                                <?php if(!$new_item) { ?>
                                 <div class="input-has-placeholder input-separate-top">
-                                    <label><?php _e('E-mail'); ?></label>
+                                    <label><?php _e('Ip Address'); ?></label>
                                     <input id="ipAddress" type="text" name="ipAddress" value="<?php echo osc_item_ip(); ?>" class="valid" readonly="readonly">
                                 </div>
+                                <?php }; ?>
                             </div>
                         </div>
 
