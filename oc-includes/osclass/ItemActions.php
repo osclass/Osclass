@@ -875,6 +875,11 @@
          */
         public function add_comment()
         {
+
+            if(!osc_comments_enabled()) {
+                return 7;
+            }
+
             $aItem  = $this->prepareDataForFunction('add_comment');
 
             $authorName     = trim($aItem['authorName']);

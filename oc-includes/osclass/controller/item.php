@@ -446,6 +446,9 @@
                         case 6:  $msg = _m('You need to be logged to comment');
                             osc_add_flash_error_message($msg);
                             break;
+                        case 7:  $msg = _m('Sorry, comments are disabled');
+                            osc_add_flash_error_message($msg);
+                            break;
                     }
 
                     //View::newInstance()->_exportVariableToView('item', Item::newInstance()->findByPrimaryKey(Params::getParam('id')));
