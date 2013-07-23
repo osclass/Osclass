@@ -413,6 +413,15 @@
     }
 
     /**
+     * Gets IP of current item
+     *
+     * @return string
+     */
+    function osc_item_ip() {
+        return osc_item_field("s_ip");
+    }
+
+    /**
      * Gets true if current item is marked premium, else return false
      *
      * @return boolean

@@ -204,10 +204,6 @@ function customPageHeader() { ?>
                     <div id="right-side">
                         <div class="well ui-rounded-corners">
                             <h3 class="label"><?php _e('User'); ?></h3>
-                            <?php //ItemForm::user_select(null, null, __('Non-registered user')); ?>
-<!--                         input autocomplete   -->
-<!--                            <input id="fUser" name="user" type="text" class="fUser input-text input-actions" value="<?php echo osc_esc_html(Params::getParam('user')); ?>" />
-                            <input id="fUserId" name="userId" type="hidden" value="<?php echo osc_esc_html(Params::getParam('userId')); ?>" />-->
                             <div id="contact_info">
                                 <div class="input-has-placeholder input-separate-top">
                                     <label><?php _e('Name'); ?></label>
@@ -216,6 +212,10 @@ function customPageHeader() { ?>
                                 <div class="input-has-placeholder input-separate-top">
                                     <label><?php _e('E-mail'); ?></label>
                                     <?php ItemForm::contact_email_text(); ?>
+                                </div>
+                                <div class="input-has-placeholder input-separate-top">
+                                    <label><?php _e('E-mail'); ?></label>
+                                    <input id="ipAddress" type="text" name="ipAddress" value="<?php echo osc_item_ip(); ?>" class="valid" readonly="readonly">
                                 </div>
                             </div>
                         </div>
