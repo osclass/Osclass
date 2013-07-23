@@ -333,14 +333,12 @@
             return true;
         }
 
-        static public function input_expiration($type = 'add' ) {
-            $value = '';
+        static public function expiration_input($type = 'add', $value = '') {
             if($type=='edit') {
                 $value = '-1';  // default no change expiration date
             }
-?>
-        <input type="text" id="dt_expiration" name="dt_expiration" value="<?php echo $value;?>"/>
-        <?php
+            parent::generic_input_text('dt_expiration', $value);
+            return true;
         }
 
 
@@ -397,7 +395,6 @@
 
         static public function title_input($name, $locale = 'en_US', $value = '')
         {
-
             parent::generic_input_text($name . '[' . $locale . ']', $value);
             return true;
         }

@@ -249,14 +249,14 @@ function customPageHeader() { ?>
                             <?php if( $new_item ) { ?>
                             <div class="input-has-placeholder input-separate-top">
                                 <label><?php _e('Expire in X days'); ?></label>
-                                <?php ItemForm::input_expiration('add'); ?>
+                                <?php ItemForm::expiration_input('add'); ?>
                             </div>
                             <?php } else if( !$new_item ) { ?>
                             <div class="input-separate-top">
                                 <label><input type="checkbox" id="update_expiration" name="update_expiration" style="width: inherit!important;"/> <?php _e('Update expiration?'); ?></label>
                                 <div class="hide update_expiration">
                                     <div class="input-has-placeholder input-separate-top">
-                                        <?php ItemForm::input_expiration('edit'); ?>
+                                        <?php ItemForm::expiration_input('edit'); ?>
                                     </div>
                                     <label><?php _e('0, means no expiration date'); ?></label>
                                 </div>
