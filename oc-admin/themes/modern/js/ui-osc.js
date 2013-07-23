@@ -64,8 +64,8 @@ $(function(){
 		extra_offset += colBulkactionsOuterWidth;
 	    }
             $rowActions.empty().append($actions.clone()).css({
-		width: $(this).width() - 13 - extra_offset,
-		top: ($thisOffset.top - $containterOffset.top) + $(this).height()-1,
+			width: $(this).width() - 13 - extra_offset,
+			top: ($thisOffset.top - $containterOffset.top) + $(this).height()-1,
                 left: extra_offset
             }).show();
             $('tr').removeClass('collapsed-hover');
