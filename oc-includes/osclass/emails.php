@@ -1215,7 +1215,7 @@
 
 
     function fn_email_warn_expiration($aItem) {
-        $itemId      = $aItem['id'];
+        $itemId      = $aItem['pk_i_id'];
         $admin_email = osc_contact_email();
 
         View::newInstance()->_exportVariableToView('item', $aItem);
@@ -1235,6 +1235,7 @@
 
         $words   = array();
         $words[] = array(
+            '{USER_NAME}',
             '{ITEM_TITLE}',
             '{ITEM_ID}',
             '{ITEM_EXPIRATION_DATE}',
@@ -1244,10 +1245,11 @@
             '{SELLER_EMAIL}'
         );
         $words[] = array(
+            $aItem['s_contact_name'],
             $aItem['s_title'],
             $itemId,
-            osc_item_url(),
             $aItem['dt_expiration'],
+            osc_item_url(),
             $itemURL,
             $aItem['s_contact_name'],
             $aItem['s_contact_email']
