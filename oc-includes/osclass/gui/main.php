@@ -37,6 +37,7 @@
 <div class="latest_ads">
 <h1><strong><?php _e('Latest Listings', 'bender') ; ?></strong></h1>
  <?php if( osc_count_latest_items() == 0) { ?>
+    <div class="clear"></div>
     <p class="empty"><?php _e("There aren't job offers available at this moment", 'bender'); ?></p>
 <?php } else { ?>
     <div class="actions">

@@ -488,6 +488,72 @@ if(osc_is_home_page() || osc_is_search_page()){
 }
 
 
+function bender_sidebar_category_search($catId = null)
+{
+    $aCategories = array();
+    if($catId==null) {
+        $aCategories[] = Category::newInstance()->findRootCategoriesEnabled();
+    } else {
+        // if parent category, only show parent categories
+        $aCategories = Category::newInstance()->toRootTree($catId);
+        end($aCategories);
+        $cat = current($aCategories);
+        // if is parent of some category
+        $childCategories = Category::newInstance()->findSubcategories($cat['pk_i_id']);
+        if(count($childCategories) > 0) {
+            $aCategories[] = $childCategories;
+        }
+    }
+
+    if(count($aCategories) == 0) {
+        return "";
+    }
+
+    bender_print_sidebar_category_search($aCategories, $catId);
+}
+
+function bender_print_sidebar_category_search($aCategories, $current_category = null, $i = 0)
+{
+    $class = '';
+    if(!isset($aCategories[$i])) {
+        return null;
+    }
+
+    if($i===0) {
+        $class = 'class="category"';
+    }
+
+    $c   = $aCategories[$i];
+    $i++;
+    if(!isset($c['pk_i_id'])) {
+        echo '<ul '.$class.' style="display:block;">';
+        foreach($c as $key => $value) {
+    ?>
+            <li style="padding:10px;">
+                <a id="cat_<?php echo osc_esc_html($value['pk_i_id']);?>" href="<?php echo osc_esc_html(osc_update_search_url(array('sCategory'=> $value['pk_i_id']))); ?>">
+                <?php if(isset($current_category) && $current_category == $value['pk_i_id']){ echo '<strong>'.$value['s_name'].'</strong>'; }
+                else{ echo $value['s_name']; } ?>
+                </a>
+
+            </li>
+    <?php
+        }
+        echo "</ul>";
+    } else {
+    ?>
+    <ul <?php echo $class;?> style="display:block;">
+        <li style="padding:10px;">
+            <a id="cat_<?php echo osc_esc_html($c['pk_i_id']);?>" href="<?php echo osc_esc_html(osc_update_search_url(array('sCategory'=> $c['pk_i_id']))); ?>">
+            <?php if(isset($current_category) && $current_category == $c['pk_i_id']){ echo '<strong>'.$c['s_name'].'</strong>'; }
+                  else{ echo $c['s_name']; } ?>
+            </a>
+            <?php bender_print_sidebar_category_search($aCategories, $current_category, $i); ?>
+        </li>
+    </ul>
+<?php
+    }
+}
+
 /**
 
 CLASSES
