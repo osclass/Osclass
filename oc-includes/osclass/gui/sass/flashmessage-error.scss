@@ -1,0 +1,86 @@
+.wrapper-flash{
+    font-weight: bold;
+
+}
+.flashmessage {
+    font-size: 14px;
+    padding: 15px 0;
+    width: 100%;
+    top: 10px;
+    z-index: 999;
+    text-align: center;
+    color: #ffffff;
+    position:relative;
+}
+.flashmessage-warning,
+.help-box{
+    background-color: #d0a52a;
+    border: solid 1px #93741e;
+}
+.flashmessage-error{
+    background-color: #c44e20;
+    border: solid 1px #873616;
+}
+.flashmessage-ok {
+    background-color: #839b44;
+    border: solid 1px #4f5e29;
+}
+.flashmessage-info{
+    background-color: #30a0ef;
+    border: solid 1px #2477b2;
+}
+.help-box{
+    padding:5px 10px;
+    display:inline-block;
+    color:#fff;
+    font-size:14px;
+    margin:10px 0;
+    @include border-radius(4px);
+}
+.flashmessage .ico-close {
+    position: absolute;
+    top: 14px;
+    right: 17px;
+    float: right;
+    font-size: 18px;
+    line-height: 18px;
+    color: white;
+    text-shadow:none;
+    text-decoration:none;
+    font-weight: bold;
+    cursor: pointer;
+}
+.flashmessage-error .close {
+    color: #B94A48;
+}
+.flashmessage-warning .close {
+    color: #C09853;
+}
+.flashmessage-success .close,
+.flashmessage-information .close {
+    color: #3A87AD;
+}
+#error_list,
+.error_list{
+    background-color: #F2DEDE;
+    border: solid 2px #EED3D7;
+    color: #B94A48;
+
+    @include border-radius(4px);
+    padding:10px;
+    list-style:none;
+    display: none;
+
+    margin: 0 10px 20px;
+}
+#error_list li,
+.error_list li{
+    list-style: none;
+    padding: 2px 0 2px 18px;
+}
+#error_list li label,
+.error_list li label{
+    margin-top:0;
+    float:none;
+    width:auto;
+}

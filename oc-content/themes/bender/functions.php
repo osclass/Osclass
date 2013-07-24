@@ -387,7 +387,7 @@ FUNCTIONS
             $location = Rewrite::newInstance()->get_location();
             $section  = Rewrite::newInstance()->get_section();
 
-            if( $location === 'user' && in_array($section, array('dashboard', 'profile', 'alerts', 'change_email', 'change_username',  'change_password', 'items')) ) {
+            if( ($location === 'user' && in_array($section, array('dashboard', 'profile', 'alerts', 'change_email', 'change_username',  'change_password', 'items'))) || ($location ==='custom' && Params::getParam('in_user_menu')==true ) ) {
                 osc_enqueue_script('delete-user-js');
             }
         }

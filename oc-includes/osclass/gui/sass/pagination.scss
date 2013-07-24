@@ -1,0 +1,122 @@
+.paginate {
+    padding:25px;
+    text-align:center;
+    clear: both;
+    li {
+        display: inline;
+        list-style-type: none;
+    }
+    a,
+    span {
+        text-decoration:none;
+        margin:0 1px;
+        padding:5px 10px;
+        border:1px solid #EEE;
+        @include border-radius(3px);
+    }
+    a.previous {
+        margin-right:15px;
+    }
+    a.next {
+        margin-left:15px;
+    }
+    strong {
+        border:1px solid #EEE;
+        color:#F30;
+        margin:0 1px;
+        padding:5px 10px;
+    }
+    em {
+        border:1px solid #EEE;
+        color:#AAA;
+        font-style:normal;
+        margin:0 1px;
+        padding:5px 10px;
+        text-decoration:none;
+    }
+    em.previous {
+        margin-right:15px;
+    }
+    em.next {
+        margin-left:15px;
+    }
+}
+.searchPaginationSelected,
+.paginate a:hover {
+    font-weight: bold;
+    background-color: $maincolor;
+    color:white;
+}
+
+.see_by{
+    float:right;
+
+    border: solid 1px #D1D1D1;
+    background-color: #F7F7F7;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    cursor: default;
+    font-size: 13px;
+    font-weight:400;
+    text-align: center;
+    white-space: nowrap;
+    height: 16px;
+    outline: 0;
+    padding: 5px 6px;
+    display: block;
+    margin-right:10px;
+    position: relative;
+
+    span{
+        float:left;
+    }
+    label{
+        float:right;
+        margin: 0;
+        padding: 0 18px 0 5px;
+        color:darken($maincolor,20%);
+    }
+    ul{
+        position: absolute;
+        right:-1px;
+        margin:22px 0 0;
+        padding:8px 10px;
+        list-style: none;
+        text-align: right;
+        background-color:$maincolor;
+        border:solid 1px darken($maincolor,10%);
+        @include border-radius(2px);
+        display: none;
+    }
+    ul a{
+        font-size: 1em;
+        font-weight:500;
+            color:#fff;
+    }
+    .arrow-up,
+    .arrow-down,
+    .arrow-right,
+    .arrow-left{
+        position:absolute;
+        right:6px;
+        top: 11px;
+    }
+}
+.arrow-envelope,{
+    position:absolute;
+    right:-1px;
+    top: -1px;
+}
+.hover{
+    .arrow-envelope{
+        background-color:$maincolor;
+        border:solid 1px darken($maincolor,10%);
+        width: 21px;
+        height: 28px;
+        border-bottom: none;
+        z-index: 3;
+    }
+    ul{
+        display: block;
+    }
+}
