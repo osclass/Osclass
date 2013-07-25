@@ -150,7 +150,9 @@
      <div class="clear"></div>
       <?php
       if(osc_rewrite_enabled()){
-      $footerLinks = osc_search_footer_links(); ?>
+      $footerLinks = osc_search_footer_links();
+      if(count($footerLinks)>0) {
+      ?>
       <div id="related-searches">
         <h5><?php _e('Other searches that may interest you','bender'); ?></h5>
         <ul class="footer-links">
@@ -160,7 +162,8 @@
           <?php } ?>
         </ul>
       </div>
-      <?php } ?>
+      <?php } 
+      } ?>
      <div class="paginate" >
           <?php echo osc_search_pagination(); ?>
      </div>
