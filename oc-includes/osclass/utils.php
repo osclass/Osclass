@@ -1429,12 +1429,8 @@ function version_compare2($a, $b)
 
 function _recursive_category_stats(&$aux, &$categoryTotal)
 {
-    $count_items = 0;
-    if($aux['categories'] == array()) {
-        $total     = Item::newInstance()->numItems($aux, true, true);
-        $categoryTotal[$aux['pk_i_id']] = $total;
-        return $total;
-    } else {
+    $count_items = Item::newInstance()->numItems($aux, true, true);
+    if(is_array($aux['categories'])) {
         foreach($aux['categories'] as &$cat) {
             $count_items += _recursive_category_stats($cat, $categoryTotal);
         }
