@@ -128,9 +128,10 @@ class Frontend_users extends FrontendTest {
         $this->selenium->open( osc_user_dashboard_url() );
 
         $this->selenium->click("xpath=//li[@class='opt_alerts']/a");
-
+        $this->selenium->waitForPageToLoad("3000");
+        
         $count = 0;
-        $count = (int)$this->selenium->getXpathCount("//div[@id='main']/div[@class='userItem']");
+        $count = (int)$this->selenium->getXpathCount("//div[@id='main']/div[contains(@class,'userItem')]");
         $this->assertTrue( $count==1 , "Users Dashboard with one item");
 
         // delete

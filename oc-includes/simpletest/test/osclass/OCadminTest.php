@@ -37,6 +37,8 @@ abstract class OCadminTest extends MyWebTestCase {
         $this->selenium = new Testing_Selenium( $browser, $entry_point); //"http://localhost/");
         $this->selenium->start();
         $this->selenium->setSpeed( $speed );
+
+        $this->selenium->windowMaximize();
     }
 
     function tearDown()
