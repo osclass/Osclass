@@ -413,6 +413,15 @@
     }
 
     /**
+     * Gets IP of current item
+     *
+     * @return string
+     */
+    function osc_item_ip() {
+        return osc_item_field("s_ip");
+    }
+
+    /**
      * Gets true if current item is marked premium, else return false
      *
      * @return boolean
@@ -489,6 +498,15 @@
      */
     function osc_item_is_inactive() {
         return (osc_item_field("b_active")==0);
+    }
+
+    /**
+     * Gets if current item is enabled
+     *
+     * @return boolean
+     */
+    function osc_item_is_enabled() {
+        return (osc_item_field("b_enabled")==1);
     }
 
     /**
@@ -942,11 +960,12 @@
     //////////
 
     /**
-     * Gets next item of last items
+     * Gets next item of latest items query
      *
-     * @return array
+     * @return boolean It returns true if there is another item available or false if there isn't
      */
     function osc_has_latest_items($total_latest_items = null, $options = array()) {
+        // if we don't have the latest items loaded, do the query
         if ( !View::newInstance()->_exists('latestItems') ) {
             $search = Search::newInstance();
             if( !is_numeric($total_latest_items) ) {
@@ -955,26 +974,36 @@
 
             View::newInstance()->_exportVariableToView('latestItems', $search->getLatestItems($total_latest_items, $options));
         }
-        if ( View::newInstance()->_exists('resources') ) {
-            View::newInstance()->_erase('resources');
+
+        // keys we want to erase from View
+        $to_erase = array('resources', 'item_category', 'metafields');
+        foreach($to_erase as $t) {
+            if ( View::newInstance()->_exists($t) ) {
+                View::newInstance()->_erase($t);
+            }
         }
-        if ( View::newInstance()->_exists('item_category') ) {
-            View::newInstance()->_erase('item_category');
-        }
-        if ( View::newInstance()->_exists('metafields') ) {
-            View::newInstance()->_erase('metafields');
-        }
-        if(View::newInstance()->_get('itemLoop')!='latest') {
+
+        // set itemLoop to latest if it's the first time we enter here
+        if(View::newInstance()->_get('itemLoop') !== 'latest') {
             View::newInstance()->_exportVariableToView('oldItem', View::newInstance()->_get('item'));
             View::newInstance()->_exportVariableToView('itemLoop', 'latest');
         }
+
+        // get next item
         $item = View::newInstance()->_next('latestItems');
+
         if(!$item) {
             View::newInstance()->_exportVariableToView('item', View::newInstance()->_get('oldItem'));
             View::newInstance()->_exportVariableToView('itemLoop', '');
         } else {
             View::newInstance()->_exportVariableToView('item', View::newInstance()->_current('latestItems'));
         }
+
+        // reset the loop once we finish just in case we want to use it again
+        if( !$item && View::newInstance()->_count('latestItems') > 0 ) {
+            View::newInstance()->_reset('latestItems');
+        }
+
         return $item;
     }
 
@@ -1157,7 +1186,7 @@
             $value = osc_field(osc_item_meta(), 's_value', '');
             if(is_array($value)) {
                 // from [date_from] to [date_to]
-                if(isset($value['from']) && $value['from']!='' && is_int($value['from']) && isset($value['to']) && $value['to']!='' && is_int($value['to'])) {
+                if(isset($value['from']) && $value['from']!='' && is_numeric($value['from']) && isset($value['to']) && $value['to']!='' && is_numeric($value['to'])) {
                     $return  = __('From') . ' ' . htmlentities( date(osc_date_format(), $value['from']), ENT_COMPAT, "UTF-8");
                     $return .= ' ' . __('to') . ' ' . htmlentities( date(osc_date_format(), $value['to']), ENT_COMPAT, "UTF-8");
                     return $return;
@@ -1165,7 +1194,7 @@
                     return '';
                 }
             } else {
-                if($value!='' && is_int($value)) {
+                if($value!='' && is_numeric($value)) {
                     return htmlentities( date(osc_date_format(), $value), ENT_COMPAT, "UTF-8");
                 } else {
                     return '';

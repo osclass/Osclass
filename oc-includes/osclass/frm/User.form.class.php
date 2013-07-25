@@ -166,6 +166,9 @@
         // Code for form validation
         $("form[name=register]").validate({
             rules: {
+                s_name: {
+                    required: true
+                },
                 s_email: {
                     required: true,
                     email: true
@@ -181,6 +184,9 @@
                 }
             },
             messages: {
+                s_name: {
+                    required: "<?php _e("Name: this field is required"); ?>."
+                },
                 s_email: {
                     required: "<?php _e("Email: this field is required"); ?>.",
                     email: "<?php _e("Invalid email address"); ?>."
@@ -272,6 +278,9 @@ function checkForm() {
         // Code for form validation
         $("form[name=register]").validate({
             rules: {
+                s_name: {
+                    required: true
+                },
                 s_email: {
                     required: true,
                     email: true
@@ -285,6 +294,9 @@ function checkForm() {
                 }
             },
             messages: {
+                s_name: {
+                    required: "<?php _e("Name: this field is required"); ?>."
+                },
                 s_email: {
                     required: "<?php _e("Email: this field is required"); ?>.",
                     email: "<?php _e("Invalid email address"); ?>."

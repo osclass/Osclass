@@ -130,6 +130,7 @@
                 ((!osc_validate_category($aItem['catId'])) ? _m("Category invalid.") . PHP_EOL : '' ) .
                 ((!osc_validate_number($aItem['price'])) ? _m("Price must be a number.") . PHP_EOL : '' ) .
                 ((!osc_validate_max(number_format($aItem['price'],0,'',''), 15)) ? _m("Price too long.") . PHP_EOL : '' ) .
+                ((!is_null($aItem['price']) && (int)$aItem['price']<0 ) ? _m('Price must be positive number.') . PHP_EOL : '' ) .
                 ((!osc_validate_max($contactName, 35)) ? _m("Name too long.") . PHP_EOL : '' ) .
                 ((!osc_validate_email($contactEmail)) ? _m("Email invalid.") . PHP_EOL : '' ) .
                 ((!osc_validate_text($aItem['countryName'], 2, false)) ? _m("Country too short.") . PHP_EOL : '' ) .
@@ -334,6 +335,7 @@
                 ((!osc_validate_category($aItem['catId'])) ? _m("Category invalid.") . PHP_EOL : '' ) .
                 ((!osc_validate_number($aItem['price'])) ? _m("Price must be a number.") . PHP_EOL : '' ) .
                 ((!osc_validate_max(number_format($aItem['price'],0,'',''), 15)) ? _m("Price too long.") . PHP_EOL : '' ) .
+                ((!is_null($aItem['price']) && (int)$aItem['price']<0 ) ? _m('Price must be positive number.') . PHP_EOL : '' ) .
                 ((!osc_validate_text($aItem['countryName'], 3, false)) ? _m("Country too short.") . PHP_EOL : '' ) .
                 ((!osc_validate_max($aItem['countryName'], 50)) ? _m("Country too long.") . PHP_EOL : '' ) .
                 ((!osc_validate_text($aItem['regionName'], 2, false)) ? _m("Region too short.") . PHP_EOL : '' ) .
@@ -873,6 +875,11 @@
          */
         public function add_comment()
         {
+
+            if(!osc_comments_enabled()) {
+                return 7;
+            }
+
             $aItem  = $this->prepareDataForFunction('add_comment');
 
             $authorName     = trim($aItem['authorName']);
@@ -954,6 +961,8 @@
                               ,'b_active'       => ($status=='ACTIVE' ? 1 : 0)
                               ,'b_enabled'      => 1
                               ,'fk_i_user_id'   => $userId);
+
+            osc_run_hook('before_add_comment', $aComment);
 
             if( $mComments->insert($aComment) ) {
                 $commentID = $mComments->dao->insertedId();

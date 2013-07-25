@@ -220,7 +220,6 @@
                         $meta = Params::getParam('meta');
                         if(is_array($meta)) {
                             foreach( $meta as $key => $value ) {
-                                error_log(print_r($value, true ));
                                 Session::newInstance()->_setForm('meta_'.$key, $value);
                                 Session::newInstance()->_keepForm('meta_'.$key);
                             }
@@ -445,6 +444,9 @@
                             osc_add_flash_error_message($msg);
                             break;
                         case 6:  $msg = _m('You need to be logged to comment');
+                            osc_add_flash_error_message($msg);
+                            break;
+                        case 7:  $msg = _m('Sorry, comments are disabled');
                             osc_add_flash_error_message($msg);
                             break;
                     }

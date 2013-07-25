@@ -1,0 +1,47 @@
+body.search #sidebar,
+body.user #sidebar{
+    width:auto;
+    float:none;
+    margin-bottom:40px;
+}
+body.search #content{
+    position:relative;
+    padding-top:100px;
+}
+body.user #sidebar{
+    margin-top:15px;
+}
+body.search .list-header{
+    position: absolute;
+    top:0;
+    width:100%;
+    left:0;
+    height: 80px;
+}
+body.search #sidebar,
+body.user #sidebar{
+    display:none;
+    background-color:$widgetbackground;
+    border:solid 1px $widgetbordercolor;
+    padding:10px 15px 5px ;
+    width:auto;
+    float:none;
+    @include border-radius(4px);
+}
+body.search #content h1{
+    display:block;
+    margin:0;
+    font-size:1.5em;
+}
+.resp-wrapper{
+    padding:0 10px;
+}
+body.search .list-header .actions{
+    padding:10px 0;
+    clear:both;
+}
+body.display-filters .show-filters-btn{
+    background-color:$maincolor;
+    border-color:darken($maincolor,10%);
+    color:white;
+}

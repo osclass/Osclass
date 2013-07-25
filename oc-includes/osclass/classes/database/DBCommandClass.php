@@ -1077,6 +1077,9 @@
         {
             if(preg_match('|\((.*)\)|ms', $struct_queries[strtolower($table)], $match)) {
                 $fields = explode("\n", trim($match[1]));
+                foreach($fields as $key => $value) {
+                    $fields[$key] = trim(preg_replace('/,$/','', $value));
+                }
             } else {
                 $fields = false;
             }
@@ -1207,6 +1210,7 @@
                     $indexes_array[$tbl_index['Key_name']]['columns'][]  = array('fieldname' => $tbl_index['Column_name'], 'subpart' => $tbl_index['Sub_part']);
                     $indexes_array[$tbl_index['Key_name']]['unique']     = ($tbl_index['Non_unique'] == 0)?true:false;
                     $indexes_array[$tbl_index['Key_name']]['index_type'] = $tbl_index['Index_type'];
+                    $indexes_array[$tbl_index['Key_name']]['Key_name']   = $tbl_index['Key_name'];
                 }
 
                 foreach($indexes_array as $k => $v) {
@@ -1232,7 +1236,7 @@
                         if( ( count($v['columns']) == 1 && $v['columns'][0]['fieldname'] !=  $k ) || ( preg_match('/^idx/', $k, $coincidencias) > 0 ) ) {
                             $string .= 'INDEX '.$k.' ';
                         } else {
-                            $string .= 'INDEX ';
+                            $string .= 'INDEX ' . $v['Key_name'] . ' ';
                         }
                     }
 

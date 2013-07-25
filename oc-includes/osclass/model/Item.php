@@ -486,10 +486,15 @@
          */
         public function findByHourExpiration($hours = 24)
         {
-            $this->dao->select('l.*, i.*, TIMESTAMPDIFF(HOUR, NOW(), i.dt_expiration) as hourdiff ');
+            $this->dao->select('l.*, i.*');
+
+            $this->dao->where( "i.b_enabled = 1 " );
+            $this->dao->where( "i.b_active = 1 " );
+            $this->dao->where( "i.b_spam = 0" );
+
             $this->dao->from($this->getTableName().' i, '.DB_TABLE_PREFIX.'t_item_location l');
             $this->dao->where('l.fk_i_item_id = i.pk_i_id');
-            $this->dao->where('hourdiff = '.$hours);
+            $this->dao->where('TIMESTAMPDIFF(HOUR, NOW(), i.dt_expiration) = '.$hours);
 
             $result = $this->dao->get();
             if($result == false) {
@@ -509,10 +514,15 @@
          */
         public function findByDayExpiration($days = 1)
         {
-            $this->dao->select('l.*, i.*, TIMESTAMPDIFF(HOUR, NOW(), i.dt_expiration) as daydiff ');
+            $this->dao->select('l.*, i.*');
+
+            $this->dao->where( "i.b_enabled = 1 " );
+            $this->dao->where( "i.b_active = 1 " );
+            $this->dao->where( "i.b_spam = 0" );
+
             $this->dao->from($this->getTableName().' i, '.DB_TABLE_PREFIX.'t_item_location l');
             $this->dao->where('l.fk_i_item_id = i.pk_i_id');
-            $this->dao->where('daydiff = '.$days);
+            $this->dao->where('TIMESTAMPDIFF(DAY, NOW(), i.dt_expiration) = '.$days);
 
             $result = $this->dao->get();
             if($result == false) {

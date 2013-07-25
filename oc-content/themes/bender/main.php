@@ -27,7 +27,7 @@
 
     $buttonClass = '';
     $listClass   = '';
-    if(osc_search_show_as() == 'gallery'){
+    if(bender_show_as() == 'gallery'){
           $listClass = 'listing-grid';
           $buttonClass = 'active';
     }
@@ -35,14 +35,15 @@
 <?php osc_current_web_theme_path('header.php') ; ?>
 <div class="clear"></div>
 <div class="latest_ads">
-<h1><strong><?php _e('Latest job offers', 'bender') ; ?></strong></h1>
+<h1><strong><?php _e('Latest Listings', 'bender') ; ?></strong></h1>
  <?php if( osc_count_latest_items() == 0) { ?>
+    <div class="clear"></div>
     <p class="empty"><?php _e("There aren't job offers available at this moment", 'bender'); ?></p>
 <?php } else { ?>
     <div class="actions">
       <span class="doublebutton <?php echo $buttonClass; ?>">
-           <a href="<?php echo osc_update_search_url(array('sShowAs'=> 'list')); ?>" class="list-button" data-class-toggle="listing-grid" data-destination="#listing-card-list"><span><?php _e('List', 'bender'); ?></span></a>
-           <a href="<?php echo osc_update_search_url(array('sShowAs'=> 'gallery')); ?>" class="grid-button" data-class-toggle="listing-grid" data-destination="#listing-card-list"><span><?php _e('Grid', 'bender'); ?></span></a>
+           <a href="<?php echo osc_base_url(true); ?>?sShowAs=list" class="list-button" data-class-toggle="listing-grid" data-destination="#listing-card-list"><span><?php _e('List', 'bender'); ?></span></a>
+           <a href="<?php echo osc_base_url(true); ?>?sShowAs=gallery" class="grid-button" data-class-toggle="listing-grid" data-destination="#listing-card-list"><span><?php _e('Grid', 'bender'); ?></span></a>
       </span>
     </div>
     <ul class="listing-card-list <?php echo $listClass; ?>" id="listing-card-list">
@@ -61,7 +62,7 @@
     <div class="clear"></div>
     <?php if( osc_count_latest_items() == osc_max_latest_items() ) { ?>
         <p class="see_more_link"><a href="<?php echo osc_search_show_all_url() ; ?>">
-            <strong><?php _e('See all offers', 'bender') ; ?> &raquo;</strong></a>
+            <strong><?php _e('See all listings', 'bender') ; ?> &raquo;</strong></a>
         </p>
     <?php } ?>
 <?php } ?>

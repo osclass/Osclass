@@ -387,9 +387,9 @@
                     $c = trim($c);
                     if($c!='') {
                         if(is_numeric($c)) {
-                            $this->city_areas[] = sprintf("%st_item_location.fk_i_city_area_id = %d ", DB_TABLE_PREFIX, $c);
+                            $this->city_areas[] = sprintf("%st_item_location.fk_i_city_area_id = %d ", DB_TABLE_PREFIX, $this->dao->escapeStr($c));
                         } else {
-                            $this->city_areas[] = sprintf("%st_item_location.s_city_area LIKE '%s' ", DB_TABLE_PREFIX, $c);
+                            $this->city_areas[] = sprintf("%st_item_location.s_city_area LIKE '%s' ", DB_TABLE_PREFIX, $this->dao->escapeStr($c));
                         }
                     }
                 }
@@ -397,9 +397,9 @@
                 $city_area = trim($city_area);
                 if($city_area!="") {
                     if(is_numeric($city_area)) {
-                        $this->city_areas[] = sprintf("%st_item_location.fk_i_city_area_id = %d ", DB_TABLE_PREFIX, $city_area);
+                        $this->city_areas[] = sprintf("%st_item_location.fk_i_city_area_id = %d ", DB_TABLE_PREFIX, $this->dao->escapeStr($city_area));
                     } else {
-                        $this->city_areas[] = sprintf("%st_item_location.s_city_area LIKE '%s' ", DB_TABLE_PREFIX, $city_area);
+                        $this->city_areas[] = sprintf("%st_item_location.s_city_area LIKE '%s' ", DB_TABLE_PREFIX, $this->dao->escapeStr($city_area));
                     }
                 }
             }
@@ -419,9 +419,9 @@
                     $c = trim($c);
                     if($c!='') {
                         if(is_numeric($c)) {
-                            $this->cities[] = sprintf("%st_item_location.fk_i_city_id = %d ", DB_TABLE_PREFIX, $c);
+                            $this->cities[] = sprintf("%st_item_location.fk_i_city_id = %d ", DB_TABLE_PREFIX, $this->dao->escapeStr($c));
                         } else {
-                            $this->cities[] = sprintf("%st_item_location.s_city LIKE '%s' ", DB_TABLE_PREFIX, $c);
+                            $this->cities[] = sprintf("%st_item_location.s_city LIKE '%s' ", DB_TABLE_PREFIX, $this->dao->escapeStr($c));
                         }
                     }
                 }
@@ -429,9 +429,9 @@
                 $city = trim($city);
                 if($city!="") {
                     if(is_numeric($city)) {
-                        $this->cities[] = sprintf("%st_item_location.fk_i_city_id = %d ", DB_TABLE_PREFIX, $city);
+                        $this->cities[] = sprintf("%st_item_location.fk_i_city_id = %d ", DB_TABLE_PREFIX, $this->dao->escapeStr($city));
                     } else {
-                        $this->cities[] = sprintf("%st_item_location.s_city LIKE '%s' ", DB_TABLE_PREFIX, $city);
+                        $this->cities[] = sprintf("%st_item_location.s_city LIKE '%s' ", DB_TABLE_PREFIX, $this->dao->escapeStr($city));
                     }
                 }
             }
@@ -451,9 +451,9 @@
                     $r = trim($r);
                     if($r!='') {
                         if(is_numeric($r)) {
-                            $this->regions[] = sprintf("%st_item_location.fk_i_region_id = %d ", DB_TABLE_PREFIX, $r);
+                            $this->regions[] = sprintf("%st_item_location.fk_i_region_id = %d ", DB_TABLE_PREFIX, $this->dao->escapeStr($r));
                         } else {
-                            $this->regions[] = sprintf("%st_item_location.s_region LIKE '%s' ", DB_TABLE_PREFIX, $r);
+                            $this->regions[] = sprintf("%st_item_location.s_region LIKE '%s' ", DB_TABLE_PREFIX, $this->dao->escapeStr($r));
                         }
                     }
                 }
@@ -461,9 +461,9 @@
                 $region = trim($region);
                 if($region!="") {
                     if(is_numeric($region)) {
-                        $this->regions[] = sprintf("%st_item_location.fk_i_region_id = %d ", DB_TABLE_PREFIX, $region);
+                        $this->regions[] = sprintf("%st_item_location.fk_i_region_id = %d ", DB_TABLE_PREFIX, $this->dao->escapeStr($region));
                     } else {
-                        $this->regions[] = sprintf("%st_item_location.s_region LIKE '%s' ", DB_TABLE_PREFIX, $region);
+                        $this->regions[] = sprintf("%st_item_location.s_region LIKE '%s' ", DB_TABLE_PREFIX, $this->dao->escapeStr($region));
                     }
                 }
             }
@@ -483,9 +483,9 @@
                     $c = trim($c);
                     if($c!='') {
                         if(strlen($c)==2) {
-                            $this->countries[] = sprintf("%st_item_location.fk_c_country_code = '%s' ", DB_TABLE_PREFIX, strtolower($c));
+                            $this->countries[] = sprintf("%st_item_location.fk_c_country_code = '%s' ", DB_TABLE_PREFIX, strtolower($this->dao->escapeStr($c)));
                         } else {
-                            $this->countries[] = sprintf("%st_item_location.s_country LIKE '%s' ", DB_TABLE_PREFIX, $c);
+                            $this->countries[] = sprintf("%st_item_location.s_country LIKE '%s' ", DB_TABLE_PREFIX, $this->dao->escapeStr($c));
                         }
                     }
                 }
@@ -493,9 +493,9 @@
                 $country = trim($country);
                 if($country!="") {
                     if(strlen($country)==2) {
-                        $this->countries[] = sprintf("%st_item_location.fk_c_country_code = '%s' ", DB_TABLE_PREFIX, strtolower($country));
+                        $this->countries[] = sprintf("%st_item_location.fk_c_country_code = '%s' ", DB_TABLE_PREFIX, strtolower($this->dao->escapeStr($country)));
                     } else {
-                        $this->countries[] = sprintf("%st_item_location.s_country LIKE '%s' ", DB_TABLE_PREFIX, $country);
+                        $this->countries[] = sprintf("%st_item_location.s_country LIKE '%s' ", DB_TABLE_PREFIX, $this->dao->escapeStr($country));
                     }
                 }
             }
@@ -593,7 +593,7 @@
         public function addPattern($pattern)
         {
             $this->withPattern  = true;
-            $this->sPattern     = $pattern;
+            $this->sPattern     = $this->dao->escapeStr($pattern);
         }
 
         /**
@@ -625,7 +625,7 @@
                     if(!is_numeric($_id)) {
                         $user = User::newInstance()->findByUsername($_id);
                         if(isset($user['pk_i_id'])) {
-                            $ids[] = sprintf("%st_item.fk_i_user_id = %d ", DB_TABLE_PREFIX, $user['pk_i_id']);
+                            $ids[] = sprintf("%st_item.fk_i_user_id = %d ", DB_TABLE_PREFIX, $this->dao->escapeStr($user['pk_i_id']));
                         }
                     } else {
                         $ids[] = sprintf("%st_item.fk_i_user_id = %d ", DB_TABLE_PREFIX, $_id);
@@ -637,10 +637,10 @@
                 if(!is_numeric($id)) {
                     $user = User::newInstance()->findByUsername($id);
                     if(isset($user['pk_i_id'])) {
-                        $this->user_ids = $user['pk_i_id'];
+                        $this->user_ids = $this->dao->escapeStr($user['pk_i_id']);
                     }
                 } else {
-                    $this->user_ids = $id;
+                    $this->user_ids = $this->dao->escapeStr($id);
                 }
             }
         }
@@ -1073,14 +1073,19 @@
             $premium_sql = $this->_makeSQLPremium($max); // make premium sql
 
             $result = $this->dao->query($premium_sql);
-            $items = $result->result();
+            if($result) {
+                $items = $result->result();
 
-            $mStat = ItemStats::newInstance();
-            foreach($items as $item) {
-                $mStat->increase('i_num_premium_views', $item['pk_i_id']);
+                $mStat = ItemStats::newInstance();
+                foreach($items as $item) {
+                    $mStat->increase('i_num_premium_views', $item['pk_i_id']);
+                }
+                return Item::newInstance()->extendData($items);
+            } else {
+                return array();
             }
-            return Item::newInstance()->extendData($items);
         }
+
 
         /**
          * Return latest posted items, you can filter by category and specify the

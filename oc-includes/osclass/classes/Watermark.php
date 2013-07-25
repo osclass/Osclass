@@ -113,7 +113,7 @@ class Watermark{
     private function imageAddText($image, $color, $text) {
         if(osc_use_imagick()) {
             $draw = new ImagickDraw();
-            $draw->setFillColor('black');//$color);
+            $draw->setFillColor("#".$color);
             $draw->setFont($this->font);
             $draw->setFontSize( 30 );
             $metrics = $image->queryFontMetrics($draw, $text);

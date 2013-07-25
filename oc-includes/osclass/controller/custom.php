@@ -28,12 +28,14 @@
         //Business Layer...
         function doModel()
         {
+            $user_menu = false;
             if(Params::existParam('route')) {
                 $routes = Rewrite::newInstance()->getRoutes();
                 $rid = Params::getParam('route');
                 $file = '../';
                 if(isset($routes[$rid]) && isset($routes[$rid]['file'])) {
                     $file = $routes[$rid]['file'];
+                    $user_menu = $routes[$rid]['user_menu'];
                 }
             } else {
                 // DEPRECATED: Disclosed path in URL is deprecated, use routes instead
@@ -54,7 +56,12 @@
             }
 
             $this->_exportVariableToView('file', $file);
-            $this->doView('custom.php');
+            if($user_menu) {
+                Params::setParam('in_user_menu', true);
+                $this->doView('user-custom.php');
+            } else {
+                $this->doView('custom.php');
+            }
         }
 
         //hopefully generic...

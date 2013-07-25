@@ -28,7 +28,7 @@
 <div id="header">
     <div class="wrapper">
         <div id="logo">
-            <a href="<?php echo osc_base_url(); ?>"><?php echo logo_header(); ?></a>
+            <?php echo logo_header(); ?>
             <span id="description"><?php echo osc_page_description(); ?></span>
         </div>
         <ul class="nav">
@@ -52,8 +52,10 @@
         </ul>
     </div>
     <?php if( osc_is_home_page() || osc_is_static_page() || osc_is_contact_page() ) { ?>
-    <form action="<?php echo osc_base_url(true) ; ?>" method="get" class="search nocsrf" <?php /* onsubmit="javascript:return doSearch();"*/ ?>>
-        <input type="hidden" name="page" value="search" />
+    <form action="<?php echo osc_search_url(); ?>" method="get" class="search nocsrf" <?php /* onsubmit="javascript:return doSearch();"*/ ?>>
+        <?php if( !osc_rewrite_enabled() ) { ?>
+        <input type="hidden" name="page" value="search"/>
+        <?php } ?>
         <div class="main-search">
             <div class="cell">
                 <input type="text" name="sPattern" id="query" class="input-text" value="" placeholder="<?php echo osc_get_preference('keyword_placeholder', 'bender_theme') ; ?>" />

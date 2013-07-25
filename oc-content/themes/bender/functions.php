@@ -26,7 +26,7 @@ DEFINES
 */
     define('BENDER_THEME_VERSION', '1.0');
     if( !osc_get_preference('keyword_placeholder', 'bender_theme') ) {
-        osc_set_preference('keyword_placeholder', __('ie. PHP Programmer', 'bender_theme'), 'bender_theme');
+        osc_set_preference('keyword_placeholder', __('ie. PHP Programmer', 'bender'), 'bender_theme');
     }
     osc_register_script('fancybox', osc_current_web_theme_url('js/fancybox/jquery.fancybox.pack.js'), array('jquery'));
     osc_enqueue_style('fancybox', osc_current_web_theme_url('js/fancybox/jquery.fancybox.css'));
@@ -48,6 +48,8 @@ FUNCTIONS
             osc_set_preference('footer_link', '1', 'bender_theme');
             osc_set_preference('donation', '0', 'bender_theme');
             osc_set_preference('default_logo', '1', 'bender_theme');
+            osc_set_preference('defaultShowAs@all', 'list', 'bender_theme');
+            osc_set_preference('defaultShowAs@search', 'list');
             osc_reset_preferences();
         }
     }
@@ -135,6 +137,23 @@ FUNCTIONS
                 $premiumSlug = '-premium';
             }
             require WebThemes::newInstance()->getCurrentThemePath().'loop-single'.$premiumSlug.'.php';
+        }
+    }
+    if( !function_exists('bender_show_as') ){
+        function bender_show_as(){
+
+            $p_sShowAs    = Params::getParam('sShowAs');
+            $aValidShowAsValues = array('list', 'gallery');
+            if (!in_array($p_sShowAs, $aValidShowAsValues)) {
+                $p_sShowAs = bender_default_show_as();
+            }
+
+            return $p_sShowAs;
+        }
+    }
+    if( !function_exists('bender_default_show_as') ){
+        function bender_default_show_as(){
+            return getPreference('defaultShowAs@all','bender_theme');
         }
     }
     if( !function_exists('bender_draw_categories_list') ) {
@@ -236,6 +255,8 @@ FUNCTIONS
     }
     if( !function_exists('related_listings') ) {
         function related_listings() {
+            View::newInstance()->_exportVariableToView('items', array());
+
             $mSearch = new Search();
             $mSearch->addCategory(osc_item_category_id());
             $mSearch->addRegion(osc_item_region());
@@ -367,7 +388,7 @@ FUNCTIONS
             $location = Rewrite::newInstance()->get_location();
             $section  = Rewrite::newInstance()->get_section();
 
-            if( $location === 'user' && in_array($section, array('dashboard', 'profile', 'alerts', 'change_email', 'change_username',  'change_password', 'items')) ) {
+            if( ($location === 'user' && in_array($section, array('dashboard', 'profile', 'alerts', 'change_email', 'change_username',  'change_password', 'items'))) || ($location ==='custom' && Params::getParam('in_user_menu')==true ) ) {
                 osc_enqueue_script('delete-user-js');
             }
         }
@@ -405,9 +426,12 @@ FUNCTIONS
             case('settings'):
                 $footerLink  = Params::getParam('footer_link');
                 $defaultLogo = Params::getParam('default_logo');
+
                 osc_set_preference('keyword_placeholder', Params::getParam('keyword_placeholder'), 'bender_theme');
                 osc_set_preference('footer_link', ($footerLink ? '1' : '0'), 'bender_theme');
                 osc_set_preference('default_logo', ($defaultLogo ? '1' : '0'), 'bender_theme');
+                osc_set_preference('defaultShowAs@all', Params::getParam('defaultShowAs@all'), 'bender_theme');
+                osc_set_preference('defaultShowAs@search', Params::getParam('defaultShowAs@all'));
 
                 osc_add_flash_ok_message(__('Theme settings updated correctly', 'bender'), 'admin');
                 osc_redirect_to(osc_admin_render_theme_url('oc-content/themes/bender/admin/settings.php'));
@@ -464,6 +488,72 @@ if(osc_is_home_page() || osc_is_search_page()){
     bender_add_body_class('has-searchbox');
 }
 
+
+function bender_sidebar_category_search($catId = null)
+{
+    $aCategories = array();
+    if($catId==null) {
+        $aCategories[] = Category::newInstance()->findRootCategoriesEnabled();
+    } else {
+        // if parent category, only show parent categories
+        $aCategories = Category::newInstance()->toRootTree($catId);
+        end($aCategories);
+        $cat = current($aCategories);
+        // if is parent of some category
+        $childCategories = Category::newInstance()->findSubcategories($cat['pk_i_id']);
+        if(count($childCategories) > 0) {
+            $aCategories[] = $childCategories;
+        }
+    }
+
+    if(count($aCategories) == 0) {
+        return "";
+    }
+
+    bender_print_sidebar_category_search($aCategories, $catId);
+}
+
+function bender_print_sidebar_category_search($aCategories, $current_category = null, $i = 0)
+{
+    $class = '';
+    if(!isset($aCategories[$i])) {
+        return null;
+    }
+
+    if($i===0) {
+        $class = 'class="category"';
+    }
+
+    $c   = $aCategories[$i];
+    $i++;
+    if(!isset($c['pk_i_id'])) {
+        echo '<ul '.$class.' style="display:block;">';
+        foreach($c as $key => $value) {
+    ?>
+            <li style="padding-left:10px;padding-top: 6px;">
+                <a id="cat_<?php echo osc_esc_html($value['pk_i_id']);?>" href="<?php echo osc_esc_html(osc_update_search_url(array('sCategory'=> $value['pk_i_id']))); ?>">
+                <?php if(isset($current_category) && $current_category == $value['pk_i_id']){ echo '<strong>'.$value['s_name'].'</strong>'; }
+                else{ echo $value['s_name']; } ?>
+                </a>
+
+            </li>
+    <?php
+        }
+        echo "</ul>";
+    } else {
+    ?>
+    <ul <?php echo $class;?> style="display:block;">
+        <li style="padding-left:10px;padding-top: 6px;">
+            <a id="cat_<?php echo osc_esc_html($c['pk_i_id']);?>" href="<?php echo osc_esc_html(osc_update_search_url(array('sCategory'=> $c['pk_i_id']))); ?>">
+            <?php if(isset($current_category) && $current_category == $c['pk_i_id']){ echo '<strong>'.$c['s_name'].'</strong>'; }
+                  else{ echo $c['s_name']; } ?>
+            </a>
+            <?php bender_print_sidebar_category_search($aCategories, $current_category, $i); ?>
+        </li>
+    </ul>
+<?php
+    }
+}
 
 /**
 

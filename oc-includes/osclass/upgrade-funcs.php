@@ -438,10 +438,9 @@ CREATE TABLE %st_item_description_tmp (
         $comm->query(sprintf("INSERT INTO %st_pages_description (fk_i_pages_id, fk_c_locale_code, s_title, s_text) VALUES (%d, 'en_US', '{WEB_TITLE} - Your ad is about to expire', '<p>Hi {USER_NAME},</p><p>Your listing <a href=\"{ITEM_URL}\">{ITEM_TITLE}</a> is about to expire at {WEB_LINK}.')", DB_TABLE_PREFIX, $comm->insertedId()));
 
         osc_set_preference('force_aspect_image', '0', 'osclass', 'BOOLEAN');
-
     }
 
-    osc_changeVersionTo(312);
+    osc_changeVersionTo(320);
 
     echo '<div class="well ui-rounded-corners separate-top-medium">';
     echo '<p>'.__('Osclass &raquo; Updated correctly').'</p>';

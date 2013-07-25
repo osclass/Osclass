@@ -31,6 +31,15 @@
                 <div class="form-controls"><input type="text" class="xlarge" name="keyword_placeholder" value="<?php echo osc_esc_html( osc_get_preference('keyword_placeholder', 'bender_theme') ); ?>"></div>
             </div>
             <div class="form-row">
+                <div class="form-label"><?php _e('Show lists as:', 'bender'); ?></div>
+                <div class="form-controls">
+                    <select name="defaultShowAs@all">
+                        <option value="gallery" <?php if(bender_default_show_as() == 'gallery'){ echo 'selected="selected"' ; } ?>><?php _e('Gallery','bender'); ?></option>
+                        <option value="list" <?php if(bender_default_show_as() == 'list'){ echo 'selected="selected"' ; } ?>><?php _e('List','bender'); ?></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
                 <div class="form-label"><?php _e('Footer link', 'bender'); ?></div>
                 <div class="form-controls">
                     <div class="form-label-checkbox"><input type="checkbox" name="footer_link" value="1" <?php echo (osc_get_preference('footer_link', 'bender_theme') ? 'checked' : ''); ?> > <?php _e('I want to help Osclass by linking to <a href="http://osclass.org/" target="_blank">osclass.org</a> from my site with the following text:', 'bender'); ?></div>

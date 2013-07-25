@@ -100,6 +100,9 @@
                                             case 9: osc_add_flash_warning_message( _m("The specified username is not valid, it contains some invalid words"));
                                                 $this->doView('user-register.php');
                                             break;
+                                            case 10: osc_add_flash_warning_message( _m('The name cannot be empty'));
+                                                $this->doView('user-register.php');
+                                            break;
                                         }
                 break;
                 case('validate'):       //validate account

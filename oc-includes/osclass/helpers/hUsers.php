@@ -119,7 +119,7 @@
         if ($id != '') {
             if ( osc_rewrite_enabled() ) {
                 $user = User::newInstance()->findByPrimaryKey($id);
-                $path = osc_base_url() . str_replace('{USER_ID}', $user['pk_i_id'], str_replace('{USER_USERNAME}', $user['s_username'], osc_get_preference('rewrite_user_public_profile')));
+                $path = osc_base_url().osc_get_preference('rewrite_user_profile')."/".$user['s_username'];
             } else {
                 $path = sprintf(osc_base_url(true) . '?page=user&action=pub_profile&id=%d', $id);
             }

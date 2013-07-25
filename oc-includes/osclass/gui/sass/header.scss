@@ -1,0 +1,160 @@
+#header{
+    background-color:$maincolor;
+
+    width:100%;
+    height:auto;
+    display:block;
+    position: relative;
+    margin-bottom:15px;//50px;
+    padding-bottom:25px;
+}
+body.has-searchbox #header{
+    //height:200px;
+    //padding-bottom:0px;
+}
+#header .wrapper{
+    position:relative
+}
+#header #logo{
+    $contrasted-lightness-threshold:65%;
+    @include constrasted-text($maincolor);
+    font-family:"Osclass";
+    border:none;
+    font-size:2.7em;
+    line-height:1.5em;
+    padding-top:20px;
+    padding-bottom:10px;
+    //@debug "Main color is:" #{$main-color};
+}
+#header #logo a{
+    font-size:1.5em;
+    line-height:0.8em;
+    font-weight: bold;
+    text-decoration: none;
+
+    @include constrasted-text($maincolor);
+}
+#header .publish a{
+    @if $maincolor == #000000{
+        @include button-style(#ffffff);
+    } @else {
+        @include button-style(complement(darken($maincolor,$buttonDarken)));
+    }
+
+}
+#header #logo span{
+    $contrasted-lightness-threshold:65%;
+    @include constrasted-text($maincolor);
+    font-family:"Osclass";
+    font-weight: 100;
+    text-decoration: none;
+    border:none;
+    font-size: 0.8em;
+    line-height: 1em;
+    display: block;
+    //@debug "Main color is:" #{$main-color};
+}
+.main-search{
+    @include linear-gradient(#f0f0f0,#c9c9c9);
+    width:966px;
+    padding:6px;
+    height:46px;
+    border: solid 1px #989393;
+    margin:0 auto;
+
+    box-shadow: inset 0px 1px 1px 0px #ffffff,0px 2px 2px 0px rgba( black, .2 );
+
+    position: relative;
+    margin-top:15px;
+    @include border-left-radius($radius);
+    @include border-right-radius($radius);
+}
+
+.main-search .has-placeholder{
+    float:none;
+}
+.main-search input{
+    @include input-style();
+    height: 43px;
+    width:100%;
+}
+.main-search .selector{
+    padding-left:42px;
+    padding-right:12px;
+}
+.main-search .reset-padding{
+    padding-left:0px;
+}
+.main-search .ui-button{
+    //@include button- (red);
+    @include button-style($maincolor);
+    height: 43px;
+}
+.main-search .cell{
+    display: table-cell;
+    width:100%;
+    vertical-align: top;
+}
+#header .nav{
+    position: absolute;
+    right: 0;
+    top: 10px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+#header .nav li{
+    float:left;
+    position: relative;
+}
+#header .nav li.search,
+#header .nav li.cat{
+    display:none
+}
+#header .nav li a,
+#header .nav li span{
+    color:white;
+    font-size:0.875em;
+}
+#header .nav li{
+    color:white;
+}
+#header .nav li a{
+    margin-left:10px;
+}
+#header .nav li.publish{
+    clear: both;
+    float: right;
+    margin-top:10px;
+}
+.main-search .select-box .select-box-label{
+    line-height: 43px;
+}
+.main-search .select-box select{
+    width:auto;
+    height: 42px;
+}
+.main-search .select-box-icon{
+    top:0px;
+}
+
+
+/* Breadcrumb */
+.wrapper-flash {
+    margin-bottom:35px;
+}
+div.breadcrumb {
+    line-height: 1.05em;
+    font-size: 0.75em;
+    height: auto;
+    margin: 0;
+    width: auto;
+    padding: 10px 0;
+    border-bottom: 1px solid $widgetbordercolor;
+}
+ul.breadcrumb {
+    list-style:none;
+     margin: 0;
+     padding:0;
+}
+ul.breadcrumb li { float: left; padding: 0 2px; font-weight:normal; }

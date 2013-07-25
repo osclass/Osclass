@@ -94,12 +94,12 @@
             }
         }
 
-        public function addRoute($id, $regexp, $url, $file)
+        public function addRoute($id, $regexp, $url, $file, $user_menu = false)
         {
             $regexp = trim($regexp);
-            $uri = trim($file);
+            $file = trim($file);
             if($regexp!='' && $file!='') {
-                $this->routes[$id] = array('regexp' => $regexp, 'url' => $url, 'file' => $file);
+                $this->routes[$id] = array('regexp' => $regexp, 'url' => $url, 'file' => $file, 'user_menu' => $user_menu);
             }
         }
 
