@@ -20,70 +20,68 @@
     class CWebSearch extends BaseModel
     {
         var $mSearch;
-        var $nice_url;
         var $uri;
 
         function __construct()
         {
             parent::__construct();
+
             $this->mSearch = Search::newInstance();
             $this->uri = preg_replace('|^' . REL_WEB_URL . '|', '', $_SERVER['REQUEST_URI']);
-
-            $this->nice_url = false;
-            if( !stripos($_SERVER['REQUEST_URI'], 'search') && osc_rewrite_enabled() ) {
-                $this->nice_url = true;
-            }
-
-            if( $this->nice_url ) {
-                // redirect if it ends with a slash
-                if( preg_match('|/$|', $this->uri) ) {
-                    $redirectURL = osc_base_url() . $this->uri;
-                    $redirectURL = preg_replace('|/$|', '', $redirectURL);
-                    $this->redirectTo($redirectURL);
-                }
-                $search_uri = preg_replace('|/[0-9]+$|', '', $this->uri);
-                $this->_exportVariableToView('search_uri', $search_uri);
-
-                // remove seo_url_search_prefix
-                if( osc_get_preference('seo_url_search_prefix') != '' ) {
-                    $this->uri = str_replace( osc_get_preference('seo_url_search_prefix') . '/', '', $this->uri);
-                }
-
-                // get page if it's set in the url
-                $iPage = preg_replace('|.*/([0-9]+)$|', '$01', $this->uri);
-                if( $iPage > 0 ) {
-                    Params::setParam('iPage', $iPage);
-                    // redirect without number of pages
-                    if( $iPage == 1 ) {
-                        $this->redirectTo(osc_base_url() . $search_uri);
+            if( preg_match('/^index\.php/', $this->uri)>0) {
+                // search url without permalinks params
+            } else {
+                if( stripos($_SERVER['REQUEST_URI'], osc_get_preference('rewrite_search_url'))===false && osc_rewrite_enabled() && !Params::existParam('sFeed')) {
+                    // redirect if it ends with a slash
+                    if( preg_match('|/$|', $this->uri) ) {
+                        $redirectURL = osc_base_url() . $this->uri;
+                        $redirectURL = preg_replace('|/$|', '', $redirectURL);
+                        $this->redirectTo($redirectURL);
                     }
-                }
-                if( Params::getParam('iPage') > 1 ) {
-                    $this->_exportVariableToView('canonical', osc_base_url() . $search_uri);
-                }
+                    $search_uri = preg_replace('|/[0-9]+$|', '', $this->uri);
+                    $this->_exportVariableToView('search_uri', $search_uri);
 
-                $search_uri = preg_replace('|.*?/|', '', $search_uri);
-                if( preg_match('|-r([0-9]+)$|', $search_uri, $r) ) {
-                    $region = Region::newInstance()->findByPrimaryKey($r[1]);
-                    if( !$region ) {
-                        $this->do404();
+                    // remove seo_url_search_prefix
+                    if( osc_get_preference('seo_url_search_prefix') != '' ) {
+                        $this->uri = str_replace( osc_get_preference('seo_url_search_prefix') . '/', '', $this->uri);
                     }
-                    Params::setParam('sRegion', $region['pk_i_id']);
-                    Params::setParam('sCategory', preg_replace('|(.*?)_.*?-r[0-9]+|', '$01', $search_uri));
-                } else if( preg_match('|-c([0-9]+)$|', $search_uri, $c) ) {
-                    $city = City::newInstance()->findByPrimaryKey($c[1]);
-                    if( !$city ) {
-                        $this->do404();
+
+                    // get page if it's set in the url
+                    $iPage = preg_replace('|.*/([0-9]+)$|', '$01', $this->uri);
+                    if( $iPage > 0 ) {
+                        Params::setParam('iPage', $iPage);
+                        // redirect without number of pages
+                        if( $iPage == 1 ) {
+                            $this->redirectTo(osc_base_url() . $search_uri);
+                        }
                     }
-                    Params::setParam('sCity', $city['pk_i_id']);
-                    Params::setParam('sCategory', preg_replace('|(.*?)_.*?-c[0-9]+|', '$01', $search_uri));
-                } else {
-                    $aCategory = explode('/', $search_uri);
-                    $category  = Category::newInstance()->findBySlug($aCategory[count($aCategory)-1]);
-                    if( count($category) === 0 ) {
-                        $this->do404();
+                    if( Params::getParam('iPage') > 1 ) {
+                        $this->_exportVariableToView('canonical', osc_base_url() . $search_uri);
                     }
-                    Params::setParam('sCategory', $search_uri);
+
+                    $search_uri = preg_replace('|.*?/|', '', $search_uri);
+                    if( preg_match('|-r([0-9]+)$|', $search_uri, $r) ) {
+                        $region = Region::newInstance()->findByPrimaryKey($r[1]);
+                        if( !$region ) {
+                            $this->do404();
+                        }
+                        Params::setParam('sRegion', $region['pk_i_id']);
+                        Params::setParam('sCategory', preg_replace('|(.*?)_.*?-r[0-9]+|', '$01', $search_uri));
+                    } else if( preg_match('|-c([0-9]+)$|', $search_uri, $c) ) {
+                        $city = City::newInstance()->findByPrimaryKey($c[1]);
+                        if( !$city ) {
+                            $this->do404();
+                        }
+                        Params::setParam('sCity', $city['pk_i_id']);
+                        Params::setParam('sCategory', preg_replace('|(.*?)_.*?-c[0-9]+|', '$01', $search_uri));
+                    } else {
+                        $aCategory = explode('/', $search_uri);
+                        $category  = Category::newInstance()->findBySlug($aCategory[count($aCategory)-1]);
+                        if( count($category) === 0 ) {
+                            $this->do404();
+                        }
+                        Params::setParam('sCategory', $search_uri);
+                    }
                 }
             }
         }
@@ -190,6 +188,15 @@
                 }
             }
 
+            $p_sLocale     = Params::getParam('sLocale');
+            if(!is_array($p_sLocale)) {
+                if($p_sLocale == '') {
+                    $p_sLocale = '';
+                } else {
+                    $p_sLocale = explode(",", $p_sLocale);
+                }
+            }
+
             $p_sPattern   = strip_tags(Params::getParam('sPattern'));
 
             // ADD TO THE LIST OF LAST SEARCHES
@@ -200,14 +207,16 @@
             }
 
             $p_bPic       = Params::getParam('bPic');
-            ($p_bPic == 1) ? $p_bPic = 1 : $p_bPic = 0;
+            $p_bPic = ($p_bPic == 1) ? 1 : 0;
+
+            $p_bPremium   = Params::getParam('bPremium');
+            $p_bPremium = ($p_bPremium == 1) ? 1 : 0;
 
             $p_sPriceMin  = Params::getParam('sPriceMin');
             $p_sPriceMax  = Params::getParam('sPriceMax');
 
             //WE CAN ONLY USE THE FIELDS RETURNED BY Search::getAllowedColumnsForSorting()
             $p_sOrder     = Params::getParam('sOrder');
-
             if(!in_array($p_sOrder, Search::getAllowedColumnsForSorting())) {
                 $p_sOrder = osc_default_order_field_at_search();
             }
@@ -254,7 +263,6 @@
             $successCat = false;
             if(count($p_sCategory) > 0) {
                 foreach($p_sCategory as $category) {
-
                     $successCat = ($this->mSearch->addCategory($category) || $successCat);
                 }
             } else {
@@ -308,9 +316,17 @@
                 $this->mSearch->fromUser($p_sUser);
             }
 
+            // FILTERING LOCALE
+            $this->mSearch->addLocale($p_sLocale);
+
             // FILTERING IF WE ONLY WANT ITEMS WITH PICS
             if($p_bPic) {
                 $this->mSearch->withPicture(true);
+            }
+
+            // FILTERING IF WE ONLY WANT PREMIUM ITEMS
+            if($p_bPremium) {
+                $this->mSearch->onlyPremium(true);
             }
 
             //FILTERING BY RANGE PRICE
@@ -365,6 +381,7 @@
                 $this->_exportVariableToView('search_total_pages', $iNumPages);
                 $this->_exportVariableToView('search_page', $p_iPage);
                 $this->_exportVariableToView('search_has_pic', $p_bPic);
+                $this->_exportVariableToView('search_only_premium', $p_bPremium);
                 $this->_exportVariableToView('search_region', $regionName);
                 $this->_exportVariableToView('search_city', $cityName);
                 $this->_exportVariableToView('search_price_min', $p_sPriceMin);

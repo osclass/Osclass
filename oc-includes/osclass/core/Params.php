@@ -110,7 +110,7 @@
         {
             self::$config = HTMLPurifier_Config::createDefault();
             self::$config->set('HTML.Allowed', '');
-            self::$config->set('Cache.SerializerPath', ABS_PATH . 'oc-content/uploads');
+            self::$config->set('Cache.SerializerPath', osc_uploads_path());
 
             if( !$xss_check ) {
                 return $value;

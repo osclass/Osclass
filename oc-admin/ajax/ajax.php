@@ -26,7 +26,7 @@
             parent::__construct();
             $this->ajax = true;
             if( $this->isModerator() ) {
-                if( !in_array($this->action, array('items', 'media', 'comments', 'custom')) ) {
+                if( !in_array($this->action, array('items', 'media', 'comments', 'custom', 'runhook')) ) {
                     $this->action = 'error_permissions';
                 }
             }
@@ -87,70 +87,30 @@
                 case 'categories_order': // Save the order of the categories
                     osc_csrf_check(false);
                     $aIds        = Params::getParam('list');
-                    $orderParent = 0;
-                    $orderSub    = 0;
-                    $catParent   = 0;
+                    $order = array();
                     $error       = 0;
 
                     $catManager = Category::newInstance();
                     $aRecountCat = array();
 
                     foreach($aIds as $id => $parent) {
-                        if( $parent == 'root' ) {
-                            $res = $catManager->updateOrder($id, $orderParent);
-                            if( is_bool($res) && !$res ) {
-                                $error = 1;
-                            }
-
-                            // find category
-                            $auxCategory = Category::newInstance()->findByPrimaryKey($id);
-
-                            // set parent category
-                            $conditions = array('pk_i_id' => $id);
-                            $array['fk_i_parent_id'] = NULL;
-                            $res = $catManager->update($array, $conditions);
-                            if( is_bool($res) && !$res ) {
-                                $error = 1;
-                            } else if($res==1) { // updated ok
-                                $parentId = $auxCategory['fk_i_parent_id'];
-                                if($parentId) {
-                                    // update parent category stats
-                                    array_push($aRecountCat, $id);
-                                    array_push($aRecountCat, $parentId);
-                                }
-
-                            }
-                            $orderParent++;
-                        } else {
-                            if( $parent != $catParent ) {
-                                $catParent = $parent;
-                                $orderSub  = 0;
-                            }
-
-                            $res = $catManager->updateOrder($id, $orderSub);
-                            if( is_bool($res) && !$res ) {
-                                $error = 1;
-                            }
-
-                            // set parent category
-                            $auxCategory = Category::newInstance()->findByPrimaryKey($id);
-                            $auxCategoryP = Category::newInstance()->findByPrimaryKey($catParent);
-
-                            $conditions = array('pk_i_id' => $id);
-                            $array['fk_i_parent_id'] = $catParent;
-
-                            $res = $catManager->update($array, $conditions);
-                            if( is_bool($res) && !$res ) {
-                                $error = 1;
-                            } else if($res==1) { // updated ok
-                                // update category parent
-                                $prevParentId = $auxCategory['fk_i_parent_id'];
-                                $parentId = $auxCategoryP['pk_i_id'];
-                                array_push($aRecountCat, $prevParentId);
-                                array_push($aRecountCat, $parentId);
-                            }
-                            $orderSub++;
+                        if(!isset($order[$parent])) {
+                            $order[$parent] = 0;
                         }
+
+                        $res = $catManager->update(
+                            array(
+                                'fk_i_parent_id' => ($parent=='root'?NULL:$parent),
+                                'i_position' => $order[$parent]
+                            ),
+                            array('pk_i_id' => $id)
+                        );
+                        if( is_bool($res) && !$res ) {
+                            $error = 1;
+                        } else if($res==1) {
+                            $aRecountCat[] = $id;
+                        }
+                        $order[$parent] = $order[$parent]+1;
                     }
 
                     // update category stats
@@ -168,6 +128,11 @@
                 break;
                 case 'category_edit_iframe':
                     $this->_exportVariableToView( 'category', Category::newInstance()->findByPrimaryKey( Params::getParam("id") ) );
+                    if(count(Category::newInstance()->findSubcategories( Params::getParam("id") ) )>0) {
+                        $this->_exportVariableToView( 'has_subcategories', true);
+                    } else {
+                        $this->_exportVariableToView( 'has_subcategories', false);
+                    };
                     $this->_exportVariableToView( 'languages', OSCLocale::newInstance()->listAllEnabled() );
                     $this->doView("categories/iframe.php");
                     break;
@@ -215,7 +180,17 @@
 
                             $s_options = implode(',', $aAux);
 
-                            $res = Field::newInstance()->update(array('s_name' => Params::getParam("s_name"), 'e_type' => Params::getParam("field_type"), 's_slug' => $slug, 'b_required' => Params::getParam("field_required") == "1" ? 1 : 0, 's_options' => $s_options), array('pk_i_id' => Params::getParam("id")));
+                            $res = Field::newInstance()->update(
+                                    array(
+                                        's_name'        => Params::getParam("s_name"),
+                                        'e_type'        => Params::getParam("field_type"),
+                                        's_slug'        => $slug,
+                                        'b_required'    => Params::getParam("field_required") == "1" ? 1 : 0,
+                                        'b_searchable'  => Params::getParam("field_searchable") == "1" ? 1 : 0,
+                                        's_options'     => $s_options),
+                                    array('pk_i_id' => Params::getParam("id"))
+                                    );
+
                             if(is_bool($res) && !$res) {
                                 $error = 1;
                             }
@@ -378,6 +353,8 @@
                     osc_csrf_check(false);
                     $id = Params::getParam("id");
                     $fields['i_expiration_days'] = (Params::getParam("i_expiration_days") != '') ? Params::getParam("i_expiration_days") : 0;
+                    $fields['b_price_enabled'] = (Params::getParam('b_price_enabled') != '') ? 1 : 0;
+                    $apply_changes_to_subcategories = Params::getParam('apply_changes_to_subcategories')==1?true:false;
 
                     $error = 0;
                     $has_one_title = 0;
@@ -403,18 +380,13 @@
                     if ($error==0 || ($error==1 && $has_one_title==1)) {
                         $categoryManager = Category::newInstance();
                         $res = $categoryManager->updateByPrimaryKey(array('fields' => $fields, 'aFieldsDescription' => $aFieldsDescription), $id);
-                        $categoryManager->updateExpiration($id, $fields['i_expiration_days']);
+                        $categoryManager->updateExpiration($id, $fields['i_expiration_days'], $apply_changes_to_subcategories);
+                        $categoryManager->updatePriceEnabled($id, $fields['b_price_enabled'], $apply_changes_to_subcategories);
                         if( is_bool($res) ) {
                             $error = 2;
                         }
                     }
 
-                    if(Params::getParam('apply_changes_to_subcategories')==1) {
-                        $subcategories = $categoryManager->findSubcategories($id);
-                        foreach($subcategories as $subc) {
-                            $categoryManager->updateExpiration($subc['pk_i_id'], $fields['i_expiration_days']);
-                        };
-                    };
                     if($error==0) {
                         $msg = __("Category updated correctly");
                     } else if($error==1) {
@@ -431,25 +403,34 @@
 
                     break;
                 case 'custom': // Execute via AJAX custom file
-                    $ajaxFile = Params::getParam("ajaxfile");
+                    if(Params::existParam('route')) {
+                        $routes = Rewrite::newInstance()->getRoutes();
+                        $rid = Params::getParam('route');
+                        $file = '../';
+                        if(isset($routes[$rid]) && isset($routes[$rid]['file'])) {
+                            $file = $routes[$rid]['file'];
+                        }
+                    } else {
+                        $file = Params::getParam("ajaxfile");
+                    }
 
-                    if($ajaxFile == '') {
+                    if($file == '') {
                         echo json_encode(array('error' => 'no action defined'));
                         break;
                     }
 
                     // valid file?
-                    if( stripos($ajaxFile, '../') !== false ) {
-                        echo json_encode(array('error' => 'no valid ajaxFile'));
+                    if( stripos($file, '../') !== false ) {
+                        echo json_encode(array('error' => 'no valid file'));
                         break;
                     }
 
-                    if( !file_exists(osc_plugins_path() . $ajaxFile) ) {
-                        echo json_encode(array('error' => "ajaxFile doesn't exist"));
+                    if( !file_exists(osc_plugins_path() . $file) ) {
+                        echo json_encode(array('error' => "file doesn't exist"));
                         break;
                     }
 
-                    require_once osc_plugins_path() . $ajaxFile;
+                    require_once osc_plugins_path() . $file;
                 break;
                 case 'test_mail':
                     $title = sprintf( __('Test email, %s'), osc_page_title() );
@@ -712,11 +693,8 @@
                                 }
                             }
 
-                            $filename = $data['s_update_url']."_".$data['s_version'].".zip";
+                            $filename = date('YmdHis')."_".osc_sanitize_string($data['s_title'])."_".$data['s_version'].".zip";
                             $url_source_file = $data['s_source_file'];
-
-//                            error_log('Source file: ' . $url_source_file);
-//                            error_log('Filename: ' . $filename);
 
                             $result   = osc_downloadFile($url_source_file, $filename);
 
@@ -842,7 +820,6 @@
                         $message = __('Missing download URL');
                         $error = 1; // Missing download URL
                     }
-
 
                     echo json_encode(array('error' => $error, 'message' => $message, 'data' => $data));
 

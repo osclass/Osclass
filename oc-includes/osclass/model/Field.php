@@ -63,7 +63,7 @@
             parent::__construct();
             $this->setTableName('t_meta_fields');
             $this->setPrimaryKey('pk_i_id');
-            $this->setFields( array('pk_i_id', 's_name', 'e_type', 'b_required', 's_slug', 's_options') );
+            $this->setFields( array('pk_i_id', 's_name', 'e_type', 'b_required', 'b_searchable', 's_slug', 's_options') );
         }
 
         /**
@@ -127,7 +127,7 @@
                 return array();
             }
 
-            $result = $this->dao->query(sprintf("SELECT query.*, im.s_value as s_value FROM (SELECT mf.* FROM %st_meta_fields mf, %st_meta_categories mc WHERE mc.fk_i_category_id = %d AND mf.pk_i_id = mc.fk_i_field_id) as query LEFT JOIN %st_item_meta im ON im.fk_i_field_id = query.pk_i_id AND im.fk_i_item_id = %d", DB_TABLE_PREFIX, DB_TABLE_PREFIX, $catId, DB_TABLE_PREFIX, $itemId));
+            $result = $this->dao->query(sprintf("SELECT query.*, im.s_value as s_value, im.fk_i_item_id FROM (SELECT mf.* FROM %st_meta_fields mf, %st_meta_categories mc WHERE mc.fk_i_category_id = %d AND mf.pk_i_id = mc.fk_i_field_id) as query LEFT JOIN %st_item_meta im ON im.fk_i_field_id = query.pk_i_id AND im.fk_i_item_id = %d group by pk_i_id", DB_TABLE_PREFIX, DB_TABLE_PREFIX, $catId, DB_TABLE_PREFIX, $itemId));
 
             if( $result == false ) {
                 return array();
@@ -180,6 +180,32 @@
             }
 
             return $result->row();
+        }
+
+        /**
+         * Return an array with from and to date values
+         * given a meta field id
+         *
+         */
+        public function getDateIntervalByPrimaryKey($item_id, $field_id)
+        {
+            $this->dao->select();
+            $this->dao->from(DB_TABLE_PREFIX.'t_item_meta');
+            $this->dao->where('fk_i_field_id', $field_id);
+            $this->dao->where('fk_i_item_id', $item_id);
+
+            $result = $this->dao->get();
+
+            if( $result == false ) {
+                return array();
+            }
+
+            $aAux = $result->result();
+            $aInterval = array();
+            foreach($aAux as $k => $v) {
+                $aInterval[$v['s_multi']] = $v['s_value'];
+            }
+            return $aInterval;
         }
 
         /**
@@ -293,7 +319,13 @@
          * @return mixed false on fail, int of num. of affected rows
          */
         public function replace($itemId, $field, $value) {
-            return $this->dao->replace(sprintf('%st_item_meta', DB_TABLE_PREFIX), array('fk_i_item_id' => $itemId, 'fk_i_field_id' => $field, 's_value' => $value));
+            if(is_array($value) ) {
+                foreach($value as $key => $v) {
+                    $this->dao->replace(sprintf('%st_item_meta', DB_TABLE_PREFIX), array('fk_i_item_id' => $itemId, 'fk_i_field_id' => $field, 's_multi' => $key, 's_value' => $v));
+                }
+            } else {
+                return $this->dao->replace(sprintf('%st_item_meta', DB_TABLE_PREFIX), array('fk_i_item_id' => $itemId, 'fk_i_field_id' => $field, 's_value' => $value));
+            }
         }
 
         /**

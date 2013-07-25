@@ -154,8 +154,11 @@
                         osc_add_flash_error_message( $success);
                         $this->redirectTo( osc_item_post_url() );
                     } else {
-                        Session::newInstance()->_dropkeepForm('meta_'.$key);
-
+                        if(is_array($meta)) {
+                            foreach( $meta as $key => $value ) {
+                                Session::newInstance()->_dropkeepForm('meta_'.$key);
+                            }
+                        }
                         if($success==1) {
                             osc_add_flash_ok_message( _m('Check your inbox to validate your listing') );
                         } else {
@@ -389,6 +392,15 @@
                         }
                     }
 
+                    $banned = osc_is_banned(Params::getParam('yourEmail'));
+                    if($banned==1) {
+                        osc_add_flash_error_message( _m('Your current email is not allowed'));
+                        $this->redirectTo(osc_item_url());
+                    } else if($banned==2) {
+                        osc_add_flash_error_message( _m('Your current IP is not allowed'));
+                        $this->redirectTo(osc_item_url());
+                    }
+
                     if( osc_isExpired($item['dt_expiration']) ) {
                         osc_add_flash_error_message( _m("We're sorry, but the listing has expired. You can't contact the seller") );
                         $this->redirectTo(osc_item_url());
@@ -415,24 +427,31 @@
                     switch ($status) {
                         case -1: $msg = _m('Sorry, we could not save your comment. Try again later');
                                  osc_add_flash_error_message($msg);
-                        break;
+                            break;
                         case 1:  $msg = _m('Your comment is awaiting moderation');
                                  osc_add_flash_info_message($msg);
-                        break;
+                            break;
                         case 2:  $msg = _m('Your comment has been approved');
                                  osc_add_flash_ok_message($msg);
-                        break;
+                            break;
                         case 3:  $msg = _m('Please fill the required field (email)');
                                  osc_add_flash_warning_message($msg);
-                        break;
+                            break;
                         case 4:  $msg = _m('Please type a comment');
                                  osc_add_flash_warning_message($msg);
-                        break;
+                            break;
                         case 5:  $msg = _m('Your comment has been marked as spam');
-                                 osc_add_flash_error_message($msg);
-                        break;
+                            osc_add_flash_error_message($msg);
+                            break;
+                        case 6:  $msg = _m('You need to be logged to comment');
+                            osc_add_flash_error_message($msg);
+                            break;
+                        case 7:  $msg = _m('Sorry, comments are disabled');
+                            osc_add_flash_error_message($msg);
+                            break;
                     }
 
+                    //View::newInstance()->_exportVariableToView('item', Item::newInstance()->findByPrimaryKey(Params::getParam('id')));
                     $this->redirectTo( osc_item_url() );
                     break;
                 case 'delete_comment':

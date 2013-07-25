@@ -1,0 +1,10 @@
+body{
+    .item-header #type_dates{
+      float:none;
+    }
+    div.cell_3,
+    div.cell_3:nth-child(2n){
+        margin:0;
+        width: 100%;
+    }
+  }

@@ -649,9 +649,9 @@
             $attachment   = Params::getFiles('attachment');
             $resourceName = $attachment['name'];
             $tmpName      = $attachment['tmp_name'];
-            $path         = osc_content_path() . 'uploads/' . time() . '_' . $resourceName;
+            $path         = osc_uploads_path() . time() . '_' . $resourceName;
 
-            if( !is_writable(osc_content_path() . 'uploads/') ) {
+            if( !is_writable(osc_uploads_path()) ) {
                 osc_add_flash_error_message( _m('There has been some errors sending the message') );
             }
 
@@ -1166,6 +1166,108 @@
         osc_sendMail($emailParams);
     }
     osc_add_hook('hook_email_new_comment_user', 'fn_email_new_comment_user');
+
+    function fn_email_new_admin($data) {
+
+        $name       = trim($data['s_name']);
+        $name       = strip_tags($name);
+        $username   = trim($data['s_username']);
+        $username   = strip_tags($username);
+
+        $mPages = new Page();
+        $aPage = $mPages->findByInternalName('email_new_admin');
+        $locale = osc_current_user_locale();
+
+        $content = array();
+        if(isset($aPage['locale'][$locale]['s_title'])) {
+            $content = $aPage['locale'][$locale];
+        } else {
+            $content = current($aPage['locale']);
+        }
+
+        $words   = array();
+        $words[] = array(
+            '{ADMIN_NAME}',
+            '{USERNAME}',
+            '{PASSWORD}',
+            '{WEB_ADMIN_LINK}'
+        );
+        $words[] = array(
+            $data['s_name'],
+            $data['s_username'],
+            $data['s_password'],
+            '<a href="' . osc_admin_base_url() . '">' . osc_page_title() . '</a>',
+        );
+        $title_email = osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_new_admin_title', $content['s_title'])), $words);
+        $body_email  = osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_new_admin_description', $content['s_text'])), $words);
+
+        $emailParams = array(
+            'from'      => osc_contact_email(),
+            'subject'   => $title_email,
+            'to'        => $data['s_email'],
+            'to_name'   => $data['s_name'],
+            'body'      => $body_email,
+            'alt_body'  => $body_email
+        );
+        osc_sendMail($emailParams);
+    }
+    osc_add_hook('hook_email_new_admin', 'fn_email_new_admin');
+
+
+    function fn_email_warn_expiration($aItem) {
+        $itemId      = $aItem['pk_i_id'];
+        $admin_email = osc_contact_email();
+
+        View::newInstance()->_exportVariableToView('item', $aItem);
+        $itemURL = osc_item_url();
+        $itemURL = '<a href="'.$itemURL.'" >'.$itemURL.'</a>';
+
+        $mPages = new Page();
+        $aPage = $mPages->findByInternalName('email_warn_expiration');
+        $locale = osc_current_user_locale();
+
+        $content = array();
+        if(isset($aPage['locale'][$locale]['s_title'])) {
+            $content = $aPage['locale'][$locale];
+        } else {
+            $content = current($aPage['locale']);
+        }
+
+        $words   = array();
+        $words[] = array(
+            '{USER_NAME}',
+            '{ITEM_TITLE}',
+            '{ITEM_ID}',
+            '{ITEM_EXPIRATION_DATE}',
+            '{ITEM_URL}',
+            '{ITEM_LINK}',
+            '{SELLER_NAME}',
+            '{SELLER_EMAIL}'
+        );
+        $words[] = array(
+            $aItem['s_contact_name'],
+            $aItem['s_title'],
+            $itemId,
+            $aItem['dt_expiration'],
+            osc_item_url(),
+            $itemURL,
+            $aItem['s_contact_name'],
+            $aItem['s_contact_email']
+        );
+        $title_email = osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_warn_expiration_title', $content['s_title'])), $words);
+        $body_email = osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_warn_expiration_description', $content['s_text'])), $words);
+
+        $emailParams = array(
+            'from'      => $admin_email,
+            'subject'   => $title_email,
+            'to'        => $aItem['s_contact_email'],
+            'to_name'   => $aItem['s_contact_name'],
+            'body'      => $body_email,
+            'alt_body'  => $body_email
+        );
+        osc_sendMail($emailParams);
+    }
+    osc_add_hook('hook_email_warn_expiration', 'fn_email_warn_expiration');
 
     /* file end: ./oc-includes/osclass/emails.php */
 ?>

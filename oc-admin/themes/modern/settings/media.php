@@ -91,7 +91,7 @@
                 });
 
                 $('#watermark_none').bind('change', function() {
-                    if( $(this).attr('checked') ) {
+                    if( $(this).prop('checked') ) {
                         $('#watermark_text_box').hide();
                         $('#watermark_image_box').hide();
                         resetLayout();
@@ -104,31 +104,31 @@
                     modal: true
                 });
 
-                $('#watermark_text').bind('change', function() {
-                    if( $(this).attr('checked') ) {
+                $('#watermark_text').on('change', function() {
+                    if( $(this).prop('checked') ) {
                         $('#watermark_text_box').show();
                         $('#watermark_image_box').hide();
-                        if( !$('input[name="keep_original_image"]').attr('checked') ) {
+                        if( !$('input[name="keep_original_image"]').prop('checked') ) {
                             $("#dialog-watermark-warning").dialog('open');
                         }
                         resetLayout();
                     }
                 });
 
-                $('#watermark_image').bind('change', function() {
-                    if( $(this).attr('checked') ) {
+                $('#watermark_image').on('change', function() {
+                    if( $(this).prop('checked') ) {
                         $('#watermark_text_box').hide();
                         $('#watermark_image_box').show();
-                        if( !$('input[name="keep_original_image"]').attr('checked') ) {
+                        if( !$('input[name="keep_original_image"]').prop('checked') ) {
                             $("#dialog-watermark-warning").dialog('open');
                         }
                         resetLayout();
                     }
                 });
 
-                $('input[name="keep_original_image"]').change(function() {
-                    if( !$(this).attr('checked') ) {
-                        if( !$('#watermark_none').attr('checked') ) {
+                $('input[name="keep_original_image"]').on("change",function() {
+                    if( !$(this).prop('checked') ) {
+                        if( !$('#watermark_none').prop('checked') ) {
                             $("#dialog-watermark-warning").dialog('open');
                         }
                         resetLayout();
@@ -193,6 +193,16 @@
                             <input type="checkbox" id="keep_original_image" name="keep_original_image" value="1" <?php echo ( osc_keep_original_image() ? 'checked="checked"' : '' ); ?> />
                             <label for="keep_original_image"><?php _e('Keep original image, unaltered after uploading.'); ?></label>
                             <span class="help-box"><?php _e('Image may occupy more space than usual.'); ?></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label"><?php _e('Force aspect'); ?></div>
+                    <div class="form-controls">
+                        <div class="form-label-checkbox">
+                            <input type="checkbox" id="force_aspect_image" name="force_aspect_image" value="1" <?php echo ( osc_force_aspect_image() ? 'checked="checked"' : '' ); ?> />
+                            <label for="force_aspect_image"><?php _e('Force image aspect.'); ?></label>
+                            <span class="help-box"><?php _e('No white background will be added to keep the size.'); ?></span>
                         </div>
                     </div>
                 </div>
@@ -277,9 +287,9 @@
                     <div class="form-row">
                         <div class="form-label"><?php _e('Image'); ?></div>
                         <div class="form-controls">
-                            <input type="file" name="watermark_image"/>
+                            <input type="file" name="watermark_image" id="watermark_image_file"/>
                             <?php if(osc_is_watermark_image()!='') { ?>
-                                <div class="help-box"><img width="100px" src="<?php echo osc_base_url()."oc-content/uploads/watermark.png" ?>" /></div>
+                                <div class="help-box"><img width="100px" src="<?php echo osc_base_url() . str_replace(osc_base_path(), '', osc_uploads_path()) . "watermark.png" ?>" /></div>
                             <?php }; ?>
                             <div class="help-box"><?php _e("It has to be a .PNG image"); ?></div>
                             <div class="help-box"><?php _e("Osclass doesn't check the watermark image size"); ?></div>

@@ -127,6 +127,19 @@
     }
 
     /**
+    * Gets the translations path
+    *
+    * @return string
+    */
+    function osc_uploads_path() {
+        if( MULTISITE && osc_multisite_upload_path() !== '' ) {
+            return osc_multisite_upload_path();
+        }
+
+        return(UPLOADS_PATH);
+    }
+
+    /**
     * Gets the current oc-admin theme
     *
     * @return string
@@ -306,7 +319,14 @@
      */
     function osc_search_category_url() {
         $path = '';
-        if(osc_rewrite_enabled()) {
+        if(osc_subdomain_type()=='category') {
+            if(isset($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS'])=='on' || $_SERVER['HTTPS']=='1')){
+                $path = "https://";
+            } else {
+                $path = "http://";
+            }
+            $path .= osc_category_slug().".".osc_subdomain_host().REL_WEB_URL;
+        } else if(osc_rewrite_enabled()) {
             $url = osc_get_preference('rewrite_cat_url');
             if( preg_match('|{CATEGORIES}|', $url) ) {
                 $category = Category::newInstance()->hierarchy(osc_category_id());
@@ -571,12 +591,15 @@
      * @param int $page
      * @return string
      */
-    function osc_user_list_items_url($page = '') {
+    function osc_user_list_items_url($page = '', $typeItem = '') {
         if ( osc_rewrite_enabled() ) {
+
             if($page=='') {
-                return osc_base_url() . osc_get_preference('rewrite_user_items');
+                $typeItem = $typeItem != '' ? "?itemType=" . $typeItem : "";
+                return osc_base_url() . osc_get_preference('rewrite_user_items') . $typeItem ;
             } else {
-                return osc_base_url() . osc_get_preference('rewrite_user_items') . '?iPage='.$page;
+                $typeItem = $typeItem != '' ? "&itemType=" . $typeItem  : "";
+                return osc_base_url() . osc_get_preference('rewrite_user_items') . "?iPage=" . $page . $typeItem ;
             }
         } else {
             if($page=='') {
@@ -775,6 +798,75 @@
             return osc_base_url(true)."?page=item&action=send_friend&id=".osc_item_id();
         }
     }
+
+    /**
+     * @param $id
+     * @param $args
+     * @since 3.2
+     */
+    function osc_route_url($id, $args = array()) {
+        $routes = Rewrite::newInstance()->getRoutes();
+        if(!isset($routes[$id])) { return ''; };
+        if ( osc_rewrite_enabled() ) {
+            $uri = $routes[$id]['url'];
+            foreach($args as $k => $v) {
+                $uri = str_ireplace('{'.$k.'}', $v, $uri);
+            }
+            return osc_base_url().$uri;
+        } else {
+            $params_url = '';
+            foreach($args as $k => $v) {
+                $params_url .= '&'.$k.'='.$v;
+            }
+            return osc_base_url(true)."?page=custom&route=".$id.$params_url;
+        }
+    }
+
+    /**
+     * @param $id
+     * @param $args
+     * @since 3.2
+     */
+    function osc_route_admin_url($id, $args = array()) {
+        $routes = Rewrite::newInstance()->getRoutes();
+        if(!isset($routes[$id])) { return ''; };
+        $params_url = '';
+        foreach($args as $k => $v) {
+            $params_url .= '&'.$k.'='.$v;
+        }
+        return osc_admin_base_url(true)."?page=plugins&action=renderplugin&route=".$id.$params_url;
+    }
+
+    /**
+     * @param $id
+     * @param $args
+     * @since 3.2
+     */
+    function osc_route_ajax_url($id, $args = array()) {
+        $routes = Rewrite::newInstance()->getRoutes();
+        if(!isset($routes[$id])) { return ''; };
+        $params_url = '';
+        foreach($args as $k => $v) {
+            $params_url .= '&'.$k.'='.$v;
+        }
+        return osc_base_url(true)."?page=ajax&action=custom&route=".$id.$params_url;
+    }
+
+    /**
+     * @param $id
+     * @param $args
+     * @since 3.2
+     */
+    function osc_route_admin_ajax_url($id, $args = array()) {
+        $routes = Rewrite::newInstance()->getRoutes();
+        if(!isset($routes[$id])) { return ''; };
+        $params_url = '';
+        foreach($args as $k => $v) {
+            $params_url .= '&'.$k.'='.$v;
+        }
+        return osc_admin_base_url(true)."?page=ajax&action=custom&route=".$id.$params_url;
+    }
+
     /////////////////////////////////////
     //functions for locations & search //
     /////////////////////////////////////
@@ -964,6 +1056,36 @@
         }
         return false;
     }
+
+    /**
+     * Get if the user is on public profile page
+     *
+     * @return boolean
+     */
+    function osc_is_public_profile() {
+        $location = Rewrite::newInstance()->get_location();
+        $section  = Rewrite::newInstance()->get_section();
+        if( $location === 'user' && $section === 'pub_profile' ) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Get if the user is on items page
+     *
+     * @return boolean
+     */
+    function osc_is_list_items() {
+        $location = Rewrite::newInstance()->get_location();
+        $section  = Rewrite::newInstance()->get_section();
+        if( $location === 'user' && $section === 'items' ) {
+            return true;
+        }
+        return false;
+    }
+
+
 
     /**
      * Get location

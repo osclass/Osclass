@@ -90,8 +90,8 @@
                     if( is_array($installed) ) {
                         switch($installed['error_code']) {
                             case('error_output'):
-                                osc_add_flash_error_message( sprintf( _m('The plugin generated %d characters of <strong>unexpected output</strong> during the installation'), strlen($installed['output']) ), 'admin');
-                            break;
+                                osc_add_flash_error_message( sprintf( _m('The plugin generated %d characters of <strong>unexpected output</strong> during the installation. Output: "%s"'), strlen($installed['output']), $installed['output'] ), 'admin');
+                                break;
                             case('error_installed'):
                                 osc_add_flash_error_message( _m('Plugin is already installed'), 'admin');
                             break;
@@ -159,30 +159,39 @@
                 case 'admin':
                     $plugin = Params::getParam("plugin");
                     if($plugin != "") {
-                        Plugins::runHook($plugin.'_configure');
+                        osc_run_hook($plugin.'_configure');
                     }
                     break;
                 case 'admin_post':
-                    Plugins::runHook('admin_post');
+                    osc_run_hook('admin_post');
                     break;
                 case 'renderplugin':
-                    $file = Params::getParam("file");
-                    if($file!="") {
+
+                    if(Params::existParam('route')) {
+                        $routes = Rewrite::newInstance()->getRoutes();
+                        $rid = Params::getParam('route');
+                        $file = '../';
+                        if(isset($routes[$rid]) && isset($routes[$rid]['file'])) {
+                            $file = $routes[$rid]['file'];
+                        }
+                    } else {
+                        // DEPRECATED: Disclosed path in URL is deprecated, use routes instead
+                        // This will be REMOVED in 3.4
+                        $file = Params::getParam('file');
                         // We pass the GET variables (in case we have somes)
                         if(preg_match('|(.+?)\?(.*)|', $file, $match)) {
                             $file = $match[1];
                             if(preg_match_all('|&([^=]+)=([^&]*)|', urldecode('&'.$match[2].'&'), $get_vars)) {
                                 for($var_k=0;$var_k<count($get_vars[1]);$var_k++) {
-                                    //$_GET[$get_vars[1][$var_k]] = $get_vars[2][$var_k];
-                                    //$_REQUEST[$get_vars[1][$var_k]] = $get_vars[2][$var_k];
                                     Params::setParam($get_vars[1][$var_k], $get_vars[2][$var_k]);
                                 }
                             }
                         } else {
                             $file = $_REQUEST['file'];
                         };
+                    }
+                    if(stripos($file, '../')===false && $file!="") {
                         $this->_exportVariableToView("file", osc_plugins_path() . $file);
-                        //osc_renderPluginView($file);
                         $this->doView("plugins/view.php");
                     }
                     break;
@@ -207,8 +216,9 @@
                         if(isset($categories)) {
                             Plugins::addToCategoryPlugin($categories, $plugin_short_name);
                         }
+                        osc_run_hook('plugin_categories_'.Params::getParam('plugin'), $categories);
                         osc_add_flash_ok_message( _m('Configuration was saved'), 'admin');
-                        $this->redirectTo(osc_get_http_referer());
+                        $this->redirectTo(osc_admin_base_url(true)."?page=plugins");
                     }
 
                     osc_add_flash_error_message( _m('No plugin selected'), 'admin');
@@ -305,22 +315,15 @@
                             if( $enabled ) {
                                 $sEnable = '<a href="' . osc_admin_base_url(true) . '?page=plugins&amp;action=disable&amp;plugin=' . $pInfo['filename'] . "&amp;" . osc_csrf_token_url() . '">' . __('Disable') . '</a>';
                             } else {
-                                $sEnable = '<a href="' . osc_admin_base_url(true) . '?page=plugins&amp;
-                                action=enable&amp;plugin=' . $pInfo['filename'] . "&amp;" . osc_csrf_token_url() . '">'
-                                    . __('Enable') . '</a>';
+                                $sEnable = '<a href="' . osc_admin_base_url(true) . '?page=plugins&amp;action=enable&amp;plugin=' . $pInfo['filename'] . "&amp;" . osc_csrf_token_url() . '">' . __('Enable') . '</a>';
                             }
                         }
                         // prepare row 6
                         $sInstall  = '';
                         if( $installed ) {
-                            $sInstall = '<a onclick="javascript:return uninstall_dialog(\'' . $pInfo['filename'] .
-                                '\');" href="' . osc_admin_base_url(true) . '?page=plugins&amp;action=uninstall&amp;
-                                plugin=' . $pInfo['filename'] . "&amp;" . osc_csrf_token_url() . '">' . __
-                            ('Uninstall') . '</a>';
+                            $sInstall = '<a onclick="javascript:return uninstall_dialog(\'' . $pInfo['filename'] . '\', \'' . $pInfo['plugin_name'] . '\');" href="' . osc_admin_base_url(true) . '?page=plugins&amp;action=uninstall&amp;plugin=' . $pInfo['filename'] . "&amp;" . osc_csrf_token_url() . '">' . __('Uninstall') . '</a>';
                         } else {
-                            $sInstall = '<a href="' . osc_admin_base_url(true) . '?page=plugins&amp;
-                            action=install&amp;plugin=' . $pInfo['filename'] . "&amp;" . osc_csrf_token_url() . '">' .
-                                __('Install') . '</a>';
+                            $sInstall = '<a href="' . osc_admin_base_url(true) . '?page=plugins&amp;action=install&amp;plugin=' . $pInfo['filename'] . "&amp;" . osc_csrf_token_url() . '">' . __('Install') . '</a>';
                         }
 
                         $row[] = '<input type="hidden" name="installed" value="' . $installed . '" enabled="' . $enabled . '" />' . $pInfo['plugin_name'] . '<div>' . $sUpdate . '</div>';

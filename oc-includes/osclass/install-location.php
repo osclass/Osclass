@@ -150,7 +150,7 @@ function install_locations ( ) {
         $sql = 'action=country&term=all';
     }
 
-    $data_sql = osc_file_get_contents('http://geo.osclass.org/newgeo.download.php?'.$sql);
+    $data_sql = osc_file_get_contents('http://geo.osclass.org/newgeo.download.php?'.$sql.'&install=true');
 
     $conn = DBConnectionClass::newInstance();
     $c_db = $conn->getOsclassDb();

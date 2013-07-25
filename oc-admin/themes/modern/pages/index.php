@@ -41,7 +41,7 @@
             function order_up(id) {
                 $('#datatables_list_processing').show();
                 $.ajax({
-                    url: "<?php echo osc_admin_base_url(true)?>?page=ajax&action=order_pages&id="+id+"&order=up",
+                    url: "<?php echo osc_admin_base_url(true)?>?page=ajax&action=order_pages&id="+id+"&order=up&<?php echo osc_csrf_token_url(); ?>",
                     success: function(res) {
                         // TODO improve
                         window.location.reload( true );
@@ -56,7 +56,7 @@
             function order_down(id) {
                 $('#datatables_list_processing').show();
                 $.ajax({
-                    url: "<?php echo osc_admin_base_url(true)?>?page=ajax&action=order_pages&id="+id+"&order=down",
+                    url: "<?php echo osc_admin_base_url(true)?>?page=ajax&action=order_pages&id="+id+"&order=down&<?php echo osc_csrf_token_url(); ?>",
                     success: function(res){
                         // TODO improve
                         window.location.reload( true );
@@ -71,7 +71,7 @@
             $(document).ready(function(){
                 // check_all bulkactions
                 $("#check_all").change(function(){
-                    var isChecked = $(this+':checked').length;
+                    var isChecked = $(this).prop("checked");
                     $('.col-bulkactions input').each( function() {
                         if( isChecked == 1 ) {
                             this.checked = true;

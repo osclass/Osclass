@@ -13,8 +13,13 @@
 <?php
     /* TODO: enqueue js lang strings */
     $lang = array(
-        'no_subcategory'     => __('No Subcategory'),
-        'select_subcategory' => __('Select Subcategory')
+        'nochange_expiration' => __('No change expiration'),
+        'without_expiration' => __('Without expiration'),
+        'expiration_day' => __('1 day'),
+        'expiration_days' => __('%d days'),
+        'select_category' => __('Select category'),
+        'no_subcategory' => __('No subcategory'),
+        'select_subcategory' => __('Select subcategory')
     );
     $locales = osc_get_locales();
     $codes   = array();
@@ -23,6 +28,7 @@
     }
 ?>
         osc.locales = {};
+        osc.locales._default = '<?php echo osc_language(); ?>';
         osc.locales.current = '<?php echo osc_current_admin_locale(); ?>';
         osc.locales.codes   = new Array(<?php echo join(',', $codes); ?>);
         osc.locales.string  = '[name*="' + osc.locales.codes.join('"],[name*="') + '"],.' + osc.locales.codes.join(',.');

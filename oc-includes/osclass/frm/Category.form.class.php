@@ -99,6 +99,11 @@
             }
         }
 
+        static public function price_enabled_for_category($category = null)
+        {
+			parent::generic_input_checkbox("b_price_enabled", "1", (isset($category) && isset($category['b_price_enabled']) && $category["b_price_enabled"] == 1) ? true : false);
+        }
+
         static public function multilanguage_name_description($locales, $category = null)
         {
             $tabs = array();

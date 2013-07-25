@@ -530,6 +530,12 @@
                                                 $url = Session::newInstance()->_get('osc_admin_referer');
                                             }
                                             Session::newInstance()->_clearVariables();
+                                            if(is_array($meta)) {
+                                                foreach( $meta as $key => $value ) {
+                                                    Session::newInstance()->_dropKeepForm('meta_'.$key);
+                                                }
+                                            }
+
                                             $this->redirectTo( $url );
                                         } else {
                                             osc_add_flash_error_message( $success , 'admin');
@@ -590,10 +596,15 @@
                                             $url = osc_admin_base_url(true) . "?page=items";
                                             // if Referer is saved that means referer is ManageListings or ReportListings
                                             if(Session::newInstance()->_get('osc_admin_referer')!='') {
-                                                Session::newInstance()->_drop('osc_admin_referer');
                                                 $url = Session::newInstance()->_get('osc_admin_referer');
+                                                Session::newInstance()->_drop('osc_admin_referer');
                                             }
                                             Session::newInstance()->_clearVariables();
+                                            if(is_array($meta)) {
+                                                foreach( $meta as $key => $value ) {
+                                                    Session::newInstance()->_dropKeepForm('meta_'.$key);
+                                                }
+                                            }
                                             osc_add_flash_ok_message( _m('A new listing has been added'), 'admin');
 
                                             $this->redirectTo( $url );
@@ -634,6 +645,8 @@
                                         $regUserCanContact          = (($regUserCanContact != '') ? true : false);
                                         $contactItemAttachment      = Params::getParam('item_attachment');
                                         $contactItemAttachment      = (($contactItemAttachment != '') ? true : false);
+                                        $warnExpiration             = Params::getParam('warn_expiration');
+                                        $warnExpiration             = (int) $warnExpiration;
 
 
 
@@ -646,6 +659,9 @@
                                         }
                                         if(!osc_validate_int($numImagesItems)) {
                                             $msg .= _m("Images per listing must only contain numeric characters")."<br/>";
+                                        }
+                                        if(!osc_validate_int($warnExpiration)) {
+                                            $msg .= _m("Number of expiration days has to be a numeric value")."<br/>";
                                         }
                                         if($msg!='') {
                                             osc_add_flash_error_message( $msg, 'admin');
@@ -685,6 +701,8 @@
                                                                                       ,array('s_name'  => 'reg_user_can_contact'));
                                         $iUpdated += Preference::newInstance()->update(array('s_value' => $contactItemAttachment)
                                                                                       ,array('s_name'  => 'item_attachment'));
+                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $warnExpiration)
+                                                                                      ,array('s_name'  => 'warn_expiration'));
 
                                         if($iUpdated > 0) {
                                             osc_add_flash_ok_message( _m("Listings' settings have been updated"), 'admin');

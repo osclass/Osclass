@@ -59,6 +59,7 @@
         private $withUserId;
         private $withItemId;
         private $withNoUserEmail;
+        private $onlyPremium;
 
         private $price_min;
         private $price_max;
@@ -91,6 +92,7 @@
             $this->withUserId       = false;
             $this->withPicture      = false;
             $this->withNoUserEmail  = false;
+            $this->onlyPremium      = false;
 
             $this->price_min = null;
             $this->price_max = null;
@@ -98,18 +100,19 @@
             $this->user_ids  = null;
             $this->itemId    = null;
 
-            $this->city_areas   = array();
-            $this->cities       = array();
-            $this->regions      = array();
-            $this->countries    = array();
-            $this->categories   = array();
-            $this->conditions   = array();
-            $this->tables       = array();
-            $this->tables_join  = array();
-            $this->search_fields = array();
+            $this->city_areas       = array();
+            $this->cities           = array();
+            $this->regions          = array();
+            $this->countries        = array();
+            $this->categories       = array();
+            $this->conditions       = array();
+            $this->tables           = array();
+            $this->tables_join      = array();
+            $this->search_fields    = array();
             $this->itemConditions   = array();
-            $this->groupBy      = '';
-            $this->having       = '';
+            $this->locale_code      = array();
+            $this->groupBy          = '';
+            $this->having           = '';
 
             $this->order();
             $this->limit();
@@ -128,9 +131,6 @@
             // get all item_location data
             if(OC_ADMIN) {
                 $this->addField(sprintf('%st_item_location.*', DB_TABLE_PREFIX) );
-                $this->locale_code = osc_current_admin_locale();
-            } else {
-                $this->locale_code = osc_current_user_locale();
             }
 
         }
@@ -142,7 +142,7 @@
          */
         public static function getAllowedColumnsForSorting()
         {
-            return( array('i_price', 'dt_pub_date') );
+            return( array('i_price', 'dt_pub_date', 'dt_expiration') );
         }
 
         /**
@@ -214,6 +214,28 @@
                     if(!in_array($conditions, $this->itemConditions)) {
                         $this->itemConditions[] = $conditions;
                     }
+                }
+            }
+        }
+
+        /**
+         * Add locale conditions to the search
+         *
+         * @access public
+         * @since 3.2
+         * @param string $locale
+         */
+        public function addLocale($locale)
+        {
+            if(is_array($locale)) {
+                foreach($locale as $l) {
+                    if($l!='') {
+                        $this->locale_code[$l] = $l;
+                    }
+                }
+            } else {
+                if($locale!='') {
+                    $this->locale_code[$locale] = $locale;
                 }
             }
         }
@@ -365,9 +387,9 @@
                     $c = trim($c);
                     if($c!='') {
                         if(is_numeric($c)) {
-                            $this->city_areas[] = sprintf("%st_item_location.fk_i_city_area_id = %d ", DB_TABLE_PREFIX, $c);
+                            $this->city_areas[] = sprintf("%st_item_location.fk_i_city_area_id = %d ", DB_TABLE_PREFIX, $this->dao->escapeStr($c));
                         } else {
-                            $this->city_areas[] = sprintf("%st_item_location.s_city_area LIKE '%s' ", DB_TABLE_PREFIX, $c);
+                            $this->city_areas[] = sprintf("%st_item_location.s_city_area LIKE '%s' ", DB_TABLE_PREFIX, $this->dao->escapeStr($c));
                         }
                     }
                 }
@@ -375,9 +397,9 @@
                 $city_area = trim($city_area);
                 if($city_area!="") {
                     if(is_numeric($city_area)) {
-                        $this->city_areas[] = sprintf("%st_item_location.fk_i_city_area_id = %d ", DB_TABLE_PREFIX, $city_area);
+                        $this->city_areas[] = sprintf("%st_item_location.fk_i_city_area_id = %d ", DB_TABLE_PREFIX, $this->dao->escapeStr($city_area));
                     } else {
-                        $this->city_areas[] = sprintf("%st_item_location.s_city_area LIKE '%s' ", DB_TABLE_PREFIX, $city_area);
+                        $this->city_areas[] = sprintf("%st_item_location.s_city_area LIKE '%s' ", DB_TABLE_PREFIX, $this->dao->escapeStr($city_area));
                     }
                 }
             }
@@ -397,9 +419,9 @@
                     $c = trim($c);
                     if($c!='') {
                         if(is_numeric($c)) {
-                            $this->cities[] = sprintf("%st_item_location.fk_i_city_id = %d ", DB_TABLE_PREFIX, $c);
+                            $this->cities[] = sprintf("%st_item_location.fk_i_city_id = %d ", DB_TABLE_PREFIX, $this->dao->escapeStr($c));
                         } else {
-                            $this->cities[] = sprintf("%st_item_location.s_city LIKE '%s' ", DB_TABLE_PREFIX, $c);
+                            $this->cities[] = sprintf("%st_item_location.s_city LIKE '%s' ", DB_TABLE_PREFIX, $this->dao->escapeStr($c));
                         }
                     }
                 }
@@ -407,9 +429,9 @@
                 $city = trim($city);
                 if($city!="") {
                     if(is_numeric($city)) {
-                        $this->cities[] = sprintf("%st_item_location.fk_i_city_id = %d ", DB_TABLE_PREFIX, $city);
+                        $this->cities[] = sprintf("%st_item_location.fk_i_city_id = %d ", DB_TABLE_PREFIX, $this->dao->escapeStr($city));
                     } else {
-                        $this->cities[] = sprintf("%st_item_location.s_city LIKE '%s' ", DB_TABLE_PREFIX, $city);
+                        $this->cities[] = sprintf("%st_item_location.s_city LIKE '%s' ", DB_TABLE_PREFIX, $this->dao->escapeStr($city));
                     }
                 }
             }
@@ -429,9 +451,9 @@
                     $r = trim($r);
                     if($r!='') {
                         if(is_numeric($r)) {
-                            $this->regions[] = sprintf("%st_item_location.fk_i_region_id = %d ", DB_TABLE_PREFIX, $r);
+                            $this->regions[] = sprintf("%st_item_location.fk_i_region_id = %d ", DB_TABLE_PREFIX, $this->dao->escapeStr($r));
                         } else {
-                            $this->regions[] = sprintf("%st_item_location.s_region LIKE '%s' ", DB_TABLE_PREFIX, $r);
+                            $this->regions[] = sprintf("%st_item_location.s_region LIKE '%s' ", DB_TABLE_PREFIX, $this->dao->escapeStr($r));
                         }
                     }
                 }
@@ -439,9 +461,9 @@
                 $region = trim($region);
                 if($region!="") {
                     if(is_numeric($region)) {
-                        $this->regions[] = sprintf("%st_item_location.fk_i_region_id = %d ", DB_TABLE_PREFIX, $region);
+                        $this->regions[] = sprintf("%st_item_location.fk_i_region_id = %d ", DB_TABLE_PREFIX, $this->dao->escapeStr($region));
                     } else {
-                        $this->regions[] = sprintf("%st_item_location.s_region LIKE '%s' ", DB_TABLE_PREFIX, $region);
+                        $this->regions[] = sprintf("%st_item_location.s_region LIKE '%s' ", DB_TABLE_PREFIX, $this->dao->escapeStr($region));
                     }
                 }
             }
@@ -461,9 +483,9 @@
                     $c = trim($c);
                     if($c!='') {
                         if(strlen($c)==2) {
-                            $this->countries[] = sprintf("%st_item_location.fk_c_country_code = '%s' ", DB_TABLE_PREFIX, strtolower($c));
+                            $this->countries[] = sprintf("%st_item_location.fk_c_country_code = '%s' ", DB_TABLE_PREFIX, strtolower($this->dao->escapeStr($c)));
                         } else {
-                            $this->countries[] = sprintf("%st_item_location.s_country LIKE '%s' ", DB_TABLE_PREFIX, $c);
+                            $this->countries[] = sprintf("%st_item_location.s_country LIKE '%s' ", DB_TABLE_PREFIX, $this->dao->escapeStr($c));
                         }
                     }
                 }
@@ -471,9 +493,9 @@
                 $country = trim($country);
                 if($country!="") {
                     if(strlen($country)==2) {
-                        $this->countries[] = sprintf("%st_item_location.fk_c_country_code = '%s' ", DB_TABLE_PREFIX, strtolower($country));
+                        $this->countries[] = sprintf("%st_item_location.fk_c_country_code = '%s' ", DB_TABLE_PREFIX, strtolower($this->dao->escapeStr($country)));
                     } else {
-                        $this->countries[] = sprintf("%st_item_location.s_country LIKE '%s' ", DB_TABLE_PREFIX, $country);
+                        $this->countries[] = sprintf("%st_item_location.s_country LIKE '%s' ", DB_TABLE_PREFIX, $this->dao->escapeStr($country));
                     }
                 }
             }
@@ -536,6 +558,7 @@
         {
             $this->having = $having;
         }
+
         /**
          * Filter by ad with picture or not
          *
@@ -545,9 +568,19 @@
          */
         public function withPicture($pic = false)
         {
-            if($pic) {
-                $this->withPicture = true;
-            }
+            $this->withPicture = $pic;
+        }
+
+        /**
+         * Filter by premium ad status
+         *
+         * @access public
+         * @since 3.2
+         * @param bool $premium
+         */
+        public function onlyPremium($premium = false)
+        {
+            $this->onlyPremium = $premium;
         }
 
         /**
@@ -560,7 +593,7 @@
         public function addPattern($pattern)
         {
             $this->withPattern  = true;
-            $this->sPattern     = $pattern;
+            $this->sPattern     = $this->dao->escapeStr($pattern);
         }
 
         /**
@@ -589,12 +622,26 @@
                 $this->withUserId = true;
                 $ids = array();
                 foreach($id as $_id) {
-                    $ids[] = sprintf("%st_item.fk_i_user_id = %d ", DB_TABLE_PREFIX, $_id);
+                    if(!is_numeric($_id)) {
+                        $user = User::newInstance()->findByUsername($_id);
+                        if(isset($user['pk_i_id'])) {
+                            $ids[] = sprintf("%st_item.fk_i_user_id = %d ", DB_TABLE_PREFIX, $this->dao->escapeStr($user['pk_i_id']));
+                        }
+                    } else {
+                        $ids[] = sprintf("%st_item.fk_i_user_id = %d ", DB_TABLE_PREFIX, $_id);
+                    }
                 }
                 $this->user_ids = $ids;
             } else {
                 $this->withUserId = true;
-                $this->user_ids = $id;
+                if(!is_numeric($id)) {
+                    $user = User::newInstance()->findByUsername($id);
+                    if(isset($user['pk_i_id'])) {
+                        $this->user_ids = $this->dao->escapeStr($user['pk_i_id']);
+                    }
+                } else {
+                    $this->user_ids = $this->dao->escapeStr($id);
+                }
             }
         }
 
@@ -753,7 +800,14 @@
                 $this->dao->from(DB_TABLE_PREFIX . 't_item_description as d');
                 $this->dao->where(sprintf("MATCH(d.s_title, d.s_description) AGAINST('%s' IN BOOLEAN MODE)", $this->sPattern));
 
-                $this->dao->where(sprintf("d.fk_c_locale_code LIKE '%s'", $this->locale_code));
+                if(empty($this->locale_code)) {
+                    if(OC_ADMIN) {
+                        $this->locale_code[osc_current_admin_locale()] = osc_current_admin_locale();
+                    } else {
+                        $this->locale_code[osc_current_user_locale()] = osc_current_user_locale();
+                    }
+                }
+                $this->dao->where(sprintf("( d.fk_c_locale_code LIKE '%s' )", implode("' d.fk_c_locale_code LIKE '", $this->locale_code)));
 
                 $subSelect = $this->dao->_getSelect();
                 $this->dao->_resetSelect();
@@ -858,7 +912,14 @@
                 if ($this->withPattern ) {
                     $this->dao->join(DB_TABLE_PREFIX.'t_item_description as d','d.fk_i_item_id = '.DB_TABLE_PREFIX.'t_item.pk_i_id','LEFT');
                     $this->dao->where(sprintf("MATCH(d.s_title, d.s_description) AGAINST('%s' IN BOOLEAN MODE)", $this->sPattern) );
-                    $this->dao->where(sprintf("d.fk_c_locale_code LIKE '%s'", $this->locale_code));
+                    if(empty($this->locale_code)) {
+                        if(OC_ADMIN) {
+                            $this->locale_code[osc_current_admin_locale()] = osc_current_admin_locale();
+                        } else {
+                            $this->locale_code[osc_current_user_locale()] = osc_current_user_locale();
+                        }
+                    }
+                    $this->dao->where(sprintf("( d.fk_c_locale_code LIKE '%s' )", implode("' d.fk_c_locale_code LIKE '", $this->locale_code)));
                 }
 
                 // item conditions
@@ -881,7 +942,13 @@
                     $this->dao->where(sprintf("%st_item_resource.s_content_type LIKE '%%image%%' ", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX));
                     $this->dao->groupBy(DB_TABLE_PREFIX.'t_item.pk_i_id');
                 }
+                if($this->onlyPremium) {
+                    $this->dao->where(sprintf("%st_item.b_premium = 1", DB_TABLE_PREFIX));
+                }
                 $this->_priceRange();
+
+                // add joinTables
+                $this->_joinTable();
 
                 // PLUGINS TABLES !!
                 if( !empty($this->tables) ) {
@@ -1006,64 +1073,51 @@
             $premium_sql = $this->_makeSQLPremium($max); // make premium sql
 
             $result = $this->dao->query($premium_sql);
-            $items = $result->result();
+            if($result) {
+                $items = $result->result();
 
-            $mStat = ItemStats::newInstance();
-            foreach($items as $item) {
-                $mStat->increase('i_num_premium_views', $item['pk_i_id']);
+                $mStat = ItemStats::newInstance();
+                foreach($items as $item) {
+                    $mStat->increase('i_num_premium_views', $item['pk_i_id']);
+                }
+                return Item::newInstance()->extendData($items);
+            } else {
+                return array();
             }
-            return Item::newInstance()->extendData($items);
         }
+
 
         /**
          * Return latest posted items, you can filter by category and specify the
          * number of items returned.
          *
          * @param int $numItems
-         * @param mixed $category int or array(int)
+         * @param mixed $options
          * @param bool $withPicture
          * @return array
          */
-        public function getLatestItems($numItems = 10, $category = array(), $withPicture = false)
+        public function getLatestItems($numItems = 10, $options = array(), $withPicture = false)
         {
-            $this->dao->select(DB_TABLE_PREFIX.'t_item.* ');
-            // from + tables
-            $this->dao->from( DB_TABLE_PREFIX.'t_item use index (PRIMARY)' );
+            $this->set_rpp($numItems);
             if($withPicture) {
-                $this->dao->from(sprintf('%st_item_resource', DB_TABLE_PREFIX));
-                $this->dao->where(sprintf("%st_item_resource.s_content_type LIKE '%%image%%' AND %st_item.pk_i_id = %st_item_resource.fk_i_item_id", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX));
+                $this->withPicture();
             }
-
-            // where
-            $whe  = DB_TABLE_PREFIX.'t_item.b_active = 1 AND ';
-            $whe .= DB_TABLE_PREFIX.'t_item.b_enabled = 1 AND ';
-            $whe .= DB_TABLE_PREFIX.'t_item.b_spam = 0 AND ';
-
-            $whe .= '('.DB_TABLE_PREFIX.'t_item.b_premium = 1 || '.DB_TABLE_PREFIX.'t_item.dt_expiration >= \''. date('Y-m-d H:i:s').'\') ';
-
-            //$whe .= 'AND '.DB_TABLE_PREFIX.'t_category.b_enabled = 1 ';
-            if( is_array($category) && (count($category) > 0) ) {
-                $listCategories = implode(',', $category );
-                $whe .= ' AND '.DB_TABLE_PREFIX.'t_item.fk_i_category_id IN ('.$listCategories.') ';
+            if(isset($options['sCategory'])) {
+                $this->addCategory($options['sCategory']);
             }
-            $this->dao->where( $whe );
-
-            // group by & order & limit
-            $this->dao->groupBy(DB_TABLE_PREFIX.'t_item.pk_i_id');
-            $this->dao->orderBy(DB_TABLE_PREFIX.'t_item.pk_i_id', 'DESC');
-            $this->dao->limit(0, $numItems);
-
-            $rs = $this->dao->get();
-
-            if($rs === false){
-                return array();
+            if(isset($options['sCountry'])) {
+                $this->addCountry($options['sCountry']);
             }
-            if( $rs->numRows() == 0 ) {
-                return array();
+            if(isset($options['sRegion'])) {
+                $this->addRegion($options['sRegion']);
             }
-
-            $items = $rs->result();
-            return Item::newInstance()->extendData($items);
+            if(isset($options['sCity'])) {
+                $this->addCity($options['sCity']);
+            }
+            if(isset($options['sUser'])) {
+                $this->fromUser($options['sUser']);
+            }
+            return $this->doSearch();
         }
 
         /**
@@ -1128,7 +1182,7 @@
          */
         public function listCityAreas($city = null, $zero = ">", $order = "items DESC")
         {
-           $aOrder = split(' ', $order);
+           $aOrder = explode(' ', $order);
             $nOrder = count($aOrder);
 
             if($nOrder == 2) $this->dao->orderBy($aOrder[0], $aOrder[1]);
@@ -1291,6 +1345,10 @@
                     $aData['withPicture']   = $this->withPicture;
                 }
 
+                if($this->onlyPremium) {
+                    $aData['onlyPremium']   = $this->onlyPremium;
+                }
+
                 $aData['tables']        = $this->tables;
                 $aData['tables_join']   = $this->tables_join;
 
@@ -1337,6 +1395,9 @@
             }
             if( isset($aData['withPicture']) ) {
                 $this->withPicture(true);
+            }
+            if( isset($aData['onlyPremium']) ) {
+                $this->onlyPremium(true);
             }
         }
     }

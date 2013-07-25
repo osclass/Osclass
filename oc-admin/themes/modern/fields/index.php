@@ -68,19 +68,19 @@ function customHead() {
      // check all the categories
     function checkAll(id, check) {
         aa = $('#' + id + ' input[type=checkbox]').each(function() {
-            $(this).attr('checked', check);
+            $(this).prop('checked', check);
         });
     }
     function checkCat(id, check) {
         aa = $('#cat' + id + ' input[type=checkbox]').each(function() {
-            $(this).attr('checked', check);
+            $(this).prop('checked', check);
         });
     }
 
     $(document).ready(function() {
-        $('.cfield-div').live('mouseenter',function(){
+        $('.cfield-div').on('mouseenter',function(){
             $(this).addClass('cfield-hover');
-        }).live('mouseleave',function(){
+        }).on('mouseleave',function(){
             $(this).removeClass('cfield-hover');
         });
 

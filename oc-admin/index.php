@@ -29,7 +29,7 @@
     }
 
     // register admin scripts
-    osc_register_script('admin-osc', osc_current_admin_theme_js_url('osc.js'));
+    osc_register_script('admin-osc', osc_current_admin_theme_js_url('osc.js'), 'jquery');
     osc_register_script('admin-ui-osc', osc_current_admin_theme_js_url('ui-osc.js'), 'jquery');
     osc_register_script('admin-location', osc_current_admin_theme_js_url('location.js'), 'jquery');
 
@@ -38,6 +38,8 @@
     osc_enqueue_script('jquery-ui');
     osc_enqueue_script('admin-osc');
     osc_enqueue_script('admin-ui-osc');
+
+    osc_add_hook('admin_footer', array('FieldForm', 'i18n_datePicker') );
 
     // enqueue css styles
     osc_enqueue_style('jquery-ui', osc_assets_url('css/jquery-ui/jquery-ui.css'));

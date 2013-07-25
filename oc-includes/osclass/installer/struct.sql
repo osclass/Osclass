@@ -170,6 +170,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_category (
     i_expiration_days INT(3) UNSIGNED NOT NULL DEFAULT 0,
     i_position INT(2) UNSIGNED NOT NULL DEFAULT 0,
     b_enabled TINYINT(1) NOT NULL DEFAULT 1,
+    b_price_enabled TINYINT(1) NOT NULL DEFAULT 1,
     s_icon VARCHAR(250) NULL,
 
         PRIMARY KEY (pk_i_id),
@@ -407,9 +408,10 @@ CREATE TABLE /*TABLE_PREFIX*/t_meta_fields (
     pk_i_id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
     s_name VARCHAR(255) NOT NULL,
     s_slug VARCHAR(255) NOT NULL,
-    e_type ENUM('TEXT','TEXTAREA','DROPDOWN','RADIO','CHECKBOX','URL') NOT NULL DEFAULT  'TEXT',
+    e_type ENUM('TEXT','TEXTAREA','DROPDOWN','RADIO','CHECKBOX','URL', 'DATE', 'DATEINTERVAL') NOT NULL DEFAULT  'TEXT',
     s_options VARCHAR(255) NULL,
     b_required TINYINT(1) NOT NULL DEFAULT 0,
+    b_searchable TINYINT(1) NOT NULL DEFAULT 0,
 
         PRIMARY KEY (pk_i_id)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
@@ -427,8 +429,10 @@ CREATE TABLE /*TABLE_PREFIX*/t_item_meta (
     fk_i_item_id INT(10) UNSIGNED NOT NULL,
     fk_i_field_id INT(10) UNSIGNED NOT NULL,
     s_value TEXT NULL,
+    s_multi VARCHAR(20) NULL,
 
-        PRIMARY KEY (fk_i_item_id, fk_i_field_id),
+        PRIMARY KEY (fk_i_item_id, fk_i_field_id, s_multi),
+        INDEX s_value (s_value(255)),
         FOREIGN KEY (fk_i_item_id) REFERENCES /*TABLE_PREFIX*/t_item (pk_i_id),
         FOREIGN KEY (fk_i_field_id) REFERENCES /*TABLE_PREFIX*/t_meta_fields (pk_i_id)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';

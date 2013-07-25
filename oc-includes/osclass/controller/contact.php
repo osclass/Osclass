@@ -47,6 +47,15 @@
                                             }
                                         }
 
+                                        $banned = osc_is_banned($yourEmail);
+                                        if($banned==1) {
+                                            osc_add_flash_error_message( _m('Your current email is not allowed'));
+                                            $this->redirectTo(osc_contact_url());
+                                        } else if($banned==2) {
+                                            osc_add_flash_error_message( _m('Your current IP is not allowed'));
+                                            $this->redirectTo(osc_contact_url());
+                                        }
+
                                         if( !preg_match('|.*?@.{2,}\..{2,}|',$yourEmail) ) {
                                             osc_add_flash_error_message( _m('Please enter a correct email') );
                                             Session::newInstance()->_setForm('yourName', $yourName);
@@ -86,8 +95,8 @@ MESSAGE;
                                                 $resourceName = $attachment['name'];
                                                 $tmpName      = $attachment['tmp_name'];
                                                 $resourceType = $attachment['type'];
-                                                $path = osc_content_path() . 'uploads/' . time() . '_' . $resourceName;
-                                                if( !is_writable(osc_content_path() . 'uploads/') ) {
+                                                $path = osc_uploads_path() . time() . '_' . $resourceName;
+                                                if( !is_writable(osc_uploads_path()) ) {
                                                     osc_add_flash_error_message( _m('There have been some errors sending the message'));
                                                     $this->redirectTo( osc_contact_url() );
                                                 }

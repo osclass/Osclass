@@ -406,6 +406,22 @@
             return (bool) $result;
         }
 
+        /**
+         * Return list of users
+         *
+         * @access public
+         * @since 2.4
+         * @param int $start
+         * @param int $end
+         * @param string $order_column
+         * @param string $order_direction
+         * @parma array $conditions
+         * @return array
+         */
+        public function search($start = 0, $end = 10, $order_column = 'pk_i_id', $order_direction = 'DESC', $conditions = null)
+        {
+            return $this->_search($conditions, $start, $end, $order_column, $order_direction);
+        }
 
         /**
          * Return list of users
@@ -419,42 +435,9 @@
          * @parma string $name
          * @return array
          */
-        public function search($start = 0, $end = 10, $order_column = 'pk_i_id', $order_direction = 'DESC', $name = '')
+        public function searchByName($start = 0, $end = 10, $order_column = 'pk_i_id', $order_direction = 'DESC', $name = '')
         {
-            // SET data, so we always return a valid object
-            $users = array();
-            $users['rows']          = 0;
-            $users['total_results'] = 0;
-            $users['users']         = array();
-
-            $this->dao->select('SQL_CALC_FOUND_ROWS *');
-            $this->dao->from($this->getTableName());
-            $this->dao->orderBy($order_column, $order_direction);
-            $this->dao->limit($start, $end);
-            if( $name != '' ) {
-                $this->dao->like('s_name', $name);
-            }
-            $rs = $this->dao->get();
-
-            if( !$rs ) {
-                return $users;
-            }
-
-            $users['users'] = $rs->result();
-
-            $rsRows = $this->dao->query('SELECT FOUND_ROWS() as total');
-            $data   = $rsRows->row();
-            if( $data['total'] ) {
-                $users['total_results'] = $data['total'];
-            }
-
-            $rsTotal = $this->dao->query('SELECT COUNT(*) as total FROM '.$this->getTableName());
-            $data   = $rsTotal->row();
-            if( $data['total'] ) {
-                $users['rows'] = $data['total'];
-            }
-
-            return $users;
+            return $this->_search(array('s_name' => $name), $start, $end, $order_column, $order_direction);
         }
 
         /**
@@ -469,29 +452,12 @@
          * @parma string $email
          * @return array
          */
-        public function searchByEmail($start = 0, $end = 10,  $email = '', $order_column = 'pk_i_id', $order_direction = 'DESC')
+        public function searchByEmail($start = 0, $end = 10, $order_column = 'pk_i_id', $order_direction = 'DESC', $email = '')
         {
-            return $this->_search('s_email', $email, $start, $end, $order_column, $order_direction);
+            return $this->_search(array('s_email' => $email), $start, $end, $order_column, $order_direction);
         }
 
-        /**
-         * Return list of users by user id
-         *
-         * @access public
-         * @since 2.4
-         * @param int $start
-         * @param int $end
-         * @param string $order_column
-         * @param string $order_direction
-         * @parma string $userId
-         * @return array
-         */
-        public function searchByPrimaryKey($start = 0, $end = 10,  $userId = '', $order_column = 'pk_i_id', $order_direction = 'DESC')
-        {
-            return $this->_search('pk_i_id', $userId, $start, $end, $order_column, $order_direction);
-        }
-
-        private function _search($field , $value, $start = 0, $end = 10, $order_column = 'pk_i_id', $order_direction = 'DESC')
+        private function _search($fields, $start = 0, $end = 10, $order_column = 'pk_i_id', $order_direction = 'DESC')
         {
             // SET data, so we always return a valid object
             $users = array();
@@ -504,10 +470,12 @@
             $this->dao->orderBy($order_column, $order_direction);
             $this->dao->limit($start, $end);
 
-            if($field == 'pk_i_id') {
-                $this->dao->where('pk_i_id', $value);
-            } else if($field == 's_email') {
-                $this->dao->where('s_email', $value);
+            foreach($fields as $k => $v) {
+                if($k=='s_username' || $k=='s_name' || $k=='s_email') {
+                    $this->dao->where($k." LIKE '".$v."'");
+                } else {
+                    $this->dao->where($k, $v);
+                }
             }
 
             $rs = $this->dao->get();

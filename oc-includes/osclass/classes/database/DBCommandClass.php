@@ -1077,6 +1077,9 @@
         {
             if(preg_match('|\((.*)\)|ms', $struct_queries[strtolower($table)], $match)) {
                 $fields = explode("\n", trim($match[1]));
+                foreach($fields as $key => $value) {
+                    $fields[$key] = trim(preg_replace('/,$/','', $value));
+                }
             } else {
                 $fields = false;
             }
@@ -1204,12 +1207,24 @@
             if($tbl_indexes) {
                 unset($indexes_array);
                 foreach($tbl_indexes as $tbl_index) {
-                    $indexes_array[$tbl_index['Key_name']]['columns'][] = array('fieldname' => $tbl_index['Column_name'], 'subpart' => $tbl_index['Sub_part']);
-                    $indexes_array[$tbl_index['Key_name']]['unique'] = ($tbl_index['Non_unique'] == 0)?true:false;
+                    $indexes_array[$tbl_index['Key_name']]['columns'][]  = array('fieldname' => $tbl_index['Column_name'], 'subpart' => $tbl_index['Sub_part']);
+                    $indexes_array[$tbl_index['Key_name']]['unique']     = ($tbl_index['Non_unique'] == 0)?true:false;
                     $indexes_array[$tbl_index['Key_name']]['index_type'] = $tbl_index['Index_type'];
+                    $indexes_array[$tbl_index['Key_name']]['Key_name']   = $tbl_index['Key_name'];
                 }
 
                 foreach($indexes_array as $k => $v) {
+
+                    // if PRIMARY KEY already exist
+                    $exist_primary = false;
+                    if($k == 'PRIMARY') {
+                        if(isset($indexes_array['PRIMARY'])) {
+                            if(count($indexes_array['PRIMARY']['columns'])>0) {
+                                $exist_primary = true;
+                            }
+                        }
+                    }
+
                     $string = '';
                     if ($k=='PRIMARY') {
                         $string .= 'PRIMARY KEY ';
@@ -1218,12 +1233,10 @@
                     } else if($v['index_type'] == 'FULLTEXT') {  // FULLTEXT INDEX MUST HAVE KEY_NAME
                         $string .= 'FULLTEXT '.$k.' ';
                     } else {
-                        $sujeto = "abcdef";
-                        $patrón = '/^def/';
                         if( ( count($v['columns']) == 1 && $v['columns'][0]['fieldname'] !=  $k ) || ( preg_match('/^idx/', $k, $coincidencias) > 0 ) ) {
                             $string .= 'INDEX '.$k.' ';
                         } else {
-                            $string .= 'INDEX ';
+                            $string .= 'INDEX ' . $v['Key_name'] . ' ';
                         }
                     }
 
@@ -1240,8 +1253,8 @@
 
                     // Add the column list to the index create string
                     $string .= '('.$columns.')';
-
                     $var_index = array_search($string, $indexes);
+
                     if (!($var_index===false)) {
                         unset($indexes[$var_index]);
                     } else {
@@ -1251,11 +1264,15 @@
                         }
                     }
                 }
-
             }
+
             // alter table
             foreach($indexes as $v ) {
-                $struct_queries[] = "ALTER TABLE ".$table." ADD ".$v;
+                if(preg_match('/primary key/i', $v, $coincidencias) > 0 ) {
+                    $struct_queries[] = "ALTER TABLE ".$table." DROP PRIMARY KEY, ADD ".$v;
+                } else {
+                    $struct_queries[] = "ALTER TABLE ".$table." ADD ".$v;
+                }
             }
         }
 
@@ -1353,7 +1370,6 @@
             $tables = $result->result();
             foreach($tables as $v) {
                 $table = current($v);
-                error_log(' ---- ' . $table);
                 if( $this->existTableIntoStruct($table, $struct_queries) ) {
                     $lastTable = NULL;
                     $normal_fields = $indexes = $constrains = array();
@@ -1369,8 +1385,12 @@
                         // Go for the index part
                         $result = $this->query("SHOW INDEX FROM ".$table);
                         $tbl_indexes = $result->result();
+
+
                         // compare table index and struct.sql index for the same table, and only add the new ones
                         $this->createNewIndex($tbl_indexes, $indexes, $table, $struct_queries);
+
+
                         // show create table TABLE_NAME constrains
                         $result = $this->query("SHOW CREATE TABLE ".$table);
                         $tbl_constraint = $result->row();
@@ -1378,14 +1398,19 @@
                         $this->createForeignKey($tbl_constraint, $table, $struct_queries, $constrains);
                         // No need to create the table, so we delete it SQL
                         unset($struct_queries[strtolower($table)]);
-                        error_log(' --- struct_queries ---');
+//                        error_log(' --- struct_queries ---');
                         foreach($struct_queries as $q) {
-                            error_log(' --- ' . $q );
+//                            error_log(' --- ' . $q );
                         }
                     }
                 }
             }
 
+
+            error_log(' --- last_struct_queries ---');
+            foreach($struct_queries as $q) {
+                error_log(' --- ' . $q );
+            }
             // HACK: AUTO_INCREMENT fields needs to be also a PRIMARY KEY
             foreach($struct_queries as $k => $v) {
                 if(stripos($v, "auto_increment")!==FALSE && stripos($v, "primary key")===FALSE) {
@@ -1394,6 +1419,7 @@
             }
 
             $queries = array_merge($struct_queries, $data_queries);
+
             $ok = true;
             $error_queries = array();
             foreach($queries as $query) {

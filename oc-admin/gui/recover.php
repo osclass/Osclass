@@ -22,7 +22,7 @@
         <meta name="robots" content="noindex, nofollow, noarchive" />
         <meta name="googlebot" content="noindex, nofollow, noarchive" />
         <title><?php echo osc_page_title(); ?> &raquo; <?php _e('Lost your password'); ?></title>
-        <script type="text/javascript" src="<?php echo osc_admin_base_url(); ?>themes/modern/js/jquery.min.js"></script>
+        <script type="text/javascript" src="<?php echo osc_assets_url('js/jquery.min.js'); ?>"></script>
         <link type="text/css" href="style/backoffice_login.css" media="screen" rel="stylesheet" />
         <?php osc_run_hook('admin_login_header'); ?>
     </head>
@@ -43,7 +43,7 @@
                 <input type="hidden" name="page" value="login" />
                 <input type="hidden" name="action" value="recover_post" />
                 <p>
-                    <label><span><?php _e('E-mail'); ?></span>
+                    <label for="user_email"><span><?php _e('E-mail'); ?></span>
                     <input type="text" name="email" id="user_email" class="input" value="" size="20" tabindex="10" /></label>
                 </p>
                 <?php osc_show_recaptcha(); ?>

@@ -28,7 +28,7 @@ class Watermark{
     public function doWatermarkImage($filepath, $mime = 'image/png')
     {
 
-        $path_watermark = osc_content_path() . 'uploads/watermark.png';
+        $path_watermark = osc_uploads_path() . 'watermark.png';
         if(osc_use_imagick()) {
             $im = new Imagick($filepath);
             $wm = new Imagick($path_watermark);
@@ -113,7 +113,7 @@ class Watermark{
     private function imageAddText($image, $color, $text) {
         if(osc_use_imagick()) {
             $draw = new ImagickDraw();
-            $draw->setFillColor('black');//$color);
+            $draw->setFillColor("#".$color);
             $draw->setFont($this->font);
             $draw->setFontSize( 30 );
             $metrics = $image->queryFontMetrics($draw, $text);

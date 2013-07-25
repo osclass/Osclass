@@ -82,11 +82,13 @@
                                             break;
                                             case 7: osc_add_flash_warning_message( _m("Sorry, passwords don't match"), 'admin');
                                             break;
-                                            case 8: osc_add_flash_warning_message( _m("Username is already taken"));
+                                            case 8: osc_add_flash_warning_message( _m("Username is already taken"), 'admin');
                                             break;
-                                            case 9: osc_add_flash_warning_message( _m("The specified username is not valid, it contains some invalid words"));
+                                            case 9: osc_add_flash_warning_message( _m("The specified username is not valid, it contains some invalid words"), 'admin');
                                             break;
-                                            default: osc_add_flash_error_message( _m("There was some error"));
+                                            case 10: osc_add_flash_warning_message( _m("The name cannot be empty"), 'admin');
+                                            break;
+                                            default: osc_add_flash_error_message( _m("There was some error"), 'admin');
                                             break;
                                         }
 
@@ -135,6 +137,9 @@
                                             break;
                                             case 3:
                                                 osc_add_flash_error_message( _m('E-mail is already in used by another user'), 'admin');
+                                                $this->redirectTo(osc_admin_base_url(true) . '?page=users&action=edit&id='.Params::getParam('id'));
+                                            break;
+                                            case 10: osc_add_flash_error_message( _m("The name cannot be empty"), 'admin');
                                                 $this->redirectTo(osc_admin_base_url(true) . '?page=users&action=edit&id='.Params::getParam('id'));
                                             break;
                                             default:   osc_add_flash_ok_message( _m('The user has been updated'), 'admin');

@@ -28,13 +28,41 @@
             $this->manager = Item::newInstance();
         }
 
+        private function _akismet_text( $title, $description, $author, $email )
+        {
+            $spam = false;
+            foreach($title as $k => $_data){
+                $_title         = $title[$k];
+                $_description   = $description[$k];
+                $content        = $_title. ' ' .$_description;
+                if (osc_akismet_key()) {
+                    require_once LIB_PATH . 'Akismet.class.php';
+                    $akismet = new Akismet(osc_base_url(), osc_akismet_key());
+
+                    $akismet->setCommentContent($content);
+                    $akismet->setCommentAuthor($author);
+                    $akismet->setCommentAuthorEmail($email);
+                    $akismet->setUserIP( get_ip() );
+
+                    $status  = '';
+                    $status = $akismet->isCommentSpam() ? 'SPAM' : $status;
+                    if($status == 'SPAM') {
+                        $spam = true;
+                        break;
+                    }
+                }
+            }
+            return $spam;
+        }
+
         /**
          * @return boolean
          */
         public function add()
         {
             $aItem       = $this->data;
-
+            $is_spam     = 0;
+            $enabled     = 1;
             $code        = osc_genRandomPassword();
             $flash_error = '';
 
@@ -50,7 +78,7 @@
             }
 
             $aItem['price']    = !is_null($aItem['price']) ? strip_tags( trim( $aItem['price'] ) ) : $aItem['price'];
-            $contactName       = osc_sanitize_name( strip_tags( trim( $aItem['contactName'] ) ) );
+            $contactName       = strip_tags( trim( $aItem['contactName'] ) );
             $contactEmail      = strip_tags( trim( $aItem['contactEmail'] ) );
             $aItem['cityArea'] = osc_sanitize_name( strip_tags( trim( $aItem['cityArea'] ) ) );
             $aItem['address']  = osc_sanitize_name( strip_tags( trim( $aItem['address'] ) ) );
@@ -68,6 +96,7 @@
 
             $title_message = '';
             foreach(@$aItem['title'] as $key => $value) {
+
                 if( osc_validate_text($value, 1) && osc_validate_max($value, 100) ) {
                     $title_message = '';
                     break;
@@ -92,19 +121,25 @@
             }
             $flash_error .= $desc_message;
 
+            // akismet check spam ...
+            if( $this->_akismet_text( $aItem['title'], $aItem['description'] , $contactName, $contactEmail) ) {
+                $is_spam     = 1;
+            }
+
             $flash_error .=
                 ((!osc_validate_category($aItem['catId'])) ? _m("Category invalid.") . PHP_EOL : '' ) .
                 ((!osc_validate_number($aItem['price'])) ? _m("Price must be a number.") . PHP_EOL : '' ) .
-                ((!osc_validate_max($aItem['price'], 15)) ? _m("Price too long.") . PHP_EOL : '' ) .
+                ((!osc_validate_max(number_format($aItem['price'],0,'',''), 15)) ? _m("Price too long.") . PHP_EOL : '' ) .
+                ((!is_null($aItem['price']) && (int)$aItem['price']<0 ) ? _m('Price must be positive number.') . PHP_EOL : '' ) .
                 ((!osc_validate_max($contactName, 35)) ? _m("Name too long.") . PHP_EOL : '' ) .
                 ((!osc_validate_email($contactEmail)) ? _m("Email invalid.") . PHP_EOL : '' ) .
-                ((!osc_validate_text($aItem['countryName'], 3, false)) ? _m("Country too short.") . PHP_EOL : '' ) .
+                ((!osc_validate_text($aItem['countryName'], 2, false)) ? _m("Country too short.") . PHP_EOL : '' ) .
                 ((!osc_validate_max($aItem['countryName'], 50)) ? _m("Country too long.") . PHP_EOL : '' ) .
-                ((!osc_validate_text($aItem['regionName'], 3, false)) ? _m("Region too short.") . PHP_EOL : '' ) .
+                ((!osc_validate_text($aItem['regionName'], 2, false)) ? _m("Region too short.") . PHP_EOL : '' ) .
                 ((!osc_validate_max($aItem['regionName'], 50)) ? _m("Region too long.") . PHP_EOL : '' ) .
-                ((!osc_validate_text($aItem['cityName'], 3, false)) ? _m("City too short.") . PHP_EOL : '' ) .
+                ((!osc_validate_text($aItem['cityName'], 2, false)) ? _m("City too short.") . PHP_EOL : '' ) .
                 ((!osc_validate_max($aItem['cityName'], 50)) ? _m("City too long.") . PHP_EOL : '' ) .
-                ((!osc_validate_text($aItem['cityArea'], 3, false)) ? _m("Municipality too short.") . PHP_EOL : '' ) .
+                ((!osc_validate_text($aItem['cityArea'], 2, false)) ? _m("Municipality too short.") . PHP_EOL : '' ) .
                 ((!osc_validate_max($aItem['cityArea'], 50)) ? _m("Municipality too long.") . PHP_EOL : '' ) .
                 ((!osc_validate_text($aItem['address'], 3, false)) ? _m("Address too short.") . PHP_EOL : '' ) .
                 ((!osc_validate_max($aItem['address'], 100)) ? _m("Address too long.") . PHP_EOL : '' ) .
@@ -112,9 +147,11 @@
 
             $_meta = Field::newInstance()->findByCategory($aItem['catId']);
             $meta = Params::getParam("meta");
+
             foreach($_meta as $_m) {
                 $meta[$_m['pk_i_id']] = (isset($meta[$_m['pk_i_id']]))?$meta[$_m['pk_i_id']]:'';
             }
+
             if($meta!='' && count($meta)>0) {
                 $mField = Field::newInstance();
                 foreach($meta as $k => $v) {
@@ -125,10 +162,12 @@
                         }
                     }
                 }
-            };
+            }
 
             // hook pre add or edit
+            // DEPRECATED: pre_item_post will be removed in 3.4
             osc_run_hook('pre_item_post');
+            osc_run_hook('pre_item_add', $aItem);
 
             // Handle error
             if ($flash_error) {
@@ -150,8 +189,9 @@
                     's_contact_email'       => $contactEmail,
                     's_secret'              => $code,
                     'b_active'              => ($active=='ACTIVE'?1:0),
-                    'b_enabled'             => 1,
+                    'b_enabled'             => $enabled,
                     'b_show_email'          => $aItem['showEmail'],
+                    'b_spam'                => $is_spam,
                     's_ip'                  => $aItem['s_ip']
                 ));
 
@@ -171,11 +211,6 @@
 
                 // INSERT title and description locales
                 $this->insertItemLocales('ADD', $aItem['title'], $aItem['description'], $itemId );
-                // INSERT location item
-                // when id location is null, check locations_name
-//                if($aItem['countryId']==''){
-//                    $aItem['countryId'] = Country::newInstance();
-//                }
 
                 $location = array(
                     'fk_i_item_id'      => $itemId,
@@ -195,10 +230,7 @@
                 $this->uploadItemResources( $aItem['photos'] , $itemId);
 
                 // update dt_expiration at t_item
-                $_category = Category::newInstance()->findByPrimaryKey($aItem['catId']);
-                // update dt_expiration
-                $i_expiration_days = $_category['i_expiration_days'];
-                $dt_expiration = Item::newInstance()->updateExpirationDate($itemId, $i_expiration_days);
+                $dt_expiration = Item::newInstance()->updateExpirationDate($itemId, $aItem['dt_expiration']);
 
                 /**
                  * META FIELDS
@@ -206,6 +238,10 @@
                 if($meta!='' && count($meta)>0) {
                     $mField = Field::newInstance();
                     foreach($meta as $k => $v) {
+                        // if dateinterval
+                        if(is_array($v) && !isset($v['from']) && !isset($v['to']) ) {
+                            $v = implode(',', $v);
+                        }
                         $mField->replace($itemId, $k, $v);
                     }
                 }
@@ -222,6 +258,7 @@
                 if(!$this->is_admin) {
                     $this->sendEmails($aItem);
                 }
+
                 if($active=='INACTIVE') {
                     $success = 1;
                 } else {
@@ -232,14 +269,13 @@
                         'fk_i_region_id'    => $location['fk_i_region_id'],
                         'fk_i_city_id'      => $location['fk_i_city_id']
                     );
-                    $this->_increaseStats($aAux);
+                    // if is_spam not increase stats
+                    if($is_spam == 0) {
+                        $this->_increaseStats($aAux);
+                    }
                     $success = 2;
                 }
 
-                // THIS HOOK IS DEPRECATED, IT WILL NOT BE AVAILABLE IN 3.2
-                osc_run_hook('item_form_post', $aItem['catId'], $itemId);
-                // THIS HOOK IS DEPRECATED, IT WILL NOT BE AVAILABLE IN 3.2
-                osc_run_hook('after_item_post');
                 // THIS HOOK IS FINE, YAY!
                 osc_run_hook('posted_item', $item);
 
@@ -298,18 +334,18 @@
             $flash_error .=
                 ((!osc_validate_category($aItem['catId'])) ? _m("Category invalid.") . PHP_EOL : '' ) .
                 ((!osc_validate_number($aItem['price'])) ? _m("Price must be a number.") . PHP_EOL : '' ) .
-                ((!osc_validate_max($aItem['price'], 15)) ? _m("Price too long.") . PHP_EOL : '' ) .
+                ((!osc_validate_max(number_format($aItem['price'],0,'',''), 15)) ? _m("Price too long.") . PHP_EOL : '' ) .
+                ((!is_null($aItem['price']) && (int)$aItem['price']<0 ) ? _m('Price must be positive number.') . PHP_EOL : '' ) .
                 ((!osc_validate_text($aItem['countryName'], 3, false)) ? _m("Country too short.") . PHP_EOL : '' ) .
                 ((!osc_validate_max($aItem['countryName'], 50)) ? _m("Country too long.") . PHP_EOL : '' ) .
-                ((!osc_validate_text($aItem['regionName'], 3, false)) ? _m("Region too short.") . PHP_EOL : '' ) .
+                ((!osc_validate_text($aItem['regionName'], 2, false)) ? _m("Region too short.") . PHP_EOL : '' ) .
                 ((!osc_validate_max($aItem['regionName'], 50)) ? _m("Region too long.") . PHP_EOL : '' ) .
-                ((!osc_validate_text($aItem['cityName'], 3, false)) ? _m("City too short.") . PHP_EOL : '' ) .
+                ((!osc_validate_text($aItem['cityName'], 2, false)) ? _m("City too short.") . PHP_EOL : '' ) .
                 ((!osc_validate_max($aItem['cityName'], 50)) ? _m("City too long.") . PHP_EOL : '' ) .
                 ((!osc_validate_text($aItem['cityArea'], 3, false)) ? _m("Municipality too short.") . PHP_EOL : '' ) .
                 ((!osc_validate_max($aItem['cityArea'], 50)) ? _m("Municipality too long.") . PHP_EOL : '' ) .
                 ((!osc_validate_text($aItem['address'], 3, false))? _m("Address too short.") . PHP_EOL : '' ) .
                 ((!osc_validate_max($aItem['address'], 100)) ? _m("Address too long.") . PHP_EOL : '' );
-
 
             $_meta = Field::newInstance()->findByCategory($aItem['catId']);
             $meta = Params::getParam("meta");
@@ -329,7 +365,9 @@
             };
 
             // hook pre add or edit
+            // DEPRECATED : preitem_psot will be removed in 3.4
             osc_run_hook('pre_item_post');
+            osc_run_hook('pre_item_edit', $aItem);
 
             // Handle error
             if ($flash_error) {
@@ -373,7 +411,6 @@
                     ,'fk_i_category_id'   => $aItem['catId']
                     ,'i_price'            => $aItem['price']
                     ,'fk_c_currency_code' => $aItem['currency']
-                    ,'s_ip'               => $aItem['s_ip']
                 );
 
                 // only can change the user if you're an admin
@@ -381,6 +418,8 @@
                     $aUpdate['fk_i_user_id']    = $aItem['userId'];
                     $aUpdate['s_contact_name']  = $aItem['contactName'];
                     $aUpdate['s_contact_email'] = $aItem['contactEmail'];
+                } else {
+                    $aUpdate['s_ip'] = $aItem['s_ip'];
                 }
 
                 $result = $this->manager->update( $aUpdate, array('pk_i_id'  => $aItem['idItem'],
@@ -397,30 +436,27 @@
                 if($meta!='' && count($meta)>0) {
                     $mField = Field::newInstance();
                     foreach($meta as $k => $v) {
+                        // if dateinterval
+                        if( is_array($v) && !isset($v['from']) && !isset($v['to']) ) {
+                            $v = implode(',', $v);
+                        }
                         $mField->replace($aItem['idItem'], $k, $v);
                     }
                 }
 
                 $oldIsExpired = osc_isExpired($old_item['dt_expiration']);
-                $newIsExpired = $oldIsExpired;
-
-                $dt_expiration = $old_item['dt_expiration'];
-                // recalculate dt_expiration t_item
-                if( $result==1 && $old_item['fk_i_category_id'] != $aItem['catId'] ) {
-                    $_category = Category::newInstance()->findByPrimaryKey($aItem['catId']);
-                    // update dt_expiration
-                    $i_expiration_days = $_category['i_expiration_days'];
-                    $dt_expiration = Item::newInstance()->updateExpirationDate($aItem['idItem'], $i_expiration_days);
-                    $newIsExpired = osc_isExpired($dt_expiration);
+                $dt_expiration = Item::newInstance()->updateExpirationDate($aItem['idItem'], $aItem['dt_expiration'], false);
+                if($dt_expiration===false) {
+                    $dt_expiration = $old_item['dt_expiration'];
+                    $aItem['dt_expiration'] = $old_item['dt_expiration'];
                 }
+                $newIsExpired = osc_isExpired($dt_expiration);
 
                 // Recalculate stats related with items
                 $this->_updateStats($result, $old_item, $oldIsExpired, $old_item_location, $aItem, $newIsExpired, $location);
 
                 unset($old_item);
 
-                // THIS HOOK IS DEPRECATED, IT WILL NOT BE AVAILABLE IN 3.2
-                osc_run_hook('item_edit_post', $aItem['catId'], $aItem['idItem']);
                 // THIS HOOK IS FINE, YAY!
                 osc_run_hook('edited_item', Item::newInstance()->findByPrimaryKey($aItem['idItem']));
                 $success = $result;
@@ -839,6 +875,11 @@
          */
         public function add_comment()
         {
+
+            if(!osc_comments_enabled()) {
+                return 7;
+            }
+
             $aItem  = $this->prepareDataForFunction('add_comment');
 
             $authorName     = trim($aItem['authorName']);
@@ -858,6 +899,13 @@
             $itemURL = '<a href="'.$itemURL.'" >'.$itemURL.'</a>';
 
             Params::setParam('itemURL', $itemURL);
+
+            if(osc_reg_user_post_comments() && !osc_is_web_user_logged_in()) {
+                Session::newInstance()->_setForm('commentAuthorName', $authorName);
+                Session::newInstance()->_setForm('commentTitle', $title);
+                Session::newInstance()->_setForm('commentBody', $body);
+                return 6;
+            }
 
             if( !preg_match('|^.*?@.{2,}\..{2,3}$|', $authorEmail)) {
                 Session::newInstance()->_setForm('commentAuthorName', $authorName);
@@ -913,6 +961,8 @@
                               ,'b_active'       => ($status=='ACTIVE' ? 1 : 0)
                               ,'b_enabled'      => 1
                               ,'fk_i_user_id'   => $userId);
+
+            osc_run_hook('before_add_comment', $aComment);
 
             if( $mComments->insert($aComment) ) {
                 $commentID = $mComments->dao->insertedId();
@@ -1088,6 +1138,21 @@
             $aItem['description']   = Params::getParam('description');
             $aItem['photos']        = Params::getFiles('photos');
             $aItem['s_ip']          = get_ip();
+
+            if($is_add || $this->is_admin) {
+                $dt_expiration = Params::getParam('dt_expiration');
+                if($dt_expiration==-1) {
+                    $aItem['dt_expiration'] = '';
+                } else if($dt_expiration!='' && (preg_match('|^([0-9]+)$|', $dt_expiration, $match) || preg_match('|([0-9]{4})-([0-9]{2})-([0-9]{2}) ([0-9]{2}):([0-9]{2}):([0-9]{2})|', $dt_expiration, $match))) {
+                    $aItem['dt_expiration'] = $dt_expiration;
+                } else {
+                    $_category = Category::newInstance()->findByPrimaryKey($aItem['catId']);
+                    $aItem['dt_expiration'] = $_category['i_expiration_days'];
+                }
+                unset($dt_expiration);
+            } else {
+                $aItem['dt_expiration'] = '';
+            };
 
             // check params
             $country = Country::newInstance()->findByCode($aItem['countryId']);
@@ -1279,7 +1344,7 @@
 
                             $freedisk = 4*osc_max_size_kb()*1024;
                             if(function_exists('disk_free_space')) {
-                                $freedisk = @disk_free_space(osc_content_path() . 'uploads/');
+                                $freedisk = @disk_free_space(osc_uploads_path());
                             }
 
                             if($freedisk!=false) {
@@ -1328,27 +1393,27 @@
                                     ));
                                     $resourceId = $itemResourceManager->dao->insertedId();
 
-                                    osc_copy($tmpName.'_normal', osc_content_path() . 'uploads/' . $resourceId . '.jpg');
-                                    osc_copy($tmpName.'_preview', osc_content_path() . 'uploads/' . $resourceId . '_preview.jpg');
-                                    osc_copy($tmpName.'_thumbnail', osc_content_path() . 'uploads/' . $resourceId . '_thumbnail.jpg');
+                                    osc_copy($tmpName.'_normal', osc_uploads_path() . $resourceId . '.jpg');
+                                    osc_copy($tmpName.'_preview', osc_uploads_path() . $resourceId . '_preview.jpg');
+                                    osc_copy($tmpName.'_thumbnail', osc_uploads_path() . $resourceId . '_thumbnail.jpg');
                                     if( osc_keep_original_image() ) {
-                                        $path = osc_content_path() . 'uploads/' . $resourceId.'_original.jpg';
+                                        $path = osc_uploads_path() . $resourceId.'_original.jpg';
                                         move_uploaded_file($tmpName, $path);
                                     }
 
-                                    $s_path = 'oc-content/uploads/';
+                                    $s_path = str_replace(osc_base_path(), '', osc_uploads_path());
                                     $resourceType = 'image/jpeg';
                                     $itemResourceManager->update(
-                                                            array(
-                                                                's_path'            => $s_path
-                                                                ,'s_name'           => osc_genRandomPassword()
-                                                                ,'s_extension'      => 'jpg'
-                                                                ,'s_content_type'   => $resourceType
-                                                            )
-                                                            ,array(
-                                                                'pk_i_id'       => $resourceId
-                                                                ,'fk_i_item_id' => $itemId
-                                                            )
+                                        array(
+                                            's_path'          => $s_path
+                                            ,'s_name'         => osc_genRandomPassword()
+                                            ,'s_extension'    => 'jpg'
+                                            ,'s_content_type' => $resourceType
+                                        )
+                                        ,array(
+                                            'pk_i_id'       => $resourceId
+                                            ,'fk_i_item_id' => $itemId
+                                        )
                                     );
                                     osc_run_hook('uploaded_file', ItemResource::newInstance()->findByPrimaryKey($resourceId));
                                 } else {

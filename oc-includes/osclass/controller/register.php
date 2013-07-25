@@ -71,7 +71,13 @@
                                                     $this->redirectTo( osc_base_url() );
                                             break;
                                             case 2: osc_add_flash_ok_message( _m('Your account has been created successfully'));
-                                                    $this->doView('user-login.php');
+                                                    Params::setParam('action', 'login_post');
+                                                    Params::setParam('email', Params::getParam('s_email'));
+                                                    Params::setParam('password', Params::getParam('s_password'));
+                                                    require_once(osc_lib_path() . 'osclass/controller/login.php');
+                                                    $do = new CWebLogin();
+                                                    $do->doModel();
+                                                    //$this->doView('user-login.php');
                                             break;
                                             case 3: osc_add_flash_warning_message( _m('The specified e-mail is already in use'));
                                                     $this->doView('user-register.php');
@@ -92,6 +98,9 @@
                                                 $this->doView('user-register.php');
                                             break;
                                             case 9: osc_add_flash_warning_message( _m("The specified username is not valid, it contains some invalid words"));
+                                                $this->doView('user-register.php');
+                                            break;
+                                            case 10: osc_add_flash_warning_message( _m('The name cannot be empty'));
                                                 $this->doView('user-register.php');
                                             break;
                                         }

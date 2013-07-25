@@ -17,6 +17,8 @@
      */
 
     osc_enqueue_script('jquery-validate');
+    osc_enqueue_script('php-date');
+
 
     // cateogry js
     $categories = Category::newInstance()->toTree();
@@ -37,7 +39,13 @@
         return $text[$return];
     }
 
-    function customPageHeader() { ?>
+    if($new_item) {
+        $options = array(0,1,3,5,7,10,15,30);
+    } else {
+        $options = array(-1,0,1,3,5,7,10,15,30);
+    }
+
+function customPageHeader() { ?>
         <h1><?php echo customText('title'); ?></h1>
 <?php
     }
@@ -70,9 +78,11 @@
                     }
                 });
 
+                $('.ui-autocomplete').css('zIndex', 10000);
+
                 <?php if(osc_locale_thousands_sep()!='' || osc_locale_dec_point() != '') { ?>
-                $("#price").blur(function(event) {
-                    var price = $("#price").attr("value");
+                $("#price").on("blur", function(event) {
+                    var price = $("#price").prop("value");
                     <?php if(osc_locale_thousands_sep()!='') { ?>
                     while(price.indexOf('<?php echo osc_esc_js(osc_locale_thousands_sep());  ?>')!=-1) {
                         price = price.replace('<?php echo osc_esc_js(osc_locale_thousands_sep());  ?>', '');
@@ -84,9 +94,25 @@
                         price = tmp[0]+'<?php echo osc_esc_js(osc_locale_dec_point())?>'+tmp[1];
                     }
                     <?php }; ?>
-                    $("#price").attr("value", price);
+                    $("#price").prop("value", price);
+
                 });
                 <?php } ?>
+
+                $('#update_expiration').change( function() {
+                    if($(this).attr("checked")) {
+                        $('#dt_expiration').prop('value', '');
+                        $('div.update_expiration').show();
+                    } else {
+                        $('#dt_expiration').prop('value', '-1');
+                        $('div.update_expiration').hide();
+                    }
+                });
+
+                $('body').on("created", '[name^="select_"]',function(evt) {
+                    selectUi($(this));
+                });
+
             });
         </script>
         <?php ItemForm::location_javascript_new('admin'); ?>
@@ -141,7 +167,7 @@
                         <?php printLocaleTitle(osc_get_locales()); ?>
                         <div class="category">
                             <label><?php _e('Category'); ?></label>
-                            <?php ItemForm::category_two_selects(); ?>
+                            <?php ItemForm::category_multiple_selects(); ?>
                         </div>
                         <div class="input-description-wide">
                             <?php printLocaleDescription(osc_get_locales()); ?>
@@ -177,11 +203,7 @@
                     </div>
                     <div id="right-side">
                         <div class="well ui-rounded-corners">
-                            <h3 class="label">User</h3>
-                            <?php //ItemForm::user_select(null, null, __('Non-registered user')); ?>
-<!--                         input autocomplete   -->
-<!--                            <input id="fUser" name="user" type="text" class="fUser input-text input-actions" value="<?php echo osc_esc_html(Params::getParam('user')); ?>" />
-                            <input id="fUserId" name="userId" type="hidden" value="<?php echo osc_esc_html(Params::getParam('userId')); ?>" />-->
+                            <h3 class="label"><?php _e('User'); ?></h3>
                             <div id="contact_info">
                                 <div class="input-has-placeholder input-separate-top">
                                     <label><?php _e('Name'); ?></label>
@@ -191,12 +213,21 @@
                                     <label><?php _e('E-mail'); ?></label>
                                     <?php ItemForm::contact_email_text(); ?>
                                 </div>
+                                <?php if(!$new_item) { ?>
+                                <div class="input-has-placeholder input-separate-top">
+                                    <label><?php _e('Ip Address'); ?></label>
+                                    <input id="ipAddress" type="text" name="ipAddress" value="<?php echo osc_item_ip(); ?>" class="valid" readonly="readonly">
+                                </div>
+                                <?php }; ?>
                             </div>
                         </div>
 
                         <div class="well ui-rounded-corners input-separate-top">
-                            <h3 class="label">Location</h3>
-                            <?php ItemForm::country_select(); ?>
+                            <h3 class="label"><?php _e('Location'); ?></h3>
+                            <div class="input-has-placeholder input-separate-top">
+                                <label><?php _e('Country'); ?></label>
+                                <?php ItemForm::country_select(); ?>
+                            </div>
                             <div class="input-has-placeholder input-separate-top">
                                 <label><?php _e('Region'); ?></label>
                                 <?php ItemForm::region_text(); ?>
@@ -214,6 +245,27 @@
                                 <?php ItemForm::address_text(); ?>
                             </div>
                         </div>
+
+                        <div class="well ui-rounded-corners input-separate-top">
+                            <h3 class="label"><?php _e('Expiration'); ?></h3>
+                            <?php if( $new_item ) { ?>
+                            <div class="input-has-placeholder input-separate-top">
+                                <label><?php _e('Expire in X days'); ?></label>
+                                <?php ItemForm::expiration_input('add'); ?>
+                            </div>
+                            <?php } else if( !$new_item ) { ?>
+                            <div class="input-separate-top">
+                                <label><input type="checkbox" id="update_expiration" name="update_expiration" style="width: inherit!important;"/> <?php _e('Update expiration?'); ?></label>
+                                <div class="hide update_expiration">
+                                    <div class="input-has-placeholder input-separate-top">
+                                        <?php ItemForm::expiration_input('edit'); ?>
+                                    </div>
+                                    <label><?php _e('0, means no expiration date'); ?></label>
+                                </div>
+                            </div>
+                            <?php } ?>
+                        </div>
+
                     </div>
                     <div class="clear"></div>
                     <div class="form-actions">

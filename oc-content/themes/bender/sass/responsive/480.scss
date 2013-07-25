@@ -1,0 +1,30 @@
+ul.r-list li {
+    float: none;
+    width: 100%;
+}
+
+#{listToSelector("","ul.r-list>li:nth-child(2n)",("","body.search "))}
+{
+  padding-left:0px;
+}
+#{listToSelector("",".listing-grid .listing-card",("","body.search "))}
+{
+    width: 49%;
+    clear:none;
+}
+#{listToSelector("",".listing-grid .listing-card:nth-child(2n)",("","body.search "))}
+{
+    margin-right:0%;
+    margin-left:1%;
+    clear:none;
+
+}
+#{listToSelector("",".listing-grid .listing-card:nth-child(2n+1)",("","body.search "))}
+{
+    margin-left:0%;
+    margin-right:1%;
+    clear:both !important;
+}
+body.home .listing-grid .first{
+    clear:none;
+}

@@ -49,6 +49,10 @@
 
             $input = $this->prepareData(true);
 
+            if( !$error && $input['s_name']=='' ) {
+                $error = 10;
+            }
+
             if( !$error && !osc_validate_email($input['s_email']) ) {
                 $error = 5;
             }
@@ -139,9 +143,15 @@
             // hook pre add or edit
             osc_run_hook('pre_user_post');
 
-            $user_email = $this->manager->findByEmail($input['s_email']);
-            if(isset($user_email['s_email'])) {
-                return 3;
+            if($this->is_admin) {
+                $user_email = $this->manager->findByEmail($input['s_email']);
+                if(isset($user_email['pk_i_id']) && $user_email['pk_i_id']!=$userId) {
+                    return 3;
+                }
+            }
+
+            if($input['s_name']=='') {
+                return 10;
             }
 
             $this->manager->update($input, array('pk_i_id' => $userId));
@@ -160,9 +170,11 @@
                 Log::newInstance()->insertLog('user', 'edit', $userId, $user['s_email'], $this->is_admin ? 'admin' : 'user', $this->is_admin ? osc_logged_admin_id() : osc_logged_user_id() );
             }
 
-            Session::newInstance()->_set('userName', $input['s_name']);
-            $phone = ($input['s_phone_mobile'])? $input['s_phone_mobile'] : $input['s_phone_land'];
-            Session::newInstance()->_set('userPhone', $phone);
+            if(!$this->is_admin) {
+                Session::newInstance()->_set('userName', $input['s_name']);
+                $phone = ($input['s_phone_mobile'])? $input['s_phone_mobile'] : $input['s_phone_land'];
+                Session::newInstance()->_set('userPhone', $phone);
+            }
 
             if ( is_array( Params::getParam('s_info') ) ) {
                 foreach (Params::getParam('s_info') as $key => $value) {
@@ -322,6 +334,7 @@
                     $mItem->enable($item['pk_i_id']);
                 }
             }
+            osc_run_hook('activate_user', $user);
 
             return true;
         }
@@ -345,6 +358,7 @@
                     $mItem->disable($item['pk_i_id']);
                 }
             }
+            osc_run_hook('deactivate_user', $user);
 
             return true;
         }
@@ -368,6 +382,7 @@
                     $mItem->enable($item['pk_i_id']);
                 }
             }
+            osc_run_hook('enable_user', $user);
 
             return true;
         }
@@ -391,6 +406,7 @@
                     $mItem->disable($item['pk_i_id']);
                 }
             }
+            osc_run_hook('disable_user', $user);
 
             return true;
         }

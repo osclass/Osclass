@@ -224,14 +224,7 @@
                 return array('error_code' => 'error_file');
             }
 
-            // check if there are spaces when you include the plugin
-            ob_start();
             include_once( osc_plugins_path() . $path );
-
-            if ( ob_get_length() > 0 ) {
-                return array('error_code' => 'error_output', 'output' => ob_get_clean());
-            }
-            ob_end_clean();
 
             try {
                 self::runHook('install_' . $path);
@@ -247,6 +240,11 @@
             $data['s_value'] = serialize($plugins_list);
             $condition = array( 's_section' => 'osclass', 's_name' => 'installed_plugins');
             Preference::newInstance()->update($data, $condition);
+
+            // Check if something failed
+            if ( ob_get_length() > 0 ) {
+                return array('error_code' => 'error_output', 'output' => ob_get_clean());
+            }
 
             return true;
         }

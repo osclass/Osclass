@@ -40,7 +40,6 @@
         $aMenu              = $adminMenu->get_array_menu();
         $current_menu_id    = osc_current_menu();
         $is_moderator       = osc_is_moderator();
-
         // Remove hook admin_menu when osclass 4.0 be released
         // hack, compatibility with menu plugins.
         ob_start();
@@ -69,14 +68,15 @@
             if( array_key_exists('sub', $value) ) {
                 $aSubmenu = $value['sub'];
                 foreach($aSubmenu as $aSub) {
-                    $credential_sub = $aSub[4];
-                    if(!$is_moderator || $is_moderator && $credential_sub == 'moderator') { // show
+                    $credential_sub = isset($aSub[4])?$aSub[4]:$aSub[3];
+
+                    if(!$is_moderator || ($is_moderator && $credential_sub == 'moderator')) { // show
 
                         $url_submenu   = $aSub[1];
                         $url_submenu   = str_replace(osc_admin_base_url(true).'?', '', $url_submenu);
                         $url_submenu   = str_replace(osc_admin_base_url(), '', $url_submenu);
 
-                        if( strpos($actual_url, $url_submenu, 0) === 0 && $priority<=2  && $url_menu != '') {
+                        if( strpos($actual_url, $url_submenu, 0) === 0 && $priority<=2  && $url_submenu != '') {
 
                             if( $urlLenght<strlen($url_submenu) ) {
                                 $urlLenght = strlen($url_submenu);
@@ -129,9 +129,9 @@
                     if($aSubmenu) {
                         $sSubmenu .= "<ul>".PHP_EOL;
                         foreach($aSubmenu as $aSub) {
-                            $credential_sub = $aSub[4];
+                            $credential_sub = isset($aSub[4])?$aSub[4]:$aSub[3];
                             if(!$is_moderator || $is_moderator && $credential_sub == 'moderator') { // show
-                                if(substr($aSub[2], 0, 8)=="divider_") {
+                                if(substr($aSub[1], 0, 8)=="divider_") {
                                     $sSubmenu .= '<li class="submenu-divide">'.$aSub[0].'</li>'.PHP_EOL;
                                 } else {
                                     $sSubmenu .= '<li><a id="'.$aSub[2].'" href="'.$aSub[1].'">'.$aSub[0].'</a></li>'.PHP_EOL;
@@ -169,9 +169,9 @@
         $sMenu .= '</ul>'. PHP_EOL;
 
         $sMenu .= '<div id="show-more">'.PHP_EOL;
-    $sMenu .= '<h3><a id="stats" href="#"><div class="ico ico-48 ico-more"></div>' . __('Show more') . '</a></h3>'.PHP_EOL;
-    $sMenu .= '<ul id="hidden-menus">'.PHP_EOL;
-    $sMenu .= '</ul>'.PHP_EOL;
+        $sMenu .= '<h3><a id="stats" href="#"><div class="ico ico-48 ico-more"></div>' . __('Show more') . '</a></h3>'.PHP_EOL;
+        $sMenu .= '<ul id="hidden-menus">'.PHP_EOL;
+        $sMenu .= '</ul>'.PHP_EOL;
         $sMenu .= '</div>'.PHP_EOL;
         $sMenu .= '<div class="osc_switch_mode"><a id="osc_toolbar_switch_mode" href="'.osc_admin_base_url(true).'?page=ajax&action=runhook&hook=compactmode"><div class="background"></div><div class="skin"></div><div class="trigger"></div></a><h3>'.__('Compact').'</h3></div>'.PHP_EOL;
 
@@ -186,9 +186,9 @@
      * @param type $array
      * @param type $id_menu
      */
-    function osc_add_admin_menu_page( $menu_title, $url, $menu_id, $icon_url = null, $capability = null , $position = null )
+    function osc_add_admin_menu_page( $menu_title, $url, $menu_id, $capability = 'administrator', $icon_url = null, $position = null )
     {
-        AdminMenu::newInstance()->add_menu($menu_title, $url, $menu_id, $icon_url = null, $capability, $position);
+        AdminMenu::newInstance()->add_menu($menu_title, $url, $menu_id, $capability, $icon_url = null, $position);
     }
 
     /**
@@ -213,7 +213,7 @@
      * @param type $array
      * @param type $id_menu
      */
-    function osc_add_admin_submenu_page( $menu_id, $submenu_title, $url, $submenu_id, $capability = null)
+    function osc_add_admin_submenu_page( $menu_id, $submenu_title, $url, $submenu_id, $capability = 'administrator')
     {
         AdminMenu::newInstance()->add_submenu( $menu_id, $submenu_title, $url, $submenu_id, $capability);
     }

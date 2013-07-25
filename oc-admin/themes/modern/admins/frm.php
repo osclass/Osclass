@@ -105,6 +105,7 @@
                         </div>
                     <?php } ?>
                 </div>
+                <?php osc_run_hook('admin_profile_form', $admin); ?>
                 <div class="clear"></div>
                 <div class="form-actions">
                     <?php if( $aux['admin_edit'] ) { ?>

@@ -96,13 +96,13 @@ function admin_theme_js() { ?>
     ================================================== -->
     <?php osc_load_scripts();
 }
-osc_add_hook('admin_header', 'admin_theme_js', 1);
+osc_add_hook('admin_header', 'admin_theme_js', 9);
 function admin_theme_css() { ?>
     <!-- styles
     ================================================== -->
     <?php osc_load_styles();
 }
-osc_add_hook('admin_header', 'admin_theme_css', 2);
+osc_add_hook('admin_header', 'admin_theme_css', 9);
 
 function printLocaleTabs($locales = null) {
     if($locales==null) { $locales = osc_get_locales(); }

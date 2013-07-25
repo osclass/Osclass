@@ -40,6 +40,7 @@
                     dataType: 'json',
                     success: function(data) {
                         if(data.status=='done') {
+                            $('span#percent').html(100);
                         }else{
                             var pending = data.pending;
                             var all = <?php echo osc_esc_js($all);?>;

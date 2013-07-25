@@ -273,11 +273,11 @@
          *
          * @access public
          * @since unknown
-         * @param type $categoryId
-         * @param string $active
+         * @param int $categoryId
+         * @param mixed $options could be a string with | separator or an array with the options
          * @return int total items
          */
-        public function totalItems($categoryId = null, $active = null)
+        public function totalItems($categoryId = null, $options = null)
         {
             $this->dao->select('count(*) as total');
             $this->dao->from($this->getTableName().' i');
@@ -286,24 +286,35 @@
                 $this->dao->where('i.fk_i_category_id', $categoryId);
             }
 
-            $conditions = '';
-            if (!is_null($active)) {
-                switch ($active) {
+            if(!is_array($options)) {
+                $options = explode("|", $options);
+            }
+            foreach($options as $option) {
+                switch ($option) {
                     case 'ACTIVE':
-                        $this->dao->where('b_active', 1);
-                    break;
+                        $this->dao->where('i.b_active', 1);
+                        break;
                     case 'INACTIVE':
-                        $this->dao->where('b_active', 0);
-                    break;
+                        $this->dao->where('i.b_active', 0);
+                        break;
                     case 'ENABLE':
-                        $this->dao->where('b_enabled', 1);
-                    break;
+                        $this->dao->where('i.b_enabled', 1);
+                        break;
                     case 'DISABLED':
-                        $this->dao->where('b_enabled', 0);
-                    break;
+                        $this->dao->where('i.b_enabled', 0);
+                        break;
                     case 'SPAM':
-                        $this->dao->where('b_spam', 1);
-                    break;
+                        $this->dao->where('i.b_spam', 1);
+                        break;
+                    case 'EXPIRED':
+                        $this->dao->where( '( i.b_premium = 0 && i.dt_expiration < \'' . date('Y-m-d H:i:s') .'\' )' );
+                        break;
+                    case 'NOTEXPIRED':
+                        $this->dao->where( '( i.b_premium = 1 || i.dt_expiration >= \'' . date('Y-m-d H:i:s') .'\' )' );
+                        break;
+                    case 'TODAY':
+                        $this->dao->where('DATEDIFF(\''.date('Y-m-d H:i:s').'\', i.dt_pub_date) < 1');
+                        break;
                     default:
                 }
             }
@@ -466,6 +477,63 @@
         }
 
         /**
+         * Find enabled items which are going to expired
+         *
+         * @access public
+         * @since 3.2
+         * @param int $hours
+         * @return array of items
+         */
+        public function findByHourExpiration($hours = 24)
+        {
+            $this->dao->select('l.*, i.*');
+
+            $this->dao->where( "i.b_enabled = 1 " );
+            $this->dao->where( "i.b_active = 1 " );
+            $this->dao->where( "i.b_spam = 0" );
+
+            $this->dao->from($this->getTableName().' i, '.DB_TABLE_PREFIX.'t_item_location l');
+            $this->dao->where('l.fk_i_item_id = i.pk_i_id');
+            $this->dao->where('TIMESTAMPDIFF(HOUR, NOW(), i.dt_expiration) = '.$hours);
+
+            $result = $this->dao->get();
+            if($result == false) {
+                return array();
+            }
+            $items  = $result->result();
+            return $this->extendData($items);
+        }
+
+        /**
+         * Find enabled items which are going to expired
+         *
+         * @access public
+         * @since 3.2
+         * @param int $days
+         * @return array of items
+         */
+        public function findByDayExpiration($days = 1)
+        {
+            $this->dao->select('l.*, i.*');
+
+            $this->dao->where( "i.b_enabled = 1 " );
+            $this->dao->where( "i.b_active = 1 " );
+            $this->dao->where( "i.b_spam = 0" );
+
+            $this->dao->from($this->getTableName().' i, '.DB_TABLE_PREFIX.'t_item_location l');
+            $this->dao->where('l.fk_i_item_id = i.pk_i_id');
+            $this->dao->where('TIMESTAMPDIFF(DAY, NOW(), i.dt_expiration) = '.$days);
+
+            $result = $this->dao->get();
+            if($result == false) {
+                return array();
+            }
+
+            $items  = $result->result();
+            return $this->extendData($items);
+        }
+
+        /**
          * Count enabled items belong to an user given its id
          *
          * @access public
@@ -483,6 +551,91 @@
             );
             $this->dao->where($array_where);
             $this->dao->orderBy('i.pk_i_id', 'DESC');
+
+            $result = $this->dao->get();
+            if($result == false) {
+                return array();
+            }
+            $items  = $result->row();
+            return $items['total'];
+        }
+
+        /**
+         * Find enable items according the type
+         *
+         * @access public
+         * @since unknown
+         * @param int $userId User id
+         * @param int $start beginning from $start
+         * @param int $end ending
+         * @param string $itemType type item(active, expired, pending validate, premium, all)
+         * @return array of items
+         */
+        public function findItemTypesByUserID($userId, $start = 0, $end = null, $itemType = false)
+        {
+            $this->dao->from($this->getTableName());
+            $this->dao->where('b_enabled', 1);
+            $this->dao->where("fk_i_user_id = $userId");
+
+            if($itemType == 'active') {
+                $this->dao->where('b_active', 1);
+                $this->dao->where('dt_expiration > \'' . date('Y-m-d H:i:s') . '\'');
+
+            } elseif($itemType == 'expired'){
+                $this->dao->where('dt_expiration < \'' . date('Y-m-d H:i:s') . '\'');
+
+            } elseif($itemType == 'pending_validate'){
+                $this->dao->where('b_active', 0);
+
+            } elseif($itemType == 'premium'){
+                $this->dao->where('b_premium', 1);
+            }
+
+            $this->dao->orderBy('pk_i_id', 'DESC');
+            if($end!=null) {
+                $this->dao->limit($start, $end);
+            } else if ($start > 0 ) {
+                $this->dao->limit($start);
+            }
+
+            $result = $this->dao->get();
+            if($result == false) {
+                return array();
+            }
+            $items  = $result->result();
+            return $this->extendData($items);
+        }
+
+        /**
+         * Count enabled items according the type
+         *
+         * @access public
+         * @since unknown
+         * @param int $userId User id
+         * @param string $itemType (active, expired, pending validate, premium, all)
+         * @return int number of items
+         */
+        public function countItemTypesByUserID($userId, $itemType = false)
+        {
+            $this->dao->select('count(pk_i_id) as total');
+            $this->dao->from($this->getTableName());
+            $this->dao->where('b_enabled', 1);
+            $this->dao->where("fk_i_user_id = $userId");
+            $this->dao->orderBy('pk_i_id', 'DESC');
+
+            if($itemType == 'active') {
+                $this->dao->where('b_active', 1);
+                $this->dao->where("dt_expiration > '" . date('Y-m-d H:i:s') . "'");
+
+            } elseif($itemType == 'expired'){
+                $this->dao->where("dt_expiration <= '" . date('Y-m-d H:i:s') . "'");
+
+            } elseif($itemType == 'pending_validate'){
+                $this->dao->where('b_active', 0);
+
+            } elseif($itemType == 'premium'){
+                $this->dao->where('b_premium', 1);
+            }
 
             $result = $this->dao->get();
             if($result == false) {
@@ -558,13 +711,17 @@
         }
 
         /**
-         * Update dt_expiration field, using $i_expiration_days
+         * Update dt_expiration field, using $expiration_time
          *
-         * @param type $i_expiration_days
+         * @param mixed $expiration_time could be interget (number of days) or directly a date
          * @return string new date expiration, false if error occurs
          */
-        public function updateExpirationDate($id, $i_expiration_days)
+        public function updateExpirationDate($id, $expiration_time, $do_stats = true)
         {
+            if($expiration_time=='') {
+                return false;
+            }
+
             $this->dao->select('dt_expiration');
             $this->dao->from($this->getTableName());
             $this->dao->where('pk_i_id', $id);
@@ -573,12 +730,16 @@
             if($result!==false) {
                 $item   = $result->row();
                 $expired_old = osc_isExpired($item['dt_expiration']);
-                if($i_expiration_days > 0) {
-                    $sql =  sprintf("UPDATE %s SET dt_expiration = ", $this->getTableName());
-                    $sql .= sprintf(' date_add(%s.dt_pub_date, INTERVAL %d DAY) ', $this->getTableName(), $i_expiration_days);
-                    $sql .= sprintf(' WHERE pk_i_id = %d', $id);
+                if(preg_match('|^([0-9]+)$|', $expiration_time, $match)) {
+                    if($expiration_time > 0) {
+                        $sql =  sprintf("UPDATE %s SET dt_expiration = ", $this->getTableName());
+                        $sql .= sprintf(' date_add(%s.dt_pub_date, INTERVAL %d DAY) ', $this->getTableName(), $expiration_time);
+                        $sql .= sprintf(' WHERE pk_i_id = %d', $id);
+                    } else {
+                        $sql = sprintf("UPDATE %s SET dt_expiration = '9999-12-31 23:59:59'  WHERE pk_i_id = %d", $this->getTableName(), $id);
+                    }
                 } else {
-                    $sql = sprintf("UPDATE %s SET dt_expiration = '9999-12-31 23:59:59'  WHERE pk_i_id = %d", $this->getTableName(), $id);
+                    $sql = sprintf("UPDATE %s SET dt_expiration = '%s'  WHERE pk_i_id = %d", $this->getTableName(), $expiration_time, $id);
                 }
 
                 $result = $this->dao->query($sql);
@@ -590,6 +751,10 @@
                     $this->dao->where('i.pk_i_id', $id );
                     $result = $this->dao->get();
                     $_item = $result->row();
+
+                    if(!$do_stats) {
+                        return $_item['dt_expiration'];
+                    }
 
                     $expired = osc_isExpired($_item['dt_expiration']);
                     if($expired!=$expired_old) {
@@ -680,7 +845,7 @@
          */
         public function metaFields($id)
         {
-            $this->dao->select('im.s_value as s_value,mf.pk_i_id as pk_i_id, mf.s_name as s_name, mf.e_type as e_type');
+            $this->dao->select('im.s_value as s_value,mf.pk_i_id as pk_i_id, mf.s_name as s_name, mf.e_type as e_type, im.s_multi as s_multi');
             $this->dao->from($this->getTableName().' i, '.DB_TABLE_PREFIX.'t_item_meta im, '.DB_TABLE_PREFIX.'t_meta_categories mc, '.DB_TABLE_PREFIX.'t_meta_fields mf');
             $this->dao->where('mf.pk_i_id = im.fk_i_field_id');
             $this->dao->where('mf.pk_i_id = mc.fk_i_field_id');
@@ -694,7 +859,25 @@
             if($result == false) {
                 return array();
             }
-            return $result->result();
+            $aTemp = $result->result();
+
+            $array = array();
+            // prepare data - date interval - from <-> to
+            foreach($aTemp as $value) {
+                if($value['e_type'] == 'DATEINTERVAL') {
+                    $aValue = array();
+                    if( isset($array[$value['pk_i_id']]) ) {
+                        $aValue = $array[$value['pk_i_id']]['s_value'];
+                    }
+                    $aValue[$value['s_multi']] = $value['s_value'];
+                    $value['s_value'] = $aValue;
+
+                    $array[$value['pk_i_id']]  = $value;
+                } else {
+                    $array[$value['pk_i_id']] = $value;
+                }
+            }
+            return $array;
         }
 
         /**

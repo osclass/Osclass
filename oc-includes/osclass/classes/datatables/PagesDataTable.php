@@ -55,14 +55,6 @@
         private function addTableHeader()
         {
 
-            $arg_date = '&sort=date';
-            if(Params::getParam('sort') == 'date') {
-                if(Params::getParam('direction') == 'desc') {
-                    $arg_date .= '&direction=asc';
-                };
-            }
-
-            
             $this->addColumn('bulkactions', '<input id="check_all" type="checkbox" />');
             $this->addColumn('internal_name', __('Internal name'));
             $this->addColumn('title', __('Title'));

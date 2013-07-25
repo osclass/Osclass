@@ -22,7 +22,7 @@
 
     /**
      * DataTable class
-     * 
+     *
      * @since 3.1
      * @package Osclass
      * @subpackage classes
@@ -46,10 +46,10 @@
             $this->aRows = array();
             $this->rawRows = array();
         }
-        
-        
+
+
         /**
-         * FUNCTIONS THAT SHOULD BE REDECLARED IN SUB-CLASSES 
+         * FUNCTIONS THAT SHOULD BE REDECLARED IN SUB-CLASSES
          */
         public function setResults($results = null) {
             if(is_array($results)) {
@@ -57,7 +57,7 @@
                 $this->limit = count($results);
                 $this->total = count($results);
                 $this->totalFiltered = count($results);
-                
+
                 if(count($results)>0) {
                     foreach($results as $r) {
                         $row = array();
@@ -76,39 +76,39 @@
                 }
             }
         }
-        
-        
-        
-        
+
+
+
+
         /**
          * COMMON FUNCTIONS . DO NOT MODIFY THEM
          */
-        
-        
+
+
         /**
          * Add a colum
          * @param type $id
          * @param type $text
-         * @param type $priority 
+         * @param type $priority
          */
         public function addColumn($id, $text, $priority = 5)
         {
             $this->removeColumn($id);
             $this->aColumns[$priority][$id] = $text;
         }
-        
+
         public function removeColumn($id)
         {
             for($priority=1;$priority<=10;$priority++) {
                 unset($this->aColumns[$priority][$id]);
             }
         }
-        
+
         protected function addRow($aRow)
         {
             $this->aRows[] = $aRow;
         }
-        
+
         public function sortedColumns()
         {
             $columns_ordered = array();
@@ -121,11 +121,14 @@
             }
             return $columns_ordered;
         }
-        
+
         public function sortedRows()
         {
             $rows = array();
             $columns = $this->sortedColumns();
+            if(count($this->aRows)===0) {
+                return $rows;
+            }
             foreach($this->aRows as $row) {
                 $aux_row = array();
                 foreach($columns as $k => $v) {
@@ -139,7 +142,7 @@
             }
             return $rows;
         }
-        
+
         public function getData()
         {
             return array(
@@ -156,9 +159,9 @@
         {
             return $this->rawRows;
         }
-        
 
-        
+
+
     }
 
 ?>

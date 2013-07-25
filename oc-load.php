@@ -19,7 +19,7 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-define('OSCLASS_VERSION', '3.1.2');
+define('OSCLASS_VERSION', '3.2.0');
 
 if( !defined('ABS_PATH') ) {
     define( 'ABS_PATH', dirname(__FILE__) . '/' );
@@ -70,7 +70,9 @@ require_once LIB_PATH . 'osclass/model/Preference.php';
 require_once LIB_PATH . 'osclass/helpers/hPreference.php';
 
 // check if Osclass is installed
-if( !getBoolPreference('osclass_installed') ) {
+if( !getBoolPreference('osclass_installed') && MULTISITE ) {
+    header('Location: ' . WEB_PATH); die;
+} else if( !getBoolPreference('osclass_installed') ) {
     require_once LIB_PATH . 'osclass/helpers/hErrors.php';
 
     $title    = 'Osclass &raquo; Error';
@@ -194,18 +196,6 @@ define('__OSC_LOADED__', true);
 // Moved from BaseModel, since we need some session magic on index.php;)
 Session::newInstance()->session_start();
 
-if( OC_ADMIN ) {
-    // init admin menu
-    AdminMenu::newInstance()->init();
-    $functions_path = AdminThemes::newInstance()->getCurrentThemePath() . 'functions.php';
-    if( file_exists($functions_path) ) {
-        require_once $functions_path;
-    }
-} else {
-    // init Rewrite class only if it's the frontend
-    Rewrite::newInstance()->init();
-}
-
 if( osc_timezone() != '' ) {
     date_default_timezone_set(osc_timezone());
 }
@@ -254,10 +244,23 @@ osc_register_script('jquery-validate', osc_assets_url('js/jquery.validate.min.js
 osc_register_script('tabber', osc_assets_url('js/tabber-minimized.js'), 'jquery');
 osc_register_script('tiny_mce', osc_assets_url('js/tiny_mce/tiny_mce.js'));
 osc_register_script('colorpicker', osc_assets_url('js/colorpicker/js/colorpicker.js'));
+osc_register_script('fancybox', osc_assets_url('js/fancybox/jquery.fancybox.pack.js'), array('jquery'));
+osc_register_script('jquery-migrate', osc_assets_url('js/jquery-migrate.min.js'), array('jquery'));
+osc_register_script('php-date', osc_assets_url('js/date.js'));
 
 Plugins::init();
 osc_csrfguard_start();
 
+if( OC_ADMIN ) {
+    // init admin menu
+    AdminMenu::newInstance()->init();
+    $functions_path = AdminThemes::newInstance()->getCurrentThemePath() . 'functions.php';
+    if( file_exists($functions_path) ) {
+        require_once $functions_path;
+    }
+} else {
+    Rewrite::newInstance()->init();
+}
 
 if( !class_exists('PHPMailer') ) {
     require_once osc_lib_path() . 'phpmailer/class.phpmailer.php';
@@ -265,4 +268,5 @@ if( !class_exists('PHPMailer') ) {
 if( !class_exists('SMTP') ) {
     require_once osc_lib_path() . 'phpmailer/class.smtp.php';
 }
+
 /* file end: ./oc-load.php */
