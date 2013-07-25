@@ -77,3 +77,4 @@
     </div>
 </div>
 <?php osc_run_hook('footer'); ?>
+</body></html>

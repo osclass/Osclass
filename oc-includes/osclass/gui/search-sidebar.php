@@ -27,10 +27,8 @@
 <div id="sidebar">
 <?php osc_alert_form(); ?>
 <div class="filters">
-    <form action="<?php echo osc_search_url(); ?>" method="get" class="nocsrf">
-        <?php if( !osc_rewrite_enabled() ) { ?>
+    <form action="<?php echo osc_base_url(true); ?>" method="get" class="nocsrf">
         <input type="hidden" name="page" value="search"/>
-        <?php } ?>
         <input type="hidden" name="sOrder" value="<?php echo osc_search_order(); ?>" />
         <input type="hidden" name="iOrderType" value="<?php $allowedTypesForSorting = Search::getAllowedTypesForSorting() ; echo $allowedTypesForSorting[osc_search_order_type()]; ?>" />
         <?php foreach(osc_search_user() as $userId) { ?>
