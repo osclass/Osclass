@@ -28,56 +28,60 @@
 
             $this->mSearch = Search::newInstance();
             $this->uri = preg_replace('|^' . REL_WEB_URL . '|', '', $_SERVER['REQUEST_URI']);
-            if( stripos($_SERVER['REQUEST_URI'], osc_get_preference('rewrite_search_url'))===false && osc_rewrite_enabled() && !Params::existParam('sFeed')) {
-                // redirect if it ends with a slash
-                if( preg_match('|/$|', $this->uri) ) {
-                    $redirectURL = osc_base_url() . $this->uri;
-                    $redirectURL = preg_replace('|/$|', '', $redirectURL);
-                    $this->redirectTo($redirectURL);
-                }
-                $search_uri = preg_replace('|/[0-9]+$|', '', $this->uri);
-                $this->_exportVariableToView('search_uri', $search_uri);
+            if( preg_match('/^index\.php/', $this->uri)>0) {
+                // search url without permalinks params
+            } else {
+                if( stripos($_SERVER['REQUEST_URI'], osc_get_preference('rewrite_search_url'))===false && osc_rewrite_enabled() && !Params::existParam('sFeed')) {
+                    // redirect if it ends with a slash
+                    if( preg_match('|/$|', $this->uri) ) {
+                        $redirectURL = osc_base_url() . $this->uri;
+                        $redirectURL = preg_replace('|/$|', '', $redirectURL);
+                        $this->redirectTo($redirectURL);
+                    }
+                    $search_uri = preg_replace('|/[0-9]+$|', '', $this->uri);
+                    $this->_exportVariableToView('search_uri', $search_uri);
 
-                // remove seo_url_search_prefix
-                if( osc_get_preference('seo_url_search_prefix') != '' ) {
-                    $this->uri = str_replace( osc_get_preference('seo_url_search_prefix') . '/', '', $this->uri);
-                }
+                    // remove seo_url_search_prefix
+                    if( osc_get_preference('seo_url_search_prefix') != '' ) {
+                        $this->uri = str_replace( osc_get_preference('seo_url_search_prefix') . '/', '', $this->uri);
+                    }
 
-                // get page if it's set in the url
-                $iPage = preg_replace('|.*/([0-9]+)$|', '$01', $this->uri);
-                if( $iPage > 0 ) {
-                    Params::setParam('iPage', $iPage);
-                    // redirect without number of pages
-                    if( $iPage == 1 ) {
-                        $this->redirectTo(osc_base_url() . $search_uri);
+                    // get page if it's set in the url
+                    $iPage = preg_replace('|.*/([0-9]+)$|', '$01', $this->uri);
+                    if( $iPage > 0 ) {
+                        Params::setParam('iPage', $iPage);
+                        // redirect without number of pages
+                        if( $iPage == 1 ) {
+                            $this->redirectTo(osc_base_url() . $search_uri);
+                        }
                     }
-                }
-                if( Params::getParam('iPage') > 1 ) {
-                    $this->_exportVariableToView('canonical', osc_base_url() . $search_uri);
-                }
+                    if( Params::getParam('iPage') > 1 ) {
+                        $this->_exportVariableToView('canonical', osc_base_url() . $search_uri);
+                    }
 
-                $search_uri = preg_replace('|.*?/|', '', $search_uri);
-                if( preg_match('|-r([0-9]+)$|', $search_uri, $r) ) {
-                    $region = Region::newInstance()->findByPrimaryKey($r[1]);
-                    if( !$region ) {
-                        $this->do404();
+                    $search_uri = preg_replace('|.*?/|', '', $search_uri);
+                    if( preg_match('|-r([0-9]+)$|', $search_uri, $r) ) {
+                        $region = Region::newInstance()->findByPrimaryKey($r[1]);
+                        if( !$region ) {
+                            $this->do404();
+                        }
+                        Params::setParam('sRegion', $region['pk_i_id']);
+                        Params::setParam('sCategory', preg_replace('|(.*?)_.*?-r[0-9]+|', '$01', $search_uri));
+                    } else if( preg_match('|-c([0-9]+)$|', $search_uri, $c) ) {
+                        $city = City::newInstance()->findByPrimaryKey($c[1]);
+                        if( !$city ) {
+                            $this->do404();
+                        }
+                        Params::setParam('sCity', $city['pk_i_id']);
+                        Params::setParam('sCategory', preg_replace('|(.*?)_.*?-c[0-9]+|', '$01', $search_uri));
+                    } else {
+                        $aCategory = explode('/', $search_uri);
+                        $category  = Category::newInstance()->findBySlug($aCategory[count($aCategory)-1]);
+                        if( count($category) === 0 ) {
+                            $this->do404();
+                        }
+                        Params::setParam('sCategory', $search_uri);
                     }
-                    Params::setParam('sRegion', $region['pk_i_id']);
-                    Params::setParam('sCategory', preg_replace('|(.*?)_.*?-r[0-9]+|', '$01', $search_uri));
-                } else if( preg_match('|-c([0-9]+)$|', $search_uri, $c) ) {
-                    $city = City::newInstance()->findByPrimaryKey($c[1]);
-                    if( !$city ) {
-                        $this->do404();
-                    }
-                    Params::setParam('sCity', $city['pk_i_id']);
-                    Params::setParam('sCategory', preg_replace('|(.*?)_.*?-c[0-9]+|', '$01', $search_uri));
-                } else {
-                    $aCategory = explode('/', $search_uri);
-                    $category  = Category::newInstance()->findBySlug($aCategory[count($aCategory)-1]);
-                    if( count($category) === 0 ) {
-                        $this->do404();
-                    }
-                    Params::setParam('sCategory', $search_uri);
                 }
             }
         }
