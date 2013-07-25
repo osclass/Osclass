@@ -1436,6 +1436,7 @@ function _recursive_category_stats(&$aux, &$categoryTotal)
         }
     }
     $categoryTotal[$aux['pk_i_id']] = $count_items;
+    return $count_items;
 }
 
 /**
