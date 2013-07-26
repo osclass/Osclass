@@ -32,6 +32,10 @@
                 break;
                 case('advanced_post'):
                     // updating advanced settings
+                    if( defined('DEMO') ) {
+                        osc_add_flash_warning_message( _m("This action can't be done because it's a demo site"), 'admin');
+                        $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=advanced');
+                    }
                     osc_csrf_check();
                     $subdomain_type = Params::getParam('e_type');
                     if(!in_array($subdomain_type, array('category', 'country', 'region', 'city'))) {

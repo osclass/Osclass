@@ -31,6 +31,10 @@
 
             switch ($location_action) {
                 case('add_country'):    // add country
+                                        if( defined('DEMO') ) {
+                                            osc_add_flash_warning_message( _m("This action can't be done because it's a demo site"), 'admin');
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
+                                        }
                                         osc_csrf_check();
                                         $countryCode = strtoupper(Params::getParam('c_country'));
                                         $countryName = Params::getParam('country');
@@ -66,6 +70,10 @@
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
                 break;
                 case('edit_country'):   // edit country
+                                        if( defined('DEMO') ) {
+                                            osc_add_flash_warning_message( _m("This action can't be done because it's a demo site"), 'admin');
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
+                                        }
                                         osc_csrf_check();
                                         if(!osc_validate_min(Params::getParam('e_country'), 1)) {
                                             osc_add_flash_error_message(_m('Country name cannot be blank'), 'admin');
@@ -81,6 +89,10 @@
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
                 break;
                 case('delete_country'): // delete country
+                                        if( defined('DEMO') ) {
+                                            osc_add_flash_warning_message( _m("This action can't be done because it's a demo site"), 'admin');
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
+                                        }
                                         osc_csrf_check();
                                         $countryIds = Params::getParam('id');
 
@@ -106,6 +118,10 @@
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
                 break;
                 case('add_region'):     // add region
+                                        if( defined('DEMO') ) {
+                                            osc_add_flash_warning_message( _m("This action can't be done because it's a demo site"), 'admin');
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
+                                        }
                                         osc_csrf_check();
                                         if( !Params::getParam('r_manual') ) {
                                             $regionId    = Params::getParam('region_id');
@@ -150,6 +166,10 @@
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations&country_code='.@$countryCode."&country=".@$country['s_name']);
                 break;
                 case('edit_region'):    // edit region
+                                        if( defined('DEMO') ) {
+                                            osc_add_flash_warning_message( _m("This action can't be done because it's a demo site"), 'admin');
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
+                                        }
                                         osc_csrf_check();
                                         $mRegions  = new Region();
                                         $newRegion = Params::getParam('e_region');
@@ -178,6 +198,10 @@
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations&country_code='.@$country['pk_c_code']."&country=".@$country['s_name']);
                 break;
                 case('delete_region'):  // delete region
+                                        if( defined('DEMO') ) {
+                                            osc_add_flash_warning_message( _m("This action can't be done because it's a demo site"), 'admin');
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
+                                        }
                                         osc_csrf_check();
                                         $mRegion  = new Region();
                                         $regionIds = Params::getParam('id');
@@ -210,6 +234,10 @@
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations&country_code='.@$country['pk_c_code']."&country=".@$country['s_name']);
                 break;
                 case('add_city'):       // add city
+                                        if( defined('DEMO') ) {
+                                            osc_add_flash_warning_message( _m("This action can't be done because it's a demo site"), 'admin');
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
+                                        }
                                         osc_csrf_check();
                                         if( !Params::getParam('ci_manual') ) {
                                             $cityId    = Params::getParam('city_id');
@@ -257,6 +285,10 @@
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations&country_code='.@$country['pk_c_code']."&country=".@$country['s_name']."&region=".$regionId);
                 break;
                 case('edit_city'):      // edit city
+                                        if( defined('DEMO') ) {
+                                            osc_add_flash_warning_message( _m("This action can't be done because it's a demo site"), 'admin');
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
+                                        }
                                         osc_csrf_check();
                                         $mRegion = new Region();
                                         $mCities = new City();
@@ -285,6 +317,10 @@
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations&country_code='.@$country['pk_c_code']."&country=".@$country['s_name']."&region=".@$region['pk_i_id']);
                 break;
                 case('delete_city'):    // delete city
+                                        if( defined('DEMO') ) {
+                                            osc_add_flash_warning_message( _m("This action can't be done because it's a demo site"), 'admin');
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
+                                        }
                                         osc_csrf_check();
                                         $mCities = new City();
                                         $cityIds  = Params::getParam('id');
