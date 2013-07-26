@@ -22,7 +22,7 @@
 
     /**
      * CommentsDataTable class
-     * 
+     *
      * @since 3.1
      * @package Osclass
      * @subpackage classes
@@ -30,50 +30,42 @@
      */
     class CommentsDataTable extends DataTable
     {
-        
+
         private $resourceID;
         private $order_by;
         private $showAll;
-        
+
         public function table($params)
         {
-            
+
             $this->addTableHeader();
             $this->getDBParams($params);
 
-            $comments = ItemComment::newInstance()->search($this->resourceID, $this->start, $this->limit, 
-                    ( $this->order_by['column_name'] ? $this->order_by['column_name'] : 'pk_i_id' ), 
+            $comments = ItemComment::newInstance()->search($this->resourceID, $this->start, $this->limit,
+                    ( $this->order_by['column_name'] ? $this->order_by['column_name'] : 'pk_i_id' ),
                     ( $this->order_by['type'] ? $this->order_by['type'] : 'desc' ),
                     $this->showAll);
             $this->processData($comments);
-            
-            
+
+
             if($this->showAll) {
                 $this->total          = ItemComment::newInstance()->countAll();
             } else {
                 $this->total          = ItemComment::newInstance()->countAll( '( c.b_active = 0 OR c.b_enabled = 0 OR c.b_spam = 1 )' );
             }
-            
+
             if( $this->resourceID == null ) {
                 $this->total_filtered = $this->total;
             } else {
                 $this->total_filtered = ItemComment::newInstance()->count( $this->resourceID );
             }
-                        
+
             return $this->getData();
         }
 
         private function addTableHeader()
         {
 
-            $arg_date = '&sort=date';
-            if(Params::getParam('sort') == 'date') {
-                if(Params::getParam('direction') == 'desc') {
-                    $arg_date .= '&direction=asc';
-                };
-            }
-
-            
             $this->addColumn('bulkactions', '<input id="check_all" type="checkbox" />');
             $this->addColumn('author', __('Author'));
             $this->addColumn('comment', __('Comment'));
@@ -82,7 +74,7 @@
             $dummy = &$this;
             osc_run_hook("admin_comments_table", $dummy);
         }
-        
+
         private function processData($comments)
         {
             if(!empty($comments)) {
@@ -95,23 +87,23 @@
 
                     View::newInstance()->_exportVariableToView('item', Item::newInstance()->findByPrimaryKey($aRow['fk_i_item_id']));
 
-                    if( $aRow['b_active'] ) {
-                        $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=status&amp;id=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url . '&amp;value=INACTIVE">' . __('Deactivate') . '</a>';
-                    } else {
-                        $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=status&amp;id=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url .'&amp;value=ACTIVE">' . __('Activate') . '</a>';
-                    }
                     if( $aRow['b_enabled'] ) {
                         $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=status&amp;id=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url . '&amp;value=DISABLE">' . __('Block') . '</a>';
                     } else {
                         $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=status&amp;id=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url . '&amp;value=ENABLE">' . __('Unblock') . '</a>';
                     }
+                    $options_more[] = '<a onclick="return delete_dialog(\'' . $aRow['pk_i_id'] . '\');" href="' . osc_admin_base_url(true) . '?page=comments&amp;action=delete&amp;id=' . $aRow['pk_i_id'] .'" id="dt_link_delete">' . __('Delete') . '</a>';
 
                     $options[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=comment_edit&amp;id=' . $aRow['pk_i_id'] . '" id="dt_link_edit">' . __('Edit') . '</a>';
-                    $options[] = '<a onclick="return delete_dialog(\'' . $aRow['pk_i_id'] . '\');" href="' . osc_admin_base_url(true) . '?page=comments&amp;action=delete&amp;id=' . $aRow['pk_i_id'] .'" id="dt_link_delete">' . __('Delete') . '</a>';
+                    if( $aRow['b_active'] ) {
+                        $options[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=status&amp;id=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url . '&amp;value=INACTIVE">' . __('Deactivate') . '</a>';
+                    } else {
+                        $options[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=status&amp;id=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url .'&amp;value=ACTIVE">' . __('Activate') . '</a>';
+                    }
 
                     // more actions
                     $moreOptions = '<li class="show-more">'.PHP_EOL.'<a href="#" class="show-more-trigger">'. __('Show more') .'...</a>'. PHP_EOL .'<ul>'. PHP_EOL;
-                    foreach( $options_more as $actual ) { 
+                    foreach( $options_more as $actual ) {
                         $moreOptions .= '<li>'.$actual."</li>".PHP_EOL;
                     }
                     $moreOptions .= '</ul>'. PHP_EOL .'</li>'.PHP_EOL;
@@ -133,7 +125,7 @@
                     }
                     $row['author'] = $aRow['s_author_name'] . ' (<a target="_blank" href="' . osc_item_url() . '">' . osc_item_title() . '</a>)'. $actions;
                     $row['comment'] = $aRow['s_body'];
-                    $row['date'] = $aRow['dt_pub_date'];
+                    $row['date'] = osc_format_date($aRow['dt_pub_date']);
 
                     $row = osc_apply_filter('comments_processing_row', $row, $aRow);
 
@@ -143,13 +135,13 @@
 
             }
         }
-                
+
         private function getDBParams($_get)
         {
-            
+
             $this->order_by['column_name'] = 'c.dt_pub_date';
             $this->order_by['type'] = 'desc';
-            
+
             $this->showAll   = Params::getParam('showAll')=='off'?false:true;
 
             foreach($_get as $k => $v) {
@@ -169,9 +161,9 @@
 
             $this->start = intval( $start );
             $this->limit = intval( $_get['iDisplayLength'] );
-            
+
         }
-        
+
     }
 
 ?>

@@ -359,13 +359,20 @@ function osc_sendMail($params) {
         $mail->Port = $smtpPort;
     }
 
+    $from = osc_mailserver_mail_from();
+    if(empty($from)) {
     $from = 'osclass@' . osc_get_domain();
     if( array_key_exists('from', $params) ) {
         $from = $params['from'];
     }
+    }
+
+    $from_name = osc_mailserver_name_from();
+    if(empty($from_name)) {
     $from_name = osc_page_title();
     if( array_key_exists('from_name', $params) ) {
         $from_name = $params['from_name'];
+    }
     }
 
     $mail->From     = osc_apply_filter('mail_from', $from);
@@ -910,6 +917,10 @@ function strip_slashes_extended($array) {
  * @param string $file Full path of the zip file
  * @param string $to Full path where it is going to be unzipped
  * @return int
+ *  0 - destination folder not writable (or not exist and cannot be created)
+ *  1 - everything was OK
+ *  2 - zip is empty
+ *  -1 : file could not be created (or error reading the file from the zip)
  */
 function osc_unzip_file($file, $to) {
     if(strpos($to, "../")!==false) {
@@ -1087,7 +1098,7 @@ function _zip_folder_ziparchive($archive_folder, $archive_name) {
 
             $dh = opendir($dir);
             while (false !== ($_file = readdir($dh))) {
-                if ($_file != '.' && $_file != '..') {
+                if ($_file != '.' && $_file != '..' && stripos($_file, 'Osclass_backup.')===FALSE) {
                     if (is_file($dir.$_file)) {
                         $zip -> addFile($dir.$_file, str_replace(ABS_PATH, '', $dir.$_file));
                     } elseif (is_dir($dir.$_file)) {
@@ -1368,14 +1379,14 @@ function _get_market_url($type, $update_uri) {
     }
 }
 
-function _need_update($uri, $version, $operator = '>') {
+function _need_update($uri, $version) {
     if(false===($json=@osc_file_get_contents($uri))) {
         return false;
     } else {
         $data = json_decode($json , true);
         if(isset($data['s_version']) ) {
             $result = version_compare2($data['s_version'], $version);
-            if( $result == -1 ) {
+            if( $result == 1 ) {
                 return true;
             }
         }
@@ -1390,8 +1401,8 @@ function _need_update($uri, $version, $operator = '>') {
  *      1  if A > B, and
  *      -1 if B < A.
  *
- * @param type $a
- * @param type $b
+ * @param type $a -> from market
+ * @param type $b -> installed version
  * @return type
  */
 function version_compare2($a, $b)
@@ -1416,6 +1427,18 @@ function version_compare2($a, $b)
     return (count($a) < count($b)) ? -1 : 0;
 }
 
+function _recursive_category_stats(&$aux, &$categoryTotal)
+{
+    $count_items = Item::newInstance()->numItems($aux, true, true);
+    if(is_array($aux['categories'])) {
+        foreach($aux['categories'] as &$cat) {
+            $count_items += _recursive_category_stats($cat, $categoryTotal);
+        }
+    }
+    $categoryTotal[$aux['pk_i_id']] = $count_items;
+    return $count_items;
+}
+
 /**
  * Update category stats
  *
@@ -1424,33 +1447,11 @@ function version_compare2($a, $b)
  */
 function osc_update_cat_stats() {
     $categoryTotal = array();
-    $categoryTree  = array();
-    $aCategories   = Category::newInstance()->listAll(false);
+    $aCategories   = Category::newInstance()->toTreeAll();
 
-    // append root categories and get the number of items of each category
-    foreach($aCategories as $category) {
-        $total     = Item::newInstance()->numItems($category, true, true);
-        $category += array('category' => array());
+    foreach($aCategories as &$category) {
         if( is_null($category['fk_i_parent_id']) ) {
-            $categoryTree += array($category['pk_i_id'] => $category);
-        }
-
-        $categoryTotal += array($category['pk_i_id'] => $total);
-    }
-
-    // append childs to root categories
-    foreach($aCategories as $category) {
-        if( !is_null($category['fk_i_parent_id']) ) {
-            $categoryTree[$category['fk_i_parent_id']]['category'][] = $category;
-        }
-    }
-
-    // sum the result of the subcategories and set in the parent category
-    foreach($categoryTree as $category) {
-        if( count( $category['category'] ) > 0 ) {
-            foreach($category['category'] as $subcategory) {
-                $categoryTotal[$category['pk_i_id']] += $categoryTotal[$subcategory['pk_i_id']];
-            }
+            _recursive_category_stats($category, $categoryTotal);
         }
     }
 
@@ -1471,23 +1472,18 @@ function osc_update_cat_stats() {
 function osc_update_cat_stats_id($id)
 {
     // get sub categorias
-    if( !Category::newInstance()->isRoot($id) ) {
-        $auxCat = Category::newInstance()->findRootCategory($id);
-        $id = $auxCat['pk_i_id'];
-    }
-
     $aCategories    = Category::newInstance()->findSubcategories($id);
     $categoryTotal  = 0;
+    $category  = Category::newInstance()->findByPrimaryKey($id);
 
     if( count($aCategories) > 0 ) {
         // sumar items de la categoría
-        foreach($aCategories as $category) {
-            $total     = Item::newInstance()->numItems($category, true, true);
+        foreach($aCategories as $subcategory) {
+            $total     = Item::newInstance()->numItems($subcategory, true, true);
             $categoryTotal += $total;
         }
-        $categoryTotal += Item::newInstance()->numItems(Category::newInstance()->findByPrimaryKey($id), true, true);
+        $categoryTotal += Item::newInstance()->numItems($category, true, true);
     } else {
-        $category  = Category::newInstance()->findByPrimaryKey($id);
         $total     = Item::newInstance()->numItems($category, true, true);
         $categoryTotal += $total;
     }
@@ -1495,6 +1491,10 @@ function osc_update_cat_stats_id($id)
     $sql = 'REPLACE INTO '.DB_TABLE_PREFIX.'t_category_stats (fk_i_category_id, i_num_items) VALUES ';
     $sql .= " (".$id.", ".$categoryTotal.")";
     $result = CategoryStats::newInstance()->dao->query($sql);
+
+    if($category['fk_i_parent_id']!=0) {
+        osc_update_cat_stats_id($category['fk_i_parent_id']);
+    }
 }
 
 
@@ -1586,7 +1586,12 @@ function get_ip() {
 /***********************
  * CSRFGUARD functions *
  ***********************/
-function osc_csrfguard_generate_token($unique_form_name) {
+function osc_csrfguard_generate_token() {
+    $token_name = Session::newInstance()->_get('token_name');
+    if($token_name!='' && Session::newInstance()->_get($token_name)!='') {
+        return array($token_name, Session::newInstance()->_get($token_name));
+    }
+    $unique_token_name = osc_csrf_name()."_".mt_rand(0,mt_getrandmax());
     if(function_exists("hash_algos") and in_array("sha512",hash_algos())) {
         $token = hash("sha512",mt_rand(0,mt_getrandmax()));
     } else {
@@ -1601,23 +1606,19 @@ function osc_csrfguard_generate_token($unique_form_name) {
             $token.=$c;
         }
     }
-    Session::newInstance()->_set($unique_form_name, $token);
-    Session::newInstance()->_set("lf_".$unique_form_name, time());
-    return $token;
+    Session::newInstance()->_set('token_name', $unique_token_name);
+    Session::newInstance()->_set($unique_token_name, $token);
+    return array($unique_token_name, $token);
 }
 
 
-function osc_csrfguard_validate_token($unique_form_name, $token_value, $drop = true) {
+function osc_csrfguard_validate_token($unique_form_name, $token_value) {
+    $name = Session::newInstance()->_get('token_name');
     $token = Session::newInstance()->_get($unique_form_name);
-    if($token===$token_value) {
-        $result = true;
+    if($name===$unique_form_name && $token===$token_value) {
+        return true;
     } else {
-        $result = false;
-    }
-    // Ajax request should not drop the token for 1 hour, yeah it's not the most secure thing out there,
-    if($drop || ((int)Session::newInstance()->_get("lf_".$unique_form_name)-time())>(3600)) {
-        Session::newInstance()->_drop($unique_form_name);
-        Session::newInstance()->_drop("lf_".$unique_form_name);
+        return false;
     }
     return $result;
 }
@@ -1636,7 +1637,6 @@ function osc_csrfguard_replace_forms($form_data_html) {
 
 
 function osc_csrfguard_inject() {
-    global $mtime;
     $data = ob_get_clean();
     $data = osc_csrfguard_replace_forms($data);
     echo $data;
@@ -1645,7 +1645,10 @@ function osc_csrfguard_inject() {
 
 function osc_csrfguard_start() {
     ob_start();
-    register_shutdown_function('osc_csrfguard_inject');
+    $functions = osc_apply_filter('shutdown_functions', array('osc_csrfguard_inject'));
+    foreach($functions as $f) {
+        register_shutdown_function($f);
+    }
 }
 
 function osc_redirect_to($url) {
@@ -1655,6 +1658,5 @@ function osc_redirect_to($url) {
     header("Location: ".$url);
     exit;
 }
-
 
 ?>

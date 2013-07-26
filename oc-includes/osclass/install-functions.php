@@ -737,16 +737,18 @@ function display_target() {
         <table class="admin-user">
             <tbody>
                 <tr>
-                    <th><label><?php _e('Username'); ?></label></th>
+                    <th><label for="admin_user"><?php _e('Username'); ?></label></th>
                     <td>
                         <input size="25" id="admin_user" name="s_name" type="text" value="admin" />
                     </td>
-                    <td><span id="admin-user-error" class="error" style="display:none;"><?php _e('Admin user is required'); ?></span></td>
+                    <td>
+                        <span id="admin-user-error" class="error" aria-hidden="true" style="display:none;"><?php _e('Admin user is required'); ?></span>
+                    </td>
                 </tr>
                 <tr>
-                    <th><label><?php _e('Password'); ?></label></th>
+                    <th><label for="s_passwd"><?php _e('Password'); ?></label></th>
                     <td>
-                        <input size="25" class="password_test" name="s_passwd" type="text" value="" />
+                        <input size="25" class="password_test" name="s_passwd" id="s_passwd" type="password" value="" />
                     </td>
                     <td></td>
                 </tr>
@@ -801,9 +803,9 @@ function display_target() {
                     <option value="all"><?php _e("All cities"); ?></option>
                 </select>
 
-                <div id="no_region_text" style="display: none;"><?php _e("There are no regions available for this country"); ?></div>
+                <div id="no_region_text" aria-hidden="true" style="display: none;"><?php _e("There are no regions available for this country"); ?></div>
 
-                <div id="no_city_text" style="display: none;"><?php _e("There are no cities available for this region"); ?></div>
+                <div id="no_city_text" aria-hidden="true" style="display: none;"><?php _e("There are no cities available for this region"); ?></div>
 
 
             </div>
@@ -823,7 +825,7 @@ function display_target() {
 </form>
 <div id="lightbox" style="display:none;">
     <div class="center">
-        <img src="<?php echo get_absolute_url(); ?>oc-includes/images/loading.gif" alt="" title="" />
+        <img src="<?php echo get_absolute_url(); ?>oc-includes/images/loading.gif" alt="<?php _e("Loading..."); ?>" title="" />
     </div>
 </div>
 <?php
@@ -889,7 +891,7 @@ function display_finish($password) {
     <table>
         <tbody>
             <tr>
-                <th><label><?php _e('Username');?></label></th>
+                <th><span class="label-like"><?php _e('Username');?></span></th>
                 <td>
                     <div class="s_name">
                         <span style="float:left;" ><?php echo $data['admin_user']; ?></span>
@@ -897,7 +899,7 @@ function display_finish($password) {
                 </td>
             </tr>
             <tr>
-                <th><label><?php _e('Password');?></label></th>
+                <th><span class="label-like"><?php _e('Password');?></span></th>
                 <td>
                     <div class="s_passwd">
                         <span style="float: left;"><?php echo osc_esc_html($data['password']); ?></span>

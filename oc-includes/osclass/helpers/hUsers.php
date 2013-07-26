@@ -119,13 +119,35 @@
         if ($id != '') {
             if ( osc_rewrite_enabled() ) {
                 $user = User::newInstance()->findByPrimaryKey($id);
-                $path = osc_base_url() . osc_get_preference('rewrite_user_profile') . '/' . $user['s_username'];
+                $path = osc_base_url().osc_get_preference('rewrite_user_profile')."/".$user['s_username'];
             } else {
                 $path = sprintf(osc_base_url(true) . '?page=user&action=pub_profile&id=%d', $id);
             }
         } else {
             $path = '';
         }
+        return $path;
+    }
+
+    /**
+     * Gets current items page from public profile
+     *
+     * @param int $page
+     * @return string
+     */
+    function osc_user_list_items_pub_profile_url($page = '', $itemsPerPage = false) {
+        $path  = osc_user_public_profile_url();
+        if ($itemsPerPage) {
+            $path .= "?itemsPerPage=" . $itemsPerPage;
+        }
+        if($page) {
+            if(!$itemsPerPage) {
+                $path .= "?iPage=" . $page;
+            } else {
+                $path .= "&iPage=" . $page;
+            }
+        }
+
         return $path;
     }
 
@@ -395,6 +417,15 @@
      */
     function osc_user_longitude() {
         return (float) osc_user_field("d_coord_long");
+    }
+
+    /**
+     * Gets type (company/user) of current user
+     *
+     * @return float
+     */
+    function osc_user_is_company() {
+        return (bool) osc_user_field("b_company");
     }
 
     /**

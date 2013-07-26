@@ -71,9 +71,9 @@
         </style>
         <script type="text/javascript">
             $(function() {
-                $('.category_div').live('mouseenter',function(){
+                $('.category_div').on('mouseenter',function(){
                     $(this).addClass('cat-hover');
-                }).live('mouseleave',function(){
+                }).on('mouseleave',function(){
                     $(this).removeClass('cat-hover');
                 });
                 var list_original = '';
@@ -85,7 +85,7 @@
                     helper: 'clone',
                     listType: 'ul',
                     items: 'li',
-                    maxLevels: 2,
+                    maxLevels: 4,
                     opacity: .6,
                     placeholder: 'placeholder',
                     revert: 250,
@@ -152,11 +152,13 @@
                 });
 
                 $(".toggle").bind("click", function(e) {
-                    var list = $(this).parents('li').find('ul');
-                    var li   = $(this).closest('li');
+                    var list = $(this).parents('li').first().find('ul');
+                    var lili = $(this).closest('li').find('ul').find('li').find('ul');
+                    var li   = $(this).closest('li').first();
                     if( $(this).hasClass('status-collapsed') ) {
                         $(li).removeClass('no-nest');
                         $(list).show();
+                        $(lili).hide();
                         $(this).removeClass('status-collapsed').addClass('status-expanded');
                         $(this).html('-');
                     } else {
@@ -306,49 +308,43 @@
     }
     osc_add_hook('admin_header','customHead', 10);
 
-    $users      = __get('users');
-    $stat       = __get('stat');
-    $categories = __get('categories');
-    $countries  = __get('countries');
-    $regions    = __get('regions');
-    $cities     = __get('cities');
-    $withFilters= __get('withFilters');
-
-    $iDisplayLength = __get('iDisplayLength');
-
-    $aData      = __get('aItems');
-function drawCategory($category,$isSubcategory = false){
+function drawCategory($category){
     if( count($category['categories']) > 0 ) { $has_subcategories = true; } else { $has_subcategories = false; }
 ?>
+<li id="list_<?php echo $category['pk_i_id']; ?>" class="category_li <?php echo ( $category['b_enabled'] == 1 ? 'enabled' : 'disabled' ); ?> " >
     <div class="category_div <?php echo ( $category['b_enabled'] == 1 ? 'enabled' : 'disabled' ); ?>" category_id="<?php echo $category['pk_i_id']; ?>" >
-    <div class="category_row">
-        <div class="handle ico ico-32 ico-droppable"></div>
-        <div class="ico-childrens">
-            <?php
-        if($isSubcategory){
-            echo '<span class="toggle status-expanded">-</span>';
-        } else {
-            if( $has_subcategories ) {
-                echo '<span class="toggle status-collapsed">+</span>';
-            } else {
-                echo '<span class="toggle status-expanded">-</span>';
-            }
-        }
-        ?>
+        <div class="category_row">
+            <div class="handle ico ico-32 ico-droppable"></div>
+            <div class="ico-childrens">
+                <?php
+                if( $has_subcategories ) {
+                    echo '<span class="toggle status-collapsed">+</span>';
+                } else {
+                    echo '<span class="toggle status-expanded">-</span>';
+                }
+            ?>
+            </div>
+            <div class="name-cat" id="<?php echo 'quick_edit_' . $category['pk_i_id']; ?>">
+                <?php echo '<span class="name">'.$category['s_name'].'</span>'; ?>
+            </div>
+            <div class="actions-cat">
+                <a onclick="show_iframe('content_list_<?php echo $category['pk_i_id'];?>','<?php echo $category['pk_i_id']; ?>');"><?php _e('Edit'); ?></a>
+                &middot;
+                <a class="enable" onclick="enable_cat('<?php echo $category['pk_i_id']; ?>')"><?php $category['b_enabled'] == 1 ? _e('Disable') : _e('Enable'); ?></a>
+                &middot;
+                <a onclick="delete_category(<?php echo $category['pk_i_id']; ?>)"><?php _e('Delete'); ?></a>
+            </div>
         </div>
-        <div class="name-cat" id="<?php echo 'quick_edit_' . $category['pk_i_id']; ?>">
-            <?php echo '<span class="name">'.$category['s_name'].'</span>'; ?>
-        </div>
-        <div class="actions-cat">
-            <a onclick="show_iframe('content_list_<?php echo $category['pk_i_id'];?>','<?php echo $category['pk_i_id']; ?>');"><?php _e('Edit'); ?></a>
-            &middot;
-            <a class="enable" onclick="enable_cat('<?php echo $category['pk_i_id']; ?>')"><?php $category['b_enabled'] == 1 ? _e('Disable') : _e('Enable'); ?></a>
-            &middot;
-            <a onclick="delete_category(<?php echo $category['pk_i_id']; ?>)"><?php _e('Delete'); ?></a>
-        </div>
+        <div class="edit content_list_<?php echo $category['pk_i_id']; ?>"></div>
     </div>
-    <div class="edit content_list_<?php echo $category['pk_i_id']; ?>"></div>
-</div>
+    <?php if($has_subcategories) { ?>
+        <ul class="subcategory subcategories-<?php echo $category['pk_i_id']; ?> " style="display: none;">
+            <?php foreach($category['categories'] as $subcategory) {
+                drawCategory($subcategory);
+            } ?>
+        </ul>
+    <?php } ?>
+</li>
 <?php
 } //End drawCategory
 ?>
@@ -363,24 +359,10 @@ function drawCategory($category,$isSubcategory = false){
                     </div>
                     <div class="list-categories">
                         <ul class="sortable">
-                        <?php foreach($categories as $category) { ?>
-                        <?php
+                        <?php foreach($categories as $category) {
                             if( count($category['categories']) > 0 ) { $has_subcategories = true; } else { $has_subcategories = false; }
-                        ?>
-                            <li id="list_<?php echo $category['pk_i_id']; ?>" class="category_li <?php echo ( $category['b_enabled'] == 1 ? 'enabled' : 'disabled' ); ?> <?php if($has_subcategories) { echo 'no-nest'; } ?>" >
-
-                                <?php drawCategory($category); ?>
-                                <?php if($has_subcategories) { ?>
-                                    <ul class="subcategory subcategories-<?php echo $category['pk_i_id']; ?> hide">
-                                    <?php foreach($category['categories'] as $category) {?>
-                                        <li id="list_<?php echo $category['pk_i_id']; ?>" class="category_li <?php echo ( $category['b_enabled'] == 1 ? 'enabled' : 'disabled' ); ?>" >
-                                            <?php drawCategory($category,true); ?>
-                                        </li>
-                                    <?php } ?>
-                                    </ul>
-                                <?php } ?>
-                            </li>
-                            <?php } ?>
+                            drawCategory($category);
+                        } ?>
                         </ul>
                     </div>
                     <div class="clear"></div>

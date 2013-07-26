@@ -38,17 +38,18 @@
                 <input type="hidden" name="page" value="login" />
                 <input type="hidden" name="action" value="login_post" />
                 <p>
-                    <label>
+                    <label for="user_login">
                         <span><?php _e('Username'); ?></span>
                         <input type="text" name="user" id="user_login" class="input" value="<?php if( defined('DEMO') ){ echo 'admin'; } ?>" size="20" tabindex="10" />
                     </label>
                 </p>
                 <p>
-                    <label>
+                    <label for="user_pass">
                         <span><?php _e('Password'); ?></span>
                         <input type="password" name="password" id="user_pass" class="input" value="<?php if( defined('DEMO') ) { echo 'admin'; }?>" size="20" tabindex="20" />
                     </label>
                 </p>
+                <?php osc_run_hook('login_admin_form'); ?>
                 <?php $locales = osc_all_enabled_locales_for_admin(); ?>
                 <?php if(count($locales) > 1) { ?>
                     <p>

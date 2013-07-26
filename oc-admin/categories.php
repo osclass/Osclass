@@ -47,6 +47,7 @@
                                         $fields['i_expiration_days'] = 0;
                                         $fields['i_position'] = 0;
                                         $fields['b_enabled'] = 1;
+                                        $fields['b_price_enabled'] = 1;
 
                                         $default_locale = osc_language();
                                         $aFieldsDescription[$default_locale]['s_name'] = "NEW CATEGORY, EDIT ME!";

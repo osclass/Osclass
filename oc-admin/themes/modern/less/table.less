@@ -52,7 +52,7 @@ table {
     background-color:@color-gray-light;
     border:solid 1px @color-gray-soft;
     z-index:2;
-    padding:0px 42px;
+    padding:0px 6px;
     text-align:left;
 }
 .table-collapsed #table-row-actions{
@@ -112,30 +112,58 @@ table {
 .table div.actions{
     display: none;
 }
-.status-spam,
-.status-spam td,
-{
-    background:@status-spam;
-    border-color:@status-spam-border;
+.table td.col-status-border {
+    width: 1px;
+    margin: 0;
+    padding: 0;
+    border-top: 0;
+    border-bottom: 0;
+    border-right: 0;
 }
-.status-block,
-.status-block td{
-    background:@status-block;
-    /*border-color:@status-block-border;*/
+.table td.col-status {
+    border-top: 1px solid rgba(0,0,0,0.1);
+    border-bottom: 0;
+    width: 50px;
+    padding: 0 10px;
+    margin: 0;
+    font-weight: bold;
+    vertical-align: middle;
+    border-left: 0;
 }
-.status-block td{
-    opacity:0.4;
-    /*border-color:@status-block-border;*/
+.table .status-spam td.col-status-border {
+    background: #323A45;
 }
-.status-activate,
-.status-activate td{
-    background:@status-activate;
-    /*border-color:@status-activate-border;*/
+.table .status-spam td.col-status {
+    background: #7A8288;
+    color: #FFFFFF;
 }
-.status-premium,
-.status-premium td{
-    background:@status-premium;
-    /*border-color:@status-premium-border;*/
+.table .status-blocked td.col-status-border {
+    background: #E02800;
+}
+.table .status-blocked td.col-status {
+    background: #FE7D7F;
+    color: #A10;
+}
+.table .status-inactive td.col-status-border {
+    background: #7A8288;
+}
+.table .status-inactive td.col-status {
+    background: #E2E7F2;
+    color: #444;
+}
+.table .status-premium td.col-status-border {
+    background: #B79400;
+}
+.table .status-premium td.col-status {
+    background: #F0DB7F;
+    color: #886E00;
+}
+.table .status-active td.col-status-border {
+    background: #2EAAB6;
+}
+.table .status-active td.col-status {
+    background: #9AE1EC;
+    color: #1F7A83;
 }
 .even{
     background:#F9F9F9;
@@ -191,4 +219,12 @@ table.table-small{
 }
 .col-title{
     min-width:280px;
+}
+table .icon-new-window {
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    background-image: url('../images/icon-new-window.png');
+    margin-left: 5px;
+    margin-top: 3px;
 }

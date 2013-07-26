@@ -134,7 +134,6 @@
                             }
 
                             if( $b_city ) {
-                                //print_r("~~~~~~~~~~~~~~~~~~~".$city."~~~~~~~~~~~~~~~~~~~~");
                                 $aCity = City::newInstance()->findByName($city);
                                 if( count($aCity) == 0 ) {
                                     $params['sCity'] = $city;

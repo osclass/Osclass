@@ -205,7 +205,7 @@
         {
             $att = array();
             foreach($attrs as $k => $v) {
-                $att[] = $k . '="' . $v . '"';
+                $att[] = $k . '="' . osc_esc_html($v) . '"';
             }
             return '<li><a ' . implode(' ', $att) . '>' . $text . '</a></li>';
         }
@@ -214,7 +214,7 @@
         {
             $att = array();
             foreach($attrs as $k => $v) {
-                $att[] = $k . '="' . $v . '"';
+                $att[] = $k . '="' . osc_esc_html($v) . '"';
             }
             return '<li><span ' . implode(' ', $att) . '>' . $text . '</span></li>';
         }

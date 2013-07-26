@@ -53,6 +53,7 @@
                 $this->redirectTo($url);
             }
 
+            $this->subdomain_params($current_host);
             $this->page   = Params::getParam('page');
             $this->action = Params::getParam('action');
             $this->ajax   = false;
@@ -130,6 +131,57 @@
             }
 
             return false;
+        }
+
+        private function subdomain_params($host) {
+            $subdomain_type = osc_subdomain_type();
+            $subhost = osc_subdomain_host();
+            // strpos is used to check if the domain is different, useful when accessing the website by diferent domains
+            if($subdomain_type!='' && $subhost!='' && strpos($host, $subhost)!==false) {
+                if(preg_match('|^(www\.)?(.+)\.'.$subhost.'$|', $host, $match)) {
+                    $subdomain = $match[2];
+                    if($subdomain!='' && $subdomain!='www') {
+                        if($subdomain_type=='category') {
+                            $category = Category::newInstance()->findBySlug($subdomain);
+                            if(isset($category['pk_i_id'])) {
+                                Params::setParam('subdomain', 1);
+                                Params::setParam('sCategory', $category['pk_i_id']);
+                                if(Params::getParam('page')=='') {
+                                    Params::setParam('page', 'search');
+                                }
+                            } else {
+                                $this->do400();
+                            }
+                        } else if($subdomain_type=='country') {
+                            $country = Country::newInstance()->findByName($subdomain);
+                            if(isset($country['pk_c_code'])) {
+                                Params::setParam('subdomain', 1);
+                                Params::setParam('sCountry', $country['pk_c_code']);
+                            } else {
+                                $this->do400();
+                            }
+                        } else if($subdomain_type=='region') {
+                            $region = Region::newInstance()->findByName($subdomain);
+                            if(isset($region['pk_i_id'])) {
+                                Params::setParam('subdomain', 1);
+                                Params::setParam('sRegion', $region['pk_i_id']);
+                            } else {
+                                $this->do400();
+                            }
+                        } else if($subdomain_type=='city') {
+                            $city = City::newInstance()->findByName($subdomain);
+                            if(isset($city['pk_i_id'])) {
+                                Params::setParam('subdomain', 1);
+                                Params::setParam('sCity', $city['pk_i_id']);
+                            } else {
+                                $this->do400();
+                            }
+                        } else {
+                            $this->do400();
+                        }
+                    }
+                }
+            }
         }
     }
 

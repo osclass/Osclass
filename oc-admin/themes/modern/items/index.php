@@ -76,6 +76,8 @@
                     }
                 });
 
+                $('.ui-autocomplete').css('zIndex', 10000);
+
                 // dialog delete
                 $("#dialog-item-delete").dialog({
                     autoOpen: false,
@@ -126,7 +128,7 @@
 
                 // check_all bulkactions
                 $("#check_all").change(function(){
-                    var isChecked = $(this+':checked').length;
+                    var isChecked = $(this).prop("checked");
                     $('.col-bulkactions input').each( function() {
                         if( isChecked == 1 ) {
                             this.checked = true;
@@ -355,14 +357,8 @@
                 </thead>
                 <tbody>
                 <?php if( count($rows) > 0 ) { ?>
-                    <?php foreach($rows as $key => $row) {
-                        $class = ''; $aI = $aRawRows[$key];
-                        if(!$aI['b_active']) $class = 'status-spam';
-                        if(!$aI['b_active']) $class = 'status-spam';
-                        if(!$aI['b_enabled']) $class = 'status-spam';
-                        if($aI['b_spam']) $class = 'status-spam';
-                        if($aI['b_premium']) $class = 'status-premium';/**/ ?>
-                        <tr class="<?php echo $class;?>">
+                    <?php foreach($rows as $key => $row) { ?>
+                        <tr class="<?php echo implode(' ', osc_apply_filter('datatable_listing_class', array(), $aRawRows[$key], $row)); ?>">
                             <?php foreach($row as $k => $v) { ?>
                                 <td class="col-<?php echo $k; ?>"><?php echo $v; ?></td>
                             <?php }; ?>

@@ -27,14 +27,16 @@
     $(document).ready(function() {
         $('input[name="moderate_items"]').bind('change', function() {
             if( $(this).is(':checked') ) {
-                $('input[name="logged_user_item_validation"]').attr('disabled', false);
                 $(".num-moderated-items").show();
                 $('input[name="num_moderate_items"]').val(0);
             } else {
-                $('input[name="logged_user_item_validation"]').attr('disabled', true);
+                $('input[name="logged_user_item_validation"]').prop('checked', false);
                 $('.num-moderated-items').hide();
             }
         });
+        if(!$('input[name="moderate_items"]').is(':checked')) {
+            $('.num-moderated-items').hide();
+        }
     });
 </script>
         <?php
@@ -88,17 +90,19 @@
                                         <?php _e('Users have to validate their listings'); ?>
                                     </label>
                                 </div>
-                                <div>
-                                    <?php printf( __("After %s validated listings the user doesn't need to validate the listings any more"), '<input type="text" class="input-small" name="num_moderate_items" value="' . ( ( osc_moderate_items() == -1 ) ? '' : osc_moderate_items() ) . '" />'); ?>
-                                    <div class="help-box">
-                                        <?php _e('If the value is zero, it means that each listing must be validated'); ?>
+                                <div class="num-moderated-items" >
+                                    <div>
+                                        <?php printf( __("After %s validated listings the user doesn't need to validate the listings any more"), '<input type="text" class="input-small" name="num_moderate_items" value="' . ( ( osc_moderate_items() == -1 ) ? '' : osc_moderate_items() ) . '" />'); ?>
+                                        <div class="help-box">
+                                            <?php _e('If the value is zero, it means that each listing must be validated'); ?>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="separate-top-medium">
-                                    <label>
-                                        <input type="checkbox" <?php echo ( osc_logged_user_item_validation() ? 'checked="checked"' : '' ); ?> name="logged_user_item_validation" value="1" <?php echo ( ( osc_moderate_items() != -1 ) ? '' : 'disabled="disabled"'); ?> />
-                                        <?php _e("Logged in users don't need to validate their listings"); ?>
-                                    </label>
+                                    <div class="separate-top-medium">
+                                        <label>
+                                            <input type="checkbox" <?php echo ( osc_logged_user_item_validation() ? 'checked="checked"' : '' ); ?> name="logged_user_item_validation" value="1" />
+                                            <?php _e("Logged in users don't need to validate their listings"); ?>
+                                        </label>
+                                    </div>
                                 </div>
                                 <div class="separate-top-medium">
                                     <label>
@@ -148,6 +152,14 @@
                                     </label>
                                 </div>
                             </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-label"><?php _e('Warn about expiration'); ?></div>
+                            <div class="form-controls">
+                                <input type="text" class="input-small" name="warn_expiration" value="<?php echo osc_esc_html(osc_warn_expiration()); ?>" />
+                                <?php _e('days'); ?>
+                            </div>
+                            <span class="help-box"><?php _e('This option will send an email X days before an ad expires to the author. 0 for no email.'); ?></span>
                         </div>
                         <div class="form-row">
                             <div class="form-label"> <?php _e('Optional fields'); ?></div>

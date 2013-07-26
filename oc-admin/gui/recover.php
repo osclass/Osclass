@@ -43,7 +43,7 @@
                 <input type="hidden" name="page" value="login" />
                 <input type="hidden" name="action" value="recover_post" />
                 <p>
-                    <label><span><?php _e('E-mail'); ?></span>
+                    <label for="user_email"><span><?php _e('E-mail'); ?></span>
                     <input type="text" name="email" id="user_email" class="input" value="" size="20" tabindex="10" /></label>
                 </p>
                 <?php osc_show_recaptcha(); ?>

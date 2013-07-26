@@ -17,6 +17,7 @@
      */
 
     $category = __get("category");
+    $has_subcats = __get("has_subcategories");
     $locales  = OSCLocale::newInstance()->listAllEnabled();
 ?>
 <div class="iframe-category">
@@ -33,8 +34,11 @@
                         <div class="input micro">
                             <?php CategoryForm::expiration_days_input_text($category); ?>
                             <p class="help-inline"><?php _e("If the value is zero, it means this category doesn't have an expiration"); ?></p>
-                            <?php if($category['fk_i_parent_id']==NULL) { ?>
-                                <label><?php CategoryForm::apply_changes_to_subcategories($category); ?><span><?php _e('Apply the expiration date to children categories'); ?></span></label>
+                            <label><?php CategoryForm::price_enabled_for_category($category); ?><span><?php _e('Enable / Disable the price field'); ?></span></label>
+                            <?php if($has_subcats) { ?>
+                                <br />
+                                <br />
+                                <label><?php CategoryForm::apply_changes_to_subcategories($category); ?><span><?php _e('Apply the expiration date and price field changes to children categories'); ?></span></label>
                             <?php }; ?>
                         </div>
                     </div>

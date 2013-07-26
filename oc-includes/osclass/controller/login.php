@@ -119,7 +119,7 @@
 
                                             }
 
-                                            osc_run_hook("after_login", $user);
+                                            osc_run_hook("after_login", $user, $url_redirect);
 
                                             $this->redirectTo( osc_apply_filter('correct_login_url_redirect', $url_redirect) );
 

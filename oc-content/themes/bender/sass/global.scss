@@ -1,0 +1,124 @@
+body{
+    margin:0;
+    padding:0;
+    font-family: $helvetica;
+    color:$textcolor;
+}
+.wrapper{
+    width: 980px;
+    margin-left: auto;
+    margin-right: auto;
+}
+#responsive-trigger{
+    display:none;
+}
+fieldset{
+    border:0;
+    margin:0;
+    padding:0;
+}
+h1,h2,h3,h4,h5{
+    font-weight: bold;
+    font-family: "Osclass";
+    color:lighten($textcolor,20%);
+    letter-spacing: -0.03em;
+    line-height: 1em;
+    margin-top:0;
+}
+h1{
+    font-size: 2.2em;
+}
+h2{
+    font-size: 1.8em;
+}
+h3{
+    font-size: 1.5em;
+}
+h4{
+    font-size: 1.3em;
+}
+h5{
+    font-size: 1.15em;
+}
+.clear{
+    clear:both
+}
+body.search #sidebar,
+body.user #sidebar{
+    float:left;
+    width:210px;
+}
+body.search #main,
+body.user #main{
+    float:right;
+    width: 728px;
+}
+body.search .list-header .actions{
+    height: 35px;
+}
+.resp-toogle{
+    display:none;
+}
+.title-has-actions{
+    border-bottom:solid 1px $widgetbordercolor;
+    margin-bottom:10px;
+}
+.title-has-actions h1,
+.title-has-actions h2,
+.title-has-actions h3{
+    float:left;
+    margin-bottom:0;
+}
+.title-has-actions a{
+    float:left;
+    margin-left:10px;
+    font-size:0.825em;
+    line-height: 2em;
+}
+
+
+
+.flashmessage-404{
+    background-color: #FCF8E3;
+    border: solid 1px #FBEED5;
+    color: #C09853;
+    border-radius: 5px;
+    font-size:15px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+    padding:10px 15px;
+    margin-top:25px;
+}
+.flashmessage-404 ul{
+    list-style: disc;
+    padding:10px 0px 10px 25px;
+}
+body.not-found .categories h2,
+body.not-found .categories h3{
+    float:left;
+    width:25%;
+    font-size:13px;
+    font-weight: normal;
+    margin:3px 0;
+}
+body.not-found .categories{
+    margin-top:10px;
+}
+body.not-found fieldset.main{
+    padding:10px 0;
+}
+body.not-found #uniform-sCategory{
+    display:none;
+}
+body.not-found h1{
+    font-size: 24px;
+    margin-bottom:20px;
+}
+body.not-found #query{
+    @include input-style(#ffffff);
+    width: 280px;
+    padding: 0 10px;
+    height: 34px;
+    line-height: 30px;
+    font-size:1em;
+}

@@ -71,8 +71,9 @@
             });
 
             // dialog delete function
-            function uninstall_dialog(plugin) {
+            function uninstall_dialog(plugin, title) {
                 $("#dialog-uninstall input[name='plugin']").attr('value', plugin);
+                $("#dialog-uninstall").dialog('option', 'title', title);
                 $("#dialog-uninstall").dialog('open');
                 return false;
             }
@@ -84,7 +85,7 @@
     $iDisplayLength = __get('iDisplayLength');
     $aData          = __get('aPlugins');
 
-    $tab_index = 1;
+    $tab_index = 2;
 ?>
 <?php osc_current_admin_theme_path( 'parts/header.php' ); ?>
 <div id="tabs" class="ui-osc-tabs ui-tabs-right">
@@ -93,7 +94,7 @@
             $aPluginsToUpdate = json_decode( getPreference('plugins_to_update') );
             $bPluginsToUpdate = is_array($aPluginsToUpdate)?true:false;
             if($bPluginsToUpdate && count($aPluginsToUpdate) > 0) {
-                $tab_index = 2;
+                $tab_index = 0;
         ?>
         <li><a href="#update-plugins"><?php _e('Updates'); ?></a></li>
         <?php } ?>
@@ -243,11 +244,12 @@
 </form>
 <script>
     $(function() {
-        var tab_id = unescape(self.document.location.hash.substring(1));
+        var tab_id = decodeURI(self.document.location.hash.substring(1));
         if(tab_id != '') {
-            $( "#tabs" ).tabs();
+            $( "#tabs" ).tabs({ active: <?php echo $tab_index; ?> });
+            $('html, body').animate({scrollTop:0}, 'slow');
         } else {
-            $( "#tabs" ).tabs({ selected: <?php echo $tab_index; ?> });
+            $( "#tabs" ).tabs({ active: -1 });
         }
 
         $("#market_cancel").on("click", function(){
@@ -277,7 +279,7 @@
         });
     });
 
-    $('.market-popup').live('click',function(){
+    $('.market-popup').on('click',function(){
         $.getJSON(
             "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=check_market",
             {"code" : $(this).attr('href').replace('#',''), 'section' : 'plugins'},

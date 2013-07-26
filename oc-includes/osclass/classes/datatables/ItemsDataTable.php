@@ -34,6 +34,10 @@
         private $mSearch;
         private $withFilters = false;
 
+        public function __construct()
+        {
+            osc_add_filter('datatable_listing_class', array(&$this, 'row_class'));
+        }
 
         public function table($params)
         {
@@ -70,7 +74,8 @@
                 'rep'   => 'i_num_repeated',
                 'off'   => 'i_num_offensive',
                 'exp'   => 'i_num_expired',
-                'date'  => 'dt_pub_date'
+                'date'  => 'dt_pub_date',
+                'expiration'  => 'dt_expiration'
                 );
             // column sort
             if( !key_exists($sort, $arraySortColumns) ) {
@@ -117,18 +122,28 @@
                     $arg_date .= '&direction=asc';
                 };
             }
+            $arg_expiration = '&sort=expiration';
+            if(Params::getParam('sort') == 'expiration') {
+                if(Params::getParam('direction') == 'desc') {
+                    $arg_expiration .= '&direction=asc';
+                };
+            }
 
             Rewrite::newInstance()->init();
-            $url_base = preg_replace('|&direction=([^&]*)|', '', preg_replace('|&sort=([^&]*)|', '', osc_base_url().Rewrite::newInstance()->get_request_uri()));
+            $page  = (int)Params::getParam('iPage');
+            if($page==0) { $page = 1; };
+            Params::setParam('iPage', $page);
+            $url_base = preg_replace('|&direction=([^&]*)|', '', preg_replace('|&sort=([^&]*)|', '', osc_base_url().Rewrite::newInstance()->get_raw_request_uri()));
 
+            $this->addColumn('status-border', '');
+            $this->addColumn('status', __('Status'));
             $this->addColumn('bulkactions', '<input id="check_all" type="checkbox" />');
             $this->addColumn('title', __('Title'));
             $this->addColumn('user', __('User'));
             $this->addColumn('category', __('Category'));
-            $this->addColumn('country', __('Country'));
-            $this->addColumn('region', __('Region'));
-            $this->addColumn('city', __('City'));
+            $this->addColumn('location', __('Location'));
             $this->addColumn('date', '<a href="'.$url_base.$arg_date.'">'.__('Date').'</a>');
+            $this->addColumn('expiration', '<a href="'.$url_base.$arg_expiration.'">'.__('Expiration date').'</a>');
 
             $dummy = &$this;
             osc_run_hook("admin_items_table", $dummy);
@@ -138,10 +153,14 @@
         {
 
             Rewrite::newInstance()->init();
-            $url_base = preg_replace('|&direction=([^&]*)|', '', preg_replace('|&sort=([^&]*)|', '', osc_base_url().Rewrite::newInstance()->get_request_uri()));
+            $page  = (int)Params::getParam('iPage');
+            if($page==0) { $page = 1; };
+            Params::setParam('iPage', $page);
+            $url_base = preg_replace('|&direction=([^&]*)|', '', preg_replace('|&sort=([^&]*)|', '', osc_base_url().Rewrite::newInstance()->get_raw_request_uri()));
             $arg_spam   = '&sort=spam'; $arg_bad    = '&sort=bad';
             $arg_rep    = '&sort=rep';  $arg_off    = '&sort=off';
             $arg_exp    = '&sort=exp';  $arg_date   = '&sort=date';
+            $arg_expiration = '&sort=expiration';
             $sort       = Params::getParam("sort");
             $direction  = Params::getParam("direction");
 
@@ -164,6 +183,9 @@
                 case('date'):
                     if($direction == 'desc' || $direction == '') $arg_date .= '&direction=asc';
                     break;
+                case('expiration'):
+                    if($direction == 'desc' || $direction == '') $arg_expiration .= '&direction=asc';
+                    break;
                 default:
                     break;
             }
@@ -174,6 +196,7 @@
             $url_off = $url_base.$arg_off;
             $url_exp = $url_base.$arg_exp;
             $url_date = $url_base.$arg_date;
+            $url_expiration = $url_base.$arg_expiration;
 
             $this->addColumn('bulkactions', '<input id="check_all" type="checkbox" />');
             $this->addColumn('title', __('Title'));
@@ -184,6 +207,7 @@
             $this->addColumn('exp', '<a id="order_exp" href="'.$url_exp.'">'.__('Expired').'</a>');
             $this->addColumn('off', '<a id="order_off" href="'.$url_off.'">'.__('Offensive').'</a>');
             $this->addColumn('date', '<a id="order_date" href="'.$url_date.'">'.__('Date').'</a>');
+            $this->addColumn('expiration', '<a id="order_expiration" href="'.$url_expiration.'">'.__('Expiration date').'</a>');
 
             $dummy = &$this;
             osc_run_hook("admin_items_reported_table", $dummy);
@@ -204,7 +228,11 @@
                     if($title != $aRow['s_title']) {
                         $title .= '...';
                     }
-                    // show more options
+
+                    //icon open add new window
+                    $title .= '<span class="icon-new-window"></span>';
+
+                    // Options of each row
                     $options_more = array();
                     if($aRow['b_active']) {
                         $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status&amp;id=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url . '&amp;value=INACTIVE">' . __('Deactivate') .'</a>';
@@ -262,13 +290,15 @@
 
                     // fill a row
                     $row['bulkactions'] = '<input type="checkbox" name="id[]" value="' . $aRow['pk_i_id'] . '" active="' . $aRow['b_active'] . '" blocked="' . $aRow['b_enabled'] . '"/>';
+                    $status = $this->get_row_status();
+                    $row['status-border'] = '';
+                    $row['status'] = $status['text'];
                     $row['title'] = '<a href="' . osc_item_url().'" target="_blank">' . $title. '</a>'. $actions;
                     $row['user'] = $aRow['s_user_name'];
                     $row['category'] = $aRow['s_category_name'];
-                    $row['country'] = $aRow['s_country'];
-                    $row['region'] = $aRow['s_region'];
-                    $row['city'] = $aRow['s_city'];
-                    $row['date'] = $aRow['dt_pub_date'];
+                    $row['location'] = $this->get_row_location();
+                    $row['date'] = osc_format_date($aRow['dt_pub_date']);
+                    $row['expiration'] = osc_format_date($aRow['dt_expiration']);
 
                     $row = osc_apply_filter('items_processing_row', $row, $aRow);
 
@@ -334,7 +364,8 @@
                     $row['rep'] = $aRow['i_num_repeated'];
                     $row['exp'] = $aRow['i_num_expired'];
                     $row['off'] = $aRow['i_num_offensive'];
-                    $row['date'] = $aRow['dt_pub_date'];
+                    $row['date'] = osc_format_date($aRow['dt_pub_date']);
+                    $row['expiration'] = osc_format_date($aRow['dt_expiration']);
 
                     $row = osc_apply_filter('items_processing_reported_row', $row, $aRow);
 
@@ -480,6 +511,89 @@
             return $this->rawRows;
         }
 
+        public function row_class($class, $rawRow, $row)
+        {
+            View::newInstance()->_exportVariableToView('item', $rawRow);
+            $status = $this->get_row_status();
+            $class[] = $status['class'];
+            View::newInstance()->_erase('item');
+            return $class;
+        }
+
+        /**
+         * Get the status of the row. There are five status:
+         *     - spam
+         *     - blocked
+         *     - inactive
+         *     - premium
+         *     - active
+         *
+         * @since 3.2
+         *
+         * @return array Array with the class and text of the status of the listing in this row. Example:
+         *     array(
+         *         'class' => '',
+         *         'text'  => ''
+         *     )
+         */
+        private function get_row_status()
+        {
+            if( osc_item_is_spam() ) {
+                return array(
+                    'class' => 'status-spam',
+                    'text'  => __('Spam')
+                );
+            }
+
+            if( !osc_item_is_enabled() ) {
+                return array(
+                    'class' => 'status-blocked',
+                    'text'  => __('Blocked')
+                );
+            }
+
+            if( !osc_item_is_active() ) {
+                return array(
+                    'class' => 'status-inactive',
+                    'text'  => __('Inactive')
+                );
+            }
+
+            if( osc_item_is_premium() ) {
+                return array(
+                    'class' => 'status-premium',
+                    'text'  => __('Premium')
+                );
+            }
+
+            return array(
+                'class' => 'status-active',
+                'text'  => __('Active')
+            );
+        }
+
+        /**
+         * Get the location separated by commas of a row
+         *
+         * @since 3.2
+         *
+         * @return string Location separated by commas
+         */
+        private function get_row_location()
+        {
+            $location = array();
+            if( osc_item_city() !== '' ) {
+                $location[] = osc_item_city();
+            }
+            if( osc_item_region() !== '' ) {
+                $location[] = osc_item_region();
+            }
+            if( osc_item_country() !== '' ) {
+                $location[] = osc_item_country();
+            }
+
+            return implode(', ', $location);
+        }
     }
 
 ?>

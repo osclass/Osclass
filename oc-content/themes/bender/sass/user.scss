@@ -1,0 +1,31 @@
+.user-card{
+    background-color:$widgetbackground;
+    position: relative;
+    padding-left:120px;
+    height:120px;
+    @include border-radius(4px);
+    margin-bottom:25px;
+    ul{
+        padding:15px;
+        margin:0;
+        list-style: none;
+    }
+    .name{
+        font-size:1.5em;
+        margin-bottom:15px;
+    }
+    .website{
+        font-size:0.725em;
+    }
+    .location,
+    .adress{
+        font-size:0.725em;
+    }
+    img{
+        position: absolute;
+        left:0;
+        top:0;
+        @include border-left-radius(4px);
+        width: 120px;
+    }
+}

@@ -71,7 +71,12 @@
                     <div class="form-label"><?php _e('Identifier name'); ?></div>
                     <div class="form-controls">
                         <input type="text" class="medium" name="field_slug" value="<?php echo $field['s_slug']; ?>" />
-                        <p class="help-inline"><?php _e('Only alphanumeric characters are allowed [a-z0-9_-]'); ?></p>                    </div>
+                        <p class="help-inline"><?php _e('Only alphanumeric characters are allowed [a-z0-9_-]'); ?></p>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label"></div>
+                    <div class="form-controls"><label><?php FieldForm::searchable_checkbox($field); ?> <?php _e('Tick to allow searches by this field'); ?></label></div>
                 </div>
             </div>
             <div class="form-actions">
@@ -91,26 +96,25 @@
         });
 
         $('select[name="field_type"]').change(function() {
-            if( $(this).attr('value') == 'DROPDOWN' || $(this).attr('value') == 'RADIO' ) {
+            if( $(this).prop('value') == 'DROPDOWN' || $(this).prop('value') == 'RADIO' ) {
                 $('#div_field_options').show();
             } else {
                 $('#div_field_options').hide();
             }
         });
 
-        if( $("select[name='field_type']").attr('value') == 'TEXT' || $("select[name='field_type']").attr('value') == 'TEXTAREA' || $("select[name='field_type']").attr('value') == 'CHECKBOX' || $("select[name='field_type_new']").attr('value') == 'URL' ) {
-            $('#div_field_options').hide();
-        }
+        $('select[name="field_type"]').change();
 
         $('#edit-custom-field-frame form').submit(function() {
-            if( ($('select[name="field_type"]').attr('value') == 'DROPDOWN' || $('select[name="field_type"]').attr('value') == 'RADIO') && $("#s_options").attr("value")=="") {
+            if( ($('select[name="field_type"]').prop('value') == 'DROPDOWN' || $('select[name="field_type"]').prop('value') == 'RADIO') && $("#s_options").prop("value")=="") {
                 $(".jsMessage").fadeIn('fast');
                 $(".jsMessage p").html('<?php echo osc_esc_js(__('At least one option is required.')); ?>');
                 return false;
             }
+
             $.ajax({
                 type: 'POST',
-                url: $(this).attr('action'),
+                url: '<?php echo osc_admin_base_url(true); ?>',
                 data: $(this).serialize(),
                 // Mostramos un mensaje con la respuesta de PHP
                 success: function(data) {
@@ -118,9 +122,7 @@
 
                     var message = "";
                     if(ret.error) {
-
                         message += ret.error;
-
                     }
                     if(ret.ok){
                         $('#settings_form').fadeOut('fast', function(){
@@ -145,7 +147,7 @@
 
         $('#advanced_fields_iframe').bind('click',function() {
             $('#more-options_iframe').toggle();
-            if( $(this).attr('class') == 'custom-field-shrink' ) {
+            if( $(this).hasClass('custom-field-shrink')) {
                 $(this).removeClass('custom-field-shrink');
                 $(this).addClass('custom-field-expanded');
             } else {

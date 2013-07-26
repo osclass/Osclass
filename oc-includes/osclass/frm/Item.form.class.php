@@ -114,34 +114,34 @@
             </select>
             <select id="catId" name="catId">
                 <?php
-                    if(!empty($subcategory)) {
-                        if( count($subcategory['categories']) > 0 ) {
-                            echo '<option value="">'.__('Select Subcategory').'</option>';
-                            foreach($subcategory['categories'] as $c) {
-                                $selected = ( (isset($item["fk_i_category_id"]) && $item["fk_i_category_id"] == $c['pk_i_id']) || (isset($subcategoryID) && $subcategoryID == $c['pk_i_id']) );
-                                echo '<option value="'.$c['pk_i_id'].'" '.($selected ? 'selected="selected"' : '' ).'>'.$c['s_name'].'</option>';
-                            }
-                        } else {
-                            echo '<option value="'.$categoryID.'" >'.__('No Subcategory').'</option>';
+                if(!empty($subcategory)) {
+                    if( count($subcategory['categories']) > 0 ) {
+                        echo '<option value="">'.__('Select Subcategory').'</option>';
+                        foreach($subcategory['categories'] as $c) {
+                            $selected = ( (isset($item["fk_i_category_id"]) && $item["fk_i_category_id"] == $c['pk_i_id']) || (isset($subcategoryID) && $subcategoryID == $c['pk_i_id']) );
+                            echo '<option value="'.$c['pk_i_id'].'" '.($selected ? 'selected="selected"' : '' ).'>'.$c['s_name'].'</option>';
                         }
                     } else {
-                        echo '<option value="">'.__('Select Subcategory').'</option>';
+                        echo '<option value="'.$category['pk_i_id'].'" >'.__('No Subcategory').'</option>';
                     }
+                } else {
+                    echo '<option value="">'.__('Select Subcategory').'</option>';
+                }
                 ?>
             </select>
             <script type="text/javascript" charset="utf-8">
-            <?php
-                foreach($categories as $c) {
-                    if( count($c['categories']) > 0 ) {
-                        $subcategory = array();
-                        for($i = 0; $i < count($c['categories']); $i++) {
-                            $subcategory[] = array($c['categories'][$i]['pk_i_id'], $c['categories'][$i]['s_name']);
+                <?php
+                    foreach($categories as $c) {
+                        if( count($c['categories']) > 0 ) {
+                            $subcategory = array();
+                            for($i = 0; $i < count($c['categories']); $i++) {
+                                $subcategory[] = array($c['categories'][$i]['pk_i_id'], $c['categories'][$i]['s_name']);
+                            }
+                            printf('var categories_%1$s = %2$s;', $c['pk_i_id'], json_encode($subcategory));
+                            echo PHP_EOL;
                         }
-                        printf('var categories_%1$s = %2$s;', $c['pk_i_id'], json_encode($subcategory));
-                        echo PHP_EOL;
                     }
-                }
-            ?>
+                ?>
 
                 osc.item_post = {};
                 osc.item_post.category_id    = '<?php echo $categoryID; ?>';
@@ -170,10 +170,117 @@
                 });
 
             </script>
-            <?php
+        <?php
         }
 
-        // OK
+        static public function category_multiple_selects($categories = null, $item = null, $default_item = null, $parent_selectable = false)
+        {
+
+            $categoryID = Params::getParam('catId');
+            if( osc_item_category_id() != null ) {
+                $categoryID = osc_item_category_id();
+            }
+
+            if( Session::newInstance()->_getForm('catId') != '' ) {
+                $categoryID = Session::newInstance()->_getForm('catId');
+            }
+
+            if ($item == null) { $item = osc_item(); }
+
+            if(isset($item['fk_i_category_id'])) {
+                $categoryID = $item['fk_i_category_id'];
+            }
+
+            $tmp_categories_tree = Category::newInstance()->toRootTree($categoryID);
+            $categories_tree = array();
+            foreach($tmp_categories_tree as $t) {
+                $categories_tree[] = $t['pk_i_id'];
+            }
+            unset($tmp_categories_tree);
+
+            if($categories == null) {
+                $categories = Category::newInstance()->listAll(false);
+            }
+
+            parent::generic_input_hidden("catId", $categoryID);
+
+            ?>
+            <div id="select_holder"></div>
+            <script type="text/javascript" charset="utf-8">
+                <?php
+                    $tmp_cat = array();
+                    foreach($categories as $c) {
+                        if( $c['fk_i_parent_id']==null ) { $c['fk_i_parent_id'] = 0; };
+                        $tmp_cat[$c['fk_i_parent_id']][] = array($c['pk_i_id'], $c['s_name']);
+                    }
+                    foreach($tmp_cat as $k => $v) {
+                        echo 'var categories_'.$k.' = '.json_encode($v).';'.PHP_EOL;
+                    }
+                ?>
+
+                if(osc==undefined) { var osc = {}; }
+                if(osc.langs==undefined) { osc.langs = {}; }
+                if(osc.langs.select_category==undefined) { osc.langs.select_category = '<?php _e('Select category') ?>'; }
+                if(osc.langs.select_subcategory==undefined) { osc.langs.select_subcategory = '<?php _e('Select subcategory') ?>'; }
+                osc.item_post = {};
+                osc.item_post.category_id    = '<?php echo $categoryID; ?>';
+                osc.item_post.category_tree_id    = <?php echo json_encode($categories_tree); ?>;
+
+                $(document).ready(function(){
+                    <?php if($categoryID==array()) { ?>
+                    draw_select(1,0);
+                    <?php } else { ?>
+                        draw_select(1,0);
+                        <?php for($i=0; $i<count($categories_tree)-1; $i++) { ?>
+                        draw_select(<?php echo ($i+2); ?> ,<?php echo $categories_tree[$i]; ?>);
+                        <?php } ?>
+                    <?php } ?>
+                    $('body').on("change", '[name^="select_"]', function() {
+                        var depth = parseInt($(this).attr("depth"));
+                        for(var d=(depth+1);d<=4;d++) {
+                            $("#select_"+d).trigger('removed');
+                            $("#select_"+d).remove();
+                        }
+                        $("#catId").attr("value", $(this).val());
+                        $("#catId").change();
+                        if(catPriceEnabled[$('#catId').val()] == 1) {
+                            $('.price').show();
+                        } else {
+                            $('.price').hide();
+                            $('#price').val('') ;
+                        }
+                        if((depth==1 && $(this).val()!=0) || (depth>1 && $(this).val()!=$("#select_"+(depth-1)).val())) {
+                            draw_select(depth+1, $(this).val());
+                        }
+                        return true;
+                    });
+                });
+
+                function draw_select(select, categoryID) {
+                    tmp_categories = window['categories_' + categoryID];
+                    if( tmp_categories!=null && $.isArray(tmp_categories) ) {
+                        $("#select_holder").before('<select id="select_'+select+'" name="select_'+select+'" depth="'+select+'"></select>');
+
+                        if(categoryID==0) {
+                            var options = '<option value="' + categoryID + '" >' + osc.langs.select_category + '</option>';
+                        }else {
+                            var options = '<option value="' + categoryID + '" >' + osc.langs.select_subcategory + '</option>';
+                        }
+                        $.each(tmp_categories, function(index, value){
+                            options += '<option value="' + value[0] + '" '+(value[0]==osc.item_post.category_tree_id[select-1]?'selected="selected"':'')+'>' + value[1] + '</option>';
+                        });
+                        osc.item_post.category_tree_id[select-1] = null;
+                        $('#select_'+select).html(options);
+                        $('#select_'+select).next("a").find(".select-box-label").text(osc.langs.select_subcategory);
+                        $('#select_'+select).trigger("created");
+                    };
+
+                }
+            </script>
+        <?php
+        }
+
+
         static public function subcategory_select($categories, $item, $default_item = null, $deep = 0)
         {
             // Did user select a specific category to post in?
@@ -197,7 +304,7 @@
                 }
             }
         }
-        // OK
+
         static public function user_select($users = null, $item = null, $default_item = null)
         {
             if($users==null) { $users = User::newInstance()->listAll(); };
@@ -225,20 +332,79 @@
             echo '</select>';
             return true;
         }
-        // OK
+
+        static public function expiration_input($type = 'add', $value = '') {
+            if($type=='edit') {
+                $value = '-1';  // default no change expiration date
+            }
+            parent::generic_input_text('dt_expiration', $value);
+            return true;
+        }
+
+
+        static public function expiration_select($options = null)
+        {
+            if(OC_ADMIN) {
+                if($options==null) { $options = array(-1,0,1,3,5,7,10,15,30); }
+            } else {
+                if($options==null) { $options = array(0,1,3,5,7,10,15,30); }
+            }
+            echo '<select name="dt_expiration" id="dt_expiration"></select>';
+            $categories = Category::newInstance()->listEnabled();
+            ?>
+            <script type="text/javascript" >
+                var exp_days = new Array();
+                <?php foreach($categories as $c) {
+                  echo 'exp_days['.$c['pk_i_id'].'] = '.$c['i_expiration_days'].';';
+                };?>
+                $(document).ready(function(){
+                    $("#catId").on("change", function() {
+                        draw_expiration(exp_days[this.value]);
+                    });
+                    draw_expiration(exp_days[$("#catId").value]);
+                });
+                if(osc==undefined) { var osc = {}; }
+                if(osc.langs==undefined) { osc.langs = {}; }
+                if(osc.langs.nochange_expiration==undefined) { osc.langs.nochange_expiration = '<?php _e('No change expiration') ?>'; }
+                if(osc.langs.without_expiration==undefined) { osc.langs.without_expiration = '<?php _e('Without expiration') ?>'; }
+                if(osc.langs.expiration_day==undefined) { osc.langs.expiration_day = '<?php _e('1 day') ?>'; }
+                if(osc.langs.expiration_days==undefined) { osc.langs.expiration_days = '<?php _e('%d days') ?>'; }
+                function draw_expiration(max_exp) {
+                    $('#dt_expiration').html("");
+                    var options = '';
+                    <?php foreach($options as $o) {
+                        if($o==-1) {?>
+                            options += '<option value="-1" >' + (osc.langs.nochange_expiration!=null?osc.langs.nochange_expiration:'<?php _e('No change expiration'); ?>') + '</option>';
+                        <?php } else if($o==0) { ?>
+                            options += '<option value="" >' + (osc.langs.without_expiration!=null?osc.langs.without_expiration:'<?php _e('Without expiration'); ?>') + '</option>';
+                        <?php } else if($o==1) { ?>
+                            options += '<option value="1" >' + (osc.langs.expiration_day!=null?osc.langs.expiration_day:'<?php _e('1 day'); ?>')+ '</option>';
+                        <?php } else { ?>
+                            if(max_exp==0 || <?php echo $o; ?><=max_exp) {
+                                options += '<option value="<?php echo $o; ?>" >' + (osc.langs.expiration_days!=null?osc.langs.expiration_days:'<?php _e('%d days'); ?>').replace("%d", <?php echo $o; ?>) + '</option>';
+                            }
+                    <?php };
+                    }; ?>
+                    $('#dt_expiration').html(options);
+                    $('#dt_expiration').change();
+                }
+            </script>
+            <?php
+            return true;
+        }
+
         static public function title_input($name, $locale = 'en_US', $value = '')
         {
-
             parent::generic_input_text($name . '[' . $locale . ']', $value);
             return true;
         }
-        // OK
+
         static public function description_textarea($name, $locale = 'en_US', $value = '')
         {
             parent::generic_textarea($name . '[' . $locale . ']', $value);
             return true;
         }
-        // OK
+
         static public function multilanguage_title_description($locales = null, $item = null) {
             if($locales==null) { $locales = osc_get_locales(); }
             if($item==null) { $item = osc_item(); }
@@ -274,7 +440,7 @@
              }
              if($num_locales>1) { echo '</div>'; };
         }
-        // OK
+
         static public function price_input_text($item = null)
         {
             if($item==null) { $item = osc_item(); };
@@ -283,7 +449,7 @@
             }
             parent::generic_input_text('price', (isset($item['i_price'])) ? osc_prepare_price($item['i_price']) : null);
         }
-        // OK
+
         static public function currency_select($currencies = null, $item = null) {
             if( $currencies == null ) { $currencies = osc_get_currencies(); }
             if( $item == null) { $item = osc_item(); }
@@ -305,7 +471,7 @@
                 echo $currencies[0]['s_description'];
             }
         }
-        // OK
+
         static public function country_select($countries = null, $item = null) {
             if($countries==null) { $countries = osc_get_countries(); };
             if($item==null) { $item = osc_item(); };
@@ -323,7 +489,7 @@
                 return true;
             }
         }
-        // OK
+
         static public function country_text($item = null) {
             if($item==null) { $item = osc_item(); };
             if( Session::newInstance()->_getForm('country') != "" ) {
@@ -342,7 +508,7 @@
             parent::generic_input_hidden('countryId', (isset($item['fk_c_country_code']) && $item['fk_c_country_code']!=null)?$item['fk_c_country_code']:'');
             return true;
         }
-        // OK
+
         static public function region_select($regions = null, $item = null) {
 
             if($item==null) { $item = osc_item(); };
@@ -368,7 +534,7 @@
             }
         }
 
-        // OK
+
         static public function city_select($cities = null, $item = null) {
 
             if($item==null) { $item = osc_item(); };
@@ -413,7 +579,7 @@
             parent::generic_input_hidden('cityId', (isset($item['fk_i_city_id']) && $item['fk_i_city_id']!=null)?$item['fk_i_city_id']:'');
             return true;
         }
-        // OK
+
         static public function city_area_text($item = null) {
             if($item==null) { $item = osc_item(); };
             if( Session::newInstance()->_getForm('cityArea') != "" ) {
@@ -423,7 +589,7 @@
             parent::generic_input_hidden('cityAreaId', (isset($item['fk_i_city_area_id']) && $item['fk_i_city_area_id']!=null)?$item['fk_i_city_area_id']:'');
             return true;
         }
-        // OK
+
         static public function address_text($item = null) {
             if($item==null) { $item = osc_item(); };
             if( Session::newInstance()->_getForm('address') != "" ) {
@@ -432,7 +598,7 @@
             parent::generic_input_text('address', (isset($item['s_address'])) ? $item['s_address'] : null);
             return true;
         }
-        // OK
+
         static public function contact_name_text($item = null) {
             if($item==null) { $item = osc_item(); };
             if( Session::newInstance()->_getForm('contactName') != "" ) {
@@ -461,7 +627,7 @@
                 return false;
             }
         }
-        // OK
+
         static public function show_email_checkbox($item = null) {
             if($item==null) { $item = osc_item(); };
             if( Session::newInstance()->_getForm('showEmail') != 0) {
@@ -487,7 +653,7 @@
             $('#city').val('');
         });
 
-        $('#countryName').live('keyup.autocomplete', function(){
+        $('#countryName').on('keyup.autocomplete', function(){
             $('#countryId').val('');
             $( this ).autocomplete({
                 source: "<?php echo osc_base_url(true); ?>?page=ajax&action=location_countries",
@@ -502,7 +668,7 @@
             });
         });
 
-        $('#region').live('keyup.autocomplete', function(){
+        $('#region').on('keyup.autocomplete', function(){
             $('#regionId').val('');
             $( this ).autocomplete({
                 source: "<?php echo osc_base_url(true); ?>?page=ajax&action=location_regions&country="+$('#countryId').val(),
@@ -515,7 +681,7 @@
             });
         });
 
-        $('#city').live('keyup.autocomplete', function(){
+        $('#city').on('keyup.autocomplete', function(){
             $('#cityId').val('');
             $( this ).autocomplete({
                 source: "<?php echo osc_base_url(true); ?>?page=ajax&action=location_cities&region="+$('#regionId').val(),
@@ -525,6 +691,8 @@
                 }
             });
         });
+
+        $('.ui-autocomplete').css('zIndex', 10000);
 
         /**
          * Validate form
@@ -670,7 +838,7 @@
 ?>
 <script type="text/javascript">
     $(document).ready(function(){
-        $("#countryId").live("change",function(){
+        $("#countryId").on("change",function(){
             var pk_c_code = $(this).val();
             <?php if($path=="admin") { ?>
                 var url = '<?php echo osc_admin_base_url(true)."?page=ajax&action=regions&countryId="; ?>' + pk_c_code;
@@ -747,7 +915,7 @@
              }
         });
 
-        $("#regionId").live("change",function(){
+        $("#regionId").on("change",function(){
             var pk_c_code = $(this).val();
             <?php if($path=="admin") { ?>
                 var url = '<?php echo osc_admin_base_url(true)."?page=ajax&action=cities&regionId="; ?>' + pk_c_code;
@@ -1036,6 +1204,16 @@
         static public function plugin_post_item($case = 'form') {
 ?>
 <script type="text/javascript">
+	var catPriceEnabled = new Array();
+	<?php
+	$categories = Category::newInstance()->listAll(false);
+	foreach($categories as $c) {
+		?>
+		//creat the array for the price enabled
+		catPriceEnabled[<?php echo $c['pk_i_id']; ?>] = <?php echo $c['b_price_enabled']; ?>;
+		<?php
+	}
+	?>
     $("#catId").change(function(){
         var cat_id = $(this).val();
         <?php if(OC_ADMIN) { ?>
@@ -1046,6 +1224,13 @@
         var result = '';
 
         if(cat_id != '') {
+			if(catPriceEnabled[cat_id] == 1) {
+				$("#price").closest("div").show();
+			} else {
+				$("#price").closest("div").hide();
+				$('#price').val('') ;
+			}
+
             $.ajax({
                 type: "POST",
                 url: url,
@@ -1067,6 +1252,13 @@
         var result = '';
 
         if(cat_id != '') {
+			if(catPriceEnabled[cat_id] == 1) {
+				$("#price").closest("div").show();
+			} else {
+				$("#price").closest("div").hide();
+				$('#price').val('') ;
+			}
+
             $.ajax({
                 type: "POST",
                 url: url,

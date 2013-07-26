@@ -8,7 +8,7 @@
 # Sublime 2
 sftp-config*
 
-# Config OSClass
+# Config Osclass
 config.php
 oc-includes/osclass/t/config.php
 .maintenance
@@ -19,16 +19,13 @@ oc-content/queries.log
 oc-content/explain_queries.log
 oc-content/uploads/*
 
-oc-includes/osclass/t/config.php
-oc-content/plugins/lopd/admin_user.php
-oc-content/plugins/lopd/ajax.php
-
-oc-inlcudes/simpletest/test/osclass/custom_config.php
-#themes
+# themes
 oc-content/themes/*
 !oc-content/themes/modern/
+!oc-content/themes/bender/
+oc-content/themes/bender/.sass-cache*
 
-#plugins
+# plugins
 oc-content/plugins/*
 !oc-content/plugins/index.php
 !oc-content/plugins/google_analytics/
@@ -41,5 +38,11 @@ oc-content/plugins/*
 # Others
 .htaccess
 dist
-
 nbproject/
+
+# npm
+node_modules
+
+# test
+oc-includes/osclass/t/config.php
+oc-includes/simpletest/test/osclass/custom_config.php

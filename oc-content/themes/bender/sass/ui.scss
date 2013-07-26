@@ -1,0 +1,213 @@
+.has-placeholder{
+    position: relative;
+    display: block;
+    float: left;
+
+    label{
+        position: absolute;
+        top:0;
+        left:0;
+        vertical-align: middle;
+        color:#646464;
+        line-height: 43px;
+        height: 100%;
+        width:100%;
+        text-decoration: none;
+        padding:0 15px;
+        text-shadow: 0 1px 0 #ffffff;
+        overflow: hidden;
+    }
+}
+
+textarea{
+    @include input-style(white,1em,10px);
+    width:280px;
+}
+
+
+/* Selectmenu
+----------------------------------*/
+div.select-box-focus{
+    outline:0;
+    border:1px solid #5B9DD9;
+    -webkit-box-shadow: 0 0 5px 1px #5B9DD9;
+    -moz-box-shadow: 0 0 5px 1px #5B9DD9;
+    box-shadow: 0 0 5px 1px #5B9DD9;
+}
+.select-box{
+    z-index:0;
+    position: relative;
+    display:inline-block;
+
+    @include border-radius(3px);
+    width: auto;
+
+    @include button-style(#f9f9f9);
+    padding:0px;
+    overflow: hidden;
+
+    .select-box-label{
+        height: 16px;
+        overflow: hidden;
+        display: block;
+        line-height: 16px;
+        float: left;
+        position: absolute;
+        top:0;
+        color:#bababa;
+        padding:0px 15px;
+        height: 100%;
+        color:#646464;
+        line-height: 30px;
+        text-shadow: 0 1px 0 #ffffff;
+    }
+    a:hover{
+        text-decoration:none;
+    }
+    select{
+        position:relative;
+        left:0px;
+        top:0px;
+        width:100%;
+        height: 30px;
+        -webkit-appearance:none;
+        z-index:1003;
+        padding-right:45px;
+    }
+}
+.select-box-icon{
+    z-index:0;
+    position: absolute;
+    right:13px;
+    top:-7px;
+    right:0px;
+
+    height:100%;
+    width:24px;
+    text-decoration:none;
+    display: block;
+    font-family: "icons";
+    color:#404040;
+    font-size: 0.8em;
+    text-align: left;
+}
+.ui-button{
+    @include button-style();
+}
+input.ui-button,
+button.ui-button{
+    padding-left:10px;
+    padding-right:10px;
+}
+.ui-button-main{
+    @include button-style($maincolor);
+}
+a.ui-button{
+    line-height: 34px;
+}
+.ui-button-middle{
+    height: 36px;
+    font-size: 1em;
+    line-height: 1em;
+}
+.doublebutton{
+    float:right;
+
+    a{
+        border:solid 1px darken($widgetbordercolor,10%);
+        background-color:$widgetbackground;
+        -webkit-border-radius: 2px;
+        border-radius: 2px;
+        cursor: default;
+        font-size: 11px;
+        font-weight: bold;
+        text-align: center;
+        white-space: nowrap;
+        height: 16px;
+        outline: 0;
+        padding: 5px 6px;
+        display: block;
+        float:left;
+    }
+    a span{
+        text-indent: -9999px;
+        float:left;
+        width:16px;
+        height: 16px;
+        background-image:url(../images/icons.png);
+        cursor:pointer;
+    }
+    .list-button{
+        margin-right:-1px;
+        @include border-right-radius(0px);
+        border-right:none;
+
+        span{
+            background-position:-16px -16px;
+        }
+    }
+    .grid-button{
+        @include border-left-radius(0px);
+        border-left:none;
+    }
+}
+
+span.active{
+    a.grid-button span{
+        background-position:-16px 0;
+    }
+    a.list-button{
+        border:solid 1px darken($widgetbordercolor,10%);
+        background-color:$widgetbackground;
+        span{
+
+            background-position:-0 -16px
+        }
+    }
+}
+
+.active a.grid-button,
+.doublebutton a.list-button{
+    background-color:$maincolor;
+    border-color:darken($maincolor,10%)
+}
+@import "form.scss";
+button{
+    @include button-style();
+}
+.ui-drop-files{
+    box-shadow: none;
+    border: 4px dashed rgba(0, 0, 0, 0.2);
+    height: 100px;
+    background: rgba(0, 0, 0, 0.1);
+}
+.bordered-box{
+    border:solid 1px $widgetbordercolor;
+    @include border-radius(4px);
+    padding:10px;
+    font-size:0.75em;
+
+    h2{
+        font-size:1.2em;
+        margin-top:0;
+        font-family:$helvetica;
+        font-weight: bold;
+    }
+}
+.form-container .photos{
+    input{
+        width:100%;
+    }
+    img{
+        width:120px;
+    }
+}
+.photos_div a{
+    display:block;
+}
+@include arrow("up");
+@include arrow("down");
+@include arrow("left");
+@include arrow("right");
+@import "pagination.scss";
+@import "flashmessage-error.scss";

@@ -40,7 +40,6 @@
         $aMenu              = $adminMenu->get_array_menu();
         $current_menu_id    = osc_current_menu();
         $is_moderator       = osc_is_moderator();
-
         // Remove hook admin_menu when osclass 4.0 be released
         // hack, compatibility with menu plugins.
         ob_start();

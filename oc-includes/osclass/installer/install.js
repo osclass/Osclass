@@ -37,8 +37,8 @@ function check_cat(id, check) {
 }
 
 function check(id) {
-    if( !$('#'+id).attr('checked') )
-        $('#'+id).attr('checked',true);
+    if( !$('#'+id).prop('checked') )
+        $('#'+id).prop('checked',true);
 
     var category_id = id.replace('category-','');
     var categories = $("#cat" + category_id + " input");
@@ -48,7 +48,7 @@ function check(id) {
            sum++;
     });
     if(sum == 0)
-        $("#category-" + category_id ).attr('checked', false);
+        $("#category-" + category_id ).prop('checked', false);
 }
 
 function validate_form() {
@@ -61,6 +61,7 @@ function validate_form() {
     if( !pattern.test(email.value) ) {
         email.setAttribute('style', 'color:red;');
         error.setAttribute('style', 'display:block;');
+        error.setAttribute('aria-hidden', 'false');
         num_error = num_error + 1;
     }
 
@@ -68,6 +69,7 @@ function validate_form() {
     var pattern_notnull=/^[a-zA-Z0-9]+$/;
     if( !pattern_notnull.test(admin_user.value) ) {
         error_admin_user.setAttribute('style', 'display:block;');
+        error_admin_user.setAttribute('aria-hidden', 'false');
         num_error = num_error + 1;
     }
 
@@ -118,7 +120,7 @@ function validate_form() {
             }
         },
         error: function(data) {
-            $("#lightbox").css('display','none');
+            $("#lightbox").css('display','none').attr('aria-hidden', 'true');
         }
     });
     return false;
@@ -131,7 +133,7 @@ function no_internet() {
     $('#icountry').attr('disabled', true );
     $('#worlwide').attr('disabled', true );
     $('#d_country span').remove();
-    $('#location-error').css('display','block');
+    $('#location-error').css('display','block').attr('aria-hidden', 'false');
 }
 
 function more_size(input, event) {
@@ -155,12 +157,10 @@ function get_regions(country) {
         $('#region_select').hide();
         $('#no_region_text').hide();
     } else {
-        var jsondata = new Object();
-        jsondata.country = country;
-        $.jsonp({
-            "url": "http://geo.osclass.org/newgeo.services.php?callback=?&action=regions",
-            "data": jsondata,
-            "success": function(json) {
+        $.getJSON(
+            "http://geo.osclass.org/newgeo.services.php?callback=?&action=regions",
+            {'country' : country},
+            function(json) {
                 if( json.length > 0 ) {
                     $('#region_select').show();
                     $('#no_region_text').hide();
@@ -172,11 +172,8 @@ function get_regions(country) {
                     $('#region_select').hide();
                     $('#no_region_text').show();
                 };
-            },
-            "error": function(d,msg) {
-                //no_internet();
             }
-        });
+        );
     }
 }
 
@@ -187,12 +184,10 @@ function get_cities(region) {
         $('#city_select').hide();
         $('#no_city_text').hide();
     } else {
-        var jsondata = new Object();
-        jsondata.region = region;
-        $.jsonp({
-            "url": "http://geo.osclass.org/newgeo.services.php?callback=?&action=cities",
-            "data": jsondata,
-            "success": function(json) {
+        $.getJSON(
+            "http://geo.osclass.org/newgeo.services.php?callback=?&action=cities",
+            {'region' : region},
+            function(json) {
                 if( json.length > 0 ) {
                     $('#city_select').show();
                     $('#no_city_text').hide();
@@ -204,22 +199,25 @@ function get_cities(region) {
                     $('#city_select').hide();
                     $('#no_city_text').show();
                 };
-            },
-            "error": function(d,msg) {
-                //no_internet();
             }
-        });
+        );
     }
 }
 
 $(document).ready(function(){
     $("#email").focus(function() {
         $("#email").attr('style', '');
-        $('#email-error').attr('style', 'display:none;');
+        $('#email-error').attr({ 
+            'style'         : 'display:none;',
+            'aria-hidden'   : 'true'
+        });
     });
 
     $("#admin_user").focus(function() {
-        $('#admin-user-error').attr('style', 'display:none;');
+        $('#admin-user-error').attr({ 
+            'style'         : 'display:none;',
+            'aria-hidden'   : 'true'
+        });
     });
     
     $("#country_select").change(function(){
@@ -240,7 +238,7 @@ $(document).ready(function(){
 
 /* Extension of jQuery */
 (function( $ ) {
-    $( ".ui-autocomplete-input" ).live( "autocompleteopen", function() {
+    $( ".ui-autocomplete-input" ).on( "autocompleteopen", function() {
         var autocomplete = $( this ).data( "autocomplete" ),
         menu = autocomplete.menu;
         if ( !autocomplete.options.selectFirst ) {

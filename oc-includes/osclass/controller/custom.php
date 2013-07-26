@@ -28,10 +28,23 @@
         //Business Layer...
         function doModel()
         {
-            $file = Params::getParam('file');
+            $user_menu = false;
+            if(Params::existParam('route')) {
+                $routes = Rewrite::newInstance()->getRoutes();
+                $rid = Params::getParam('route');
+                $file = '../';
+                if(isset($routes[$rid]) && isset($routes[$rid]['file'])) {
+                    $file = $routes[$rid]['file'];
+                    $user_menu = $routes[$rid]['user_menu'];
+                }
+            } else {
+                // DEPRECATED: Disclosed path in URL is deprecated, use routes instead
+                // This will be REMOVED in 3.4
+                $file = Params::getParam('file');
+            }
 
             // valid file?
-            if( stripos($file, '../') !== false ) {
+            if( stripos($file, '../') !== false || stripos($file, '/admin/') !== false ) { //If the file is inside an "admin" folder, it should NOT be opened in frontend
                 $this->do404();
                 return;
             }
@@ -43,7 +56,12 @@
             }
 
             $this->_exportVariableToView('file', $file);
-            $this->doView('custom.php');
+            if($user_menu) {
+                Params::setParam('in_user_menu', true);
+                $this->doView('user-custom.php');
+            } else {
+                $this->doView('custom.php');
+            }
         }
 
         //hopefully generic...

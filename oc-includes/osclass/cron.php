@@ -42,6 +42,16 @@
                 LatestSearches::newInstance()->purgeNumber($purge);
             }
             osc_update_location_stats(true, 'auto');
+
+            // WARN EXPIRATION EACH HOUR (COMMENT TO DISABLE)
+            // NOTE: IF THIS IS ENABLE, SAME CODE SHOULD BE DISABLE ON CRON DAILY
+            if(is_numeric(osc_warn_expiration()) && osc_warn_expiration()>0) {
+                $items = Item::newInstance()->findByHourExpiration(24*osc_warn_expiration());
+                foreach($items as $item) {
+                    osc_run_hook('hook_email_warn_expiration', $item);
+                }
+            }
+
             osc_run_hook('cron_hourly');
         }
     }
@@ -52,6 +62,9 @@
         $i_next = strtotime($cron['d_next_exec']);
 
         if( (CLI && (Params::getParam('cron-type') === 'daily')) || ((($i_now - $i_next) >= 0) && !CLI) ) {
+            // before update, d_last_exec
+            osc_runAlert('DAILY');
+
             // update the next execution time in t_cron
             $d_next = date('Y-m-d H:i:s', $i_now + (24 * 3600));
             Cron::newInstance()->update(array('d_last_exec' => $d_now, 'd_next_exec' => $d_next),
@@ -62,8 +75,17 @@
             if( $purge == 'day' ) {
                 LatestSearches::newInstance()->purgeDate( date('Y-m-d H:i:s', ( time() - (24 * 3600) ) ) );
             }
-            osc_runAlert('DAILY');
             osc_update_cat_stats();
+
+            // WARN EXPIRATION EACH DAY (UNCOMMENT TO ENABLE)
+            // NOTE: IF THIS IS ENABLE, SAME CODE SHOULD BE DISABLE ON CRON HOURLY
+            /*if(is_numeric(osc_warn_expiration()) && osc_warn_expiration()>0) {
+                $items = Item::newInstance()->findByDayExpiration(osc_warn_expiration());
+                foreach($items as $item) {
+                    osc_run_hook('hook_email_warn_expiration', $item);
+                }
+            }*/
+
             osc_run_hook('cron_daily');
         }
     }

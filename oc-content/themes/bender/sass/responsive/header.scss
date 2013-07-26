@@ -1,0 +1,89 @@
+  #header{
+    height: auto;
+    margin-bottom:20px;
+  }
+  #header #logo{
+    font-size: 1.7em;
+    letter-spacing: -0.07em;
+    padding-top:10px;
+    padding-bottom:10px;
+    margin-left:10px;
+  }
+  #header #logo span{
+    display:none;
+  }
+  #header .wrapper{
+    padding-left:0;
+    padding-right:0;
+    width: 100%;
+    position: relative;
+  }
+  .main-search{
+    top:100%;
+    margin-left: 0;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    padding-left:0;
+    padding-right:0;
+    border-width: 0 0 1px 0;
+    @include border-bottom-radius(0);
+    @include border-top-radius(0);
+    display:none;
+    position:absolute;
+    margin-top:0;
+  }
+  .main-search .cell{
+    display: table-cell;
+    //display: table-cell;
+    width:100%;
+    padding-left:11px;
+    vertical-align: top;
+  }
+  .main-search .cell:last-child{
+    padding-left:42px;
+    padding-right:11px;
+  }
+  .main-search input{
+    width:100%;
+  }
+  .main-search .selector{
+    display:none;
+  }
+  .main-search .reset-padding{
+      padding-left:0px;
+  }
+  #header .nav{
+    top:0;
+    height:100%;
+    vertical-align: middle;
+  }
+  #header .nav li{
+    height:100%;
+  }
+  #header .nav li a{
+    height:100%;
+    padding:0 15px;
+    $contrasted-lightness-threshold:65%;
+    @include contrasted(darken($maincolor, 10% ));
+    display: table;
+    border-left:solid 1px darken($maincolor, 20% );
+    font-size:30px;
+    margin-left:0;
+  }
+  #header .nav li.active a,
+  #header .nav li a:hover{
+    $contrasted-lightness-threshold:65%;
+    @include contrasted(darken($maincolor, 20% ));
+  }
+  #header .nav li .icons:after{
+    display: table-cell;
+    vertical-align: middle;
+  }
+  #header .nav li{
+    display:none;
+}
+#header .nav li.search,
+#header .nav li.cat{
+    display:block;
+}

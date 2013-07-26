@@ -59,7 +59,8 @@
                 'i_expiration_days',
                 'i_position',
                 'b_enabled',
-                's_icon'
+                's_icon',
+                'b_price_enabled'
             );
             $this->setFields($array_fields);
 
@@ -737,15 +738,16 @@
         }
 
         /**
-         * Update categories' order
+         * Update categories' expiration
          *
          * @access public
          * @since unknown
          * @param integer $pk_i_id
          * @param integer $expiration
+         * @param boolean $updateSubcategories
          * @return mixed false on fail, int of num. of affected rows
          */
-        public function updateExpiration($pk_i_id, $expiration)
+        public function updateExpiration($pk_i_id, $expiration, $updateSubcategories = false)
         {
             $itemManager = Item::newInstance();
 
@@ -760,8 +762,36 @@
             foreach($items as $item) {
                 $itemManager->updateExpirationDate($item['pk_i_id'], $expiration);
             }
-            return $this->dao->update($this->tableName, array('i_expiration_days' => $expiration), array('pk_i_id'  => $pk_i_id));
+            $result = $this->dao->update($this->tableName, array('i_expiration_days' => $expiration), array('pk_i_id'  => $pk_i_id));
+            if($updateSubcategories) {
+                $subcategories = $this->findSubcategories($pk_i_id);
+                foreach($subcategories as $c) {
+                    $this->updateExpiration($c['pk_i_id'], $expiration, true);
+                }
+            }
+            return $result;
+        }
 
+        /**
+         * Update categories' price enabled
+         *
+         * @access public
+         * @since unknown
+         * @param integer $pk_i_id
+         * @param integer $enabled
+         * @param boolean $updateSubcategories
+         * @return bool true on pass, false on fail
+         */
+        public function updatePriceEnabled($pk_i_id, $enabled, $updateSubcategories = false)
+        {
+            $result = $this->dao->update($this->tableName, array('b_price_enabled' => $enabled), array('pk_i_id'  => $pk_i_id));
+            if($updateSubcategories) {
+                $subcategories = $this->findSubcategories($pk_i_id);
+                foreach($subcategories as $c) {
+                    $this->updatePriceEnabled($c['pk_i_id'], $enabled, true);
+                }
+            }
+            return $result;
         }
 
         /**

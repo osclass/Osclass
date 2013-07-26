@@ -183,7 +183,7 @@
 </form>
 <script type="text/javascript">
     $(function() {
-        $( "#tabs" ).tabs({ selected: 1 });
+        $( "#tabs" ).tabs({ active: -1 });
 
         $("#market_cancel").on("click", function(){
             $(".ui-dialog-content").dialog("close");
@@ -213,7 +213,7 @@
         });
     });
 
-    $('.market-popup').live('click',function(){
+    $('.market-popup').on('click',function(){
         $.getJSON(
             "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=check_market",
             {"code" : $(this).attr('href').replace('#',''), 'section' : 'themes'},

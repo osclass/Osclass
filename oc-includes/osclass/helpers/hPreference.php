@@ -55,6 +55,15 @@
     }
 
     /**
+     * Gets number of days to warn about an ad being expired
+     *
+     * @return int
+     */
+    function osc_warn_expiration() {
+        return (getPreference('warn_expiration'));
+    }
+
+    /**
      * Gets comments per page
      *
      * @return int
@@ -78,7 +87,7 @@
      * @return boolean
      */
     function osc_reg_user_post_comments() {
-        return (getPreference('reg_user_post_comments'));
+        return (getBoolPreference('reg_user_post_comments'));
     }
 
     /**
@@ -187,6 +196,15 @@
      */
     function osc_keep_original_image() {
         return (getBoolPreference('keep_original_image'));
+    }
+
+    /**
+     * Force image aspect
+     *
+     * @return boolean
+     */
+    function osc_force_aspect_image() {
+        return (getBoolPreference('force_aspect_image'));
     }
 
     /**
@@ -696,6 +714,24 @@
     }
 
     /**
+    * Gets mail from 
+    *
+    * @return string
+    */    
+    function osc_mailserver_mail_from() {
+        return(getPreference('mailserver_mail_from'));
+    }    
+
+    /**
+    * Gets name from 
+    *
+    * @return string
+    */    
+    function osc_mailserver_name_from() {
+        return(getPreference('mailserver_name_from'));
+    }
+
+    /**
      * Gets mailserver's username
      *
      * @return string
@@ -942,7 +978,25 @@
         return getPreference('watermark_place');
     }
 
-    //PRIVATE FUNCTION (if there was a class :P)
+    /**
+     * Return subdomain type
+     *
+     * @return string
+     */
+    function osc_subdomain_type() {
+        return getPreference('subdomain_type');
+    }
+
+    /**
+     * Return subdomain host
+     *
+     * @return string
+     */
+    function osc_subdomain_host() {
+        return getPreference('subdomain_host');
+    }
+
+//PRIVATE FUNCTION (if there was a class :P)
     /**
      * Gets preference
      *
