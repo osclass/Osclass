@@ -150,7 +150,7 @@
             if($desc=='') {
                 $aLocales = osc_get_locales();
                 foreach($aLocales as $locale) {
-                    $desc = osc_item_field("s_description", $locale);
+                    $desc = osc_item_field("s_description", @$locale['pk_c_code']);
                     if($desc!='') {
                         break;
                     }
@@ -174,7 +174,7 @@
             if($title=='') {
                 $aLocales = osc_get_locales();
                 foreach($aLocales as $locale) {
-                    $title = osc_item_field("s_title", $locale);
+                    $title = osc_item_field("s_title", @$locale['pk_c_code']);
                     if($title!='') {
                         break;
                     }
