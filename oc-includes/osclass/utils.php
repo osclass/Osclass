@@ -1567,6 +1567,47 @@ function osc_update_location_stats($force = false, $limit = 1000) {
     return LocationsTmp::newInstance()->count();
 }
 
+/* Translate current categories to new locale
+ *
+ * @since 3.2.1
+ *
+ */
+function osc_translate_categories($locale) {
+    $old_locale = Session::newInstance()->_get('adminLocale');
+    Session::newInstance()->_set('adminLocale', $locale);
+    Translation::newInstance()->_load(osc_translations_path().$locale.'/core.mo', 'cat_'.$locale);
+    $catManager = Category::newInstance();
+    $old_categories = $catManager->_findNameIDByLocale($old_locale);
+    $tmp_categories = $catManager->_findNameIDByLocale($locale);
+    foreach($tmp_categories as $category) {
+        $new_categories[$category['pk_i_id']] = $category['s_name'];
+    }
+    unset($tmp_categories);
+    foreach($old_categories as $category) {
+        if(!isset($new_categories[$category['pk_i_id']])) {
+            $fieldsDescription['s_name'] = __($category['s_name'], 'cat_'.$locale);
+            $fieldsDescription['s_description'] = '';
+            $fieldsDescription['fk_i_category_id'] = $category['pk_i_id'];
+            $fieldsDescription['fk_c_locale_code'] = $locale;
+            $slug_tmp = $slug = osc_sanitizeString(osc_apply_filter('slug', $fieldsDescription['s_name']));
+            $slug_unique = 1;
+            while(true) {
+                if(!$catManager->findBySlug($slug)) {
+                    break;
+                } else {
+                    $slug = $slug_tmp . "_" . $slug_unique;
+                    $slug_unique++;
+                }
+            }
+            $fieldsDescription['s_slug'] = $slug;
+            $catManager->insertDescription($fieldsDescription);
+        }
+    }
+    Session::newInstance()->_set('adminLocale', $old_locale);
+
+}
+
+
 function get_ip() {
     if( !empty($_SERVER['HTTP_CLIENT_IP']) ) {
         return $_SERVER['HTTP_CLIENT_IP'];
