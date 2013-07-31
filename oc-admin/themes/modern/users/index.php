@@ -236,7 +236,7 @@
     <div class="form-actions">
         <div class="wrapper">
             <input id="show-filters" type="submit" value="<?php echo osc_esc_html( __('Apply filters') ); ?>" class="btn btn-submit" />
-            <a class="btn" href="<?php echo osc_admin_base_url(true).'?page=items'; ?>"><?php _e('Reset filters'); ?></a>
+            <a class="btn" href="<?php echo osc_admin_base_url(true).'?page=users'; ?>"><?php _e('Reset filters'); ?></a>
         </div>
     </div>
 </form>
