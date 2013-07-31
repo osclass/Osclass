@@ -770,7 +770,7 @@
                 $this->withCategoryId = true;
             }
 
-            $conditionsSQL = implode(' AND ', $this->conditions);
+            $conditionsSQL = implode(' AND ', osc_apply_filter('sql_search_conditions', $this->conditions));
             if($conditionsSQL!='') {
                 $conditionsSQL = " ".$conditionsSQL;
             }
@@ -778,7 +778,7 @@
             $extraFields = "";
             if( count($this->search_fields) > 0 ) {
                 $extraFields = ",";
-                $extraFields .= implode(' ,', $this->search_fields);
+                $extraFields .= implode(' ,', osc_apply_filter('sql_search_fields', $this->search_fields));
             }
 
             return array(
