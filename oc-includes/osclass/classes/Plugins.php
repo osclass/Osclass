@@ -361,6 +361,12 @@
                 $info['plugin_update_uri'] = "";
             }
 
+            if( preg_match('|Support URI:([^\\r\\t\\n]*)|i', $s_info, $match) ) {
+                $info['support_uri'] = trim($match[1]);
+            } else {
+                $info['support_uri'] = "";
+            }
+
             if( preg_match('|Description:([^\\r\\t\\n]*)|i', $s_info, $match) ) {
                 $info['description'] = trim($match[1]);
             } else {
