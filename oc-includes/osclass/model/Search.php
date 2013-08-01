@@ -924,7 +924,7 @@
 
                 // item conditions
                 if(count($this->itemConditions)>0) {
-                    $itemConditions = implode(' AND ', $this->itemConditions);
+                    $itemConditions = implode(' AND ', osc_apply_filter('sql_search_item_conditions', $this->itemConditions));
                     $this->dao->where($itemConditions);
                 }
                 if( $this->withCategoryId && (count($this->categories) > 0) ) {
