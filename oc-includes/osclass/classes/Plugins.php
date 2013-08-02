@@ -259,9 +259,12 @@
                 return false;
             }
 
-            if( !self::deactivate($path) ) {
+            include_once( osc_plugins_path() . $path );
+
+            self::deactivate($path);
+            /*if( !self::deactivate($path) ) {
                 return false;
-            }
+            }*/
 
             self::runHook($path . '_uninstall');
 
