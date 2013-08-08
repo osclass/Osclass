@@ -48,7 +48,7 @@
 
                     // get page if it's set in the url
                     $iPage = preg_replace('|.*/([0-9]+)$|', '$01', $this->uri);
-                    if( $iPage > 0 ) {
+                    if( is_numeric($iPage) && $iPage > 0 ) {
                         Params::setParam('iPage', $iPage);
                         // redirect without number of pages
                         if( $iPage == 1 ) {
