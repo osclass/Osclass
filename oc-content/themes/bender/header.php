@@ -36,6 +36,7 @@
                 <li class="search"><a class="ico-search icons" data-bclass-toggle="display-search"></a></li>
                 <li class="cat"><a class="ico-menu icons" data-bclass-toggle="display-cat"></a></li>
             <?php } ?>
+            <?php if( osc_users_enabled() ) { ?>
             <?php if( osc_is_web_user_logged_in() ) { ?>
                 <li class="first logged">
                     <span><?php echo sprintf(__('Hi %s', 'bender'), osc_logged_user_name() . '!'); ?>  &middot;</span>
@@ -47,6 +48,7 @@
                 <?php if(osc_user_registration_enabled()) { ?>
                     <li><a href="<?php echo osc_register_account_url() ; ?>"><?php _e('Register for a free account', 'bender'); ?></a></li>
                 <?php }; ?>
+            <?php } ?>
             <?php } ?>
             <li class="publish"><a href="<?php echo osc_item_post_url_in_category() ; ?>"><?php _e("Publish your ad for free", 'bender');?></a></li>
         </ul>
