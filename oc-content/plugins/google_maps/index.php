@@ -18,6 +18,7 @@ Plugin update URI: http://www.osclass.org/files/plugins/google_maps/update.php
     // HELPER
     function osc_google_maps_header() {
         echo '<script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>';
+        echo '<style>#itemMap img { max-width: 140em; } </style>';
     }
 
     function insert_geo_location($item) {
