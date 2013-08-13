@@ -167,11 +167,16 @@
             }
 
             $this->conditions = array();
+            if(@$_get['userId']!='') {
+                $this->conditions['pk_i_id'] = str_replace('*','%', $_get['userId']);
+            }
             if(@$_get['s_email']!='') {
                 $this->conditions['s_email'] = str_replace('*','%', $_get['s_email']);
             }
             if(@$_get['s_name']!='') {
                 $this->conditions['s_name'] = str_replace('*','%', $_get['s_name']);
+            } else if(@$_get['user']!='') {
+                $this->conditions['s_name'] = str_replace('*','%', $_get['user']);
             }
             if(@$_get['s_username']!='') {
                 $this->conditions['s_username'] = str_replace('*','%', $_get['s_username']);
