@@ -340,6 +340,8 @@
             if( osc_get_preference('seo_url_search_prefix') != '' ) {
                 $seo_prefix = osc_get_preference('seo_url_search_prefix') . '/';
             }
+            $url = str_replace('{CATEGORY_NAME}', osc_category_slug(), $url);
+            // DEPRECATED : CATEGORY_SLUG is going to be removed in 3.4
             $url = str_replace('{CATEGORY_SLUG}', osc_category_slug(), $url);
             $url = str_replace('{CATEGORY_ID}', osc_category_id(), $url);
             $path = osc_base_url() . $seo_prefix . $url;

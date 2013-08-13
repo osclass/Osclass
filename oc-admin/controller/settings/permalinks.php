@@ -97,6 +97,8 @@ HTACCESS;
                                                              ,array('s_name' => 'rewrite_page_url'));
                         }
                         $cat_url = substr(str_replace('//', '/', Params::getParam('rewrite_cat_url').'/'), 0, -1);
+                        // DEPRECATED: backward compatibility, remove in 3.4
+                        $cat_url = str_replace('{CATEGORY_SLUG}', '{CATEGORY_NAME}', $cat_url);
                         if(!osc_validate_text($cat_url)) {
                             $errors += 1;
                         } else {
@@ -439,7 +441,7 @@ HTACCESS;
 
                         // Category rules
                         $id_pos = stripos($item_url, '{CATEGORY_ID}');
-                        $title_pos = stripos($item_url, '{CATEGORY_SLUG}');
+                        $title_pos = stripos($item_url, '{CATEGORY_NAME}');
                         $cat_pos = stripos($item_url, '{CATEGORIES');
                         $param_pos = 1;
                         if($title_pos!==false && $id_pos>$title_pos) {
@@ -448,8 +450,8 @@ HTACCESS;
                         if($cat_pos!==false && $id_pos>$cat_pos) {
                             $param_pos++;
                         }
-                        $rewrite->addRule('^'.str_replace('{CATEGORIES}', '(.+)', str_replace('{CATEGORY_SLUG}', '([^/]+)', str_replace('{CATEGORY_ID}', '([0-9]+)', $cat_url))).'/([0-9]+)$', 'index.php?page=search&sCategory=$'.$param_pos.'&iPage=$'.($param_pos+1));
-                        $rewrite->addRule('^'.str_replace('{CATEGORIES}', '(.+)', str_replace('{CATEGORY_SLUG}', '([^/]+)', str_replace('{CATEGORY_ID}', '([0-9]+)', $cat_url))).'$', 'index.php?page=search&sCategory=$'.$param_pos);
+                        $rewrite->addRule('^'.str_replace('{CATEGORIES}', '(.+)', str_replace('{CATEGORY_NAME}', '([^/]+)', str_replace('{CATEGORY_ID}', '([0-9]+)', $cat_url))).'/([0-9]+)$', 'index.php?page=search&sCategory=$'.$param_pos.'&iPage=$'.($param_pos+1));
+                        $rewrite->addRule('^'.str_replace('{CATEGORIES}', '(.+)', str_replace('{CATEGORY_NAME}', '([^/]+)', str_replace('{CATEGORY_ID}', '([0-9]+)', $cat_url))).'$', 'index.php?page=search&sCategory=$'.$param_pos);
 
                         $rewrite->addRule('^(.+)/([0-9]+)$', 'index.php?page=search&iPage=$2');
                         $rewrite->addRule('^(.+)$', 'index.php?page=search');
