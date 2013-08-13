@@ -49,9 +49,9 @@
 
                     $iUpdated          = 0;
                     $maxSizeKb         = Params::getParam('maxSizeKb');
-                    $dimThumbnail      = Params::getParam('dimThumbnail');
-                    $dimPreview        = Params::getParam('dimPreview');
-                    $dimNormal         = Params::getParam('dimNormal');
+                    $dimThumbnail      = strtolower(Params::getParam('dimThumbnail'));
+                    $dimPreview        = strtolower(Params::getParam('dimPreview'));
+                    $dimNormal         = strtolower(Params::getParam('dimNormal'));
                     $keepOriginalImage = Params::getParam('keep_original_image');
                     $forceAspectImage  = Params::getParam('force_aspect_image');
                     $use_imagick       = Params::getParam('use_imagick');
@@ -140,6 +140,16 @@
                     $keepOriginalImage = ($keepOriginalImage != '' ? true : false);
                     $forceAspectImage  = ($forceAspectImage != '' ? true : false);
                     $use_imagick       = ($use_imagick != '' ? true : false);
+
+                    if(!preg_match('|([0-9]+)x([0-9]+)|', $dimThumbnail, $match)) {
+                        $dimThumbnail = is_numeric($dimThumbnail)?$dimThumbnail."x".$dimThumbnail:"100x100";
+                    }
+                    if(!preg_match('|([0-9]+)x([0-9]+)|', $dimPreview, $match)) {
+                        $dimPreview = is_numeric($dimPreview)?$dimPreview."x".$dimPreview:"100x100";
+                    }
+                    if(!preg_match('|([0-9]+)x([0-9]+)|', $dimNormal, $match)) {
+                        $dimNormal = is_numeric($dimNormal)?$dimNormal."x".$dimNormal:"100x100";
+                    }
 
                     // is imagick extension loaded?
                     if( !@extension_loaded('imagick') ) {
