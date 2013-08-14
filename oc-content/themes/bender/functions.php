@@ -231,7 +231,7 @@ FUNCTIONS
             foreach( osc_get_locales() as $locale ) {
                 if( Session::newInstance()->_getForm('title') != "" ) {
                     $title_ = Session::newInstance()->_getForm('title');
-                    if( $title_[$locale['pk_c_code']] != "" ){
+                    if( @$title_[$locale['pk_c_code']] != "" ){
                         $title = $title_[$locale['pk_c_code']];
                     }
                 }
@@ -245,7 +245,7 @@ FUNCTIONS
             foreach( osc_get_locales() as $locale ) {
                 if( Session::newInstance()->_getForm('description') != "" ) {
                     $description_ = Session::newInstance()->_getForm('description');
-                    if( $description_[$locale['pk_c_code']] != "" ){
+                    if( @$description_[$locale['pk_c_code']] != "" ){
                         $description = $description_[$locale['pk_c_code']];
                     }
                 }
