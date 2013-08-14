@@ -72,7 +72,7 @@
             <?php } else { ?>
             <span class="counter-search"><?php
                 $search_number = bender_search_number();
-                printf('%1$d - %2$d of %3$d listings', $search_number['from'], $search_number['to'], $search_number['of']);
+                printf(__('%1$d - %2$d of %3$d listings', 'bender'), $search_number['from'], $search_number['to'], $search_number['of']);
             ?></span>
             <div class="actions">
               <a href="#" data-bclass-toggle="display-filters" class="resp-toogle show-filters-btn"><?php _e('Show filters','bender'); ?></a>
