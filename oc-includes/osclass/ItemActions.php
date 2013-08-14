@@ -103,8 +103,8 @@
                 }
 
                 $title_message .=
-                    (!osc_validate_text($value, 1) ? _m("Title too short.") . PHP_EOL : '' ) .
-                    (!osc_validate_max($value, 100) ? _m("Title too long.") . PHP_EOL : '' );
+                    (!osc_validate_text($value, 1) ? sprintf(_m("Title too short (%s)."), $key) . PHP_EOL : '' ) .
+                    (!osc_validate_max($value, 100) ? sprintf(_m("Title too long (%s)."), $key) . PHP_EOL : '' );
             }
             $flash_error .= $title_message;
 
@@ -116,8 +116,8 @@
                 }
 
                 $desc_message .=
-                    (!osc_validate_text($value, 3) ? _m("Description too short.") . PHP_EOL : '' ) .
-                    (!osc_validate_max($value, 5000) ? _m("Description too long."). PHP_EOL : '' );
+                    (!osc_validate_text($value, 3) ? sprintf(_m("Description too short (%s)."), $key) . PHP_EOL : '' ) .
+                    (!osc_validate_max($value, 5000) ? sprintf(_m("Description too long (%s)."), $key). PHP_EOL : '' );
             }
             $flash_error .= $desc_message;
 
