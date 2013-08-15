@@ -31,6 +31,7 @@
             <?php echo logo_header(); ?>
             <span id="description"><?php echo osc_page_description(); ?></span>
         </div>
+        <?php if(osc_users_enabled()) { ?>
         <ul class="nav">
             <?php if( osc_is_static_page() || osc_is_contact_page() ){ ?>
                 <li class="search"><a class="ico-search icons" data-bclass-toggle="display-search"></a></li>
@@ -50,6 +51,7 @@
             <?php } ?>
             <li class="publish"><a href="<?php echo osc_item_post_url_in_category() ; ?>"><?php _e("Publish your ad for free", 'bender');?></a></li>
         </ul>
+        <?php } ?>
     </div>
     <?php if( osc_is_home_page() || osc_is_static_page() || osc_is_contact_page() ) { ?>
     <form action="<?php echo osc_base_url(true); ?>" method="get" class="search nocsrf" <?php /* onsubmit="javascript:return doSearch();"*/ ?>>
