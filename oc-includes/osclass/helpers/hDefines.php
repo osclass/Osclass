@@ -811,10 +811,15 @@
         if(!isset($routes[$id])) { return ''; };
         if ( osc_rewrite_enabled() ) {
             $uri = $routes[$id]['url'];
+            $params_url = '';
             foreach($args as $k => $v) {
+                $old_uri = $uri;
                 $uri = str_ireplace('{'.$k.'}', $v, $uri);
+                if($old_uri==$uri) {
+                    $params_url .= '&'.$k.'='.$v;
+                }
             }
-            return osc_base_url().$uri;
+            return osc_base_url().$uri.(($params_url!='')?'?'.$params_url:'');
         } else {
             $params_url = '';
             foreach($args as $k => $v) {
