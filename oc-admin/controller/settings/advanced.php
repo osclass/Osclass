@@ -49,6 +49,7 @@
                     if($iUpdated > 0) {
                         osc_add_flash_ok_message( _m("Advanced settings have been updated"), 'admin');
                     }
+                    osc_calculate_location_slug(osc_subdomain_type());
                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=advanced');
                 break;
             }
