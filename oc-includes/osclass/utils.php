@@ -1700,4 +1700,42 @@ function osc_redirect_to($url) {
     exit;
 }
 
+function osc_calculate_location_slug($type) {
+    $field = 'pk_i_id';
+    switch($type) {
+        case 'country':
+            $manager = Country::newInstance();
+            $field = 'pk_c_code';
+            break;
+        case 'region':
+            $manager = Region::newInstance();
+            break;
+        case 'city':
+            $manager = City::newInstance();
+            break;
+        default:
+            return false;
+        break;
+    }
+    $locations = $manager->listByEmptySlug();
+    $locations_changed = 0;
+    foreach($locations as $location) {
+        $slug_tmp = $slug = osc_sanitizeString($location['s_name']);
+        $slug_unique = 1;
+        while(true) {
+            $location_slug = $manager->findBySlug($slug);
+            if(!isset($location_slug[$field])) {
+                break;
+            } else {
+                $slug = $slug_tmp . '-' . $slug_unique;
+                $slug_unique++;
+            }
+        }
+        $locations_changed += $manager->update(array('s_slug' => $slug), array($field => $location[$field]));
+    }
+
+    return $locations_changed;
+
+}
+
 ?>
