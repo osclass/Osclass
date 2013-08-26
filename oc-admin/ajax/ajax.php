@@ -947,6 +947,30 @@
                         echo json_encode($array);
                     }
                     break;
+                case 'country_slug':
+                    $exists = Country::newInstance()->findBySlug(Params::getParam('slug'));
+                    if(isset($exists['s_slug'])) {
+                        echo json_encode(array('error' => 1, 'country' => $exists));
+                    } else {
+                        echo json_encode(array('error' => 0));
+                    }
+                    break;
+                case 'region_slug':
+                    $exists = Region::newInstance()->findBySlug(Params::getParam('slug'));
+                    if(isset($exists['s_slug'])) {
+                        echo json_encode(array('error' => 1, 'region' => $exists));
+                    } else {
+                        echo json_encode(array('error' => 0));
+                    }
+                    break;
+                case 'city_slug':
+                    $exists = City::newInstance()->findBySlug(Params::getParam('slug'));
+                    if(isset($exists['s_slug'])) {
+                        echo json_encode(array('error' => 1, 'city' => $exists));
+                    } else {
+                        echo json_encode(array('error' => 0));
+                    }
+                    break;
                 case 'error_permissions':
                     echo json_encode(array('error' => __("You don't have the necessary permissions")));
                     break;
