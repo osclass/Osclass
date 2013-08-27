@@ -58,7 +58,7 @@
         <input type="hidden" name="page" value="search"/>
         <div class="main-search">
             <div class="cell">
-                <input type="text" name="sPattern" id="query" class="input-text" value="" placeholder="<?php echo osc_get_preference('keyword_placeholder', 'bender_theme') ; ?>" />
+                <input type="text" name="sPattern" id="query" class="input-text" value="" placeholder="<?php echo osc_esc_html(__(osc_get_preference('keyword_placeholder', 'bender_theme'), 'bender')); ?>" />
             </div>
             <?php  if ( osc_count_categories() ) { ?>
                 <div class="cell selector">
