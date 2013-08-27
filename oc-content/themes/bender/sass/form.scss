@@ -41,68 +41,108 @@
 .form-container .main-button{
     @include button-style($maincolor);
 }
-.form-container .checkbox input{
+.form-container .checkbox input,
+input[type="checkbox"],
+.form-container .meta input[type="checkbox"],
+.form-container .controls input[type="checkbox"],
+input[type="radio"],
+.form-container .meta input[type="radio"],
+.form-container .controls input[type="radio"]{
     width:auto;
     height: auto;
     vertical-align: middle;
     margin-top:-2px;
-
+    padding:0;
+    border:none;
+    box-shadow:none;
+}
+.meta_list{
+    .meta{
+        ul{
+            margin:5px 0 0 0;
+            padding:0;
+            list-style:none;
+            float: left;
+            li{
+                clear:both;
+                list-style:none;
+                label{
+                    width: auto;
+                    margin-left:5px;
+                    float:none;
+                }
+            }
+        }
+        input[type="checkbox"]{
+            margin-top:10px;
+        }
+        .cf_date_interval{
+            width: 100px;
+        }
+    }
+    .meta:after{
+        content:"";
+        clear:both;
+    }
 }
 .form-container .checkbox{
     margin-bottom:5px;
+    label{
+        font-size:0.85em;
+    }
 }
-.form-container .checkbox label{
-    font-size:0.85em;
-}
-.form-horizontal .actions{
-    border-top:solid 1px $widgetbordercolor;
-    padding:10px 10px 15px 155px;
-    margin:0 25px;
-}
-.form-horizontal .actions a{
-    font-size:0.725em;
-}
-.form-horizontal label{
-    float: left;
-    width: 160px;
-    padding-top: 7px;
-    text-align: right;
-    font-size:0.85em;
-}
-.form-horizontal .select-box{
-    width:300px;
-}
-.form-horizontal .controls {
-    margin-left: 180px;
-    line-height: 32px;
-}
-.form-horizontal .control-group,
-.form-horizontal .meta_list .meta{
-    clear:both;
-    margin-bottom: 10px;
-}
-.form-horizontal .controls label{
-    float: none;
-    width: auto;
-    padding-top: 0;
-    text-align: left;
+.form-horizontal{
+    .actions{
+        border-top:solid 1px $widgetbordercolor;
+        padding:10px 10px 15px 155px;
+        margin:0 25px;
+        a{
+            font-size:0.725em;
+        }
+    }
+    label{
+        float: left;
+        width: 160px;
+        padding-top: 7px;
+        text-align: right;
+        font-size:0.85em;
+    }
+    .select-box{
+        width:300px;
+    }
+    .controls {
+        margin-left: 180px;
+        line-height: 32px;
+        label{
+            float: none;
+            width: auto;
+            padding-top: 0;
+            text-align: left;
+        }
+    }
+    .control-group,
+    .meta_list .meta{
+        clear:both;
+        margin-bottom: 10px;
+    }
+
 }
 .form-container-box{
     border:solid 1px $widgetbordercolor;
     margin:0 auto;
     width:700px;
     @include border-radius(4px);
+    .header{
+        background-color:$widgetbackground;
+        padding:10px 15px;
+        margin-bottom:30px;
+        h1{
+            margin:0;
+            line-height: 1.2em;
+        }
+    }
 }
-.form-container-box .header{
-    background-color:$widgetbackground;
-    padding:10px 15px;
-    margin-bottom:30px;
-}
-.form-container-box .header h1{
-    margin:0;
-    line-height: 1.2em;
-    //font-size: 1.5em;
-}
+
 
 
 body.item-post .select-box{
