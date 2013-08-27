@@ -388,7 +388,6 @@
                                                 osc_add_flash_error_message(sprintf(_m('%s already was in the database'), $newCity), 'admin');
                                             }
                                         }
-                                        if(osc_subdomain_type()=='city') { osc_calculate_location_slug('city'); }
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations&country_code='.@$country['pk_c_code']."&country=".@$country['s_name']."&region=".@$region['pk_i_id']);
                 break;
                 case('delete_city'):    // delete city
