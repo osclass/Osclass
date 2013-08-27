@@ -1342,12 +1342,12 @@
                     if($numImagesItems==0 || ($numImagesItems>0 && $numImages<$numImagesItems)) {
                         if ($error == UPLOAD_ERR_OK) {
 
-                            $freedisk = 4*osc_max_size_kb()*1024;
+                            /*$freedisk = 4*osc_max_size_kb()*1024;
                             if(function_exists('disk_free_space')) {
                                 $freedisk = @disk_free_space(osc_uploads_path());
                             }
 
-                            if($freedisk!=false) {
+                            if($freedisk!=false) {*/
                                 $tmpName = $aResources['tmp_name'][$key];
 
                                 $total_size = 0;
@@ -1419,9 +1419,9 @@
                                 } else {
                                     return 2; // IMAGES ARE BIGGER THAN SPACE
                                 }
-                            } else {
+                            /*} else {
                                 return 1; // NO SPACE LEFT
-                            }
+                            }*/
                         }
                     }
                 }
