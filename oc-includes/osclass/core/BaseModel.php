@@ -59,7 +59,7 @@
             $this->ajax   = false;
             $this->time   = list($sm, $ss) = explode(' ', microtime());
             WebThemes::newInstance();
-            osc_run_hook( 'init' );
+            osc_run_hook( 'init', $this );
         }
 
         function __destruct()
@@ -79,6 +79,21 @@
         function _view($key = null)
         {
             View::newInstance()->_view($key);
+        }
+
+        function getAction()
+        {
+            return $this->action;
+        }
+
+        function getPage()
+        {
+            return $this->page;
+        }
+
+        function isAdmin()
+        {
+            return $this instanceof AdminBaseModel || $this instanceof AdminSecBaseModel;
         }
 
         //Funciones que se tendran que reescribir en la clase que extienda de esta
