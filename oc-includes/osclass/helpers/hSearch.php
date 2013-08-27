@@ -340,8 +340,8 @@
                     } else {
                         $country = Country::newInstance()->findByCode($params['sCountry']);
                     }
-                    if(isset($country['s_name'])) {
-                        return $url.$country['s_name'].".".osc_subdomain_host().REL_WEB_URL;
+                    if(isset($country['s_slug'])) {
+                        return $url.$country['s_slug'].".".osc_subdomain_host().REL_WEB_URL;
                     }
                 }
             } else if(osc_subdomain_type()=='region' && isset($params['sRegion'])) {
@@ -354,8 +354,8 @@
                     } else {
                         $region = Region::newInstance()->findByName($params['sRegion']);
                     }
-                    if(isset($region['s_name'])) {
-                        return $url.$region['s_name'].".".osc_subdomain_host().REL_WEB_URL;
+                    if(isset($region['s_slug'])) {
+                        return $url.$region['s_slug'].".".osc_subdomain_host().REL_WEB_URL;
                     }
 
                 }
@@ -369,8 +369,8 @@
                     } else {
                         $city = City::newInstance()->findByName($params['sCity']);
                     }
-                    if(isset($city['s_name'])) {
-                        return $url.$city['s_name'].".".osc_subdomain_host().REL_WEB_URL;
+                    if(isset($city['s_slug'])) {
+                        return $url.$city['s_slug'].".".osc_subdomain_host().REL_WEB_URL;
                     }
 
                 }
