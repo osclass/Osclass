@@ -145,7 +145,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_user (
         PRIMARY KEY (pk_i_id),
         UNIQUE KEY (s_email),
         INDEX idx_s_name (s_name(6)),
-        INDEX idx_s_slug (s_slug),
+        INDEX idx_s_username (s_username),
         FOREIGN KEY (fk_c_country_code) REFERENCES /*TABLE_PREFIX*/t_country (pk_c_code),
         FOREIGN KEY (fk_i_region_id) REFERENCES /*TABLE_PREFIX*/t_region (pk_i_id),
         FOREIGN KEY (fk_i_city_id) REFERENCES /*TABLE_PREFIX*/t_city (pk_i_id),
