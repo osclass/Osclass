@@ -66,6 +66,9 @@
     @if $text-color-contrasted != false {
         $color: $text-color-contrasted;
     }
+    @if $bg-color == #f0f0f0 {
+        $color: #5f5f5f;
+    }
     @if $base-color == #000000 {
         $color: #ffffff;
     }
