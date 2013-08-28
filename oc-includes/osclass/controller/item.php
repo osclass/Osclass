@@ -102,6 +102,7 @@
                         $this->redirectTo( osc_base_url(true) );
                     }
 
+                    osc_run_hook('before_save_added_item');
                     $mItems = new ItemActions(false);
                     // prepare data for ADD ITEM
                     $mItems->prepareData(true);
@@ -167,6 +168,8 @@
 
                         $itemId         = Params::getParam('itemId');
 
+                        osc_run_hook('after_save_added_item', $itemId);
+
                         $category = Category::newInstance()->findByPrimaryKey(Params::getParam('catId'));
                         View::newInstance()->_exportVariableToView('category', $category);
                         $this->redirectTo(osc_search_category_url());
@@ -208,6 +211,7 @@
 
                     if (count($item) == 1) {
                         $this->_exportVariableToView('item', $item[0]);
+                        osc_run_hook('before_save_edited_item', $item[0]);
 
                         $mItems = new ItemActions(false);
                         // prepare data for ADD ITEM
@@ -236,6 +240,7 @@
                         $success = $mItems->edit();
 
                         if($success==1) {
+                            osc_run_hook('after_save_edited_item', $item[0]['pk_i_id']);
                             osc_add_flash_ok_message( _m("Great! We've just updated your listing") );
                             View::newInstance()->_exportVariableToView("item", Item::newInstance()->findByPrimaryKey($id));
                             $this->redirectTo( osc_item_url() );

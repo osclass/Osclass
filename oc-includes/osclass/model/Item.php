@@ -568,27 +568,44 @@
          * @param int $userId User id
          * @param int $start beginning from $start
          * @param int $end ending
-         * @param string $itemType type item(active, expired, pending validate, premium, all)
+         * @param mixed $itemType type item(active, expired, pending validate, premium, blocked, all)
          * @return array of items
          */
         public function findItemTypesByUserID($userId, $start = 0, $end = null, $itemType = false)
         {
+            // Make sure we're dealing with an array of item types, because previous versions of this function
+            // only allowed strings
+            if(is_string($itemType)) {
+                $itemType = array($itemType);
+            }
+
             $this->dao->from($this->getTableName());
-            $this->dao->where('b_enabled', 1);
             $this->dao->where("fk_i_user_id = $userId");
 
-            if($itemType == 'active') {
-                $this->dao->where('b_active', 1);
-                $this->dao->where('dt_expiration > \'' . date('Y-m-d H:i:s') . '\'');
+            if(is_array($itemType)) {
+                if(in_array('active', $itemType)) {
+                    $this->dao->where('b_active', 1);
+                    $this->dao->where('dt_expiration > \'' . date('Y-m-d H:i:s') . '\'');
+                }
 
-            } elseif($itemType == 'expired'){
-                $this->dao->where('dt_expiration < \'' . date('Y-m-d H:i:s') . '\'');
+                if(in_array('expired', $itemType)) {
+                    $this->dao->where('dt_expiration < \'' . date('Y-m-d H:i:s') . '\'');
+                }
 
-            } elseif($itemType == 'pending_validate'){
-                $this->dao->where('b_active', 0);
+                if(in_array('pending_validate', $itemType)) {
+                    $this->dao->where('b_active', 0);
+                }
 
-            } elseif($itemType == 'premium'){
-                $this->dao->where('b_premium', 1);
+                if(in_array('premium', $itemType)) {
+                    $this->dao->where('b_premium', 1);
+                }
+
+                if(!in_array('blocked', $itemType)) {
+                    $this->dao->where('b_enabled', 1);
+                }
+            } else {
+                // Previously this function assumed the caller was only interested in "unblocked"/enabled items
+                $this->dao->where('b_enabled', 1);
             }
 
             $this->dao->orderBy('pk_i_id', 'DESC');
@@ -612,29 +629,48 @@
          * @access public
          * @since unknown
          * @param int $userId User id
-         * @param string $itemType (active, expired, pending validate, premium, all)
+         * @param mixed $itemType (active, expired, pending validate, premium, blocked, all)
          * @return int number of items
          */
         public function countItemTypesByUserID($userId, $itemType = false)
         {
+            // Make sure we're dealing with an array of item types, because previous versions of this function
+            // only allowed strings
+            if(is_string($itemType)) {
+                $itemType = array($itemType);
+            }
+
             $this->dao->select('count(pk_i_id) as total');
             $this->dao->from($this->getTableName());
-            $this->dao->where('b_enabled', 1);
             $this->dao->where("fk_i_user_id = $userId");
             $this->dao->orderBy('pk_i_id', 'DESC');
 
-            if($itemType == 'active') {
-                $this->dao->where('b_active', 1);
-                $this->dao->where("dt_expiration > '" . date('Y-m-d H:i:s') . "'");
+            if(is_array($itemType)) {
+                if(in_array('active', $itemType)) {
+                    $this->dao->where('b_active', 1);
+                    $this->dao->where('dt_expiration > \'' . date('Y-m-d H:i:s') . '\'');
+                }
 
-            } elseif($itemType == 'expired'){
-                $this->dao->where("dt_expiration <= '" . date('Y-m-d H:i:s') . "'");
+                if(in_array('expired', $itemType)) {
+                    $this->dao->where('dt_expiration < \'' . date('Y-m-d H:i:s') . '\'');
+                }
 
-            } elseif($itemType == 'pending_validate'){
-                $this->dao->where('b_active', 0);
+                if(in_array('pending_validate', $itemType)) {
+                    $this->dao->where('b_active', 0);
+                }
 
-            } elseif($itemType == 'premium'){
-                $this->dao->where('b_premium', 1);
+                if(in_array('premium', $itemType)) {
+                    $this->dao->where('b_premium', 1);
+                }
+
+                if(in_array('blocked', $itemType)) {
+                    $this->dao->where('b_enabled', 0);
+                } else {
+                    $this->dao->where('b_enabled', 1);
+                }
+            } else {
+                // Previously this function assumed the caller was only interested in "unblocked"/enabled items
+                $this->dao->where('b_enabled', 1);
             }
 
             $result = $this->dao->get();
