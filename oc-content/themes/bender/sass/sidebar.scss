@@ -32,7 +32,7 @@
         padding: 0 10px;
         height: 24px;
         line-height: 24px;
-        box-sizing: border-box;
+	@include prefixer(box-sizing, border-box, webkit moz ms o spec);
     }
     ul.category,
     ul.category ul{
@@ -133,8 +133,7 @@ ul.user_menu li{
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            -webkit-box-sizing: border-box;
-            box-sizing: border-box;
+	    @include prefixer(box-sizing, border-box, webkit moz ms o spec);
             width: 100%;
             font-weight: normal;
             font-size:0.8125em;
