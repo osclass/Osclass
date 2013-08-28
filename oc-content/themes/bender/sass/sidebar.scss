@@ -63,12 +63,7 @@ ul.user_menu li{
     line-height: 0.8125em;
 }
 #sidebar{
-
-    .category ul{
-        display:none;
-    }
-    ul.category .show-sub ul.sub{
-        display:block;
+    ul.category ul{
         padding-left:15px;
     }
     .show-sub a{
