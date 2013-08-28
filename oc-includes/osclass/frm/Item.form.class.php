@@ -1237,8 +1237,7 @@
                 data: 'page=ajax&action=runhook&hook=item_<?php echo $case;?>&catId=' + cat_id,
                 dataType: 'html',
                 success: function(data){
-                    var element = document.getElementById('plugin-hook');
-                    element.innerHTML = data;
+                    $("#plugin-hook").html(data);
                 }
             });
         }
@@ -1266,8 +1265,7 @@
                 data: 'page=ajax&action=runhook&hook=item_<?php echo $case;?>&catId=' + cat_id,
                 dataType: 'html',
                 success: function(data){
-                    var element = document.getElementById('plugin-hook');
-                    element.innerHTML = data;
+                    $("#plugin-hook").html(data);
                 }
             });
         }

@@ -53,7 +53,7 @@
             if($value=='') $value = 0;
             $aux = <<<FB
             <script type="text/javascript">
-            $(document).ready(function() {
+            $(document).ready(function(){
                 $('.$id_field').datepicker({
                     onSelect: function() {
                         // format to unix timestamp
@@ -91,7 +91,7 @@
                         $('#$id_field').prop('value', '');
                     }
                 });
-            });
+                });
             </script>
 FB;
             echo  $aux;
