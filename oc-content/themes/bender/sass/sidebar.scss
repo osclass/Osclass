@@ -77,10 +77,17 @@ ul.user_menu li{
     .show-sub li a{
         font-weight:normal;
     }
-    .price-slice input{
-        width: 50px;
+    .price-slice input,
+    .two_input input{
+	width: 65px;
         padding: 0 5px;
-        margin-right:5px;
+	margin-right:2px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+    }
+    .two_input input{
+	width: 70px;
     }
    .price-slice span{
         margin-right:0px;
