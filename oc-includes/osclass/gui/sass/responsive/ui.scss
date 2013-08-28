@@ -18,11 +18,7 @@ body.item #contact h2{
 }
 #alert_email{
     width:100%;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -ms-box-sizing: border-box;
-    -o-box-sizing: border-box;
-    box-sizing: border-box;
+    @include prefixer(box-sizing, border-box, webkit moz ms o spec);
 }
 
 .form-container .controls input,
@@ -41,11 +37,7 @@ body.item #sidebar .form-container .controls textarea,
 button,
 .ui-button{
     width:100%;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -ms-box-sizing: border-box;
-    -o-box-sizing: border-box;
-    box-sizing: border-box;
+    @include prefixer(box-sizing, border-box, webkit moz ms o spec);
 }
 ul.r-list{
     width: 100%;
@@ -71,8 +63,7 @@ ul.r-list li {
     margin-bottom: 5px;
     margin-right:0;
     padding: 0;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
+    @include prefixer(box-sizing, border-box, webkit moz ms o spec);
 }
 ul.r-list>li:nth-child(2n){
     padding-left:5px;
@@ -89,8 +80,7 @@ ul.r-list li a{
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
+    @include prefixer(box-sizing, border-box, webkit moz ms o spec);
     width: 100%;
     font-weight: bold;
     display: block;
@@ -145,11 +135,7 @@ div.cell_3:nth-child(2n){
 
 .select-box{
     width:100%;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -ms-box-sizing: border-box;
-    -o-box-sizing: border-box;
-    box-sizing: border-box;
+    @include prefixer(box-sizing, border-box, webkit moz ms o spec);
 }
 .select-box select{
     width:100%;
