@@ -103,7 +103,7 @@
                                                 // Create normal size
                                                 $path_normal = $path = osc_uploads_path() . $resource['pk_i_id'] . '.jpg';
                                                 $size = explode('x', osc_normal_dimensions());
-                                                ImageResizer::fromFile($image_tmp)->resizeTo($size[0], $size[1])->saveToFile($path);
+                                                ImageResizer::fromFile($image_tmp)->autoRotate()->resizeTo($size[0], $size[1])->saveToFile($path);
 
                                                 if( osc_is_watermark_text() ) {
                                                     $wat->doWatermarkText( $path , osc_watermark_text_color(), osc_watermark_text() , 'image/jpeg' );

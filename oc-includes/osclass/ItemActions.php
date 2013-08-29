@@ -1355,7 +1355,7 @@
                                 // Create normal size
                                 $normal_path = $path = $tmpName."_normal";
                                 $size = explode('x', osc_normal_dimensions());
-                                ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($path);
+                                ImageResizer::fromFile($tmpName)->autoRotate()->resizeTo($size[0], $size[1])->saveToFile($path);
 
                                 if( osc_is_watermark_text() ) {
                                     $wat->doWatermarkText( $path , osc_watermark_text_color(), osc_watermark_text() , 'image/jpeg' );
