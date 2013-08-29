@@ -1100,7 +1100,7 @@
         {
             $this->set_rpp($numItems);
             if($withPicture) {
-                $this->withPicture();
+                $this->withPicture(true);
             }
             if(isset($options['sCategory'])) {
                 $this->addCategory($options['sCategory']);
