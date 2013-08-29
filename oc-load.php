@@ -22,7 +22,7 @@
 define('OSCLASS_VERSION', '3.2.1');
 
 if( !defined('ABS_PATH') ) {
-    define( 'ABS_PATH', dirname(__FILE__) . '/' );
+    define( 'ABS_PATH', str_replace('\\', '/', dirname(__FILE__) . '/' ));
 }
 
 define('LIB_PATH', ABS_PATH . 'oc-includes/');
