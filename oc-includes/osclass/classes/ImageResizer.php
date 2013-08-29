@@ -29,7 +29,7 @@
         }
 
         private $im;
-        private $image_info;
+        private $_exif;
 
         private function __construct($imagePath) {
             if(!file_exists($imagePath)) { throw new Exception("$imagePath does not exist!"); };
@@ -41,7 +41,7 @@
             } else {
                 $content = file_get_contents($imagePath);
                 $this->im = imagecreatefromstring($content);
-                $this->image_info = getimagesize($imagePath);
+                $this->_exif = @exif_read_data($imagePath);
             }
 
             return $this;
@@ -119,6 +119,75 @@
             }
         }
 
+        public function autoRotate() {
+            if(osc_use_imagick()) {
+                switch($this->im->getImageOrientation()) {
+                    case 1:
+                    default:
+                        // DO NOTHING, THE IMAGE IS OK OR WE DON'T KNOW IF IT'S ROTATED
+                        break;
+                    case 2:
+                        $this->im->flipImage();
+                        break;
+                    case 3:
+                        $this->im->rotateImage(new ImagickPixel('none'), 180);
+                        break;
+                    case 4:
+                        $this->im->flipImage();
+                        $this->im->rotateImage(new ImagickPixel('none'), 180);
+                        break;
+                    case 5:
+                        $this->im->flipImage();
+                        $this->im->rotateImage(new ImagickPixel('none'), 90);
+                        break;
+                    case 6:
+                        $this->im->rotateImage(new ImagickPixel('none'), 90);
+                        break;
+                    case 7:
+                        $this->im->flipImage();
+                        $this->im->rotateImage(new ImagickPixel('none'), 270);
+                        break;
+                    case 8:
+                        $this->im->rotateImage(new ImagickPixel('none'), 270);
+                        break;
+                }
+            } else {
+                if(isset($this->_exif['Orientation'])) {
+                    switch($this->_exif['Orientation']) {
+                        case 1:
+                        default:
+                            // DO NOTHING, THE IMAGE IS OK OR WE DON'T KNOW IF IT'S ROTATED
+                            break;
+                        case 2:
+                            $this->im = imageflip($this->im, IMG_FLIP_HORIZONTAL);
+                            break;
+                        case 3:
+                            $this->im = imagerotate($this->im, 180, 0);
+                            break;
+                        case 4:
+                            $this->im = imagerotate($this->im, 180, 0);
+                            $this->im = imageflip($this->im, IMG_FLIP_HORIZONTAL);
+                            break;
+                        case 5:
+                            $this->im = imagerotate($this->im, 90, 0);
+                            $this->im = imageflip($this->im, IMG_FLIP_HORIZONTAL);
+                            break;
+                        case 6:
+                            $this->im = imagerotate($this->im, 90, 0);
+                            break;
+                        case 7:
+                            $this->im = imagerotate($this->im, 270, 0);
+                            $this->im = imageflip($this->im, IMG_FLIP_HORIZONTAL);
+                            break;
+                        case 8:
+                            $this->im = imagerotate($this->im, 270, 0);
+                            break;
+                    }
+                }
+            }
+            return $this;
+        }
+
         public function show() {
             header('Content-Disposition: Attachment;filename=image.jpg');
             header('Content-type: image/jpg');
@@ -130,4 +199,34 @@
 
     }
 
+
+if(!function_exists('imageflip')) {
+    function imageflip(&$image, $x = 0, $y = 0, $width = null, $height = null)
+    {
+        if ($width  < 1) $width  = imagesx($image);
+        if ($height < 1) $height = imagesy($image);
+        // Truecolor provides better results, if possible.
+        if (function_exists('imageistruecolor') && imageistruecolor($image))
+        {
+            $tmp = imagecreatetruecolor(1, $height);
+        }
+        else
+        {
+            $tmp = imagecreate(1, $height);
+        }
+        $x2 = $x + $width - 1;
+        for ($i = (int) floor(($width - 1) / 2); $i >= 0; $i--)
+        {
+            // Backup right stripe.
+            imagecopy($tmp,   $image, 0,        0,  $x2 - $i, $y, 1, $height);
+            // Copy left stripe to the right.
+            imagecopy($image, $image, $x2 - $i, $y, $x + $i,  $y, 1, $height);
+            // Copy backuped right stripe to the left.
+            imagecopy($image, $tmp,   $x + $i,  $y, 0,        0,  1, $height);
+        }
+        imagedestroy($tmp);
+        return $image;
+    }
+    define('IMG_FLIP_HORIZONTAL', 0);
+}
 ?>
