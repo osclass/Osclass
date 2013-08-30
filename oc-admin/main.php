@@ -32,6 +32,7 @@
         {
             switch($this->action) {
                 case('logout'):     // unset only the required parameters in Session
+                                    osc_run_hook('logout_admin');
                                     $this->logout();
                                     $this->redirectTo( osc_admin_base_url(true) );
                 break;
