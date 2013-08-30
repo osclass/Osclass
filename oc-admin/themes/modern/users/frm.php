@@ -286,7 +286,11 @@
                     </div>
                 </div>
 
-                <?php if(!$aux['edit']) { osc_run_hook('user_register_form'); }; ?>
+                <?php if(!$aux['edit']) {
+                    osc_run_hook('user_register_form');
+                } else {
+                    osc_run_hook('user_form');
+                }; ?>
 
                 <div class="clear"></div>
                 <div class="form-actions">
