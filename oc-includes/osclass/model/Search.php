@@ -370,7 +370,6 @@
         {
             if($r_p_p!=null) { $this->results_per_page = $r_p_p; };
             $this->limit_init = $this->results_per_page*$p;
-            $this->results_per_page = $this->results_per_page;
         }
 
         /**
