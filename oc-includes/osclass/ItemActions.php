@@ -158,7 +158,7 @@
                     if($v=='') {
                         $field = $mField->findByPrimaryKey($k);
                         if($field['b_required']==1) {
-                            $flash_error .= sprintf(_m("%s field is required."), $field['s_name']);
+                            $flash_error .= sprintf(_m("%s field is required."), $field['s_name']) . PHP_EOL;
                         }
                     }
                 }
@@ -358,7 +358,7 @@
                     if($v=='') {
                         $field = $mField->findByPrimaryKey($k);
                         if($field['b_required']==1) {
-                            $flash_error .= sprintf(_m("%s field is required."), $field['s_name']);
+                            $flash_error .= sprintf(_m("%s field is required."), $field['s_name']) . PHP_EOL;
                         }
                     }
                 }
