@@ -205,31 +205,26 @@ function osc_show_maintenance() {
         <div id="maintenance" name="maintenance">
              <?php _e("The website is currently undergoing maintenance"); ?>
         </div>
-    <?php }
-}
-function osc_show_maintenance_css() {
-    if(defined('__OSC_MAINTENANCE__')) { ?>
-<style>
-#maintenance {
-    position: static;
-    top: 0px;
-    right: 0px;
-    background-color: #bc0202;
-    width: 100%;
-    height:20px;
-    text-align: center;
-    padding:5px 0;
-    font-size:14px;
-    color: #fefefe;
-}
-</style>
+        <style>
+            #maintenance {
+                position: static;
+                top: 0px;
+                right: 0px;
+                background-color: #bc0202;
+                width: 100%;
+                height:20px;
+                text-align: center;
+                padding:5px 0;
+                font-size:14px;
+                color: #fefefe;
+            }
+        </style>
     <?php }
 }
 function osc_meta_generator() {
     echo '<meta name="generator" content="Osclass ' . OSCLASS_VERSION . '" />';
 }
 osc_add_hook('header', 'osc_show_maintenance');
-osc_add_hook('header', 'osc_show_maintenance_css');
 osc_add_hook('header', 'osc_meta_generator');
 osc_add_hook('header', 'osc_load_scripts', 10);
 osc_add_hook('header', 'osc_load_styles', 10);
