@@ -115,7 +115,17 @@
                 $this->im->setImageFileName($imagePath);
                 $this->im->writeImage($imagePath);
             } else {
-               imagejpeg($this->im, $imagePath);
+                switch ($this->image_info['mime']) {
+                    case 'image/png':
+                        imagepng($this->im, $imagePath,0);
+                        break;
+                    case 'image/gif':                        
+                        imagepng($this->im, $imagePath,0);
+                        break;
+                    default:
+                        imagejpeg($this->im, $imagePath);
+                        break;
+                }               
             }
         }
 

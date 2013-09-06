@@ -1392,23 +1392,34 @@
                                         'fk_i_item_id' => $itemId
                                     ));
                                     $resourceId = $itemResourceManager->dao->insertedId();
-
-                                    osc_copy($tmpName.'_normal', osc_uploads_path() . $resourceId . '.jpg');
-                                    osc_copy($tmpName.'_preview', osc_uploads_path() . $resourceId . '_preview.jpg');
-                                    osc_copy($tmpName.'_thumbnail', osc_uploads_path() . $resourceId . '_thumbnail.jpg');
+                                    $info = getimagesize($aResources['tmp_name'][$key]);
+                                    switch ($info['mime']) {
+                                        case 'image/png':
+                                            $extension = 'png';
+                                            break;
+                                        case 'image/gif':                        
+                                            $extension = 'png';
+                                            break;
+                                        default:
+                                            $extension = 'jpg';
+                                            break;
+                                    }  
+                                    osc_copy($tmpName.'_normal', osc_uploads_path() . $resourceId . '.'.$extension);
+                                    osc_copy($tmpName.'_preview', osc_uploads_path() . $resourceId . '_preview.'.$extension);
+                                    osc_copy($tmpName.'_thumbnail', osc_uploads_path() . $resourceId . '_thumbnail.'.$extension);
                                     if( osc_keep_original_image() ) {
-                                        $path = osc_uploads_path() . $resourceId.'_original.jpg';
+                                        $path = osc_uploads_path() . $resourceId.'_original.'.$extension;
                                         move_uploaded_file($tmpName, $path);
                                     }
 
                                     $s_path = str_replace(osc_base_path(), '', osc_uploads_path());
-                                    $resourceType = 'image/jpeg';
+                                    $resourceType = array('jpg'=>'image/jpeg','png'=>'image/png');
                                     $itemResourceManager->update(
                                         array(
                                             's_path'          => $s_path
                                             ,'s_name'         => osc_genRandomPassword()
-                                            ,'s_extension'    => 'jpg'
-                                            ,'s_content_type' => $resourceType
+                                            ,'s_extension'    => $extension
+                                            ,'s_content_type' => $resourceType[$extension]
                                         )
                                         ,array(
                                             'pk_i_id'       => $resourceId
