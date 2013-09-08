@@ -343,6 +343,11 @@ FUNCTIONS
         function get_user_menu() {
             $options   = array();
             $options[] = array(
+                'name' => __('Public Profile'), 
+                 'url' => osc_user_public_profile_url(), 
+               'class' => 'opt_publicprofile'
+            );
+            $options[] = array(
                 'name'  => __('Listings', 'bender'),
                 'url'   => osc_user_list_items_url(),
                 'class' => 'opt_items'
