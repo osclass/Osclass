@@ -802,8 +802,7 @@
                                         $params = Params::getParamsAsArray("get");
 
                                         $itemsDataTable = new ItemsDataTable();
-                                        $itemsDataTable->table($params);
-                                        $aData = $itemsDataTable->getData();
+                                        $aData = $itemsDataTable->table($params);
 
                                         if(count($aData['aRows']) == 0 && $page!=1) {
                                             $total = (int)$aData['iTotalDisplayRecords'];
