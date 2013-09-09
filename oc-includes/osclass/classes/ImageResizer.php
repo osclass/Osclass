@@ -30,18 +30,35 @@
 
         private $im;
         private $image_info;
+        private $ext;
+        private $mime;
 
         private function __construct($imagePath) {
-            if(!file_exists($imagePath)) { throw new Exception("$imagePath does not exist!"); };
-            if(!is_readable($imagePath)) { throw new Exception("$imagePath is not readable!"); };
-            if(filesize($imagePath)==0) { throw new Exception("$imagePath is corrupt or broken!"); };
+            if(!file_exists($imagePath)) { throw new Exception(sprintf(__("%s does not exist!"), $imagePath)); };
+            if(!is_readable($imagePath)) { throw new Exception(sprintf(__("%s is not readable!"), $imagePath)); };
+            if(filesize($imagePath)==0) { throw new Exception(sprintf(__("%s is corrupt or broken!"), $imagePath)); };
 
             if(osc_use_imagick()) {
-                $this->im = new Imagick($imagePath);                
+                $this->im = new Imagick($imagePath);
             } else {
                 $content = file_get_contents($imagePath);
                 $this->im = imagecreatefromstring($content);
-                $this->image_info = getimagesize($imagePath);
+            }
+
+            $this->image_info = @getimagesize($imagePath);
+            switch (@$this->image_info['mime']) {
+                case 'image/png':
+                    $this->ext = 'png';
+                    $this->mime = 'image/png';
+                    break;
+                case 'image/gif':
+                    $this->ext = 'png';
+                    $this->mime = 'image/png';
+                    break;
+                default:
+                    $this->ext = 'jpg';
+                    $this->mime = 'image/jpeg';
+                    break;
             }
 
             return $this;
@@ -54,6 +71,9 @@
                 imagedestroy($this->im);
             }
         }
+
+        public function getExt() { return $this->ext; }
+        public function getMime() { return $this->mime; }
 
         public function resizeTo($width, $height, $force_aspect = null, $upscale = true) {
             if($force_aspect==null) {
@@ -71,7 +91,7 @@
                         $width = ceil($geometry['width'] * ($newH / $geometry['height']));
                     }
                 }
-                $bg->newImage($width, $height, 'white');
+                $bg->newImage($width, $height, 'none');
                 
                 $this->im->thumbnailImage($width, $height, true);
                 $geometry = $this->im->getImageGeometry();
@@ -111,20 +131,40 @@
         public function saveToFile($imagePath) {
             if(file_exists($imagePath) && !is_writable($imagePath)) { throw new Exception("$imagePath is not writable!"); };
             if(osc_use_imagick()) {
-                $this->im->setImageFormat('jpeg');
+                $this->im->setImageFormat($this->ext);
                 $this->im->setImageFileName($imagePath);
                 $this->im->writeImage($imagePath);
             } else {
-               imagejpeg($this->im, $imagePath);
+                switch ($this->ext) {
+                    case 'png':
+                        imagepng($this->im, $imagePath,0);
+                        break;
+                    case 'gif':
+                        imagepng($this->im, $imagePath,0);
+                        break;
+                    default:
+                        imagejpeg($this->im, $imagePath);
+                        break;
+                }               
             }
         }
 
         public function show() {
-            header('Content-Disposition: Attachment;filename=image.jpg');
-            header('Content-type: image/jpg');
+            header('Content-Disposition: Attachment;filename=image.'.$this->ext);
+            header('Content-type: '.$this->mime);
             if(osc_use_imagick()) {
             } else {
-                imagepng($this->im);
+                switch ($this->ext) {
+                    case 'png':
+                        imagepng($this->im);
+                        break;
+                    case 'gif':
+                        imagepng($this->im);
+                        break;
+                    default:
+                        imagejpeg($this->im);
+                        break;
+                }
             }
         }
 

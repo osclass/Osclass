@@ -1349,6 +1349,10 @@
 
                             if($freedisk!=false) {
                                 $tmpName = $aResources['tmp_name'][$key];
+                                $imgres = ImageResizer::fromFile($tmpName);
+                                $extension = $imgres->getExt();
+                                $mime = $imgres->getMime();
+
 
                                 $total_size = 0;
 
@@ -1358,9 +1362,9 @@
                                 ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($path);
 
                                 if( osc_is_watermark_text() ) {
-                                    $wat->doWatermarkText( $path , osc_watermark_text_color(), osc_watermark_text() , 'image/jpeg' );
-                                } elseif ( osc_is_watermark_image() ){
-                                    $wat->doWatermarkImage( $path, 'image/jpeg');
+                                    $wat->doWatermarkText( $path , osc_watermark_text_color(), osc_watermark_text() , $mime);
+                                } else if ( osc_is_watermark_image() ){
+                                    $wat->doWatermarkImage( $path, $mime);
                                 }
                                 $sizeTmp = filesize($path);
                                 $total_size += $sizeTmp!==false?$sizeTmp:(osc_max_size_kb()*1024);
@@ -1392,23 +1396,21 @@
                                         'fk_i_item_id' => $itemId
                                     ));
                                     $resourceId = $itemResourceManager->dao->insertedId();
-
-                                    osc_copy($tmpName.'_normal', osc_uploads_path() . $resourceId . '.jpg');
-                                    osc_copy($tmpName.'_preview', osc_uploads_path() . $resourceId . '_preview.jpg');
-                                    osc_copy($tmpName.'_thumbnail', osc_uploads_path() . $resourceId . '_thumbnail.jpg');
+                                    osc_copy($tmpName.'_normal', osc_uploads_path() . $resourceId . '.'.$extension);
+                                    osc_copy($tmpName.'_preview', osc_uploads_path() . $resourceId . '_preview.'.$extension);
+                                    osc_copy($tmpName.'_thumbnail', osc_uploads_path() . $resourceId . '_thumbnail.'.$extension);
                                     if( osc_keep_original_image() ) {
-                                        $path = osc_uploads_path() . $resourceId.'_original.jpg';
+                                        $path = osc_uploads_path() . $resourceId.'_original.'.$extension;
                                         move_uploaded_file($tmpName, $path);
                                     }
 
                                     $s_path = str_replace(osc_base_path(), '', osc_uploads_path());
-                                    $resourceType = 'image/jpeg';
                                     $itemResourceManager->update(
                                         array(
                                             's_path'          => $s_path
                                             ,'s_name'         => osc_genRandomPassword()
-                                            ,'s_extension'    => 'jpg'
-                                            ,'s_content_type' => $resourceType
+                                            ,'s_extension'    => $extension
+                                            ,'s_content_type' => $mime
                                         )
                                         ,array(
                                             'pk_i_id'       => $resourceId
