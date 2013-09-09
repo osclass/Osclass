@@ -49,19 +49,11 @@
             </span>
         </div>
     </div>
-    <ul class="listing-card-list <?php echo $listClass; ?>" id="listing-card-list">
-        <?php
-        $i = 0;
-        while(osc_has_items()) {
-            $i++;
-            $class = false;
-            if($i%4 == 0){
-                $class = 'last';
-            }
-            bender_draw_item($class,true);
-        }
-        ?>
-    </ul>
+    <?php
+        View::newInstance()->_exportVariableToView("listClass",$listClass);
+        View::newInstance()->_exportVariableToView("listAdmin", true);
+        osc_current_web_theme_path('loop.php');
+    ?>
     <div class="clear"></div>
     <?php
     if(osc_rewrite_enabled()){
