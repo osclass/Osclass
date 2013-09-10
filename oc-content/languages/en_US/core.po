@@ -4011,7 +4011,7 @@ msgid "Congratulations!"
 msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/install-functions.php:894
-msgid "Osclass has been installed. Were you expecting more steps? Sorry to disappoint!"
+msgid "Osclass has been installed. Were you expecting more steps? Sorry to disappoint you!"
 msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/install-functions.php:895
