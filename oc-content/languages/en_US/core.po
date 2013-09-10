@@ -5767,7 +5767,7 @@ msgid "Congratulations!"
 msgstr ""
 
 #: oc-includes/osclass/install-functions.php:887
-msgid "Osclass has been installed. Were you expecting more steps? Sorry to disappoint!"
+msgid "Osclass has been installed. Were you expecting more steps? Sorry to disappoint you!"
 msgstr ""
 
 #: oc-includes/osclass/install-functions.php:888
