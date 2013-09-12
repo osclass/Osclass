@@ -1332,8 +1332,6 @@
         public function uploadItemResources($aResources,$itemId)
         {
             if($aResources != '') {
-                $wat = new Watermark();
-
                 $itemResourceManager = ItemResource::newInstance();
                 $folder = osc_uploads_path().(floor($itemId/100))."/";
 
@@ -1351,8 +1349,8 @@
                             if($freedisk!=false) {
                                 $tmpName = $aResources['tmp_name'][$key];
                                 $imgres = ImageResizer::fromFile($tmpName);
-                                $extension = $imgres->getExt();
-                                $mime = $imgres->getMime();
+                                $extension = osc_apply_filter('upload_image_extension', $imgres->getExt());
+                                $mime = osc_apply_filter('upload_image_mime', $imgres->getMime());
 
 
                                 $total_size = 0;
@@ -1360,27 +1358,28 @@
                                 // Create normal size
                                 $normal_path = $path = $tmpName."_normal";
                                 $size = explode('x', osc_normal_dimensions());
-                                ImageResizer::fromFile($tmpName)->autoRotate()->resizeTo($size[0], $size[1])->saveToFile($path);
-
+                                $img = ImageResizer::fromFile($tmpName)->autoRotate()->resizeTo($size[0], $size[1]);
                                 if( osc_is_watermark_text() ) {
-                                    $wat->doWatermarkText( $path , osc_watermark_text_color(), osc_watermark_text() , $mime);
+                                    $img->doWatermarkText(osc_watermark_text(), osc_watermark_text_color());
                                 } else if ( osc_is_watermark_image() ){
-                                    $wat->doWatermarkImage( $path, $mime);
+                                    $img->doWatermarkImage();
                                 }
+                                $img->saveToFile($path, $extension);
+
                                 $sizeTmp = filesize($path);
                                 $total_size += $sizeTmp!==false?$sizeTmp:(osc_max_size_kb()*1024);
 
                                 // Create preview
                                 $path = $tmpName."_preview";
                                 $size = explode('x', osc_preview_dimensions());
-                                ImageResizer::fromFile($normal_path)->resizeTo($size[0], $size[1])->saveToFile($path);
+                                ImageResizer::fromFile($normal_path)->resizeTo($size[0], $size[1])->saveToFile($path, $extension);
                                 $sizeTmp = filesize($path);
                                 $total_size += $sizeTmp!==false?$sizeTmp:(osc_max_size_kb()*1024);
 
                                 // Create thumbnail
                                 $path = $tmpName."_thumbnail";
                                 $size = explode('x', osc_thumbnail_dimensions());
-                                ImageResizer::fromFile($normal_path)->resizeTo($size[0], $size[1])->saveToFile($path);
+                                ImageResizer::fromFile($normal_path)->resizeTo($size[0], $size[1])->saveToFile($path, $extension);
                                 $sizeTmp = filesize($path);
                                 $total_size += $sizeTmp!==false?$sizeTmp:(osc_max_size_kb()*1024);
 
@@ -1398,7 +1397,7 @@
                                     ));
                                     $resourceId = $itemResourceManager->dao->insertedId();
                                     if(!is_dir($folder)) {
-                                        if (!@mkdir($folder, 0766)) {
+                                        if (!@mkdir($folder, 0755, true)) {
                                             return 3; // PATH CAN NOT BE CREATED
                                         }
                                     }
