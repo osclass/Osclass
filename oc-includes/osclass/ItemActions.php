@@ -1068,14 +1068,12 @@
                 $userId = Session::newInstance()->_get('userId');
                 if( $userId == '' ) {
                     $userId = NULL;
+                } elseif ($userId != NULL) {  
+                    $data   = User::newInstance()->findByPrimaryKey( $userId );
                 }
             }
 
             if( $userId != null ) {
-                $data   = User::newInstance()->findByPrimaryKey( $userId );
-            }
-
-            if($userId != null) {
                 $aItem['contactName']   = $data['s_name'];
                 $aItem['contactEmail']  = $data['s_email'];
                 Params::setParam('contactName', $data['s_name']);
