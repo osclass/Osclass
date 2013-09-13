@@ -100,6 +100,7 @@
                     };
                 });
                 resetLayout();
+                hook_load_cities();
             }
         });
         $('input[name=country_c_parent]').val(c_code);
