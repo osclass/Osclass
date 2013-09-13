@@ -159,7 +159,6 @@ require_once LIB_PATH . 'osclass/classes/ImageResizer.php';
 require_once LIB_PATH . 'osclass/classes/RSSFeed.php';
 require_once LIB_PATH . 'osclass/classes/Sitemap.php';
 require_once LIB_PATH . 'osclass/classes/Pagination.php';
-require_once LIB_PATH . 'osclass/classes/Watermark.php';
 require_once LIB_PATH . 'osclass/classes/Rewrite.php';
 require_once LIB_PATH . 'osclass/classes/Stats.php';
 require_once LIB_PATH . 'osclass/classes/AdminMenu.php';
