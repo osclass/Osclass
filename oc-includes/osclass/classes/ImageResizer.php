@@ -100,18 +100,17 @@
 
             if(osc_use_imagick()) {
                 $bg = new Imagick();
-                $bg->newImage($width, $height, 'none');
+                if($this->ext=='jpg') {
+                    $bg->newImage($width, $height, 'white');
+                } else {
+                    $bg->newImage($width, $height, 'none');
+                }
                 $this->im->thumbnailImage($width, $height, true);
                 $bg->compositeImage( $this->im, imagick::COMPOSITE_OVER, floor(($width-$newW)/2), floor(($height-$newH)/2));
                 $this->im = $bg;
             } else {
                 $newIm = imagecreatetruecolor($width,$height);
                 imagealphablending($newIm, false);
-                /*if($this->ext=='jpg') {
-                    $colorTransparent = imagecolorallocatealpha($newIm, 255, 255, 255, 0);
-                } else {
-                    $colorTransparent = imagecolorallocatealpha($newIm, 255, 255, 255, 0);
-                }*/
                 $colorTransparent = imagecolorallocatealpha($newIm, 255, 255, 255, 127);
                 imagefill($newIm, 0, 0, $colorTransparent);
                 imagesavealpha($newIm, true);
