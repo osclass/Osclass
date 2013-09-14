@@ -3664,7 +3664,7 @@ msgid "Your .htaccess file"
 msgstr ""
 
 #: oc-admin/themes/modern/settings/permalinks.php:651
-msgid "How your .htaccess file should looks like"
+msgid "What your .htaccess file should look like"
 msgstr ""
 
 #: oc-admin/themes/modern/settings/searches.php:45
@@ -5767,7 +5767,7 @@ msgid "Congratulations!"
 msgstr ""
 
 #: oc-includes/osclass/install-functions.php:887
-msgid "Osclass has been installed. Were you expecting more steps? Sorry to disappoint!"
+msgid "Osclass has been installed. Were you expecting more steps? Sorry to disappoint you!"
 msgstr ""
 
 #: oc-includes/osclass/install-functions.php:888

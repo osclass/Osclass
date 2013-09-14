@@ -336,18 +336,6 @@
         </form>
     </div>
 </div>
-<?php if(Params::getParam('country')!='' && Params::getParam('country_code')!='') { ?>
-    <script type="text/javascript">
-        <?php if(Params::getParam('country')!='' && Params::getParam('country_code')!='') { ?>
-            show_region('<?php echo Params::getParam('country_code'); ?>', '<?php echo osc_esc_js(Params::getParam('country')); ?>');
-            function hook_load_cities() {
-            <?php if(Params::getParam('region')!='') { ?>
-                show_city(<?php echo Params::getParam('region'); ?>);
-            <?php }; ?>
-            };
-        <?php }; ?>
-    </script>
-<?php }; ?>
 <!-- settings form -->
 <div id="settings_form" class="locations">
 <div class="grid-system">
@@ -417,4 +405,15 @@
             </div>
         </div>
     </form>
+<?php if(Params::getParam('country')!='' && Params::getParam('country_code')!='') { ?>
+    <script type="text/javascript">
+        show_region('<?php echo Params::getParam('country_code'); ?>', '<?php echo osc_esc_js(Params::getParam('country')); ?>');
+        function hook_load_cities() {
+            <?php if(Params::getParam('region')!='') { ?>
+            show_city(<?php echo Params::getParam('region'); ?>);
+            hook_load_cities = function() { };
+            <?php }; ?>
+        };
+    </script>
+<?php }; ?>
 <?php osc_current_admin_theme_path('parts/footer.php'); ?>
