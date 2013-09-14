@@ -130,13 +130,27 @@ FUNCTIONS
             }
         }
     }
+    /*
     if( !function_exists('bender_draw_item') ) {
         function bender_draw_item($class = false,$admin = false, $premium = false) {
             $premiumSlug = '';
             if($premium){
                 $premiumSlug = '-premium';
+                View::newInstance()->_exportVariableToView("item", View::newInstance()->_current('premiums'));
+            } else {
+                View::newInstance()->_exportVariableToView("item", View::newInstance()->_current('latestItems'));
             }
-            require WebThemes::newInstance()->getCurrentThemePath().'loop-single'.$premiumSlug.'.php';
+            require WebThemes::newInstance()->getCurrentThemePath().'loop-single.php';
+            View::newInstance()->_erase('item');
+        }
+    }*/
+     if( !function_exists('bender_draw_item') ) {
+        function bender_draw_item($class = false,$admin = false, $premium = false) {
+            $filename = 'loop-single';
+            if($premium){
+                $filename .='-premium';
+            }
+            require WebThemes::newInstance()->getCurrentThemePath().$filename.'.php';
         }
     }
     if( !function_exists('bender_show_as') ){
