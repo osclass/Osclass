@@ -32,7 +32,6 @@ if(View::newInstance()->_exists('listClass')){
                     if($i == 3){
                         break;
                     }
-                $i++;
             }
         } else {
             while(osc_has_items()) {
