@@ -509,7 +509,7 @@
                         Session::newInstance()->_set('userLocale', Params::getParam('lang'));
                     }
 
-                    $item = $this->itemManager->findByPrimaryKey( Params::getParam('id') );
+                    $item = osc_apply_filter('pre_show_item', $this->itemManager->findByPrimaryKey( Params::getParam('id') ));
                     // if item doesn't exist show an error 410
                     if( count($item) == 0 ) {
                         $this->do410();

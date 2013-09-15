@@ -326,7 +326,12 @@
                             $sInstall = '<a href="' . osc_admin_base_url(true) . '?page=plugins&amp;action=install&amp;plugin=' . $pInfo['filename'] . "&amp;" . osc_csrf_token_url() . '">' . __('Install') . '</a>';
                         }
 
-                        $row[] = '<input type="hidden" name="installed" value="' . $installed . '" enabled="' . $enabled . '" />' . $pInfo['plugin_name'] . '<div>' . $sUpdate . '</div>';
+                        $sHelp = '';
+                        if($pInfo['support_uri']!='') {
+                            $sHelp = '<span class="plugin-support-icon plugin-tooltip" ><a href="'.osc_sanitize_url($pInfo['support_uri']).'" ><img src="'.osc_current_admin_theme_url('images/question.png').'" alt="'.osc_esc_html(__('Problems with this plugin? Ask for support.')).'" ></a></span>';
+                        }
+
+                        $row[] = '<input type="hidden" name="installed" value="' . $installed . '" enabled="' . $enabled . '" />' . $pInfo['plugin_name'] . $sHelp . '<div>' . $sUpdate . '</div>';
                         $row[] = $pInfo['description'];
                         $row[] = ($sUpdate!='')     ? $sUpdate      : '&nbsp;';
                         $row[] = ($sConfigure!='')  ? $sConfigure   : '&nbsp;';

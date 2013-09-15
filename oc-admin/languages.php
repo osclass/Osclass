@@ -192,6 +192,7 @@
                                             }
 
                                             foreach( $id as $i ) {
+                                                osc_translate_categories($i);
                                                 $iUpdated += $this->localeManager->update($aValues, array('pk_c_code' => $i));
                                             }
 
@@ -249,6 +250,7 @@
                                             }
 
                                             foreach( $id as $i ) {
+                                                osc_translate_categories($i);
                                                 $iUpdated += $this->localeManager->update($aValues, array('pk_c_code' => $i));
                                             }
 

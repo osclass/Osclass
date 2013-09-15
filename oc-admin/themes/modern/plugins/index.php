@@ -68,6 +68,12 @@
                     modal: true,
                     title: '<?php echo osc_esc_js( __('Uninstall plugin') ); ?>'
                 });
+
+                $('.plugin-tooltip').each(function(){
+                    $(this).osc_tooltip('<?php echo osc_esc_js(__('Problems with this plugin? Ask for support.')); ?>',{layout:'gray-tooltip',position:{x:'right',y:'middle'}});
+                });
+
+
             });
 
             // dialog delete function
