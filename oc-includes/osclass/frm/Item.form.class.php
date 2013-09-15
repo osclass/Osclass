@@ -143,15 +143,16 @@
                     }
                 ?>
 
-                osc.item_post = {};
-                osc.item_post.category_id    = '<?php echo $categoryID; ?>';
-                osc.item_post.subcategory_id = '<?php echo $subcategoryID; ?>';
+                if(osc==undefined) { var osc = {}; }
+                if(osc.langs==undefined) { osc.langs = {}; }
+                if(osc.langs.select_subcategory==undefined) { osc.langs.select_subcategory = '<?php _e('Select subcategory') ?>'; }
+                if(osc.langs.no_subcategory==undefined) { osc.langs.no_subcategory = '<?php _e('No subcategory') ?>'; }
 
                 $(document).ready(function(){
                     $("#parentCategory").bind('change', function(){
                         var categoryID = $(this).val();
                         if( categoryID == 0 ) {
-                            return false;
+                            var options = '<option value="' + categoryID + '" selected="">' + osc.langs.no_subcategory + '</option>';
                         }
                         categories = window['categories_' + categoryID];
                         if( categories==null || !$.isArray(categories) ) {
