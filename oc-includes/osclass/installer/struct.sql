@@ -24,8 +24,10 @@ CREATE TABLE /*TABLE_PREFIX*/t_locale (
 CREATE TABLE /*TABLE_PREFIX*/t_country (
     pk_c_code CHAR(2) NOT NULL,
     s_name VARCHAR(80) NOT NULL,
+    s_slug VARCHAR(80) NOT NULL DEFAULT '',
 
         PRIMARY KEY (pk_c_code),
+        INDEX idx_s_slug (s_slug),
         INDEX idx_s_name (s_name)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
 
@@ -43,11 +45,13 @@ CREATE TABLE /*TABLE_PREFIX*/t_region (
     pk_i_id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
     fk_c_country_code CHAR(2) NOT NULL,
     s_name VARCHAR(60) NOT NULL,
+    s_slug VARCHAR(60) NOT NULL DEFAULT '',
     b_active TINYINT(1) NOT NULL DEFAULT 1,
 
         PRIMARY KEY (pk_i_id),
         INDEX (fk_c_country_code),
         INDEX idx_s_name (s_name),
+        INDEX idx_s_slug (s_slug),
         FOREIGN KEY (fk_c_country_code) REFERENCES /*TABLE_PREFIX*/t_country (pk_c_code)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
 
@@ -56,12 +60,14 @@ CREATE TABLE /*TABLE_PREFIX*/t_city (
     pk_i_id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
     fk_i_region_id INT(10) UNSIGNED NOT NULL,
     s_name VARCHAR(60) NOT NULL,
+    s_slug VARCHAR(60) NOT NULL DEFAULT '',
     fk_c_country_code CHAR(2) NULL,
     b_active TINYINT(1) NOT NULL DEFAULT 1,
 
         PRIMARY KEY (pk_i_id),
         INDEX (fk_i_region_id),
         INDEX idx_s_name (s_name),
+        INDEX idx_s_slug (s_slug),
         FOREIGN KEY (fk_i_region_id) REFERENCES /*TABLE_PREFIX*/t_region (pk_i_id),
         FOREIGN KEY (fk_c_country_code) REFERENCES /*TABLE_PREFIX*/t_country (pk_c_code)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
@@ -139,6 +145,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_user (
         PRIMARY KEY (pk_i_id),
         UNIQUE KEY (s_email),
         INDEX idx_s_name (s_name(6)),
+        INDEX idx_s_username (s_username),
         FOREIGN KEY (fk_c_country_code) REFERENCES /*TABLE_PREFIX*/t_country (pk_c_code),
         FOREIGN KEY (fk_i_region_id) REFERENCES /*TABLE_PREFIX*/t_region (pk_i_id),
         FOREIGN KEY (fk_i_city_id) REFERENCES /*TABLE_PREFIX*/t_city (pk_i_id),
@@ -187,6 +194,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_category_description (
     s_slug VARCHAR(100) NOT NULL,
 
         PRIMARY KEY (fk_i_category_id, fk_c_locale_code),
+        INDEX idx_s_slug (s_slug),
         FOREIGN KEY (fk_i_category_id) REFERENCES /*TABLE_PREFIX*/t_category (pk_i_id),
         FOREIGN KEY (fk_c_locale_code) REFERENCES /*TABLE_PREFIX*/t_locale (pk_c_code)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';

@@ -45,9 +45,7 @@
             <div class="title-has-actions">
                 <h3><?php _e('Alert', 'bender'); ?> <?php echo $i; ?></h3> <a onclick="javascript:return confirm('<?php echo osc_esc_js(__('This action can\'t be undone. Are you sure you want to continue?', 'benderw')); ?>');" href="<?php echo osc_user_unsubscribe_alert_url(); ?>"><?php _e('Delete this alert', 'bender'); ?></a><div class="clear"></div></div>
             <div>
-            <?php while(osc_has_items()) {
-                bender_draw_item();
-            } ?>
+            <?php osc_current_web_theme_path('loop.php') ; ?>
             <?php if(osc_count_items() == 0) { ?>
                     <br />
                     0 <?php _e('Listings', 'bender'); ?>

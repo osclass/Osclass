@@ -66,7 +66,7 @@
                 $this->_load($theme_file, $domain);
 
                 // load plugins
-                $aPlugins = Plugins::listInstalled();
+                $aPlugins = Plugins::listEnabled();
                 foreach($aPlugins as $plugin) {
                     $domain = preg_replace('|/.*|', '', $plugin);
                     $plugin_file = osc_plugins_path() . $domain . '/languages/' . $locale . '/messages.mo';

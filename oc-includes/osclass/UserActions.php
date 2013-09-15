@@ -260,10 +260,10 @@
                 $input['s_username']     = osc_sanitize_username(Params::getParam('s_username'));
             }
 
-            $input['s_name']         = Params::getParam('s_name');
-            $input['s_website']      = Params::getParam('s_website');
-            $input['s_phone_land']   = Params::getParam('s_phone_land');
-            $input['s_phone_mobile'] = Params::getParam('s_phone_mobile');
+            $input['s_name']         = trim(Params::getParam('s_name'));
+            $input['s_website']      = trim(Params::getParam('s_website'));
+            $input['s_phone_land']   = trim(Params::getParam('s_phone_land'));
+            $input['s_phone_mobile'] = trim(Params::getParam('s_phone_mobile'));
 
             //locations...
             $country = Country::newInstance()->findByCode( Params::getParam('countryId') );

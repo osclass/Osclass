@@ -19,7 +19,7 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
-    define('ABS_PATH', dirname(dirname($_SERVER['SCRIPT_FILENAME'])) . '/');
+    define('ABS_PATH', str_replace('\\', '/', dirname(dirname($_SERVER['SCRIPT_FILENAME'])) . '/'));
     define('OC_ADMIN', true);
 
     require_once ABS_PATH . 'oc-load.php';

@@ -150,7 +150,7 @@
             if($desc=='') {
                 $aLocales = osc_get_locales();
                 foreach($aLocales as $locale) {
-                    $desc = osc_item_field("s_description", $locale);
+                    $desc = osc_item_field("s_description", @$locale['pk_c_code']);
                     if($desc!='') {
                         break;
                     }
@@ -174,7 +174,7 @@
             if($title=='') {
                 $aLocales = osc_get_locales();
                 foreach($aLocales as $locale) {
-                    $title = osc_item_field("s_title", $locale);
+                    $title = osc_item_field("s_title", @$locale['pk_c_code']);
                     if($title!='') {
                         break;
                     }
@@ -271,7 +271,8 @@
      * @return float
      */
     function osc_item_price() {
-        return (float) osc_item_field("i_price");
+        if(osc_item_field("i_price")=='') return null;
+        else return (float) osc_item_field("i_price");
     }
 
     /**
@@ -280,7 +281,7 @@
      * @return string
      */
     function osc_item_formated_price() {
-        return (string) osc_format_price( osc_item_field("i_price") );
+        return (string) osc_format_price( osc_item_price() );
     }
 
     /**
@@ -1091,7 +1092,7 @@
      * @return string
      */
     function osc_format_price($price, $symbol = null) {
-        if ($price == null) return osc_apply_filter ('item_price_null', __('Check with seller') );
+        if ($price === null) return osc_apply_filter ('item_price_null', __('Check with seller') );
         if ($price == 0) return osc_apply_filter ('item_price_zero', __('Free') );
 
         if($symbol==null) { $symbol = osc_item_currency_symbol(); }

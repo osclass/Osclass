@@ -103,8 +103,8 @@
                 }
 
                 $title_message .=
-                    (!osc_validate_text($value, 1) ? _m("Title too short.") . PHP_EOL : '' ) .
-                    (!osc_validate_max($value, 100) ? _m("Title too long.") . PHP_EOL : '' );
+                    (!osc_validate_text($value, 1) ? sprintf(_m("Title too short (%s)."), $key) . PHP_EOL : '' ) .
+                    (!osc_validate_max($value, 100) ? sprintf(_m("Title too long (%s)."), $key) . PHP_EOL : '' );
             }
             $flash_error .= $title_message;
 
@@ -116,8 +116,8 @@
                 }
 
                 $desc_message .=
-                    (!osc_validate_text($value, 3) ? _m("Description too short.") . PHP_EOL : '' ) .
-                    (!osc_validate_max($value, 5000) ? _m("Description too long."). PHP_EOL : '' );
+                    (!osc_validate_text($value, 3) ? sprintf(_m("Description too short (%s)."), $key) . PHP_EOL : '' ) .
+                    (!osc_validate_max($value, 5000) ? sprintf(_m("Description too long (%s)."), $key). PHP_EOL : '' );
             }
             $flash_error .= $desc_message;
 
@@ -158,7 +158,7 @@
                     if($v=='') {
                         $field = $mField->findByPrimaryKey($k);
                         if($field['b_required']==1) {
-                            $flash_error .= sprintf(_m("%s field is required."), $field['s_name']);
+                            $flash_error .= sprintf(_m("%s field is required."), $field['s_name']) . PHP_EOL;
                         }
                     }
                 }
@@ -358,7 +358,7 @@
                     if($v=='') {
                         $field = $mField->findByPrimaryKey($k);
                         if($field['b_required']==1) {
-                            $flash_error .= sprintf(_m("%s field is required."), $field['s_name']);
+                            $flash_error .= sprintf(_m("%s field is required."), $field['s_name']) . PHP_EOL;
                         }
                     }
                 }
@@ -1068,14 +1068,12 @@
                 $userId = Session::newInstance()->_get('userId');
                 if( $userId == '' ) {
                     $userId = NULL;
+                } elseif ($userId != NULL) {  
+                    $data   = User::newInstance()->findByPrimaryKey( $userId );
                 }
             }
 
             if( $userId != null ) {
-                $data   = User::newInstance()->findByPrimaryKey( $userId );
-            }
-
-            if($userId != null) {
                 $aItem['contactName']   = $data['s_name'];
                 $aItem['contactEmail']  = $data['s_email'];
                 Params::setParam('contactName', $data['s_name']);
@@ -1332,9 +1330,8 @@
         public function uploadItemResources($aResources,$itemId)
         {
             if($aResources != '') {
-                $wat = new Watermark();
-
                 $itemResourceManager = ItemResource::newInstance();
+                $folder = osc_uploads_path().(floor($itemId/100))."/";
 
                 $numImagesItems = osc_max_images_per_item();
                 $numImages = $itemResourceManager->countResources($itemId);
@@ -1349,33 +1346,38 @@
 
                             if($freedisk!=false) {
                                 $tmpName = $aResources['tmp_name'][$key];
+                                $imgres = ImageResizer::fromFile($tmpName);
+                                $extension = osc_apply_filter('upload_image_extension', $imgres->getExt());
+                                $mime = osc_apply_filter('upload_image_mime', $imgres->getMime());
+
 
                                 $total_size = 0;
 
                                 // Create normal size
                                 $normal_path = $path = $tmpName."_normal";
                                 $size = explode('x', osc_normal_dimensions());
-                                ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($path);
-
+                                $img = ImageResizer::fromFile($tmpName)->autoRotate()->resizeTo($size[0], $size[1]);
                                 if( osc_is_watermark_text() ) {
-                                    $wat->doWatermarkText( $path , osc_watermark_text_color(), osc_watermark_text() , 'image/jpeg' );
-                                } elseif ( osc_is_watermark_image() ){
-                                    $wat->doWatermarkImage( $path, 'image/jpeg');
+                                    $img->doWatermarkText(osc_watermark_text(), osc_watermark_text_color());
+                                } else if ( osc_is_watermark_image() ){
+                                    $img->doWatermarkImage();
                                 }
+                                $img->saveToFile($path, $extension);
+
                                 $sizeTmp = filesize($path);
                                 $total_size += $sizeTmp!==false?$sizeTmp:(osc_max_size_kb()*1024);
 
                                 // Create preview
                                 $path = $tmpName."_preview";
                                 $size = explode('x', osc_preview_dimensions());
-                                ImageResizer::fromFile($normal_path)->resizeTo($size[0], $size[1])->saveToFile($path);
+                                ImageResizer::fromFile($normal_path)->resizeTo($size[0], $size[1])->saveToFile($path, $extension);
                                 $sizeTmp = filesize($path);
                                 $total_size += $sizeTmp!==false?$sizeTmp:(osc_max_size_kb()*1024);
 
                                 // Create thumbnail
                                 $path = $tmpName."_thumbnail";
                                 $size = explode('x', osc_thumbnail_dimensions());
-                                ImageResizer::fromFile($normal_path)->resizeTo($size[0], $size[1])->saveToFile($path);
+                                ImageResizer::fromFile($normal_path)->resizeTo($size[0], $size[1])->saveToFile($path, $extension);
                                 $sizeTmp = filesize($path);
                                 $total_size += $sizeTmp!==false?$sizeTmp:(osc_max_size_kb()*1024);
 
@@ -1392,23 +1394,26 @@
                                         'fk_i_item_id' => $itemId
                                     ));
                                     $resourceId = $itemResourceManager->dao->insertedId();
-
-                                    osc_copy($tmpName.'_normal', osc_uploads_path() . $resourceId . '.jpg');
-                                    osc_copy($tmpName.'_preview', osc_uploads_path() . $resourceId . '_preview.jpg');
-                                    osc_copy($tmpName.'_thumbnail', osc_uploads_path() . $resourceId . '_thumbnail.jpg');
+                                    if(!is_dir($folder)) {
+                                        if (!@mkdir($folder, 0755, true)) {
+                                            return 3; // PATH CAN NOT BE CREATED
+                                        }
+                                    }
+                                    osc_copy($tmpName.'_normal', $folder.$resourceId.'.'.$extension);
+                                    osc_copy($tmpName.'_preview', $folder.$resourceId.'_preview.'.$extension);
+                                    osc_copy($tmpName.'_thumbnail', $folder.$resourceId.'_thumbnail.'.$extension);
                                     if( osc_keep_original_image() ) {
-                                        $path = osc_uploads_path() . $resourceId.'_original.jpg';
+                                        $path = $folder.$resourceId.'_original.'.$extension;
                                         move_uploaded_file($tmpName, $path);
                                     }
 
-                                    $s_path = str_replace(osc_base_path(), '', osc_uploads_path());
-                                    $resourceType = 'image/jpeg';
+                                    $s_path = str_replace(osc_base_path(), '', $folder);
                                     $itemResourceManager->update(
                                         array(
                                             's_path'          => $s_path
                                             ,'s_name'         => osc_genRandomPassword()
-                                            ,'s_extension'    => 'jpg'
-                                            ,'s_content_type' => $resourceType
+                                            ,'s_extension'    => $extension
+                                            ,'s_content_type' => $mime
                                         )
                                         ,array(
                                             'pk_i_id'       => $resourceId

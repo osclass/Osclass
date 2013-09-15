@@ -440,7 +440,15 @@ CREATE TABLE %st_item_description_tmp (
         osc_set_preference('force_aspect_image', '0', 'osclass', 'BOOLEAN');
     }
 
-    osc_changeVersionTo(320);
+    if(osc_version() < 321) {
+        osc_calculate_location_slug(osc_subdomain_type());
+    }
+
+    if(osc_version() < 330) {
+        @unlink(osc_lib_path() . 'osclass/classes/Watermark.php');
+    }
+
+    osc_changeVersionTo(321);
 
     echo '<div class="well ui-rounded-corners separate-top-medium">';
     echo '<p>'.__('Osclass &raquo; Updated correctly').'</p>';

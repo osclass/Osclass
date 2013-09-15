@@ -21,6 +21,17 @@ module.exports = function(grunt) {
                     'oc-admin/themes/modern/css/main.css': 'oc-admin/themes/modern/less/main.less'
                 }
             }
+	    },
+	    sass: {
+	        dist: {
+		        options: {
+		            style:   'compressed',
+		            compass: true
+		        },
+		        files: {
+		            'oc-content/themes/bender/css/main.css': 'oc-content/themes/bender/sass/main.scss'
+		        }
+	        }
         }
     });
 
@@ -28,4 +39,6 @@ module.exports = function(grunt) {
     grunt.loadTasks('tasks');
 
     grunt.loadNpmTasks('grunt-contrib-less');
+
+    grunt.loadNpmTasks('grunt-contrib-sass');
 };
