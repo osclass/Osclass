@@ -140,12 +140,8 @@
                 </thead>
                 <tbody>
                 <?php if( count($rows) > 0 ) { ?>
-                    <?php foreach($rows as $key => $row) {
-                        $aC = $aRawRows[$key];
-                        $class = '';
-                        if(!$aC['b_enabled'] || !$aC['b_active'] || $aC['b_spam']) $class = 'status-spam';
-                    ?>
-                        <tr class="<?php echo $class; ?>">
+                    <?php foreach($rows as $key => $row) { ?>
+                        <tr class="<?php echo implode(' ', osc_apply_filter('datatable_comment_class', array(), $aRawRows[$key], $row)); ?>">
                             <?php foreach($row as $k => $v) { ?>
                                 <td class="col-<?php echo $k; ?>"><?php echo $v; ?></td>
                             <?php }; ?>

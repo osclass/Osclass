@@ -236,7 +236,7 @@
     <div class="form-actions">
         <div class="wrapper">
             <input id="show-filters" type="submit" value="<?php echo osc_esc_html( __('Apply filters') ); ?>" class="btn btn-submit" />
-            <a class="btn" href="<?php echo osc_admin_base_url(true).'?page=items'; ?>"><?php _e('Reset filters'); ?></a>
+            <a class="btn" href="<?php echo osc_admin_base_url(true).'?page=users'; ?>"><?php _e('Reset filters'); ?></a>
         </div>
     </div>
 </form>
@@ -244,7 +244,7 @@
 <div class="relative">
     <div id="users-toolbar" class="table-toolbar">
         <div class="float-right">
-            <form method="get" action="<?php echo osc_admin_base_url(true); ?>" id="shortcut-filters" class="inline">
+            <form method="get" action="<?php echo osc_admin_base_url(true); ?>" id="shortcut-filters" class="inline nocsrf">
                 <input type="hidden" name="page" value="users" />
                 <a id="btn-display-filters" href="#" class="btn <?php if($withFilters) { echo 'btn-red'; } ?>"><?php _e('Show filters'); ?></a>
                 <input id="fUser" name="user" type="text" class="fUser input-text input-actions" value="<?php echo osc_esc_html(Params::getParam('user')); ?>" />
@@ -273,16 +273,8 @@
                 </thead>
                 <tbody>
                 <?php if( count($rows) > 0 ) { ?>
-                    <?php foreach($rows as $key => $row) {
-                    $class = ''; $aU = $aRawRows[$key];
-                        if( !$aU['b_enabled'] ) {
-                            $class = 'status-blocked';
-                        } else if( !$aU['b_active'] ) {
-                            $class = 'status-inactive';
-                        } else {
-                            $class = 'status-active';
-                        } ?>
-                        <tr class="<?php echo $class;?>">
+                    <?php foreach($rows as $key => $row) { ?>
+                        <tr class="<?php echo implode(' ', osc_apply_filter('datatable_user_class', array(), $aRawRows[$key], $row)); ?>">
                             <?php foreach($row as $k => $v) { ?>
                                 <td class="col-<?php echo $k; ?>"><?php echo $v; ?></td>
                             <?php }; ?>

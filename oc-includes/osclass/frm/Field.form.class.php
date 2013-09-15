@@ -53,6 +53,7 @@
             if($value=='') $value = 0;
             $aux = <<<FB
             <script type="text/javascript">
+            $(document).ready(function(){
                 $('.$id_field').datepicker({
                     onSelect: function() {
                         // format to unix timestamp
@@ -90,6 +91,7 @@
                         $('#$id_field').prop('value', '');
                     }
                 });
+                });
             </script>
 FB;
             echo  $aux;
@@ -122,14 +124,14 @@ FB;
         static public function type_select($field = null) {
             ?>
             <select name="field_type" id="field_type">
-                <option value="TEXT" <?php if($field['e_type']=="TEXT") { echo 'selected="selected"';};?>>TEXT</option>
-                <option value="TEXTAREA" <?php if($field['e_type']=="TEXTAREA") { echo 'selected="selected"';};?>>TEXTAREA</option>
-                <option value="DROPDOWN" <?php if($field['e_type']=="DROPDOWN") { echo 'selected="selected"';};?>>DROPDOWN</option>
-                <option value="RADIO" <?php if($field['e_type']=="RADIO") { echo 'selected="selected"';};?>>RADIO</option>
-                <option value="CHECKBOX" <?php if($field['e_type']=="CHECKBOX") { echo 'selected="selected"';};?>>CHECKBOX</option>
-                <option value="URL" <?php if($field['e_type']=="URL") { echo 'selected="selected"';};?>>URL</option>
-                <option value="DATE" <?php if($field['e_type']=="DATE") { echo 'selected="selected"';};?>>DATE</option>
-                <option value="DATEINTERVAL" <?php if($field['e_type']=="DATEINTERVAL") { echo 'selected="selected"';};?>>DATE INTERVAL</option>
+                <option value="TEXT" <?php if($field['e_type']=="TEXT") { echo 'selected="selected"';};?>><?php _e('TEXT'); ?></option>
+                <option value="TEXTAREA" <?php if($field['e_type']=="TEXTAREA") { echo 'selected="selected"';};?>><?php _e('TEXTAREA'); ?></option>
+                <option value="DROPDOWN" <?php if($field['e_type']=="DROPDOWN") { echo 'selected="selected"';};?>><?php _e('DROPDOWN'); ?></option>
+                <option value="RADIO" <?php if($field['e_type']=="RADIO") { echo 'selected="selected"';};?>><?php _e('RADIO'); ?></option>
+                <option value="CHECKBOX" <?php if($field['e_type']=="CHECKBOX") { echo 'selected="selected"';};?>><?php _e('CHECKBOX'); ?></option>
+                <option value="URL" <?php if($field['e_type']=="URL") { echo 'selected="selected"';};?>><?php _e('URL'); ?></option>
+                <option value="DATE" <?php if($field['e_type']=="DATE") { echo 'selected="selected"';};?>><?php _e('DATE'); ?></option>
+                <option value="DATEINTERVAL" <?php if($field['e_type']=="DATEINTERVAL") { echo 'selected="selected"';};?>><?php _e('DATE INTERVAL'); ?></option>
             </select>
             <?php
             return true;
@@ -236,7 +238,7 @@ FB;
                     }
                     // timestamp/1000 (javascript timestamp)
                     echo '<input type="hidden" id="meta_'.$field['s_slug'].'" name="meta['.$field['pk_i_id'].']" value=""/>';
-                    echo '<input type="text" id="" class="meta_'.$field['s_slug'].'" value=""/>';
+                    echo '<input type="text" id="" class="meta_'.$field['s_slug'].' cf_date" value=""/>';
                     FieldForm::initDatePicker('meta_'.$field['s_slug'], osc_date_format(), $field['s_value']);
 
                 } else if($field['e_type']=="DATEINTERVAL") {
@@ -248,12 +250,12 @@ FB;
 
                     echo __('from'). ' ';
                     echo '<input type="hidden" id="meta_'.$field['s_slug'].'_from" name="meta['.$field['pk_i_id'].'][from]" value="'.$field['s_value']['from'].'"/>';
-                    echo '<input type="text" id="" class="meta_'.$field['s_slug'].'_from" value=""/>';
+                    echo '<input type="text" id="" class="meta_'.$field['s_slug'].'_from cf_date_interval" value=""/>';
                     FieldForm::initDatePicker('meta_'.$field['s_slug'].'_from', osc_date_format(), $field['s_value']['from'], 'from');
 
                     echo ' ' . __('to'). ' ';
                     echo '<input type="hidden" id="meta_'.$field['s_slug'].'_to" name="meta['.$field['pk_i_id'].'][to]" value="'.$field['s_value']['to'].'"/>';
-                    echo '<input type="text" id="" class="meta_'.$field['s_slug'].'_to" value=""/>';
+                    echo '<input type="text" id="" class="meta_'.$field['s_slug'].'_to cf_date_interval" value=""/>';
                     FieldForm::initDatePicker('meta_'.$field['s_slug'].'_to', osc_date_format(), $field['s_value']['to'], 'to');
 
                 } else {

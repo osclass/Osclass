@@ -33,6 +33,7 @@
             switch( $this->action ) {
                 case('login_post'):     //post execution for the login
                                         osc_csrf_check();
+                                        osc_run_hook('before_login_admin');
                                         $url_redirect  = osc_get_http_referer();
                                         $page_redirect = '';
                                         if(preg_match('|[\?&]page=([^&]+)|', $url_redirect.'&', $match)) {

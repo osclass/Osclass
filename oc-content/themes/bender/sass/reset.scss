@@ -125,9 +125,7 @@ input[type="submit"] {
   -webkit-appearance: button; // Style clickable inputs in iOS
 }
 input[type="search"] { // Appearance in Safari/Chrome
-  -webkit-box-sizing: content-box;
-  -moz-box-sizing: content-box;
-  box-sizing: content-box;
+  @include prefixer(box-sizing, content-box, webkit moz ms o spec);
   -webkit-appearance: textfield;
 }
 input[type="search"]::-webkit-search-decoration,

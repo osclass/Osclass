@@ -51,7 +51,7 @@
             parent::__construct();
             $this->setTableName('t_country');
             $this->setPrimaryKey('pk_c_code');
-            $this->setFields( array('pk_c_code', 's_name') );
+            $this->setFields( array('pk_c_code', 's_name', 's_slug') );
         }
 
         /**
@@ -155,6 +155,47 @@
                 $result++;
             }
             return $result;
+        }
+
+        /**
+         * Find a location by its slug
+         *
+         * @access public
+         * @since 3.2.1
+         * @param type $slug
+         * @return array
+         */
+        public function findBySlug($slug)
+        {
+            $this->dao->select('*');
+            $this->dao->from($this->getTableName());
+            $this->dao->where('s_slug', $slug);
+            $result = $this->dao->get();
+
+            if($result == false) {
+                return array();
+            }
+            return $result->row();
+        }
+
+        /**
+         * Find a locations with no slug
+         *
+         * @access public
+         * @since 3.2.1
+         * @return array
+         */
+        public function listByEmptySlug()
+        {
+            $this->dao->select('*');
+            $this->dao->from($this->getTableName());
+            $this->dao->where('s_slug', '');
+            $result = $this->dao->get();
+
+            if($result == false) {
+                return array();
+            }
+            return $result->result();
         }
 
 

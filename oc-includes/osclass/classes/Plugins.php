@@ -259,9 +259,12 @@
                 return false;
             }
 
-            if( !self::deactivate($path) ) {
+            include_once( osc_plugins_path() . $path );
+
+            self::deactivate($path);
+            /*if( !self::deactivate($path) ) {
                 return false;
-            }
+            }*/
 
             self::runHook($path . '_uninstall');
 
@@ -359,6 +362,12 @@
                 $info['plugin_update_uri'] = trim($match[1]);
             } else {
                 $info['plugin_update_uri'] = "";
+            }
+
+            if( preg_match('|Support URI:([^\\r\\t\\n]*)|i', $s_info, $match) ) {
+                $info['support_uri'] = trim($match[1]);
+            } else {
+                $info['support_uri'] = "";
             }
 
             if( preg_match('|Description:([^\\r\\t\\n]*)|i', $s_info, $match) ) {

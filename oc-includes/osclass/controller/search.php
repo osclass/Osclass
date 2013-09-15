@@ -48,7 +48,7 @@
 
                     // get page if it's set in the url
                     $iPage = preg_replace('|.*/([0-9]+)$|', '$01', $this->uri);
-                    if( $iPage > 0 ) {
+                    if( is_numeric($iPage) && $iPage > 0 ) {
                         Params::setParam('iPage', $iPage);
                         // redirect without number of pages
                         if( $iPage == 1 ) {
@@ -75,12 +75,14 @@
                         Params::setParam('sCity', $city['pk_i_id']);
                         Params::setParam('sCategory', preg_replace('|(.*?)_.*?-c[0-9]+|', '$01', $search_uri));
                     } else {
-                        $aCategory = explode('/', $search_uri);
-                        $category  = Category::newInstance()->findBySlug($aCategory[count($aCategory)-1]);
-                        if( count($category) === 0 ) {
-                            $this->do404();
+                        if(!Params::existParam('sCategory')) {
+                            $aCategory = explode('/', $search_uri);
+                            $category  = Category::newInstance()->findBySlug($aCategory[count($aCategory)-1]);
+                            if( count($category) === 0 ) {
+                                $this->do404();
+                            }
+                            Params::setParam('sCategory', $search_uri);
                         }
-                        Params::setParam('sCategory', $search_uri);
                     }
                 }
             }

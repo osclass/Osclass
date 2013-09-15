@@ -153,7 +153,7 @@
                                 $this->do400();
                             }
                         } else if($subdomain_type=='country') {
-                            $country = Country::newInstance()->findByName($subdomain);
+                            $country = Country::newInstance()->findBySlug($subdomain);
                             if(isset($country['pk_c_code'])) {
                                 Params::setParam('subdomain', 1);
                                 Params::setParam('sCountry', $country['pk_c_code']);
@@ -161,7 +161,7 @@
                                 $this->do400();
                             }
                         } else if($subdomain_type=='region') {
-                            $region = Region::newInstance()->findByName($subdomain);
+                            $region = Region::newInstance()->findBySlug($subdomain);
                             if(isset($region['pk_i_id'])) {
                                 Params::setParam('subdomain', 1);
                                 Params::setParam('sRegion', $region['pk_i_id']);
@@ -169,7 +169,7 @@
                                 $this->do400();
                             }
                         } else if($subdomain_type=='city') {
-                            $city = City::newInstance()->findByName($subdomain);
+                            $city = City::newInstance()->findBySlug($subdomain);
                             if(isset($city['pk_i_id'])) {
                                 Params::setParam('subdomain', 1);
                                 Params::setParam('sCity', $city['pk_i_id']);

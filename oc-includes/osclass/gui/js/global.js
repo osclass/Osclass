@@ -87,7 +87,6 @@ function selectUi(thatSelect){
         return false;
     });
     thatSelect.on('focus',function(){
-        console.log(uiWrap);
         thatSelect.parent().addClass('select-box-focus');
     });
     thatSelect.on('blur',function(){

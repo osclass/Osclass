@@ -231,7 +231,7 @@ FUNCTIONS
             foreach( osc_get_locales() as $locale ) {
                 if( Session::newInstance()->_getForm('title') != "" ) {
                     $title_ = Session::newInstance()->_getForm('title');
-                    if( $title_[$locale['pk_c_code']] != "" ){
+                    if( @$title_[$locale['pk_c_code']] != "" ){
                         $title = $title_[$locale['pk_c_code']];
                     }
                 }
@@ -245,7 +245,7 @@ FUNCTIONS
             foreach( osc_get_locales() as $locale ) {
                 if( Session::newInstance()->_getForm('description') != "" ) {
                     $description_ = Session::newInstance()->_getForm('description');
-                    if( $description_[$locale['pk_c_code']] != "" ){
+                    if( @$description_[$locale['pk_c_code']] != "" ){
                         $description = $description_[$locale['pk_c_code']];
                     }
                 }
@@ -386,8 +386,7 @@ FUNCTIONS
         function delete_user_js() {
             $location = Rewrite::newInstance()->get_location();
             $section  = Rewrite::newInstance()->get_section();
-
-            if( ($location === 'user' && in_array($section, array('dashboard', 'profile', 'alerts', 'change_email', 'change_username',  'change_password', 'items'))) || ($location ==='custom' && Params::getParam('in_user_menu')==true ) ) {
+            if( ($location === 'user' && in_array($section, array('dashboard', 'profile', 'alerts', 'change_email', 'change_username',  'change_password', 'items'))) || (Params::getParam('page') ==='custom' && Params::getParam('in_user_menu')==true ) ) {
                 osc_enqueue_script('delete-user-js');
             }
         }
@@ -526,13 +525,13 @@ function bender_print_sidebar_category_search($aCategories, $current_category = 
     $c   = $aCategories[$i];
     $i++;
     if(!isset($c['pk_i_id'])) {
-        echo '<ul '.$class.' style="display:block;">';
+        echo '<ul '.$class.'>';
         if($i==1) {
-        echo '<ul  style="display:block;"><li><a href="'.osc_esc_html(osc_update_search_url(array('sCategory'=>null))).'">'.__('All categories')."</a></li>";
+            echo '<li><a href="'.osc_esc_html(osc_update_search_url(array('sCategory'=>null))).'">'.__('All categories')."</a></li>";
         }
         foreach($c as $key => $value) {
     ?>
-            <li style="padding-left:10px;padding-top: 6px;">
+            <li>
                 <a id="cat_<?php echo osc_esc_html($value['pk_i_id']);?>" href="<?php echo osc_esc_html(osc_update_search_url(array('sCategory'=> $value['pk_i_id']))); ?>">
                 <?php if(isset($current_category) && $current_category == $value['pk_i_id']){ echo '<strong>'.$value['s_name'].'</strong>'; }
                 else{ echo $value['s_name']; } ?>
@@ -542,17 +541,17 @@ function bender_print_sidebar_category_search($aCategories, $current_category = 
     <?php
         }
         if($i==1) {
-        echo "</ul></ul>";
+        echo "</ul>";
         } else {
         echo "</ul>";
         }
     } else {
     ?>
-    <ul <?php echo $class;?> style="display:block;">
+    <ul <?php echo $class;?>>
         <?php if($i==1) { ?>
-        <ul  style="display:block;"><li><a href="<?php echo osc_esc_html(osc_update_search_url(array('sCategory'=>null))); ?>"><?php _e('All categories'); ?></a></li>
+        <li><a href="<?php echo osc_esc_html(osc_update_search_url(array('sCategory'=>null))); ?>"><?php _e('All categories'); ?></a></li>
         <?php } ?>
-            <li style="padding-left:10px;padding-top: 6px;">
+            <li>
                 <a id="cat_<?php echo osc_esc_html($c['pk_i_id']);?>" href="<?php echo osc_esc_html(osc_update_search_url(array('sCategory'=> $c['pk_i_id']))); ?>">
                 <?php if(isset($current_category) && $current_category == $c['pk_i_id']){ echo '<strong>'.$c['s_name'].'</strong>'; }
                       else{ echo $c['s_name']; } ?>
@@ -560,7 +559,6 @@ function bender_print_sidebar_category_search($aCategories, $current_category = 
                 <?php bender_print_sidebar_category_search($aCategories, $current_category, $i); ?>
             </li>
         <?php if($i==1) { ?>
-        </ul>
         <?php } ?>
     </ul>
 <?php
