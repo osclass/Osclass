@@ -24,7 +24,7 @@
 DEFINES
 
 */
-    define('BENDER_THEME_VERSION', '1.0');
+    define('BENDER_THEME_VERSION', '1.0.1');
     if( !osc_get_preference('keyword_placeholder', 'bender_theme') ) {
         osc_set_preference('keyword_placeholder', __('ie. PHP Programmer', 'bender'), 'bender_theme');
     }
@@ -41,7 +41,7 @@ FUNCTIONS
 */
 
     // install update options
-    if( !function_exists('benderBodyClass_theme_install') ) {
+    if( !function_exists('bender_theme_install') ) {
         function bender_theme_install() {
             osc_set_preference('keyword_placeholder', Params::getParam('keyword_placeholder'), 'bender_theme');
             osc_set_preference('version', BENDER_THEME_VERSION, 'bender_theme');
@@ -130,21 +130,7 @@ FUNCTIONS
             }
         }
     }
-    /*
     if( !function_exists('bender_draw_item') ) {
-        function bender_draw_item($class = false,$admin = false, $premium = false) {
-            $premiumSlug = '';
-            if($premium){
-                $premiumSlug = '-premium';
-                View::newInstance()->_exportVariableToView("item", View::newInstance()->_current('premiums'));
-            } else {
-                View::newInstance()->_exportVariableToView("item", View::newInstance()->_current('latestItems'));
-            }
-            require WebThemes::newInstance()->getCurrentThemePath().'loop-single.php';
-            View::newInstance()->_erase('item');
-        }
-    }*/
-     if( !function_exists('bender_draw_item') ) {
         function bender_draw_item($class = false,$admin = false, $premium = false) {
             $filename = 'loop-single';
             if($premium){
