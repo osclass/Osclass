@@ -23,16 +23,15 @@ if(View::newInstance()->_exists('listClass')){
             }
         } elseif($type == 'premiums'){
             while ( osc_has_premiums() ) {
-                    $class = '';
-                    if($i%3 == 0){
-                        $class = 'first';
-                    }
-                    bender_draw_item($class,false,true);
-                    $i++;
-                    if($i == 3){
-                        break;
-                    }
+                $class = '';
+                if($i%3 == 0){
+                    $class = 'first';
+                }
+                bender_draw_item($class,false,true);
                 $i++;
+                if($i == 3){
+                    break;
+                }
             }
         } else {
             while(osc_has_items()) {
