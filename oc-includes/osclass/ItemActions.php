@@ -221,7 +221,9 @@
                     'fk_i_city_id'      => $aItem['cityId'],
                     's_city'            => $aItem['cityName'],
                     's_city_area'       => $aItem['cityArea'],
-                    's_address'         => $aItem['address']
+                    's_address'         => $aItem['address'],
+                    'd_coord_lat'       => $aItem['d_coord_lat'],
+                    'd_coord_long'      => $aItem['d_coord_long']
                 );
 
                 $locationManager = ItemLocation::newInstance();
@@ -381,7 +383,9 @@
                     'fk_i_city_id'      => $aItem['cityId'],
                     's_city'            => $aItem['cityName'],
                     's_city_area'       => $aItem['cityArea'],
-                    's_address'         => $aItem['address']
+                    's_address'         => $aItem['address'],
+                    'd_coord_lat'       => $aItem['d_coord_lat'],
+                    'd_coord_long'      => $aItem['d_coord_long']
                 );
 
                 $locationManager = ItemLocation::newInstance();
@@ -1136,6 +1140,8 @@
             $aItem['description']   = Params::getParam('description');
             $aItem['photos']        = Params::getFiles('photos');
             $aItem['s_ip']          = get_ip();
+            $aItem['d_coord_lat']   = (Params::getParam('d_coord_lat')  != '') ? Params::getParam('d_coord_lat') : null;
+            $aItem['d_coord_long']  = (Params::getParam('d_coord_long') != '') ? Params::getParam('d_coord_long') : null;
 
             if($is_add || $this->is_admin) {
                 $dt_expiration = Params::getParam('dt_expiration');

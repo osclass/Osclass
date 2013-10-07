@@ -306,6 +306,8 @@
             $input['s_city_area']    = Params::getParam('cityArea');
             $input['s_address']      = Params::getParam('address');
             $input['s_zip']          = Params::getParam('zip');
+            $input['d_coord_lat']    = (Params::getParam('d_coord_lat')  != '') ? Params::getParam('d_coord_lat') : null;
+            $input['d_coord_long']   = (Params::getParam('d_coord_long') != '') ? Params::getParam('d_coord_long') : null;
             $input['b_company']      = (Params::getParam('b_company') != '' && Params::getParam('b_company') != 0) ? 1 : 0;
 
             return($input);
