@@ -162,15 +162,15 @@
                     );
                     $iUpdated += Preference::newInstance()->update(
                         array('s_value' => $contactAttachment),
-                        array('s_name'  => 'contact_attachment')
+                        array('s_name'  => 'contact_attachment', 's_section' => 'osclass')
                     );
                     $iUpdated += Preference::newInstance()->update(
                         array('s_value' => $bAutoCron),
-                        array('s_name' => 'auto_cron')
+                        array('s_name' => 'auto_cron', 's_section' => 'osclass')
                     );
                     $iUpdated += Preference::newInstance()->update(
                         array('s_value' => $selectableParent),
-                        array('s_name'  => 'selectable_parent_categories')
+                        array('s_name'  => 'selectable_parent_categories', 's_section' => 'osclass')
                     );
 
                     if( $iUpdated > 0 ) {

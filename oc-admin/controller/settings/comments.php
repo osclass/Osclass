@@ -60,23 +60,23 @@
                     }
 
                     $iUpdated += Preference::newInstance()->update(array('s_value' => $enabledComments)
-                                                                  ,array('s_name' => 'enabled_comments'));
+                                                                  ,array('s_name' => 'enabled_comments', 's_section' => 'osclass'));
                     if($moderateComments) {
                         $iUpdated += Preference::newInstance()->update(array('s_value' => $numModerateComments)
-                                                                      ,array('s_name' => 'moderate_comments'));
+                                                                      ,array('s_name' => 'moderate_comments', 's_section' => 'osclass'));
                     } else {
                         $iUpdated += Preference::newInstance()->update(array('s_value' => '-1')
-                                                                      ,array('s_name' => 'moderate_comments'));
+                                                                      ,array('s_name' => 'moderate_comments', 's_section' => 'osclass'));
                     }
                     $iUpdated += Preference::newInstance()->update(array('s_value' => $notifyNewComment)
-                                                                  ,array('s_name' => 'notify_new_comment'));
+                                                                  ,array('s_name' => 'notify_new_comment', 's_section' => 'osclass'));
                     $iUpdated += Preference::newInstance()->update(array('s_value' => $notifyNewCommentUser)
-                                                                  ,array('s_name' => 'notify_new_comment_user'));
+                                                                  ,array('s_name' => 'notify_new_comment_user', 's_section' => 'osclass'));
                     $iUpdated += Preference::newInstance()->update(array('s_value' => $commentsPerPage)
-                                                                  ,array('s_name' => 'comments_per_page'));
+                                                                  ,array('s_name' => 'comments_per_page', 's_section' => 'osclass'));
 
                     $iUpdated += Preference::newInstance()->update(array('s_value' => $regUserPostComments )
-                                                                  ,array('s_name' => 'reg_user_post_comments'));
+                                                                  ,array('s_name' => 'reg_user_post_comments', 's_section' => 'osclass'));
 
                     if($iUpdated > 0) {
                         osc_add_flash_ok_message( _m("Comment settings have been updated"), 'admin');

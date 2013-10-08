@@ -63,33 +63,33 @@
                         case 'none':
                             $iUpdated += Preference::newInstance()->update(
                                     array('s_value' => ''),
-                                    array('s_name'  => 'watermark_text_color')
+                                    array('s_name'  => 'watermark_text_color', 's_section' => 'osclass')
                             );
                             $iUpdated += Preference::newInstance()->update(
                                     array('s_value' => ''),
-                                    array('s_name'  => 'watermark_text')
+                                    array('s_name'  => 'watermark_text', 's_section' => 'osclass')
                             );
                             $iUpdated += Preference::newInstance()->update(
                                     array('s_value' => ''),
-                                    array('s_name'  => 'watermark_image')
+                                    array('s_name'  => 'watermark_image', 's_section' => 'osclass')
                             );
                         break;
                         case 'text':
                             $iUpdated += Preference::newInstance()->update(
                                     array('s_value' => $watermark_color),
-                                    array('s_name'  => 'watermark_text_color')
+                                    array('s_name'  => 'watermark_text_color', 's_section' => 'osclass')
                             );
                             $iUpdated += Preference::newInstance()->update(
                                     array('s_value' => $watermark_text),
-                                    array('s_name'  => 'watermark_text')
+                                    array('s_name'  => 'watermark_text', 's_section' => 'osclass')
                             );
                             $iUpdated += Preference::newInstance()->update(
                                     array('s_value' => ''),
-                                    array('s_name'  => 'watermark_image')
+                                    array('s_name'  => 'watermark_image', 's_section' => 'osclass')
                             );
                             $iUpdated += Preference::newInstance()->update(
                                     array('s_value' => Params::getParam('watermark_text_place')),
-                                    array('s_name'  => 'watermark_place')
+                                    array('s_name'  => 'watermark_place', 's_section' => 'osclass')
                             );
                         break;
                         case 'image':
@@ -101,7 +101,7 @@
                                     if( move_uploaded_file($tmpName, $path) ){
                                         $iUpdated += Preference::newInstance()->update(
                                                 array('s_value' => $path),
-                                                array('s_name'  => 'watermark_image')
+                                                array('s_name'  => 'watermark_image', 's_section' => 'osclass')
                                         );
                                     } else {
                                         $status = 'error';
@@ -117,15 +117,15 @@
                             }
                             $iUpdated += Preference::newInstance()->update(
                                     array('s_value' => ''),
-                                    array('s_name'  => 'watermark_text_color')
+                                    array('s_name'  => 'watermark_text_color', 's_section' => 'osclass')
                             );
                             $iUpdated += Preference::newInstance()->update(
                                     array('s_value' => ''),
-                                    array('s_name'  => 'watermark_text')
+                                    array('s_name'  => 'watermark_text', 's_section' => 'osclass')
                             );
                             $iUpdated += Preference::newInstance()->update(
                                     array('s_value' => Params::getParam('watermark_image_place')),
-                                    array('s_name'  => 'watermark_place')
+                                    array('s_name'  => 'watermark_place', 's_section' => 'osclass')
                             );
                         break;
                         default:
@@ -172,31 +172,31 @@
 
                     $iUpdated += Preference::newInstance()->update(
                             array('s_value' => $maxSizeKb),
-                            array('s_name'  => 'maxSizeKb')
+                            array('s_name'  => 'maxSizeKb', 's_section' => 'osclass')
                     );
                     $iUpdated += Preference::newInstance()->update(
                             array('s_value' => $dimThumbnail),
-                            array('s_name'  => 'dimThumbnail')
+                            array('s_name'  => 'dimThumbnail', 's_section' => 'osclass')
                     );
                     $iUpdated += Preference::newInstance()->update(
                             array('s_value' => $dimPreview),
-                            array('s_name'  => 'dimPreview')
+                            array('s_name'  => 'dimPreview', 's_section' => 'osclass')
                     );
                     $iUpdated += Preference::newInstance()->update(
                             array('s_value' => $dimNormal),
-                            array('s_name'  => 'dimNormal')
+                            array('s_name'  => 'dimNormal', 's_section' => 'osclass')
                     );
                     $iUpdated += Preference::newInstance()->update(
                         array('s_value' => $keepOriginalImage),
-                        array('s_name'  => 'keep_original_image')
+                        array('s_name'  => 'keep_original_image', 's_section' => 'osclass')
                     );
                     $iUpdated += Preference::newInstance()->update(
                         array('s_value' => $forceAspectImage),
-                        array('s_name'  => 'force_aspect_image')
+                        array('s_name'  => 'force_aspect_image', 's_section' => 'osclass')
                     );
                     $iUpdated += Preference::newInstance()->update(
                             array('s_value' => $use_imagick),
-                            array('s_name'  => 'use_imagick')
+                            array('s_name'  => 'use_imagick', 's_section' => 'osclass')
                     );
 
                     if( $error != '' ) {

@@ -42,9 +42,9 @@
                         $subdomain_type = '';
                     }
                     $iUpdated = Preference::newInstance()->update(array('s_value' => $subdomain_type)
-                        ,array('s_name' => 'subdomain_type'));
+                        ,array('s_name' => 'subdomain_type', 's_section' => 'osclass'));
                     $iUpdated += Preference::newInstance()->update(array('s_value' => Params::getParam('s_host'))
-                        ,array('s_name' => 'subdomain_host'));
+                        ,array('s_name' => 'subdomain_host', 's_section' => 'osclass'));
 
                     if($iUpdated > 0) {
                         osc_add_flash_ok_message( _m("Advanced settings have been updated"), 'admin');

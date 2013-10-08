@@ -58,25 +58,25 @@
                     }
 
                     $iUpdated += Preference::newInstance()->update(array('s_value' => $mailserverAuth)
-                                                                   ,array('s_name' => 'mailserver_auth'));
+                                                                   ,array('s_name' => 'mailserver_auth', 's_section' => 'osclass'));
                     $iUpdated += Preference::newInstance()->update(array('s_value' => $mailserverPop)
-                                                                   ,array('s_name' => 'mailserver_pop'));
+                                                                   ,array('s_name' => 'mailserver_pop', 's_section' => 'osclass'));
                     $iUpdated += Preference::newInstance()->update(array('s_value' => $mailserverType)
-                                                                   ,array('s_name' => 'mailserver_type'));
+                                                                   ,array('s_name' => 'mailserver_type', 's_section' => 'osclass'));
                     $iUpdated += Preference::newInstance()->update(array('s_value' => $mailserverHost)
-                                                                   ,array('s_name' => 'mailserver_host'));
+                                                                   ,array('s_name' => 'mailserver_host', 's_section' => 'osclass'));
                     $iUpdated += Preference::newInstance()->update(array('s_value' => $mailserverPort)
-                                                                   ,array('s_name' => 'mailserver_port'));
+                                                                   ,array('s_name' => 'mailserver_port', 's_section' => 'osclass'));
                     $iUpdated += Preference::newInstance()->update(array('s_value' => $mailserverUsername)
-                                                                   ,array('s_name' => 'mailserver_username'));
+                                                                   ,array('s_name' => 'mailserver_username', 's_section' => 'osclass'));
                     $iUpdated += Preference::newInstance()->update(array('s_value' => $mailserverPassword)
-                                                                   ,array('s_name' => 'mailserver_password'));
+                                                                   ,array('s_name' => 'mailserver_password', 's_section' => 'osclass'));
                     $iUpdated += Preference::newInstance()->update(array('s_value' => $mailserverSsl)
-                                                                   ,array('s_name' => 'mailserver_ssl'));
+                                                                   ,array('s_name' => 'mailserver_ssl', 's_section' => 'osclass'));
                     $iUpdated += Preference::newInstance()->update(array('s_value' => $mailserverMailFrom)
-                                                                ,array('s_name' => 'mailserver_mail_from'));
+                                                                ,array('s_name' => 'mailserver_mail_from', 's_section' => 'osclass'));
                     $iUpdated += Preference::newInstance()->update(array('s_value' => $mailserverNameFrom)
-                                                                ,array('s_name' => 'mailserver_name_from'));
+                                                                ,array('s_name' => 'mailserver_name_from', 's_section' => 'osclass'));
 
                     if($iUpdated > 0) {
                         osc_add_flash_ok_message( _m('Mail server configuration has changed'), 'admin');

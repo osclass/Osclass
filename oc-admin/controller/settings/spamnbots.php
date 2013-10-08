@@ -74,9 +74,9 @@
                     $recaptchaPubKey  = trim($recaptchaPubKey);
 
                     $iUpdated += Preference::newInstance()->update(array('s_value' => $recaptchaPrivKey)
-                                                                  ,array('s_name'  => 'recaptchaPrivKey'));
+                                                                  ,array('s_name'  => 'recaptchaPrivKey', 's_section' => 'osclass'));
                     $iUpdated += Preference::newInstance()->update(array('s_value' => $recaptchaPubKey)
-                                                                  ,array('s_name'  => 'recaptchaPubKey'));
+                                                                  ,array('s_name'  => 'recaptchaPubKey', 's_section' => 'osclass'));
                     if( $recaptchaPubKey == '' ) {
                         osc_add_flash_info_message(_m('Your reCAPTCHA key has been cleared'), 'admin');
                     } else {
