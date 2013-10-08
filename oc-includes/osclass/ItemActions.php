@@ -1407,6 +1407,10 @@
                                         $path = osc_uploads_path() . $resourceId.'_original.'.$extension;
                                         move_uploaded_file($tmpName, $path);
                                     }
+                                    @unlink($tmpName."_normal");
+                                    @unlink($tmpName."_preview");
+                                    @unlink($tmpName."_thumbnail");
+                                    @unlink($tmpName);
 
                                     $s_path = str_replace(osc_base_path(), '', osc_uploads_path());
                                     $itemResourceManager->update(
