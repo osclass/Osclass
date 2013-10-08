@@ -445,8 +445,14 @@
                 foreach($params as $k => $v) {
                     if($k!='page') {
                         if( is_array($v) ) {
-                            foreach($v as $aux) {
-                                $url .= "&" . $k . "[]=" . $aux;
+                            foreach($v as $_k => $aux) {
+                                if(is_array($aux)) {
+                                    foreach( array_keys($aux) as $aux_k ) {
+                                        $url .= "&" . $k . "[$_k][$aux_k]=" . $aux[$aux_k];
+                                    }
+                                } else {
+                                    $url .= "&" . $k . "[]=" . $aux;
+                                }
                             }
                         } else {
                             $url .= "&" . $k . "=" . $v;
