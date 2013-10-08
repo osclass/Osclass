@@ -451,7 +451,7 @@
                                         $url .= "&" . $k . "[$_k][$aux_k]=" . $aux[$aux_k];
                                     }
                                 } else {
-                                    $url .= "&" . $k . "[]=" . $aux;
+                                    $url .= "&" . $_k . "[]=" . $aux;
                                 }
                             }
                         } else {
