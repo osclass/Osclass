@@ -125,7 +125,10 @@
             $this->conn->orderBy('dt_pub_date', 'DESC');
             
             $result = $this->conn->get();
-            return $result->result();
+            if($result) {
+                return $result->result();
+            }
+            return array();
         }
         
         public function latest_items() 
