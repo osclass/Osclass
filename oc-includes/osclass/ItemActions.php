@@ -1345,89 +1345,63 @@
                 foreach ($aResources['error'] as $key => $error) {
                     if($numImagesItems==0 || ($numImagesItems>0 && $numImages<$numImagesItems)) {
                         if ($error == UPLOAD_ERR_OK) {
+                            $tmpName = $aResources['tmp_name'][$key];
+                            $imgres = ImageResizer::fromFile($tmpName);
+                            $extension = $imgres->getExt();
+                            $mime = $imgres->getMime();
 
-                            $freedisk = 4*osc_max_size_kb()*1024;
-                            if(function_exists('disk_free_space')) {
-                                $freedisk = @disk_free_space(osc_uploads_path());
+
+                            $total_size = 0;
+
+                            // Create normal size
+                            $normal_path = $path = $tmpName."_normal";
+                            $size = explode('x', osc_normal_dimensions());
+                            ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($path);
+
+                            if( osc_is_watermark_text() ) {
+                                $wat->doWatermarkText( $path , osc_watermark_text_color(), osc_watermark_text() , $mime);
+                            } else if ( osc_is_watermark_image() ){
+                                $wat->doWatermarkImage( $path, $mime);
                             }
 
-                            if($freedisk!=false) {
-                                $tmpName = $aResources['tmp_name'][$key];
-                                $imgres = ImageResizer::fromFile($tmpName);
-                                $extension = $imgres->getExt();
-                                $mime = $imgres->getMime();
+                            // Create preview
+                            $path = $tmpName."_preview";
+                            $size = explode('x', osc_preview_dimensions());
+                            ImageResizer::fromFile($normal_path)->resizeTo($size[0], $size[1])->saveToFile($path);
 
+                            // Create thumbnail
+                            $path = $tmpName."_thumbnail";
+                            $size = explode('x', osc_thumbnail_dimensions());
+                            ImageResizer::fromFile($normal_path)->resizeTo($size[0], $size[1])->saveToFile($path);
 
-                                $total_size = 0;
+                            $numImages++;
 
-                                // Create normal size
-                                $normal_path = $path = $tmpName."_normal";
-                                $size = explode('x', osc_normal_dimensions());
-                                ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($path);
-
-                                if( osc_is_watermark_text() ) {
-                                    $wat->doWatermarkText( $path , osc_watermark_text_color(), osc_watermark_text() , $mime);
-                                } else if ( osc_is_watermark_image() ){
-                                    $wat->doWatermarkImage( $path, $mime);
-                                }
-                                $sizeTmp = filesize($path);
-                                $total_size += $sizeTmp!==false?$sizeTmp:(osc_max_size_kb()*1024);
-
-                                // Create preview
-                                $path = $tmpName."_preview";
-                                $size = explode('x', osc_preview_dimensions());
-                                ImageResizer::fromFile($normal_path)->resizeTo($size[0], $size[1])->saveToFile($path);
-                                $sizeTmp = filesize($path);
-                                $total_size += $sizeTmp!==false?$sizeTmp:(osc_max_size_kb()*1024);
-
-                                // Create thumbnail
-                                $path = $tmpName."_thumbnail";
-                                $size = explode('x', osc_thumbnail_dimensions());
-                                ImageResizer::fromFile($normal_path)->resizeTo($size[0], $size[1])->saveToFile($path);
-                                $sizeTmp = filesize($path);
-                                $total_size += $sizeTmp!==false?$sizeTmp:(osc_max_size_kb()*1024);
-
-                                if( osc_keep_original_image() ) {
-                                    $sizeTmp = filesize($tmpName);
-                                    $total_size += $sizeTmp!==false?$sizeTmp:(osc_max_size_kb()*1024);
-                                }
-
-                                if($total_size<=$freedisk) {
-
-                                    $numImages++;
-
-                                    $itemResourceManager->insert(array(
-                                        'fk_i_item_id' => $itemId
-                                    ));
-                                    $resourceId = $itemResourceManager->dao->insertedId();
-                                    osc_copy($tmpName.'_normal', osc_uploads_path() . $resourceId . '.'.$extension);
-                                    osc_copy($tmpName.'_preview', osc_uploads_path() . $resourceId . '_preview.'.$extension);
-                                    osc_copy($tmpName.'_thumbnail', osc_uploads_path() . $resourceId . '_thumbnail.'.$extension);
-                                    if( osc_keep_original_image() ) {
-                                        $path = osc_uploads_path() . $resourceId.'_original.'.$extension;
-                                        move_uploaded_file($tmpName, $path);
-                                    }
-
-                                    $s_path = str_replace(osc_base_path(), '', osc_uploads_path());
-                                    $itemResourceManager->update(
-                                        array(
-                                            's_path'          => $s_path
-                                            ,'s_name'         => osc_genRandomPassword()
-                                            ,'s_extension'    => $extension
-                                            ,'s_content_type' => $mime
-                                        )
-                                        ,array(
-                                            'pk_i_id'       => $resourceId
-                                            ,'fk_i_item_id' => $itemId
-                                        )
-                                    );
-                                    osc_run_hook('uploaded_file', ItemResource::newInstance()->findByPrimaryKey($resourceId));
-                                } else {
-                                    return 2; // IMAGES ARE BIGGER THAN SPACE
-                                }
-                            } else {
-                                return 1; // NO SPACE LEFT
+                            $itemResourceManager->insert(array(
+                                'fk_i_item_id' => $itemId
+                            ));
+                            $resourceId = $itemResourceManager->dao->insertedId();
+                            osc_copy($tmpName.'_normal', osc_uploads_path() . $resourceId . '.'.$extension);
+                            osc_copy($tmpName.'_preview', osc_uploads_path() . $resourceId . '_preview.'.$extension);
+                            osc_copy($tmpName.'_thumbnail', osc_uploads_path() . $resourceId . '_thumbnail.'.$extension);
+                            if( osc_keep_original_image() ) {
+                                $path = osc_uploads_path() . $resourceId.'_original.'.$extension;
+                                move_uploaded_file($tmpName, $path);
                             }
+
+                            $s_path = str_replace(osc_base_path(), '', osc_uploads_path());
+                            $itemResourceManager->update(
+                                array(
+                                    's_path'          => $s_path
+                                    ,'s_name'         => osc_genRandomPassword()
+                                    ,'s_extension'    => $extension
+                                    ,'s_content_type' => $mime
+                                )
+                                ,array(
+                                    'pk_i_id'       => $resourceId
+                                    ,'fk_i_item_id' => $itemId
+                                )
+                            );
+                            osc_run_hook('uploaded_file', ItemResource::newInstance()->findByPrimaryKey($resourceId));
                         }
                     }
                 }
