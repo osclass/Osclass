@@ -124,6 +124,34 @@
                             default :
                                 break;
                         }
+                        // custom fields
+                        if( preg_match("/meta(\d+)-?(.*)?/", $m[1][$k], $results) ) {
+                            $meta_key   = $m[1][$k];
+                            $meta_value = $m[2][$k];
+                            $array_r    = array();
+                            $array_g    = array();
+                            if(isset($_REQUEST['meta'])) {
+                                $array_r    = $_REQUEST['meta'];
+                            }
+                            if(isset($_GET['meta'])) {
+                                $array_g    = $_GET['meta'];
+                            }
+                            if($results[2]=='') {
+                                // meta[meta_id] = meta_value
+                                $meta_key = $results[1];
+                                $array_r[$meta_key] = $meta_value;
+                                $array_g[$meta_key] = $meta_value;
+                            } else {
+                                // meta[meta_id][meta_key] = meta_value
+                                $meta_key  = $results[1];
+                                $meta_key2 = $results[2];
+                                $array_r[$meta_key][$meta_key2]    = $meta_value;
+                                $array_g[$meta_key][$meta_key2]    = $meta_value;
+                            }
+                            $_REQUEST['meta'] = $array_r;
+                            $_GET['meta']     = $array_g;
+                        }
+
                         $_REQUEST[$m[1][$k]] = $m[2][$k];
                         $_GET[$m[1][$k]] = $m[2][$k];
                         unset($_REQUEST['sParams']);
