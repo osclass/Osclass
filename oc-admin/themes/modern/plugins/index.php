@@ -157,7 +157,7 @@
 
                 foreach($aPluginsToUpdate as $slug) {
                     $key = array_search($slug, $array_aux);
-                    if($key) {
+                    if($key!==false) {
                         $aIndex[]   = $aData['aaData'][$key];
                     }
                 }
