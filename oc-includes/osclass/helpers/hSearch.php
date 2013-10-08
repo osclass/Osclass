@@ -431,11 +431,29 @@
                         case 'sPattern':
                             $k = osc_get_preference('rewrite_search_pattern');
                             break;
+                        case 'meta':
+                            // meta(@id),value/meta(@id),value2/...
+                            foreach ($v as $key => $value) {
+                                if(is_array($value)) {
+                                    foreach ($value as $_key => $_value) {
+                                        if($value!='') {
+                                            $url .= 'meta'.$key.'-'.$_key.','.$_value.'/';
+                                        }
+                                    }
+                                } else {
+                                    if($value!='') {
+                                        $url .= 'meta'.$_key.','.$value.'/';
+                                    }
+                                }
+                            }
+                            break;
                         default:
                             break;
                     }
                     if($k!='page') {
-                        $url .= $k.",".$v."/";
+                        if(!is_array($v) ) {
+                            $url .= $k.",".$v."/";
+                        }
                     }
                 }
             }
@@ -451,7 +469,7 @@
                                         $url .= "&" . $k . "[$_k][$aux_k]=" . $aux[$aux_k];
                                     }
                                 } else {
-                                    $url .= "&" . $k . "[]=" . $aux;
+                                    $url .= "&" . $_k . "[]=" . $aux;
                                 }
                             }
                         } else {
