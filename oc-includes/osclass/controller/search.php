@@ -122,8 +122,30 @@
                                 $m[1][$k] = 'sPattern';
                                 break;
                             default :
+                                // custom fields
+                                if( preg_match("/meta(\d+)-?(.*)?/", $m[1][$k], $results) ) {
+                                    $meta_key   = $m[1][$k];
+                                    $meta_value = $m[2][$k];
+                                    $array_r    = array();
+                                    if(isset($_REQUEST['meta'])) {
+                                        $array_r    = $_REQUEST['meta'];
+                                    }
+                                    if($results[2]=='') {
+                                        // meta[meta_id] = meta_value
+                                        $meta_key = $results[1];
+                                        $array_r[$meta_key] = $meta_value;
+                                    } else {
+                                        // meta[meta_id][meta_key] = meta_value
+                                        $meta_key  = $results[1];
+                                        $meta_key2 = $results[2];
+                                        $array_r[$meta_key][$meta_key2]    = $meta_value;
+                                    }
+                                    $m[1][$k] = 'meta';
+                                    $m[2][$k] = $array_r;
+                                }
                                 break;
                         }
+
                         $_REQUEST[$m[1][$k]] = $m[2][$k];
                         $_GET[$m[1][$k]] = $m[2][$k];
                         unset($_REQUEST['sParams']);
