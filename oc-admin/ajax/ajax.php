@@ -702,7 +702,7 @@
                                 /**********************
                                  ***** UNZIP FILE *****
                                  **********************/
-                                @mkdir(ABS_PATH . 'oc-temp', 0777);
+                                @mkdir(osc_content_path() . 'downloads/oc-temp/', 0777);
                                 $res = osc_unzip_file(osc_content_path() . 'downloads/' . $filename, osc_content_path() . 'downloads/oc-temp/');
                                 if ($res == 1) { // Everything is OK, continue
                                     /**********************
