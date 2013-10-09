@@ -47,7 +47,7 @@
                     $mailserverHost     = Params::getParam('mailserver_host');
                     $mailserverPort     = Params::getParam('mailserver_port');
                     $mailserverUsername = Params::getParam('mailserver_username');
-                    $mailserverPassword = Params::getParam('mailserver_password');
+                    $mailserverPassword = Params::getParam('mailserver_password', false, false);
                     $mailserverSsl      = Params::getParam('mailserver_ssl');
                     $mailserverMailFrom = Params::getParam('mailserver_mail_from');
                     $mailserverNameFrom = Params::getParam('mailserver_name_from');
