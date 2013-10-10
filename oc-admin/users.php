@@ -41,7 +41,6 @@
             //specific things for this class
             switch ($this->action) {
                 case('create'):         // callign create view
-                                        $aCountries = array();
                                         $aRegions   = array();
                                         $aCities    = array();
 
@@ -95,11 +94,6 @@
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=users');
                 break;
                 case('edit'):           // calling the edit view
-                                        $aUser      = array();
-                                        $aCountries = array();
-                                        $aRegions   = array();
-                                        $aCities    = array();
-
                                         $aUser = $this->userManager->findByPrimaryKey(Params::getParam("id"));
                                         $aCountries = Country::newInstance()->listAll();
                                         $aRegions = array();
@@ -209,7 +203,6 @@
 
                                         osc_add_flash_ok_message($msg, 'admin');
                                         $this->redirectTo( $_SERVER['HTTP_REFERER'] );
-                                        //$this->redirectTo(osc_admin_base_url(true) . '?page=users');
                 break;
                 case('deactivate'):     //deactivate
                                         osc_csrf_check();
@@ -235,7 +228,6 @@
 
                                         osc_add_flash_ok_message($msg, 'admin');
                                         $this->redirectTo( $_SERVER['HTTP_REFERER'] );
-                                        //$this->redirectTo(osc_admin_base_url(true) . '?page=users');
                 break;
                 case('enable'):
                                         osc_csrf_check();
@@ -260,7 +252,6 @@
 
                                         osc_add_flash_ok_message($msg, 'admin');
                                         $this->redirectTo( $_SERVER['HTTP_REFERER'] );
-                                        //$this->redirectTo(osc_admin_base_url(true) . '?page=users');
                 break;
                 case('disable'):
                                         osc_csrf_check();
@@ -285,7 +276,6 @@
 
                                         osc_add_flash_ok_message($msg, 'admin');
                                         $this->redirectTo( $_SERVER['HTTP_REFERER'] );
-                                        // $this->redirectTo(osc_admin_base_url(true) . '?page=users');
                 break;
                 case('delete'):         //delete
                                         osc_csrf_check();
