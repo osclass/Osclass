@@ -1394,7 +1394,7 @@
                             @unlink($tmpName."_thumbnail");
                             @unlink($tmpName);
 
-                            $s_path = str_replace(osc_base_path(), '', osc_uploads_path());
+                            $s_path = str_replace(osc_base_path(), '', $folder);
                             $itemResourceManager->update(
                                 array(
                                     's_path'          => $s_path
