@@ -61,10 +61,7 @@
 
         public function setRules()
         {
-            Preference::newInstance()->update(
-                    array('s_value' => osc_serialize($this->rules))
-                    ,array('s_name' => 'rewrite_rules')
-            );
+            osc_set_preference('rewrite_rules', osc_serialize($this->rules));
         }
 
         public function listRules()
