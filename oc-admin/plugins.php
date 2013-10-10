@@ -280,7 +280,7 @@
                     $aInfo = array();
                     $max = ($start+$limit);
                     if($max > $count) $max = $count;
-                    $aPluginsToUpdate = json_decode( getPreference('plugins_to_update') );
+                    $aPluginsToUpdate = json_decode( osc_get_preference('plugins_to_update') );
                     $bPluginsToUpdate = is_array($aPluginsToUpdate)?true:false;
                     for($i = $start; $i < $max; $i++) {
                         $plugin = $aPlugin[$i];
