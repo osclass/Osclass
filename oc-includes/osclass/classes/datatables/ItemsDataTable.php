@@ -365,7 +365,7 @@
                     $row['exp'] = $aRow['i_num_expired'];
                     $row['off'] = $aRow['i_num_offensive'];
                     $row['date'] = osc_format_date($aRow['dt_pub_date']);
-                    $row['expiration'] = osc_format_date($aRow['dt_expiration']);
+                    $row['expiration'] = ($aRow['dt_expiration'] != '9999-12-31 23:59:59') ? osc_format_date($aRow['dt_expiration']) : __('Never expires');
 
                     $row = osc_apply_filter('items_processing_reported_row', $row, $aRow);
 
