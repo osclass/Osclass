@@ -306,7 +306,7 @@
         if ( osc_rewrite_enabled() ) {
             $path = osc_base_url() . osc_get_preference('rewrite_item_new');
         } else {
-            $path = sprintf(osc_base_url(true) . '?page=item&action=item_add');
+            $path = osc_base_url(true) . '?page=item&action=item_add';
         }
         return $path;
     }
