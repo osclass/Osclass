@@ -1376,14 +1376,19 @@
                                 'fk_i_item_id' => $itemId
                             ));
                             $resourceId = $itemResourceManager->dao->insertedId();
-                            osc_copy($tmpName.'_normal', osc_uploads_path() . $resourceId . '.'.$extension);
-                            osc_copy($tmpName.'_preview', osc_uploads_path() . $resourceId . '_preview.'.$extension);
-                            osc_copy($tmpName.'_thumbnail', osc_uploads_path() . $resourceId . '_thumbnail.'.$extension);
+
+                            if(!is_dir($folder)) {
+                                if (!@mkdir($folder, 0755, true)) {
+                                    return 3; // PATH CAN NOT BE CREATED
+                                }
+                            }
+                            osc_copy($tmpName.'_normal', $folder.$resourceId.'.'.$extension);
+                            osc_copy($tmpName.'_preview', $folder.$resourceId.'_preview.'.$extension);
+                            osc_copy($tmpName.'_thumbnail', $folder.$resourceId.'_thumbnail.'.$extension);
                             if( osc_keep_original_image() ) {
-                                $path = osc_uploads_path() . $resourceId.'_original.'.$extension;
+                                $path = $folder.$resourceId.'_original.'.$extension;
                                 move_uploaded_file($tmpName, $path);
                             }
-
                             $s_path = str_replace(osc_base_path(), '', osc_uploads_path());
                             $itemResourceManager->update(
                                 array(
