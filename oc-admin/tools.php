@@ -58,6 +58,7 @@
                                         } else {
                                             osc_add_flash_warning_message( _m('No file was uploaded'), 'admin');
                                         }
+                                        @unlink($sql['tmp_name']);
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=import');
                 break;
                 case('category'):       $this->doView('tools/category.php');

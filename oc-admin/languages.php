@@ -51,6 +51,7 @@
                                             if( isset($filePackage['size']) && $filePackage['size'] != 0 ) {
                                                 $path         = osc_translations_path();
                                                 (int) $status = osc_unzip_file($filePackage['tmp_name'], $path);
+                                                @unlink($filePackage['tmp_name']);
                                             } else {
                                                 $status = 3;
                                             }

@@ -50,6 +50,7 @@
                     if(isset($package['size']) && $package['size']!=0) {
                         $path = osc_plugins_path();
                         (int) $status = osc_unzip_file($package['tmp_name'], $path);
+                        @unlink($package['tmp_name']);
                     } else {
                         $status = 3;
                     }
