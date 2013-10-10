@@ -1346,29 +1346,29 @@
                         if ($error == UPLOAD_ERR_OK) {
                             $tmpName = $aResources['tmp_name'][$key];
                             $imgres = ImageResizer::fromFile($tmpName);
-                            $extension = $imgres->getExt();
-                            $mime = $imgres->getMime();
+                            $extension = osc_apply_filter('upload_image_extension', $imgres->getExt());
+                            $mime = osc_apply_filter('upload_image_mime', $imgres->getMime());
 
                             // Create normal size
                             $normal_path = $path = $tmpName."_normal";
                             $size = explode('x', osc_normal_dimensions());
-                            ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($path);
-
+                            $img = ImageResizer::fromFile($tmpName)->autoRotate()->resizeTo($size[0], $size[1]);
                             if( osc_is_watermark_text() ) {
-                                $wat->doWatermarkText( $path , osc_watermark_text_color(), osc_watermark_text() , $mime);
+                                $img->doWatermarkText(osc_watermark_text(), osc_watermark_text_color());
                             } else if ( osc_is_watermark_image() ){
-                                $wat->doWatermarkImage( $path, $mime);
+                                $img->doWatermarkImage();
                             }
+                            $img->saveToFile($path, $extension);
 
                             // Create preview
                             $path = $tmpName."_preview";
                             $size = explode('x', osc_preview_dimensions());
-                            ImageResizer::fromFile($normal_path)->resizeTo($size[0], $size[1])->saveToFile($path);
+                            ImageResizer::fromFile($normal_path)->resizeTo($size[0], $size[1])->saveToFile($path, $extension);
 
                             // Create thumbnail
                             $path = $tmpName."_thumbnail";
                             $size = explode('x', osc_thumbnail_dimensions());
-                            ImageResizer::fromFile($normal_path)->resizeTo($size[0], $size[1])->saveToFile($path);
+                            ImageResizer::fromFile($normal_path)->resizeTo($size[0], $size[1])->saveToFile($path, $extension);
 
                             $numImages++;
 
