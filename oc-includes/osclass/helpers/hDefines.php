@@ -1144,5 +1144,8 @@
         return $br->render($separator);
     }
 
+    function osc_subdomain_name() {
+        return View::newInstance()->_get('subdomain_name');
+    }    
     /* file end: ./oc-includes/osclass/helpers/hDefines.php */
 ?>
