@@ -59,24 +59,17 @@
                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=comments');
                     }
 
-                    $iUpdated += Preference::newInstance()->update(array('s_value' => $enabledComments)
-                                                                  ,array('s_name' => 'enabled_comments'));
+                    $iUpdated += osc_set_preference('enabled_comments', $enabledComments);
                     if($moderateComments) {
-                        $iUpdated += Preference::newInstance()->update(array('s_value' => $numModerateComments)
-                                                                      ,array('s_name' => 'moderate_comments'));
+                        $iUpdated += osc_set_preference('moderate_comments', $numModerateComments);
                     } else {
-                        $iUpdated += Preference::newInstance()->update(array('s_value' => '-1')
-                                                                      ,array('s_name' => 'moderate_comments'));
+                        $iUpdated += osc_set_preference('moderate_comments', '-1');
                     }
-                    $iUpdated += Preference::newInstance()->update(array('s_value' => $notifyNewComment)
-                                                                  ,array('s_name' => 'notify_new_comment'));
-                    $iUpdated += Preference::newInstance()->update(array('s_value' => $notifyNewCommentUser)
-                                                                  ,array('s_name' => 'notify_new_comment_user'));
-                    $iUpdated += Preference::newInstance()->update(array('s_value' => $commentsPerPage)
-                                                                  ,array('s_name' => 'comments_per_page'));
+                    $iUpdated += osc_set_preference('notify_new_comment', $notifyNewComment);
+                    $iUpdated += osc_set_preference('notify_new_comment_user', $notifyNewCommentUser);
+                    $iUpdated += osc_set_preference('comments_per_page', $commentsPerPage);
 
-                    $iUpdated += Preference::newInstance()->update(array('s_value' => $regUserPostComments )
-                                                                  ,array('s_name' => 'reg_user_post_comments'));
+                    $iUpdated += osc_set_preference('reg_user_post_comments', $regUserPostComments);
 
                     if($iUpdated > 0) {
                         osc_add_flash_ok_message( _m("Comment settings have been updated"), 'admin');

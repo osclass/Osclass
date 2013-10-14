@@ -917,7 +917,7 @@
                 case 'dashboardbox_market':
                     $error = 0;
                     // make market call
-                    $url = getPreference('marketURL') . 'dashboardbox/';
+                    $url = osc_get_preference('marketURL') . 'dashboardbox/';
 
                     $content = '';
                     if(false===($json=@osc_file_get_contents($url))) {

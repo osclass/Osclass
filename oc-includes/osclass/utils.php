@@ -894,9 +894,8 @@ function apache_mod_loaded($mod) {
 function osc_changeVersionTo($version = null) {
 
     if($version != null) {
-        Preference::newInstance()->update(array('s_value' => $version), array( 's_section' => 'osclass', 's_name' => 'version'));
-        //XXX: I don't know if it's really needed. Only for reload the values of the preferences
-        Preference::newInstance()->toArray();
+        osc_set_preference('version', $version);
+        osc_reset_preferences();
     }
 }
 
@@ -1562,7 +1561,7 @@ function osc_update_location_stats($force = false, $limit = 1000) {
                 unset($batchCities);
             } unset($aRegionsCountry);
         } unset($aCountry);
-        Preference::newInstance()->replace('location_todo', LocationsTmp::newInstance()->count() );
+        osc_set_preference('location_todo', LocationsTmp::newInstance()->count());
     }
     return LocationsTmp::newInstance()->count();
 }

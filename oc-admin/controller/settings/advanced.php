@@ -41,10 +41,8 @@
                     if(!in_array($subdomain_type, array('category', 'country', 'region', 'city'))) {
                         $subdomain_type = '';
                     }
-                    $iUpdated = Preference::newInstance()->update(array('s_value' => $subdomain_type)
-                        ,array('s_name' => 'subdomain_type'));
-                    $iUpdated += Preference::newInstance()->update(array('s_value' => Params::getParam('s_host'))
-                        ,array('s_name' => 'subdomain_host'));
+                    $iUpdated = osc_set_preference('subdomain_type', $subdomain_type);
+                    $iUpdated += osc_set_preference('subdomain_host', Params::getParam('s_host'));
 
                     if($iUpdated > 0) {
                         osc_add_flash_ok_message( _m("Advanced settings have been updated"), 'admin');

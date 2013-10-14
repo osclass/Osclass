@@ -237,9 +237,7 @@
             }
 
             $plugins_list[]  = $path;
-            $data['s_value'] = serialize($plugins_list);
-            $condition = array( 's_section' => 'osclass', 's_name' => 'installed_plugins');
-            Preference::newInstance()->update($data, $condition);
+            osc_set_preference('installed_plugins', serialize($plugins_list));
 
             // Check if something failed
             if ( ob_get_length() > 0 ) {
@@ -274,9 +272,7 @@
                 }
             }
 
-            $data['s_value'] = serialize($plugins_list);
-            $condition = array( 's_section' => 'osclass', 's_name' => 'installed_plugins');
-            Preference::newInstance()->update($data, $condition);
+            osc_set_preference('installed_plugins', serialize($plugins_list));
 
             $plugin = self::getInfo($path);
             self::cleanCategoryFromPlugin($plugin['short_name']);
@@ -297,9 +293,7 @@
             }
 
             $plugins_list[]  = $path;
-            $data['s_value'] = serialize($plugins_list);
-            $condition = array( 's_section' => 'osclass', 's_name' => 'active_plugins');
-            Preference::newInstance()->update($data, $condition);
+            osc_set_preference('active_plugins', serialize($plugins_list));
 
             self::reload();
 
@@ -329,9 +323,7 @@
             self::runHook($path . '_disable');
 
             // update t_preference field for active plugins
-            $data['s_value'] = serialize($plugins_list);
-            $condition = array( 's_section' => 'osclass', 's_name' => 'active_plugins');
-            Preference::newInstance()->update($data, $condition);
+            osc_set_preference('active_plugins', serialize($plugins_list));
 
             self::reload();
             return true;
@@ -507,7 +499,7 @@
 
         static function reload()
         {
-            Preference::newInstance()->toArray();
+            osc_reset_preferences();
             self::init();
         }
 
