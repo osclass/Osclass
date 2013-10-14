@@ -61,36 +61,15 @@
 
                     switch ($type_watermark) {
                         case 'none':
-                            $iUpdated += Preference::newInstance()->update(
-                                    array('s_value' => ''),
-                                    array('s_name'  => 'watermark_text_color')
-                            );
-                            $iUpdated += Preference::newInstance()->update(
-                                    array('s_value' => ''),
-                                    array('s_name'  => 'watermark_text')
-                            );
-                            $iUpdated += Preference::newInstance()->update(
-                                    array('s_value' => ''),
-                                    array('s_name'  => 'watermark_image')
-                            );
+                            $iUpdated += osc_set_preference('watermark_text_color', '');
+                            $iUpdated += osc_set_preference('watermark_text', '');
+                            $iUpdated += osc_set_preference('watermark_image', '');
                         break;
                         case 'text':
-                            $iUpdated += Preference::newInstance()->update(
-                                    array('s_value' => $watermark_color),
-                                    array('s_name'  => 'watermark_text_color')
-                            );
-                            $iUpdated += Preference::newInstance()->update(
-                                    array('s_value' => $watermark_text),
-                                    array('s_name'  => 'watermark_text')
-                            );
-                            $iUpdated += Preference::newInstance()->update(
-                                    array('s_value' => ''),
-                                    array('s_name'  => 'watermark_image')
-                            );
-                            $iUpdated += Preference::newInstance()->update(
-                                    array('s_value' => Params::getParam('watermark_text_place')),
-                                    array('s_name'  => 'watermark_place')
-                            );
+                            $iUpdated += osc_set_preference('watermark_text_color', $watermark_color);
+                            $iUpdated += osc_set_preference('watermark_text', $watermark_text);
+                            $iUpdated += osc_set_preference('watermark_image', '');
+                            $iUpdated += osc_set_preference('watermark_place', Params::getParam('watermark_text_place'));
                         break;
                         case 'image':
                             // upload image & move to path
@@ -101,10 +80,7 @@
                                         $tmpName = $watermark_file['tmp_name'];
                                         $path    = osc_content_path().'uploads/watermark.png';
                                         if( move_uploaded_file($tmpName, $path) ){
-                                            $iUpdated += Preference::newInstance()->update(
-                                                    array('s_value' => $path),
-                                                    array('s_name'  => 'watermark_image')
-                                            );
+                                            $iUpdated += osc_set_preference('watermark_image', $path);
                                         } else {
                                             $status = 'error';
                                             $error .= _m('There was a problem uploading the watermark image')."<br />";
@@ -118,18 +94,9 @@
                                     $error .= _m('There was a problem uploading the watermark image')."<br />";
                                 }
                             }
-                            $iUpdated += Preference::newInstance()->update(
-                                    array('s_value' => ''),
-                                    array('s_name'  => 'watermark_text_color')
-                            );
-                            $iUpdated += Preference::newInstance()->update(
-                                    array('s_value' => ''),
-                                    array('s_name'  => 'watermark_text')
-                            );
-                            $iUpdated += Preference::newInstance()->update(
-                                    array('s_value' => Params::getParam('watermark_image_place')),
-                                    array('s_name'  => 'watermark_place')
-                            );
+                            $iUpdated += osc_set_preference('watermark_text_color', '');
+                            $iUpdated += osc_set_preference('watermark_text', '');
+                            $iUpdated += osc_set_preference('watermark_place', Params::getParam('watermark_image_place'));
                         break;
                         default:
                         break;
@@ -173,34 +140,13 @@
                         $error     .= sprintf( _m("You cannot set a maximum file size higher than the one allowed in the PHP configuration: <b>%d KB</b>"), $upload_mb );
                     }
 
-                    $iUpdated += Preference::newInstance()->update(
-                            array('s_value' => $maxSizeKb),
-                            array('s_name'  => 'maxSizeKb')
-                    );
-                    $iUpdated += Preference::newInstance()->update(
-                            array('s_value' => $dimThumbnail),
-                            array('s_name'  => 'dimThumbnail')
-                    );
-                    $iUpdated += Preference::newInstance()->update(
-                            array('s_value' => $dimPreview),
-                            array('s_name'  => 'dimPreview')
-                    );
-                    $iUpdated += Preference::newInstance()->update(
-                            array('s_value' => $dimNormal),
-                            array('s_name'  => 'dimNormal')
-                    );
-                    $iUpdated += Preference::newInstance()->update(
-                        array('s_value' => $keepOriginalImage),
-                        array('s_name'  => 'keep_original_image')
-                    );
-                    $iUpdated += Preference::newInstance()->update(
-                        array('s_value' => $forceAspectImage),
-                        array('s_name'  => 'force_aspect_image')
-                    );
-                    $iUpdated += Preference::newInstance()->update(
-                            array('s_value' => $use_imagick),
-                            array('s_name'  => 'use_imagick')
-                    );
+                    $iUpdated += osc_set_preference('maxSizeKb', $maxSizeKb);
+                    $iUpdated += osc_set_preference('dimThumbnail', $dimThumbnail);
+                    $iUpdated += osc_set_preference('dimPreview', $dimPreview);
+                    $iUpdated += osc_set_preference('dimNormal', $dimNormal);
+                    $iUpdated += osc_set_preference('keep_original_image', $keepOriginalImage);
+                    $iUpdated += osc_set_preference('force_aspect_image', $forceAspectImage);
+                    $iUpdated += osc_set_preference('use_imagick', $use_imagick);
 
                     if( $error != '' ) {
                         switch($status) {

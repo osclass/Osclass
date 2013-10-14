@@ -53,7 +53,7 @@
             $config_version = str_replace('.', '', OSCLASS_VERSION);
             $config_version = preg_replace('|-.*|', '', $config_version);
 
-            if( $config_version > Preference::newInstance()->get('version') ) {
+            if( $config_version > osc_get_preference('version') ) {
                 if(get_class($this) == 'CAdminTools') {
                 } else {
                     if(get_class($this) != 'CAdminUpgrade' )
