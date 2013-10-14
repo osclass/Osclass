@@ -97,7 +97,7 @@
 <div id="tabs" class="ui-osc-tabs ui-tabs-right">
     <ul>
         <?php
-            $aPluginsToUpdate = json_decode( getPreference('plugins_to_update') );
+            $aPluginsToUpdate = json_decode( osc_get_preference('plugins_to_update') );
             $bPluginsToUpdate = is_array($aPluginsToUpdate)?true:false;
             if($bPluginsToUpdate && count($aPluginsToUpdate) > 0) {
                 $tab_index = 0;

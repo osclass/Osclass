@@ -54,8 +54,7 @@
                     $akismetKey = Params::getParam('akismetKey');
                     $akismetKey = trim($akismetKey);
 
-                    $updated = Preference::newInstance()->update(array('s_value' => $akismetKey)
-                                                                ,array('s_name'  => 'akismetKey'));
+                    $updated = osc_set_preference('akismetKey', $akismetKey);
 
                     if( $akismetKey == '' ) {
                         osc_add_flash_info_message(_m('Your Akismet key has been cleared'), 'admin');
@@ -73,10 +72,9 @@
                     $recaptchaPubKey  = Params::getParam('recaptchaPubKey');
                     $recaptchaPubKey  = trim($recaptchaPubKey);
 
-                    $iUpdated += Preference::newInstance()->update(array('s_value' => $recaptchaPrivKey)
-                                                                  ,array('s_name'  => 'recaptchaPrivKey'));
-                    $iUpdated += Preference::newInstance()->update(array('s_value' => $recaptchaPubKey)
-                                                                  ,array('s_name'  => 'recaptchaPubKey'));
+                    $iUpdated += osc_set_preference('recaptchaPrivKey', $recaptchaPrivKey);
+                    $iUpdated += osc_set_preference('recaptchaPubKey', $recaptchaPubKey);
+
                     if( $recaptchaPubKey == '' ) {
                         osc_add_flash_info_message(_m('Your reCAPTCHA key has been cleared'), 'admin');
                     } else {

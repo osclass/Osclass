@@ -51,7 +51,7 @@
     }
 
     $aMessages = array();
-    Preference::newInstance()->update(array('s_value' => time()), array( 's_section' => 'osclass', 's_name' => 'last_version_check'));
+    osc_set_preference('last_version_check', time());
 
     $conn = DBConnectionClass::newInstance();
     $c_db = $conn->getOsclassDb();

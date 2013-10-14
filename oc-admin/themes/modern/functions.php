@@ -201,8 +201,8 @@ function drawMarketItem($item,$color = false){
     $letterDraw       = '';
     $compatible       = '';
     $type             = strtolower($item['e_type']);
-    $items_to_update  = json_decode(getPreference($type.'s_to_update'),true);
-    $items_downloaded = json_decode(getPreference($type.'s_downloaded'),true);
+    $items_to_update  = json_decode(osc_get_preference($type.'s_to_update'),true);
+    $items_downloaded = json_decode(osc_get_preference($type.'s_downloaded'),true);
 
     if($item['s_thumbnail']){
         $thumbnail = $item['s_thumbnail'];
