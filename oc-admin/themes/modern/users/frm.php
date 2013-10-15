@@ -308,7 +308,7 @@
                 <?php if(!$aux['edit']) {
                     osc_run_hook('user_register_form');
                 } else {
-                    osc_run_hook('user_form');
+                    osc_run_hook('user_form', $user);
                 }; ?>
 
                 <div class="clear"></div>
