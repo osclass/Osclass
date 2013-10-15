@@ -22,7 +22,7 @@ class Watermark{
         $image = $this->imageAddText($image, $color, $text);
 
         // save watermarked image
-        return $this->saveImageFile($image, 'image/jpeg', $filepath);
+        return $this->saveImageFile($image, $mime, $filepath);
     }
 
     public function doWatermarkImage($filepath, $mime = 'image/png')
@@ -69,7 +69,6 @@ class Watermark{
             $watermark_width  = imagesx($watermark);
             $watermark_height = imagesy($watermark);
 
-            $image = imagecreatetruecolor($watermark_width, $watermark_height);
             $image = $this->getImageResource($filepath, $mime );
             $size = getimagesize( $filepath );
 
@@ -98,7 +97,7 @@ class Watermark{
 
             $this->imagecopymerge_alpha($image, $watermark, $dest_x, $dest_y, 0, 0, $watermark_width, $watermark_height, 100);
 
-            $this->saveImageFile($image, 'image/jpeg', $filepath);
+            $this->saveImageFile($image, $mime, $filepath);
             imagedestroy($image);
             imagedestroy($watermark);
         }
@@ -141,9 +140,11 @@ class Watermark{
                     break;
             }
             $image->annotateImage($draw, $offset['x'], $offset['y'], 0, $text);
-            $image->setImageFormat('jpg');
         } else {
-            // allocate text color
+            imagealphablending( $image, false );
+            imagesavealpha( $image, true );
+            $white = imagecolorallocatealpha($image, 255, 255, 255, 127);
+            imagefill($image, 0, 0, $white);            // allocate text color
             $color  = $this->imageColorAllocateHex($image, $color);
 
             // calculate watermark position and get full path to font file
@@ -174,7 +175,7 @@ class Watermark{
      * Calculate offset acording to watermark alignment
      *
      * @param resource $image
-     * @param array $opt
+     * @param array $text
      * @return array
      */
     private function calculateOffset($image,$text) {
@@ -226,12 +227,10 @@ class Watermark{
     /**
      * Calculate bounding box of watermark
      *
-     * @param array $opt
+     * @param array $text
      * @return array
      */
     private function calculateBBox($text) {
-        // http://ruquay.com/sandbox/imagettf/
-
         $bbox = imagettfbbox(
             20,
             0,
@@ -299,8 +298,8 @@ class Watermark{
      */
     private function saveImageFile($image, $mime_type, $filepath) {
         if(osc_use_imagick()) {
-                $image->setImageFileName($filepath);
-                $image->writeImage();
+            $image->setImageFileName($filepath);
+            $image->writeImage();
         } else {
             switch ( $mime_type ) {
                 case 'image/jpeg':
@@ -318,6 +317,8 @@ class Watermark{
 
     function imagecopymerge_alpha($dst_im, $src_im, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h, $pct, $trans = NULL)
     {
+        imagealphablending( $dst_im, false );
+        imagesavealpha( $dst_im, true );
         $dst_w = imagesx($dst_im);
         $dst_h = imagesy($dst_im);
 

@@ -48,7 +48,7 @@
 
                     // get page if it's set in the url
                     $iPage = preg_replace('|.*/([0-9]+)$|', '$01', $this->uri);
-                    if( $iPage > 0 ) {
+                    if( is_numeric($iPage) && $iPage > 0 ) {
                         Params::setParam('iPage', $iPage);
                         // redirect without number of pages
                         if( $iPage == 1 ) {
@@ -75,12 +75,14 @@
                         Params::setParam('sCity', $city['pk_i_id']);
                         Params::setParam('sCategory', preg_replace('|(.*?)_.*?-c[0-9]+|', '$01', $search_uri));
                     } else {
-                        $aCategory = explode('/', $search_uri);
-                        $category  = Category::newInstance()->findBySlug($aCategory[count($aCategory)-1]);
-                        if( count($category) === 0 ) {
-                            $this->do404();
+                        if(!Params::existParam('sCategory')) {
+                            $aCategory = explode('/', $search_uri);
+                            $category  = Category::newInstance()->findBySlug($aCategory[count($aCategory)-1]);
+                            if( count($category) === 0 ) {
+                                $this->do404();
+                            }
+                            Params::setParam('sCategory', $search_uri);
                         }
-                        Params::setParam('sCategory', $search_uri);
                     }
                 }
             }
@@ -120,8 +122,30 @@
                                 $m[1][$k] = 'sPattern';
                                 break;
                             default :
+                                // custom fields
+                                if( preg_match("/meta(\d+)-?(.*)?/", $m[1][$k], $results) ) {
+                                    $meta_key   = $m[1][$k];
+                                    $meta_value = $m[2][$k];
+                                    $array_r    = array();
+                                    if(isset($_REQUEST['meta'])) {
+                                        $array_r    = $_REQUEST['meta'];
+                                    }
+                                    if($results[2]=='') {
+                                        // meta[meta_id] = meta_value
+                                        $meta_key = $results[1];
+                                        $array_r[$meta_key] = $meta_value;
+                                    } else {
+                                        // meta[meta_id][meta_key] = meta_value
+                                        $meta_key  = $results[1];
+                                        $meta_key2 = $results[2];
+                                        $array_r[$meta_key][$meta_key2]    = $meta_value;
+                                    }
+                                    $m[1][$k] = 'meta';
+                                    $m[2][$k] = $array_r;
+                                }
                                 break;
                         }
+
                         $_REQUEST[$m[1][$k]] = $m[2][$k];
                         $_GET[$m[1][$k]] = $m[2][$k];
                         unset($_REQUEST['sParams']);

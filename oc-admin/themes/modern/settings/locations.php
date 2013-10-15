@@ -79,6 +79,48 @@
                     return false;
                 });
 
+                $("#e_country_slug").on("keyup", function() {
+                    $("#e_country_slug").css('border', 'solid 0px white');
+                    $.getJSON(
+                        "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=country_slug",
+                        {"slug" : $("#e_country_slug").attr("value")},
+                        function(data){
+                            if(data.error==1) {
+                                $("#e_country_slug").css('border', 'solid 3px red');
+                            }
+                        }
+                    );
+                    return false;
+                });
+
+                $("#e_region_slug").on("keyup", function() {
+                    $("#e_region_slug").css('border', 'solid 0px white');
+                    $.getJSON(
+                        "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=region_slug",
+                        {"slug" : $("#e_region_slug").attr("value")},
+                        function(data){
+                            if(data.error==1) {
+                                $("#e_region_slug").css('border', 'solid 3px red');
+                            }
+                        }
+                    );
+                    return false;
+                });
+
+                $("#e_city_slug").on("keyup", function() {
+                    $("#e_city_slug").css('border', 'solid 0px white');
+                    $.getJSON(
+                        "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=city_slug",
+                        {"slug" : $("#e_city_slug").attr("value")},
+                        function(data){
+                            if(data.error==1) {
+                                $("#e_city_slug").css('border', 'solid 3px red');
+                            }
+                        }
+                    );
+                    return false;
+                });
+
             });
 
             var base_url           = '<?php echo osc_admin_base_url(); ?>';
@@ -166,6 +208,13 @@
                 <label><?php _e('Country'); ?>: </label><br />
                 <input type="text" id="e_country" name="e_country" value="" />
             </p>
+            <p>
+                <label><?php _e('Slug'); ?>: </label><br />
+                <input type="text" id="e_country_slug" name="e_country_slug" value="" /><br />
+                <div class="help-box">
+                    <?php _e('The slug has to be a unique string, could be left blank'); ?>
+                </div>
+            </p>
             <div class="form-actions">
                 <div class="wrapper">
                     <button class="btn btn-red close-dialog" ><?php _e('Cancel'); ?></button>
@@ -210,12 +259,17 @@
             <input type="hidden" name="action" value="locations" />
             <input type="hidden" name="type" value="edit_region" />
             <input type="hidden" name="region_id" value="" />
-            <table>
-                <tr>
-                    <td><?php _e('Region'); ?>: </td>
-                    <td><input type="text" id="e_region" name="e_region" value="" /></td>
-                </tr>
-            </table>
+            <p>
+                <label><?php _e('Region'); ?>: </label><br />
+                <input type="text" id="e_region" name="e_region" value="" />
+            </p>
+            <p>
+                <label><?php _e('Slug'); ?>: </label><br />
+                <input type="text" id="e_region_slug" name="e_region_slug" value="" /><br />
+                <div class="help-box">
+                    <?php _e('The slug has to be a unique string, could be left blank'); ?>
+                </div>
+            </p>
             <div class="form-actions">
                 <div class="wrapper">
                     <button class="btn btn-red close-dialog" ><?php _e('Cancel'); ?></button>
@@ -262,12 +316,17 @@
             <input type="hidden" name="action" value="locations" />
             <input type="hidden" name="type" value="edit_city" />
             <input type="hidden" name="city_id" value="" />
-            <table>
-                <tr>
-                    <td><?php _e('City'); ?>: </td>
-                    <td><input type="text" id="e_city" name="e_city" value="" /></td>
-                </tr>
-            </table>
+            <p>
+                <label><?php _e('City'); ?>: </label><br />
+                <input type="text" id="e_city" name="e_city" value="" />
+            </p>
+            <p>
+                <label><?php _e('Slug'); ?>: </label><br />
+                <input type="text" id="e_city_slug" name="e_city_slug" value="" /><br />
+                <div class="help-box">
+                    <?php _e('The slug has to be a unique string, could be left blank'); ?>
+                </div>
+            </p>
             <div class="form-actions">
                 <div class="wrapper">
                     <button class="btn btn-red close-dialog" ><?php _e('Cancel'); ?></button>
@@ -277,18 +336,6 @@
         </form>
     </div>
 </div>
-<?php if(Params::getParam('country')!='' && Params::getParam('country_code')!='') { ?>
-    <script type="text/javascript">
-        <?php if(Params::getParam('country')!='' && Params::getParam('country_code')!='') { ?>
-            show_region('<?php echo Params::getParam('country_code'); ?>', '<?php echo osc_esc_js(Params::getParam('country')); ?>');
-            function hook_load_cities() {
-            <?php if(Params::getParam('region')!='') { ?>
-                show_city(<?php echo Params::getParam('region'); ?>);
-            <?php }; ?>
-            };
-        <?php }; ?>
-    </script>
-<?php }; ?>
 <!-- settings form -->
 <div id="settings_form" class="locations">
 <div class="grid-system">
@@ -308,7 +355,7 @@
                                     <a class="close" onclick="return delete_dialog('<?php echo $country['pk_c_code']; ?>', 'delete_country');" href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=locations&type=delete_country&id[]=<?php echo $country['pk_c_code']; ?>">
                                         <img src="<?php echo osc_admin_base_url(); ?>images/close.png" alt="<?php echo osc_esc_html(__('Close')); ?>" title="<?php echo osc_esc_html(__('Close')); ?>" />
                                     </a>
-                                    <a class="edit" href="javascript:void(0);" style="padding-right: 15px;" onclick="edit_countries($(this));" data="<?php echo osc_esc_html($country['s_name']);?>" code="<?php echo $country['pk_c_code'];?>"><?php echo $country['s_name']; ?></a>
+                                    <a class="edit" href="javascript:void(0);" style="padding-right: 15px;" onclick="edit_countries($(this));" data="<?php echo osc_esc_html($country['s_name']);?>" code="<?php echo $country['pk_c_code'];?>" slug="<?php echo $country['s_slug'];?>"><?php echo $country['s_name']; ?></a>
                                 </div>
                             </div>
                             <div class="float-right">
@@ -358,4 +405,15 @@
             </div>
         </div>
     </form>
+<?php if(Params::getParam('country')!='' && Params::getParam('country_code')!='') { ?>
+    <script type="text/javascript">
+        show_region('<?php echo Params::getParam('country_code'); ?>', '<?php echo osc_esc_js(Params::getParam('country')); ?>');
+        function hook_load_cities() {
+            <?php if(Params::getParam('region')!='') { ?>
+            show_city(<?php echo Params::getParam('region'); ?>);
+            hook_load_cities = function() { };
+            <?php }; ?>
+        };
+    </script>
+<?php }; ?>
 <?php osc_current_admin_theme_path('parts/footer.php'); ?>

@@ -894,9 +894,8 @@ function apache_mod_loaded($mod) {
 function osc_changeVersionTo($version = null) {
 
     if($version != null) {
-        Preference::newInstance()->update(array('s_value' => $version), array( 's_section' => 'osclass', 's_name' => 'version'));
-        //XXX: I don't know if it's really needed. Only for reload the values of the preferences
-        Preference::newInstance()->toArray();
+        osc_set_preference('version', $version);
+        osc_reset_preferences();
     }
 }
 
@@ -1562,10 +1561,51 @@ function osc_update_location_stats($force = false, $limit = 1000) {
                 unset($batchCities);
             } unset($aRegionsCountry);
         } unset($aCountry);
-        Preference::newInstance()->replace('location_todo', LocationsTmp::newInstance()->count() );
+        osc_set_preference('location_todo', LocationsTmp::newInstance()->count());
     }
     return LocationsTmp::newInstance()->count();
 }
+
+/* Translate current categories to new locale
+ *
+ * @since 3.2.1
+ *
+ */
+function osc_translate_categories($locale) {
+    $old_locale = Session::newInstance()->_get('adminLocale');
+    Session::newInstance()->_set('adminLocale', $locale);
+    Translation::newInstance()->_load(osc_translations_path().$locale.'/core.mo', 'cat_'.$locale);
+    $catManager = Category::newInstance();
+    $old_categories = $catManager->_findNameIDByLocale($old_locale);
+    $tmp_categories = $catManager->_findNameIDByLocale($locale);
+    foreach($tmp_categories as $category) {
+        $new_categories[$category['pk_i_id']] = $category['s_name'];
+    }
+    unset($tmp_categories);
+    foreach($old_categories as $category) {
+        if(!isset($new_categories[$category['pk_i_id']])) {
+            $fieldsDescription['s_name'] = __($category['s_name'], 'cat_'.$locale);
+            $fieldsDescription['s_description'] = '';
+            $fieldsDescription['fk_i_category_id'] = $category['pk_i_id'];
+            $fieldsDescription['fk_c_locale_code'] = $locale;
+            $slug_tmp = $slug = osc_sanitizeString(osc_apply_filter('slug', $fieldsDescription['s_name']));
+            $slug_unique = 1;
+            while(true) {
+                if(!$catManager->findBySlug($slug)) {
+                    break;
+                } else {
+                    $slug = $slug_tmp . "_" . $slug_unique;
+                    $slug_unique++;
+                }
+            }
+            $fieldsDescription['s_slug'] = $slug;
+            $catManager->insertDescription($fieldsDescription);
+        }
+    }
+    Session::newInstance()->_set('adminLocale', $old_locale);
+
+}
+
 
 function get_ip() {
     if( !empty($_SERVER['HTTP_CLIENT_IP']) ) {
@@ -1657,6 +1697,44 @@ function osc_redirect_to($url) {
     }
     header("Location: ".$url);
     exit;
+}
+
+function osc_calculate_location_slug($type) {
+    $field = 'pk_i_id';
+    switch($type) {
+        case 'country':
+            $manager = Country::newInstance();
+            $field = 'pk_c_code';
+            break;
+        case 'region':
+            $manager = Region::newInstance();
+            break;
+        case 'city':
+            $manager = City::newInstance();
+            break;
+        default:
+            return false;
+        break;
+    }
+    $locations = $manager->listByEmptySlug();
+    $locations_changed = 0;
+    foreach($locations as $location) {
+        $slug_tmp = $slug = osc_sanitizeString($location['s_name']);
+        $slug_unique = 1;
+        while(true) {
+            $location_slug = $manager->findBySlug($slug);
+            if(!isset($location_slug[$field])) {
+                break;
+            } else {
+                $slug = $slug_tmp . '-' . $slug_unique;
+                $slug_unique++;
+            }
+        }
+        $locations_changed += $manager->update(array('s_slug' => $slug), array($field => $location[$field]));
+    }
+
+    return $locations_changed;
+
 }
 
 ?>

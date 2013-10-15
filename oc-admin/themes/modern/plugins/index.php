@@ -68,6 +68,12 @@
                     modal: true,
                     title: '<?php echo osc_esc_js( __('Uninstall plugin') ); ?>'
                 });
+
+                $('.plugin-tooltip').each(function(){
+                    $(this).osc_tooltip('<?php echo osc_esc_js(__('Problems with this plugin? Ask for support.')); ?>',{layout:'gray-tooltip',position:{x:'right',y:'middle'}});
+                });
+
+
             });
 
             // dialog delete function
@@ -91,7 +97,7 @@
 <div id="tabs" class="ui-osc-tabs ui-tabs-right">
     <ul>
         <?php
-            $aPluginsToUpdate = json_decode( getPreference('plugins_to_update') );
+            $aPluginsToUpdate = json_decode( osc_get_preference('plugins_to_update') );
             $bPluginsToUpdate = is_array($aPluginsToUpdate)?true:false;
             if($bPluginsToUpdate && count($aPluginsToUpdate) > 0) {
                 $tab_index = 0;
@@ -150,8 +156,8 @@
                 $array_aux  = array_keys($aData['aaInfo']);
 
                 foreach($aPluginsToUpdate as $slug) {
-                    $key = array_search($slug, $array_aux);
-                    if($key) {
+                    $key = array_search($slug, $array_aux, true);
+                    if($key!==false) {
                         $aIndex[]   = $aData['aaData'][$key];
                     }
                 }
