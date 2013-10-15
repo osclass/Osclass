@@ -393,22 +393,30 @@
                 if(osc_list_region_id()==$params['sRegion']) {
                     $url .= osc_sanitizeString(osc_list_region_name()) . '-r' . osc_list_region_id();
                 } else {
-                    $region = Region::newInstance()->findByPrimaryKey($params['sRegion']);
+                    if(is_numeric($params['sRegion'])) {
+                        $region = Region::newInstance()->findByPrimaryKey($params['sRegion']);
+                    } else {
+                        $region = Region::newInstance()->findByName($params['sRegion']);
+                    }
                     $url .= osc_sanitizeString($region['s_name']) . '-r' . $region['pk_i_id'];
                 }
                 return $url;
             } else if($countP==1 && isset($params['sCity'])) {
-                    $url = osc_base_url();
-                    if( osc_get_preference('seo_url_search_prefix') != '' ) {
-                        $url .= osc_get_preference('seo_url_search_prefix') . '/';
-                    }
-                    if(osc_list_region_id()==$params['sCity']) {
-                        $url .= osc_sanitizeString(osc_list_city_name()) . '-c' . osc_list_city_id();
-                    } else {
+                $url = osc_base_url();
+                if( osc_get_preference('seo_url_search_prefix') != '' ) {
+                    $url .= osc_get_preference('seo_url_search_prefix') . '/';
+                }
+                if(osc_list_region_id()==$params['sCity']) {
+                    $url .= osc_sanitizeString(osc_list_city_name()) . '-c' . osc_list_city_id();
+                } else {
+                    if(is_numeric($params['sCity'])) {
                         $city = City::newInstance()->findByPrimaryKey($params['sCity']);
-                        $url .= osc_sanitizeString($city['s_name']) . '-c' . $city['pk_i_id'];
+                    } else {
+                        $city = City::newInstance()->findByName($params['sCity']);
                     }
-                    return $url;
+                    $url .= osc_sanitizeString($city['s_name']) . '-c' . $city['pk_i_id'];
+                }
+                return $url;
             } else if($params!=null) {
                 $url .= "/";
                 foreach($params as $k => $v) {

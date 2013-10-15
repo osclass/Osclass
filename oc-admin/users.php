@@ -402,26 +402,11 @@
                                         }
                                         $usernameBlacklist = implode(",", $usernameBlacklistTmp);
 
-                                        $iUpdated += Preference::newInstance()->update(
-                                                array('s_value' => $enabledUserValidation),
-                                                array('s_name'  => 'enabled_user_validation')
-                                        );
-                                        $iUpdated += Preference::newInstance()->update(
-                                                array('s_value' => $enabledUserRegistration),
-                                                array('s_name'  => 'enabled_user_registration')
-                                        );
-                                        $iUpdated += Preference::newInstance()->update(
-                                                array('s_value' => $enabledUsers),
-                                                array('s_name'  => 'enabled_users')
-                                        );
-                                        $iUpdated += Preference::newInstance()->update(
-                                                array('s_value' => $notifyNewUser),
-                                                array('s_name'  => 'notify_new_user')
-                                        );
-                                        $iUpdated += Preference::newInstance()->update(
-                                                array('s_value' => $usernameBlacklist),
-                                                array('s_name'  => 'username_blacklist')
-                                        );
+                                        $iUpdated += osc_set_preference('enabled_user_validation', $enabledUserValidation);
+                                        $iUpdated += osc_set_preference('enabled_user_registration', $enabledUserRegistration);
+                                        $iUpdated += osc_set_preference('enabled_users', $enabledUsers);
+                                        $iUpdated += osc_set_preference('notify_new_user', $notifyNewUser);
+                                        $iUpdated += osc_set_preference('username_blacklist', $usernameBlacklist);
 
                                         if( $iUpdated > 0 ) {
                                             osc_add_flash_ok_message( _m("User settings have been updated"), 'admin');

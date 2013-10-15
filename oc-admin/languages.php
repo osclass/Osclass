@@ -352,7 +352,7 @@
                                                 $displayRecords = ($start+$limit) - $count;
                                             }
                                             // ----
-                                            $aLanguagesToUpdate = json_decode( getPreference('languages_to_update') );
+                                            $aLanguagesToUpdate = json_decode( osc_get_preference('languages_to_update') );
                                             $bLanguagesToUpdate = is_array($aLanguagesToUpdate)?true:false;
                                             // ----
                                             $aData = array();
