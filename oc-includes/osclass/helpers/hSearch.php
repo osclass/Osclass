@@ -459,7 +459,7 @@
                                     }
                                 } else {
                                     if($value!='') {
-                                        $url .= 'meta'.$_key.','.$value.'/';
+                                        $url .= 'meta'.$key.','.$value.'/';
                                     }
                                 }
                             }
