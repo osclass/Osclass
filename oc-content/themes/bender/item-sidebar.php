@@ -67,7 +67,7 @@
                 <p class="phone"><?php printf(__("Phone: %s", 'bender'), osc_user_phone()); ?></p>
             <?php } ?>
             <ul id="error_list"></ul>
-            <form action="<?php echo osc_base_url(true); ?>" method="post" name="contact_form" id="contact_form">
+            <form action="<?php echo osc_base_url(true); ?>" method="post" name="contact_form" id="contact_form" enctype='multipart/form-data'>
                 <?php osc_prepare_user_info(); ?>
                  <input type="hidden" name="action" value="contact_post" />
                     <input type="hidden" name="page" value="item" />
