@@ -55,7 +55,7 @@ FUNCTIONS
     // update options
     if( !function_exists('bender_theme_update') ) {
         function bender_theme_update() {
-            //osc_set_preference('version', BENDER_THEME_VERSION, 'bender_theme');
+            osc_set_preference('version', BENDER_THEME_VERSION, 'bender_theme');
             osc_delete_preference('default_logo', 'bender_theme');
 
             $logo_prefence = osc_get_preference('logo', 'bender_theme');
