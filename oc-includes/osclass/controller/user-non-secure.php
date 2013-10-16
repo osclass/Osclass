@@ -156,7 +156,7 @@
                     }
 
                     osc_run_hook('hook_email_contact_user', Params::getParam('id'), Params::getParam('yourEmail'), Params::getParam('yourName'), Params::getParam('phoneNumber'), Params::getParam('message'));
-
+                    osc_add_flash_ok_message( _m('Your email has been sent properly.') );
                     $this->redirectTo( osc_user_public_profile_url( ) );
                 break;
                 default:
