@@ -156,9 +156,10 @@
                     } else {
                         if(is_array($meta)) {
                             foreach( $meta as $key => $value ) {
-                                Session::newInstance()->_dropkeepForm('meta_'.$key);
+                                Session::newInstance()->_dropKeepForm('meta_'.$key);
                             }
                         }
+                        Session::newInstance()->_clearVariables();
                         if($success==1) {
                             osc_add_flash_ok_message( _m('Check your inbox to validate your listing') );
                         } else {
