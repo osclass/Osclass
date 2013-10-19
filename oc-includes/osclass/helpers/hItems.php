@@ -595,24 +595,6 @@
     }
 
     /**
-     * Gets actual page for current pagination
-     *
-     * @return int
-     */
-    function osc_list_page() {
-        return View::newInstance()->_get('list_page');
-    }
-
-    /**
-     * Gets total of pages for current pagination
-     *
-     * @return int
-     */
-    function osc_list_total_pages() {
-        return View::newInstance()->_get('list_total_pages');
-    }
-
-    /**
      * Gets number of items per page for current pagination
      *
      * @return <type>
