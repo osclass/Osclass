@@ -36,6 +36,9 @@
 
         function session_start() {
             $currentCookieParams = session_get_cookie_params();
+            if ( defined('COOKIE_DOMAIN') ) {
+                $currentCookieParams["domain"] = COOKIE_DOMAIN;
+            }
             session_set_cookie_params(
                 $currentCookieParams["lifetime"],
                 $currentCookieParams["path"],
