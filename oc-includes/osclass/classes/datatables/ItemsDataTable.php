@@ -294,10 +294,28 @@
                     $row['status-border'] = '';
                     $row['status'] = $status['text'];
                     $row['title'] = '<a href="' . osc_item_url().'" target="_blank">' . $title. '</a>'. $actions;
-                    $row['user'] = $aRow['s_user_name'];
+                    $countItems = Item::newInstance()->listWhere("i.s_contact_email = '%s' AND i.dt_pub_date > '%s'", $aRow['s_contact_email'], addslashes(date('Y-m-d')));
+                    if (isset($aRow['fk_i_user_id'])) {
+                        $user = User::newInstance()->findByPrimaryKey($aRow['fk_i_user_id']);
+                        $row['user'] = '<a href="http://' . $user['s_username'] . '.' . osc_subdomain_host() .'" target="_blank">' . $aRow['s_user_name'].'</a></br>';
+                        $row['user'].= 'Today='. count($countItems) . ' Total='.Item::newInstance()->countItemTypesByUserID($aRow['fk_i_user_id'], 'active').'</br>';
+                        if (!$user['b_enabled']) {
+                            $row['user'].= 'Blocked ';
+                        }   
+                        $row['user'].= '<a href="http://' . osc_subdomain_host() . '/oc-admin/index.php?page=users&action=edit&id=' . $user['pk_i_id'] .'" target="_blank">Edit</a>';
+                    } else {
+                        $countallItems = Item::newInstance()->listWhere("i.s_contact_email = '%s'", $aRow['s_contact_email']);
+                        $row['user'] = $aRow['s_contact_email'];
+                        $row['user'].= '</br>Today=' . count($countItems) . ' Total=' . count($countallItems);
+                        if (!osc_is_banned($aRow['s_contact_email'])) {
+                            $row['user'].= '</br><a href="http://' . osc_subdomain_host() . '/oc-admin/index.php?page=users&action=create_ban_rule" target="_blank">Ban</a>';
+                        } else {
+                            $row['user'].= '</br>Banned';
+                        }
+                    }    
                     $row['category'] = $aRow['s_category_name'];
                     $row['location'] = $this->get_row_location();
-                    $row['date'] = osc_format_date($aRow['dt_pub_date']);
+                    $row['date'] = osc_format_date($aRow['dt_pub_date'],'j F H:i');
                     $row['expiration'] = osc_format_date($aRow['dt_expiration']);
 
                     $row = osc_apply_filter('items_processing_row', $row, $aRow);
@@ -538,17 +556,27 @@
          */
         private function get_row_status()
         {
-            if( osc_item_is_spam() ) {
+            $isspam = osc_item_is_spam();
+            $isenable = osc_item_is_enabled();
+            
+            if( $isspam && !$isenable ) {
                 return array(
-                    'class' => 'status-spam',
-                    'text'  => __('Spam')
+                    'class' => 'status-blocked',
+                    'text'  => __('SpamBlock')
                 );
             }
 
-            if( !osc_item_is_enabled() ) {
+            if( !$isenable  ) {
                 return array(
                     'class' => 'status-blocked',
                     'text'  => __('Blocked')
+                );
+            }
+
+            if( $isspam ) {
+                return array(
+                    'class' => 'status-spam',
+                    'text'  => __('Spam')
                 );
             }
 
