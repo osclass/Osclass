@@ -200,7 +200,7 @@
             unset($tmp_categories_tree);
 
             if($categories == null) {
-                $categories = Category::newInstance()->listAll(false);
+                $categories = Category::newInstance()->listEnabled();
             }
 
             parent::generic_input_hidden("catId", $categoryID);
