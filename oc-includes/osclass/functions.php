@@ -167,7 +167,7 @@ function search_title() {
     if($b_category && is_array($category) && count($category) > 0) {
         $cat = Category::newInstance()->findByPrimaryKey($category[0]);
         if(isset($cat['s_name'])) {
-            $result .= strtolower($cat['s_name']) . ' ';
+            $result .= $cat['s_name'].' ';
         }
     }
 
@@ -179,7 +179,7 @@ function search_title() {
         $result .= $region;
     }
 
-    return ucfirst($result);
+    return $result;
 }
 
 function meta_title() {
@@ -232,7 +232,7 @@ function meta_title() {
             if($b_category && is_array($category) && count($category) > 0) {
                 $cat = Category::newInstance()->findByPrimaryKey($category[0]);
                 if( $cat ) {
-                    $result .= strtolower($cat['s_name']) . ' ';
+                    $result .= $cat['s_name'].' ';
                 }
             }
 
@@ -290,7 +290,7 @@ function meta_title() {
         $text .= ' - ' . osc_page_title();
     }
 
-    return (osc_apply_filter('meta_title_filter', ucfirst($text)));
+    return (osc_apply_filter('meta_title_filter', $text));
 }
 
 function meta_description( ) {
@@ -463,7 +463,7 @@ function osc_footer_link_title() {
 
     if( osc_search_category_id() ) {
         $cat = osc_get_category('id', $f['fk_i_category_id']);
-        $text .= strtolower($cat['s_name']) . ' ';
+        $text .= $cat['s_name'].' ';
     }
 
     if( osc_search_region() == '' ) {
@@ -473,7 +473,7 @@ function osc_footer_link_title() {
     }
 
     $text = trim($text);
-    return ucfirst($text);
+    return $text;
 }
 
 /**
