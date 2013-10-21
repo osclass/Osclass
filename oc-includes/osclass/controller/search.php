@@ -66,14 +66,18 @@
                             $this->do404();
                         }
                         Params::setParam('sRegion', $region['pk_i_id']);
-                        Params::setParam('sCategory', preg_replace('|(.*?)_.*?-r[0-9]+|', '$01', $search_uri));
+                        if(preg_match('|(.*?)_.*?-r[0-9]+|', $search_uri, $match)) {
+                            Params::setParam('sCategory', $match[1]);
+                        }
                     } else if( preg_match('|-c([0-9]+)$|', $search_uri, $c) ) {
                         $city = City::newInstance()->findByPrimaryKey($c[1]);
                         if( !$city ) {
                             $this->do404();
                         }
                         Params::setParam('sCity', $city['pk_i_id']);
-                        Params::setParam('sCategory', preg_replace('|(.*?)_.*?-c[0-9]+|', '$01', $search_uri));
+                        if(preg_match('|(.*?)_.*?-c[0-9]+|', $search_uri, $match)) {
+                            Params::setParam('sCategory', $match[1]);
+                        }
                     } else {
                         if(!Params::existParam('sCategory')) {
                             $aCategory = explode('/', $search_uri);
