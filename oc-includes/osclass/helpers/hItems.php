@@ -1025,8 +1025,6 @@
                 $options = array();
             }
             View::newInstance()->_exportVariableToView('latestItems', $search->getLatestItems($total_latest_items, $options));
-            $s = new Search();
-            $s->doSearch(true, false);
         };
         return (int) View::newInstance()->_count('latestItems');
     }
