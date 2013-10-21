@@ -594,6 +594,16 @@
         return (string) $url;
     }
 
+    // DEPRECATED: This function will be removed in version 4.0
+    function osc_list_page() {
+        return osc_search_page();
+    }
+
+    // DEPRECATED: This function will be removed in version 4.0
+    function osc_list_total_pages() {
+        return osc_search_total_pages();
+    }
+
     /**
      * Gets number of items per page for current pagination
      *
