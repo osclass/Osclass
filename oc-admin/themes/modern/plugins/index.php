@@ -147,6 +147,23 @@
             osc_add_hook('before_show_pagination_admin','showingResults');
             osc_show_pagination_admin($aData);
         ?>
+
+        <div class="display-select-bottom">
+            <form method="get" action="<?php echo osc_admin_base_url(true); ?>"  class="inline nocsrf">
+                <?php foreach( Params::getParamsAsArray('get') as $key => $value ) { ?>
+                    <?php if( $key != 'iDisplayLength' ) { ?>
+                        <input type="hidden" name="<?php echo $key; ?>" value="<?php echo osc_esc_html($value); ?>" />
+                    <?php } } ?>
+                <select name="iDisplayLength" class="select-box-extra select-box-medium float-left" onchange="this.form.submit();" >
+                    <option value="10" <?php if( Params::getParam('iDisplayLength') == 10 ) echo 'selected'; ?> ><?php printf(__('%d plugins'), 10); ?></option>
+                    <option value="25" <?php if( Params::getParam('iDisplayLength') == 25 ) echo 'selected'; ?> ><?php printf(__('%d plugins'), 25); ?></option>
+                    <option value="50" <?php if( Params::getParam('iDisplayLength') == 50 ) echo 'selected'; ?> ><?php printf(__('%d plugins'), 50); ?></option>
+                    <option value="100" <?php if( Params::getParam('iDisplayLength') == 100 ) echo 'selected'; ?> ><?php printf(__('%d plugins'), 100); ?></option>
+                </select>
+            </form>
+        </div>
+
+
     </div>
     <?php if($bPluginsToUpdate && count($aPluginsToUpdate) > 0) { ?>
     <div id="update-plugins">

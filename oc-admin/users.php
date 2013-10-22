@@ -41,7 +41,6 @@
             //specific things for this class
             switch ($this->action) {
                 case('create'):         // callign create view
-                                        $aCountries = array();
                                         $aRegions   = array();
                                         $aCities    = array();
 
@@ -95,11 +94,6 @@
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=users');
                 break;
                 case('edit'):           // calling the edit view
-                                        $aUser      = array();
-                                        $aCountries = array();
-                                        $aRegions   = array();
-                                        $aCities    = array();
-
                                         $aUser = $this->userManager->findByPrimaryKey(Params::getParam("id"));
                                         $aCountries = Country::newInstance()->listAll();
                                         $aRegions = array();
@@ -114,6 +108,20 @@
                                         } else if( count($aRegions) > 0 ) {
                                             $aCities = City::newInstance()->findByRegion($aRegions[0]['pk_i_id']);
                                         }
+
+                                        $csrf_token = osc_csrf_token_url();
+                                        if( $aUser['b_active'] ) {
+                                            $actions[] = '<a class="btn float-left" href="'.osc_admin_base_url(true).'?page=users&action=deactivate&id[]='.$aUser['pk_i_id'].'&'.$csrf_token.'&value=INACTIVE">'.__('Deactivate') .'</a>';
+                                            } else {
+                                            $actions[] = '<a class="btn btn-red float-left" href="'.osc_admin_base_url(true).'?page=users&action=activate&id[]='.$aUser['pk_i_id'].'&'.$csrf_token.'&value=ACTIVE">'.__('Activate') .'</a>';
+                                        }
+                                        if( $aUser['b_enabled'] ) {
+                                            $actions[] = '<a class="btn float-left" href="'.osc_admin_base_url(true).'?page=users&action=disable&id[]='.$aUser['pk_i_id'].'&'.$csrf_token.'&value=DISABLE">'.__('Block') .'</a>';
+                                            } else {
+                                            $actions[] = '<a class="btn btn-red float-left" href="'.osc_admin_base_url(true).'?page=users&action=enable&id[]='.$aUser['pk_i_id'].'&'.$csrf_token.'&value=ENABLE">'.__('Unblock') .'</a>';
+                                        }
+                                       
+                                        $this->_exportVariableToView("actions", $actions);
 
                                         $this->_exportVariableToView("user", $aUser);
                                         $this->_exportVariableToView("countries", $aCountries);
@@ -194,7 +202,7 @@
                                         }
 
                                         osc_add_flash_ok_message($msg, 'admin');
-                                        $this->redirectTo(osc_admin_base_url(true) . '?page=users');
+                                        $this->redirectTo( $_SERVER['HTTP_REFERER'] );
                 break;
                 case('deactivate'):     //deactivate
                                         osc_csrf_check();
@@ -219,7 +227,7 @@
                                         }
 
                                         osc_add_flash_ok_message($msg, 'admin');
-                                        $this->redirectTo(osc_admin_base_url(true) . '?page=users');
+                                        $this->redirectTo( $_SERVER['HTTP_REFERER'] );
                 break;
                 case('enable'):
                                         osc_csrf_check();
@@ -243,7 +251,7 @@
                                         }
 
                                         osc_add_flash_ok_message($msg, 'admin');
-                                        $this->redirectTo(osc_admin_base_url(true) . '?page=users');
+                                        $this->redirectTo( $_SERVER['HTTP_REFERER'] );
                 break;
                 case('disable'):
                                         osc_csrf_check();
@@ -267,7 +275,7 @@
                                         }
 
                                         osc_add_flash_ok_message($msg, 'admin');
-                                        $this->redirectTo(osc_admin_base_url(true) . '?page=users');
+                                        $this->redirectTo( $_SERVER['HTTP_REFERER'] );
                 break;
                 case('delete'):         //delete
                                         osc_csrf_check();
@@ -548,7 +556,7 @@
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=users&action=ban');
                                         }
 
-                                        BanRule::newInstance()->update(array('s_name' => Params::getParam('s_name'), 's_ip' => Params::getParam('s_ip'), 's_email' => Params::getParam('s_email')), array('pk_i_id' => Params::getParam('id')));
+                                        BanRule::newInstance()->update(array('s_name' => Params::getParam('s_name'), 's_ip' => Params::getParam('s_ip'), 's_email' => strtolower(Params::getParam('s_email'))), array('pk_i_id' => Params::getParam('id')));
                                         osc_add_flash_ok_message(_m('Rule updated correctly'), 'admin');
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=users&action=ban');
                 break;
@@ -563,7 +571,7 @@
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=users&action=ban');
                                         }
 
-                                        BanRule::newInstance()->insert(array('s_name' => Params::getParam('s_name'), 's_ip' => Params::getParam('s_ip'), 's_email' => Params::getParam('s_email')));
+                                        BanRule::newInstance()->insert(array('s_name' => Params::getParam('s_name'), 's_ip' => Params::getParam('s_ip'), 's_email' => strtolower(Params::getParam('s_email'))));
                                         osc_add_flash_ok_message(_m('Rule saved correctly'), 'admin');
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=users&action=ban');
                 break;

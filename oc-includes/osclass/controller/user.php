@@ -34,14 +34,14 @@
             switch( $this->action ) {
                 case('dashboard'):      //dashboard...
                                         $max_items = (Params::getParam('max_items')!='')?Params::getParam('max_items'):5;
-                                        $aItems = Item::newInstance()->findByUserIDEnabled(Session::newInstance()->_get('userId'), 0, $max_items);
+                                        $aItems = Item::newInstance()->findByUserIDEnabled(osc_logged_user_id(), 0, $max_items);
                                         //calling the view...
                                         $this->_exportVariableToView('items', $aItems);
                                         $this->_exportVariableToView('max_items', $max_items);
                                         $this->doView('user-dashboard.php');
                 break;
                 case('profile'):        //profile...
-                                        $user = User::newInstance()->findByPrimaryKey( Session::newInstance()->_get('userId') );
+                                        $user = User::newInstance()->findByPrimaryKey( osc_logged_user_id() );
                                         $aCountries = Country::newInstance()->listAll();
                                         $aRegions = array();
                                         if( $user['fk_c_country_code'] != '' ) {
@@ -201,9 +201,9 @@
                                                 $itemsPerPage = (Params::getParam('itemsPerPage')!='')?Params::getParam('itemsPerPage'):10;
                                                 $page         = (Params::getParam('iPage') > 0) ? Params::getParam('iPage') -1 : 0;
                                                 $itemType     = Params::getParam('itemType');
-                                                $total_items  = Item::newInstance()->countItemTypesByUserID($_SESSION['userId'], $itemType);
+                                                $total_items  = Item::newInstance()->countItemTypesByUserID(osc_logged_user_id(), $itemType);
                                                 $total_pages  = ceil($total_items/$itemsPerPage);
-                                                $items        = Item::newInstance()->findItemTypesByUserID($_SESSION['userId'], $page*$itemsPerPage, $itemsPerPage, $itemType);
+                                                $items        = Item::newInstance()->findItemTypesByUserID(osc_logged_user_id(), $page*$itemsPerPage, $itemsPerPage, $itemType);
 
                                                 $this->_exportVariableToView('items', $items);
                                                 $this->_exportVariableToView('list_total_pages', $total_pages);

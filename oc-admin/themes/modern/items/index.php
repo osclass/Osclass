@@ -91,7 +91,10 @@
                     modal: true
                 });
                 $("#bulk-actions-submit").click(function() {
-                    $("#datatablesForm").submit();
+                    if($("#bulk-actions-submit").prop("clicked")==false) {
+                        $("#bulk-actions-submit").prop("clicked", true);
+                        $("#datatablesForm").submit();
+                    }
                 });
                 $("#bulk-actions-cancel").click(function() {
                     $("#datatablesForm").attr('data-dialog-open', 'false');
@@ -110,6 +113,7 @@
                     $("#dialog-bulk-actions .form-row").html($("#bulk_actions option:selected").attr('data-dialog-content'));
                     $("#bulk-actions-submit").html($("#bulk_actions option:selected").text());
                     $("#datatablesForm").attr('data-dialog-open', 'true');
+                    $("#bulk-actions-submit").prop("clicked", false);
                     $("#dialog-bulk-actions").dialog('open');
                     return false;
                 });
@@ -291,7 +295,7 @@
 <div class="relative">
     <div id="listing-toolbar">
         <div class="float-right">
-            <form method="get" action="<?php echo osc_admin_base_url(true); ?>"  class="inline">
+            <form method="get" action="<?php echo osc_admin_base_url(true); ?>"  class="inline nocsrf">
                 <?php foreach( Params::getParamsAsArray('get') as $key => $value ) { ?>
                 <?php if( $key != 'iDisplayLength' ) { ?>
                 <input type="hidden" name="<?php echo $key; ?>" value="<?php echo osc_esc_html($value); ?>" />

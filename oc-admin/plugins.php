@@ -50,6 +50,7 @@
                     if(isset($package['size']) && $package['size']!=0) {
                         $path = osc_plugins_path();
                         (int) $status = osc_unzip_file($package['tmp_name'], $path);
+                        @unlink($package['tmp_name']);
                     } else {
                         $status = 3;
                     }
@@ -242,9 +243,9 @@
                     }
 
                     if( Params::getParam('iDisplayLength') == '' ) {
-                        Params::setParam('iDisplayLength', 10 );
+                        Params::setParam('iDisplayLength', 25 );
                     }
-                    // ?
+
                     $this->_exportVariableToView('iDisplayLength', Params::getParam('iDisplayLength'));
 
                     $p_iPage      = 1;

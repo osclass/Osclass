@@ -38,6 +38,7 @@
                                             $this->redirectTo(osc_base_url());
                                         }
                                         osc_csrf_check();
+                                        osc_run_hook('before_login');
                                         require_once LIB_PATH . 'osclass/UserActions.php';
                                         $user = User::newInstance()->findByEmail( Params::getParam('email') );
                                         if (!$user) {

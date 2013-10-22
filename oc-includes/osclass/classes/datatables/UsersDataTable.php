@@ -36,6 +36,10 @@
         private $order_by;
         private $conditions;
 
+        public function __construct()
+        {
+            osc_add_filter('datatable_user_class', array(&$this, 'row_class'));
+        }
 
         public function table($params)
         {
@@ -57,6 +61,8 @@
         private function addTableHeader()
         {
 
+            $this->addColumn('status-border', '');
+            $this->addColumn('status', __('Status'));
             $this->addColumn('bulkactions', '<input id="check_all" type="checkbox" />');
             $this->addColumn('email', __('E-mail'));
             $this->addColumn('username', __('Username'));
@@ -116,6 +122,9 @@
 
                     $actions = '<div class="actions">'.$auxOptions.'</div>'.PHP_EOL;
 
+                    $status = $this->get_row_status($aRow);
+                    $row['status-border'] = '';
+                    $row['status'] = $status['text'];
                     $row['bulkactions'] = '<input type="checkbox" name="id[]" value="' . $aRow['pk_i_id'] . '" /></div>';
                     $row['email'] = '<a href="' . osc_admin_base_url(true) . '?page=items&userId='. $aRow['pk_i_id'] .'&user='. $aRow['s_name'] .'">' . $aRow['s_email'] . '</a>'. $actions;
                     $row['username'] = $aRow['s_username'];
@@ -207,6 +216,50 @@
             $this->limit = intval( $_get['iDisplayLength'] );
 
 
+        }
+
+        public function row_class($class, $rawRow, $row)
+        {
+            $status = $this->get_row_status($rawRow);
+            $class[] = $status['class'];
+            return $class;
+        }
+
+        /**
+         * Get the status of the row. There are three status:
+         *     - blocked
+         *     - inactive
+         *     - active
+         *
+         * @since 3.3
+         *
+         * @return array Array with the class and text of the status of the listing in this row. Example:
+         *     array(
+         *         'class' => '',
+         *         'text'  => ''
+         *     )
+         */
+        private function get_row_status($user)
+        {
+
+            if( $user['b_enabled']==0 ) {
+                return array(
+                    'class' => 'status-blocked',
+                    'text'  => __('Blocked')
+                );
+            }
+
+            if( $user['b_active']==0 ) {
+                return array(
+                    'class' => 'status-inactive',
+                    'text'  => __('Inactive')
+                );
+            }
+
+            return array(
+                'class' => 'status-active',
+                'text'  => __('Active')
+            );
         }
 
     }
