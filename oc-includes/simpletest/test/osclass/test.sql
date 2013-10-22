@@ -1,0 +1,2 @@
+INSERT INTO `/*TABLE_PREFIX*/t_pages` (pk_i_id,s_internal_name,b_indelible,dt_pub_date,dt_mod_date,i_order) VALUES (99,'about',0,'2011-03-25 12:37:00','2011-03-25 12:37:00',99);
+INSERT INTO `/*TABLE_PREFIX*/t_pages_description` (fk_i_pages_id,fk_c_locale_code,s_title,s_text) VALUES (99,'en_US','About','string, text, description');

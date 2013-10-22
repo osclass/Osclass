@@ -25,7 +25,9 @@ if( !defined('ABS_PATH') ) {
     define( 'ABS_PATH', str_replace('\\', '/', dirname(__FILE__) . '/' ));
 }
 
-define('LIB_PATH', ABS_PATH . 'oc-includes/');
+if(!defined('LIB_PATH')) {
+    define('LIB_PATH', ABS_PATH . 'oc-includes/');
+};
 define('CONTENT_PATH', ABS_PATH . 'oc-content/');
 define('THEMES_PATH', CONTENT_PATH . 'themes/');
 define('PLUGINS_PATH', CONTENT_PATH . 'plugins/');

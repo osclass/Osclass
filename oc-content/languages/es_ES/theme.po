@@ -1,0 +1,538 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: OSClass\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-02-24 18:52+0100\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Juan Ramón <juanramon@osclass.org>\n"
+"Language-Team: OSClass <info@osclass.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: English\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+
+msgid "Page not found"
+msgstr "Página no encontrada"
+
+msgid "You have sucessfully subscribed to the alert"
+msgstr "Te has suscrito correctamente a esta alerta"
+
+msgid "There was a problem with the alert"
+msgstr "Ha habido un problema con la alerta"
+
+msgid "Subscribe to this search"
+msgstr "Suscribirse a esta búsqueda"
+
+msgid "Subject"
+msgstr "Asunto"
+
+msgid "Message"
+msgstr "Mensaje"
+
+msgid "Your name"
+msgstr "Tu nombre"
+
+msgid "Your e-mail address"
+msgstr "Tu e-mail"
+
+msgid "Send"
+msgstr "Enviar"
+
+msgid "Contact"
+msgstr "Contacto"
+
+msgid "This website is proudly using the <a title=\"OSClass web\" href=\"http://osclass.org/\">open source classifieds</a> software <strong>OSClass</strong>"
+msgstr "Este sitio web está utilizando <a title=\"OSClass web\" href=\"http://osclass.org/\">open source classifieds</a> - <strong>OSClass</strong>"
+
+msgid "Hi %s"
+msgstr "Hola %s"
+
+msgid "My account"
+msgstr "Mi cuenta"
+
+msgid "Logout"
+msgstr "Desconectarse"
+
+msgid "Login"
+msgstr "Login"
+
+msgid "Register for a free account"
+msgstr "Registra tu cuenta gratis"
+
+msgid "E-mail"
+msgstr "E-mail"
+
+msgid "Password"
+msgstr "Escribe tu contraseña"
+
+msgid "Log in"
+msgstr "Entrar"
+
+msgid "Forgot password?"
+msgstr "¿Has olvidado la contraseña?"
+
+msgid "Language"
+msgstr "Idioma"
+
+msgid "Publish your ad for free"
+msgstr "Publica tu anuncio gratis"
+
+msgid "ie. PHP Programmer"
+msgstr "pe. Programador PHP"
+
+msgid "Select a category"
+msgstr "Selecciona una categoría"
+
+msgid "Search"
+msgstr "Buscar"
+
+msgid "Contact seller"
+msgstr "Contactar al anunciante"
+
+msgid "To (seller)"
+msgstr "Para (anunciante)"
+
+msgid "Item"
+msgstr "Anuncio"
+
+msgid "Phone number"
+msgstr "Teléfono"
+
+msgid "Send message"
+msgstr "Enviar mensaje"
+
+msgid "Update your item"
+msgstr "Modifica tu anuncio"
+
+msgid "General Information"
+msgstr "Información general"
+
+msgid "Category"
+msgstr "Categoría"
+
+msgid "Price"
+msgstr "Precio"
+
+msgid "Photos"
+msgstr "Fotos"
+
+msgid "optional"
+msgstr "opcional"
+
+msgid "Add new photo"
+msgstr "Añadir nueva foto"
+
+msgid "Location"
+msgstr "Localización"
+
+msgid "Country"
+msgstr "País"
+
+msgid "Region"
+msgstr "Provincia"
+
+msgid "City"
+msgstr "Población"
+
+msgid "City area"
+msgstr "Distrito"
+
+msgid "Address"
+msgstr "Dirección postal"
+
+msgid "Update"
+msgstr "Modificar"
+
+msgid "Cancel"
+msgstr "Cancelado"
+
+msgid "Publish an item"
+msgstr "Publica un anuncio"
+
+msgid "Item Location"
+msgstr "Ubicación del anuncio"
+
+msgid "City Area"
+msgstr "Zona"
+
+msgid "Seller's information"
+msgstr "Información del anunciante"
+
+msgid "Name"
+msgstr "Nombre"
+
+msgid "Show e-mail on the item page"
+msgstr "Mostrar el e-mail en la ficha del anuncio"
+
+msgid "Publish"
+msgstr "Publicar"
+
+msgid "Send to a friend"
+msgstr "Envía a un amigo"
+
+msgid "Your friend's name"
+msgstr "Su nombre"
+
+msgid "Your friend's e-mail address"
+msgstr "Su e-mail"
+
+msgid "Mark as"
+msgstr "Marcar como"
+
+msgid "spam"
+msgstr "spam"
+
+msgid "misclassified"
+msgstr "mal clasificado"
+
+msgid "duplicated"
+msgstr "duplicado"
+
+msgid "expired"
+msgstr "expirado"
+
+msgid "offensive"
+msgstr "ofensivo"
+
+msgid "Share"
+msgstr "Compartir"
+
+msgid "Useful information"
+msgstr "Información útil"
+
+msgid "Avoid scams by acting locally or paying with PayPal"
+msgstr "Evitar fraudes pagando con paypal"
+
+msgid "Never pay with Western Union, Moneygram or other anonymous payment services"
+msgstr "Nunca pagues con Western Union, Moneygram u otros servicios de pago anónimos"
+
+msgid "Don't buy or sell outside of your country. Don't accept cashier cheques from outside your country"
+msgstr "No compres ni vendas fuera de tu país. No aceptes cheques de fuera de tu país"
+
+msgid "This site is never involved in any transaction, and does not handle payments, shipping, guarantee transactions, provide escrow services, or offer \"buyer protection\" or \"seller certification\""
+msgstr "Este sitio no está involucrado en la transacción y no gestiona los pagos, ni las entregas, ni las garantías, ni provee de servicios de depósito, ni ofrece \"protección al comprador\" o \"certificación del vendedor\""
+
+msgid "Comments"
+msgstr "Comentarios"
+
+msgid "by"
+msgstr "por"
+
+msgid "Leave your comment (spam and offensive messages will be removed)"
+msgstr "Deja tu comentario (spam y comentarios ofensivos serán eliminados)"
+
+msgid "Your e-mail"
+msgstr "Tu e-mail"
+
+msgid "Title"
+msgstr "Título"
+
+msgid "Comment"
+msgstr "Comentario"
+
+msgid "Contact publisher"
+msgstr "Contacta con el anunciante"
+
+msgid "Tel"
+msgstr "Teléfono"
+
+msgid "Latest Items"
+msgstr "Últimos anuncios"
+
+msgid "No Latest Items"
+msgstr "No hay anuncios recientes"
+
+msgid "See all offers"
+msgstr "Ver todas las ofertas"
+
+msgid "Search results"
+msgstr "Resultados de búsqueda"
+
+msgid "Sort by"
+msgstr "Ordenar por"
+
+msgid "There are no results matching \"%s\""
+msgstr "No hay ningún resultado que coincida con tu búsqueda \"%s\""
+
+msgid "Your search"
+msgstr "Tu búsqueda"
+
+msgid "Show only"
+msgstr "Mostrar sólo"
+
+msgid "Show only items with pictures"
+msgstr "Mostrar sólo anuncios con imágenes"
+
+msgid "Min"
+msgstr "Mín"
+
+msgid "Max"
+msgstr "Máx"
+
+msgid "Apply"
+msgstr "Aplicar"
+
+msgid "Selected"
+msgstr "Seleccionado"
+
+msgid "Nothing selected, input was"
+msgstr "No se ha seleccionado nada, el valor es"
+
+msgid "User account manager"
+msgstr "Mi cuenta"
+
+msgid "Your alerts"
+msgstr "Tus alertas"
+
+msgid "You do not have any alerts yet"
+msgstr "No has creado todavía ninguna alerta"
+
+msgid "Alert"
+msgstr "Alertas"
+
+msgid "This action can't be undone. Are you sure you want to continue?"
+msgstr "Esta acción no puede deshacerse. ¿Estás seguro de querer continuar?"
+
+msgid "Delete this alert"
+msgstr "Eliminar esta alerta"
+
+msgid "Publication date"
+msgstr "Fecha de publicación"
+
+msgid "Change your e-mail"
+msgstr "Modifica tu e-mail"
+
+msgid "Current e-mail"
+msgstr "E-mail actual"
+
+msgid "New e-mail"
+msgstr "Nuevo e-mail"
+
+msgid "Change your password"
+msgstr "Cambiar tu contraseña"
+
+msgid "Current password"
+msgstr "Contraseña actual"
+
+msgid "New pasword"
+msgstr "Nueva contraseña"
+
+msgid "Repeat new pasword"
+msgstr "Repite nueva contraseña"
+
+msgid "Items from %s"
+msgstr "Anuncios de %s"
+
+msgid "No items have been added yet"
+msgstr "Aún no has dado de alta ningún anuncio"
+
+msgid "Your items"
+msgstr "Tus anuncios"
+
+msgid "Post a new item"
+msgstr "Añade un anuncio"
+
+msgid "You don't have any items yet"
+msgstr "Aún no has dado de alta ningún anuncio"
+
+msgid "Edit"
+msgstr "Editar"
+
+msgid "Delete"
+msgstr "Eliminar"
+
+msgid "Activate"
+msgstr "Activar"
+
+msgid "Access to your account"
+msgstr "Acceso a tu cuenta"
+
+msgid "Remember me"
+msgstr "Nunca cerrar sesión"
+
+msgid "Update your profile"
+msgstr "Actualiza tu perfil"
+
+msgid "Modify e-mail"
+msgstr "Modificar e-mail"
+
+msgid "Modify password"
+msgstr "Modificar contraseña"
+
+msgid "Cell phone"
+msgstr "Móvil"
+
+msgid "Phone"
+msgstr "Teléfono"
+
+msgid "Website"
+msgstr "Website"
+
+msgid "Recover your password"
+msgstr "He olvidado mi contraseña"
+
+msgid "Send me a new password"
+msgstr "Envíame una nueva contraseña"
+
+msgid "Register an account for free"
+msgstr "Registra tu cuenta gratis"
+
+msgid "Re-type password"
+msgstr "Introduce tu contraseña de nuevo"
+
+msgid "Passwords don't match"
+msgstr "Las contraseñas no coinciden"
+
+msgid "Create"
+msgstr "Crear"
+
+msgid "New password"
+msgstr "Nueva contraseña"
+
+msgid "Dashboard"
+msgstr "Escritorio"
+
+msgid "Upload"
+msgstr "Subir"
+
+msgid "To make a directory writable under UNIX execute this command from the shell"
+msgstr "Para dar permisos de escritura a un directorio desde UNIX debes ejecutar este comando desde la línea de comandos"
+
+msgid "Latest items"
+msgstr "Últimos anuncios"
+
+msgid "Help"
+msgstr "Ayuda"
+
+msgid "Subscribe now"
+msgstr "Suscríbete ahora"
+
+msgid "Edit your item"
+msgstr "Edita tu anuncio"
+
+msgid "page"
+msgstr "página"
+
+msgid "Show all items"
+msgstr "Mostrar todos los anuncios"
+
+msgid "Create a new account"
+msgstr "Crear una cuenta nueva"
+
+msgid "Manage my items"
+msgstr "Gestionar mis anuncios"
+
+msgid "Manage my alerts"
+msgstr "Gestionar mis alertas"
+
+msgid "Update my profile"
+msgstr "Actualizar mi perfil"
+
+msgid "Change my email"
+msgstr "Cambiar mi email"
+
+msgid "Change my password"
+msgstr "Cambiar mi contraseña"
+
+msgid "Recover my password"
+msgstr "Recuperar mi contraseña"
+
+msgid "Delete your comment"
+msgstr "Elimina tu comentario"
+
+msgid "Enter the words above"
+msgstr "Introduce las palabras abajo"
+
+msgid "Repeat new password"
+msgstr "Repetir contraseña nueva"
+
+msgid "Change password"
+msgstr "Cambiar contraseña"
+
+msgid "This action can not be undone. Are you sure you want to continue?"
+msgstr "Esta acción no se puede deshacer. ¿Estás seguro de que quieres continuar?"
+
+msgid "User type"
+msgstr "Tipo de usuario"
+
+msgid "Invalid email address"
+msgstr "Dirección de correo no válida"
+
+msgid "Modern theme"
+msgstr "Plantilla Moderna"
+
+msgid "Settings theme"
+msgstr "Configuración de la plantilla"
+
+msgid "Image"
+msgstr "Imagen"
+
+msgid "Published date"
+msgstr "Fecha publicación"
+
+msgid "Modified date"
+msgstr "Fecha modificación"
+
+msgid "The preferred size of the logo is 600x100"
+msgstr "Las medidas recomendadas del logo són 600x100"
+
+msgid "Logo image"
+msgstr "Imagen logo"
+
+msgid "Remove logo"
+msgstr "Eliminar logo"
+
+msgid "Has not uploaded any logo image"
+msgstr "No ha subido ninguna imagen de logo"
+
+msgid "The images folder %s is not writable on your server"
+msgstr "La carpeta de imagenes %s no tiene permisos para escribir en tú servidor"
+
+msgid "OSClass can't upload logo image from the administration panel"
+msgstr "OSClass no puede subir la imagen de logo desde el panel de administración"
+
+msgid "Please make the mentioned images folder writable"
+msgstr "Por favor dé permisos de escritura a la mencionada carpeta de imagenes"
+
+msgid "Contact us"
+msgstr "Contáctanos"
+
+msgid "Error"
+msgstr "Error"
+
+msgid "No file selected"
+msgstr "Fichero no seleccionado"
+
+msgid "Choose File"
+msgstr "Escoge Fichero"
+
+msgid "Sponsored ad"
+msgstr "Destacado"
+
+msgid "View item"
+msgstr "Ver anuncio"
+
+msgid "Note: Uploading another logo will overwrite current logo"
+msgstr "Aviso: Cargar un logo nuevo supone la eliminación del actual"
+
+msgid "The item is expired. You cannot contact the publisher."
+msgstr ""
+
+msgid "It's your own item, you cannot contact the publisher."
+msgstr ""
+
+msgid "You must login or register a new free account in order to contact the advertiser"
+msgstr ""
+
+msgid "%s's profile"
+msgstr ""
+
+msgid "Profile"
+msgstr ""
+
+msgid "Full name"
+msgstr ""
+

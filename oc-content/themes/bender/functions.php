@@ -292,6 +292,7 @@ FUNCTIONS
 
             $aItems = $mSearch->doSearch();
             $iTotalItems = count($aItems);
+
             if( $iTotalItems > 0 ) {
                 View::newInstance()->_exportVariableToView('items', $aItems);
                 return $iTotalItems;

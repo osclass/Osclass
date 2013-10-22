@@ -22,7 +22,7 @@ Plugin update URI: http://www.osclass.org/files/plugins/google_analytics/update.
     }
 
     function google_analytics_actions() {
-        $dao_preference = new Preference();
+        $dao_preference = new Preference() ;
         $option         = Params::getParam('option');
 
         if( Params::getParam('file') != 'google_analytics/admin.php' ) {
