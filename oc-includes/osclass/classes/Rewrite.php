@@ -134,6 +134,7 @@
                         Params::setParam('page', 'custom');
                         Params::setParam('route', $id);
                         $route_used = true;
+                        $this->location = 'custom';
                         break;
                     }
                 }
