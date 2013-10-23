@@ -252,31 +252,6 @@
 
                     $this->redirectTo(osc_user_alerts_url());
                 break;
-                case 'deleteResource':
-                    $id   = Params::getParam('id');
-                    $name = Params::getParam('name');
-                    $fkid = Params::getParam('fkid');
-
-                    $resource = ItemResource::newInstance()->findByPrimaryKey($id);
-                    $item = Item::newInstance()->findByPrimaryKey($fkid);
-
-                    if ($resource && $item) {
-                        if($resource['fk_i_item_id']==$fkid && $item['fk_i_user_id']==  osc_logged_user_id()) {
-                            // Delete: file, db table entry
-                            osc_deleteResource($id, false);
-                            Log::newInstance()->insertLog('user', 'deleteResource', $id, $id, 'user', osc_logged_user_id());
-                            ItemResource::newInstance()->delete(array('pk_i_id' => $id, 'fk_i_item_id' => $item, 's_name' => $name) );
-
-                            osc_add_flash_ok_message(_m('The selected photo has been successfully deleted'));
-                        } else {
-                            osc_add_flash_error_message(_m("The selected photo does not belong to you"));
-                        }
-                    } else {
-                        osc_add_flash_error_message(_m("The selected photo couldn't be deleted"));
-                    }
-
-                    $this->redirectTo( osc_base_url(true) . "?page=item&action=item_edit&id=" . $fkid );
-                break;
                 case 'delete':
                     $id     = Params::getParam('id');
                     $secret = Params::getParam('secret');
