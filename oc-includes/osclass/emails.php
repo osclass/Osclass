@@ -1034,8 +1034,8 @@
                 $user['s_name'],
                 $user['s_email']
             );
-            $title = osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_user_registration_title', $content['s_title'])), $words);
-            $body  = osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_user_regsitration_description', $content['s_text'])), $words);
+            $title = osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_admin_user_registration_title', $content['s_title'])), $words);
+            $body  = osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_admin_user_regsitration_description', $content['s_text'])), $words);
 
             $emailParams = array(
                 'subject'  => $title,
