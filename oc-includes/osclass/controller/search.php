@@ -62,6 +62,7 @@
                         $this->_exportVariableToView('canonical', osc_base_url() . $search_uri);
                     }
 
+                    // get only the last segment
                     $search_uri = preg_replace('|.*?/|', '', $search_uri);
                     if( preg_match('|-r([0-9]+)$|', $search_uri, $r) ) {
                         $region = Region::newInstance()->findByPrimaryKey($r[1]);
