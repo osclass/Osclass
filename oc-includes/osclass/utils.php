@@ -1737,4 +1737,12 @@ function osc_calculate_location_slug($type) {
 
 }
 
+function osc_prune_array(&$array) {
+    if (is_array($array) && $array) {
+        $dummy = &$array;
+        $array = array_filter($dummy, 'osc_prune_array');
+    }
+    return !!$array;
+}
+
 ?>
