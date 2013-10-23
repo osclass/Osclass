@@ -351,6 +351,15 @@
     }
 
     /**
+     * Gets region id of current item
+     *
+     * @return string
+     */
+    function osc_item_region_id() {
+        return (string) osc_item_field("fk_i_region_id");
+    }
+
+    /**
      * Gets city of current item
      *
      * @return string
@@ -360,12 +369,30 @@
     }
 
     /**
+     * Gets city of current item
+     *
+     * @return string
+     */
+    function osc_item_city_id() {
+        return (string) osc_item_field("fk_i_city_id");
+    }
+
+    /**
      * Gets city area of current item
      *
      * @return string
      */
     function osc_item_city_area() {
         return (string) osc_item_field("s_city_area");
+    }
+
+    /**
+     * Gets city area of current item
+     *
+     * @return string
+     */
+    function osc_item_city_area_id() {
+        return (string) osc_item_field("fk_i_city_area_id");
     }
 
     /**

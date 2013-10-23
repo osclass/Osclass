@@ -366,6 +366,15 @@
     }
 
     /**
+     * Gets region id of current user
+     *
+     * @return string
+     */
+    function osc_user_region_id() {
+        return (string) osc_user_field("fk_i_region_id");
+    }
+
+    /**
      * Gets city of current user
      *
      * @return string
@@ -375,12 +384,30 @@
     }
 
     /**
+     * Gets city id of current user
+     *
+     * @return string
+     */
+    function osc_user_city_id() {
+        return (string) osc_user_field("fk_i_city_id");
+    }
+
+    /**
      * Gets city area of current user
      *
      * @return string
      */
     function osc_user_city_area() {
         return (string) osc_user_field("s_city_area");
+    }
+
+    /**
+     * Gets city area id of current user
+     *
+     * @return string
+     */
+    function osc_user_city_area_id() {
+        return (string) osc_user_field("fk_i_city_area_id");
     }
 
     /**
