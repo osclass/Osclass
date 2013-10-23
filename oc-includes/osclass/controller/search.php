@@ -32,6 +32,9 @@
                 // search url without permalinks params
             } else {
                 if( stripos($_SERVER['REQUEST_URI'], osc_get_preference('rewrite_search_url'))===false && osc_rewrite_enabled() && !Params::existParam('sFeed')) {
+                    // clean GET html params
+                    $this->uri = preg_replace('/(\/?)\?.*$/', '', $this->uri);
+
                     // redirect if it ends with a slash
                     if( preg_match('|/$|', $this->uri) ) {
                         $redirectURL = osc_base_url() . $this->uri;
@@ -80,8 +83,7 @@
                         }
                     } else {
                         if(!Params::existParam('sCategory')) {
-                            $aCategory = explode('/', $search_uri);
-                            $category  = Category::newInstance()->findBySlug($aCategory[count($aCategory)-1]);
+                            $category  = Category::newInstance()->findBySlug($search_uri);
                             if( count($category) === 0 ) {
                                 $this->do404();
                             }
