@@ -423,6 +423,17 @@
     }
 
     /**
+     * Re-send the activation link
+     *
+     * @param int $id
+     * @param string $email
+     * @return string
+     */
+    function osc_user_resend_activation_link($id, $email) {
+        return osc_base_url(true) . '?page=login&action=resend&id='.$id.'&email='.$email;
+    }
+
+    /**
      * Create automatically the url of the item's comments page
      *
      * @param mixed $page

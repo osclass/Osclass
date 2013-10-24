@@ -98,7 +98,11 @@
                                         if($logged==0) {
                                             osc_add_flash_error_message(_m("The user doesn't exist"));
                                         } else if($logged==1) {
-                                            osc_add_flash_error_message(_m('The user has not been validated yet'));
+                                            if((time()-strtotime($user['dt_access_date']))>1200) { // EACH 20 MINUTES
+                                                osc_add_flash_error_message(sprintf(_m('The user has not been validated yet. Would you like to re-send your <a href="%s">activation?</a>'), osc_user_resend_activation_link($user['pk_i_id'], $user['s_email'])));
+                                            } else {
+                                                osc_add_flash_error_message(_m('The user has not been validated yet'));
+                                            }
                                         } else if($logged==2) {
                                             osc_add_flash_error_message(_m('The user has been suspended'));
                                         } else if($logged==3) {
@@ -133,7 +137,29 @@
                                         }
 
                                         $this->redirectTo(osc_user_login_url());
-                break;
+                                        break;
+                case('resend'):
+                                        $id = Params::getParam('id');
+                                        $email = Params::getParam('email');
+                                        $user = User::newInstance()->findByPrimaryKey($id);
+                                        if($id=='' || $email=='' || !isset($user) || $user['b_active']==1 || $email!=$user['s_email']) {
+                                            osc_add_flash_error_message(_m('Incorrect link'));
+                                            $this->redirectTo(osc_user_login_url());
+                                        }
+                                        if((time()-strtotime($user['dt_access_date']))>1200) { // EACH 20 MINUTES
+                                            if(osc_notify_new_user()) {
+                                                osc_run_hook('hook_email_admin_new_user', $user);
+                                            }
+                                            if(osc_user_validation_enabled()) {
+                                                osc_run_hook('hook_email_user_validation', $user, $user);
+                                            }
+                                            User::newInstance()->update(array('dt_access_date' => date('Y-m-d H:i:s')), array('pk_i_id'  => $user['pk_i_id']));
+                                            osc_add_flash_ok_message(_m('Validation email re-sent'));
+                                        } else {
+                                            osc_add_flash_warning_message(_m('We have just sent you an email to validate your account, you will have to wait a few minutes to resend it again'));
+                                        }
+                                        $this->redirectTo(osc_user_login_url());
+                                        break;
                 case('recover'):        //form to recover the password (in this case we have the form in /gui/)
                                         $this->doView( 'user-recover.php' );
                 break;
