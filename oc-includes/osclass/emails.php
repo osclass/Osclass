@@ -512,7 +512,7 @@
                 'body'     => $body,
                 'alt_body' => $body
             );
-            $res = osc_sendMail($emailParams);
+            osc_sendMail($emailParams);
         }
     }
     osc_add_hook('hook_email_user_validation', 'fn_email_user_validation');
