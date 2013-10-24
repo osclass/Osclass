@@ -621,22 +621,14 @@
         return (string) $url;
     }
 
-    /**
-     * Gets actual page for current pagination
-     *
-     * @return int
-     */
+    // DEPRECATED: This function will be removed in version 4.0
     function osc_list_page() {
-        return View::newInstance()->_get('list_page');
+        return osc_search_page();
     }
 
-    /**
-     * Gets total of pages for current pagination
-     *
-     * @return int
-     */
+    // DEPRECATED: This function will be removed in version 4.0
     function osc_list_total_pages() {
-        return View::newInstance()->_get('list_total_pages');
+        return osc_search_total_pages();
     }
 
     /**

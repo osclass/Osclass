@@ -206,11 +206,11 @@
                                                 $items        = Item::newInstance()->findItemTypesByUserID($_SESSION['userId'], $page*$itemsPerPage, $itemsPerPage, $itemType);
 
                                                 $this->_exportVariableToView('items', $items);
-                                                $this->_exportVariableToView('list_total_pages', $total_pages);
-                                                $this->_exportVariableToView('list_total_items', $total_items);
+                                                $this->_exportVariableToView('search_total_pages', $total_pages);
+                                                $this->_exportVariableToView('search_total_items', $total_items);
                                                 $this->_exportVariableToView('items_per_page', $itemsPerPage);
                                                 $this->_exportVariableToView('items_type', $itemType);
-                                                $this->_exportVariableToView('list_page', $page);
+                                                $this->_exportVariableToView('search_page', $page);
 
                                                 $this->doView('user-items.php');
                 break;
