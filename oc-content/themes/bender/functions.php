@@ -511,8 +511,14 @@ FUNCTIONS
             exit;
         }
     }
+
+    function bender_delete() {
+        Preference::newInstance()->delete(array('s_section' => 'bender'));
+    }
+
     osc_add_hook('init', 'bender_redirect_user_dashboard', 2);
     osc_add_hook('init_admin', 'theme_bender_actions_admin');
+    osc_add_hook('theme_delete_bender', 'bender_delete');
     osc_admin_menu_appearance(__('Header logo', 'bender'), osc_admin_render_theme_url('oc-content/themes/bender/admin/header.php'), 'header_bender');
     osc_admin_menu_appearance(__('Theme settings', 'bender'), osc_admin_render_theme_url('oc-content/themes/bender/admin/settings.php'), 'settings_bender');
 /**
