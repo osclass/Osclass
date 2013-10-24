@@ -79,6 +79,7 @@
     <div class="similar_ads">
         <h2><?php _e('Latest listings', 'bender'); ?></h2>
         <?php osc_current_web_theme_path('loop.php'); ?>
+        <div class="paginate"><?php echo osc_pagination_items(); ?></div>
         <div class="clear"></div>
     </div>
     <?php } ?>
