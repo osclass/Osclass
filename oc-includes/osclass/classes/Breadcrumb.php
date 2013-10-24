@@ -87,6 +87,10 @@
                             $l = array('title' => osc_item_title());
                             $this->addLevel($l);
                         break;
+                        default:
+                            $l = array('title' => $this->section);
+                            $this->addLevel($l);
+                            break;
                     }
                 break;
                 case('search'):
@@ -228,6 +232,10 @@
                             break;
                         case('change_username'):
                             $l = array('title' => $this->title['user_change_username']);
+                            $this->addLevel($l);
+                            break;
+                        default:
+                            $l = array('title' => $this->section);
                             $this->addLevel($l);
                             break;
                     }
