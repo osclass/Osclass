@@ -266,7 +266,7 @@ function osc_add_route($id, $regexp, $url, $file, $user_menu = false) {
  */
 function osc_get_subdomain_params() {
     $options = array();
-    if(Params::getParam('subdomain')==1) {
+    if(osc_subdomain_name()!='') {
         if(Params::getParam('sCountry')!='') {
             $options['sCountry'] = Params::getParam('sCountry');
         }

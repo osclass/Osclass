@@ -53,6 +53,7 @@
             if($value=='') $value = 0;
             $aux = <<<FB
             <script type="text/javascript">
+            $(document).ready(function(){
                 $('.$id_field').datepicker({
                     onSelect: function() {
                         // format to unix timestamp
@@ -89,6 +90,7 @@
                     if($(".$id_field").prop('value') == '') {
                         $('#$id_field').prop('value', '');
                     }
+                });
                 });
             </script>
 FB;
@@ -236,7 +238,7 @@ FB;
                     }
                     // timestamp/1000 (javascript timestamp)
                     echo '<input type="hidden" id="meta_'.$field['s_slug'].'" name="meta['.$field['pk_i_id'].']" value=""/>';
-                    echo '<input type="text" id="" class="meta_'.$field['s_slug'].'" value=""/>';
+                    echo '<input type="text" id="" class="meta_'.$field['s_slug'].' cf_date" value=""/>';
                     FieldForm::initDatePicker('meta_'.$field['s_slug'], osc_date_format(), $field['s_value']);
 
                 } else if($field['e_type']=="DATEINTERVAL") {
@@ -248,12 +250,12 @@ FB;
 
                     echo __('from'). ' ';
                     echo '<input type="hidden" id="meta_'.$field['s_slug'].'_from" name="meta['.$field['pk_i_id'].'][from]" value="'.$field['s_value']['from'].'"/>';
-                    echo '<input type="text" id="" class="meta_'.$field['s_slug'].'_from" value=""/>';
+                    echo '<input type="text" id="" class="meta_'.$field['s_slug'].'_from cf_date_interval" value=""/>';
                     FieldForm::initDatePicker('meta_'.$field['s_slug'].'_from', osc_date_format(), $field['s_value']['from'], 'from');
 
                     echo ' ' . __('to'). ' ';
                     echo '<input type="hidden" id="meta_'.$field['s_slug'].'_to" name="meta['.$field['pk_i_id'].'][to]" value="'.$field['s_value']['to'].'"/>';
-                    echo '<input type="text" id="" class="meta_'.$field['s_slug'].'_to" value=""/>';
+                    echo '<input type="text" id="" class="meta_'.$field['s_slug'].'_to cf_date_interval" value=""/>';
                     FieldForm::initDatePicker('meta_'.$field['s_slug'].'_to', osc_date_format(), $field['s_value']['to'], 'to');
 
                 } else {

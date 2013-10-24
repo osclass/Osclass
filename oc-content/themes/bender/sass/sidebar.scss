@@ -32,7 +32,7 @@
         padding: 0 10px;
         height: 24px;
         line-height: 24px;
-        box-sizing: border-box;
+        @include prefixer(box-sizing, border-box, webkit moz ms o spec);
     }
     ul.category,
     ul.category ul{
@@ -63,12 +63,7 @@ ul.user_menu li{
     line-height: 0.8125em;
 }
 #sidebar{
-
-    .category ul{
-        display:none;
-    }
-    ul.category .show-sub ul.sub{
-        display:block;
+    ul.category ul{
         padding-left:15px;
     }
     .show-sub a{
@@ -77,10 +72,17 @@ ul.user_menu li{
     .show-sub li a{
         font-weight:normal;
     }
-    .price-slice input{
-        width: 50px;
+    .price-slice input,
+    .two_input input{
+	width: 65px;
         padding: 0 5px;
-        margin-right:5px;
+	margin-right:2px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+    }
+    .two_input input{
+	width: 70px;
     }
    .price-slice span{
         margin-right:0px;
@@ -133,8 +135,7 @@ ul.user_menu li{
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            -webkit-box-sizing: border-box;
-            box-sizing: border-box;
+            @include prefixer(box-sizing, border-box, webkit moz ms o spec);
             width: 100%;
             font-weight: normal;
             font-size:0.8125em;

@@ -31,6 +31,10 @@
 
             switch ($location_action) {
                 case('add_country'):    // add country
+                                        if( defined('DEMO') ) {
+                                            osc_add_flash_warning_message( _m("This action can't be done because it's a demo site"), 'admin');
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
+                                        }
                                         osc_csrf_check();
                                         $countryCode = strtoupper(Params::getParam('c_country'));
                                         $countryName = Params::getParam('country');
@@ -63,14 +67,42 @@
                                                 }
                                             }
                                         }
+                                        if(osc_subdomain_type()=='country' || osc_subdomain_type()=='region' || osc_subdomain_type()=='city') { osc_calculate_location_slug(osc_subdomain_type()); }
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
                 break;
                 case('edit_country'):   // edit country
+                                        if( defined('DEMO') ) {
+                                            osc_add_flash_warning_message( _m("This action can't be done because it's a demo site"), 'admin');
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
+                                        }
                                         osc_csrf_check();
                                         if(!osc_validate_min(Params::getParam('e_country'), 1)) {
                                             osc_add_flash_error_message(_m('Country name cannot be blank'), 'admin');
                                         } else {
-                                            $ok = $mCountries->update(array('s_name'=> Params::getParam('e_country')), array('pk_c_code' => Params::getParam('country_code')));
+                                            $name = Params::getParam('e_country');
+                                            $slug = Params::getParam('e_country_slug');
+                                            if($slug=='') {
+                                                $slug_tmp = $slug = osc_sanitizeString($name);
+                                            } else {
+                                                $exists = $mCountries->findBySlug($slug);
+                                                if(isset($exists['s_slug']) && $exists['pk_c_code']!=Params::getParam('country_code')) {
+                                                    $slug_tmp = $slug = osc_sanitizeString($name);
+                                                } else {
+                                                    $slug_tmp = $slug = osc_sanitizeString($slug);
+                                                }
+                                            }
+                                            $slug_unique = 1;
+                                            while(true) {
+                                                $location_slug = $mCountries->findBySlug($slug);
+                                                if(isset($location_slug['s_slug']) && $location_slug['pk_c_code']!=Params::getParam('country_code')) {
+                                                    $slug = $slug_tmp . '-' . $slug_unique;
+                                                    $slug_unique++;
+                                                } else {
+                                                    break;
+                                                }
+                                            }
+
+                                            $ok = $mCountries->update(array('s_name'=> $name, 's_slug' => $slug), array('pk_c_code' => Params::getParam('country_code')));
 
                                             if( $ok ) {
                                                 osc_add_flash_ok_message(_m('Country has been edited'), 'admin');
@@ -81,6 +113,10 @@
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
                 break;
                 case('delete_country'): // delete country
+                                        if( defined('DEMO') ) {
+                                            osc_add_flash_warning_message( _m("This action can't be done because it's a demo site"), 'admin');
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
+                                        }
                                         osc_csrf_check();
                                         $countryIds = Params::getParam('id');
 
@@ -106,6 +142,10 @@
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
                 break;
                 case('add_region'):     // add region
+                                        if( defined('DEMO') ) {
+                                            osc_add_flash_warning_message( _m("This action can't be done because it's a demo site"), 'admin');
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
+                                        }
                                         osc_csrf_check();
                                         if( !Params::getParam('r_manual') ) {
                                             $regionId    = Params::getParam('region_id');
@@ -147,9 +187,14 @@
                                                 }
                                             }
                                         }
+                                        if(osc_subdomain_type()=='region' || osc_subdomain_type()=='city') { osc_calculate_location_slug(osc_subdomain_type()); }
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations&country_code='.@$countryCode."&country=".@$country['s_name']);
                 break;
                 case('edit_region'):    // edit region
+                                        if( defined('DEMO') ) {
+                                            osc_add_flash_warning_message( _m("This action can't be done because it's a demo site"), 'admin');
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
+                                        }
                                         osc_csrf_check();
                                         $mRegions  = new Region();
                                         $newRegion = Params::getParam('e_region');
@@ -163,7 +208,31 @@
                                                 if($regionId != '') {
                                                     $aRegion = $mRegions->findByPrimaryKey($regionId);
                                                     $country = Country::newInstance()->findByCode($aRegion['fk_c_country_code']);
-                                                    $mRegions->update(array('s_name' => $newRegion)
+
+                                                    $name = $newRegion;
+                                                    $slug = Params::getParam('e_region_slug');
+                                                    if($slug=='') {
+                                                        $slug_tmp = $slug = osc_sanitizeString($name);
+                                                    } else {
+                                                        $exists = $mRegions->findBySlug($slug);
+                                                        if(isset($exists['s_slug']) && $exists['pk_i_id']!=$regionId) {
+                                                            $slug_tmp = $slug = osc_sanitizeString($name);
+                                                        } else {
+                                                            $slug_tmp = $slug = osc_sanitizeString($slug);
+                                                        }
+                                                    }
+                                                    $slug_unique = 1;
+                                                    while(true) {
+                                                        $location_slug = $mRegions->findBySlug($slug);
+                                                        if(isset($location_slug['s_slug']) && $location_slug['pk_i_id']!=$regionId) {
+                                                            $slug = $slug_tmp . '-' . $slug_unique;
+                                                            $slug_unique++;
+                                                        } else {
+                                                            break;
+                                                        }
+                                                    }
+
+                                                    $mRegions->update(array('s_name' => $newRegion, 's_slug' => $slug)
                                                                      ,array('pk_i_id' => $regionId));
                                                     ItemLocation::newInstance()->update(
                                                         array('s_region'       => $newRegion),
@@ -178,6 +247,10 @@
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations&country_code='.@$country['pk_c_code']."&country=".@$country['s_name']);
                 break;
                 case('delete_region'):  // delete region
+                                        if( defined('DEMO') ) {
+                                            osc_add_flash_warning_message( _m("This action can't be done because it's a demo site"), 'admin');
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
+                                        }
                                         osc_csrf_check();
                                         $mRegion  = new Region();
                                         $regionIds = Params::getParam('id');
@@ -210,6 +283,10 @@
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations&country_code='.@$country['pk_c_code']."&country=".@$country['s_name']);
                 break;
                 case('add_city'):       // add city
+                                        if( defined('DEMO') ) {
+                                            osc_add_flash_warning_message( _m("This action can't be done because it's a demo site"), 'admin');
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
+                                        }
                                         osc_csrf_check();
                                         if( !Params::getParam('ci_manual') ) {
                                             $cityId    = Params::getParam('city_id');
@@ -254,9 +331,14 @@
                                                 }
                                             }
                                         }
+                                        if(osc_subdomain_type()=='city') { osc_calculate_location_slug('city'); }
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations&country_code='.@$country['pk_c_code']."&country=".@$country['s_name']."&region=".$regionId);
                 break;
                 case('edit_city'):      // edit city
+                                        if( defined('DEMO') ) {
+                                            osc_add_flash_warning_message( _m("This action can't be done because it's a demo site"), 'admin');
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
+                                        }
                                         osc_csrf_check();
                                         $mRegion = new Region();
                                         $mCities = new City();
@@ -271,7 +353,31 @@
                                                 $city = $mCities->findByPrimaryKey($cityId);
                                                 $region = $mRegion->findByPrimaryKey($city['fk_i_region_id']);
                                                 $country = Country::newInstance()->findByCode($region['fk_c_country_code']);
-                                                $mCities->update(array('s_name' => $newCity)
+
+                                                $name = $newCity;
+                                                $slug = Params::getParam('e_country_slug');
+                                                if($slug=='') {
+                                                    $slug_tmp = $slug = osc_sanitizeString($name);
+                                                } else {
+                                                    $exists = $mCities->findBySlug($slug);
+                                                    if(isset($exists['s_slug']) && $exists['pk_i_id']!=$cityId) {
+                                                        $slug_tmp = $slug = osc_sanitizeString($name);
+                                                    } else {
+                                                        $slug_tmp = $slug = osc_sanitizeString($slug);
+                                                    }
+                                                }
+                                                $slug_unique = 1;
+                                                while(true) {
+                                                    $location_slug = $mCities->findBySlug($slug);
+                                                    if(isset($location_slug['s_slug']) && $location_slug['pk_i_id']!=$cityId) {
+                                                        $slug = $slug_tmp . '-' . $slug_unique;
+                                                        $slug_unique++;
+                                                    } else {
+                                                        break;
+                                                    }
+                                                }
+
+                                                $mCities->update(array('s_name' => $newCity, 's_slug' => $slug)
                                                                 ,array('pk_i_id' => $cityId));
                                                 ItemLocation::newInstance()->update(
                                                     array('s_city'       => $newCity),
@@ -285,6 +391,10 @@
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations&country_code='.@$country['pk_c_code']."&country=".@$country['s_name']."&region=".@$region['pk_i_id']);
                 break;
                 case('delete_city'):    // delete city
+                                        if( defined('DEMO') ) {
+                                            osc_add_flash_warning_message( _m("This action can't be done because it's a demo site"), 'admin');
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
+                                        }
                                         osc_csrf_check();
                                         $mCities = new City();
                                         $cityIds  = Params::getParam('id');

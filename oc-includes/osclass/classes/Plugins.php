@@ -237,9 +237,7 @@
             }
 
             $plugins_list[]  = $path;
-            $data['s_value'] = serialize($plugins_list);
-            $condition = array( 's_section' => 'osclass', 's_name' => 'installed_plugins');
-            Preference::newInstance()->update($data, $condition);
+            osc_set_preference('installed_plugins', serialize($plugins_list));
 
             // Check if something failed
             if ( ob_get_length() > 0 ) {
@@ -259,9 +257,12 @@
                 return false;
             }
 
-            if( !self::deactivate($path) ) {
+            include_once( osc_plugins_path() . $path );
+
+            self::deactivate($path);
+            /*if( !self::deactivate($path) ) {
                 return false;
-            }
+            }*/
 
             self::runHook($path . '_uninstall');
 
@@ -271,9 +272,7 @@
                 }
             }
 
-            $data['s_value'] = serialize($plugins_list);
-            $condition = array( 's_section' => 'osclass', 's_name' => 'installed_plugins');
-            Preference::newInstance()->update($data, $condition);
+            osc_set_preference('installed_plugins', serialize($plugins_list));
 
             $plugin = self::getInfo($path);
             self::cleanCategoryFromPlugin($plugin['short_name']);
@@ -294,9 +293,7 @@
             }
 
             $plugins_list[]  = $path;
-            $data['s_value'] = serialize($plugins_list);
-            $condition = array( 's_section' => 'osclass', 's_name' => 'active_plugins');
-            Preference::newInstance()->update($data, $condition);
+            osc_set_preference('active_plugins', serialize($plugins_list));
 
             self::reload();
 
@@ -326,9 +323,7 @@
             self::runHook($path . '_disable');
 
             // update t_preference field for active plugins
-            $data['s_value'] = serialize($plugins_list);
-            $condition = array( 's_section' => 'osclass', 's_name' => 'active_plugins');
-            Preference::newInstance()->update($data, $condition);
+            osc_set_preference('active_plugins', serialize($plugins_list));
 
             self::reload();
             return true;
@@ -359,6 +354,12 @@
                 $info['plugin_update_uri'] = trim($match[1]);
             } else {
                 $info['plugin_update_uri'] = "";
+            }
+
+            if( preg_match('|Support URI:([^\\r\\t\\n]*)|i', $s_info, $match) ) {
+                $info['support_uri'] = trim($match[1]);
+            } else {
+                $info['support_uri'] = "";
             }
 
             if( preg_match('|Description:([^\\r\\t\\n]*)|i', $s_info, $match) ) {
@@ -498,7 +499,7 @@
 
         static function reload()
         {
-            Preference::newInstance()->toArray();
+            osc_reset_preferences();
             self::init();
         }
 

@@ -370,7 +370,6 @@
         {
             if($r_p_p!=null) { $this->results_per_page = $r_p_p; };
             $this->limit_init = $this->results_per_page*$p;
-            $this->results_per_page = $this->results_per_page;
         }
 
         /**
@@ -770,7 +769,7 @@
                 $this->withCategoryId = true;
             }
 
-            $conditionsSQL = implode(' AND ', $this->conditions);
+            $conditionsSQL = implode(' AND ', osc_apply_filter('sql_search_conditions', $this->conditions));
             if($conditionsSQL!='') {
                 $conditionsSQL = " ".$conditionsSQL;
             }
@@ -778,7 +777,7 @@
             $extraFields = "";
             if( count($this->search_fields) > 0 ) {
                 $extraFields = ",";
-                $extraFields .= implode(' ,', $this->search_fields);
+                $extraFields .= implode(' ,', osc_apply_filter('sql_search_fields', $this->search_fields));
             }
 
             return array(
@@ -924,7 +923,7 @@
 
                 // item conditions
                 if(count($this->itemConditions)>0) {
-                    $itemConditions = implode(' AND ', $this->itemConditions);
+                    $itemConditions = implode(' AND ', osc_apply_filter('sql_search_item_conditions', $this->itemConditions));
                     $this->dao->where($itemConditions);
                 }
                 if( $this->withCategoryId && (count($this->categories) > 0) ) {
@@ -1100,7 +1099,7 @@
         {
             $this->set_rpp($numItems);
             if($withPicture) {
-                $this->withPicture();
+                $this->withPicture(true);
             }
             if(isset($options['sCategory'])) {
                 $this->addCategory($options['sCategory']);

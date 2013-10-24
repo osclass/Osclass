@@ -306,7 +306,7 @@
         if ( osc_rewrite_enabled() ) {
             $path = osc_base_url() . osc_get_preference('rewrite_item_new');
         } else {
-            $path = sprintf(osc_base_url(true) . '?page=item&action=item_add');
+            $path = osc_base_url(true) . '?page=item&action=item_add';
         }
         return $path;
     }
@@ -340,6 +340,8 @@
             if( osc_get_preference('seo_url_search_prefix') != '' ) {
                 $seo_prefix = osc_get_preference('seo_url_search_prefix') . '/';
             }
+            $url = str_replace('{CATEGORY_NAME}', osc_category_slug(), $url);
+            // DEPRECATED : CATEGORY_SLUG is going to be removed in 3.4
             $url = str_replace('{CATEGORY_SLUG}', osc_category_slug(), $url);
             $url = str_replace('{CATEGORY_ID}', osc_category_id(), $url);
             $path = osc_base_url() . $seo_prefix . $url;
@@ -809,10 +811,15 @@
         if(!isset($routes[$id])) { return ''; };
         if ( osc_rewrite_enabled() ) {
             $uri = $routes[$id]['url'];
+            $params_url = '';
             foreach($args as $k => $v) {
+                $old_uri = $uri;
                 $uri = str_ireplace('{'.$k.'}', $v, $uri);
+                if($old_uri==$uri) {
+                    $params_url .= '&'.$k.'='.$v;
+                }
             }
-            return osc_base_url().$uri;
+            return osc_base_url().$uri.(($params_url!='')?'?'.$params_url:'');
         } else {
             $params_url = '';
             foreach($args as $k => $v) {
@@ -1137,5 +1144,8 @@
         return $br->render($separator);
     }
 
+    function osc_subdomain_name() {
+        return View::newInstance()->_get('subdomain_name');
+    }    
     /* file end: ./oc-includes/osclass/helpers/hDefines.php */
 ?>

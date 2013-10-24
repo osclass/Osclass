@@ -89,7 +89,7 @@
                 </div>
                 <h2 class="render-title"><?php _e('Available themes'); ?></h2>
                 <div class="available-theme">
-                    <?php $aThemesToUpdate = json_decode( getPreference('themes_to_update') );
+                    <?php $aThemesToUpdate = json_decode( osc_get_preference('themes_to_update') );
                     $bThemesToUpdate = (is_array($aThemesToUpdate))?true:false;
                     $csrf_token = osc_csrf_token_url();
                     foreach($themes as $theme) { ?>

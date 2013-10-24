@@ -192,6 +192,7 @@
                                             }
 
                                             foreach( $id as $i ) {
+                                                osc_translate_categories($i);
                                                 $iUpdated += $this->localeManager->update($aValues, array('pk_c_code' => $i));
                                             }
 
@@ -249,6 +250,7 @@
                                             }
 
                                             foreach( $id as $i ) {
+                                                osc_translate_categories($i);
                                                 $iUpdated += $this->localeManager->update($aValues, array('pk_c_code' => $i));
                                             }
 
@@ -349,7 +351,7 @@
                                                 $displayRecords = ($start+$limit) - $count;
                                             }
                                             // ----
-                                            $aLanguagesToUpdate = json_decode( getPreference('languages_to_update') );
+                                            $aLanguagesToUpdate = json_decode( osc_get_preference('languages_to_update') );
                                             $bLanguagesToUpdate = is_array($aLanguagesToUpdate)?true:false;
                                             // ----
                                             $aData = array();
