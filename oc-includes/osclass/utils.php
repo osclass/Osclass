@@ -1693,7 +1693,7 @@ function osc_csrfguard_start() {
 
 function osc_redirect_to($url) {
     if(ob_get_length()>0) {
-        ob_end_flush();
+        ob_end_clean();
     }
     header("Location: ".$url);
     exit;
