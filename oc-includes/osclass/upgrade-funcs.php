@@ -444,7 +444,7 @@ CREATE TABLE %st_item_description_tmp (
         osc_calculate_location_slug(osc_subdomain_type());
     }
 
-    osc_changeVersionTo(321);
+    osc_changeVersionTo(322);
 
     echo '<div class="well ui-rounded-corners separate-top-medium">';
     echo '<p>'.__('Osclass &raquo; Updated correctly').'</p>';
