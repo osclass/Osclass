@@ -1737,4 +1737,17 @@ function osc_calculate_location_slug($type) {
 
 }
 
+function osc_prune_array(&$input) {
+    foreach ($input as $key => &$value) {
+        if(is_array($value)) {
+            osc_prune_array($value);
+            if(empty($input[$key])) {
+                unset($input[$key]);
+            }
+        } else if($value==='' || $value===false || $value===null) {
+            unset($input[$key]);
+        }
+    }
+}
+
 ?>
