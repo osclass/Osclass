@@ -32,6 +32,9 @@
                 // search url without permalinks params
             } else {
                 if( stripos($_SERVER['REQUEST_URI'], osc_get_preference('rewrite_search_url'))===false && osc_rewrite_enabled() && !Params::existParam('sFeed')) {
+                    // clean GET html params
+                    $this->uri = preg_replace('/(\/?)\?.*$/', '', $this->uri);
+
                     // redirect if it ends with a slash
                     if( preg_match('|/$|', $this->uri) ) {
                         $redirectURL = osc_base_url() . $this->uri;
@@ -59,6 +62,7 @@
                         $this->_exportVariableToView('canonical', osc_base_url() . $search_uri);
                     }
 
+                    // get only the last segment
                     $search_uri = preg_replace('|.*?/|', '', $search_uri);
                     if( preg_match('|-r([0-9]+)$|', $search_uri, $r) ) {
                         $region = Region::newInstance()->findByPrimaryKey($r[1]);
@@ -66,18 +70,21 @@
                             $this->do404();
                         }
                         Params::setParam('sRegion', $region['pk_i_id']);
-                        Params::setParam('sCategory', preg_replace('|(.*?)_.*?-r[0-9]+|', '$01', $search_uri));
+                        if(preg_match('|(.*?)_.*?-r[0-9]+|', $search_uri, $match)) {
+                            Params::setParam('sCategory', $match[1]);
+                        }
                     } else if( preg_match('|-c([0-9]+)$|', $search_uri, $c) ) {
                         $city = City::newInstance()->findByPrimaryKey($c[1]);
                         if( !$city ) {
                             $this->do404();
                         }
                         Params::setParam('sCity', $city['pk_i_id']);
-                        Params::setParam('sCategory', preg_replace('|(.*?)_.*?-c[0-9]+|', '$01', $search_uri));
+                        if(preg_match('|(.*?)_.*?-c[0-9]+|', $search_uri, $match)) {
+                            Params::setParam('sCategory', $match[1]);
+                        }
                     } else {
                         if(!Params::existParam('sCategory')) {
-                            $aCategory = explode('/', $search_uri);
-                            $category  = Category::newInstance()->findBySlug($aCategory[count($aCategory)-1]);
+                            $category  = Category::newInstance()->findBySlug($search_uri);
                             if( count($category) === 0 ) {
                                 $this->do404();
                             }

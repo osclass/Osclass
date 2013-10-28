@@ -200,7 +200,7 @@
             unset($tmp_categories_tree);
 
             if($categories == null) {
-                $categories = Category::newInstance()->listAll(false);
+                $categories = Category::newInstance()->listEnabled();
             }
 
             parent::generic_input_hidden("catId", $categoryID);
@@ -1209,10 +1209,7 @@
 	<?php
 	$categories = Category::newInstance()->listAll(false);
 	foreach($categories as $c) {
-		?>
-		//creat the array for the price enabled
-		catPriceEnabled[<?php echo $c['pk_i_id']; ?>] = <?php echo $c['b_price_enabled']; ?>;
-		<?php
+		echo 'catPriceEnabled['.$c['pk_i_id'].'] = '.$c['b_price_enabled'].';';
 	}
 	?>
     $("#catId").change(function(){
