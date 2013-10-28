@@ -67,8 +67,8 @@
             $url = osc_user_list_items_url('{PAGE}', $field);
         }
 
-        $params = array('total'    => osc_list_total_pages(),
-                        'selected' => osc_list_page(),
+        $params = array('total'    => osc_search_total_pages(),
+                        'selected' => osc_search_page(),
                         'url'      => $url
                   );
 

@@ -19,10 +19,10 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-define('OSCLASS_VERSION', '3.2.0');
+define('OSCLASS_VERSION', '3.2.2');
 
 if( !defined('ABS_PATH') ) {
-    define( 'ABS_PATH', dirname(__FILE__) . '/' );
+    define( 'ABS_PATH', str_replace('\\', '/', dirname(__FILE__) . '/' ));
 }
 
 define('LIB_PATH', ABS_PATH . 'oc-includes/');

@@ -32,6 +32,9 @@
                 // search url without permalinks params
             } else {
                 if( stripos($_SERVER['REQUEST_URI'], osc_get_preference('rewrite_search_url'))===false && osc_rewrite_enabled() && !Params::existParam('sFeed')) {
+                    // clean GET html params
+                    $this->uri = preg_replace('/(\/?)\?.*$/', '', $this->uri);
+
                     // redirect if it ends with a slash
                     if( preg_match('|/$|', $this->uri) ) {
                         $redirectURL = osc_base_url() . $this->uri;
@@ -48,7 +51,7 @@
 
                     // get page if it's set in the url
                     $iPage = preg_replace('|.*/([0-9]+)$|', '$01', $this->uri);
-                    if( $iPage > 0 ) {
+                    if( is_numeric($iPage) && $iPage > 0 ) {
                         Params::setParam('iPage', $iPage);
                         // redirect without number of pages
                         if( $iPage == 1 ) {
@@ -59,6 +62,7 @@
                         $this->_exportVariableToView('canonical', osc_base_url() . $search_uri);
                     }
 
+                    // get only the last segment
                     $search_uri = preg_replace('|.*?/|', '', $search_uri);
                     if( preg_match('|-r([0-9]+)$|', $search_uri, $r) ) {
                         $region = Region::newInstance()->findByPrimaryKey($r[1]);
@@ -66,21 +70,26 @@
                             $this->do404();
                         }
                         Params::setParam('sRegion', $region['pk_i_id']);
-                        Params::setParam('sCategory', preg_replace('|(.*?)_.*?-r[0-9]+|', '$01', $search_uri));
+                        if(preg_match('|(.*?)_.*?-r[0-9]+|', $search_uri, $match)) {
+                            Params::setParam('sCategory', $match[1]);
+                        }
                     } else if( preg_match('|-c([0-9]+)$|', $search_uri, $c) ) {
                         $city = City::newInstance()->findByPrimaryKey($c[1]);
                         if( !$city ) {
                             $this->do404();
                         }
                         Params::setParam('sCity', $city['pk_i_id']);
-                        Params::setParam('sCategory', preg_replace('|(.*?)_.*?-c[0-9]+|', '$01', $search_uri));
-                    } else {
-                        $aCategory = explode('/', $search_uri);
-                        $category  = Category::newInstance()->findBySlug($aCategory[count($aCategory)-1]);
-                        if( count($category) === 0 ) {
-                            $this->do404();
+                        if(preg_match('|(.*?)_.*?-c[0-9]+|', $search_uri, $match)) {
+                            Params::setParam('sCategory', $match[1]);
                         }
-                        Params::setParam('sCategory', $search_uri);
+                    } else {
+                        if(!Params::existParam('sCategory')) {
+                            $category  = Category::newInstance()->findBySlug($search_uri);
+                            if( count($category) === 0 ) {
+                                $this->do404();
+                            }
+                            Params::setParam('sCategory', $search_uri);
+                        }
                     }
                 }
             }
@@ -120,8 +129,30 @@
                                 $m[1][$k] = 'sPattern';
                                 break;
                             default :
+                                // custom fields
+                                if( preg_match("/meta(\d+)-?(.*)?/", $m[1][$k], $results) ) {
+                                    $meta_key   = $m[1][$k];
+                                    $meta_value = $m[2][$k];
+                                    $array_r    = array();
+                                    if(isset($_REQUEST['meta'])) {
+                                        $array_r    = $_REQUEST['meta'];
+                                    }
+                                    if($results[2]=='') {
+                                        // meta[meta_id] = meta_value
+                                        $meta_key = $results[1];
+                                        $array_r[$meta_key] = $meta_value;
+                                    } else {
+                                        // meta[meta_id][meta_key] = meta_value
+                                        $meta_key  = $results[1];
+                                        $meta_key2 = $results[2];
+                                        $array_r[$meta_key][$meta_key2]    = $meta_value;
+                                    }
+                                    $m[1][$k] = 'meta';
+                                    $m[2][$k] = $array_r;
+                                }
                                 break;
                         }
+
                         $_REQUEST[$m[1][$k]] = $m[2][$k];
                         $_GET[$m[1][$k]] = $m[2][$k];
                         unset($_REQUEST['sParams']);

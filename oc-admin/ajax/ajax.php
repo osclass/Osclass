@@ -93,24 +93,24 @@
                     $catManager = Category::newInstance();
                     $aRecountCat = array();
 
-                    foreach($aIds as $id => $parent) {
-                        if(!isset($order[$parent])) {
-                            $order[$parent] = 0;
+                    foreach($aIds as $cat) {
+                        if(!isset($order[$cat['p']])) {
+                            $order[$cat['p']] = 0;
                         }
 
                         $res = $catManager->update(
                             array(
-                                'fk_i_parent_id' => ($parent=='root'?NULL:$parent),
-                                'i_position' => $order[$parent]
+                                'fk_i_parent_id' => ($cat['p']=='root'?NULL:$cat['p']),
+                                'i_position' => $order[$cat['p']]
                             ),
-                            array('pk_i_id' => $id)
+                            array('pk_i_id' => $cat['c'])
                         );
                         if( is_bool($res) && !$res ) {
                             $error = 1;
                         } else if($res==1) {
-                            $aRecountCat[] = $id;
+                            $aRecountCat[] = $cat['c'];
                         }
-                        $order[$parent] = $order[$parent]+1;
+                        $order[$cat['p']] = $order[$cat['p']]+1;
                     }
 
                     // update category stats
@@ -702,7 +702,7 @@
                                 /**********************
                                  ***** UNZIP FILE *****
                                  **********************/
-                                @mkdir(ABS_PATH . 'oc-temp', 0777);
+                                @mkdir(osc_content_path() . 'downloads/oc-temp/', 0777);
                                 $res = osc_unzip_file(osc_content_path() . 'downloads/' . $filename, osc_content_path() . 'downloads/oc-temp/');
                                 if ($res == 1) { // Everything is OK, continue
                                     /**********************
@@ -917,7 +917,7 @@
                 case 'dashboardbox_market':
                     $error = 0;
                     // make market call
-                    $url = getPreference('marketURL') . 'dashboardbox/';
+                    $url = osc_get_preference('marketURL') . 'dashboardbox/';
 
                     $content = '';
                     if(false===($json=@osc_file_get_contents($url))) {
@@ -945,6 +945,30 @@
                     } else {
                         $array['status']  = 'done';
                         echo json_encode($array);
+                    }
+                    break;
+                case 'country_slug':
+                    $exists = Country::newInstance()->findBySlug(Params::getParam('slug'));
+                    if(isset($exists['s_slug'])) {
+                        echo json_encode(array('error' => 1, 'country' => $exists));
+                    } else {
+                        echo json_encode(array('error' => 0));
+                    }
+                    break;
+                case 'region_slug':
+                    $exists = Region::newInstance()->findBySlug(Params::getParam('slug'));
+                    if(isset($exists['s_slug'])) {
+                        echo json_encode(array('error' => 1, 'region' => $exists));
+                    } else {
+                        echo json_encode(array('error' => 0));
+                    }
+                    break;
+                case 'city_slug':
+                    $exists = City::newInstance()->findBySlug(Params::getParam('slug'));
+                    if(isset($exists['s_slug'])) {
+                        echo json_encode(array('error' => 1, 'city' => $exists));
+                    } else {
+                        echo json_encode(array('error' => 0));
                     }
                     break;
                 case 'error_permissions':

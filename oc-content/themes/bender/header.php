@@ -37,6 +37,7 @@
                 <li class="search"><a class="ico-search icons" data-bclass-toggle="display-search"></a></li>
                 <li class="cat"><a class="ico-menu icons" data-bclass-toggle="display-cat"></a></li>
             <?php } ?>
+            <?php if( osc_users_enabled() ) { ?>
             <?php if( osc_is_web_user_logged_in() ) { ?>
                 <li class="first logged">
                     <span><?php echo sprintf(__('Hi %s', 'bender'), osc_logged_user_name() . '!'); ?>  &middot;</span>
@@ -49,7 +50,10 @@
                     <li><a href="<?php echo osc_register_account_url() ; ?>"><?php _e('Register for a free account', 'bender'); ?></a></li>
                 <?php }; ?>
             <?php } ?>
+            <?php } ?>
+            <?php if( osc_users_enabled() || ( !osc_users_enabled() && !osc_reg_user_post() )) { ?>
             <li class="publish"><a href="<?php echo osc_item_post_url_in_category() ; ?>"><?php _e("Publish your ad for free", 'bender');?></a></li>
+            <?php } ?>
         </ul>
         <?php } ?>
     </div>
@@ -58,7 +62,7 @@
         <input type="hidden" name="page" value="search"/>
         <div class="main-search">
             <div class="cell">
-                <input type="text" name="sPattern" id="query" class="input-text" value="" placeholder="<?php echo osc_get_preference('keyword_placeholder', 'bender_theme') ; ?>" />
+                <input type="text" name="sPattern" id="query" class="input-text" value="" placeholder="<?php echo osc_esc_html(__(osc_get_preference('keyword_placeholder', 'bender_theme'), 'bender')); ?>" />
             </div>
             <?php  if ( osc_count_categories() ) { ?>
                 <div class="cell selector">

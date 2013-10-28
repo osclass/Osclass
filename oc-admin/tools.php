@@ -50,6 +50,7 @@
                                             $c_db = $conn->getOsclassDb();
                                             $comm = new DBCommandClass($c_db);
                                             if ( $comm->importSQL($content_file) ) {
+                                                osc_calculate_location_slug(osc_subdomain_type());
                                                 osc_add_flash_ok_message( _m('Import complete'), 'admin');
                                             } else {
                                                 osc_add_flash_error_message( _m('There was a problem importing data to the database'), 'admin');

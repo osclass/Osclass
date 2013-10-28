@@ -156,9 +156,10 @@
                     } else {
                         if(is_array($meta)) {
                             foreach( $meta as $key => $value ) {
-                                Session::newInstance()->_dropkeepForm('meta_'.$key);
+                                Session::newInstance()->_dropKeepForm('meta_'.$key);
                             }
                         }
+                        Session::newInstance()->_clearVariables();
                         if($success==1) {
                             osc_add_flash_ok_message( _m('Check your inbox to validate your listing') );
                         } else {
@@ -509,7 +510,7 @@
                         Session::newInstance()->_set('userLocale', Params::getParam('lang'));
                     }
 
-                    $item = $this->itemManager->findByPrimaryKey( Params::getParam('id') );
+                    $item = osc_apply_filter('pre_show_item', $this->itemManager->findByPrimaryKey( Params::getParam('id') ));
                     // if item doesn't exist show an error 410
                     if( count($item) == 0 ) {
                         $this->do410();

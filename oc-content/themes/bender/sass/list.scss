@@ -163,7 +163,8 @@ ul.r-list{
     }
     @include underlinke-hover(".listing-attributes a");
 }
-.premium-list  li.listing-card{
+.premium-list li.listing-card,
+li.listing-card.premium{
     background-color: #FCFCD7;
 }
 .listing-grid{
@@ -223,13 +224,14 @@ ul.r-list{
             overflow: hidden;
             text-overflow: ellipsis;
             width: 100%;
-            display: block;
+            display: inline-block;
         }
     }
     .g-hide{
         display:none;
     }
 }
+
 body.search .listing-grid .last{
     margin-right:0px;
 }

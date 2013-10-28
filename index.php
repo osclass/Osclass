@@ -19,7 +19,7 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
-    define('ABS_PATH', dirname($_SERVER['SCRIPT_FILENAME']) . '/');
+    define('ABS_PATH', str_replace('\\', '/', dirname($_SERVER['SCRIPT_FILENAME']) . '/'));
     if(PHP_SAPI==='cli') {
         define('CLI', true);
     }

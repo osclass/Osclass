@@ -121,8 +121,14 @@
                             $(ui.item).parent().addClass('subcategory');
                         }
                         if(list_original != list) {
+                            var plist = array_list.reduce(function ( total, current, index ) {
+                                total[index] = {'c' : current.item_id, 'p' : current.parent_id};
+                                return total;
+                            }, {});
                             $.ajax({
-                                url: "<?php echo osc_admin_base_url(true) . "?page=ajax&action=categories_order&" . osc_csrf_token_url() . "&"; ?>" + list,
+                                type: 'POST',
+                                url: "<?php echo osc_admin_base_url(true) . "?page=ajax&action=categories_order&" . osc_csrf_token_url(); ?>",
+                                data: {'list' : plist},
                                 context: document.body,
                                 success: function(res){
                                     var ret = eval( "(" + res + ")");
