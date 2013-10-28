@@ -1055,9 +1055,9 @@
      *
      * @return boolean
      */
-    function osc_is_custom_page($file = null) {
+    function osc_is_custom_page($value = null) {
         if(Rewrite::newInstance()->get_location()=='custom') {
-            if($file==null || Params::getParam('file')==$file) {
+            if($value==null || Params::getParam('file')==$value || Params::getParam('route')==$value) {
                 return true;
             }
         }
