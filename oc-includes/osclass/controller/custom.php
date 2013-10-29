@@ -55,7 +55,7 @@
                 return;
             }
 
-            osc_add_hook('custom_controller');
+            osc_run_hook('custom_controller');
 
             $this->_exportVariableToView('file', $file);
             if($user_menu) {
