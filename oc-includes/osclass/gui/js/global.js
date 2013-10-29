@@ -188,17 +188,24 @@ $(document).ready(function(event){
     });
 
     if(typeof $.fancybox == 'function') {
-      $("a[rel=image_group]").fancybox({
-          openEffect : 'none',
-          closeEffect : 'none',
-          nextEffect : 'fade',
-          prevEffect : 'fade',
-          loop : false,
-          helpers : {
-                  title : {
-                          type : 'inside'
-                  }
-          }
-      });
+        $("a[rel=image_group]").fancybox({
+            openEffect : 'none',
+            closeEffect : 'none',
+            nextEffect : 'fade',
+            prevEffect : 'fade',
+            loop : false,
+            helpers : {
+                title : {
+                    type : 'inside'
+                }
+            }
+        });
+
+        $(".main-photo").on('click', function(e) {
+            e.preventDefault();
+            $("a[rel=image_group]").first().click();
+        });
+
+
     }
 });

@@ -67,7 +67,7 @@
                 <p class="phone"><?php printf(__("Phone: %s", 'bender'), osc_user_phone()); ?></p>
             <?php } ?>
             <ul id="error_list"></ul>
-            <form action="<?php echo osc_base_url(true); ?>" method="post" name="contact_form" id="contact_form">
+            <form action="<?php echo osc_base_url(true); ?>" method="post" name="contact_form" id="contact_form" <?php if(osc_item_attachment()) { echo 'enctype="multipart/form-data"'; };?> >
                 <?php osc_prepare_user_info(); ?>
                  <input type="hidden" name="action" value="contact_post" />
                     <input type="hidden" name="page" value="item" />
@@ -89,6 +89,13 @@
                     <label class="control-label" for="message"><?php _e('Message', 'bender'); ?>:</label>
                     <div class="controls textarea"><?php ContactForm::your_message(); ?></div>
                 </div>
+
+                <?php if(osc_item_attachment()) { ?>
+                    <div class="control-group">
+                        <label class="control-label" for="attachment"><?php _e('Attachment', 'bender'); ?>:</label>
+                        <div class="controls"><?php ContactForm::your_attachment(); ?></div>
+                    </div>
+                <?php }; ?>
 
                 <div class="control-group">
                     <div class="controls">

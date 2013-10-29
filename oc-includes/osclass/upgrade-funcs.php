@@ -448,7 +448,7 @@ CREATE TABLE %st_item_description_tmp (
         @unlink(osc_lib_path() . 'osclass/classes/Watermark.php');
     }
 
-    osc_changeVersionTo(321);
+    osc_changeVersionTo(330);
 
     echo '<div class="well ui-rounded-corners separate-top-medium">';
     echo '<p>'.__('Osclass &raquo; Updated correctly').'</p>';
