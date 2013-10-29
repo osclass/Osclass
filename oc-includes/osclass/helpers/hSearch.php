@@ -315,7 +315,9 @@
      * @return string
      */
     function osc_search_url($params = null) {
-        osc_prune_array($params);
+        if(is_array($params)) {
+            osc_prune_array($params);
+        }
         $countP = count($params);
         if($countP==1) {
             if(isset($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS'])=='on' || $_SERVER['HTTPS']=='1')){

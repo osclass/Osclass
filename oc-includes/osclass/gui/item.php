@@ -76,7 +76,7 @@
             $i = 0;
         ?>
         <div class="item-photos">
-            <a href="<?php echo osc_resource_url(); ?>" class="main-photo" rel="image_group" title="<?php _e('Image', 'bender'); ?> <?php echo $i+1;?> / <?php echo osc_count_item_resources();?>">
+            <a href="<?php echo osc_resource_url(); ?>" class="main-photo" title="<?php _e('Image', 'bender'); ?> <?php echo $i+1;?> / <?php echo osc_count_item_resources();?>">
                 <img src="<?php echo osc_resource_url(); ?>" alt="<?php echo osc_item_title(); ?>" title="<?php echo osc_item_title(); ?>" />
             </a>
             <div class="thumbs">
@@ -133,18 +133,10 @@
         <?php if( osc_count_items() > 0 ) { ?>
         <div class="similar_ads">
             <h2><?php _e('Related listings', 'bender'); ?></h2>
-            <ul class="listing-card-list <?php echo (osc_item_is_premium()?" premium":"") ; ?>" id="related-card-list">
-                <?php
-                $i = 0;
-                while(osc_has_items()) { $i++; ?>
-                        <?php
-                        $class = false;
-                        if($i%4 == 0){
-                            $class = 'last';
-                        }
-                        bender_draw_item($class); ?>
-                <?php } ?>
-            </ul>
+            <?php
+            View::newInstance()->_exportVariableToView("listType", 'items');
+            osc_current_web_theme_path('loop.php');
+            ?>
             <div class="clear"></div>
         </div>
     <?php } ?>
