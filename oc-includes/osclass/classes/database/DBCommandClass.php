@@ -335,7 +335,6 @@
                     $v = ' ' . $this->escape($v);
                 }
 
-                $prefix . $k . $v;
                 $this->aWhere[] = $prefix . $k . $v;
             }
 
