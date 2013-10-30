@@ -286,11 +286,23 @@
      * @param string $file
      * @return string
      */
+    // DEPRECATED: Disclosed path in URL is deprecated, use routes instead
+    // This will be REMOVED in 3.4
     function osc_admin_render_plugin_url($file = '') {
         $file        = preg_replace('|/+|', '/', str_replace('\\', '/', $file));
         $plugin_path = str_replace('\\', '/', osc_plugins_path());
         $file        = str_replace($plugin_path, '', $file);
         return osc_admin_base_url(true) . '?page=plugins&action=renderplugin&file=' . $file;
+    }
+
+    /**
+     * Gets urls for custom plugin administrations options from route id
+     *
+     * @param string $route
+     * @return string
+     */
+    function osc_admin_route_url($route = '') {
+        return osc_admin_base_url(true) . '?page=plugins&action=renderplugin&route=' . $route;
     }
 
     /**
