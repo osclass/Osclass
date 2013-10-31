@@ -531,18 +531,19 @@
                             /**********************
                              ***** UNZIP FILE *****
                              **********************/
-                            @mkdir(ABS_PATH . 'oc-temp', 0777);
-                            $res = osc_unzip_file(osc_content_path() . 'downloads/' . $filename, ABS_PATH . 'oc-temp/');
+                            $tmp_path = osc_content_path().'downloads/oc-temp/core-'.$data['version'].'/';
+                            @mkdir($tmp_path, 0777);
+                            $res = osc_unzip_file(osc_content_path().'downloads/'.$filename, $tmp_path);
                             if ($res == 1) { // Everything is OK, continue
                                 /**********************
                                  ***** COPY FILES *****
                                  **********************/
                                 $fail = -1;
-                                if ($handle = opendir(ABS_PATH . 'oc-temp')) {
+                                if ($handle = opendir($tmp_path)) {
                                     $fail = 0;
                                     while (false !== ($_file = readdir($handle))) {
-                                        if ($_file != '.' && $_file != '..' && $_file != 'remove.list' && $_file != 'upgrade.sql' && $_file != 'customs.actions') {
-                                            $data = osc_copy(ABS_PATH . "oc-temp/" . $_file, ABS_PATH . $_file);
+                                        if ($_file != '.' && $_file != '..' && $_file != 'oc-content') {
+                                            $data = osc_copy($tmp_path.$_file, ABS_PATH.$_file);
                                             if ($data == false) {
                                                 $fail = 1;
                                             };
@@ -580,9 +581,8 @@
                                             /****************************
                                              ** REMOVE TEMPORARY FILES **
                                              ****************************/
-                                            $path = ABS_PATH . 'oc-temp';
                                             $rm_errors = 0;
-                                            $dir = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path), RecursiveIteratorIterator::CHILD_FIRST);
+                                            $dir = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($tmp_path), RecursiveIteratorIterator::CHILD_FIRST);
                                             for ($dir->rewind(); $dir->valid(); $dir->next()) {
                                                 if ($dir->isDir()) {
                                                     if ($dir->getFilename() != '.' && $dir->getFilename() != '..') {
@@ -596,7 +596,7 @@
                                                     }
                                                 }
                                             }
-                                            if (!rmdir($path)) {
+                                            if (!rmdir($tmp_path)) {
                                                 $rm_errors++;
                                             }
                                             $deleted = @unlink(ABS_PATH . '.maintenance');
