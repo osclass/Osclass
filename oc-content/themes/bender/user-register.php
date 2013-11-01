@@ -42,13 +42,6 @@
                 </div>
             </div>
             <div class="control-group">
-                <label class="control-label" for="email"><?php _e('E-mail', 'bender'); ?></label>
-                <div class="controls">
-                    <?php UserForm::email_text(); ?>
-                    <?php osc_show_recaptcha('register'); ?>
-                </div>
-            </div>
-            <div class="control-group">
                 <label class="control-label" for="password"><?php _e('Password', 'bender'); ?></label>
                 <div class="controls">
                     <?php UserForm::password_text(); ?>
@@ -61,6 +54,13 @@
                     <p id="password-error" style="display:none;">
                         <?php _e("Passwords don't match", 'bender'); ?>
                     </p>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="email"><?php _e('E-mail', 'bender'); ?></label>
+                <div class="controls">
+                    <?php UserForm::email_text(); ?>
+                    <?php osc_show_recaptcha('register'); ?>
                 </div>
             </div>
             <?php osc_run_hook('user_register_form'); ?>
