@@ -66,6 +66,11 @@
             <?php osc_run_hook('user_register_form'); ?>
             <div class="control-group">
                 <div class="controls">
+                    <?php osc_show_recaptcha('register'); ?>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="controls">
                     <button type="submit" class="ui-button ui-button-middle ui-button-main"><?php _e("Create", 'bender'); ?></button>
                 </div>
             </div>
