@@ -1762,7 +1762,7 @@ class HTML5TreeConstructer {
                         node, then stop this algorithm. */
                         if($token['name'] === $node->tagName ||    ($token['name'] !== 'li'
                         && ($node->tagName === 'dd' || $node->tagName === 'dt'))) {
-                            for($x = $stack_length; $x >= $n; $x--) {
+                            for($x = $stack_length; $x >= $n ; $x--) {
                                 array_pop($this->stack);
                             }
 
