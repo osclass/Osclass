@@ -55,7 +55,7 @@
     }
 
     /**
-     * Gets comments per page
+     * Gets auto update settings
      *
      * @return string
      */
