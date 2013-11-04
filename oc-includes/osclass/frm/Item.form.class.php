@@ -338,7 +338,7 @@
             if($type=='edit') {
                 $value = '-1';  // default no change expiration date
             }
-            parent::generic_input_text('dt_expiration', $value);
+            echo '<input id="dt_expiration" type="text" name="dt_expiration" value="'.osc_esc_html(htmlentities($value, ENT_COMPAT, "UTF-8")).'" placeholder="yyyy-mm-dd HH:mm:ss" />';
             return true;
         }
 
