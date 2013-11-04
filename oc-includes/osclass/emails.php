@@ -1269,5 +1269,49 @@
     }
     osc_add_hook('hook_email_warn_expiration', 'fn_email_warn_expiration');
 
-    /* file end: ./oc-includes/osclass/emails.php */
+    function fn_email_auto_upgrade($result) {
+
+
+        $body = __('<p>Dear {WEB_TITLE} admin,</p>');
+        if($result['error']==0 || $result['error']==6) {
+            $title = __('{WEB_TITLE} - Your site has upgraded to Osclass {VERSION}');
+            $body .= __('<p>Your site at {WEB_LINK} has been updated automatically to Osclass {VERSION}</p>');
+            if($result['error']==6) {
+                $body .= __('<p>There were some minor errors removing temporary files. Please manually remove the "oc-content/downloads/oc-temp" folder</p>');
+            }
+        } else {
+            $title = __('{WEB_TITLE} - We failed trying to upgrade your site to Osclass {VERSION}');
+            $body .= '<p>We failed trying to upgrade your site to Osclass {VERSION}. Heres is the error message: {MESSAGE}</p>';
+        }
+        $body .= '<p>If you experience any issues or need support, we will be happy to help you at the Osclass support forums</p>';
+        $body .= '<p><a href="http://forums.osclass.org/">http://forums.osclass.org/</a></p>';
+        $body .= '<p>The Osclass team</p>';
+
+
+        $words   = array();
+        $words[] = array(
+            '{MESSAGE}',
+            '{VERSION}'
+        );
+        $words[] = array(
+            $result['message'],
+            $result['version']
+        );
+
+        $title = osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_after_auto_upgrade', $title)), $words);
+        $body = osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_after_auto_upgrade', $body)), $words);
+
+        $emailParams = array(
+            'subject'  => $title,
+            'from'     => osc_contact_email(),
+            'to'       => osc_contact_email(),
+            'to_name'  => osc_page_title(),
+            'body'     => $body,
+            'alt_body' => $body,
+        );
+        osc_sendMail($emailParams);
+    }
+    osc_add_hook('after_after_auto_upgrade', 'fn_email_after_auto_upgrade');
+
+/* file end: ./oc-includes/osclass/emails.php */
 ?>

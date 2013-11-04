@@ -55,6 +55,15 @@
     }
 
     /**
+     * Gets comments per page
+     *
+     * @return string
+     */
+    function osc_auto_update() {
+        return (getPreference('auto_update'));
+    }
+
+    /**
      * Gets number of days to warn about an ad being expired
      *
      * @return int

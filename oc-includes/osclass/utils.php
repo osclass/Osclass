@@ -1750,4 +1750,381 @@ function osc_prune_array(&$input) {
     }
 }
 
+function osc_do_upgrade() {
+    $message = "";
+    $error = 0;
+    $sql_error_msg = "";
+    $rm_errors = 0;
+    $perms = osc_save_permissions();
+    osc_change_permissions();
+
+    $maintenance_file = ABS_PATH . '.maintenance';
+    $fileHandler = @fopen($maintenance_file, 'w');
+    fclose($fileHandler);
+
+    /***********************
+     **** DOWNLOAD FILE ****
+     ***********************/
+    $data = osc_file_get_contents("http://osclass.org/latest_version.php");
+    $data = json_decode(substr($data, 1, strlen($data)-3), true);
+    $source_file = $data['url'];
+    if ($source_file != '') {
+
+        $tmp = explode("/", $source_file);
+        $filename = end($tmp);
+        $result = osc_downloadFile($source_file, $filename);
+
+        if ($result) { // Everything is OK, continue
+            /**********************
+             ***** UNZIP FILE *****
+             **********************/
+            @mkdir(ABS_PATH . 'oc-temp', 0777);
+            $res = osc_unzip_file(osc_content_path() . 'downloads/' . $filename, ABS_PATH . 'oc-temp/');
+            if ($res == 1) { // Everything is OK, continue
+                /**********************
+                 ***** COPY FILES *****
+                 **********************/
+                $fail = -1;
+                if ($handle = opendir(ABS_PATH . 'oc-temp')) {
+                    $fail = 0;
+                    while (false !== ($_file = readdir($handle))) {
+                        if ($_file != '.' && $_file != '..' && $_file != 'remove.list' && $_file != 'upgrade.sql' && $_file != 'customs.actions') {
+                            $data = osc_copy(ABS_PATH . "oc-temp/" . $_file, ABS_PATH . $_file);
+                            if ($data == false) {
+                                $fail = 1;
+                            };
+                        }
+                    }
+                    closedir($handle);
+                    //TRY TO REMOVE THE ZIP PACKAGE
+                    @unlink(osc_content_path() . 'downloads/' . $filename);
+
+                    if ($fail == 0) { // Everything is OK, continue
+                        /************************
+                         *** UPGRADE DATABASE ***
+                         ************************/
+                        $error_queries = array();
+                        if (file_exists(osc_lib_path() . 'osclass/installer/struct.sql')) {
+                            $sql = file_get_contents(osc_lib_path() . 'osclass/installer/struct.sql');
+
+                            $conn = DBConnectionClass::newInstance();
+                            $c_db = $conn->getOsclassDb();
+                            $comm = new DBCommandClass( $c_db );
+                            $error_queries = $comm->updateDB( str_replace('/*TABLE_PREFIX*/', DB_TABLE_PREFIX, $sql) );
+
+                        }
+                        if ($error_queries[0]) { // Everything is OK, continue
+                            /**********************************
+                             ** EXECUTING ADDITIONAL ACTIONS **
+                             **********************************/
+                            if (file_exists(osc_lib_path() . 'osclass/upgrade-funcs.php')) {
+                                // There should be no errors here
+                                define('AUTO_UPGRADE', true);
+                                require_once osc_lib_path() . 'osclass/upgrade-funcs.php';
+                            }
+                            // Additional actions is not important for the rest of the proccess
+                            // We will inform the user of the problems but the upgrade could continue
+                            /****************************
+                             ** REMOVE TEMPORARY FILES **
+                             ****************************/
+                            $path = ABS_PATH . 'oc-temp';
+                            $rm_errors = 0;
+                            $dir = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path), RecursiveIteratorIterator::CHILD_FIRST);
+                            for ($dir->rewind(); $dir->valid(); $dir->next()) {
+                                if ($dir->isDir()) {
+                                    if ($dir->getFilename() != '.' && $dir->getFilename() != '..') {
+                                        if (!rmdir($dir->getPathname())) {
+                                            $rm_errors++;
+                                        }
+                                    }
+                                } else {
+                                    if (!unlink($dir->getPathname())) {
+                                        $rm_errors++;
+                                    }
+                                }
+                            }
+                            if (!rmdir($path)) {
+                                $rm_errors++;
+                            }
+                            $deleted = @unlink(ABS_PATH . '.maintenance');
+                            if ($rm_errors == 0) {
+                                $message = __('Everything looks good! Your Osclass installation is up-to-date');
+                            } else {
+                                $message = __('Nearly everything looks good! Your Osclass installation is up-to-date, but there were some errors removing temporary files. Please manually remove the "oc-content/downloads/oc-temp" folder');
+                                $error = 6; // Some errors removing files
+                            }
+                        } else {
+                            $sql_error_msg = $error_queries[2];
+                            $message = __('Problems when upgrading the database');
+                            $error = 5; // Problems upgrading the database
+                        }
+                    } else {
+                        $message = __('Problems when copying files. Please check your permissions. ');
+                        $error = 4; // Problems copying files. Maybe permissions are not correct
+                    }
+                } else {
+                    $message = __('Nothing to copy');
+                    $error = 99; // Nothing to copy. THIS SHOULD NEVER HAPPEN, means we don't update any file!
+                }
+            } else {
+                $message = __('Unzip failed');
+                $error = 3; // Unzip failed
+            }
+        } else {
+            $message = __('Download failed');
+            $error = 2; // Download failed
+        }
+    } else {
+        $message = __('Missing download URL');
+        $error = 1; // Missing download URL
+    }
+
+    if ($error == 5) {
+        $message .= "<br /><br />" . __('We had some errors upgrading your database. The follwing queries failed:') . implode("<br />", $sql_error_msg);
+    }
+
+    foreach ($perms as $k => $v) {
+        @chmod($k, $v);
+    }
+    return array('error' => $error, 'message' => $message, 'version' => @$data['s_name']);
+}
+
+function osc_do_auto_upgrade() {
+    $data = osc_file_get_contents('http://osclass.org/latest_version.php?callback=?');
+    $data = preg_replace('|^\?\((.*?)\);$|', '$01', $data);
+    $json = json_decode($data);
+    $result['error'] = 0;
+    if($json->version>osc_version()) {
+        osc_set_preference('update_core_json', $data);
+        if(substr($json->version,0,1)!=substr(osc_version(),0,1)) {
+            // NEW BRANCH
+            if(strpos(osc_auto_update(), 'branch')!==false) {
+                osc_run_hook('before_auto_update');
+                $result = osc_do_upgrade();
+                osc_run_hook('after_auto_update', $result);
+            }
+        } else if(substr($json->version,1,1)!=substr(osc_version(),1,1)) {
+            // MAJOR RELEASE
+            if(strpos(osc_auto_update(), 'branch')!==false || strpos(osc_auto_update(), 'major')!==false) {
+                osc_run_hook('before_auto_update');
+                $result = osc_do_upgrade();
+                osc_run_hook('after_auto_update', $result);
+            }
+        } else if(substr($json->version,2,1)!=substr(osc_version(),2,1)) {
+            // MINOR RELEASE
+            if(strpos(osc_auto_update(), 'branch')!==false || strpos(osc_auto_update(), 'major')!==false || strpos(osc_auto_update(), 'minor')!==false) {
+                osc_run_hook('before_auto_update');
+                $result = osc_do_upgrade();
+                osc_run_hook('after_auto_update', $result);
+            }
+        }
+    } else {
+        osc_set_preference('update_core_json', '');
+    }
+    osc_set_preference('last_version_check', time());
+
+    if($result['error']==0 || $result['error']==6) {
+        osc_set_preference('update_core_json', '');
+        if(strpos(osc_auto_update(), 'plugins')!==false) {
+            $total = osc_check_plugins_update(true);
+            if($total>0) {
+                $elements = osc_get_preference('plugins_to_update');
+                foreach($elements as $element) {
+                    osc_market('plugins', $element);
+                }
+            }
+        }
+
+        if(strpos(osc_auto_update(), 'themes')!==false) {
+            $total = osc_check_themes_update(true);
+            if($total>0) {
+                $elements = osc_get_preference('themes_to_update');
+                foreach($elements as $element) {
+                    osc_market('themes', $element);
+                }
+            }
+        }
+
+        if(strpos(osc_auto_update(), 'languages')!==false) {
+            $total = osc_check_languages_update(true);
+            if($total>0) {
+                $elements = osc_get_preference('languages_to_update');
+                foreach($elements as $element) {
+                    osc_market('languages', $element);
+                }
+            }
+        }
+    }
+}
+
+
+
+function osc_market($section, $code) {
+    $plugin  = false;
+    $re_enable = false;
+    $message = "";
+    $data = array();
+    /************************
+     *** CHECK VALID CODE ***
+     ************************/
+    if ($code != '' && $section != '') {
+        if(stripos($code, "http://")===FALSE) {
+            // OSCLASS OFFICIAL REPOSITORY
+            $url = osc_market_url($section, $code);
+            $data = json_decode(osc_file_get_contents($url), true);
+        } else {
+            // THIRD PARTY REPOSITORY
+            if(osc_market_external_sources()) {
+                $data = json_decode(osc_file_get_contents($code), true);
+            } else {
+                return array('error' => 9, 'message' => __('No external sources are allowed'), 'data' => $data);
+            }
+        }
+
+        /***********************
+         **** DOWNLOAD FILE ****
+         ***********************/
+        if( isset($data['s_update_url']) && isset($data['s_source_file']) && isset($data['e_type'])) {
+
+            if($data['e_type']=='THEME') {
+                $folder = 'themes/';
+            } else if($data['e_type']=='LANGUAGE') {
+                $folder = 'languages/';
+            } else { // PLUGINS
+                $folder = 'plugins/';
+                $plugin = Plugins::findByUpdateURI($data['s_update_url']);
+                if($plugin!=false) {
+                    if(Plugins::isEnabled($plugin)) {
+                        Plugins::runHook($plugin.'_disable');
+                        Plugins::deactivate($plugin);
+                        $re_enable = true;
+                    }
+                }
+            }
+
+            $filename = date('YmdHis')."_".osc_sanitize_string($data['s_title'])."_".$data['s_version'].".zip";
+            $url_source_file = $data['s_source_file'];
+
+            $result   = osc_downloadFile($url_source_file, $filename);
+
+            if ($result) { // Everything is OK, continue
+                /**********************
+                 ***** UNZIP FILE *****
+                 **********************/
+                @mkdir(osc_content_path() . 'downloads/oc-temp/', 0777);
+                $res = osc_unzip_file(osc_content_path() . 'downloads/' . $filename, osc_content_path() . 'downloads/oc-temp/');
+                if ($res == 1) { // Everything is OK, continue
+                    /**********************
+                     ***** COPY FILES *****
+                     **********************/
+                    $fail = -1;
+                    if ($handle = opendir(osc_content_path() . 'downloads/oc-temp')) {
+                        $folder_dest    = ABS_PATH . "oc-content/".$folder;
+
+                        if( function_exists('posix_getpwuid') ) {
+                            $current_user   = posix_getpwuid(posix_geteuid());
+                            $ownerFolder    = posix_getpwuid(fileowner($folder_dest));
+                        }
+
+                        $fail = 0;
+                        while (false !== ($_file = readdir($handle))) {
+                            if ($_file != '.' && $_file != '..') {
+                                $copyprocess = osc_copy(osc_content_path() . "downloads/oc-temp/" . $_file, $folder_dest . $_file);
+                                if ($copyprocess == false) {
+                                    $fail = 1;
+                                };
+                            }
+                        }
+                        closedir($handle);
+
+                        // Additional actions is not important for the rest of the proccess
+                        // We will inform the user of the problems but the upgrade could continue
+                        // Also remove the zip package
+                        /****************************
+                         ** REMOVE TEMPORARY FILES **
+                         ****************************/
+                        @unlink(osc_content_path() . 'downloads/' . $filename);
+                        $path = osc_content_path() . 'downloads/oc-temp';
+                        $rm_errors = 0;
+                        $dir = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path), RecursiveIteratorIterator::CHILD_FIRST);
+                        for ($dir->rewind(); $dir->valid(); $dir->next()) {
+                            if ($dir->isDir()) {
+                                if ($dir->getFilename() != '.' && $dir->getFilename() != '..') {
+                                    if (!rmdir($dir->getPathname())) {
+                                        $rm_errors++;
+                                    }
+                                }
+                            } else {
+                                if (!unlink($dir->getPathname())) {
+                                    $rm_errors++;
+                                }
+                            }
+                        }
+
+                        if (!rmdir($path)) {
+                            $rm_errors++;
+                        }
+
+                        if ($fail == 0) { // Everything is OK, continue
+                            if($data['e_type']!='THEME' && $data['e_type']!='LANGUAGE') {
+                                if($plugin!=false && $re_enable) {
+                                    $enabled = Plugins::activate($plugin);
+                                    if($enabled) {
+                                        Plugins::runHook($plugin.'_enable');
+                                    }
+                                }
+
+                            }
+                            // recount plugins&themes for update
+                            if($section == 'plugins') {
+                                osc_check_plugins_update(true);
+                            } else if($section == 'themes') {
+                                osc_check_themes_update(true);
+                            } else if($section == 'languages') {
+                                osc_check_languages_update(true);
+                            }
+
+                            if ($rm_errors == 0) {
+                                $message = __('Everything looks good!');
+                                $error = 0;
+                            } else {
+                                $message = __('Nearly everything looks good! but there were some errors removing temporary files. Please manually remove the \"oc-content/downloads/oc-temp\" folder');
+                                $error = 6; // Some errors removing files
+                            }
+                        } else {
+                            $message = __('Problems when copying files. Please check your permissions. ');
+
+                            if($current_user['uid'] != $ownerFolder['uid']) {
+                                if(function_exists('posix_getgrgid') ) {
+                                    $current_group  = posix_getgrgid( $current_user['gid']);
+                                    $message .= '<p><strong>' . sprintf(__('NOTE: Web user and destination folder user is not the same, you might have an issue there. <br/>Do this in your console:<br/>chown -R %s:%s %s'), $current_user['name'], $current_group['name'], $folder_dest).'</strong></p>';
+                                }
+                            }
+                            $error = 4; // Problems copying files. Maybe permissions are not correct
+                        }
+                    } else {
+                        $message = __('Nothing to copy');
+                        $error = 99; // Nothing to copy. THIS SHOULD NEVER HAPPEN, means we don't update any file!
+                    }
+                } else {
+                    $message = __('Unzip failed');
+                    $error = 3; // Unzip failed
+                }
+            } else {
+                $message = __('Download failed');
+                $error = 2; // Download failed
+            }
+        } else {
+            $message = __('Input code not valid');
+            $error = 7; // Input code not valid
+        }
+    } else {
+        $message = __('Missing download URL');
+        $error = 1; // Missing download URL
+    }
+
+    return array('error' => $error, 'message' => $message, 'data' => $data);
+}
+
+
 ?>
