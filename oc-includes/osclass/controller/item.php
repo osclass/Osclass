@@ -506,6 +506,8 @@
                         return;
                     }
 
+                    osc_run_hook('show_item_pre_check', Params::getParam('id'));
+                    
                     if( Params::getParam('lang') != '' ) {
                         Session::newInstance()->_set('userLocale', Params::getParam('lang'));
                     }
@@ -577,7 +579,8 @@
 
                     // redirect to the correct url
                     if( $itemURI != $URI ) {
-                        $this->redirectTo(osc_base_url() . $itemURI);
+                        header("Location: ".osc_base_url() . $itemURI, true, 301);
+                        exit;
                     }
 
                     $this->doView('item.php');
