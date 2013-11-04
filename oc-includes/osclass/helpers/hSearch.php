@@ -759,7 +759,7 @@
         if ( !View::newInstance()->_exists('latest_searches') ) {
             View::newInstance()->_exportVariableToView('latest_searches', LatestSearches::newInstance()->getSearches($limit) );
         }
-        return View::newInstance()->_count('latest_searches');
+        return View::newInstance()->_get('latest_searches');
     }
 
     /**
