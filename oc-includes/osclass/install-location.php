@@ -69,7 +69,7 @@ function basic_info() {
         array(
             's_name'      => 'Administrator'
             ,'s_username' => $admin
-            ,'s_password' => sha1($password)
+            ,'s_password' => osc_hash_password($password)
             ,'s_email'    => Params::getParam('email')
         )
     );

@@ -1,5 +1,7 @@
 <?php
 
+require_once LIB_PATH . 'Bcrypt.php';
+
     /*
      *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
@@ -233,5 +235,22 @@
         }
         return false;
     }
+
+    function osc_verify_password($password, $hash) {
+        if(CRYPT_BLOWFISH==1) {
+            $bcrypt = new Bcrypt(15);
+            return $bcrypt->verify($password, $hash)?true:(sha1($password)==$hash);
+        }
+        return (sha1($password)==$hash);
+    }
+
+    function osc_hash_password($password) {
+        if(CRYPT_BLOWFISH==1) {
+            $bcrypt = new Bcrypt(15);
+            return $bcrypt->hash($password);
+        }
+        return sha1($password);
+    }
+
 
 ?>

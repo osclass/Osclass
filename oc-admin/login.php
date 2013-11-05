@@ -61,7 +61,7 @@
                                             $this->redirectTo( osc_admin_base_url(true)."?page=login" );
                                         }
 
-                                        if( $admin["s_password"] !== sha1( Params::getParam('password', false, false) ) ) {
+                                        if(!osc_verify_password(Params::getParam('password', false, false), $admin['s_password'])) {
                                             osc_add_flash_error_message( sprintf(_m('Sorry, incorrect password. <a href="%s">Have you lost your password?</a>'), osc_admin_base_url(true) . '?page=login&amp;action=recover' ), 'admin');
                                             $this->redirectTo( osc_admin_base_url(true)."?page=login" );
                                         }
@@ -149,7 +149,7 @@
                                         if( Params::getParam('new_password', false, false) == Params::getParam('new_password2', false, false) ) {
                                             Admin::newInstance()->update(
                                                 array('s_secret' => osc_genRandomPassword()
-                                                    , 's_password' => sha1(Params::getParam('new_password', false, false))
+                                                    , 's_password' => osc_hash_password(Params::getParam('new_password', false, false))
                                                 ), array('pk_i_id' => $admin['pk_i_id'])
                                             );
                                             osc_add_flash_ok_message( _m('The password has been changed'), 'admin');
