@@ -272,6 +272,7 @@
             unset($request['sUser']);
         }
         unset($request['sUser[]']);
+        unset($request['page']);
         $merged = array_merge($request, $params);
         return osc_search_url($merged);
         //return osc_base_url(true) ."?" . http_build_query($merged, '', $delimiter);
@@ -302,7 +303,7 @@
      */
     function osc_search_show_all_url( ) {
         if(osc_rewrite_enabled ()) {
-            return osc_base_url().osc_get_preference('rewrite_search_url');
+            return osc_search_url();
         } else {
             return osc_base_url(true) . '?page=search';
         }
@@ -384,7 +385,7 @@
             }
         }
         if(osc_rewrite_enabled()) {
-            $url = osc_base_url().osc_get_preference('rewrite_search_url');
+            $url = osc_base_url().osc_get_preference('rewrite_search_url').'/';
 
             if($countP==1 && isset($params['sRegion'])) {
                 $url = osc_base_url();
@@ -471,6 +472,7 @@
 
                     if($k!='page') {
                         if(!is_array($v) ) {
+                            if ($v != '')
                             $url .= $k.",".$v."/";
                         }
                     }
