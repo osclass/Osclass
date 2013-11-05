@@ -236,6 +236,14 @@ require_once LIB_PATH . 'Bcrypt.php';
         return false;
     }
 
+    /*
+     * Verify an user's password
+     *
+     * @param $password plain-text
+     * @hash bcrypt/sha1
+     * @since 3.3
+     * @return boolean
+     */
     function osc_verify_password($password, $hash) {
         if(CRYPT_BLOWFISH==1) {
             $bcrypt = new Bcrypt(15);
@@ -244,6 +252,13 @@ require_once LIB_PATH . 'Bcrypt.php';
         return (sha1($password)==$hash);
     }
 
+    /*
+     * Hash a password in available method (bcrypt/sha1)
+     *
+     * @param $password plain-text
+     * @since 3.3
+     * @return string hashed password
+     */
     function osc_hash_password($password) {
         if(CRYPT_BLOWFISH==1) {
             $bcrypt = new Bcrypt(15);
