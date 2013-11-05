@@ -420,7 +420,6 @@
                 }
                 return $url;
             } else if($params!=null) {
-                $url .= "/";
                 foreach($params as $k => $v) {
                     switch($k) {
                         case 'sCountry':
