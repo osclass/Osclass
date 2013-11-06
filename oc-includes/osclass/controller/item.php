@@ -576,8 +576,8 @@
                     }
 
                     // redirect to the correct url
-                    if( $itemURI != $URI ) {
-                        $this->redirectTo(osc_base_url() . $itemURI);
+                    if($itemURI!=$URI) {
+                        $this->redirectTo(osc_base_url().$itemURI, 301);
                     }
 
                     $this->doView('item.php');
