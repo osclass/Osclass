@@ -109,9 +109,9 @@
             exit;
         }
 
-        function redirectTo($url)
+        function redirectTo($url, $code = null)
         {
-            osc_redirect_to($url);
+            osc_redirect_to($url, $code);
         }
 
         function getTime()
