@@ -30,6 +30,7 @@
         private $uri;
         private $location;
         private $section;
+        private $title;
         private $http_referer;
 
         public function __construct()
@@ -39,6 +40,7 @@
             $this->uri = '';
             $this->location = '';
             $this->section = '';
+            $this->title = '';
             $this->http_referer = '';
             $this->routes = array();
             $this->rules = $this->getRules();
@@ -91,12 +93,12 @@
             }
         }
 
-        public function addRoute($id, $regexp, $url, $file, $user_menu = false)
+        public function addRoute($id, $regexp, $url, $file, $user_menu = false, $location = "custom", $section = "custom", $title = "Custom")
         {
             $regexp = trim($regexp);
             $file = trim($file);
             if($regexp!='' && $file!='') {
-                $this->routes[$id] = array('regexp' => $regexp, 'url' => $url, 'file' => $file, 'user_menu' => $user_menu);
+                $this->routes[$id] = array('regexp' => $regexp, 'url' => $url, 'file' => $file, 'user_menu' => $user_menu, 'location' => $location, 'section' => $section, 'title' => $title);
             }
         }
 
@@ -134,6 +136,9 @@
                         Params::setParam('page', 'custom');
                         Params::setParam('route', $id);
                         $route_used = true;
+                        $this->location = $route['location'];
+                        $this->section = $route['section'];
+                        $this->title = $route['title'];
                         break;
                     }
                 }
@@ -217,6 +222,11 @@
         public function get_section()
         {
             return $this->section;
+        }
+        
+        public function get_title()
+        {
+            return $this->title;
         }
         
         public function get_http_referer()
