@@ -1,6 +1,5 @@
 <?php
 
-require_once LIB_PATH . 'Bcrypt.php';
 
     /*
      *      Osclass – software for creating and publishing online classified
@@ -236,6 +235,7 @@ require_once LIB_PATH . 'Bcrypt.php';
         return false;
     }
 
+
     /*
      * Verify an user's password
      *
@@ -245,6 +245,11 @@ require_once LIB_PATH . 'Bcrypt.php';
      * @return boolean
      */
     function osc_verify_password($password, $hash) {
+        if(version_compare(PHP_VERSION, '5.3.7')>=0) {
+            return password_verify($password, $hash)?true:(sha1($password)==$hash);
+        }
+
+        require_once LIB_PATH . 'Bcrypt.php';
         if(CRYPT_BLOWFISH==1) {
             $bcrypt = new Bcrypt(15);
             return $bcrypt->verify($password, $hash)?true:(sha1($password)==$hash);
@@ -260,6 +265,12 @@ require_once LIB_PATH . 'Bcrypt.php';
      * @return string hashed password
      */
     function osc_hash_password($password) {
+        if(version_compare(PHP_VERSION, '5.3.7')>=0) {
+            $options = array('cost' => 15);
+            return password_hash($password, PASSWORD_BCRYPT, $options);
+        }
+
+        require_once LIB_PATH . 'Bcrypt.php';
         if(CRYPT_BLOWFISH==1) {
             $bcrypt = new Bcrypt(15);
             return $bcrypt->hash($password);

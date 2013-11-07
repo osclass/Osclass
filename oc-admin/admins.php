@@ -216,7 +216,7 @@
                                                 osc_add_flash_warning_message( _m("Password invalid"), 'admin');
                                                 $this->redirectTo(osc_admin_base_url(true) . '?page=admins&action=edit&id=' . $adminId);
                                             } else {
-                                                $firstCondition  = !osc_verify_password($sOldPassword, $aAdmin['s_password']);
+                                                $firstCondition  = osc_verify_password($sOldPassword, $aAdmin['s_password']);
                                                 $secondCondition = ( $sPassword == $sPassword2 );
                                                 if( $firstCondition && $secondCondition ) {
                                                     $array['s_password'] = osc_hash_password($sPassword);
