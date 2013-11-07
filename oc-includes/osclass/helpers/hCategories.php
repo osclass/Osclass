@@ -200,6 +200,15 @@
     }
 
     /**
+     * Returns if the category has the prices enabled or not
+     *
+     * @return boolean
+     */
+    function osc_category_price_enabled() {
+        return (boolean)osc_category_field("b_price_enabled");
+    }
+
+    /**
      * Gets the total items related with the current category
      *
      * @return int
