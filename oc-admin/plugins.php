@@ -319,11 +319,21 @@
 
                         $sHelp = '';
                         if($pInfo['support_uri']!='') {
-                            $sHelp = '<span class="plugin-support-icon plugin-tooltip" ><a href="'.osc_sanitize_url($pInfo['support_uri']).'" ><img src="'.osc_current_admin_theme_url('images/question.png').'" alt="'.osc_esc_html(__('Problems with this plugin? Ask for support.')).'" ></a></span>';
+                            $sHelp = '<span class="plugin-support-icon plugin-tooltip" ><a target="_blank" href="'.osc_sanitize_url($pInfo['support_uri']).'" ><img src="'.osc_current_admin_theme_url('images/question.png').'" alt="'.osc_esc_html(__('Problems with this plugin? Ask for support.')).'" ></a></span>';
                         }
+                        $sSiteUrl = '';
+                        if($pInfo['plugin_uri']!='') {
+							$sSiteUrl = ' | <a target="_blank" href="'. $pInfo['plugin_uri'] . '">'. __('Plugins Site'). '</a>';
+						}
+						$sAuthor = '';
+						if($pInfo['author_uri']!='') {
+							$sAuthor = __('By') . ' <a target="_blank" href="'. $pInfo['author_uri'] . '">'. $pInfo['author'] . '</a>';
+						} else {
+							$sAuthor = __('By') . ' ' . $pInfo['author'];
+						}
 
                         $row[] = '<input type="hidden" name="installed" value="' . $installed . '" enabled="' . $enabled . '" />' . $pInfo['plugin_name'] . $sHelp . '<div>' . $sUpdate . '</div>';
-                        $row[] = $pInfo['description'];
+                        $row[] = $pInfo['description'] . '<br />' . __('Version:') . $pInfo['version'] . ' | ' . $sAuthor . $sSiteUrl ;
                         $row[] = ($sUpdate!='')     ? $sUpdate      : '&nbsp;';
                         $row[] = ($sConfigure!='')  ? $sConfigure   : '&nbsp;';
                         $row[] = ($sEnable!='')     ? $sEnable      : '&nbsp;';
