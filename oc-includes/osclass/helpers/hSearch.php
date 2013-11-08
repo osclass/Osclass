@@ -271,8 +271,10 @@
         if(isset($request['sUser[0]'])) {
             unset($request['sUser']);
         }
+        if($request['iPage'] == '') {
+          unset($request['iPage']);
+        }
         unset($request['sUser[]']);
-        unset($request['page']);
         $merged = array_merge($request, $params);
         return osc_search_url($merged);
         //return osc_base_url(true) ."?" . http_build_query($merged, '', $delimiter);
@@ -303,9 +305,9 @@
      */
     function osc_search_show_all_url( ) {
         if(osc_rewrite_enabled ()) {
-            return osc_search_url();
+            return osc_search_url(osc_get_subdomain_params()).osc_get_preference('rewrite_search_url').'/';
         } else {
-            return osc_base_url(true) . '?page=search';
+            return osc_search_url(osc_get_subdomain_params()) . '/index.php?page=search';
         }
     }
 
