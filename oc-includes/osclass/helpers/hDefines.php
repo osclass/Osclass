@@ -751,6 +751,24 @@
     }
 
     /**
+     * Gets url for renew an item
+     *
+     * @param string $secret
+     * @param int $id
+     * @return string
+     */
+
+    function osc_item_renew_url($secret = '', $id = '') {
+        if ($id == '') { $id = osc_item_id(); };
+        // TODO: PERMALINK
+        //if ( osc_rewrite_enabled() ) {
+        //    return osc_base_url() . osc_get_preference('rewrite_item_renew') . '/' . $id . '/' . $secret;
+        //} else {
+            return osc_base_url(true) . '?page=item&action=item_renew&id=' . $id . ($secret != '' ? '&secret=' . $secret : '');
+        //}
+    }
+
+    /**
      * Gets url for delete an item
      *
      * @param string $secret
