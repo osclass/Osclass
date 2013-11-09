@@ -748,6 +748,7 @@
             CountryStats::newInstance()->increaseNumItems($item['fk_c_country_code']);
             RegionStats::newInstance()->increaseNumItems($item['fk_i_region_id']);
             CityStats::newInstance()->increaseNumItems($item['fk_i_city_id']);
+            osc_run_hook('item_increase_stat',$item);
         }
 
         /**
@@ -765,6 +766,7 @@
             CountryStats::newInstance()->decreaseNumItems($item['fk_c_country_code']);
             RegionStats::newInstance()->decreaseNumItems($item['fk_i_region_id']);
             CityStats::newInstance()->decreaseNumItems($item['fk_i_city_id']);
+            osc_run_hook('item_decrease_stat',$item);
         }
 
         /**
