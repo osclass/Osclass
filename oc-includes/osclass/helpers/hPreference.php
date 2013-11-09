@@ -285,7 +285,7 @@
      * @return int
      */
     function osc_max_characters_per_title() {
-        return (getPreference('title_character_lenght'));
+        return (getPreference('title_character_length'));
     }
 
     /**
@@ -294,7 +294,7 @@
      * @return int
      */
     function osc_max_characters_per_description() {
-        return (getPreference('description_character_lenght'));
+        return (getPreference('description_character_length'));
     }
 
     /**

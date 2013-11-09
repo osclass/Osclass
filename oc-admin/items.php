@@ -666,7 +666,7 @@
                                             $msg .= _m("Number of expiration days has to be a numeric value")."<br/>";
                                         }
                                         if(!osc_validate_int($titleLength)) {
-                                            $msg .= _m("Title lenght has to be a numeric value")."<br/>";
+                                            $msg .= _m("Title Length has to be a numeric value")."<br/>";
                                         }
                                         if(!osc_validate_int($descriptionLength)) {
                                             $msg .= _m("Description Length has to be a numeric value")."<br/>";
@@ -696,8 +696,8 @@
                                         $iUpdated += osc_set_preference('reg_user_can_contact', $regUserCanContact);
                                         $iUpdated += osc_set_preference('item_attachment', $contactItemAttachment);
                                         $iUpdated += osc_set_preference('warn_expiration', $warnExpiration);
-                                        $iUpdated += osc_set_preference('title_character_lenght', $titleLength);
-                                        $iUpdated += osc_set_preference('description_character_lenght', $descriptionLength);
+                                        $iUpdated += osc_set_preference('title_character_length', $titleLength);
+                                        $iUpdated += osc_set_preference('description_character_length', $descriptionLength);
 
                                         if($iUpdated > 0) {
                                             osc_add_flash_ok_message( _m("Listings' settings have been updated"), 'admin');
