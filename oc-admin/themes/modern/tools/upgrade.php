@@ -43,7 +43,7 @@
                 steps.innerHTML += '<?php echo osc_esc_js( sprintf( __('Checking for updates (Current version %s)'), osc_version() )); ?>';
 
                 $.getJSON("http://osclass.org/latest_version.php?callback=?", function(data) {
-                    if(data.version <= version-200) {
+                    if(data.version <= version) {
                         steps.innerHTML += '<?php echo osc_esc_js( __('Congratulations! Your Osclass installation is up to date!')); ?>';
                     } else {
                         steps.innerHTML += '<?php echo osc_esc_js( __('New version to update:')); ?> ' + data.version + "<br />";
