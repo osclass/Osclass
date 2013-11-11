@@ -176,7 +176,7 @@
                                                     $this->redirectTo( osc_change_user_password_url() );
                                                 }
 
-                                                if( $user['s_password'] != sha1( Params::getParam('password', false, false) ) ) {
+                                                if(!osc_verify_password(Params::getParam('password', false, false), $user['s_password'])) {
                                                     osc_add_flash_error_message( _m("Current password doesn't match") );
                                                     $this->redirectTo( osc_change_user_password_url() );
                                                 }
@@ -191,7 +191,7 @@
                                                     $this->redirectTo( osc_change_user_password_url() );
                                                 }
 
-                                                User::newInstance()->update(array( 's_password' => sha1( Params::getParam ('new_password', false, false) ) )
+                                                User::newInstance()->update(array( 's_password' => osc_hash_password(Params::getParam ('new_password', false, false)))
                                                                            ,array( 'pk_i_id' => Session::newInstance()->_get('userId') ) );
 
                                                 osc_add_flash_ok_message( _m('Password has been changed') );

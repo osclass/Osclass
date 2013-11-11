@@ -78,7 +78,7 @@
                                             $this->redirectTo(osc_user_login_url());
                                         }
 
-                                        if ( $user["s_password"] != sha1( Params::getParam('password', false, false) ) ) {
+                                        if(!osc_verify_password(Params::getParam('password', false, false), $user['s_password'])) {
                                             osc_add_flash_error_message( _m('The password is incorrect'));
                                             $this->redirectTo(osc_user_login_url());
                                         }
@@ -214,7 +214,7 @@
                                                     array('s_pass_code' => osc_genRandomPassword(50)
                                                         , 's_pass_date' => date('Y-m-d H:i:s', 0)
                                                         , 's_pass_ip' => $_SERVER['REMOTE_ADDR']
-                                                        , 's_password' => sha1(Params::getParam('new_password', false, false))
+                                                        , 's_password' => osc_hash_password(Params::getParam('new_password', false, false))
                                                     ), array('pk_i_id' => $user['pk_i_id'])
                                                 );
                                                 osc_add_flash_ok_message( _m('The password has been changed'));
