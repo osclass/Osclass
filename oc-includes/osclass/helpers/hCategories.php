@@ -34,13 +34,10 @@
      */
     function osc_category() {
         if (View::newInstance()->_exists('subcategories')) {
-            //echo "<================SUBCAT=================>";
             $category = View::newInstance()->_current('subcategories');
         } elseif (View::newInstance()->_exists('categories')) {
-            //echo "<================CATES=================>";
             $category = View::newInstance()->_current('categories');
         } elseif (View::newInstance()->_exists('category')) {
-            //echo "<================CATEG=================>";
             $category = View::newInstance()->_get('category');
         } else {
             $category = null;
@@ -206,6 +203,15 @@
      */
     function osc_category_price_enabled() {
         return (boolean)osc_category_field("b_price_enabled");
+    }
+
+    /**
+     * Returns category's parent id
+     *
+     * @return int
+     */
+    function osc_category_parent_id() {
+        return osc_category_field("fk_i_parent_id");
     }
 
     /**
