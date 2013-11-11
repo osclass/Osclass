@@ -38,6 +38,7 @@
         protected $sides;
         protected $url;
         protected $nofollow;
+        protected $firsturl;
 
         public function __construct($params = null)
         {
@@ -58,6 +59,7 @@
             $this->sides              = isset($params['sides']) ? $params['sides'] : 2;
             $this->url                = isset($params['url']) ? $params['url'] : osc_update_search_url(array('iPage' => '{PAGE}'));
             $this->nofollow           = isset($params['nofollow']) ? $params['nofollow'] : true;
+            $this->firsturl           = isset($params['firsturl']) ? $params['firsturl'] : $this->url;
         }
 
         public function get_raw_pages($params = null)
@@ -127,7 +129,7 @@
                     $isFirst++;
                 }
                 $attrs['class'] = $this->class_first;
-                $attrs['href'] = str_replace('{PAGE}', '', str_replace(urlencode('{PAGE}'), '', $this->url));
+                $attrs['href'] = str_replace('{PAGE}', '1', str_replace(urlencode('{PAGE}'), '1', $this->firsturl));
                 $attrs['href'] = rtrim($attrs['href'], "/");
                 $links[] = $this->createATag($this->text_first, $attrs);
             }
@@ -138,7 +140,7 @@
                 }
                 $attrs['class'] = $this->class_prev;                
                 if( $pages['prev'] == 1 ) {
-                    $attrs['href'] = str_replace('{PAGE}', '', str_replace(urlencode('{PAGE}'), '', $this->url));
+                    $attrs['href'] = str_replace('{PAGE}', '1', str_replace(urlencode('{PAGE}'), '1', $this->firsturl));
                     $attrs['href'] = rtrim($attrs['href'], "/");
                 } else {
                     $attrs['href']  = str_replace('{PAGE}', $pages['prev'], str_replace(urlencode('{PAGE}'), $pages['prev'], $this->url));
@@ -161,8 +163,7 @@
                     $classfirst_non_selected = $this->class_non_selected;
                 }
                 if( $p == 1 ) {
-                    $attrs['href'] = str_replace('{PAGE}', '', str_replace(urlencode('{PAGE}'), '', $this->url));
-                    $attrs['href'] = rtrim($attrs['href'], "/");
+                    $attrs['href'] = str_replace('{PAGE}', '1', str_replace(urlencode('{PAGE}'), '1', $this->firsturl));
                 } else {
                     $attrs['href'] = str_replace('{PAGE}', $p, str_replace(urlencode('{PAGE}'), $p, $this->url));
                 }
