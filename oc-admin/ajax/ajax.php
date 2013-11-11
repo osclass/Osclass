@@ -601,9 +601,9 @@
                                             }
                                             $deleted = @unlink(ABS_PATH . '.maintenance');
                                             if ($rm_errors == 0) {
-                                                $message = __('Everything looks good! Your Osclass installation is up-to-date');
+                                                osc_add_flash_ok_message(_m('Osclass has been updated successfully. <a href="http://forums.osclass.org/">Need more help?</a>'), 'admin');
                                             } else {
-                                                $message = __('Nearly everything looks good! Your Osclass installation is up-to-date, but there were some errors removing temporary files. Please manually remove the "oc-temp" folder');
+                                                osc_add_flash_warning_message(_m('Nearly everything looks good! Your Osclass installation is up-to-date, but there were some errors removing temporary files. Please manually remove the "oc-temp" folder'), 'admin');
                                                 $error = 6; // Some errors removing files
                                             }
                                         } else {
@@ -635,7 +635,7 @@
                     if ($error == 5) {
                         $message .= "<br /><br />" . __('We had some errors upgrading your database. The follwing queries failed:') . implode("<br />", $sql_error_msg);
                     }
-                    echo $message;
+                    echo json_encode(array('error' => $error, 'message' => $message));
 
                     foreach ($perms as $k => $v) {
                         @chmod($k, $v);

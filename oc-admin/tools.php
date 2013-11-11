@@ -85,6 +85,8 @@
                 case('upgrade'):
                                         $this->doView('tools/upgrade.php');
                 break;
+                case 'version':         $this->doView('tools/version.php');
+                    break;
                 case('backup'):
                                         $this->doView('tools/backup.php');
                 break;

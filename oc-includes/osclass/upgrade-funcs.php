@@ -450,13 +450,18 @@ CREATE TABLE %st_item_description_tmp (
 
     osc_changeVersionTo(330);
 
-    echo '<div class="well ui-rounded-corners separate-top-medium">';
-    echo '<p>'.__('Osclass &raquo; Updated correctly').'</p>';
-    echo '<p>'.__('Osclass has been updated successfully. <a href="http://forums.osclass.org/">Need more help?</a>').'</p>';
-    foreach($aMessages as $msg) {
-        echo "<p>".$msg."</p>";
+    if(!IS_AJAX && empty($aMessages)) {
+        osc_add_flash_ok_message(_m('Osclass has been updated successfully. <a href="http://forums.osclass.org/">Need more help?</a>'), 'admin');
+        echo '<script type="text/javascript"> window.location = "'.osc_admin_base_url(true).'?page=tools&action=version"; </script>';
+    } else {
+        echo '<div class="well ui-rounded-corners separate-top-medium">';
+        echo '<p>'.__('Osclass &raquo; Updated correctly').'</p>';
+        echo '<p>'.__('Osclass has been updated successfully. <a href="http://forums.osclass.org/">Need more help?</a>').'</p>';
+        foreach($aMessages as $msg) {
+            echo "<p>".$msg."</p>";
+        }
+        echo "</div>";
     }
-    echo "</div>";
 
     /**
      * Convert alerts < 2.4, updating s_search with json encoded to based64.
