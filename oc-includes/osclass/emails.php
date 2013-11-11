@@ -1311,7 +1311,7 @@
         );
         osc_sendMail($emailParams);
     }
-    osc_add_hook('after_after_auto_upgrade', 'fn_email_after_auto_upgrade');
+    osc_add_hook('after_auto_upgrade', 'fn_email_auto_upgrade', 10);
 
 /* file end: ./oc-includes/osclass/emails.php */
 ?>
