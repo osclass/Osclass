@@ -62,6 +62,9 @@
         $i_next = strtotime($cron['d_next_exec']);
 
         if( (CLI && (Params::getParam('cron-type') === 'daily')) || ((($i_now - $i_next) >= 0) && !CLI) ) {
+
+            osc_do_auto_upgrade();
+
             // before update, d_last_exec
             osc_runAlert('DAILY');
 
