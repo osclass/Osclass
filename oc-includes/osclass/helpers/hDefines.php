@@ -467,30 +467,32 @@
      */
     function osc_item_url($locale = '') 
     {
-        return osc_item_url_from_item(osc_item_id(),osc_item_category_id(), osc_item_city(), osc_item_title(), $locale);
+        return osc_item_url_from_item(osc_item(), $locale);
     }
     
     /**
      * Create item url from item data without exported to view.
      *
-     * @param string $itemId, $itemCat, $itemCity, $itemTitle, $locale = ''
+     * @since 3.3
+     * @param array $item
+     * @param string $locale
      * @return string
      */
-    function osc_item_url_from_item($itemId, $itemCat, $itemCity, $itemTitle, $locale = '') 
+    function osc_item_url_from_item($item, $locale = '')
     {
         if ( osc_rewrite_enabled() ) {
             $url = osc_get_preference('rewrite_item_url');
             if( preg_match('|{CATEGORIES}|', $url) ) {
                 $sanitized_categories = array();
-                $cat = Category::newInstance()->hierarchy($itemCat);
+                $cat = Category::newInstance()->hierarchy($item['fk_i_category_id']);
                 for ($i = (count($cat)); $i > 0; $i--) {
                     $sanitized_categories[] = $cat[$i - 1]['s_slug'];
                 }
                 $url = str_replace('{CATEGORIES}', implode("/", $sanitized_categories), $url);
             }
-            $url = str_replace('{ITEM_ID}', osc_sanitizeString($itemId), $url);
-            $url = str_replace('{ITEM_CITY}', osc_sanitizeString($itemCity), $url);
-            $url = str_replace('{ITEM_TITLE}', osc_sanitizeString($itemTitle), $url);
+            $url = str_replace('{ITEM_ID}', osc_sanitizeString($item['pk_i_id']), $url);
+            $url = str_replace('{ITEM_CITY}', osc_sanitizeString($item['s_city']), $url);
+            $url = str_replace('{ITEM_TITLE}', osc_sanitizeString($item['s_title']), $url);
             $url = str_replace('?', '', $url);
             if($locale!='') {
                 $path = osc_base_url().$locale."/".$url;
