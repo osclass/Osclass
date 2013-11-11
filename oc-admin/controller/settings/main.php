@@ -54,6 +54,7 @@
                     $selectableParent  = Params::getParam('selectable_parent_categories');
                     $bAutoCron         = Params::getParam('auto_cron');
                     $bMarketSources    = (Params::getParam('market_external_sources') != '' ? true: false);
+                    $sAutoUpdate       = join("|", Params::getParam('auto_update'));
 
                     // preparing parameters
                     $sPageTitle        = strip_tags($sPageTitle);
@@ -105,6 +106,7 @@
                     $iUpdated += osc_set_preference('timeFormat', $sTimeFormat);
                     $iUpdated += osc_set_preference('timezone', $sTimezone);
                     $iUpdated += osc_set_preference('marketAllowExternalSources', $bMarketSources);
+                    $iUpdated += osc_set_preference('auto_update', $sAutoUpdate);
                     if(is_int($sNumRssItems)) {
                         $iUpdated += osc_set_preference('num_rss_items', $sNumRssItems);
                     } else {
