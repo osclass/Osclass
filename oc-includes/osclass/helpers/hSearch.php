@@ -352,128 +352,7 @@
         } else {
              $url = osc_base_url();
         } 
-        $countP = count($params);
-        if(osc_rewrite_enabled()) {
-            $url .= osc_get_preference('rewrite_search_url') . REL_WEB_URL;
-
-            if($countP==1 && isset($params['sRegion'])) {
-                $url = osc_base_url();
-                if( osc_get_preference('seo_url_search_prefix') != '' ) {
-                    $url .= osc_get_preference('seo_url_search_prefix') . '/';
-                }
-                if(osc_list_region_id()==$params['sRegion']) {
-                    $url .= osc_sanitizeString(osc_list_region_name()) . '-r' . osc_list_region_id();
-                } else {
-                    if(is_numeric($params['sRegion'])) {
-                        $region = Region::newInstance()->findByPrimaryKey($params['sRegion']);
-                    } else {
-                        $region = Region::newInstance()->findByName($params['sRegion']);
-                    }
-                    $url .= osc_sanitizeString($region['s_name']) . '-r' . $region['pk_i_id'];
-                }
-                return $url;
-            } else if($countP==1 && isset($params['sCity'])) {
-                $url = osc_base_url();
-                if( osc_get_preference('seo_url_search_prefix') != '' ) {
-                    $url .= osc_get_preference('seo_url_search_prefix') . '/';
-                }
-                if(osc_list_region_id()==$params['sCity']) {
-                    $url .= osc_sanitizeString(osc_list_city_name()) . '-c' . osc_list_city_id();
-                } else {
-                    if(is_numeric($params['sCity'])) {
-                        $city = City::newInstance()->findByPrimaryKey($params['sCity']);
-                    } else {
-                        $city = City::newInstance()->findByName($params['sCity']);
-                    }
-                    $url .= osc_sanitizeString($city['s_name']) . '-c' . $city['pk_i_id'];
-                }
-                return $url;
-            } else if($params!=null) {
-                foreach($params as $k => $v) {
-                    switch($k) {
-                        case 'sCountry':
-                            $k = osc_get_preference('rewrite_search_country');
-                            break;
-                        case 'sRegion':
-                            $k = osc_get_preference('rewrite_search_region');
-                            break;
-                        case 'sCity':
-                            $k = osc_get_preference('rewrite_search_city');
-                            break;
-                        case 'sCityArea':
-                            $k = osc_get_preference('rewrite_search_city_area');
-                            break;
-                        case 'sCategory':
-                            $k = osc_get_preference('rewrite_search_category');
-                            if(is_array($v)) {
-                                $v = implode(",", $v);
-                            }
-                            break;
-                        case 'sUser':
-                            $k = osc_get_preference('rewrite_search_user');
-                            if(is_array($v)) {
-                                $v = implode(",", $v);
-                            }
-                            break;
-                        case 'sPattern':
-                            $k = osc_get_preference('rewrite_search_pattern');
-                            break;
-                        case 'meta':
-                            // meta(@id),value/meta(@id),value2/...
-                            foreach ($v as $key => $value) {
-                                if(is_array($value)) {
-                                    foreach ($value as $_key => $_value) {
-                                        if($value!='') {
-                                            $url .= 'meta'.$key.'-'.$_key.','.$_value.'/';
-                                        }
-                                    }
-                                } else {
-                                    if($value!='') {
-                                        $url .= 'meta'.$key.','.$value.'/';
-                                    }
-                                }
-                            }
-                            break;
-                        default:
-                            break;
-                    }
-
-                    if($k!='page') {
-                        if(!is_array($v) ) {
-                            if ($v != '')
-                                $url .= $k.",".$v."/";
-                        }
-                    }
-                }
-            }
-        } else {
-            $url .= 'index.php?page=search';
-            if($params!=null) {
-                foreach($params as $k => $v) {
-                    if($k!='page') {
-                        if($k=='meta') {
-                            if( is_array($v) ) {
-                                foreach($v as $_k => $aux) {
-                                    if(is_array($aux)) {
-                                        foreach( array_keys($aux) as $aux_k ) {
-                                            $url .= "&" . $k . "[$_k][$aux_k]=" . $aux[$aux_k];
-                                        }
-                                    } else {
-                                        $url .= "&" . $_k . "[]=" . $aux;
-                                    }
-                                }
-                            }
-                        } else {
-                            if( is_array($v) ) {
-                                $v = implode(",", $v);
-                            }
-                            $url .= "&" . $k . "=" . $v;
-                        }
-                    }
-                }
-            }
-        }
-        return $url;
+        return osc_add_search_params_to_base($url, $params);
     }
 
     /**
@@ -483,7 +362,9 @@
      * @return string
      */
     function osc_search_url($params = null) {
-        osc_prune_array($params);
+        if(is_array($params)) {
+            osc_prune_array($params);
+        }
         $countP = count($params);
         if($countP==1) {
             if(isset($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS'])=='on' || $_SERVER['HTTPS']=='1')){
@@ -551,8 +432,15 @@
                 }
             }
         }
+        }
+        $url = osc_base_url();
+        return osc_add_search_params_to_base($url, $params);
+    }
+
+    function osc_add_search_params_to_base($url, $params) {        
+        $countP = count($params);
         if(osc_rewrite_enabled()) {
-            $url = osc_base_url().osc_get_preference('rewrite_search_url').'/';
+            $url .= osc_get_preference('rewrite_search_url') . REL_WEB_URL;
 
             if($countP==1 && isset($params['sRegion'])) {
                 $url = osc_base_url();
@@ -645,7 +533,7 @@
                 }
             }
         } else {
-            $url = osc_base_url(true) . '?page=search';
+            $url .= 'index.php?page=search';
             if($params!=null) {
                 foreach($params as $k => $v) {
                     if($k!='page') {
