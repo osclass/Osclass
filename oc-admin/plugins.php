@@ -191,6 +191,7 @@
                             $file = $_REQUEST['file'];
                         };
                     }
+                    osc_run_hook('renderplugin_controller');
                     if(stripos($file, '../')===false && $file!="") {
                         $this->_exportVariableToView("file", osc_plugins_path() . $file);
                         $this->doView("plugins/view.php");
