@@ -321,13 +321,13 @@
         if(is_array($params)) {
             osc_prune_array($params);
         }
-        if (osc_subdomain_type() != '') {
+        if (osc_subdomain_type() != '' && $subdomain_slug != '') {
             $subdomain_slug = View::newInstance()->_get('subdomain_slug');
             $subdomain_host = osc_subdomain_host();
             if(isset($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS'])=='on' || $_SERVER['HTTPS']=='1')){
-                $url = 'https://'. $subdomain_slug . '.' . osc_subdomain_host() . '/';
+                $url = 'https://'. $subdomain_slug . '.' . osc_subdomain_host() . REL_WEB_URL;
             } else {
-                $url = 'http://' . $subdomain_slug . '.' . osc_subdomain_host() . '/';
+                $url = 'http://' . $subdomain_slug . '.' . osc_subdomain_host() . REL_WEB_URL;
             }
             switch (osc_subdomain_type()) {
               case 'city':
@@ -440,7 +440,7 @@
     function osc_add_search_params_to_base($url, $params) {        
         $countP = count($params);
         if(osc_rewrite_enabled()) {
-            $url .= osc_get_preference('rewrite_search_url') . REL_WEB_URL;
+            $url .= osc_get_preference('rewrite_search_url') . '/';
 
             if($countP==1 && isset($params['sRegion'])) {
                 $url = osc_base_url();
