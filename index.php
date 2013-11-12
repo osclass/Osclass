@@ -40,7 +40,7 @@
 
     if( file_exists(ABS_PATH . '.maintenance') ) {
         if(!osc_is_admin_user_logged_in()) {
-            if(file_exists(WebThemes::newInstance()->getCurrentThemePath(),'maintenance.php')) {
+            if(file_exists(WebThemes::newInstance()->getCurrentThemePath().'maintenance.php')) {
                 osc_current_web_theme_path('maintenance.php');
             } else {
                 require_once LIB_PATH . 'osclass/helpers/hErrors.php';
