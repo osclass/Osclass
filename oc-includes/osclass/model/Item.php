@@ -639,7 +639,7 @@
 
             $result = $this->dao->get();
             if($result == false) {
-                return array();
+                return 0;
             }
             $items  = $result->row();
             return $items['total'];
