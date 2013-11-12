@@ -108,10 +108,7 @@
                 }
             }
             // update alerts user id with the same email
-            $aAlerts = Alerts::newInstance()->findByEmail( $input['s_email'] );
-            foreach( $aAlerts as $aux ) {
-                Alerts::newInstance()->update(array('fk_i_user_id' => $userId), array('s_email' => $input['s_email']));
-            }
+            Alerts::newInstance()->update(array('fk_i_user_id' => $userId), array('s_email' => $input['s_email']));
 
             $user = $this->manager->findByPrimaryKey($userId);
 
