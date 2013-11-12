@@ -58,13 +58,13 @@
                         <div class="control-group">
                             <label class="control-label" for="title[<?php echo osc_locale_code(); ?>]"><?php _e('Title', 'bender'); ?></label>
                             <div class="controls">
-                                <?php ItemForm::title_input('title',osc_locale_code(), osc_esc_html( bender_item_title() )); ?>
+                                <?php ItemForm::title_input('title',osc_locale_code(), osc_esc_html( bender_item_title() ), osc_max_characters_per_title(), __('Title', 'bender')); ?>
                             </div>
                         </div>
                         <div class="control-group">
                             <label class="control-label" for="description[<?php echo osc_locale_code(); ?>]"><?php _e('Description', 'bender'); ?></label>
                             <div class="controls">
-                                <?php ItemForm::description_textarea('description',osc_locale_code(), osc_esc_html( bender_item_description() )); ?>
+                                <?php ItemForm::description_textarea('description',osc_locale_code(), osc_esc_html( bender_item_description()), osc_max_characters_per_description(), __('Description', 'bender'), 10 ); ?>
                             </div>
                         </div>
                         <?php if( osc_price_enabled_at_items() ) { ?>

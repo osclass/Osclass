@@ -394,15 +394,15 @@
             return true;
         }
 
-        static public function title_input($name, $locale = 'en_US', $value = '')
+        static public function title_input($name, $locale = 'en_US', $value = '', $maxLength = null, $placeholder = null)
         {
-            parent::generic_input_text($name . '[' . $locale . ']', $value);
+            parent::generic_input_text($name . '[' . $locale . ']', $value, $maxLength, false, true, $placeholder);
             return true;
         }
 
-        static public function description_textarea($name, $locale = 'en_US', $value = '')
+        static public function description_textarea($name, $locale = 'en_US', $value = '', $maxLength = null, $placeholder = null, $rowLen = 10)
         {
-            parent::generic_textarea($name . '[' . $locale . ']', $value);
+            parent::generic_textarea($name . '[' . $locale . ']', $value, $maxLength, $placeholder, $rowLen );
             return true;
         }
 

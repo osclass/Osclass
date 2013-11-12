@@ -31,17 +31,25 @@
             echo '</select>';
         }
 
-        static protected function generic_input_text($name, $value, $maxLength = null, $readOnly = false, $autocomplete = true) {
+        static protected function generic_radio($name, $value, $label, $current_value) {
+            echo '<span class="controls-radio">';
+            echo '<input id="' . $name.$value . '" type="radio" name="' . $name . '" value="' . $value . '"' . ( ($current_value == $value) ? ' checked="checked"' : '') . '/><label style="display: inline;" for="' . $name.$value . '"> ' . $label . '</label></input>';
+            echo '</span> ';         
+        }
+
+        static protected function generic_input_text($name, $value, $maxLength = null, $readOnly = false, $autocomplete = true, $placeholder = null) {
             echo '<input id="' . preg_replace('|([^_a-zA-Z0-9-]+)|', '', $name) . '" type="text" name="' . $name . '" value="' . osc_esc_html(htmlentities($value, ENT_COMPAT, "UTF-8")) . '" ';
             if (isset($maxLength)) echo 'maxlength="' . $maxLength . '" ';
             if (!$autocomplete) echo ' autocomplete="off" ';
+            if (!$value && isset($placeholder)) echo ' placeholder="' . $placeholder . '" ';
             if ($readOnly) echo 'disabled="disabled" readonly="readonly" ';
             echo '/>';
         }
 
-        static protected function generic_password($name, $value, $maxLength = null, $readOnly = false) {
+        static protected function generic_password($name, $value, $maxLength = null, $readOnly = false, $placeholder = null) {
             echo '<input id="' . preg_replace('|([^_a-zA-Z0-9-]+)|', '', $name) . '" type="password" name="' . $name . '" value="' . osc_esc_html(htmlentities($value, ENT_COMPAT, "UTF-8")) . '" ';
             if (isset($maxLength)) echo 'maxlength="' . $maxLength . '" ';
+            if (!$value && isset($placeholder)) echo ' placeholder="' . $placeholder . '" ';
             if ($readOnly) echo 'disabled="disabled" readonly="readonly" ';
             echo '/>';
         }
@@ -56,8 +64,11 @@
             echo '/>';
         }
 
-        static protected function generic_textarea($name, $value) {
-            echo '<textarea id="' . preg_replace('|([^_a-zA-Z0-9-]+)|', '', $name) . '" name="' . $name . '" rows="10">' . $value . '</textarea>';
+        static protected function generic_textarea($name, $value, $maxLength = null, $placeholder = null, $rowlen = 10) {
+            echo '<textarea id="' . preg_replace('|([^_a-zA-Z0-9-]+)|', '', $name) . '" name="' . $name . '" rows="' . $rowlen . '" ';
+            if (isset($maxLength)) echo 'maxlength="' . $maxLength . '" ';
+            if (!$value && isset($placeholder)) echo ' placeholder="' . $placeholder . '" ';
+            echo '>' . $value . '</textarea>';
         }
 
     }
