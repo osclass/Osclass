@@ -271,9 +271,12 @@
         if(isset($request['sUser[0]'])) {
             unset($request['sUser']);
         }
+        if($request['iPage'] == '') {
+          unset($request['iPage']);
+        }
         unset($request['sUser[]']);
         $merged = array_merge($request, $params);
-        return osc_search_url($merged);
+        return osc_search_subdomain_url($merged);
         //return osc_base_url(true) ."?" . http_build_query($merged, '', $delimiter);
     }
 
@@ -302,10 +305,54 @@
      */
     function osc_search_show_all_url( ) {
         if(osc_rewrite_enabled ()) {
-            return osc_base_url().osc_get_preference('rewrite_search_url');
+            return osc_search_subdomain_url();
         } else {
-            return osc_base_url(true) . '?page=search';
+            return osc_search_subdomain_url();
         }
+    }
+
+    /**
+     * Gets search url given params in current subdomain
+     *
+     * @params array $params
+     * @return string
+     */
+    function osc_search_subdomain_url($params = null) {
+        if(is_array($params)) {
+            osc_prune_array($params);
+        }
+        if (osc_subdomain_type() != '' && $subdomain_slug != '') {
+            $subdomain_slug = View::newInstance()->_get('subdomain_slug');
+            $subdomain_host = osc_subdomain_host();
+            if(isset($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS'])=='on' || $_SERVER['HTTPS']=='1')){
+                $url = 'https://'. $subdomain_slug . '.' . osc_subdomain_host() . REL_WEB_URL;
+            } else {
+                $url = 'http://' . $subdomain_slug . '.' . osc_subdomain_host() . REL_WEB_URL;
+            }
+            switch (osc_subdomain_type()) {
+              case 'city':
+                unset($params['sCountry']);
+                unset($params['sRegion']);
+                unset($params['sCity']);
+                break;
+              case 'region':
+                unset($params['sCountry']);
+                unset($params['sRegion']);
+                break;
+              case 'country':
+                unset($params['sCountry']);
+                break;
+              case 'username':
+                unset($params['sUser']);
+                break;
+              case 'category':
+                unset($params['sCategory']);
+                break;
+            }
+        } else {
+             $url = osc_base_url();
+        } 
+        return osc_add_search_params_to_base($url, $params);
     }
 
     /**
@@ -385,8 +432,15 @@
                 }
             }
         }
+        }
+        $url = osc_base_url();
+        return osc_add_search_params_to_base($url, $params);
+    }
+
+    function osc_add_search_params_to_base($url, $params) {        
+        $countP = count($params);
         if(osc_rewrite_enabled()) {
-            $url = osc_base_url().osc_get_preference('rewrite_search_url');
+            $url .= osc_get_preference('rewrite_search_url') . '/';
 
             if($countP==1 && isset($params['sRegion'])) {
                 $url = osc_base_url();
@@ -421,7 +475,6 @@
                 }
                 return $url;
             } else if($params!=null) {
-                $url .= "/";
                 foreach($params as $k => $v) {
                     switch($k) {
                         case 'sCountry':
@@ -473,13 +526,14 @@
 
                     if($k!='page') {
                         if(!is_array($v) ) {
+                            if ($v != '')
                             $url .= $k.",".$v."/";
                         }
                     }
                 }
             }
         } else {
-            $url = osc_base_url(true) . '?page=search';
+            $url .= 'index.php?page=search';
             if($params!=null) {
                 foreach($params as $k => $v) {
                     if($k!='page') {

@@ -37,6 +37,10 @@
         $params = array();
         if( View::newInstance()->_exists('search_uri') ) {
             $params['url'] = osc_base_url() . View::newInstance()->_get('search_uri') . '/{PAGE}';
+            $params['firsturl'] = osc_base_url() . View::newInstance()->_get('search_uri');
+        } else {
+            $params['url'] = osc_update_search_url(array('iPage' => '{PAGE}'));
+            $params['firsturl'] = osc_update_search_url(array('iPage' => ''));
         }
         $pagination = new Pagination($params);
         return $pagination->doPagination();
@@ -63,13 +67,16 @@
     {
         if(osc_is_public_profile()) {
             $url = osc_user_list_items_pub_profile_url('{PAGE}', $field);
+            $firsturl = osc_user_public_profile_url();
         } elseif(osc_is_list_items()) {
             $url = osc_user_list_items_url('{PAGE}', $field);
+            $firsturl = osc_user_list_items_url();
         }
 
         $params = array('total'    => osc_search_total_pages(),
                         'selected' => osc_search_page(),
-                        'url'      => $url
+                        'url'      => $url,
+                        'firsturl' => $firsturl
                   );
 
         if(is_array($extraParams) && !empty($extraParams)) {

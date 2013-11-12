@@ -145,6 +145,7 @@
                             $category = Category::newInstance()->findBySlug($subdomain);
                             if(isset($category['pk_i_id'])) {
                                 View::newInstance()->_exportVariableToView('subdomain_name', $category['s_name']);
+                                View::newInstance()->_exportVariableToView('subdomain_slug', $category['s_slug']);
                                 Params::setParam('sCategory', $category['pk_i_id']);
                                 if(Params::getParam('page')=='') {
                                     Params::setParam('page', 'search');
@@ -156,6 +157,7 @@
                             $country = Country::newInstance()->findBySlug($subdomain);
                             if(isset($country['pk_c_code'])) {
                                 View::newInstance()->_exportVariableToView('subdomain_name', $country['s_name']);
+                                View::newInstance()->_exportVariableToView('subdomain_slug', $country['s_slug']);
                                 Params::setParam('sCountry', $country['pk_c_code']);
                             } else {
                                 $this->do400();
@@ -164,6 +166,7 @@
                             $region = Region::newInstance()->findBySlug($subdomain);
                             if(isset($region['pk_i_id'])) {
                                 View::newInstance()->_exportVariableToView('subdomain_name', $region['s_name']);
+                                View::newInstance()->_exportVariableToView('subdomain_slug', $region['s_slug']);
                                 Params::setParam('sRegion', $region['pk_i_id']);
                             } else {
                                 $this->do400();
@@ -172,6 +175,7 @@
                             $city = City::newInstance()->findBySlug($subdomain);
                             if(isset($city['pk_i_id'])) {
                                 View::newInstance()->_exportVariableToView('subdomain_name', $city['s_name']);
+                                View::newInstance()->_exportVariableToView('subdomain_slug', $city['s_slug']);
                                 Params::setParam('sCity', $city['pk_i_id']);
                             } else {
                                 $this->do400();

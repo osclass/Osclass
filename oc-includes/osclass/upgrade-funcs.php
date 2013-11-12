@@ -221,7 +221,7 @@ CREATE TABLE %st_item_description_tmp (
         osc_set_preference('rewrite_item_url', '{CATEGORIES}/{ITEM_TITLE}_{ITEM_ID}');
         osc_set_preference('rewrite_cat_url', '{CATEGORIES}/');
         osc_set_preference('rewrite_page_url', '{PAGE_SLUG}-p{PAGE_ID}');
-        osc_set_preference('rewrite_search_url', 'search/');
+        osc_set_preference('rewrite_search_url', 'search');
         osc_set_preference('rewrite_search_country', 'country');
         osc_set_preference('rewrite_search_region', 'region');
         osc_set_preference('rewrite_search_city', 'city');
