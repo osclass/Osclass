@@ -337,6 +337,7 @@
                 }
                 if(isset($category['s_slug'])) {
                     $base_url = $http_url.$category['s_slug'].".".osc_subdomain_host().REL_WEB_URL;
+                    unset($params['sCategory']);
                 }
             }
         } else if(osc_subdomain_type()=='country' && isset($params['sCountry'])) {
@@ -351,6 +352,7 @@
                 }
                 if(isset($country['s_slug'])) {
                     $base_url = $http_url.$country['s_slug'].".".osc_subdomain_host().REL_WEB_URL;
+                    unset($params['sCountry']);
                 }
             }
         } else if(osc_subdomain_type()=='region' && isset($params['sRegion'])) {
@@ -365,6 +367,7 @@
                 }
                 if(isset($region['s_slug'])) {
                     $base_url = $http_url.$region['s_slug'].".".osc_subdomain_host().REL_WEB_URL;
+                    unset($params['sRegion']);
                 }
 
             }
@@ -380,6 +383,7 @@
                 }
                 if(isset($city['s_slug'])) {
                     $base_url = $http_url.$city['s_slug'].".".osc_subdomain_host().REL_WEB_URL;
+                    unset($params['sCity']);
                 }
 
             }
@@ -390,7 +394,7 @@
             $countP = count($params);
             // CANONICAL URLS
             if($countP==1 && isset($params['sRegion'])) {
-                $url = osc_base_url();
+                $url = $base_url;
                 if( osc_get_preference('seo_url_search_prefix') != '' ) {
                     $url .= osc_get_preference('seo_url_search_prefix') . '/';
                 }
@@ -406,7 +410,7 @@
                 }
                 return $url;
             } else if($countP==1 && isset($params['sCity'])) {
-                $url = osc_base_url();
+                $url = $base_url;
                 if( osc_get_preference('seo_url_search_prefix') != '' ) {
                     $url .= osc_get_preference('seo_url_search_prefix') . '/';
                 }
