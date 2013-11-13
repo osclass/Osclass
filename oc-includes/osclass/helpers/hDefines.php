@@ -35,14 +35,17 @@
      * @return string
      */
     function osc_base_url($with_index = false) {
-        $path = '';
         if(MULTISITE) {
             $path = osc_multisite_url();
         } else {
             $path = WEB_PATH;
         }
-        if ($with_index) $path .= "index.php";
-        return($path);
+        // add the index.php if it's true
+        if($with_index) {
+            $path .= "index.php";
+        }
+
+        return osc_apply_filter('base_url', $path, $with_index);
     }
 
     /**
@@ -52,15 +55,14 @@
      * @return string
      */
     function osc_admin_base_url($with_index = false) {
-        $path = '';
-        if(MULTISITE) {
-            $path = osc_multisite_url();
-        } else {
-            $path = WEB_PATH;
+        $path  = osc_base_url(false) . 'oc-admin/';
+
+        // add the index.php if it's true
+        if($with_index) {
+            $path .= "index.php";
         }
-        $path .= "oc-admin/";
-        if ($with_index) $path .= "index.php";
-        return($path);
+
+        return osc_apply_filter('admin_base_url', $path, $with_index);
     }
 
     /**
@@ -465,11 +467,11 @@
      * @param string $locale
      * @return string
      */
-    function osc_item_url($locale = '') 
+    function osc_item_url($locale = '')
     {
         return osc_item_url_from_item(osc_item(), $locale);
     }
-    
+
     /**
      * Create item url from item data without exported to view.
      *
@@ -1171,6 +1173,6 @@
 
     function osc_subdomain_name() {
         return View::newInstance()->_get('subdomain_name');
-    }    
+    }
     /* file end: ./oc-includes/osclass/helpers/hDefines.php */
 ?>
