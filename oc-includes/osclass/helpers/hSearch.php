@@ -393,7 +393,7 @@
             $url = $base_url.osc_get_preference('rewrite_search_url');
             $countP = count($params);
             // CANONICAL URLS
-            if($countP==1 && isset($params['sRegion'])) {
+            if(isset($params['sRegion']) && ($countP==1 || ($countP==2 && isset($params['iPage'])))) {
                 $url = $base_url;
                 if( osc_get_preference('seo_url_search_prefix') != '' ) {
                     $url .= osc_get_preference('seo_url_search_prefix') . '/';
@@ -408,8 +408,8 @@
                     }
                     $url .= osc_sanitizeString($region['s_name']) . '-r' . $region['pk_i_id'];
                 }
-                return $url;
-            } else if($countP==1 && isset($params['sCity'])) {
+                if(@$params['iPage']!='' && @$params['iPage']!=1) { $url .= "/".$params['iPage']; };
+            } else if(isset($params['sCity']) && ($countP==1 || ($countP==2 && isset($params['iPage'])))) {
                 $url = $base_url;
                 if( osc_get_preference('seo_url_search_prefix') != '' ) {
                     $url .= osc_get_preference('seo_url_search_prefix') . '/';
@@ -424,9 +424,8 @@
                     }
                     $url .= osc_sanitizeString($city['s_name']) . '-c' . $city['pk_i_id'];
                 }
-                return $url;
+                if(@$params['iPage']!='' && @$params['iPage']!=1) { $url .= "/".$params['iPage']; };
             } else if($params!=null) {
-                $url .= "/";
                 foreach($params as $k => $v) {
                     switch($k) {
                         case 'sCountry':
@@ -462,12 +461,12 @@
                                 if(is_array($value)) {
                                     foreach ($value as $_key => $_value) {
                                         if($value!='') {
-                                            $url .= 'meta'.$key.'-'.$_key.','.$_value.'/';
+                                            $url .= '/meta'.$key.'-'.$_key.','.$_value;
                                         }
                                     }
                                 } else {
                                     if($value!='') {
-                                        $url .= 'meta'.$key.','.$value.'/';
+                                        $url .= '/meta'.$key.','.$value;
                                     }
                                 }
                             }
@@ -476,7 +475,7 @@
                             break;
                     }
 
-                    if(!is_array($v)  && $v!='') { $url .= $k.",".$v."/"; }
+                    if(!is_array($v)  && $v!='') { $url .= "/".$k.",".$v; }
                 }
             }
         } else {
