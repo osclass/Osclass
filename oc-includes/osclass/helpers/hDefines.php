@@ -55,8 +55,7 @@
      * @return string
      */
     function osc_admin_base_url($with_index = false) {
-        $path  = osc_base_url(false);
-        $path .= 'oc-admin/';
+        $path  = osc_base_url(false) . 'oc-admin/';
 
         // add the index.php if it's true
         if($with_index) {
