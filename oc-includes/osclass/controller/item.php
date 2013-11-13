@@ -256,7 +256,6 @@
                         $this->do404();
                         return;
                     }
-                    $user = User::newInstance()->findByEmail($item[0]['s_contact_email']);
                     $datenow = new DateTime('NOW');
                     $itemdate = new DateTime(substr($item[0]['dt_pub_date'],0,10));
                     $ddate = date_diff($itemdate,$datenow)->days; 
@@ -265,7 +264,6 @@
                       $mItems = new ItemActions(false);
                       $success = $mItems->renew( $item[0]['pk_i_id'], $item[0]['s_secret']);
                       if( $success ) {
-                        osc_run_hook('item_renewed', $item[0]);
                         osc_add_flash_ok_message( _m('The listing has been renewed') );
                       } else {
                         osc_add_flash_error_message( _m("The listing can't be renewed") );

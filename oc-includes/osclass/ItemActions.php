@@ -560,33 +560,48 @@
                 $item = $this->manager->listWhere("i.s_secret = '%s' AND i.pk_i_id = '%s' ", $secret, $id);
                 $aWhere = array('s_secret' => $secret, 'pk_i_id' => $id);
             }
-
-            if($item[0]['b_enabled']==1 && $item[0]['b_active']==1 && $item[0]['b_spam']==0) {
-                /* add dt_create_date to use this code
-                if ($item[0]['dt_create_date'] == 0) {
-                    $result = $this->manager->update(
-                        array('dt_pub_date' => date('Y-m-d H:i:s'), 'dt_create_date' => $item[0]['dt_pub_date']),
-                        $aWhere
-                    );
-                } else {
-                    $result = $this->manager->update(
-                        array('dt_pub_date' => date('Y-m-d H:i:s')),
-                        $aWhere
-                    );
-                } 
-                */
-                    $result = $this->manager->update(
-                        array('dt_pub_date' => date('Y-m-d H:i:s')),
-                        $aWhere
-                    );
-                   
-                // updated correctly
-                if($result == 1) {
-                    return true;
-                }
+            if( count($item) == 0 ) {
+                return false;
+            }
+            if($item[0]['b_enabled']==0 || $item[0]['b_active']==0 || $item[0]['b_spam']!=0) {
+                return false;
+            }
+            osc_run_hook('pre_item_renew', $item[0]);
+            $_category = Category::newInstance()->findByPrimaryKey($item[0]['fk_i_category_id']);
+            $expdate = date('Y-m-d H:i:s', time() + 86400*$_category['i_expiration_days']);
+            /*
+            if ($item[0]['dt_create_date'] == 0) {
+                $result = $this->manager->update(
+                array('dt_pub_date' => date('Y-m-d H:i:s'), 'dt_expiration' => $expdate, 'dt_create_date' => $item[0]['dt_pub_date']),
+                    $aWhere
+                );
+            } else {
+                $result = $this->manager->update(
+                array('dt_pub_date' => date('Y-m-d H:i:s'), 'dt_expiration' => $expdate),
+                    $aWhere
+                );
             } 
-            return false;
-        }
+            */
+            $result = $this->manager->update(
+                array('dt_pub_date' => date('Y-m-d H:i:s'), 'dt_expiration' => $expdate),
+                    $aWhere
+            );
+               
+            // updated correctly
+            if($result == 1) {
+                osc_run_hook('item_renewed', $item[0]);
+                if (osc_isExpired($item[0]['dt_expiration'])) {
+                    if($item[0]['fk_i_user_id']!=null) {
+                        User::newInstance()->increaseNumItems($item[0]['fk_i_user_id']);
+                    }
+                    CategoryStats::newInstance()->increaseNumItems($item[0]['fk_i_category_id']);
+                    CountryStats::newInstance()->increaseNumItems($item[0]['fk_c_country_code']);
+                    RegionStats::newInstance()->increaseNumItems($item[0]['fk_i_region_id']);
+                    CityStats::newInstance()->increaseNumItems($item[0]['fk_i_city_id']);
+                }    
+                return true;
+            }
+        } 
 
         /**
          * Activates an item.
