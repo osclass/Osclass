@@ -57,6 +57,7 @@
             $this->force_limits       = isset($params['force_limits']) ? (bool) $params['force_limits'] : false;
             $this->sides              = isset($params['sides']) ? $params['sides'] : 2;
             $this->url                = isset($params['url']) ? $params['url'] : osc_update_search_url(array('iPage' => '{PAGE}'));
+            $this->firstUrl           = isset($params['first_url']) ? $params['first_url'] : $this->url;
             $this->nofollow           = isset($params['nofollow']) ? $params['nofollow'] : true;
         }
 
@@ -127,8 +128,7 @@
                     $isFirst++;
                 }
                 $attrs['class'] = $this->class_first;
-                $attrs['href'] = str_replace('{PAGE}', '', str_replace(urlencode('{PAGE}'), '', $this->url));
-                $attrs['href'] = rtrim($attrs['href'], "/");
+                $attrs['href'] = str_replace('{PAGE}', '', str_replace(urlencode('{PAGE}'), '', $this->firstUrl));
                 $links[] = $this->createATag($this->text_first, $attrs);
             }
             if( isset($pages['prev']) ) {
@@ -138,14 +138,12 @@
                 }
                 $attrs['class'] = $this->class_prev;                
                 if( $pages['prev'] == 1 ) {
-                    $attrs['href'] = str_replace('{PAGE}', '', str_replace(urlencode('{PAGE}'), '', $this->url));
-                    $attrs['href'] = rtrim($attrs['href'], "/");
+                    $attrs['href'] = str_replace('{PAGE}', '', str_replace(urlencode('{PAGE}'), '', $this->firstUrl));
                 } else {
                     $attrs['href']  = str_replace('{PAGE}', $pages['prev'], str_replace(urlencode('{PAGE}'), $pages['prev'], $this->url));
                 }
                 $links[] = $this->createATag($this->text_prev, $attrs);
             }
-            
             foreach($pages['pages'] as $p) {
                 $isLast++;
                 if((!isset($pages['next']) && !isset($pages['last']) && ( $isLast == count($pages['pages']))) ){
@@ -161,8 +159,7 @@
                     $classfirst_non_selected = $this->class_non_selected;
                 }
                 if( $p == 1 ) {
-                    $attrs['href'] = str_replace('{PAGE}', '', str_replace(urlencode('{PAGE}'), '', $this->url));
-                    $attrs['href'] = rtrim($attrs['href'], "/");
+                    $attrs['href'] = str_replace('{PAGE}', '', str_replace(urlencode('{PAGE}'), '', $this->firstUrl));
                 } else {
                     $attrs['href'] = str_replace('{PAGE}', $p, str_replace(urlencode('{PAGE}'), $p, $this->url));
                 }
