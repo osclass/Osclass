@@ -1278,6 +1278,68 @@
             ItemForm::plugin_post_item('edit&itemId='.osc_item_id());
         }
 
+
+        static public function ajax_photos() {
+            $aImages = array();
+            if( Session::newInstance()->_getForm('fu_pre_images') != '' ) {
+                $aImages = Session::newInstance()->_getForm('fu_pre_images');
+                Session::newInstance()->_drop('fu_pre_images');
+                Session::newInstance()->_dropKeepForm('fu_pre_images');
+            }
+            ?>
+            <div id="restricted-fine-uploader"></div>
+            <div style="clear:both;"></div>
+            <?php if(count($aImages)>0) { ?>
+                <br/>
+                <h3><?php _e('Images already uploaded', 'image_uploader');?></h3>
+                <ul class="qq-upload-list">
+                    <?php foreach($aImages as $img){ ?>
+                        <li class=" qq-upload-success">
+                            <span class="qq-upload-file"><?php echo $img; ?></span>
+                            <a class="qq-upload-delete" onclick="$(this).parent().remove();" style="display: inline; cursor:pointer;">Delete</a>
+                            <div class="fu_preview_img"><img src="<?php echo osc_base_url(); ?>oc-content/uploads/temp/<?php echo osc_esc_html($img); ?>" alt="<?php echo osc_esc_html($img); ?>"></div>
+                            <input type="hidden" name="fu_images[]" value="<?php echo osc_esc_html($img); ?>">
+                        </li>
+                    <?php } ?>
+                </ul>
+            <?php } ?>
+            <div style="clear:both;"></div>
+            <script>
+                $(document).ready(function() {
+                    $('#restricted-fine-uploader').fineUploader({
+                        request: {
+                            endpoint: '<?php echo osc_base_url(true)."?page=ajax&action=ajaxupload"; ?>'
+                        },
+                        multiple: true,
+                        validation: {
+                            allowedExtensions: ['jpeg', 'jpg', 'gif', 'png'],
+                            sizeLimit: <?php echo ((int)osc_max_size_kb()*1024); ?> // 50 kB = 50 * 1024 bytes
+                        },
+                        // optional feature
+                        deleteFile: {
+                            enabled: true,
+                            method: "POST",
+                            endpoint: '<?php echo osc_ajax_plugin_url(osc_plugin_folder(__FILE__).'server/success.php'); ?>'
+                        },
+                        text: {
+                            uploadButton: '<?php _e('Click or Drop for upload images'); ?>'
+                        },
+                        showMessage: function(message) {
+                            // Using Bootstrap's classes
+                            $('#restricted-fine-uploader').append('<div class="alert alert-error">' + message + '</div>');
+                        }
+                    }).on('complete', function(event, id, fileName, responseJSON) {
+                            if (responseJSON.success) {
+                                var li = $('.qq-upload-list li')[id];
+                                $(li).append('<div class="fu_preview_img"><img src="<?php echo osc_base_url(); ?>oc-content/uploads/temp/'+responseJSON.uploadName+'" alt="' + fileName + '"></div>');
+                                $(li).append('<input type="hidden" name="fu_images[]" value="'+responseJSON.uploadName+'"></input>'); //uploadName
+                            }
+                        });
+                });
+            </script>
+        <?php
+        }
+
     }
 
 ?>

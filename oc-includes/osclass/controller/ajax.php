@@ -252,7 +252,17 @@
                         echo json_encode(array('exists' => 1, 's_username' => $username));
                     }
                 break;
-
+                case 'ajax_upload':
+                    // Include the uploader class
+                    $variable = Params::getParam('variable')?Params::getParam('variable'):'fu_images';
+                    $uploader = new AjaxUploader($variable);
+                    @mkdir(osc_content_path().'/uploads/temp/');
+                    $original = pathinfo($uploader->getOriginalName());
+                    $filename = uniqid($variable."_").".".$original['extension'];
+                    $result = $uploader->handleUpload(osc_content_path().'/uploads/temp/');
+                    $result['uploadName'] = $filename;
+                    echo htmlspecialchars(json_encode($result), ENT_NOQUOTES);
+                    break;
                 default:
                     echo json_encode(array('error' => __('no action defined')));
                 break;
