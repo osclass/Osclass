@@ -505,7 +505,14 @@
                 case 'upgrade': // AT THIS POINT WE KNOW IF THERE'S AN UPDATE OR NOT
                     osc_csrf_check();
                     $result = osc_do_upgrade();
-                    echo $result['message'];
+                    if(!__FROM_CRON__) {
+                        if($result['error']==0) {
+                            osc_add_flash_ok_message($result['message'], 'admin');
+                        } else if($result['error']==6) {
+                            osc_add_flash_warning_message($result['message'], 'admin');
+                        }
+                    }
+                    echo json_encode($result);
                     break;
 
                 /*******************************
