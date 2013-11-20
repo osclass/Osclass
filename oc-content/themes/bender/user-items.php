@@ -48,8 +48,7 @@
                 <a href="<?php echo osc_user_list_items_url(); ?>?ShowAs=gallery" class="grid-button" data-class-toggle="listing-grid" data-destination="#listing-card-list"><span>Grid</span></a>
             </span>
         </div>
-    </div>
-    <?php
+       <?php
         View::newInstance()->_exportVariableToView("listClass",$listClass);
         View::newInstance()->_exportVariableToView("listAdmin", true);
         osc_current_web_theme_path('loop.php');
@@ -70,4 +69,5 @@
         <?php echo osc_search_pagination(); ?>
     </div>
 <?php } ?>
+</div>
 <?php osc_current_web_theme_path('footer.php') ; ?>
