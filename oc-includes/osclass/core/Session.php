@@ -113,8 +113,7 @@
 
         function _setMessage($key, $value, $type) {
             $messages = $this->_get('messages');
-            $messages[$key]['msg'] = $value;
-            $messages[$key]['type'] = $type;
+            $messages[$key][] = array('msg' => $value, 'type' => $type); 
             $this->_set('messages', $messages);
         }
 
