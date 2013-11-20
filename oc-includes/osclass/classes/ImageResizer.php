@@ -248,7 +248,7 @@
         }
 
         public function doWatermarkText($text, $color = 'ff0000') {
-            $this->font = osc_apply_filter('watermark_font_path', LIB_PATH . "osclass/classes/Arial.ttf");
+            $this->font = osc_apply_filter('watermark_font_path', LIB_PATH . "osclass/assets/Arial.ttf");
             if(osc_use_imagick()) {
                 $draw = new ImagickDraw();
                 $draw->setFillColor("#".$color);
