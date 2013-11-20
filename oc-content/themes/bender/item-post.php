@@ -30,10 +30,11 @@
         $action = 'item_edit_post';
         $edit = true;
     }
+
     ?>
 <?php osc_current_web_theme_path('header.php') ; ?>
 <?php ItemForm::location_javascript_new(); ?>
-<?php if(osc_images_enabled_at_items()) ItemForm::photos_javascript(); ?>
+<?php /*if(osc_images_enabled_at_items()) ItemForm::photos_javascript();*/ ?>
     <div class="form-container form-horizontal">
         <div class="resp-wrapper">
             <div class="header">
@@ -76,7 +77,9 @@
                             </div>
                         </div>
                         <?php } ?>
-                        <?php if( osc_images_enabled_at_items() ) { ?>
+                        <?php if( osc_images_enabled_at_items() ) {
+                            ItemForm::ajax_photos();
+                         /* ?>
                         <div class="box photos">
                             <h2><?php _e('Photos', 'bender'); ?></h2>
                             <div class="control-group">
@@ -91,7 +94,7 @@
                                 </div>
                             </div>
                         </div>
-                        <?php } ?>
+                        <?php */ } ?>
                         <div class="box location">
                             <h2><?php _e('Listing Location', 'bender'); ?></h2>
 

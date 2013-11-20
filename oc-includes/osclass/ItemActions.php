@@ -1141,9 +1141,22 @@
             $aItem['title']         = Params::getParam('title');
             $aItem['description']   = Params::getParam('description');
             $aItem['photos']        = Params::getFiles('photos');
+            $ajax_photos            = Params::getParam('ajax_photos');
             $aItem['s_ip']          = get_ip();
             $aItem['d_coord_lat']   = (Params::getParam('d_coord_lat')  != '') ? Params::getParam('d_coord_lat') : null;
             $aItem['d_coord_long']  = (Params::getParam('d_coord_long') != '') ? Params::getParam('d_coord_long') : null;
+
+            if(is_array($ajax_photos)) {
+                foreach($ajax_photos as $photo) {
+                    if(file_exists(osc_content_path().'uploads/temp/'.$photo)) {
+                        $aItem['photos']['name'][]      = $photo;
+                        $aItem['photos']['type'][]      = 'image/*';
+                        $aItem['photos']['tmp_name'][]  = osc_content_path().'uploads/temp/'.$photo;
+                        $aItem['photos']['error'][]     = UPLOAD_ERR_OK;
+                        $aItem['photos']['size'][]      = 0;
+                    }
+                }
+            }
 
             if($is_add || $this->is_admin) {
                 $dt_expiration = Params::getParam('dt_expiration');
