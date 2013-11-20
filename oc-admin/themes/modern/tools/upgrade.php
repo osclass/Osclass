@@ -52,10 +52,13 @@
 
                             var tempAr = data.url.split('/');
                             fileToUnzip = tempAr.pop();
-                            $.get('<?php echo osc_admin_base_url(true); ?>?page=ajax&action=upgrade&<?php echo osc_csrf_token_url(); ?>' , function(data) {
+                            $.getJSON('<?php echo osc_admin_base_url(true); ?>?page=ajax&action=upgrade&<?php echo osc_csrf_token_url(); ?>' , function(data) {
+                                if(data.error==0 || data.error==6) {
+                                    window.location = "<?php echo osc_admin_base_url(true); ?>?page=tools&action=version";
+                                }
                                 var loading_image = document.getElementById('loading_image');
                                 loading_image.style.display = "none";
-                                steps.innerHTML += data+"<br />";
+                                steps.innerHTML += data.message+"<br />";
                             });
                         <?php } else { ?>
                             steps.innerHTML += '<input type="button" value="<?php echo osc_esc_html( __('Upgrade')); ?>" onclick="window.location.href=\'<?php echo osc_admin_base_url(true); ?>?page=tools&action=upgrade&confirm=true\';" />';
