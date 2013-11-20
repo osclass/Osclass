@@ -5,18 +5,18 @@ class AjaxUploader {
     private $_sizeLimit;
     private $_file;
 
-    function __construct($variable, array $allowedExtensions = null, $sizeLimit = null){
+    function __construct(array $allowedExtensions = null, $sizeLimit = null){
         if($allowedExtensions===null) { $allowedExtensions = osc_allowed_extension(); }
         if($sizeLimit===null) { $sizeLimit = 1024*osc_max_size_kb(); }
-        $this->_allowedExtensions = array_map("strtolower", $allowedExtensions);
+        $this->_allowedExtensions = $allowedExtensions;
         $this->_sizeLimit = $sizeLimit;
 
         if(!isset($_SERVER['CONTENT_TYPE'])) {
             $this->_file = false;
         } else if (strpos(strtolower($_SERVER['CONTENT_TYPE']), 'multipart/') === 0) {
-            $this->_file = new AjaxUploadedFileForm($variable);
+            $this->_file = new AjaxUploadedFileForm();
         } else {
-            $this->_file = new AjaxUploadedFileXhr($variable);
+            $this->_file = new AjaxUploadedFileXhr();
         }
     }
 
@@ -29,21 +29,24 @@ class AjaxUploader {
         if($size == 0) { return array('error' => __('File is empty')); }
         if($size > $this->_sizeLimit) { return array('error' => __('File is too large')); }
 
-        $pathinfo = pathinfo($this->_file->getName());
+        $pathinfo = pathinfo($this->_file->getOriginalName());
         $ext = @$pathinfo['extension'];
+        $uuid = pathinfo($uploadFilename);
 
-        if($this->_allowedExtensions && !in_array(strtolower($ext), $this->_allowedExtensions)){
-            $these = implode(', ', $this->_allowedExtensions);
-            return array('error' => sprintf(__('File has an invalid extension, it should be one of %s.'), $these));
+        if($this->_allowedExtensions && stripos($this->_allowedExtensions, strtolower($ext))===false){
+            return array('error' => sprintf(__('File has an invalid extension, it should be one of %s.'), $this->_allowedExtensions));
         }
 
         if(!$replace){
-            if(file_exists($$uploadFilename)) {
+            if(file_exists($uploadFilename)) {
                 return array('error' => 'Could not save uploaded file. File already exists');
             }
         }
 
-        if($this->file->save($uploadFilename)){
+        if($this->_file->save($uploadFilename)){
+            $files = Session::newInstance()->_get('ajax_files');
+            $files[Params::getParam('qquuid')] = $uuid['basename'];
+            Session::newInstance()->_set('ajax_files', $files);
             return array('success' => true);
         } else {
             return array('error' => 'Could not save uploaded file. The upload was cancelled, or server error encountered');
@@ -53,8 +56,7 @@ class AjaxUploader {
 }
 
 class AjaxUploadedFileXhr {
-    private $_variable;
-    function __construct($variable) { $this->_variable = $variable; }
+    function __construct() {}
 
     public function save($path) {
         $input = fopen("php://input", "r");
@@ -69,7 +71,7 @@ class AjaxUploadedFileXhr {
         return true;
     }
 
-    public function getOriginalName() { return Params::getParam($this->_variable); }
+    public function getOriginalName() { return Params::getParam('qqfile'); }
     public function getSize() {
         if(isset($_SERVER["CONTENT_LENGTH"])){
             return (int)$_SERVER["CONTENT_LENGTH"];
@@ -81,7 +83,7 @@ class AjaxUploadedFileXhr {
 
 class AjaxUploadedFileForm {
     private $_file;
-    function __construct($variable) { $this->_file = Params::getFiles($variable); }
+    function __construct() { $this->_file = Params::getFiles('qqfile'); }
     public function save($path) { return move_uploaded_file($this->_file['tmp_name'], $path); }
     public function getOriginalName() { return $this->_file['name']; }
     public function getSize() { return $this->_file['size']; }

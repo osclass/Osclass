@@ -33,6 +33,10 @@ DEFINES
     osc_enqueue_script('fancybox');
     // used for date/dateinterval custom fields
     osc_enqueue_script('php-date');
+    osc_enqueue_style('fine-uploader-css', osc_assets_url('js/fineuploader/fineuploader.css'));
+    osc_enqueue_style('bender-fine-uploader-css', osc_current_web_theme_url('css/ajax-uploader.css'));
+    osc_enqueue_script('jquery-fineuploader');
+
 
 /**
 

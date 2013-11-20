@@ -52,6 +52,13 @@
                 }
             }
 
+            $files = glob(osc_content_path().'uploads/temp/qqfile_*');
+            foreach($files as $file) {
+                if((time()-filectime($file))>(2*3600)) {
+                    @unlink($file);
+                }
+            }
+
             osc_run_hook('cron_hourly');
         }
     }
