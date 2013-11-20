@@ -31,16 +31,17 @@
             if( preg_match('/^index\.php/', $this->uri)>0) {
                 // search url without permalinks params
             } else {
+                // redirect if it ends with a slash
+                if( preg_match('|/$|', $this->uri) ) {
+                    $redirectURL = osc_base_url() . $this->uri;
+                    $redirectURL = preg_replace('|/$|', '', $redirectURL);
+                    $this->redirectTo($redirectURL, 301);
+                }
+
                 if( stripos($_SERVER['REQUEST_URI'], osc_get_preference('rewrite_search_url'))===false && osc_rewrite_enabled() && !Params::existParam('sFeed')) {
                     // clean GET html params
                     $this->uri = preg_replace('/(\/?)\?.*$/', '', $this->uri);
 
-                    // redirect if it ends with a slash
-                    if( preg_match('|/$|', $this->uri) ) {
-                        $redirectURL = osc_base_url() . $this->uri;
-                        $redirectURL = preg_replace('|/$|', '', $redirectURL);
-                        $this->redirectTo($redirectURL);
-                    }
                     $search_uri = preg_replace('|/[0-9]+$|', '', $this->uri);
                     $this->_exportVariableToView('search_uri', $search_uri);
 
