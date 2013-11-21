@@ -279,7 +279,7 @@ function meta_title() {
             }
         break;
         case('contact'):
-            $text = __('Contact','modern');
+            $text = __('Contact');
         break;
         default:
             $text = osc_page_title();
