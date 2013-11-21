@@ -223,7 +223,8 @@
                     's_city_area'       => $aItem['cityArea'],
                     's_address'         => $aItem['address'],
                     'd_coord_lat'       => $aItem['d_coord_lat'],
-                    'd_coord_long'      => $aItem['d_coord_long']
+                    'd_coord_long'      => $aItem['d_coord_long'],
+                    's_zip'             => $aItem['s_zip']
                 );
 
                 $locationManager = ItemLocation::newInstance();
@@ -385,7 +386,8 @@
                     's_city_area'       => $aItem['cityArea'],
                     's_address'         => $aItem['address'],
                     'd_coord_lat'       => $aItem['d_coord_lat'],
-                    'd_coord_long'      => $aItem['d_coord_long']
+                    'd_coord_long'      => $aItem['d_coord_long'],
+                    's_zip'             => $aItem['s_zip']
                 );
 
                 $locationManager = ItemLocation::newInstance();
@@ -1145,7 +1147,10 @@
             $aItem['s_ip']          = get_ip();
             $aItem['d_coord_lat']   = (Params::getParam('d_coord_lat')  != '') ? Params::getParam('d_coord_lat') : null;
             $aItem['d_coord_long']  = (Params::getParam('d_coord_long') != '') ? Params::getParam('d_coord_long') : null;
+            $aItem['s_zip']         = (Params::getParam('s_zip')  != '') ? Params::getParam('s_zip') : null;
 
+            // $ajax_photos is an array of filenames of the photos uploaded by ajax to a temporary folder
+            // fake insert them into the array of the form-uploaded photos
             if(is_array($ajax_photos)) {
                 foreach($ajax_photos as $photo) {
                     if(file_exists(osc_content_path().'uploads/temp/'.$photo)) {

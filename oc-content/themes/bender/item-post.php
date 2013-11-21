@@ -34,7 +34,6 @@
     ?>
 <?php osc_current_web_theme_path('header.php') ; ?>
 <?php ItemForm::location_javascript_new(); ?>
-<?php /*if(osc_images_enabled_at_items()) ItemForm::photos_javascript();*/ ?>
     <div class="form-container form-horizontal">
         <div class="resp-wrapper">
             <div class="header">
@@ -44,7 +43,7 @@
                 <form name="item" action="<?php echo osc_base_url(true);?>" method="post" enctype="multipart/form-data" id="item-post">
                     <fieldset>
                     <input type="hidden" name="action" value="<?php echo $action; ?>" />
-                    <input type="hidden" name="page" value="item" />
+                        <input type="hidden" name="page" value="item" />
                     <?php if($edit){ ?>
                         <input type="hidden" name="id" value="<?php echo osc_item_id();?>" />
                         <input type="hidden" name="secret" value="<?php echo osc_item_secret();?>" />
@@ -79,22 +78,7 @@
                         <?php } ?>
                         <?php if( osc_images_enabled_at_items() ) {
                             ItemForm::ajax_photos();
-                         /* ?>
-                        <div class="box photos">
-                            <h2><?php _e('Photos', 'bender'); ?></h2>
-                            <div class="control-group">
-                                <label class="control-label" for="photos[]"><?php _e('Photos', 'bender'); ?></label>
-                                <div class="controls">
-                                    <div id="photos">
-                                        <?php ItemForm::photos(); ?>
-                                    </div>
-                                </div>
-                                <div class="controls">
-                                    <a href="#" onclick="addNewPhoto(); return false;"><?php _e('Add new photo', 'bender'); ?></a>
-                                </div>
-                            </div>
-                        </div>
-                        <?php */ } ?>
+                         } ?>
                         <div class="box location">
                             <h2><?php _e('Listing Location', 'bender'); ?></h2>
 
