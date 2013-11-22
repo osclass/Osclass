@@ -276,12 +276,9 @@ function check_market_language_compatibility($slug, $language_version) {
     return osc_check_language_update($slug);
 }
 
-function check_market_compatibility($versions, $type = '') {
-    $compatible = false;
-
+function check_market_compatibility($versions) {
     $versions = explode(',',$versions);
     $current_version = OSCLASS_VERSION;
-    $version_length = strlen($current_version);
 
     foreach($versions as $_version) {
         $result = version_compare2(OSCLASS_VERSION, $_version);
@@ -290,6 +287,6 @@ function check_market_compatibility($versions, $type = '') {
             return true;
         }
     }
-    return $compatible;
+    return false;
 }
 /* end of file */
