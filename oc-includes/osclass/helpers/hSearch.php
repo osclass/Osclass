@@ -308,8 +308,9 @@
      *
      * @return string
      */
-    function osc_search_show_all_url( ) {
-        return osc_update_search_url(array('page' => 'search'));
+    function osc_search_show_all_url($params = array()) {
+        $params['page'] = 'search';
+        return osc_update_search_url($params);
     }
 
     /**
@@ -325,70 +326,89 @@
         $base_url = osc_base_url();
         $http_url = osc_is_ssl()?"https://":"http://";
         if(osc_subdomain_type()=='category' && isset($params['sCategory'])) {
-            if(is_array($params['sCategory'])) {
-                $params['sCategory'] = implode(",", $params['sCategory']);
-            }
-            if($params['sCategory']!='' && strpos($params['sCategory'], ",")===false) {
-                if(is_numeric($params['sCategory'])) {
-                    $category = Category::newInstance()->findByPrimaryKey($params['sCategory']);
-                } else {
-                    $category = Category::newInstance()->findBySlug($params['sCategory']);
+            if($params['sCategory']!=Params::getParam('sCategory')) {
+                if(is_array($params['sCategory'])) {
+                    $params['sCategory'] = implode(",", $params['sCategory']);
                 }
-                if(isset($category['s_slug'])) {
-                    $base_url = $http_url.$category['s_slug'].".".osc_subdomain_host().REL_WEB_URL;
-                    unset($params['sCategory']);
+                if($params['sCategory']!='' && strpos($params['sCategory'], ",")===false) {
+                    if(is_numeric($params['sCategory'])) {
+                        $category = Category::newInstance()->findByPrimaryKey($params['sCategory']);
+                    } else {
+                        $category = Category::newInstance()->findBySlug($params['sCategory']);
+                    }
+                    if(isset($category['s_slug'])) {
+                        $base_url = $http_url.$category['s_slug'].".".osc_subdomain_host().REL_WEB_URL;
+                        unset($params['sCategory']);
+                    }
                 }
+            } else if(osc_is_subdomain()) {
+                unset($params['sCategory']);
             }
         } else if(osc_subdomain_type()=='country' && isset($params['sCountry'])) {
-            if(is_array($params['sCountry'])) {
-                $params['sCountry'] = implode(",", $params['sCountry']);
-            }
-            if($params['sCountry']!='' && strpos($params['sCountry'], ",")===false) {
-                if(is_numeric($params['sCountry'])) {
-                    $country = Country::newInstance()->findByPrimaryKey($params['sCountry']);
-                } else {
-                    $country = Country::newInstance()->findByCode($params['sCountry']);
+            if($params['sCountry']!=Params::getParam('sCountry')) {
+                if(is_array($params['sCountry'])) {
+                    $params['sCountry'] = implode(",", $params['sCountry']);
                 }
-                if(isset($country['s_slug'])) {
-                    $base_url = $http_url.$country['s_slug'].".".osc_subdomain_host().REL_WEB_URL;
-                    unset($params['sCountry']);
+                if($params['sCountry']!='' && strpos($params['sCountry'], ",")===false) {
+                    if(is_numeric($params['sCountry'])) {
+                        $country = Country::newInstance()->findByPrimaryKey($params['sCountry']);
+                    } else {
+                        $country = Country::newInstance()->findByCode($params['sCountry']);
+                    }
+                    if(isset($country['s_slug'])) {
+                        $base_url = $http_url.$country['s_slug'].".".osc_subdomain_host().REL_WEB_URL;
+                        unset($params['sCountry']);
+                    }
                 }
+            } else if(osc_is_subdomain()) {
+                unset($params['sCountry']);
             }
         } else if(osc_subdomain_type()=='region' && isset($params['sRegion'])) {
-            if(is_array($params['sRegion'])) {
-                $params['sRegion'] = implode(",", $params['sRegion']);
-            }
-            if($params['sRegion']!='' && strpos($params['sRegion'], ",")===false) {
-                if(is_numeric($params['sRegion'])) {
-                    $region = Region::newInstance()->findByPrimaryKey($params['sRegion']);
-                } else {
-                    $region = Region::newInstance()->findByName($params['sRegion']);
+            if($params['sRegion']!=Params::getParam('sRegion')) {
+                if(is_array($params['sRegion'])) {
+                    $params['sRegion'] = implode(",", $params['sRegion']);
                 }
-                if(isset($region['s_slug'])) {
-                    $base_url = $http_url.$region['s_slug'].".".osc_subdomain_host().REL_WEB_URL;
-                    unset($params['sRegion']);
-                }
+                if($params['sRegion']!='' && strpos($params['sRegion'], ",")===false) {
+                    if(is_numeric($params['sRegion'])) {
+                        $region = Region::newInstance()->findByPrimaryKey($params['sRegion']);
+                    } else {
+                        $region = Region::newInstance()->findByName($params['sRegion']);
+                    }
+                    if(isset($region['s_slug'])) {
+                        $base_url = $http_url.$region['s_slug'].".".osc_subdomain_host().REL_WEB_URL;
+                        unset($params['sRegion']);
+                    }
 
+                }
+            } else if(osc_is_subdomain()) {
+                unset($params['sRegion']);
             }
         } else if(osc_subdomain_type()=='city' && isset($params['sCity'])) {
-            if(is_array($params['sCity'])) {
-                $params['sCity'] = implode(",", $params['sCity']);
-            }
-            if($params['sCity']!='' && strpos($params['sCity'], ",")===false) {
-                if(is_numeric($params['sCity'])) {
-                    $city = City::newInstance()->findByPrimaryKey($params['sCity']);
-                } else {
-                    $city = City::newInstance()->findByName($params['sCity']);
+            if($params['sCity']!=Params::getParam('sCity')) {
+                if(is_array($params['sCity'])) {
+                    $params['sCity'] = implode(",", $params['sCity']);
                 }
-                if(isset($city['s_slug'])) {
-                    $base_url = $http_url.$city['s_slug'].".".osc_subdomain_host().REL_WEB_URL;
-                    unset($params['sCity']);
-                }
+                if($params['sCity']!='' && strpos($params['sCity'], ",")===false) {
+                    if(is_numeric($params['sCity'])) {
+                        $city = City::newInstance()->findByPrimaryKey($params['sCity']);
+                    } else {
+                        $city = City::newInstance()->findByName($params['sCity']);
+                    }
+                    if(isset($city['s_slug'])) {
+                        $base_url = $http_url.$city['s_slug'].".".osc_subdomain_host().REL_WEB_URL;
+                        unset($params['sCity']);
+                    }
 
+                }
+            } else if(osc_is_subdomain()) {
+                unset($params['sCity']);
             }
         }
+
         $countP = count($params);
-        if ($countP == 0) return $base_url;
+        if ($countP == 0) { return $base_url; };
+        unset($params['page']);
+        $countP = count($params);
 
         if(osc_rewrite_enabled()) {
             $url = $base_url.osc_get_preference('rewrite_search_url');
@@ -474,32 +494,28 @@
                         default:
                             break;
                     }
-                    if($k!='page') {
-                        if(!is_array($v)  && $v!='') { $url .= "/".$k.",".$v; }
-                    }    
+                    if(!is_array($v)  && $v!='') { $url .= "/".$k.",".$v; }
                 }
             }
         } else {
             $url = $base_url.'index.php?page=search';
             if($params!=null) {
                 foreach($params as $k => $v) {
-                    if($k!='page') {
-                        if($k=='meta') {
-                            if( is_array($v) ) {
-                                foreach($v as $_k => $aux) {
-                                    if(is_array($aux)) {
-                                        foreach( array_keys($aux) as $aux_k ) {
-                                            $url .= "&" . $k . "[$_k][$aux_k]=" . $aux[$aux_k];
-                                        }
-                                    } else {
-                                        $url .= "&" . $_k . "[]=" . $aux;
+                    if($k=='meta') {
+                        if( is_array($v) ) {
+                            foreach($v as $_k => $aux) {
+                                if(is_array($aux)) {
+                                    foreach( array_keys($aux) as $aux_k ) {
+                                        $url .= "&" . $k . "[$_k][$aux_k]=" . $aux[$aux_k];
                                     }
+                                } else {
+                                    $url .= "&" . $_k . "[]=" . $aux;
                                 }
                             }
-                        } else {
-                            if(is_array($v)) { $v = implode(",", $v); }
-                            $url .= "&" . $k . "=" . $v;
                         }
+                    } else {
+                        if(is_array($v)) { $v = implode(",", $v); }
+                        $url .= "&" . $k . "=" . $v;
                     }
                 }
             }

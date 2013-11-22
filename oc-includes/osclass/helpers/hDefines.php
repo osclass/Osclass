@@ -48,6 +48,20 @@
         return osc_apply_filter('base_url', $path, $with_index);
     }
 
+    function osc_subdomain_base_url($params = array()) {
+        $fields['category'] = 'sCategory';
+        $fields['country'] = 'sCountry';
+        $fields['region'] = 'sRegion';
+        $fields['city'] = 'sCity';
+        if(isset($fields[osc_subdomain_type()])) {
+            $field = $fields[osc_subdomain_type()];
+            if(isset($params[$field]) && !is_array($params[$field]) && $params[$field]!='' && strpos($params[$field], ',')===false) {
+                return osc_search_url(array('sCategory' => $params[$field]));
+            }
+        }
+        return osc_base_url();
+    }
+
     /**
      * Gets the root url of oc-admin for your installation
      *
@@ -1173,6 +1187,14 @@
 
     function osc_subdomain_name() {
         return View::newInstance()->_get('subdomain_name');
+    }
+
+    function osc_subdomain_slug() {
+        return View::newInstance()->_get('subdomain_slug');
+    }
+
+    function osc_is_subdomain() {
+        return View::newInstance()->_get('subdomain_slug')!='';
     }
     /* file end: ./oc-includes/osclass/helpers/hDefines.php */
 ?>
