@@ -324,7 +324,7 @@
             osc_prune_array($params);
         }
         $countP = count($params);
-        if ($countP == 0) { return $params['page'] = 'search'; };
+        if ($countP == 0) { $params['page'] = 'search'; };
         $base_url = osc_base_url();
         $http_url = osc_is_ssl()?"https://":"http://";
         if(osc_subdomain_type()=='category' && isset($params['sCategory'])) {
