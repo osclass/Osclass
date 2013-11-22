@@ -1934,7 +1934,9 @@ function osc_do_auto_upgrade() {
             if($total>0) {
                 $elements = osc_get_preference('plugins_to_update');
                 foreach($elements as $element) {
-                    osc_market('plugins', $element);
+                    if(osc_is_update_compatible('plugins', $element, $json->s_name)) {
+                        osc_market('plugins', $element);
+                    }
                 }
             }
         }
@@ -1944,7 +1946,9 @@ function osc_do_auto_upgrade() {
             if($total>0) {
                 $elements = osc_get_preference('themes_to_update');
                 foreach($elements as $element) {
-                    osc_market('themes', $element);
+                    if(osc_is_update_compatible('themes', $element, $json->s_name)) {
+                        osc_market('themes', $element);
+                    }
                 }
             }
         }
@@ -1954,11 +1958,41 @@ function osc_do_auto_upgrade() {
             if($total>0) {
                 $elements = osc_get_preference('languages_to_update');
                 foreach($elements as $element) {
-                    osc_market('languages', $element);
+                    if(osc_is_update_compatible('languages', $element, $json->s_name)) {
+                        osc_market('languages', $element);
+                    }
                 }
             }
         }
     }
+}
+
+function osc_is_update_compatible($section, $element, $osclass_version = OSCLASS_VERSION) {
+    if ($element!='') {
+        $data = array();
+        if(stripos($element, "http://")===FALSE) {
+            // OSCLASS OFFICIAL REPOSITORY
+            $url = osc_market_url($section, $element);
+            $data = json_decode(osc_file_get_contents($url), true);
+        } else {
+            // THIRD PARTY REPOSITORY
+            if(osc_market_external_sources()) {
+                $data = json_decode(osc_file_get_contents($element), true);
+            }
+        }
+        if(isset($data['s_compatible'])) {
+            $versions = explode(',',$data['s_compatible']);
+
+            foreach($versions as $_version) {
+                $result = version_compare2($osclass_version, $_version);
+
+                if( $result == 0 || $result == -1 ) {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
 }
 
 
