@@ -37,6 +37,7 @@
         protected $force_limits;
         protected $sides;
         protected $url;
+        protected $firstUrl;
         protected $nofollow;
 
         public function __construct($params = null)
