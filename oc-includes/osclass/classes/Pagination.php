@@ -58,7 +58,7 @@
             $this->force_limits       = isset($params['force_limits']) ? (bool) $params['force_limits'] : false;
             $this->sides              = isset($params['sides']) ? $params['sides'] : 2;
             $this->url                = isset($params['url']) ? $params['url'] : osc_update_search_url(array('iPage' => '{PAGE}'));
-            $this->firstUrl           = isset($params['first_url']) ? $params['first_url'] : $this->url;
+            $this->firstUrl           = isset($params['first_url']) ? $params['first_url'] : osc_update_search_url(array('iPage' => null));
             $this->nofollow           = isset($params['nofollow']) ? $params['nofollow'] : true;
         }
 
