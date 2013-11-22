@@ -259,7 +259,7 @@
      *
      * @return string
      */
-    function osc_update_search_url($params, $forced = false) {
+    function osc_update_search_url($params = array(), $forced = false) {
         $request = Params::getParamsAsArray('get');
         unset($request['osclass']);
         if(isset($request['sCategory[0]'])) { unset($request['sCategory']); }
@@ -281,7 +281,6 @@
                 unset($request['sCity']);
             }
         }
-        unset($request['page']);
         $merged = array_merge($request, $params);
         return osc_search_url($merged);
     }
@@ -310,7 +309,7 @@
      * @return string
      */
     function osc_search_show_all_url( ) {
-        return osc_search_url();
+        return osc_update_search_url(array('page' => 'search'));
     }
 
     /**
@@ -388,10 +387,11 @@
 
             }
         }
+        $countP = count($params);
+        if ($countP == 0) return $base_url;
 
         if(osc_rewrite_enabled()) {
             $url = $base_url.osc_get_preference('rewrite_search_url');
-            $countP = count($params);
             // CANONICAL URLS
             if(isset($params['sRegion']) && ($countP==1 || ($countP==2 && isset($params['iPage'])))) {
                 $url = $base_url;
@@ -474,8 +474,9 @@
                         default:
                             break;
                     }
-
-                    if(!is_array($v)  && $v!='') { $url .= "/".$k.",".$v; }
+                    if($k!='page') {
+                        if(!is_array($v)  && $v!='') { $url .= "/".$k.",".$v; }
+                    }    
                 }
             }
         } else {
