@@ -582,7 +582,7 @@ function bender_print_sidebar_category_search($aCategories, $current_category = 
     if(!isset($c['pk_i_id'])) {
         echo '<ul '.$class.'>';
         if($i==1) {
-            echo '<li><a href="'.osc_esc_html(osc_update_search_url(array('sCategory'=>null, 'iPage'=>null))).'">'.__('All categories')."</a></li>";
+            echo '<li><a href="'.osc_esc_html(osc_update_search_url(array('sCategory'=>null, 'iPage'=>null))).'">'.__('All categories', 'bender')."</a></li>";
         }
         foreach($c as $key => $value) {
     ?>
@@ -604,7 +604,7 @@ function bender_print_sidebar_category_search($aCategories, $current_category = 
     ?>
     <ul <?php echo $class;?>>
         <?php if($i==1) { ?>
-        <li><a href="<?php echo osc_esc_html(osc_update_search_url(array('sCategory'=>null, 'iPage'=>null))); ?>"><?php _e('All categories'); ?></a></li>
+        <li><a href="<?php echo osc_esc_html(osc_update_search_url(array('sCategory'=>null, 'iPage'=>null))); ?>"><?php _e('All categories', 'bender'); ?></a></li>
         <?php } ?>
             <li>
                 <a id="cat_<?php echo osc_esc_html($c['pk_i_id']);?>" href="<?php echo osc_esc_html(osc_update_search_url(array('sCategory'=> $c['pk_i_id'], 'iPage'=>null))); ?>">
