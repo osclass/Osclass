@@ -34,6 +34,7 @@
      */
     function osc_search_pagination()
     {
+        /*
         $params = array();
         if( View::newInstance()->_exists('search_uri') ) { // CANONICAL URL
             $params['url'] = osc_base_url().View::newInstance()->_get('search_uri') . '/{PAGE}';
@@ -41,7 +42,8 @@
         } else {
             $params['first_url'] = osc_update_search_url(array('iPage' => null));
         }
-        $pagination = new Pagination($params);
+        */
+        $pagination = new Pagination();
         return $pagination->doPagination();
     }
 
@@ -127,6 +129,7 @@
             'total'    => $pageTotal,
             'selected' => $pageActual - 1,
             'url'      => $urlActual . '&iPage={PAGE}',
+            'first_url'=> $urlActual ,
             'sides'    => 5
         );
 

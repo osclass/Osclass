@@ -259,7 +259,7 @@
      *
      * @return string
      */
-    function osc_update_search_url($params, $forced = false) {
+    function osc_update_search_url($params = array(), $forced = false) {
         $request = Params::getParamsAsArray('get');
         unset($request['osclass']);
         if(isset($request['sCategory[0]'])) { unset($request['sCategory']); }
@@ -281,7 +281,6 @@
                 unset($request['sCity']);
             }
         }
-        unset($request['page']);
         $merged = array_merge($request, $params);
         return osc_search_url($merged);
     }
@@ -309,8 +308,9 @@
      *
      * @return string
      */
-    function osc_search_show_all_url( ) {
-        return osc_search_url();
+    function osc_search_show_all_url($params = array()) {
+        $params['page'] = 'search';
+        return osc_update_search_url($params);
     }
 
     /**
@@ -388,10 +388,12 @@
 
             }
         }
+        if (count($params) == 0) return $base_url;
+        unset($params['page']);
+        $countP = count($params);
 
         if(osc_rewrite_enabled()) {
             $url = $base_url.osc_get_preference('rewrite_search_url');
-            $countP = count($params);
             // CANONICAL URLS
             if(isset($params['sRegion']) && ($countP==1 || ($countP==2 && isset($params['iPage'])))) {
                 $url = $base_url;
@@ -424,6 +426,26 @@
                     }
                     $url .= osc_sanitizeString($city['s_name']) . '-c' . $city['pk_i_id'];
                 }
+                if(@$params['iPage']!='' && @$params['iPage']!=1) { $url .= "/".$params['iPage']; };
+            } else if(isset($params['sCategory']) && ($countP==1 || ($countP==2 && isset($params['iPage'])))) {
+                $url = osc_get_preference('rewrite_cat_url');
+                if( preg_match('|{CATEGORIES}|', $url) ) {
+                    $category = Category::newInstance()->hierarchy($params['sCategory']);
+                    $sanitized_categories = array();
+                    for ($i = count($category); $i > 0; $i--) {
+                        $sanitized_categories[] = $category[$i - 1]['s_slug'];
+                    }
+                    $url = str_replace('{CATEGORIES}', implode("/", $sanitized_categories), $url);
+                }
+                $seo_prefix = '';
+                if( osc_get_preference('seo_url_search_prefix') != '' ) {
+                    $seo_prefix = osc_get_preference('seo_url_search_prefix') . '/';
+                }
+                $url = str_replace('{CATEGORY_NAME}', $params['sCategory'], $url);
+                // DEPRECATED : CATEGORY_SLUG is going to be removed in 3.4
+                $url = str_replace('{CATEGORY_SLUG}', $params['sCategory'], $url);
+                $url = str_replace('{CATEGORY_ID}', $category[0]['pk_i_id'], $url); 
+                $url = $base_url . $seo_prefix . $url;
                 if(@$params['iPage']!='' && @$params['iPage']!=1) { $url .= "/".$params['iPage']; };
             } else if($params!=null) {
                 foreach($params as $k => $v) {
@@ -474,7 +496,6 @@
                         default:
                             break;
                     }
-
                     if(!is_array($v)  && $v!='') { $url .= "/".$k.",".$v; }
                 }
             }
@@ -482,23 +503,21 @@
             $url = $base_url.'index.php?page=search';
             if($params!=null) {
                 foreach($params as $k => $v) {
-                    if($k!='page') {
-                        if($k=='meta') {
-                            if( is_array($v) ) {
-                                foreach($v as $_k => $aux) {
-                                    if(is_array($aux)) {
-                                        foreach( array_keys($aux) as $aux_k ) {
-                                            $url .= "&" . $k . "[$_k][$aux_k]=" . $aux[$aux_k];
-                                        }
-                                    } else {
-                                        $url .= "&" . $_k . "[]=" . $aux;
+                    if($k=='meta') {
+                        if( is_array($v) ) {
+                            foreach($v as $_k => $aux) {
+                                if(is_array($aux)) {
+                                    foreach( array_keys($aux) as $aux_k ) {
+                                        $url .= "&" . $k . "[$_k][$aux_k]=" . $aux[$aux_k];
                                     }
+                                } else {
+                                    $url .= "&" . $_k . "[]=" . $aux;
                                 }
                             }
-                        } else {
-                            if(is_array($v)) { $v = implode(",", $v); }
-                            $url .= "&" . $k . "=" . $v;
                         }
+                    } else {
+                        if(is_array($v)) { $v = implode(",", $v); }
+                        $url .= "&" . $k . "=" . $v;
                     }
                 }
             }
