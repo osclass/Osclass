@@ -1293,7 +1293,7 @@
             <div id="restricted-fine-uploader"></div>
             <div style="clear:both;"></div>
             <?php if(count($aImages)>0 || ($resources!=null && is_array($resources) && count($resources)>0)) { ?>
-                <h3><?php _e('Images already uploaded', 'image_uploader');?></h3>
+                <h3><?php _e('Images already uploaded');?></h3>
                 <ul class="qq-upload-list">
                     <?php foreach($resources as $_r) {
                         $img = $_r['pk_i_id'].'.'.$_r['s_extension']; ?>
@@ -1429,11 +1429,11 @@
                             itemLimit: <?php echo $maxImages; ?>
                         },
                         messages: {
-                            tooManyItemsError: '<?php echo osc_esc_js(__('Too many items ({netItems}) would be uploaded. Item limit is {itemLimit}.', 'image_uploader'));?>',
-                            onLeave: '<?php echo osc_esc_js(__('The files are being uploaded, if you leave now the upload will be cancelled.', 'image_uploader'));?>',
-                            typeError: '<?php echo osc_esc_js(__('{file} has an invalid extension. Valid extension(s): {extensions}.', 'image_uploader'));?>',
-                            sizeError: '<?php echo osc_esc_js(__('{file} is too large, maximum file size is {sizeLimit}.', 'image_uploader'));?>',
-                            emptyError: '<?php echo osc_esc_js(__('{file} is empty, please select files again without it.', 'image_uploader'));?>'
+                            tooManyItemsError: '<?php echo osc_esc_js(__('Too many items ({netItems}) would be uploaded. Item limit is {itemLimit}.'));?>',
+                            onLeave: '<?php echo osc_esc_js(__('The files are being uploaded, if you leave now the upload will be cancelled.'));?>',
+                            typeError: '<?php echo osc_esc_js(__('{file} has an invalid extension. Valid extension(s): {extensions}.'));?>',
+                            sizeError: '<?php echo osc_esc_js(__('{file} is too large, maximum file size is {sizeLimit}.'));?>',
+                            emptyError: '<?php echo osc_esc_js(__('{file} is empty, please select files again without it.'));?>'
                         },
                         deleteFile: {
                             enabled: true,
@@ -1446,7 +1446,7 @@
                             showButton: true
                         },
                         text: {
-                            uploadButton: '<?php _e('Click or Drop for upload images','image_uploader'); ?>'
+                            uploadButton: '<?php _e('Click or Drop for upload images'); ?>'
                         },
                         showMessage: function(message) {
                             $('#restricted-fine-uploader').append('<div class="alert alert-error">' + message + '</div>');
@@ -1461,7 +1461,7 @@
                                 if(parseInt(new_id)==0) {
                                     $(li).append('<div class="primary_image primary"></div>');
                                 } else {
-                                    $(li).append('<div class="primary_image"><a title="<?php echo osc_esc_html(__('Make primary image', 'image_uploader')); ?>"></a></div>');
+                                    $(li).append('<div class="primary_image"><a title="<?php echo osc_esc_html(__('Make primary image')); ?>"></a></div>');
                                 }
                                 <?php } ?>
                                 $(li).append('<div class="ajax_preview_img"><img src="<?php echo osc_base_url(); ?>oc-content/uploads/temp/'+responseJSON.uploadName+'" alt="' + responseJSON.uploadName + '"></div>');
@@ -1498,7 +1498,7 @@
                             json.success = true;
                         } else {
                             json.success = false;
-                            $('#restricted-fine-uploader .qq-uploader').after($('<div class="alert alert-error"><?php echo sprintf(__('Too many items were uploaded. Item limit is %d.', 'image_uploader'), $maxImages); ?></div>'));
+                            $('#restricted-fine-uploader .qq-uploader').after($('<div class="alert alert-error"><?php echo sprintf(__('Too many items were uploaded. Item limit is %d.'), $maxImages); ?></div>'));
                         }
                         return json;
                     }
