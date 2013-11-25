@@ -129,6 +129,7 @@
             'total'    => $pageTotal,
             'selected' => $pageActual - 1,
             'url'      => $urlActual . '&iPage={PAGE}',
+            'first_url'=> $urlActual ,
             'sides'    => 5
         );
 
