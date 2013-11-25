@@ -429,32 +429,40 @@ function osc_search_footer_links() {
     return $rs->result();
 }
 
-function osc_footer_link_url() {
-    $f   = View::newInstance()->_get('footer_link');
-    $url = osc_base_url();
-
-    if( osc_get_preference('seo_url_search_prefix') != '' ) {
-        $url .= osc_get_preference('seo_url_search_prefix') . '/';
+function osc_footer_link_url($f = null) {
+    if($f==null) {
+        if(View::newInstance()->_exists('footer_link')) {
+            $f = View::newInstance()->_get('footer_link');
+        } else {
+            return '';
+        }
+    } else {
+        View::newInstance()->_exportVariableToView('footer_link', $f);
     }
-
-    $bCategory = false;
+    $params = array();
     if( osc_search_category_id() ) {
-        $bCategory = true;
-        $cat = osc_get_category('id', $f['fk_i_category_id']);
-        $url .= $cat['s_slug'] . '_';
+        $params['sCategory'] = osc_search_category_id();
     }
 
     if( osc_search_region() == '' ) {
-        $url .= osc_sanitizeString($f['s_region']) . '-r' . $f['fk_i_region_id'];
+        $params['sRegion'] = $f['fk_i_region_id'];
     } else {
-        $url .= osc_sanitizeString($f['s_city']) . '-c' . $f['fk_i_city_id'];
+        $params['sCity'] = $f['fk_i_city_id'];
     }
 
-    return $url;
+    return osc_search_url($params);
 }
 
-function osc_footer_link_title() {
-    $f = View::newInstance()->_get('footer_link');
+function osc_footer_link_title($f = null) {
+    if($f==null) {
+        if(View::newInstance()->_exists('footer_link')) {
+            $f = View::newInstance()->_get('footer_link');
+        } else {
+            return '';
+        }
+    } else {
+        View::newInstance()->_exportVariableToView('footer_link', $f);
+    }
     $text = '';
 
     if( osc_get_preference('seo_title_keyword') != '' ) {
