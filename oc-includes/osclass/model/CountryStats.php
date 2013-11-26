@@ -162,7 +162,7 @@
          */
         public function listCountries($zero = ">", $order = "country_name ASC")
         {
-            $this->dao->select($this->getTableName().'.fk_c_country_code as country_code, '.$this->getTableName().'.i_num_items as items, '.DB_TABLE_PREFIX.'t_country.s_name as country_name');
+            $this->dao->select($this->getTableName().'.fk_c_country_code as country_code, '.$this->getTableName().'.i_num_items as items, '.DB_TABLE_PREFIX.'t_country.s_name as country_name, '.DB_TABLE_PREFIX.'t_country.s_slug as country_slug');
             $this->dao->from($this->getTableName() );
             $this->dao->join(DB_TABLE_PREFIX.'t_country', $this->getTableName().'.fk_c_country_code = '.DB_TABLE_PREFIX.'t_country.pk_c_code');
             $this->dao->where('i_num_items '.$zero.' 0' );

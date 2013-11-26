@@ -48,6 +48,20 @@
         return osc_apply_filter('base_url', $path, $with_index);
     }
 
+    function osc_subdomain_base_url($params = array()) {
+        $fields['category'] = 'sCategory';
+        $fields['country'] = 'sCountry';
+        $fields['region'] = 'sRegion';
+        $fields['city'] = 'sCity';
+        if(isset($fields[osc_subdomain_type()])) {
+            $field = $fields[osc_subdomain_type()];
+            if(isset($params[$field]) && !is_array($params[$field]) && $params[$field]!='' && strpos($params[$field], ',')===false) {
+                return osc_search_url(array($fields[osc_subdomain_type()] => $params[$field]));
+            }
+        }
+        return osc_base_url();
+    }
+
     /**
      * Gets the root url of oc-admin for your installation
      *
@@ -320,37 +334,7 @@
      * @return string the url
      */
     function osc_search_category_url() {
-        $path = '';
-        if(osc_subdomain_type()=='category') {
-            if(isset($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS'])=='on' || $_SERVER['HTTPS']=='1')){
-                $path = "https://";
-            } else {
-                $path = "http://";
-            }
-            $path .= osc_category_slug().".".osc_subdomain_host().REL_WEB_URL;
-        } else if(osc_rewrite_enabled()) {
-            $url = osc_get_preference('rewrite_cat_url');
-            if( preg_match('|{CATEGORIES}|', $url) ) {
-                $category = Category::newInstance()->hierarchy(osc_category_id());
-                $sanitized_categories = array();
-                for ($i = count($category); $i > 0; $i--) {
-                    $sanitized_categories[] = $category[$i - 1]['s_slug'];
-                }
-                $url = str_replace('{CATEGORIES}', implode("/", $sanitized_categories), $url);
-            }
-            $seo_prefix = '';
-            if( osc_get_preference('seo_url_search_prefix') != '' ) {
-                $seo_prefix = osc_get_preference('seo_url_search_prefix') . '/';
-            }
-            $url = str_replace('{CATEGORY_NAME}', osc_category_slug(), $url);
-            // DEPRECATED : CATEGORY_SLUG is going to be removed in 3.4
-            $url = str_replace('{CATEGORY_SLUG}', osc_category_slug(), $url);
-            $url = str_replace('{CATEGORY_ID}', osc_category_id(), $url);
-            $path = osc_base_url() . $seo_prefix . $url;
-        } else {
-            $path = sprintf( osc_base_url(true) . '?page=search&sCategory=%d', osc_category_id() );
-        }
-        return $path;
+        return osc_search_url(array('sCategory' => osc_category_id()));
     }
 
     /**
@@ -1173,6 +1157,14 @@
 
     function osc_subdomain_name() {
         return View::newInstance()->_get('subdomain_name');
+    }
+
+    function osc_subdomain_slug() {
+        return View::newInstance()->_get('subdomain_slug');
+    }
+
+    function osc_is_subdomain() {
+        return View::newInstance()->_get('subdomain_slug')!='';
     }
     /* file end: ./oc-includes/osclass/helpers/hDefines.php */
 ?>
