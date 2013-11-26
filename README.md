@@ -1,5 +1,6 @@
 # Osclass
-## All you need to easily create your own classifieds website
+
+### All you need to easily create your own classifieds website
 
 [Osclass is for classifieds][osclass] what WordPress is for publishing. It's a free
 and open script to create your advertisement or listings site. Best features: Plugins,
@@ -7,16 +8,24 @@ themes, multi-language, CAPTCHA, dashboard, SEO friendly.
 
 ![Preview of Osclass][preview]
 
-Project info
-------------
-- [Official website][osclass]
-- [Code repository][code]
-- [Mailing list][mailing]
-- IRC Channel [#osclass][irc]
-- License: [GNU Affero GPL 3][license]
+## Project info
 
-Installation
-------------
+* [Official website][osclass]
+* [Code repository][code]
+* [Mailing list][mailing]
+* IRC Channel [#osclass][irc]
+* License: [GNU Affero GPL 3][license]
+
+## Develop
+
+Clone the repository and the submodules.
+
+```
+$> git clone --recursive git@github.com:osclass/Osclass.git
+```
+
+## Installation
+
 Go to [our site][installing] to get detailed information on installing Osclass.
 
 [osclass]: http://osclass.org/
