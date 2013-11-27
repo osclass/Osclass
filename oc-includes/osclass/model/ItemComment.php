@@ -118,7 +118,7 @@
             if( $page == '' ) {
                 $page = 0;
             } else if($page > 0) {
-                $page = $page-1;
+                $page = $page;
             }
 
             if( $commentsPerPage == null ) { $commentsPerPage = osc_comments_per_page(); }

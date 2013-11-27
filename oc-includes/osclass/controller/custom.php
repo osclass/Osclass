@@ -55,6 +55,8 @@
                 return;
             }
 
+            osc_run_hook('custom_controller');
+
             $this->_exportVariableToView('file', $file);
             if($user_menu) {
                 Params::setParam('in_user_menu', true);

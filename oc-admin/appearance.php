@@ -43,6 +43,7 @@
                     if(isset($filePackage['size']) && $filePackage['size']!=0) {
                         $path = osc_themes_path();
                         (int) $status = osc_unzip_file($filePackage['tmp_name'], $path);
+                        @unlink($filePackage['tmp_name']);
                     } else {
                         $status = 3;
                     }
@@ -78,6 +79,7 @@
                     $theme = Params::getParam('webtheme');
                     if($theme!='') {
                         if($theme!=  osc_current_web_theme()) {
+                            osc_run_hook("theme_delete_".$theme);
                             if(osc_deleteDir(osc_content_path()."themes/".$theme."/")) {
                                 osc_add_flash_ok_message(_m("Theme removed successfully"), "admin");
                             } else {
@@ -162,10 +164,7 @@
                 /* /widget */
                 case('activate'):
                     osc_csrf_check();
-                    Preference::newInstance()->update(
-                            array('s_value' => Params::getParam('theme')),
-                            array('s_section' => 'osclass', 's_name' => 'theme')
-                    );
+                    osc_set_preference('theme', Params::getParam('theme'));
                     osc_add_flash_ok_message( _m('Theme activated correctly'), 'admin');
                     osc_run_hook("theme_activate", Params::getParam('theme'));
                     $this->redirectTo( osc_admin_base_url(true) . "?page=appearance" );

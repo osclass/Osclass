@@ -161,8 +161,27 @@
     });
 </script>
 
-
+<div class="grid-row no-bottom-margin">
+    <div class="row-wrapper">
 <h2 class="render-title"><?php echo $aux['title']; ?></h2>
+    </div>
+</div>
+<div class="grid-row no-bottom-margin float-right">
+    <div class="row-wrapper">
+        <?php if( __get('user') != '') { 
+            $actions = __get('actions'); ?>
+        <ul id="item-action-list">
+            <?php foreach($actions as $action) { ?>
+            <li>
+                <?php echo $action; ?>
+            </li>
+            <?php } ?>
+        </ul>
+        <div class="clear"></div>
+        <?php } ?>
+    </div>
+</div>
+<div class="clear"></div>
 
 
     <!-- add user form -->
@@ -286,7 +305,11 @@
                     </div>
                 </div>
 
-                <?php if(!$aux['edit']) { osc_run_hook('user_register_form'); }; ?>
+                <?php if(!$aux['edit']) {
+                    osc_run_hook('user_register_form');
+                } else {
+                    osc_run_hook('user_form', $user);
+                }; ?>
 
                 <div class="clear"></div>
                 <div class="form-actions">

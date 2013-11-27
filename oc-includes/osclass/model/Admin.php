@@ -123,18 +123,13 @@
          */
         function findByCredentials($userName, $password)
         {
-            $this->dao->select();
-            $this->dao->from($this->getTableName());
-            $conditions = array( 's_username' => $userName,
-                                 's_password' => sha1($password) );
-            $this->dao->where($conditions);
-            $result = $this->dao->get();
-
-            if( $result->numRows == 0 ) {
-                return false;
+            $user = $this->findByUsername($userName);
+            if($user!==false && isset($user['s_password'])) {
+                if(osc_verify_password($password, $user['s_password'])) {
+                    return $user;
+                };
             }
-
-            return $result->row();
+            return false;
         }
 
         /**

@@ -9,6 +9,73 @@ NEWS ( CHANGELOG and HISTORY )                                     HTMLPurifier
     . Internal change
 ==========================
 
+4.5.0, released 2013-02-17
+# Fix bug where stacked attribute transforms clobber each other;
+  this also means it's no longer possible to override attribute
+  transforms in later modules.  No internal code was using this
+  but this may break some clients.
+# We now use SHA-1 to identify cached definitions, instead of MD5.
+! Support display:inline-block
+! Support for more white-space CSS values.
+! Permit underscores in font families
+! Support for page-break-* CSS3 properties when proprietary properties
+  are enabled.
+! New directive %Core.EnableExcludes; can be set to 'false' to turn off
+  SGML excludes checking.  If HTML Purifier is removing too much text
+  and you don't care about full standards compliance, try setting this to
+  'false'.
+- Use prepend for SPL autoloading on PHP 5.3 and later.
+- Fix bug with nofollow transform when pre-existing rel exists.
+- Fix bug where background:url() always gets lower-cased
+  (but not background-image:url())
+- Fix bug with non lower-case color names in HTML
+- Fix bug where data URI validation doesn't remove temporary files.
+  Thanks Javier Marín Ros <javiermarinros@gmail.com> for reporting.
+- Don't remove certain empty tags on RemoveEmpty.
+
+4.4.0, released 2012-01-18
+# Removed PEARSax3 handler.
+# URI.Munge now munges URIs inside the same host that go from https
+  to http.  Reported by Neike Taika-Tessaro.
+# Core.EscapeNonASCIICharacters now always transforms entities to
+  entities, even if target encoding is UTF-8.
+# Tighten up selector validation in ExtractStyleBlocks.
+  Non-syntactically valid selectors are now rejected, along with
+  some of the more obscure ones such as attribute selectors, the
+  :lang pseudoselector, and anything not in CSS2.1.  Furthermore,
+  ID and class selectors now work properly with the relevant
+  configuration attributes.  Also, mute errors when parsing CSS
+  with CSS Tidy.  Reported by Mario Heiderich and Norman Hippert.
+! Added support for 'scope' attribute on tables.
+! Added %HTML.TargetBlank, which adds target="blank" to all outgoing links.
+! Properly handle sub-lists directly nested inside of lists in
+  a standards compliant way, by moving them into the preceding <li>
+! Added %HTML.AllowedComments and %HTML.AllowedCommentsRegexp for
+  limited allowed comments in untrusted situations.
+! Implement iframes, and allow them to be used in untrusted mode with
+  %HTML.SafeIframe and %URI.SafeIframeRegexp.  Thanks Bradley M. Froehle
+  <brad.froehle@gmail.com> for submitting an initial version of the patch.
+! The Forms module now works properly for transitional doctypes.
+! Added support for internationalized domain names. You need the PEAR
+  Net_IDNA2 module to be in your path; if it is installed, ensure the
+  class can be loaded and then set %Core.EnableIDNA to true.
+- Color keywords are now case insensitive.  Thanks Yzmir Ramirez
+  <yramirez-htmlpurifier@adicio.com> for reporting.
+- Explicitly initialize anonModule variable to null.
+- Do not duplicate nofollow if already present.  Thanks 178
+  for reporting.
+- Do not add nofollow if hostname matches our current host.  Thanks 178
+  for reporting, and Neike Taika-Tessaro for helping diagnose.
+- Do not unset parser variable; this fixes intermittent serialization
+  problems.  Thanks Neike Taika-Tessaro for reporting, bill
+  <10010tiger@gmail.com> for diagnosing.
+- Fix iconv truncation bug, where non-UTF-8 target encodings see
+  output truncated after around 8000 characters.  Thanks Jörg Ludwig
+  <joerg.ludwig@iserv.eu> for reporting.
+- Fix broken table content model for XHTML1.1 (and also earlier
+  versions, although the W3C validator doesn't catch those violations).
+  Thanks GlitchMr <glitch.mr@gmail.com> for reporting.
+
 4.3.0, released 2011-03-27
 # Fixed broken caching of customized raw definitions, but requires an
   API change.  The old API still works but will emit a warning,

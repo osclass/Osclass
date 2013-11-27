@@ -38,7 +38,7 @@
 <h1><strong><?php _e('Latest Listings', 'bender') ; ?></strong></h1>
  <?php if( osc_count_latest_items() == 0) { ?>
     <div class="clear"></div>
-    <p class="empty"><?php _e("There aren't job offers available at this moment", 'bender'); ?></p>
+    <p class="empty"><?php _e("There aren't listings available at this moment", 'bender'); ?></p>
 <?php } else { ?>
     <div class="actions">
       <span class="doublebutton <?php echo $buttonClass; ?>">
@@ -46,19 +46,11 @@
            <a href="<?php echo osc_base_url(true); ?>?sShowAs=gallery" class="grid-button" data-class-toggle="listing-grid" data-destination="#listing-card-list"><span><?php _e('Grid', 'bender'); ?></span></a>
       </span>
     </div>
-    <ul class="listing-card-list <?php echo $listClass; ?>" id="listing-card-list">
-        <?php
-            $i = 0;
-            while ( osc_has_latest_items() ) {
-                $class = '';
-                if($i%3 == 0){
-                    $class = 'first';
-                }
-                bender_draw_item($class);
-                $i++;
-            }
-        ?>
-    </ul>
+    <?php
+    View::newInstance()->_exportVariableToView("listType", 'latestItems');
+    View::newInstance()->_exportVariableToView("listClass",$listClass);
+    osc_current_web_theme_path('loop.php');
+    ?>
     <div class="clear"></div>
     <?php if( osc_count_latest_items() == osc_max_latest_items() ) { ?>
         <p class="see_more_link"><a href="<?php echo osc_search_show_all_url() ; ?>">

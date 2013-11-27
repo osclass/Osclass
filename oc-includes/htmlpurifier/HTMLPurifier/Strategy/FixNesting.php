@@ -26,6 +26,22 @@
  *       translated into text depends on the child definitions.
  *
  * @todo Enable nodes to be bubbled out of the structure.
+ *
+ * @warning This algorithm (though it may be hard to see) proceeds from
+ *          a top-down fashion.  Thus, parents are processed before
+ *          children.  This is easy to implement and has a nice effiency
+ *          benefit, in that if a node is removed, we never waste any
+ *          time processing it, but it also means that if a child
+ *          changes in a non-encapsulated way (e.g. it is removed), we
+ *          need to go back and reprocess the parent to see if those
+ *          changes resulted in problems for the parent.  See
+ *          [BACKTRACK] for an example of this.  In the current
+ *          implementation, this backtracking can only be triggered when
+ *          a node is removed and if that node was the sole node, the
+ *          parent would need to be removed.  As such, it is easy to see
+ *          that backtracking only incurs constant overhead.  If more
+ *          sophisticated backtracking is implemented, care must be
+ *          taken to avoid nontermination or exponential blowup.
  */
 
 class HTMLPurifier_Strategy_FixNesting extends HTMLPurifier_Strategy
@@ -37,6 +53,8 @@ class HTMLPurifier_Strategy_FixNesting extends HTMLPurifier_Strategy
 
         // get a copy of the HTML definition
         $definition = $config->getHTMLDefinition();
+
+        $excludes_enabled = !$config->get('Core.DisableExcludes');
 
         // insert implicit "parent" node, will be removed at end.
         // DEFINITION CALL
@@ -77,7 +95,7 @@ class HTMLPurifier_Strategy_FixNesting extends HTMLPurifier_Strategy
 
         // iterate through all start nodes. Determining the start node
         // is complicated so it has been omitted from the loop construct
-        for ($i = 0, $size = count($tokens); $i < $size; ) {
+        for ($i = 0, $size = count($tokens) ; $i < $size; ) {
 
             //################################################################//
             // Gather information on children
@@ -87,7 +105,7 @@ class HTMLPurifier_Strategy_FixNesting extends HTMLPurifier_Strategy
 
             // scroll to the end of this node, report number, and collect
             // all children
-            for ($j = $i, $depth = 0;; $j++) {
+            for ($j = $i, $depth = 0; ; $j++) {
                 if ($tokens[$j] instanceof HTMLPurifier_Token_Start) {
                     $depth++;
                     // skip token assignment on first iteration, this is the
@@ -147,7 +165,7 @@ class HTMLPurifier_Strategy_FixNesting extends HTMLPurifier_Strategy
             // parent exclusions. The array should not be very large, two
             // elements at most.
             $excluded = false;
-            if (!empty($exclude_stack)) {
+            if (!empty($exclude_stack) && $excludes_enabled) {
                 foreach ($exclude_stack as $lookup) {
                     if (isset($lookup[$tokens[$i]->name])) {
                         $excluded = true;
@@ -235,7 +253,7 @@ class HTMLPurifier_Strategy_FixNesting extends HTMLPurifier_Strategy
                 // our current implementation claims that that case would
                 // not allow empty, even if it did
                 if (!$parent_def->child->allow_empty) {
-                    // we need to do a double-check
+                    // we need to do a double-check [BACKTRACK]
                     $i = $parent_index;
                     array_pop($stack);
                 }

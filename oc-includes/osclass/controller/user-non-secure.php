@@ -132,10 +132,10 @@
 
                     View::newInstance()->_exportVariableToView( 'user', $user );
                     $this->_exportVariableToView('items', $items);
-                    $this->_exportVariableToView('list_total_pages', $total_pages);
-                    $this->_exportVariableToView('list_total_items', $total_items);
+                    $this->_exportVariableToView('search_total_pages', $total_pages);
+                    $this->_exportVariableToView('search_total_items', $total_items);
                     $this->_exportVariableToView('items_per_page', $itemsPerPage);
-                    $this->_exportVariableToView('list_page', $page);
+                    $this->_exportVariableToView('search_page', $page);
                     $this->_exportVariableToView('canonical', osc_user_public_profile_url());
 
                     $this->doView('user-public-profile.php');
@@ -154,9 +154,17 @@
                             return false; // BREAK THE PROCESS, THE RECAPTCHA IS WRONG
                         }
                     }
+                    $banned = osc_is_banned(Params::getParam('yourEmail'));
+                    if($banned==1) {
+                        osc_add_flash_error_message( _m('Your current email is not allowed'));
+                        $this->redirectTo(osc_user_public_profile_url());
+                    } else if($banned==2) {
+                        osc_add_flash_error_message( _m('Your current IP is not allowed'));
+                        $this->redirectTo(osc_user_public_profile_url());
+                    }
 
                     osc_run_hook('hook_email_contact_user', Params::getParam('id'), Params::getParam('yourEmail'), Params::getParam('yourName'), Params::getParam('phoneNumber'), Params::getParam('message'));
-
+                    osc_add_flash_ok_message( _m('Your email has been sent properly.') );
                     $this->redirectTo( osc_user_public_profile_url( ) );
                 break;
                 default:

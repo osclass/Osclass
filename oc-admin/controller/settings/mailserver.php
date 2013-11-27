@@ -47,7 +47,7 @@
                     $mailserverHost     = Params::getParam('mailserver_host');
                     $mailserverPort     = Params::getParam('mailserver_port');
                     $mailserverUsername = Params::getParam('mailserver_username');
-                    $mailserverPassword = Params::getParam('mailserver_password');
+                    $mailserverPassword = Params::getParam('mailserver_password', false, false);
                     $mailserverSsl      = Params::getParam('mailserver_ssl');
                     $mailserverMailFrom = Params::getParam('mailserver_mail_from');
                     $mailserverNameFrom = Params::getParam('mailserver_name_from');
@@ -57,26 +57,16 @@
                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=mailserver');
                     }
 
-                    $iUpdated += Preference::newInstance()->update(array('s_value' => $mailserverAuth)
-                                                                   ,array('s_name' => 'mailserver_auth'));
-                    $iUpdated += Preference::newInstance()->update(array('s_value' => $mailserverPop)
-                                                                   ,array('s_name' => 'mailserver_pop'));
-                    $iUpdated += Preference::newInstance()->update(array('s_value' => $mailserverType)
-                                                                   ,array('s_name' => 'mailserver_type'));
-                    $iUpdated += Preference::newInstance()->update(array('s_value' => $mailserverHost)
-                                                                   ,array('s_name' => 'mailserver_host'));
-                    $iUpdated += Preference::newInstance()->update(array('s_value' => $mailserverPort)
-                                                                   ,array('s_name' => 'mailserver_port'));
-                    $iUpdated += Preference::newInstance()->update(array('s_value' => $mailserverUsername)
-                                                                   ,array('s_name' => 'mailserver_username'));
-                    $iUpdated += Preference::newInstance()->update(array('s_value' => $mailserverPassword)
-                                                                   ,array('s_name' => 'mailserver_password'));
-                    $iUpdated += Preference::newInstance()->update(array('s_value' => $mailserverSsl)
-                                                                   ,array('s_name' => 'mailserver_ssl'));
-                    $iUpdated += Preference::newInstance()->update(array('s_value' => $mailserverMailFrom)
-                                                                ,array('s_name' => 'mailserver_mail_from'));
-                    $iUpdated += Preference::newInstance()->update(array('s_value' => $mailserverNameFrom)
-                                                                ,array('s_name' => 'mailserver_name_from'));
+                    $iUpdated += osc_set_preference('mailserver_auth', $mailserverAuth);
+                    $iUpdated += osc_set_preference('mailserver_pop', $mailserverPop);
+                    $iUpdated += osc_set_preference('mailserver_type', $mailserverType);
+                    $iUpdated += osc_set_preference('mailserver_host', $mailserverHost);
+                    $iUpdated += osc_set_preference('mailserver_port', $mailserverPort);
+                    $iUpdated += osc_set_preference('mailserver_username', $mailserverUsername);
+                    $iUpdated += osc_set_preference('mailserver_password', $mailserverPassword);
+                    $iUpdated += osc_set_preference('mailserver_ssl', $mailserverSsl);
+                    $iUpdated += osc_set_preference('mailserver_mail_from', $mailserverMailFrom);
+                    $iUpdated += osc_set_preference('mailserver_name_from', $mailserverNameFrom);
 
                     if($iUpdated > 0) {
                         osc_add_flash_ok_message( _m('Mail server configuration has changed'), 'admin');

@@ -72,7 +72,7 @@
             <?php } else { ?>
             <span class="counter-search"><?php
                 $search_number = bender_search_number();
-                printf('%1$d - %2$d of %3$d listings', $search_number['from'], $search_number['to'], $search_number['of']);
+                printf(__('%1$d - %2$d of %3$d listings', 'bender'), $search_number['from'], $search_number['to'], $search_number['of']);
             ?></span>
             <div class="actions">
               <a href="#" data-bclass-toggle="display-filters" class="resp-toogle show-filters-btn"><?php _e('Show filters','bender'); ?></a>
@@ -118,39 +118,25 @@
             $i = 0;
             osc_get_premiums();
             if(osc_count_premiums() > 0) {
-                //echo '<h5>Premium listings</h5>';
-                echo '<ul class="listing-card-list '.$listClass.' premium-list" id="listing-card-list">';
-                while ( osc_has_premiums() ) {
-                    $class = '';
-                    if($i%3 == 0){
-                        $class = 'first';
-                    }
-                    bender_draw_item($class,false,true);
-                    $i++;
-                    if($i == 3){
-                        break;
-                    }
-                }
-                echo '</ul>';
+            echo '<h5>'.__('Premium listings','bender').'</h5>';
+            View::newInstance()->_exportVariableToView("listType", 'premiums');
+            View::newInstance()->_exportVariableToView("listClass",$listClass.' premium-list');
+            osc_current_web_theme_path('loop.php');
             }
         ?>
-     <?php if(osc_count_items() > 0) { ?>
-     <ul class="listing-card-list <?php echo $listClass; ?>" id="listing-card-list">
-          <?php
-          $i = 0;
-          while(osc_has_items()) { $i++; ?>
-                 <?php
-                 $class = false;
-                 if($i%4 == 0){
-                    $class = 'last';
-                 }
-                 bender_draw_item($class); ?>
-          <?php } ?>
-     </ul>
+     <?php if(osc_count_items() > 0) {
+        echo '<h5>'.__('Listings','bender').'</h5>';
+        View::newInstance()->_exportVariableToView("listType", 'items');
+        View::newInstance()->_exportVariableToView("listClass",$listClass);
+        osc_current_web_theme_path('loop.php');
+    ?>
+
      <div class="clear"></div>
       <?php
       if(osc_rewrite_enabled()){
-      $footerLinks = osc_search_footer_links(); ?>
+      $footerLinks = osc_search_footer_links();
+      if(count($footerLinks)>0) {
+      ?>
       <div id="related-searches">
         <h5><?php _e('Other searches that may interest you','bender'); ?></h5>
         <ul class="footer-links">
@@ -160,7 +146,8 @@
           <?php } ?>
         </ul>
       </div>
-      <?php } ?>
+      <?php } 
+      } ?>
      <div class="paginate" >
           <?php echo osc_search_pagination(); ?>
      </div>

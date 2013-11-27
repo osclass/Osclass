@@ -87,7 +87,6 @@ function selectUi(thatSelect){
         return false;
     });
     thatSelect.on('focus',function(){
-        console.log(uiWrap);
         thatSelect.parent().addClass('select-box-focus');
     });
     thatSelect.on('blur',function(){
@@ -189,17 +188,24 @@ $(document).ready(function(event){
     });
 
     if(typeof $.fancybox == 'function') {
-      $("a[rel=image_group]").fancybox({
-          openEffect : 'none',
-          closeEffect : 'none',
-          nextEffect : 'fade',
-          prevEffect : 'fade',
-          loop : false,
-          helpers : {
-                  title : {
-                          type : 'inside'
-                  }
-          }
-      });
+        $("a[rel=image_group]").fancybox({
+            openEffect : 'none',
+            closeEffect : 'none',
+            nextEffect : 'fade',
+            prevEffect : 'fade',
+            loop : false,
+            helpers : {
+                title : {
+                    type : 'inside'
+                }
+            }
+        });
+
+        $(".main-photo").on('click', function(e) {
+            e.preventDefault();
+            $("a[rel=image_group]").first().click();
+        });
+
+
     }
 });

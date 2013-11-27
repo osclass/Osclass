@@ -28,56 +28,70 @@
 
             $this->mSearch = Search::newInstance();
             $this->uri = preg_replace('|^' . REL_WEB_URL . '|', '', $_SERVER['REQUEST_URI']);
-            if( stripos($_SERVER['REQUEST_URI'], osc_get_preference('rewrite_search_url'))===false && osc_rewrite_enabled() && !Params::existParam('sFeed')) {
+            if( preg_match('/^index\.php/', $this->uri)>0) {
+                // search url without permalinks params
+            } else {
                 // redirect if it ends with a slash
                 if( preg_match('|/$|', $this->uri) ) {
                     $redirectURL = osc_base_url() . $this->uri;
                     $redirectURL = preg_replace('|/$|', '', $redirectURL);
-                    $this->redirectTo($redirectURL);
-                }
-                $search_uri = preg_replace('|/[0-9]+$|', '', $this->uri);
-                $this->_exportVariableToView('search_uri', $search_uri);
-
-                // remove seo_url_search_prefix
-                if( osc_get_preference('seo_url_search_prefix') != '' ) {
-                    $this->uri = str_replace( osc_get_preference('seo_url_search_prefix') . '/', '', $this->uri);
+                    $this->redirectTo($redirectURL, 301);
                 }
 
-                // get page if it's set in the url
-                $iPage = preg_replace('|.*/([0-9]+)$|', '$01', $this->uri);
-                if( $iPage > 0 ) {
-                    Params::setParam('iPage', $iPage);
-                    // redirect without number of pages
-                    if( $iPage == 1 ) {
-                        $this->redirectTo(osc_base_url() . $search_uri);
-                    }
-                }
-                if( Params::getParam('iPage') > 1 ) {
-                    $this->_exportVariableToView('canonical', osc_base_url() . $search_uri);
-                }
+                if( stripos($_SERVER['REQUEST_URI'], osc_get_preference('rewrite_search_url'))===false && osc_rewrite_enabled() && !Params::existParam('sFeed')) {
+                    // clean GET html params
+                    $this->uri = preg_replace('/(\/?)\?.*$/', '', $this->uri);
 
-                $search_uri = preg_replace('|.*?/|', '', $search_uri);
-                if( preg_match('|-r([0-9]+)$|', $search_uri, $r) ) {
-                    $region = Region::newInstance()->findByPrimaryKey($r[1]);
-                    if( !$region ) {
-                        $this->do404();
+                    $search_uri = preg_replace('|/[0-9]+$|', '', $this->uri);
+                    $this->_exportVariableToView('search_uri', $search_uri);
+
+                    // remove seo_url_search_prefix
+                    if( osc_get_preference('seo_url_search_prefix') != '' ) {
+                        $this->uri = str_replace( osc_get_preference('seo_url_search_prefix') . '/', '', $this->uri);
                     }
-                    Params::setParam('sRegion', $region['pk_i_id']);
-                    Params::setParam('sCategory', preg_replace('|(.*?)_.*?-r[0-9]+|', '$01', $search_uri));
-                } else if( preg_match('|-c([0-9]+)$|', $search_uri, $c) ) {
-                    $city = City::newInstance()->findByPrimaryKey($c[1]);
-                    if( !$city ) {
-                        $this->do404();
+
+                    // get page if it's set in the url
+                    $iPage = preg_replace('|.*/([0-9]+)$|', '$01', $this->uri);
+                    if( is_numeric($iPage) && $iPage > 0 ) {
+                        Params::setParam('iPage', $iPage);
+                        // redirect without number of pages
+                        if( $iPage == 1 ) {
+                            $this->redirectTo(osc_base_url() . $search_uri);
+                        }
                     }
-                    Params::setParam('sCity', $city['pk_i_id']);
-                    Params::setParam('sCategory', preg_replace('|(.*?)_.*?-c[0-9]+|', '$01', $search_uri));
-                } else {
-                    $aCategory = explode('/', $search_uri);
-                    $category  = Category::newInstance()->findBySlug($aCategory[count($aCategory)-1]);
-                    if( count($category) === 0 ) {
-                        $this->do404();
+                    if( Params::getParam('iPage') > 1 ) {
+                        $this->_exportVariableToView('canonical', osc_base_url() . $search_uri);
                     }
-                    Params::setParam('sCategory', $search_uri);
+
+                    // get only the last segment
+                    $search_uri = preg_replace('|.*?/|', '', $search_uri);
+                    if( preg_match('|-r([0-9]+)$|', $search_uri, $r) ) {
+                        $region = Region::newInstance()->findByPrimaryKey($r[1]);
+                        if( !$region ) {
+                            $this->do404();
+                        }
+                        Params::setParam('sRegion', $region['pk_i_id']);
+                        if(preg_match('|(.*?)_.*?-r[0-9]+|', $search_uri, $match)) {
+                            Params::setParam('sCategory', $match[1]);
+                        }
+                    } else if( preg_match('|-c([0-9]+)$|', $search_uri, $c) ) {
+                        $city = City::newInstance()->findByPrimaryKey($c[1]);
+                        if( !$city ) {
+                            $this->do404();
+                        }
+                        Params::setParam('sCity', $city['pk_i_id']);
+                        if(preg_match('|(.*?)_.*?-c[0-9]+|', $search_uri, $match)) {
+                            Params::setParam('sCategory', $match[1]);
+                        }
+                    } else {
+                        if(!Params::existParam('sCategory')) {
+                            $category  = Category::newInstance()->findBySlug($search_uri);
+                            if( count($category) === 0 ) {
+                                $this->do404();
+                            }
+                            Params::setParam('sCategory', $search_uri);
+                        }
+                    }
                 }
             }
         }
@@ -116,8 +130,30 @@
                                 $m[1][$k] = 'sPattern';
                                 break;
                             default :
+                                // custom fields
+                                if( preg_match("/meta(\d+)-?(.*)?/", $m[1][$k], $results) ) {
+                                    $meta_key   = $m[1][$k];
+                                    $meta_value = $m[2][$k];
+                                    $array_r    = array();
+                                    if(isset($_REQUEST['meta'])) {
+                                        $array_r    = $_REQUEST['meta'];
+                                    }
+                                    if($results[2]=='') {
+                                        // meta[meta_id] = meta_value
+                                        $meta_key = $results[1];
+                                        $array_r[$meta_key] = $meta_value;
+                                    } else {
+                                        // meta[meta_id][meta_key] = meta_value
+                                        $meta_key  = $results[1];
+                                        $meta_key2 = $results[2];
+                                        $array_r[$meta_key][$meta_key2]    = $meta_value;
+                                    }
+                                    $m[1][$k] = 'meta';
+                                    $m[2][$k] = $array_r;
+                                }
                                 break;
                         }
+
                         $_REQUEST[$m[1][$k]] = $m[2][$k];
                         $_GET[$m[1][$k]] = $m[2][$k];
                         unset($_REQUEST['sParams']);
