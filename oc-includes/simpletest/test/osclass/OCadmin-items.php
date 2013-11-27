@@ -722,8 +722,8 @@ sleep(10);
         $this->selenium->open( osc_item_post_url() );
 
         $this->selenium->select("catId", "label=regexp:\\s*Animals");
-        $this->selenium->type("id=title[en_US]", "foo title");
-        $this->selenium->type("id=description[en_US]","description foo title");
+        $this->selenium->type("id=titleen_US", "foo title");
+        $this->selenium->type("id=descriptionen_US","description foo title");
         $this->selenium->select("countryId", "label=Spain");
         $this->selenium->select("regionId", "label=Albacete");
         $this->selenium->select("cityId", "label=Albacete");

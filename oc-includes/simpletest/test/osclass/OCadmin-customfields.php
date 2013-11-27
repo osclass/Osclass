@@ -297,8 +297,8 @@ class OCadmin_customfields extends OCadminTest
 
         $this->selenium->select("catId", "label=regexp:\\s*Animals");
         sleep(2);
-        $this->selenium->type("id=title[en_US]", "foo title");
-        $this->selenium->type("id=description[en_US]","description foo title");
+        $this->selenium->type("id=titleen_US", "foo title");
+        $this->selenium->type("id=descriptionen_US","description foo title");
         $this->selenium->select("countryId", "label=Spain");
         $this->selenium->select("regionId", "label=Albacete");
         $this->selenium->select("cityId", "label=Albacete");
