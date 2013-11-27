@@ -54,6 +54,7 @@
                     $selectableParent  = Params::getParam('selectable_parent_categories');
                     $bAutoCron         = Params::getParam('auto_cron');
                     $bMarketSources    = (Params::getParam('market_external_sources') != '' ? true: false);
+                    $sAutoUpdate       = join("|", Params::getParam('auto_update'));
 
                     // preparing parameters
                     $sPageTitle        = strip_tags($sPageTitle);
@@ -92,86 +93,38 @@
                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings');
                     }
 
-                    $iUpdated += Preference::newInstance()->update(
-                        array('s_value'   => $sPageTitle),
-                        array('s_section' => 'osclass', 's_name' => 'pageTitle')
-                    );
-                    $iUpdated += Preference::newInstance()->update(
-                        array('s_value'   => $sPageDesc),
-                        array('s_section' => 'osclass', 's_name' => 'pageDesc')
-                    );
+                    $iUpdated += osc_set_preference('pageTitle', $sPageTitle);
+                    $iUpdated += osc_set_preference('pageDesc', $sPageDesc);
 
                     if( !defined('DEMO') ) {
-                        $iUpdated += Preference::newInstance()->update(
-                            array('s_value'   => $sContactEmail),
-                            array('s_section' => 'osclass', 's_name' => 'contactEmail')
-                        );
+                        $iUpdated += osc_set_preference('contactEmail', $sContactEmail);
                     }
-                    $iUpdated += Preference::newInstance()->update(
-                        array('s_value'   => $sLanguage),
-                        array('s_section' => 'osclass', 's_name' => 'language')
-                    );
-                    $iUpdated += Preference::newInstance()->update(
-                        array('s_value'   => $sDateFormat),
-                        array('s_section' => 'osclass', 's_name' => 'dateFormat')
-                    );
-                    $iUpdated += Preference::newInstance()->update(
-                        array('s_value'   => $sCurrency),
-                        array('s_section' => 'osclass', 's_name' => 'currency')
-                    );
-                    $iUpdated += Preference::newInstance()->update(
-                        array('s_value'   => $sWeekStart),
-                        array('s_section' => 'osclass', 's_name' => 'weekStart')
-                    );
-                    $iUpdated += Preference::newInstance()->update(
-                        array('s_value'   => $sTimeFormat),
-                        array('s_section' => 'osclass', 's_name' => 'timeFormat')
-                    );
-                    $iUpdated += Preference::newInstance()->update(
-                        array('s_value'   => $sTimezone),
-                        array('s_section' => 'osclass', 's_name' => 'timezone')
-                    );
-                    $iUpdated += Preference::newInstance()->update(
-                        array('s_value'   => $bMarketSources),
-                        array('s_section' => 'osclass', 's_name' => 'marketAllowExternalSources')
-                    );
+                    $iUpdated += osc_set_preference('language', $sLanguage);
+                    $iUpdated += osc_set_preference('dateFormat', $sDateFormat);
+                    $iUpdated += osc_set_preference('currency', $sCurrency);
+                    $iUpdated += osc_set_preference('weekStart', $sWeekStart);
+                    $iUpdated += osc_set_preference('timeFormat', $sTimeFormat);
+                    $iUpdated += osc_set_preference('timezone', $sTimezone);
+                    $iUpdated += osc_set_preference('marketAllowExternalSources', $bMarketSources);
+                    $iUpdated += osc_set_preference('auto_update', $sAutoUpdate);
                     if(is_int($sNumRssItems)) {
-                        $iUpdated += Preference::newInstance()->update(
-                            array('s_value'   => $sNumRssItems),
-                            array('s_section' => 'osclass', 's_name' => 'num_rss_items')
-                        );
+                        $iUpdated += osc_set_preference('num_rss_items', $sNumRssItems);
                     } else {
                         if($error != '') $error .= "</p><p>";
                         $error .= _m('Number of listings in the RSS must be an integer');
                     }
 
                     if(is_int($maxLatestItems)) {
-                        $iUpdated += Preference::newInstance()->update(
-                            array('s_value'   => $maxLatestItems),
-                            array('s_section' => 'osclass', 's_name' => 'maxLatestItems@home')
-                        );
+                        $iUpdated += osc_set_preference('maxLatestItems@home', $maxLatestItems);
                     } else {
                         if($error != '') $error .= "</p><p>";
                         $error .= _m('Number of recent listings displayed at home must be an integer');
                     }
 
-                    $iUpdated += Preference::newInstance()->update(
-                            array('s_value'   => $numItemsSearch),
-                            array('s_section' => 'osclass',
-                                  's_name'    => 'defaultResultsPerPage@search')
-                    );
-                    $iUpdated += Preference::newInstance()->update(
-                        array('s_value' => $contactAttachment),
-                        array('s_name'  => 'contact_attachment')
-                    );
-                    $iUpdated += Preference::newInstance()->update(
-                        array('s_value' => $bAutoCron),
-                        array('s_name' => 'auto_cron')
-                    );
-                    $iUpdated += Preference::newInstance()->update(
-                        array('s_value' => $selectableParent),
-                        array('s_name'  => 'selectable_parent_categories')
-                    );
+                    $iUpdated += osc_set_preference('defaultResultsPerPage@search', $numItemsSearch);
+                    $iUpdated += osc_set_preference('contact_attachment', $contactAttachment);
+                    $iUpdated += osc_set_preference('auto_cron', $bAutoCron);
+                    $iUpdated += osc_set_preference('selectable_parent_categories', $selectableParent);
 
                     if( $iUpdated > 0 ) {
                         if( $error != '' ) {

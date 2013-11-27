@@ -647,6 +647,8 @@
                                         $contactItemAttachment      = (($contactItemAttachment != '') ? true : false);
                                         $warnExpiration             = Params::getParam('warn_expiration');
                                         $warnExpiration             = (int) $warnExpiration;
+                                        $titleLength				= Params::getParam('max_chars_per_title');
+                                        $descriptionLength			= Params::getParam('max_chars_per_description');
 
 
 
@@ -663,6 +665,12 @@
                                         if(!osc_validate_int($warnExpiration)) {
                                             $msg .= _m("Number of expiration days has to be a numeric value")."<br/>";
                                         }
+                                        if(!osc_validate_int($titleLength)) {
+                                            $msg .= _m("Title Length has to be a numeric value")."<br/>";
+                                        }
+                                        if(!osc_validate_int($descriptionLength)) {
+                                            $msg .= _m("Description Length has to be a numeric value")."<br/>";
+                                        }
                                         if($msg!='') {
                                             osc_add_flash_error_message( $msg, 'admin');
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=items&action=settings');
@@ -670,39 +678,26 @@
 
 
 
-                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $enabledRecaptchaItems)
-                                                                                      ,array('s_name'  => 'enabled_recaptcha_items'));
+                                        $iUpdated += osc_set_preference('enabled_recaptcha_items', $enabledRecaptchaItems);
                                         if($moderateItems) {
-                                            $iUpdated += Preference::newInstance()->update(array('s_value' => $numModerateItems)
-                                                                                          ,array('s_name' => 'moderate_items'));
+                                            $iUpdated += osc_set_preference('moderate_items', $numModerateItems);
                                         } else {
-                                            $iUpdated += Preference::newInstance()->update(array('s_value' => '-1')
-                                                                                          ,array('s_name' => 'moderate_items'));
+                                            $iUpdated += osc_set_preference('moderate_items', '-1');
                                         }
-                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $loggedUserItemValidation)
-                                                                                      ,array('s_name'  => 'logged_user_item_validation'));
-                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $regUserPost)
-                                                                                      ,array('s_name'  => 'reg_user_post'));
-                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $notifyNewItem)
-                                                                                      ,array('s_name'  => 'notify_new_item'));
-                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $notifyContactItem)
-                                                                                      ,array('s_name'  => 'notify_contact_item'));
-                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $notifyContactFriends)
-                                                                                      ,array('s_name'  => 'notify_contact_friends'));
-                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $enabledFieldPriceItems)
-                                                                                      ,array('s_name'  => 'enableField#f_price@items'));
-                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $enabledFieldImagesItems)
-                                                                                      ,array('s_name'  => 'enableField#images@items'));
-                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $itemsWaitTime)
-                                                                                      ,array('s_name'  => 'items_wait_time'));
-                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $numImagesItems)
-                                                                                      ,array('s_name'  => 'numImages@items'));
-                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $regUserCanContact)
-                                                                                      ,array('s_name'  => 'reg_user_can_contact'));
-                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $contactItemAttachment)
-                                                                                      ,array('s_name'  => 'item_attachment'));
-                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $warnExpiration)
-                                                                                      ,array('s_name'  => 'warn_expiration'));
+                                        $iUpdated += osc_set_preference('logged_user_item_validation', $loggedUserItemValidation);
+                                        $iUpdated += osc_set_preference('reg_user_post', $regUserPost);
+                                        $iUpdated += osc_set_preference('notify_new_item', $notifyNewItem);
+                                        $iUpdated += osc_set_preference('notify_contact_item', $notifyContactItem);
+                                        $iUpdated += osc_set_preference('notify_contact_friends', $notifyContactFriends);
+                                        $iUpdated += osc_set_preference('enableField#f_price@items', $enabledFieldPriceItems);
+                                        $iUpdated += osc_set_preference('enableField#images@items', $enabledFieldImagesItems);
+                                        $iUpdated += osc_set_preference('items_wait_time', $itemsWaitTime);
+                                        $iUpdated += osc_set_preference('numImages@items', $numImagesItems);
+                                        $iUpdated += osc_set_preference('reg_user_can_contact', $regUserCanContact);
+                                        $iUpdated += osc_set_preference('item_attachment', $contactItemAttachment);
+                                        $iUpdated += osc_set_preference('warn_expiration', $warnExpiration);
+                                        $iUpdated += osc_set_preference('title_character_length', $titleLength);
+                                        $iUpdated += osc_set_preference('description_character_length', $descriptionLength);
 
                                         if($iUpdated > 0) {
                                             osc_add_flash_ok_message( _m("Listings' settings have been updated"), 'admin');
@@ -802,8 +797,7 @@
                                         $params = Params::getParamsAsArray("get");
 
                                         $itemsDataTable = new ItemsDataTable();
-                                        $itemsDataTable->table($params);
-                                        $aData = $itemsDataTable->getData();
+                                        $aData = $itemsDataTable->table($params);
 
                                         if(count($aData['aRows']) == 0 && $page!=1) {
                                             $total = (int)$aData['iTotalDisplayRecords'];

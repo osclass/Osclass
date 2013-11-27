@@ -56,6 +56,12 @@
                                             $this->redirectTo(osc_contact_url());
                                         }
 
+                                        $user = User::newInstance()->newInstance()->findByEmail($yourEmail);
+                                        if(isset($user['b_active']) && ($user['b_active']==0 || $user['b_enabled']==0)) {
+                                            osc_add_flash_error_message( _m('Your current email is not allowed'));
+                                            $this->redirectTo(osc_contact_url());
+                                        }
+
                                         if( !preg_match('|.*?@.{2,}\..{2,}|',$yourEmail) ) {
                                             osc_add_flash_error_message( _m('Please enter a correct email') );
                                             Session::newInstance()->_setForm('yourName', $yourName);

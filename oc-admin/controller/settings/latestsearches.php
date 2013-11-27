@@ -34,26 +34,16 @@
                     // updating comment
                     osc_csrf_check();
                     if( Params::getParam('save_latest_searches') == 'on' ) {
-                        Preference::newInstance()->update(
-                                array('s_value' => 1),
-                                array('s_name'  => 'save_latest_searches')
-                        );
+                        osc_set_preference('save_latest_searches', 1);
                     } else {
-                        Preference::newInstance()->update(
-                                array('s_value' => 0),
-                                array('s_name'  => 'save_latest_searches')
-                        );
+                        osc_set_preference('save_latest_searches', 0);
                     }
 
                     if(Params::getParam('customPurge')=='') {
                         osc_add_flash_error_message(_m('Custom number could not be left empty'), 'admin');
                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=latestsearches');
                     } else {
-
-                        Preference::newInstance()->update(
-                                array('s_value' => Params::getParam('customPurge')),
-                                array('s_name'  => 'purge_latest_searches')
-                        );
+                        osc_set_preference('purge_latest_searches', Params::getParam('customPurge'));
 
                         osc_add_flash_ok_message( _m('Last search settings have been updated'), 'admin');
                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=latestsearches');

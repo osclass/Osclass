@@ -162,6 +162,22 @@
                             <span class="help-box"><?php _e('This option will send an email X days before an ad expires to the author. 0 for no email.'); ?></span>
                         </div>
                         <div class="form-row">
+							<div class="form-label"> <?php _e('Title length'); ?></div>
+                            <div class="form-controls">
+								<div class="separate-top-medium">
+									<?php printf( __('%s characters '), '<input type="text" class="input-small" name="max_chars_per_title" value="' . osc_max_characters_per_title() . '" />' ); ?>
+								</div>
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="form-label"> <?php _e('Description length'); ?></div>
+								<div class="separate-top-medium">
+								<div class="form-controls">
+									<?php printf( __('%s characters '), '<input type="text" class="input-small" name="max_chars_per_description" value="' . osc_max_characters_per_description() . '" />' ); ?>
+								</div>
+							</div>
+						</div>
+                        <div class="form-row">
                             <div class="form-label"> <?php _e('Optional fields'); ?></div>
                             <div class="form-controls">
                                 <div class="form-label-checkbox">

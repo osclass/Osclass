@@ -38,7 +38,7 @@
             if( parse_url(osc_base_url(), PHP_URL_HOST) !== $current_host ) {
                 // first check if it's http or https
                 $url = 'http://';
-                if( $this->is_ssl() ) {
+                if(osc_is_ssl()) {
                     $url = 'https://';
                 }
                 // append the domain
@@ -109,9 +109,9 @@
             exit;
         }
 
-        function redirectTo($url)
+        function redirectTo($url, $code = null)
         {
-            osc_redirect_to($url);
+            osc_redirect_to($url, $code);
         }
 
         function getTime()
@@ -120,31 +120,19 @@
             return ($timeEnd[0] + $timeEnd[1]) - ($this->time[0] + $this->time[1]);
         }
 
-        protected function is_ssl() {
-            if( isset($_SERVER['HTTPS']) ) {
-                if( strtolower($_SERVER['HTTPS']) == 'on' ){
-                    return true;
-                }
-                if( $_SERVER['HTTPS'] == '1' ) {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
         private function subdomain_params($host) {
             $subdomain_type = osc_subdomain_type();
             $subhost = osc_subdomain_host();
             // strpos is used to check if the domain is different, useful when accessing the website by diferent domains
             if($subdomain_type!='' && $subhost!='' && strpos($host, $subhost)!==false) {
-                if(preg_match('|^(www\.)?(.+)\.'.$subhost.'$|', $host, $match)) {
+                if(preg_match('|^(www\.)?(.+)\.'.$subhost.'$|i', $host, $match)) {
                     $subdomain = $match[2];
                     if($subdomain!='' && $subdomain!='www') {
                         if($subdomain_type=='category') {
                             $category = Category::newInstance()->findBySlug($subdomain);
                             if(isset($category['pk_i_id'])) {
-                                Params::setParam('subdomain', 1);
+                                View::newInstance()->_exportVariableToView('subdomain_name', $category['s_name']);
+                                View::newInstance()->_exportVariableToView('subdomain_slug', $category['s_slug']);
                                 Params::setParam('sCategory', $category['pk_i_id']);
                                 if(Params::getParam('page')=='') {
                                     Params::setParam('page', 'search');
@@ -153,25 +141,28 @@
                                 $this->do400();
                             }
                         } else if($subdomain_type=='country') {
-                            $country = Country::newInstance()->findByName($subdomain);
+                            $country = Country::newInstance()->findBySlug($subdomain);
                             if(isset($country['pk_c_code'])) {
-                                Params::setParam('subdomain', 1);
+                                View::newInstance()->_exportVariableToView('subdomain_name', $country['s_name']);
+                                View::newInstance()->_exportVariableToView('subdomain_slug', $country['s_slug']);
                                 Params::setParam('sCountry', $country['pk_c_code']);
                             } else {
                                 $this->do400();
                             }
                         } else if($subdomain_type=='region') {
-                            $region = Region::newInstance()->findByName($subdomain);
+                            $region = Region::newInstance()->findBySlug($subdomain);
                             if(isset($region['pk_i_id'])) {
-                                Params::setParam('subdomain', 1);
+                                View::newInstance()->_exportVariableToView('subdomain_name', $region['s_name']);
+                                View::newInstance()->_exportVariableToView('subdomain_slug', $region['s_slug']);
                                 Params::setParam('sRegion', $region['pk_i_id']);
                             } else {
                                 $this->do400();
                             }
                         } else if($subdomain_type=='city') {
-                            $city = City::newInstance()->findByName($subdomain);
+                            $city = City::newInstance()->findBySlug($subdomain);
                             if(isset($city['pk_i_id'])) {
-                                Params::setParam('subdomain', 1);
+                                View::newInstance()->_exportVariableToView('subdomain_name', $city['s_name']);
+                                View::newInstance()->_exportVariableToView('subdomain_slug', $city['s_slug']);
                                 Params::setParam('sCity', $city['pk_i_id']);
                             } else {
                                 $this->do400();

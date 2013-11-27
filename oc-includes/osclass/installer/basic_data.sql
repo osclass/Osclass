@@ -4,7 +4,7 @@ INSERT INTO /*TABLE_PREFIX*/t_currency (pk_c_code, s_name, s_description, b_enab
     ('EUR', 'European Union euro', 'Euro €', true);
 
 INSERT INTO /*TABLE_PREFIX*/t_preference VALUES
-    ('osclass', 'version', 320, 'INTEGER')
+    ('osclass', 'version', 322, 'INTEGER')
     ,('osclass', 'theme', 'bender', 'STRING')
     ,('osclass', 'admin_language', 'en_US', 'STRING')
     ,('osclass', 'language', 'en_US', 'STRING')
@@ -62,8 +62,8 @@ INSERT INTO /*TABLE_PREFIX*/t_preference VALUES
     ,('osclass', 'rewrite_rules', '', 'STRING')
     ,('osclass', 'rewrite_item_url', '{CATEGORIES}/{ITEM_TITLE}_i{ITEM_ID}', 'STRING')
     ,('osclass', 'rewrite_page_url', '{PAGE_SLUG}-p{PAGE_ID}', 'STRING')
-    ,('osclass', 'rewrite_cat_url', '{CATEGORIES}/', 'STRING')
-    ,('osclass', 'rewrite_search_url', 'search/', 'STRING')
+    ,('osclass', 'rewrite_cat_url', '{CATEGORIES}', 'STRING')
+    ,('osclass', 'rewrite_search_url', 'search', 'STRING')
     ,('osclass', 'rewrite_search_country', 'country', 'STRING')
     ,('osclass', 'rewrite_search_region', 'region', 'STRING')
     ,('osclass', 'rewrite_search_city', 'city', 'STRING')
@@ -71,7 +71,7 @@ INSERT INTO /*TABLE_PREFIX*/t_preference VALUES
     ,('osclass', 'rewrite_search_category', 'category', 'STRING')
     ,('osclass', 'rewrite_search_user', 'user', 'STRING')
     ,('osclass', 'rewrite_search_pattern', 'pattern', 'STRING')
-    ,('osclass', 'rewrite_contact', 'contact/', 'STRING')
+    ,('osclass', 'rewrite_contact', 'contact', 'STRING')
     ,('osclass', 'rewrite_feed', 'feed', 'STRING')
     ,('osclass', 'rewrite_language', 'language', 'STRING')
     ,('osclass', 'rewrite_item_mark', 'item/mark', 'STRING')
@@ -126,6 +126,9 @@ INSERT INTO /*TABLE_PREFIX*/t_preference VALUES
     ,('osclass', 'watermark_place', 'centre', 'STRING')
     ,('osclass', 'watermark_image', '', 'STRING')
     ,('osclass', 'last_version_check', '', 'STRING')
+    ,('osclass', 'auto_update', 'major|plugins|themes|languages', 'STRING')
+    ,('osclass', 'title_character_length', '100', 'INTEGER')
+    ,('osclass', 'description_character_length', '5000', 'INTEGER')
     ,('osclass', 'update_core_json', '', 'STRING');
 
 INSERT INTO /*TABLE_PREFIX*/t_cron (e_type, d_last_exec, d_next_exec) VALUES

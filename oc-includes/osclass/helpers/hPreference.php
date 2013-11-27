@@ -55,6 +55,15 @@
     }
 
     /**
+     * Gets auto update settings
+     *
+     * @return string
+     */
+    function osc_auto_update() {
+        return (getPreference('auto_update'));
+    }
+
+    /**
      * Gets number of days to warn about an ad being expired
      *
      * @return int
@@ -277,6 +286,24 @@
      */
     function osc_max_images_per_item() {
         return (getPreference('numImages@items'));
+    }
+
+    /**
+     * Gets how many characters are allowed for the listings title
+     *
+     * @return int
+     */
+    function osc_max_characters_per_title() {
+        return (getPreference('title_character_length'));
+    }
+
+    /**
+     * Gets how many characters are allowed for the listings description
+     *
+     * @return int
+     */
+    function osc_max_characters_per_description() {
+        return (getPreference('description_character_length'));
     }
 
     /**
@@ -714,19 +741,19 @@
     }
 
     /**
-    * Gets mail from 
+    * Gets mail from
     *
     * @return string
-    */    
+    */
     function osc_mailserver_mail_from() {
         return(getPreference('mailserver_mail_from'));
-    }    
+    }
 
     /**
-    * Gets name from 
+    * Gets name from
     *
     * @return string
-    */    
+    */
     function osc_mailserver_name_from() {
         return(getPreference('mailserver_name_from'));
     }

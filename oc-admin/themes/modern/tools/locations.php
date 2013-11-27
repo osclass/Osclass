@@ -16,7 +16,7 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-    $all        = Preference::newInstance()->findValueByName('location_todo');
+    $all        = osc_get_preference('location_todo');
     $worktodo   = LocationsTmp::newInstance()->count();
 
     function render_offset(){
@@ -24,7 +24,7 @@
     }
 
     function customHead() {
-        $all = Preference::newInstance()->findValueByName('location_todo');
+        $all = osc_get_preference('location_todo');
         if( $all == '' ) $all = 0;
         $worktodo   = LocationsTmp::newInstance()->count();
         ?>
