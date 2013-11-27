@@ -68,6 +68,12 @@
                     modal: true,
                     title: '<?php echo osc_esc_js( __('Uninstall plugin') ); ?>'
                 });
+
+                $('.plugin-tooltip').each(function(){
+                    $(this).osc_tooltip('<?php echo osc_esc_js(__('Problems with this plugin? Ask for support.')); ?>',{layout:'gray-tooltip',position:{x:'right',y:'middle'}});
+                });
+
+
             });
 
             // dialog delete function
@@ -91,7 +97,7 @@
 <div id="tabs" class="ui-osc-tabs ui-tabs-right">
     <ul>
         <?php
-            $aPluginsToUpdate = json_decode( getPreference('plugins_to_update') );
+            $aPluginsToUpdate = json_decode( osc_get_preference('plugins_to_update') );
             $bPluginsToUpdate = is_array($aPluginsToUpdate)?true:false;
             if($bPluginsToUpdate && count($aPluginsToUpdate) > 0) {
                 $tab_index = 0;
@@ -141,6 +147,23 @@
             osc_add_hook('before_show_pagination_admin','showingResults');
             osc_show_pagination_admin($aData);
         ?>
+
+        <div class="display-select-bottom">
+            <form method="get" action="<?php echo osc_admin_base_url(true); ?>"  class="inline nocsrf">
+                <?php foreach( Params::getParamsAsArray('get') as $key => $value ) { ?>
+                    <?php if( $key != 'iDisplayLength' ) { ?>
+                        <input type="hidden" name="<?php echo $key; ?>" value="<?php echo osc_esc_html($value); ?>" />
+                    <?php } } ?>
+                <select name="iDisplayLength" class="select-box-extra select-box-medium float-left" onchange="this.form.submit();" >
+                    <option value="10" <?php if( Params::getParam('iDisplayLength') == 10 ) echo 'selected'; ?> ><?php printf(__('%d plugins'), 10); ?></option>
+                    <option value="25" <?php if( Params::getParam('iDisplayLength') == 25 ) echo 'selected'; ?> ><?php printf(__('%d plugins'), 25); ?></option>
+                    <option value="50" <?php if( Params::getParam('iDisplayLength') == 50 ) echo 'selected'; ?> ><?php printf(__('%d plugins'), 50); ?></option>
+                    <option value="100" <?php if( Params::getParam('iDisplayLength') == 100 ) echo 'selected'; ?> ><?php printf(__('%d plugins'), 100); ?></option>
+                </select>
+            </form>
+        </div>
+
+
     </div>
     <?php if($bPluginsToUpdate && count($aPluginsToUpdate) > 0) { ?>
     <div id="update-plugins">
@@ -150,8 +173,8 @@
                 $array_aux  = array_keys($aData['aaInfo']);
 
                 foreach($aPluginsToUpdate as $slug) {
-                    $key = array_search($slug, $array_aux);
-                    if($key) {
+                    $key = array_search($slug, $array_aux, true);
+                    if($key!==false) {
                         $aIndex[]   = $aData['aaData'][$key];
                     }
                 }

@@ -108,10 +108,7 @@
                 }
             }
             // update alerts user id with the same email
-            $aAlerts = Alerts::newInstance()->findByEmail( $input['s_email'] );
-            foreach( $aAlerts as $aux ) {
-                Alerts::newInstance()->update(array('fk_i_user_id' => $userId), array('s_email' => $input['s_email']));
-            }
+            Alerts::newInstance()->update(array('fk_i_user_id' => $userId), array('s_email' => $input['s_email']));
 
             $user = $this->manager->findByPrimaryKey($userId);
 
@@ -255,15 +252,15 @@
 
                 //if we want to change the password
                 if( Params::getParam('s_password', false, false) != '') {
-                    $input['s_password'] = sha1( Params::getParam('s_password', false, false) );
+                    $input['s_password'] = osc_hash_password(Params::getParam('s_password', false, false));
                 }
                 $input['s_username']     = osc_sanitize_username(Params::getParam('s_username'));
             }
 
-            $input['s_name']         = Params::getParam('s_name');
-            $input['s_website']      = Params::getParam('s_website');
-            $input['s_phone_land']   = Params::getParam('s_phone_land');
-            $input['s_phone_mobile'] = Params::getParam('s_phone_mobile');
+            $input['s_name']         = trim(Params::getParam('s_name'));
+            $input['s_website']      = trim(Params::getParam('s_website'));
+            $input['s_phone_land']   = trim(Params::getParam('s_phone_land'));
+            $input['s_phone_mobile'] = trim(Params::getParam('s_phone_mobile'));
 
             //locations...
             $country = Country::newInstance()->findByCode( Params::getParam('countryId') );
@@ -306,6 +303,8 @@
             $input['s_city_area']    = Params::getParam('cityArea');
             $input['s_address']      = Params::getParam('address');
             $input['s_zip']          = Params::getParam('zip');
+            $input['d_coord_lat']    = (Params::getParam('d_coord_lat')  != '') ? Params::getParam('d_coord_lat') : null;
+            $input['d_coord_long']   = (Params::getParam('d_coord_long') != '') ? Params::getParam('d_coord_long') : null;
             $input['b_company']      = (Params::getParam('b_company') != '' && Params::getParam('b_company') != 0) ? 1 : 0;
 
             return($input);

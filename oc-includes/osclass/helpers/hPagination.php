@@ -35,8 +35,11 @@
     function osc_search_pagination()
     {
         $params = array();
-        if( View::newInstance()->_exists('search_uri') ) {
-            $params['url'] = osc_base_url() . View::newInstance()->_get('search_uri') . '/{PAGE}';
+        if( View::newInstance()->_exists('search_uri') ) { // CANONICAL URL
+            $params['url'] = osc_base_url().View::newInstance()->_get('search_uri') . '/{PAGE}';
+            $params['first_url'] = osc_base_url().View::newInstance()->_get('search_uri');
+        } else {
+            $params['first_url'] = osc_update_search_url(array('iPage' => null));
         }
         $pagination = new Pagination($params);
         return $pagination->doPagination();
@@ -63,13 +66,16 @@
     {
         if(osc_is_public_profile()) {
             $url = osc_user_list_items_pub_profile_url('{PAGE}', $field);
+            $first_url = osc_user_public_profile_url();;
         } elseif(osc_is_list_items()) {
             $url = osc_user_list_items_url('{PAGE}', $field);
+            $first_url = osc_user_list_items_url();
         }
 
-        $params = array('total'    => osc_list_total_pages(),
-                        'selected' => osc_list_page(),
-                        'url'      => $url
+        $params = array('total'    => osc_search_total_pages(),
+                        'selected' => osc_search_page(),
+                        'url'      => $url,
+                        'first_url' => $first_url
                   );
 
         if(is_array($extraParams) && !empty($extraParams)) {
@@ -101,6 +107,7 @@
      *          'force_limits' => Always show the first/last links even if you're already on first/last page (default false)
      *          'sides' => How many pages to show (default 2)
      *          'url' => Format of the URL of the links, put "{PAGE}" on the page variable. Example http://www.example.com/index.php?page=search&amp;sCategory=2&amp;iPage={PAGE} (default osc_update_search_url(array('iPage' => '{PAGE}'))
+     *          'first_url' => Format of the FIRST URL of the links, if you want to avoid to have the page variable "{PAGE}" on the page variable. Example http://www.example.com/index.php?page=search&amp;sCategory=2&amp; (default osc_update_search_url(array('iPage' => null))
      *
      * @return string pagination links
      */

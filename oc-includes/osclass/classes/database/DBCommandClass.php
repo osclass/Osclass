@@ -335,7 +335,6 @@
                     $v = ' ' . $this->escape($v);
                 }
 
-                $prefix . $k . $v;
                 $this->aWhere[] = $prefix . $k . $v;
             }
 
@@ -1016,7 +1015,7 @@
         {
             $sql     = str_replace( '/*TABLE_PREFIX*/', DB_TABLE_PREFIX, $sql);
             $sql     = preg_replace('#/\*(?:[^*]*(?:\*(?!/))*)*\*/#','',($sql));
-            $queries = explode( ';', $sql );
+            $queries = $this->splitSQL($sql, ';');
 
             if( count($queries) == 0 ) {
                 return false;
@@ -1032,6 +1031,26 @@
             }
 
             return true;
+        }
+
+        /**
+         * Split sql queries, allowing DELIMITER blocks. We clean DELIMITER statements.
+         *
+         * @param string $sql
+         * @param string $explodeChars
+         * @return array
+         */
+        private function splitSQL($sql, $explodeChars)
+        {
+            if (preg_match('|^(.*)DELIMITER (\S+)\s(.*)$|isU', $sql, $matches)) {
+                $queries = explode($explodeChars, $matches[1]);
+                $recursive = $this->splitSQL($matches[3], $matches[2]);
+
+                return array_merge($queries, $recursive);
+            }
+            else {
+                return explode($explodeChars, $sql);
+            }
         }
 
         /**

@@ -186,7 +186,7 @@
         }
 
         /**
-         * Find an user by its id and password
+         * Find an user by its email and password
          *
          * @access public
          * @since unknown
@@ -194,24 +194,15 @@
          * @param string $password
          * @return array
          */
-        public function findByCredentials($key, $password, $locale = null)
+        public function findByCredentials($email, $password, $locale = null)
         {
-            $this->dao->select();
-            $this->dao->from($this->getTableName());
-            $conditions = array(
-                's_email'   => $key,
-                's_password'=> sha1($password)
-            );
-            $this->dao->where($conditions);
-            $result = $this->dao->get();
-
-            if( $result == false ) {
-                return false;
-            } else if($result->numRows() == 1){
-                return $this->extendData($result->row(), $locale);
-            } else {
-                return array();
+            $user = $this->findByEmail($email);
+            if(isset($user['s_password'])) {
+                if(osc_verify_password($password, $user['s_password'])) {
+                    return $this->extendData($user, $locale);;
+                };
             }
+            return array();
         }
 
         /**

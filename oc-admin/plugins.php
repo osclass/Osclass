@@ -50,6 +50,7 @@
                     if(isset($package['size']) && $package['size']!=0) {
                         $path = osc_plugins_path();
                         (int) $status = osc_unzip_file($package['tmp_name'], $path);
+                        @unlink($package['tmp_name']);
                     } else {
                         $status = 3;
                     }
@@ -190,6 +191,7 @@
                             $file = $_REQUEST['file'];
                         };
                     }
+                    osc_run_hook('renderplugin_controller');
                     if(stripos($file, '../')===false && $file!="") {
                         $this->_exportVariableToView("file", osc_plugins_path() . $file);
                         $this->doView("plugins/view.php");
@@ -236,25 +238,15 @@
                     exit;
                 break;
                 default:
-//                    $marketError = Params::getParam('marketError');
-//                    $slug = Params::getParam('slug');
-//                    if($marketError!='') {
-//                        if($marketError == '0') { // no error installed ok
-//                            $extra = '<br/><br/><b>' . __('You only need to install and configure the plugin.') . '</b>';
-//                            osc_add_flash_ok_message( __('Everything was OK!') . ' ( ' . $slug . ' ) ' . $extra , 'admin');
-//                        } else {
-//                            osc_add_flash_error_message( __('Error occurred') . ' ' . $slug , 'admin');
-//                        }
-//                    }
 
                     if(Params::getParam('checkUpdated') != '') {
                         osc_admin_toolbar_update_plugins(true);
                     }
 
                     if( Params::getParam('iDisplayLength') == '' ) {
-                        Params::setParam('iDisplayLength', 10 );
+                        Params::setParam('iDisplayLength', 25 );
                     }
-                    // ?
+
                     $this->_exportVariableToView('iDisplayLength', Params::getParam('iDisplayLength'));
 
                     $p_iPage      = 1;
@@ -280,7 +272,7 @@
                     $aInfo = array();
                     $max = ($start+$limit);
                     if($max > $count) $max = $count;
-                    $aPluginsToUpdate = json_decode( getPreference('plugins_to_update') );
+                    $aPluginsToUpdate = json_decode( osc_get_preference('plugins_to_update') );
                     $bPluginsToUpdate = is_array($aPluginsToUpdate)?true:false;
                     for($i = $start; $i < $max; $i++) {
                         $plugin = $aPlugin[$i];
@@ -326,8 +318,23 @@
                             $sInstall = '<a href="' . osc_admin_base_url(true) . '?page=plugins&amp;action=install&amp;plugin=' . $pInfo['filename'] . "&amp;" . osc_csrf_token_url() . '">' . __('Install') . '</a>';
                         }
 
-                        $row[] = '<input type="hidden" name="installed" value="' . $installed . '" enabled="' . $enabled . '" />' . $pInfo['plugin_name'] . '<div>' . $sUpdate . '</div>';
-                        $row[] = $pInfo['description'];
+                        $sHelp = '';
+                        if($pInfo['support_uri']!='') {
+                            $sHelp = '<span class="plugin-support-icon plugin-tooltip" ><a target="_blank" href="'.osc_sanitize_url($pInfo['support_uri']).'" ><img src="'.osc_current_admin_theme_url('images/question.png').'" alt="'.osc_esc_html(__('Problems with this plugin? Ask for support.')).'" ></a></span>';
+                        }
+                        $sSiteUrl = '';
+                        if($pInfo['plugin_uri']!='') {
+							$sSiteUrl = ' | <a target="_blank" href="'. $pInfo['plugin_uri'] . '">'. __('Plugins Site'). '</a>';
+						}
+						$sAuthor = '';
+						if($pInfo['author_uri']!='') {
+							$sAuthor = __('By') . ' <a target="_blank" href="'. $pInfo['author_uri'] . '">'. $pInfo['author'] . '</a>';
+						} else {
+							$sAuthor = __('By') . ' ' . $pInfo['author'];
+						}
+
+                        $row[] = '<input type="hidden" name="installed" value="' . $installed . '" enabled="' . $enabled . '" />' . $pInfo['plugin_name'] . $sHelp . '<div>' . $sUpdate . '</div>';
+                        $row[] = $pInfo['description'] . '<br />' . __('Version:') . $pInfo['version'] . ' | ' . $sAuthor . $sSiteUrl ;
                         $row[] = ($sUpdate!='')     ? $sUpdate      : '&nbsp;';
                         $row[] = ($sConfigure!='')  ? $sConfigure   : '&nbsp;';
                         $row[] = ($sEnable!='')     ? $sEnable      : '&nbsp;';

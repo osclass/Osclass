@@ -63,7 +63,7 @@
                 $this->conn->groupBy('DAY(dt_reg_date)');
             }
             $this->conn->from(DB_TABLE_PREFIX.'t_user');
-            $this->conn->where("dt_reg_date > '$from_date'");
+            $this->conn->where("dt_reg_date >= '$from_date'");
             $this->conn->orderBy('dt_reg_date', 'DESC');
             
             $result = $this->conn->get();
@@ -121,11 +121,14 @@
             }
             
             $this->conn->from(DB_TABLE_PREFIX."t_item");
-            $this->conn->where("dt_pub_date > '$from_date'");
+            $this->conn->where("dt_pub_date >= '$from_date'");
             $this->conn->orderBy('dt_pub_date', 'DESC');
             
             $result = $this->conn->get();
-            return $result->result();
+            if($result) {
+                return $result->result();
+            }
+            return array();
         }
         
         public function latest_items() 
@@ -155,7 +158,7 @@
             }
             
             $this->conn->from(DB_TABLE_PREFIX."t_item_comment");
-            $this->conn->where("dt_pub_date > '$from_date'");
+            $this->conn->where("dt_pub_date >= '$from_date'");
             $this->conn->orderBy('dt_pub_date', 'DESC');
             
             $result = $this->conn->get();
@@ -188,7 +191,7 @@
             }
             
             $this->conn->from(DB_TABLE_PREFIX.'t_item_stats');
-            $this->conn->where("dt_date > '$from_date'");
+            $this->conn->where("dt_date >= '$from_date'");
 
             $result = $this->conn->get();
             return $result->result();
@@ -208,7 +211,7 @@
             }
             
             $this->conn->from(DB_TABLE_PREFIX."t_alerts");
-            $this->conn->where("dt_date > '$from_date'");
+            $this->conn->where("dt_date >= '$from_date'");
             $this->conn->where("dt_unsub_date IS NULL");
             $this->conn->orderBy('dt_date', 'ASC');
             
@@ -230,7 +233,7 @@
             }
             
             $this->conn->from(DB_TABLE_PREFIX."t_alerts");
-            $this->conn->where("dt_date > '$from_date'");
+            $this->conn->where("dt_date >= '$from_date'");
             $this->conn->where("dt_unsub_date IS NULL");
             $this->conn->orderBy('dt_date', 'ASC');
             

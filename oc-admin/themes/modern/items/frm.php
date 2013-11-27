@@ -260,7 +260,7 @@ function customPageHeader() { ?>
                                     <div class="input-has-placeholder input-separate-top">
                                         <?php ItemForm::expiration_input('edit'); ?>
                                     </div>
-                                    <label><?php _e('0, means no expiration date'); ?></label>
+                                    <label><?php _e('It could be an integer (days from now it will be expired, 0 to never expire) or a date in the format "yyyy-mm-dd hh:mm:ss"'); ?></label>
                                 </div>
                             </div>
                             <?php } ?>

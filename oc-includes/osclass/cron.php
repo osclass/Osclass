@@ -52,6 +52,13 @@
                 }
             }
 
+            $files = glob(osc_content_path().'uploads/temp/qqfile_*');
+            foreach($files as $file) {
+                if((time()-filectime($file))>(2*3600)) {
+                    @unlink($file);
+                }
+            }
+
             osc_run_hook('cron_hourly');
         }
     }
@@ -62,6 +69,9 @@
         $i_next = strtotime($cron['d_next_exec']);
 
         if( (CLI && (Params::getParam('cron-type') === 'daily')) || ((($i_now - $i_next) >= 0) && !CLI) ) {
+
+            osc_do_auto_upgrade();
+
             // before update, d_last_exec
             osc_runAlert('DAILY');
 

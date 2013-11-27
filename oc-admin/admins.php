@@ -101,7 +101,7 @@
                                     }
 
                                     $array = array(
-                                        's_password'    =>  sha1($sPassword),
+                                        's_password'    =>  osc_hash_password($sPassword),
                                         's_name'        =>  $sName,
                                         's_email'       =>  $sEmail,
                                         's_username'    =>  $sUserName,
@@ -216,10 +216,10 @@
                                                 osc_add_flash_warning_message( _m("Password invalid"), 'admin');
                                                 $this->redirectTo(osc_admin_base_url(true) . '?page=admins&action=edit&id=' . $adminId);
                                             } else {
-                                                $firstCondition  = ( sha1($sOldPassword) == $aAdmin['s_password'] );
+                                                $firstCondition  = osc_verify_password($sOldPassword, $aAdmin['s_password']);
                                                 $secondCondition = ( $sPassword == $sPassword2 );
                                                 if( $firstCondition && $secondCondition ) {
-                                                    $array['s_password'] = sha1($sPassword);
+                                                    $array['s_password'] = osc_hash_password($sPassword);
                                                 } else {
                                                     osc_add_flash_warning_message( _m("The password couldn't be updated. Passwords don't match"), 'admin');
                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=admins&action=edit&id=' . $adminId);
@@ -229,7 +229,7 @@
                                     } else {
                                         if( $sPassword!='') {
                                             if($sPassword == $sPassword2) {
-                                                $array['s_password'] = sha1($sPassword);
+                                                $array['s_password'] = osc_hash_password($sPassword);
                                             } else {
                                                 osc_add_flash_warning_message( _m("The password couldn't be updated. Passwords don't match"), 'admin');
                                                 $this->redirectTo(osc_admin_base_url(true) . '?page=admins&action=edit&id=' . $adminId);

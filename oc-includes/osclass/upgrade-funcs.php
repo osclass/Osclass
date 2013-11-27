@@ -51,7 +51,7 @@
     }
 
     $aMessages = array();
-    Preference::newInstance()->update(array('s_value' => time()), array( 's_section' => 'osclass', 's_name' => 'last_version_check'));
+    osc_set_preference('last_version_check', time());
 
     $conn = DBConnectionClass::newInstance();
     $c_db = $conn->getOsclassDb();
@@ -440,15 +440,30 @@ CREATE TABLE %st_item_description_tmp (
         osc_set_preference('force_aspect_image', '0', 'osclass', 'BOOLEAN');
     }
 
-    osc_changeVersionTo(320);
-
-    echo '<div class="well ui-rounded-corners separate-top-medium">';
-    echo '<p>'.__('Osclass &raquo; Updated correctly').'</p>';
-    echo '<p>'.__('Osclass has been updated successfully. <a href="http://forums.osclass.org/">Need more help?</a>').'</p>';
-    foreach($aMessages as $msg) {
-        echo "<p>".$msg."</p>";
+    if(osc_version() < 321) {
+        osc_calculate_location_slug(osc_subdomain_type());
     }
-    echo "</div>";
+
+    if(osc_version() < 330) {
+        @unlink(osc_lib_path() . 'osclass/classes/Watermark.php');
+        osc_set_preference('title_character_length', '100', 'INTEGER');
+        osc_set_preference('description_character_length', '5000', 'INTEGER');
+    }
+
+    osc_changeVersionTo(330);
+
+    if(!IS_AJAX && empty($aMessages)) {
+        osc_add_flash_ok_message(_m('Osclass has been updated successfully. <a href="http://forums.osclass.org/">Need more help?</a>'), 'admin');
+        echo '<script type="text/javascript"> window.location = "'.osc_admin_base_url(true).'?page=tools&action=version"; </script>';
+    } else {
+        echo '<div class="well ui-rounded-corners separate-top-medium">';
+        echo '<p>'.__('Osclass &raquo; Updated correctly').'</p>';
+        echo '<p>'.__('Osclass has been updated successfully. <a href="http://forums.osclass.org/">Need more help?</a>').'</p>';
+        foreach($aMessages as $msg) {
+            echo "<p>".$msg."</p>";
+        }
+        echo "</div>";
+    }
 
     /**
      * Convert alerts < 2.4, updating s_search with json encoded to based64.

@@ -36,6 +36,9 @@
 
         function session_start() {
             $currentCookieParams = session_get_cookie_params();
+            if ( defined('COOKIE_DOMAIN') ) {
+                $currentCookieParams["domain"] = COOKIE_DOMAIN;
+            }
             session_set_cookie_params(
                 $currentCookieParams["lifetime"],
                 $currentCookieParams["path"],
@@ -110,8 +113,7 @@
 
         function _setMessage($key, $value, $type) {
             $messages = $this->_get('messages');
-            $messages[$key]['msg'] = $value;
-            $messages[$key]['type'] = $type;
+            $messages[$key][] = array('msg' => $value, 'type' => $type); 
             $this->_set('messages', $messages);
         }
 
