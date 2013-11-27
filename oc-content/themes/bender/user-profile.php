@@ -105,7 +105,7 @@
             <div class="control-group">
                 <label class="control-label" for="s_info"><?php _e('Description', 'bender'); ?></label>
                 <div class="controls">
-                    <?php UserForm::info_textarea('s_info', osc_locale_code(), $osc_user['locale'][osc_locale_code()]['s_info']); ?>
+                    <?php UserForm::info_textarea('s_info', osc_locale_code(), @$osc_user['locale'][osc_locale_code()]['s_info']); ?>
                 </div>
             </div>
             <div class="control-group">
@@ -115,7 +115,7 @@
             </div>
             <div class="control-group">
                 <div class="controls">
-                    <?php osc_run_hook('user_form'); ?>
+                    <?php osc_run_hook('user_form', osc_user()); ?>
                 </div>
             </div>
         </form>
