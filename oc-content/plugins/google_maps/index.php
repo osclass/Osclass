@@ -45,12 +45,7 @@ function insert_geo_location($item) {
 
     osc_add_hook('location', 'google_maps_location') ;
 
-<<<<<<< HEAD
-    osc_add_hook('item_form_post', 'insert_geo_location') ;
-    osc_add_hook('item_edit_post', 'insert_geo_location') ;
-=======
     osc_add_hook('posted_item', 'insert_geo_location');
     osc_add_hook('edited_item', 'insert_geo_location');
->>>>>>> develop
 
 ?>
