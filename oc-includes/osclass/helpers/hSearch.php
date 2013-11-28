@@ -473,7 +473,7 @@
                     $url .= osc_sanitizeString($region['s_slug']) . '-r' . $region['pk_i_id'];
                 }
                 if(@$params['iPage']!='' && @$params['iPage']!=1) { $url .= "/".$params['iPage']; };
-            } else if(isset($params['sCity']) && !is_array($params['sCity']) && strpos($params['sCity'], ',')===false
+            } else if(isset($params['sCity']) && !is_array($params['sCity']) && strpos($params['sCity'], ',')===false &&
                 ($countP==1 || ($countP==2 && (isset($params['iPage']) || isset($params['sCategory']))) || ($countP==3 && isset($params['iPage']) && isset($params['sCategory'])))) {
                 $url = $base_url;
                 if( osc_get_preference('seo_url_search_prefix') != '' ) {

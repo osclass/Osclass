@@ -954,13 +954,13 @@ sleep(10);
         $this->loginWebsite();
         // entrar en la pag de post_item
         $this->selenium->open( osc_item_post_url() );
-        $exist_input_photo = $this->selenium->isElementPresent("xpath=//h2[contains(.,'Photos')]") ;
+        $exist_input_photo = $this->selenium->isElementPresent("xpath=//h2[contains(.,'Click or Drop for upload images')]") ;
         if($bool == 1) {
             $this->assertTrue($exist_input_photo, "Not exist input photos[]. ERROR");
         } else if ($bool == 0){
             $this->assertTrue( !$exist_input_photo, "Exist input photos[]. ERROR");
         }
-        if($num>0){
+        /*if($num>0){
             $this->selenium->open( osc_item_post_url() );
             for($i = 0;$i < $num; $i++)
                 $this->selenium->click('link=Add new photo');
@@ -968,9 +968,8 @@ sleep(10);
             $num_photo_input = (int)$this->selenium->getXpathCount("//input[@name='photos[]']") ;
 
             $this->assertTrue(($num == $num_photo_input), "More or less input photos[]! ERROR") ;
-        }
+        }*/
         $user = User::newInstance()->findByEmail($this->_email);
-        // @todo use UserActions::*
         User::newInstance()->deleteUser($user['pk_i_id']);
     }
 
