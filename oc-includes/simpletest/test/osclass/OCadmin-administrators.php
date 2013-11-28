@@ -203,7 +203,7 @@ class OCadmin_administrators extends OCadminTest {
         $this->selenium->type('user', "useradminone");
         $this->selenium->type('password', "useradminpass");
         $this->selenium->click('submit');
-        $this->selenium->waitForPageToLoad(1000);
+        $this->selenium->waitForPageToLoad(10000);
         $this->assertTrue($this->selenium->isTextPresent("Dashboard"),"Moderator access");
 
         $this->selenium->open( osc_admin_base_url(true) );
