@@ -128,9 +128,7 @@ abstract class FrontendTest extends MyWebTestCase {
         if($regionId!=NULL) {
             $this->selenium->select("countryId", "label=Spain");
             $this->selenium->type('id=region', $regionId);
-    //        $this->selenium->click('id=ui-active-menuitem');
             $this->selenium->type('id=city', $cityId);
-    //        $this->selenium->click('id=ui-active-menuitem');
         }
         if($cityArea==NULL) {
             $this->selenium->type("cityArea", "my area");
@@ -141,20 +139,10 @@ abstract class FrontendTest extends MyWebTestCase {
         if( count($aPhotos) > 0 ) {
             sleep(2);
 
-            echo LIB_PATH."simpletest/test/osclass/".$aPhotos[0] ;
-            echo "<br/>";
-            flush();
-
-            $this->selenium->type("photos[]", LIB_PATH."simpletest/test/osclass/".$aPhotos[0]);
+            $this->selenium->type("qqfile", LIB_PATH."simpletest/test/osclass/".$aPhotos[0]);
             for($k=1;$k<count($aPhotos);$k++) {
-                sleep(2);
-
-                echo LIB_PATH."simpletest/test/osclass/".$aPhotos[$k];
-                echo "<br/>";
-                flush();
-
-                $this->selenium->click("link=Add new photo");
-                $this->selenium->type("//div[@id='p-".$k."']/input", LIB_PATH."simpletest/test/osclass/".$aPhotos[$k]);
+                sleep(4);
+                $this->selenium->type("qqfile", LIB_PATH."simpletest/test/osclass/".$aPhotos[$k]);
             }
         }
 
