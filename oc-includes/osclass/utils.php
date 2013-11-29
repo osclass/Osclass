@@ -1825,7 +1825,8 @@ function osc_do_upgrade() {
                              **********************************/
                             if (file_exists(osc_lib_path() . 'osclass/upgrade-funcs.php')) {
                                 // There should be no errors here
-                                osc_doRequest(osc_lib_path() . 'osclass/upgrade-funcs.php', array('auto_upgrade' => '1'));
+                                define('AUTO_UPGRADE', true);
+                                require_once osc_lib_path() . 'osclass/upgrade-funcs.php';
                             }
                             // Additional actions is not important for the rest of the proccess
                             // We will inform the user of the problems but the upgrade could continue

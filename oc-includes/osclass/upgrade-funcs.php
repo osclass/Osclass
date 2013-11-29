@@ -27,7 +27,7 @@
     require_once ABS_PATH . 'oc-load.php';
     require_once LIB_PATH . 'osclass/helpers/hErrors.php';
 
-    if( !defined('AUTO_UPGRADE') && Params::getParam('auto_upgrade')!='1' ) {
+    if( !defined('AUTO_UPGRADE') ) {
         if(file_exists(osc_lib_path() . 'osclass/installer/struct.sql')) {
             $sql  = file_get_contents(osc_lib_path() . 'osclass/installer/struct.sql');
 
