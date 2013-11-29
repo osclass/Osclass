@@ -27,7 +27,7 @@
     require_once ABS_PATH . 'oc-load.php';
     require_once LIB_PATH . 'osclass/helpers/hErrors.php';
 
-    if( !defined('AUTO_UPGRADE') ) {
+    if( !defined('AUTO_UPGRADE') && Params::getParam('auto_upgrade')!='1' ) {
         if(file_exists(osc_lib_path() . 'osclass/installer/struct.sql')) {
             $sql  = file_get_contents(osc_lib_path() . 'osclass/installer/struct.sql');
 
@@ -441,7 +441,9 @@ CREATE TABLE %st_item_description_tmp (
     }
 
     if(osc_version() < 321) {
-        osc_calculate_location_slug(osc_subdomain_type());
+        if(function_exists('osc_calculate_location_slug')) {
+            osc_calculate_location_slug(osc_subdomain_type());
+        }
     }
 
     if(osc_version() < 330) {
@@ -452,7 +454,7 @@ CREATE TABLE %st_item_description_tmp (
 
     osc_changeVersionTo(330);
 
-    if(!IS_AJAX && empty($aMessages)) {
+    if(empty($aMessages)) {
         osc_add_flash_ok_message(_m('Osclass has been updated successfully. <a href="http://forums.osclass.org/">Need more help?</a>'), 'admin');
         echo '<script type="text/javascript"> window.location = "'.osc_admin_base_url(true).'?page=tools&action=version"; </script>';
     } else {
