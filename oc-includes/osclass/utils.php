@@ -1783,6 +1783,7 @@ function osc_do_upgrade() {
              ***** UNZIP FILE *****
              **********************/
             $tmp_path = osc_content_path().'downloads/oc-temp/core-'.$data['version'].'/';
+            @mkdir(osc_content_path().'downloads/oc-temp/', 0777);
             @mkdir($tmp_path, 0777);
             $res = osc_unzip_file(osc_content_path().'downloads/'.$filename, $tmp_path);
             if ($res == 1) { // Everything is OK, continue
@@ -1853,8 +1854,10 @@ function osc_do_upgrade() {
                             $deleted = @unlink(ABS_PATH . '.maintenance');
                             if ($rm_errors == 0) {
                                 $message = __('Everything looks good! Your Osclass installation is up-to-date');
+                                osc_add_flash_ok_message($message, 'admin');
                             } else {
                                 $message = __('Nearly everything looks good! Your Osclass installation is up-to-date, but there were some errors removing temporary files. Please manually remove the "oc-content/downloads/oc-temp" folder');
+                                osc_add_flash_warning_message($message, 'admin');
                                 $error = 6; // Some errors removing files
                             }
                         } else {
