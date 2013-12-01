@@ -214,7 +214,7 @@ function meta_title() {
                 $s_page = ' - ' . __('page') . ' ' . $i_page;
             }
 
-            $b_show_all = ($region == '' && $city == '' & $pattern == '' && $category == '');
+            $b_show_all = ($region == '' && $city == '' && $pattern == '' && $category == '');
             $b_category = ($category != '');
             $b_pattern  = ($pattern != '');
             $b_city     = ($city != '');
@@ -236,9 +236,7 @@ function meta_title() {
                 }
             }
 
-            if($b_city && $b_region) {
-                $result .= $city . ' &raquo; ';
-            } else if($b_city) {
+            if($b_city) {
                 $result .= $city . ' &raquo; ';
             } else if($b_region) {
                 $result .= $region . ' &raquo; ';
