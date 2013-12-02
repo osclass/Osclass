@@ -1783,7 +1783,6 @@ function osc_do_upgrade() {
              ***** UNZIP FILE *****
              **********************/
             $tmp_path = osc_content_path().'downloads/oc-temp/core-'.$data['version'].'/';
-            @mkdir(osc_content_path().'downloads/oc-temp/', 0777);
             @mkdir($tmp_path, 0777);
             $res = osc_unzip_file(osc_content_path().'downloads/'.$filename, $tmp_path);
             if ($res == 1) { // Everything is OK, continue
@@ -2052,7 +2051,6 @@ function osc_market($section, $code) {
                 /**********************
                  ***** UNZIP FILE *****
                  **********************/
-                @mkdir(osc_content_path() . 'downloads/oc-temp/', 0777);
                 $res = osc_unzip_file(osc_content_path() . 'downloads/' . $filename, osc_content_path() . 'downloads/oc-temp/');
                 if ($res == 1) { // Everything is OK, continue
                     /**********************
