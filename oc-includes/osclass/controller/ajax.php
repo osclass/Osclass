@@ -275,7 +275,6 @@
                     // Include the uploader class
                     require_once(LIB_PATH."AjaxUploader.php");
                     $uploader = new AjaxUploader();
-                    @mkdir(osc_content_path().'uploads/temp/');
                     $original = pathinfo($uploader->getOriginalName());
                     $filename = uniqid("qqfile_").".".$original['extension'];
                     $result = $uploader->handleUpload(osc_content_path().'uploads/temp/'.$filename);

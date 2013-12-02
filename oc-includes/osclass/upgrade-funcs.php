@@ -447,6 +447,8 @@ CREATE TABLE %st_item_description_tmp (
     }
 
     if(osc_version() < 330) {
+        @mkdir(osc_content_path().'uploads/temp/');
+        @mkdir(osc_content_path().'downloads/oc-temp/', 0777);
         @unlink(osc_lib_path() . 'osclass/classes/Watermark.php');
         osc_set_preference('title_character_length', '100', 'INTEGER');
         osc_set_preference('description_character_length', '5000', 'INTEGER');
