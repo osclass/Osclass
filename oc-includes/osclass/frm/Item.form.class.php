@@ -1446,7 +1446,14 @@
                             showButton: true
                         },
                         text: {
-                            uploadButton: '<?php _e('Click or Drop for upload images'); ?>'
+                            uploadButton: '<?php _e('Click or Drop for upload images'); ?>',
+                            waitingForResponse: '<?php _e('Processing...'); ?>',
+                            retryButton: '<?php _e('Retry'); ?>',
+                            cancelButton: '<?php _e('Cancel'); ?>',
+                            failUpload: '<?php _e('Upload failed'); ?>',
+                            deleteButton: '<?php _e('Delete'); ?>',
+                            deletingStatusText: '<?php _e('Deleting...'); ?>',
+                            formatProgress: '<?php _e('{percent}% of {total_size}'); ?>'
                         },
                         showMessage: function(message) {
                             $('#restricted-fine-uploader').append('<div class="alert alert-error">' + message + '</div>');
