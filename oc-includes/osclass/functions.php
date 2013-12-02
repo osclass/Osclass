@@ -171,9 +171,7 @@ function search_title() {
         }
     }
 
-    if($b_city && $b_region) {
-        $result .= $city;
-    } else if($b_city) {
+    if($b_city) {
         $result .= $city;
     } else if($b_region) {
         $result .= $region;
