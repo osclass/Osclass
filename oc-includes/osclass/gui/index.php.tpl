@@ -22,9 +22,9 @@
 /*
 Theme Name: bender
 Theme URI: http://osclass.org/
-Description: Bender theme
-Version: 1.1.0
-Author: Osclass
+Description: <%- pkg.description %>
+Version: <%- pkg.version %>
+Author: <%- pkg.author %>
 Author URI: http://osclass.org/
 Widgets:
 Theme update URI:
@@ -33,9 +33,9 @@ Theme update URI:
     function bender_theme_info() {
         return array(
              'name'        => 'bender'
-            ,'version'     => '1.1.0'
-            ,'description' => 'Bender theme'
-            ,'author_name' => 'Osclass'
+            ,'version'     => '<%- pkg.version %>'
+            ,'description' => '<%- pkg.description %>'
+            ,'author_name' => '<%- pkg.author %>'
             ,'author_url'  => 'http://osclass.org'
             ,'locations'   => array()
         );

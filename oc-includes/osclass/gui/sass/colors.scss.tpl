@@ -1,7 +1,7 @@
 $text-color-contrasted: false;
-$maincolor: #35C3D9;
-$text-color-contrasted: #fff;
-$buttonDarken: 5%;
+$maincolor: <%- theme.color.main %>;
+$text-color-contrasted: <%- theme.color.text %>;
+$buttonDarken: <%- theme.color.darken %>;
 $textcolor:#333;
 $linkcolor:#069;
 $contrasted-default-dark:   #000;
