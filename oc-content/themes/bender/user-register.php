@@ -42,13 +42,6 @@
                 </div>
             </div>
             <div class="control-group">
-                <label class="control-label" for="email"><?php _e('E-mail', 'bender'); ?></label>
-                <div class="controls">
-                    <?php UserForm::email_text(); ?>
-                    <?php osc_show_recaptcha('register'); ?>
-                </div>
-            </div>
-            <div class="control-group">
                 <label class="control-label" for="password"><?php _e('Password', 'bender'); ?></label>
                 <div class="controls">
                     <?php UserForm::password_text(); ?>
@@ -63,7 +56,19 @@
                     </p>
                 </div>
             </div>
+            <div class="control-group">
+                <label class="control-label" for="email"><?php _e('E-mail', 'bender'); ?></label>
+                <div class="controls">
+                    <?php UserForm::email_text(); ?>
+                    <?php osc_show_recaptcha('register'); ?>
+                </div>
+            </div>
             <?php osc_run_hook('user_register_form'); ?>
+            <div class="control-group">
+                <div class="controls">
+                    <?php osc_show_recaptcha('register'); ?>
+                </div>
+            </div>
             <div class="control-group">
                 <div class="controls">
                     <button type="submit" class="ui-button ui-button-middle ui-button-main"><?php _e("Create", 'bender'); ?></button>

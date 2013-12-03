@@ -52,8 +52,8 @@
                         select: function( event, ui ) {
                             $("#sRegion").attr("value", ui.item.region);
                             log( ui.item ?
-                                "<?php _e('Selected', 'modern'); ?>: " + ui.item.value + " aka " + ui.item.id :
-                                "<?php _e('Nothing selected, input was', 'modern'); ?> " + this.value );
+                                "<?php _e('Selected', 'bender'); ?>: " + ui.item.value + " aka " + ui.item.id :
+                                "<?php _e('Nothing selected, input was', 'bender'); ?> " + this.value );
                         }
                     });
                 });
@@ -66,7 +66,7 @@
         <div class="resp-wrapper">
             <?php osc_run_hook('search_ads_listing_top'); ?>
             <h1><?php echo search_title(); ?></h1>
-
+		       <p><?php echo osc_category_description(); ?></p>
             <?php if(osc_count_items() == 0) { ?>
                 <p class="empty" ><?php printf(__('There are no results matching "%s"', 'bender'), osc_search_pattern()) ; ?></p>
             <?php } else { ?>
