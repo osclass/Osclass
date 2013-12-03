@@ -1,130 +1,334 @@
-<!--[if gte mso 9]>
-<style>
-    .full-size{
-        width:750px;
-    }
-    .second-size{
-        width:700px !important;
-    }
-</style>
-<![endif]-->
-<table style="width: 100%; background-color: #f2f2f2; font-size: 1px; margin: 0px auto; font-family: Arial, Helvetica, Verdana, sans-serif; color: #323232; border-collapse: collapse; border: 0px; background-position: initial initial; background-repeat: initial initial;" border="0" cellpadding="0" cellspacing="0" width="100%">
-    <tbody>
-    <tr>
-        <td style="width: 100%;">
-            <table class="second-size" style="max-width: 700px; width: 100%;  background-color: #f2f2f2; font-size: 1px; margin: 20px auto 0px; border: 0px; border-collapse: collapse; font-family: Arial, Helvetica, Verdana, sans-serif; background-position: initial initial; background-repeat: initial initial;" border="0" cellspacing="0" cellpadding="0" align="center">
-                <tbody><tr>
-                    <td style="width: 100%;" class="second-size">
-                        <table style="width: 100%; margin-left: 0px; font-size: 1px; font-family: Arial, Helvetica, Verdana, sans-serif; color: #323232; border: 0px; border-collapse: collapse;" border="0" cellspacing="0" cellpadding="0" class="second-size">
-                            <tbody><tr>
-                                <td style="width: 259px;"><a href="http://osclass.org/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=we_are_open&amp;utm_content=logo_top"><img src="http://static.osclass.org/mailing/common/images/logo.gif" width="259" height="77" border="0"></a></td>
-                                <td><div style="font-size:11px;color:#656565; text-align:right; font-family:Arial, Helvetica, sans-serif"><a href="http://static.osclass.org/mailing/20130924/index.html?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=we_are_open&amp;utm_content=cant_see_this_email" style="color:#323232; font-size:11px;color:#656565; text-align:right;">Click here if you can't see this email</a><div></div></div></td>
-                            </tr>
-                            </tbody></table>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </td>
-
-    <tr>
-        <td style="width: 100%;">
-            <table  class="full-size" style="max-width: 750px; background-color: #f2f2f2; font-size: 1px; margin:0 auto 0 auto; border: 0px; border-collapse: collapse; font-family: Arial, Helvetica, Verdana, sans-serif; background-position: initial initial; background-repeat: initial initial;" border="0" cellspacing="0" cellpadding="0" align="center">
-                <tbody>
-                <tr>
-                    <td style="width: 100%;">
-                        <table class="full-size" style="max-width: 750px; width:100%; background-color: #f2f2f2; font-size: 1px; margin: 20px auto 0px; border: 0px; border-collapse: collapse; font-family: Arial, Helvetica, Verdana, sans-serif; background-position: initial initial; background-repeat: initial initial;" border="0" cellspacing="0" cellpadding="0" align="center">
-                            <tbody><tr>
-                                <td style="width: 100%">
-                                    <img src="http://static.osclass.org/mailing/20130924/images/1.png" width="100%" height="auto"  alt=""/>
-                                </td>
-                            </tr>
-
-                            </tbody>
-                        </table>
-                    </td>
-
-                </tr>
-                </tbody>
-            </table>
-        </td>
-    </tr>
-    <tr>
-        <td style="width: 100%;">
-            <table class="full-size" style="max-width: 750px; background-color: #f2f2f2; font-size: 1px; margin:0 auto 0 auto; border: 0px; border-collapse: collapse; font-family: Arial, Helvetica, Verdana, sans-serif; background-position: initial initial; background-repeat: initial initial;" border="0" cellspacing="0" cellpadding="0" align="center">
-                <tbody>
+<table style="width:100%;background:#ffffff;font-size:1px;line-heigh:1px;margin:0 auto;font-family:Arial,Helvetica,Verdana,sans-serif;color:#323232" border="0" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td>
+<table style="width:700px;background:#ffffff;font-size:1px;line-heigh:1px;margin-top:20px;margin-left:auto;margin-right:auto;margin-bottom:0" border="0" cellspacing="0" cellpadding="0" align="center">
+<tbody>
+<tr>
+<td>
+<!-- Table -->
+<table id="Table_01" width="700" height="880" border="0" cellpadding="0" cellspacing="0" style="font-family:Helvetica, 'Helvetica Neue', 'Helvetica light', Arial, sans-serif; text-align:center;font-size:1px;line-height:1px;margin:0" align="center">
+<tbody><tr>
+    <td style="background-color:#2FC6D8; font-size:1px;line;height:0; border-collapse:collapse;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/mockup_01.png" width="700" height="33" alt="" style="background-color:#2FC6D8"></td>
+</tr>
+<tr>
+    <td style="background-color:#2FC6D8; font-size:1px;line;height:0; border-collapse:collapse;">
+                                        <span style="
+    color: white;
+    font-size: 28px;
+    text-align: center;
+    line-height: 33px;
+"> Osclass 3.3 RC - want to help us testing it? </span></td>
+</tr>
 
 
 
-                <tr>
-                    <td style="width:4%">
-                        <img border="0" src="http://static.osclass.org/mailing/20130828/images/t.gif" width="100%" height="10" alt="">
-                    </td>
-                    <td style="width:25px;background-color: #303133; ">
-                        <img border="0" src="http://static.osclass.org/mailing/20130828/images/t.gif" width="25" height="10" alt="">
-                    </td>
-                    <td style="background-color: #303133;">
-                        <div style="font-size:40px;color:#ffffff;line-height:40px;font-family:Arial, Helvetica, sans-serif; text-align:center">
-                            <a href="http://forums.osclass.org/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=we_are_open&amp;utm_content=open_24_hrs" style="color:#ffffff;text-decoration:none"><img border="0" src="http://static.osclass.org/mailing/20130924/images/2.png" width="100%" height="auto" alt="" style="max-width:400px" /></a><br />
 
-                            <a href="http://forums.osclass.org/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=we_are_open&amp;utm_content=share_plugins_and_themes" style="color:#ffffff;text-decoration:none">Share your plugins and themes in the Osclass Market!</a>
-                        </div>
-                        <div style="font-size:17px;color:#ffffff;line-height:19px;font-family:Arial, Helvetica, sans-serif; text-align:center">
-                            <img border="0" src="http://static.osclass.org/mailing/20130828/images/t.gif" width="100%" height="20" alt=""><br>
-                            <strong>Yes</strong>, you’ve developed a great plugin or theme for Osclass that enables you to make your installation do the impossible. And <strong>yes</strong>, you’ve actually shared it on <a href="http://forums.osclass.org/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=we_are_open&amp;utm_content=osclass_forums_link" style="color:#ffffff;">Osclass forums</a> so that everyone can see it and try its potential. Now you can give your cool plugin even more exposure by adding it to our Market!<br>
-                            <img border="0" src="http://static.osclass.org/mailing/20130828/images/t.gif" width="100px" height="20" alt="">
-                        </div>
-                    </td>
 
-                    <td style="width:25px;background-color: #303133; ">
-                        <img border="0" src="http://static.osclass.org/mailing/20130828/images/t.gif" width="25" height="10" alt="">
-                    </td>
-                    <td style="width:4%">
-                        <img border="0" src="http://static.osclass.org/mailing/20130828/images/t.gif" width="100%" height="10" alt="">
-                    </td>
-                </tr>
-                <tr>
-                    <td style="width:4%">
-                        <img border="0" src="http://static.osclass.org/mailing/20130828/images/t.gif" width="100%" height="10" alt="">
-                    </td>
-                    <td style="width:25px;background-color: #35aed8; ">
-                        <img border="0" src="http://static.osclass.org/mailing/20130828/images/t.gif" width="25" height="10" alt="">
-                    </td>
-                    <td style="background-color: #35aed8;">
-                        <div style="font-size:25px;color:#ffffff;line-height:25px;font-family:Arial, Helvetica, sans-serif; text-align:center"><img border="0" src="http://static.osclass.org/mailing/20130828/images/t.gif" width="100%" height="50" alt=""><br />
 
-                            <a href="http://blog.osclass.org/2013/09/16/plugins-themes-osclass-market/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=we_are_open&amp;utm_content=for_now_all_the_plugins" style="color:#ffffff;text-decoration:none">For now all the plugins/themes on Osclass Market are available to download for free, so you’ll get:</a>
-                        </div>
-                        <div style="font-size:17px;color:#ffffff;line-height:19px;font-family:Arial, Helvetica, sans-serif; text-align:center">
-                            <img border="0" src="http://static.osclass.org/mailing/20130828/images/t.gif" width="100%" height="20" alt=""><br>
-                            <a href="http://blog.osclass.org/2013/09/16/plugins-themes-osclass-market/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=we_are_open&amp;utm_content=ul_li___you_will_get" style="color:#ffffff;text-decoration:none"><ul style="text-align:left; color:#fff">
-                                    <li>Extra exposure for your plugin/theme.</li>
-                                    <li>You’ll be able to know how many people have actually downloaded it.</li>
-                                    <li>It will be translated into other languages by Osclass members all around the world.</li>
-                                    <li>Appear among other great Osclass plugins and themes and contribute to its community!</li>
-                                </ul></a><br/>If you’re not a developer you can still participate in improving Osclass by <a href="http://translate.osclass.org/getting-started?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=we_are_open&amp;utm_content=translating_it_to_your_language" style="color:#ffffff;">translating it to your language!</a> <br>
-                            <img border="0" src="http://static.osclass.org/mailing/20130828/images/t.gif" width="100%" height="50" alt="">
-                        </div>
-                    </td>
+<tr>
+<td style="background-color:#2FC6D8; font-size:1px;line;height:0; border-collapse:collapse;">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color: #34c3da; font-family: Arial, Helvetica, Verdana, sans-serif; border: 0px; border-collapse: collapse;">
+<tbody>
 
-                    <td style="width:25px;background-color: #35aed8; ">
-                        <img border="0" src="http://static.osclass.org/mailing/20130828/images/t.gif" width="25" height="10" alt="">
-                    </td>
-                    <td style="width:4%">
-                        <img border="0" src="http://static.osclass.org/mailing/20130828/images/t.gif" width="100%" height="10" alt="">
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </td>
-    </tr>
-    <td style="width: 100%;">
-        <table  class="second-size" style="max-width: 700px; width: 100%; background-color: #f2f2f2; font-size: 1px; margin: 20px auto 0px; border: 0px; border-collapse: collapse; font-family: Arial, Helvetica, Verdana, sans-serif; background-position: initial initial; background-repeat: initial initial;" border="0" cellspacing="0" cellpadding="0" align="center">
-            <tbody>
-            <tr><td style="width: 100%;"><img border="0" src="http://static.osclass.org/mailing/20130828/images/t.gif" width="100%" height="15" alt=""><div style="font-size:11px; line-height:11px; padding:0px 0; text-align:center;color:#323232;font-family:Arial;">OSCLASS S.L. NIF No. B-65307910, Barcelona.</div><img border="0" src="http://static.osclass.org/mailing/20130828/images/t.gif" width="100%" height="15" alt=""></td></tr>
-            </tbody></table>
+
+<tr>
+    <td style="height: 20px; width: 40px;"><img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" height="20" width="40"></td>
+    <td style="width: 620px;"></td>
+    <td style="width: 40px;"></td>
+</tr><tr>
+<td style="height: 50px; width: 40px;"></td>
+<td align="center" style="width: 620px;"><!-- Save for Web Slices (grid_1.psd) -->
+<table width="554" height="5" border="0" cellpadding="0" cellspacing="0" style="font-size: 1px; height: 1px; font-family: Arial, Helvetica, Verdana, sans-serif; border: 0px; border-collapse: collapse;"><tbody><tr style="height: 1px; line-height: 1px;"><td colspan="4" style="background-color: #34c3da; width: 4px; height: 1px; font-size: 1px; line-height: 1px;"><img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="4" height="1" alt=""></td>
+    <td style="background-color: #4ccade; width: 1px; height: 1px; font-size: 1px; line-height: 1px;"><img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td style="background-color: #ace4ee; width: 1px; height: 1px; font-size: 1px; line-height: 1px;"><img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td style="background-color: #e8f5f9; width: 1px; height: 1px; font-size: 1px; line-height: 1px;"><img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td style="background-color: #f4f8fb; width: 540px; height: 1px; font-size: 1px; line-height: 1px;"><img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="540" height="1" alt=""></td>
+    <td style="background-color: #e8f5f9; width: 1px; height: 1px; font-size: 1px; line-height: 1px;"><img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td style="background-color: #ace4ee; width: 1px; height: 1px; font-size: 1px; line-height: 1px;"><img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td style="background-color: #4ccade; width: 1px; height: 1px; font-size: 1px; line-height: 1px;"><img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td colspan="4" style="background-color: #34c3da; width: 4px; height: 1px; font-size: 1px; line-height: 1px;"><img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="4" height="1" alt=""></td>
+</tr><tr style="height: 1px; line-height: 1px;"><td colspan="3" style="background-color: #34c3da; width: 3px; height: 1px; font-size: 1px; line-height: 1px;"><img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="3" height="1" alt=""></td>
+    <td style="background-color: #58cbdf; width: 1px; height: 1px; font-size: 1px; line-height: 1px;"><img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td style="background-color: #e8f5f9; width: 1px; height: 1px; font-size: 1px; line-height: 1px;"><img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td colspan="5" style="background-color: #f4f8fb; width: 544px; height: 1px; font-size: 1px; line-height: 1px;"><img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="544" height="1" alt=""></td>
+    <td style="background-color: #e8f5f9; width: 1px; height: 1px; font-size: 1px; line-height: 1px;"><img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td style="background-color: #58cbdf; width: 1px; height: 1px; font-size: 1px; line-height: 1px;"><img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td colspan="3" style="background-color: #34c3da; width: 3px; height: 1px; font-size: 1px; line-height: 1px;"><img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="3" height="1" alt=""></td>
+</tr><tr style="height: 1px; line-height: 1px;"><td colspan="2" style="background-color: #34c3da; width: 2px; height: 1px; font-size: 1px; line-height: 1px;"><img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="2" height="1" alt=""></td>
+    <td style="background-color: #4bc8dc; width: 1px; height: 1px; font-size: 1px; line-height: 1px;"><img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td style="background-color: #e8f4f9; width: 1px; height: 1px; font-size: 1px; line-height: 1px;"><img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td colspan="7" style="background-color: #f4f8fb; width: 546px; height: 1px; font-size: 1px; line-height: 1px; background-position: initial initial; background-repeat: initial initial;"><img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="546" height="1" alt=""></td>
+    <td style="background-color: #e8f4f9; width: 1px; height: 1px; font-size: 1px; line-height: 1px;"><img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td style="background-color: #4bc8dc; width: 1px; height: 1px; font-size: 1px; line-height: 1px;"><img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td colspan="2" style="background-color: #34c3da; width: 2px; height: 1px; font-size: 1px; line-height: 1px;"><img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="2" height="1" alt=""></td>
+</tr><tr style="height: 1px; line-height: 1px;"><td colspan="2" style="background-color: #34c3da; width: 2px; height: 1px; font-size: 1px; line-height: 1px;"><img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="2" height="1" alt=""></td>
+    <td style="background-color: #abe2ec; width: 1px; height: 1px; font-size: 1px; line-height: 1px;"><img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td colspan="9" style="background-color: #f4f8fb; width: 548px; height: 1px; font-size: 1px; line-height: 1px;"><img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="548" height="1" alt=""></td>
+    <td style="background-color: #abe2ec; width: 1px; height: 1px; font-size: 1px; line-height: 1px;"><img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td colspan="2" style="background-color: #34c3da; width: 2px; height: 1px; font-size: 1px; line-height: 1px;"><img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="2" height="1" alt=""></td>
+</tr><tr style="height: 1px; line-height: 1px;"><td style="background-color: #34c1d8; width: 1px; height: 1px; font-size: 1px; line-height: 1px;"><img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td style="background-color: #33bed4; width: 1px; height: 1px; font-size: 1px; line-height: 1px;"><img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td style="background-color: #e8f4f8; width: 1px; height: 1px; font-size: 1px; line-height: 1px;"><img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td colspan="9" style="background-color: #f4f8fb; width: 548px; height: 1px; font-size: 1px; line-height: 1px;"><img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="547" height="1" alt=""></td>
+    <td style="background-color: #e8f4f8; width: 1px; height: 1px; font-size: 1px; line-height: 1px;"><img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td style="background-color: #33bed4; width: 1px; height: 1px; font-size: 1px; line-height: 1px;"><img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td style="background-color: #34c1d8; width: 1px; height: 1px; font-size: 1px; line-height: 1px;"><img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+</tr>
+<tr><td style="background-color: #34c1d8; width: 1px;"><img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td style="background-color: #33bed4; width: 1px;"><img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td colspan="11" style="background-color: #f4f8fb; font-size: 12px; width: 550px;">
+        <!-- -->
+        <img src="http://static.osclass.org/mailing/20130730/images/t_buttons.gif" width="550" height="20" alt="">
+        <table height="5" border="0" cellpadding="0" cellspacing="0" style="font-size: 12px; height: 12px; background-color: #f4f8fb; border: 0px; border-collapse: collapse; font-family: Arial, Helvetica, Verdana, sans-serif;">
+            <tbody><tr valign="top">
+                <td width="85" style="width: 85px;"><img src="http://static.osclass.org/mailing/20130730/images/t_1.gif" width="85" height="48" alt=""></td>
+                <td width="420" style="width: 420px;">
+                    <div style="font-size:25px;line-height:25px;border-bottom:solid 1px #dbdbdb;padding-bottom:5px;padding-top:5px"><a href="http://blog.osclass.org/2013/12/02/osclass-3-3-rc-want-help-us-testing/" style="color:#555555;text-decoration:none;">Osclass 3.3 RC highlights</a></div><img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="420" height="25" alt="">
+                    <div style="font-size:13px; line-height:15px;color:#555555;">
+                        <a href="http://blog.osclass.org/2013/12/02/osclass-3-3-rc-want-help-us-testing/" style="text-decoration:none;"><ul style="color:#555555;margin: 0;padding: 0;padding-left: 16px;list-style-type: disc;">
+                                <li>Subdomains improved</li>
+                                <li>Ajax upload of photos, with preview</li>
+                                <li>Improved image handling, no more mess with background color</li>
+                                <li>Passwords more secure (use of Bcrypt + individual salt isntead of SHA1)</li>
+                                <li>Updated HTML Purifier to 4.5.0</li>
+                                <li>Release notes added when upgrading from previous version</li>
+                                <li>Minor bug fixes and improvements</li>
+                            </ul>
+                        </a>
+                    </div>
+                </td>
+                <td width="35" style="width: 35px;"><img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="35" height="1" alt=""></td>
+            </tr>
+            </tbody></table><img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="550" height="20" alt="">
+        <!-- -->
     </td>
+</tr>
+<!--- RB_BOTTOM -->
+<tr style="height: 1px; line-height: 1px;"><td style="background-color: #34c1d8; width: 1px; height: 1px; font-size: 1px; line-height: 1px;"><img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td><td style="background-color: #33bed4; width: 1px; height: 1px; font-size: 1px; line-height: 1px;"><img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td><td style="background-color: #e8f3f7; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td colspan="9" style="background-color: #f4f8fb; width: 548px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="7" height="1" alt=""></td>
+    <td style="background-color: #e8f3f7; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td style="background-color: #33bed4; width: 1px; height: 1px; font-size: 1px; line-height: 1px;"><img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td style="background-color: #34c1d8; width: 1px; height: 1px; font-size: 1px; line-height: 1px;"><img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
 
-    </tr>
-    </tbody>
+
+</tr>
+<tr style="height: 1px; line-height: 1px;"><td style="background-color: #34c1d8; width: 1px; height: 1px; font-size: 1px; line-height: 1px;"><img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td><td style="background-color: #33bed4; width: 1px; height: 1px; font-size: 1px; line-height: 1px;"><img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td><td style="background-color: #a9dae3; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td colspan="9" style="background-color: #f4f8fb; width: 548px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="7" height="1" alt=""></td>
+    <td style="background-color: #a9dae3; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td style="background-color: #33bed4; width: 1px; height: 1px; font-size: 1px; line-height: 1px;"><img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td style="background-color: #34c1d8; width: 1px; height: 1px; font-size: 1px; line-height: 1px;"><img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+
+
+
+</tr>
+<tr style="height: 1px; line-height: 1px;"><td style="background-color: #34c3da; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td><td style="background-color: #31b8cd; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td><td style="background-color: #51b1c1; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td><td style="background-color: #e8f3f7; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td colspan="7" style="background-color: #f4f8fb; width: 546px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="6" height="1" alt=""></td>
+    <td style="background-color: #e8f3f7; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td style="background-color: #51b1c1; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td style="background-color: #31b8cd; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td style="background-color: #34c3da; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+</tr>
+<tr style="height: 1px; line-height: 1px;"><td style="background-color: #34c3da; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td><td style="background-color: #31b8cd; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td><td style="background-color: #2da9bd; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td><td style="background-color: #51b1c1; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td><td style="background-color: #e8f3f7; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td colspan="5" style="background-color: #f4f8fb; width: 544px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="5" height="1" alt=""></td>
+    <td style="background-color: #e8f3f7; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td style="background-color: #51b1c1; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td style="background-color: #2da9bd; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td style="background-color: #31b8cd; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td style="background-color: #34c3da; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+</tr>
+<tr style="height: 1px; line-height: 1px;"><td style="background-color: #34c3da; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td><td style="background-color: #31b8cd; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td><td style="background-color: #2daabe; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td><td style="background-color: #2ba1b4; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td><td style="background-color: #43a8b9; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td><td style="background-color: #a9dae3; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td><td style="background-color: #e8f3f7; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td style="background-color: #f4f8fb; width: 540px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="3" height="1" alt=""></td>
+    <td style="background-color: #e8f3f7; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td style="background-color: #a9dae3; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td style="background-color: #43a8b9; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td style="background-color: #2ba1b4; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td style="background-color: #2daabe; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td style="background-color: #31b8cd; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td style="background-color: #34c3da; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+</tr>
+<tr style="height: 1px; line-height: 1px;"><td style="background-color: #34c3da; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td><td style="background-color: #32bad0; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td><td style="background-color: #2eaec2; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td><td style="background-color: #2ca4b7; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td colspan="7" style="background-color: #2a9daf; width: 546px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="6" height="1" alt=""></td>
+    <td style="background-color: #2ca4b7; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td style="background-color: #2eaec2; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td style="background-color: #32bad0; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td style="background-color: #34c3da; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+</tr>
+<tr style="height: 1px; line-height: 1px;"><td style="background-color: #34c3da; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td><td style="background-color: #33bed4; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td><td style="background-color: #30b5cb; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td><td style="background-color: #2eabbf; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td><td style="background-color: #2ca4b7; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td colspan="5" style="background-color: #2a9fb2; width: 544px; height: 1px; font-size: 1px; line-height: 1px; background-position: initial initial; background-repeat: initial initial;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="5" height="1" alt=""></td>
+    <td style="background-color: #2ca4b7; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td style="background-color: #2eabbf; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td style="background-color: #30b5cb; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td style="background-color: #33bed4; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td style="background-color: #34c3da; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+</tr>
+<tr style="height: 1px; line-height: 1px;"><td colspan="2" style="background-color: #34c3da; width: 2px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td><td style="background-color: #32bdd3; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td><td style="background-color: #30b5cd; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td><td style="background-color: #2eaec2; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td colspan="5" style="background-color: #2da9bd; width: 544px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="5" height="1" alt=""></td>
+    <td style="background-color: #2eaec2; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td style="background-color: #30b5cd; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td style="background-color: #32bdd3; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td colspan="2" style="background-color: #34c3da; width: 2px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+
+</tr>
+<tr style="height: 1px; line-height: 1px;"><td colspan="5" style="background-color: #34c3da; width: 5px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="3" height="1" alt=""></td><td style="background-color: #32bad0; width: 1px; height: 1px; font-size: 1px; line-height: 1px; background-position: initial initial; background-repeat: initial initial;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td><td style="background-color: #32bad0; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td colspan="3" style="background-color: #31b7cc; width: 542px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="5" height="1" alt=""></td>
+    <td style="background-color: #32bad0; width: 1px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td style="background-color: #32bad0; width: 1px; height: 1px; font-size: 1px; line-height: 1px; background-position: initial initial; background-repeat: initial initial;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="1" height="1" alt=""></td>
+    <td colspan="3" style="background-color: #34c3da; width: 3px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="3" height="1" alt=""></td>
+</tr>
+<tr style="height: 1px; line-height: 1px;"><td colspan="4" style="background-color: #34c3da; width: 4px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="4" height="1" alt=""></td>
+    <td colspan="7" style="background-color: #33c0d7; width: 546px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="6" height="1" alt=""></td>
+    <td colspan="4" style="background-color: #34c3da; width: 4px; height: 1px; font-size: 1px; line-height: 1px;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="4" height="1" alt="">/td>
+</tr>
+<!--- RB_BOTTOM -->
+</tbody></table>
+<!-- End Save for Web Slices --></td>
+<td style="width: 40px;"></td>
+</tr>
+
+
+
+</tbody></table>
+</td>
+</tr><tr>
+    <td style="background-color:#2FC6D8; font-size:1px;line;height:0; border-collapse:collapse;">
+        <div style="
+    font-size: 16px;
+    color: white;
+    line-height: 16px;
+    padding: 35px 30px;
+    display: block;
+"><strong>IMPORTANT!</strong> As always, we don’t recommend you to run the installation on a production website to test it, once we make sure there are no bugs the new official version will be released in the following days</div> <div style="
+    font-size: 14px;
+    color: #3D3D3D;
+    line-height: 14px;
+    padding: 22px 30px 35px 30px;
+    display: block;
+    background: #8de0e9;
+    font-weight: 200;
+"><p><strong style="
+    font-size: 25px;
+    font-weight: 200;
+"> Note about new password algorithm</strong></p>We changed the password algorithm to make it more secure, we strongly suggest you reset your users’ passwords, so they will be forced to used the new, more secure, method. Old passwords (SHA1) will still work, new passwords (new users or users who changed their passwords) will be using the new method. You do not have to do anything, but it’s recommended you change your password.</div></td>
+</tr><tr>
+    <td style="background-color:#ffffff; font-size:1px;line;height:0; border-collapse:collapse;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/mockup_09.png" width="700" height="30" alt=""></td>
+</tr>
+<tr>
+    <td style="background-color:#ffffff; font-size:1px;line;height:0; border-collapse:collapse;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/mockup_10.png" width="700" height="52" alt="Give us feedback" style="color:#333333;font-size:35px;font-weight:200;line-height:35px"></td>
+</tr>
+<tr>
+    <td style="background-color:#ffffff; font-size:1px;line;height:0; border-collapse:collapse;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/mockup_11.png" width="700" height="14" alt=""></td>
+</tr>
+<tr>
+    <td style="background-color:#ffffff; font-size:1px;line;height:0; border-collapse:collapse;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/mockup_12.png" width="700" height="29" alt="If you have any suggestions for the next version, don’t hesitate to" style="color:#333333;font-size:15px;font-weight:200;line-height:16px"></td>
+</tr>
+<tr>
+    <td style="background-color:#ffffff; font-size:1px;line;height:0; border-collapse:collapse;">
+        <a href="http://osclass.uservoice.com/" style="text-decoration:none;border:none;"><img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/mockup_13.png" width="700" height="25" alt="share them on UserVoice. In last two months you have sent us great" style="color:#333333;font-size:15px;font-weight:200;line-height:16px; border:none"></a></td>
+</tr>
+<tr>
+    <td style="background-color:#ffffff; font-size:1px;line;height:0; border-collapse:collapse;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/mockup_14.png" width="700" height="26" alt="feedback and we’re already working on how to implement all your" style="color:#333333;font-size:15px;font-weight:200;line-height:16px"></td>
+</tr>
+<tr>
+    <td style="background-color:#ffffff; font-size:1px;line;height:0; border-collapse:collapse;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/mockup_15.png" width="700" height="22" alt="ideas in the next version." style="color:#333333;font-size:15px;font-weight:200;line-height:16px"></td>
+</tr>
+<tr>
+    <td style="background-color:#ffffff; font-size:1px;line;height:0; border-collapse:collapse;">
+        <img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/mockup_16.png" width="700" height="52" alt=""></td>
+</tr>
+</tbody></table>
+<!-- /Table -->
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+</tbody>
 </table>
