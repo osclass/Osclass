@@ -33,8 +33,8 @@
         private $ext;
         private $mime;
 
-        private $font;
-        private $color;
+        private $_font;
+        private $_color;
         private $_width;
         private $_height;
 
@@ -143,6 +143,15 @@
                 switch ($ext) {
                     case 'gif':
                     case 'png':
+                        if($this->ext!='png' && $this->ext!='gif') {
+                            $bg = imagecreatetruecolor($this->_width, $this->_height);
+                            imagefill($bg, 0, 0, imagecolorallocatealpha($bg, 255, 255, 255, 127));
+                            imagesavealpha($bg, true);
+                            imagealphablending($bg, TRUE);
+                            imagecopy($bg, $this->im, 0, 0, 0, 0, $this->_width, $this->_height);
+                            imagedestroy($this->im);
+                            $this->im = $bg;
+                        }
                         imagepng($this->im, $imagePath, 0);
                         break;
                     default:
@@ -248,11 +257,11 @@
         }
 
         public function doWatermarkText($text, $color = 'ff0000') {
-            $this->font = osc_apply_filter('watermark_font_path', LIB_PATH . "osclass/assets/Arial.ttf");
+            $this->_font = osc_apply_filter('watermark_font_path', LIB_PATH . "osclass/assets/Arial.ttf");
             if(osc_use_imagick()) {
                 $draw = new ImagickDraw();
                 $draw->setFillColor("#".$color);
-                $draw->setFont($this->font);
+                $draw->setFont($this->_font);
                 $draw->setFontSize( 30 );
                 $metrics = $this->im->queryFontMetrics($draw, $text);
                 switch(osc_watermark_place()) {
@@ -285,7 +294,7 @@
                 imagefill($this->im, 0, 0, $white);
                 $color  = $this->_imageColorAllocateHex($color);
                 $offset = $this->_calculateOffset($text);
-                imagettftext($this->im, 20, 0, $offset['x'], $offset['y'], $color, $this->font , html_entity_decode($text, null, "UTF-8"));
+                imagettftext($this->im, 20, 0, $offset['x'], $offset['y'], $color, $this->_font , html_entity_decode($text, null, "UTF-8"));
             }
             return $this;
         }
@@ -334,7 +343,7 @@
             $bbox = imagettfbbox(
                 20,
                 0,
-                $this->font,
+                $this->_font,
                 $text
             );
 
