@@ -460,7 +460,7 @@
                         $category = Category::newInstance()->findBySlug($params['sCategory']);
                     }
                 }
-                if(isset($category['s_slug'])) { $url .= $category['s_slug']."_"; }
+                if(@$category['s_slug']!='') { $url .= $category['s_slug']."_"; }
 
                 if(osc_list_region_id()==$params['sRegion']) {
                     $url .= osc_sanitizeString(osc_list_region_slug()) . '-r' . osc_list_region_id();
@@ -488,7 +488,7 @@
                         $category = Category::newInstance()->findBySlug($params['sCategory']);
                     }
                 }
-                if(isset($category['s_slug'])) { $url .= $category['s_slug']."_"; }
+                if(@$category['s_slug']!='') { $url .= $category['s_slug']."_"; }
                 if(osc_list_region_id()==$params['sCity']) {
                     $url .= osc_sanitizeString(osc_list_city_slug()) . '-c' . osc_list_city_id();
                 } else {
