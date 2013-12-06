@@ -1409,7 +1409,7 @@
                             osc_copy($tmpName.'_thumbnail', $folder.$resourceId.'_thumbnail.'.$extension);
                             if( osc_keep_original_image() ) {
                                 $path = $folder.$resourceId.'_original.'.$extension;
-                                move_uploaded_file($tmpName, $path);
+                                osc_copy($tmpName, $path);
                             }
                             @unlink($tmpName."_normal");
                             @unlink($tmpName."_preview");
