@@ -445,10 +445,13 @@
          * @param integer$cat_id
          * @return array
          */
-        public function findSubcategories($categoryID)
+        public function findSubcategories($categoryID, $is_enabled = true)
         {
             // juanramon: specific condition
             $this->dao->where( 'fk_i_parent_id', $categoryID );
+            if ($is_enabled == true) {
+                $this->dao->where( 'b_enabled', 1 );
+            }
             // end specific condition
 
             return $this->listWhere();
