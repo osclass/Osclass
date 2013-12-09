@@ -553,7 +553,7 @@ function bender_sidebar_category_search($catId = null)
         end($aCategories);
         $cat = current($aCategories);
         // if is parent of some category
-        $childCategories = Category::newInstance()->findSubcategories($cat['pk_i_id']);
+        $childCategories = Category::newInstance()->findSubcategoriesEnabled($cat['pk_i_id']);
         if(count($childCategories) > 0) {
             $aCategories[] = $childCategories;
         }
