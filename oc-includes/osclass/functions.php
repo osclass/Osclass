@@ -65,7 +65,7 @@ function osc_customfields_search_conditions($params) {
                             $str_escaped = Search::newInstance()->dao->escape($aux);
                             $sql .= $table.'.fk_i_field_id = '.$key.' AND ';
                             $sql .= $table.".s_value LIKE ".$str_escaped;
-                            Search::newInstance()->addConditions('pk_i_id IN ('.$sql.')');
+                            Search::newInstance()->addConditions(DB_TABLE_PREFIX.'t_item.pk_i_id IN ('.$sql.')');
                             $addTable = true;
                         }
                         break;
@@ -76,7 +76,7 @@ function osc_customfields_search_conditions($params) {
                             $str_escaped = Search::newInstance()->dao->escape($aux);
                             $sql .= $table.'.fk_i_field_id = '.$key.' AND ';
                             $sql .= $table.".s_value = ".$str_escaped;
-                            Search::newInstance()->addConditions('pk_i_id IN ('.$sql.')');
+                            Search::newInstance()->addConditions(DB_TABLE_PREFIX.'t_item.pk_i_id IN ('.$sql.')');
                             $addTable = true;
                         }
                         break;
@@ -85,7 +85,7 @@ function osc_customfields_search_conditions($params) {
                             $sql = "SELECT fk_i_item_id FROM $table WHERE ";
                             $sql .= $table.'.fk_i_field_id = '.$key.' AND ';
                             $sql .= $table.".s_value = 1";
-                            Search::newInstance()->addConditions('pk_i_id IN ('.$sql.')');
+                            Search::newInstance()->addConditions(DB_TABLE_PREFIX.'t_item.pk_i_id IN ('.$sql.')');
                             $addTable = true;
                         }
                         break;
@@ -108,7 +108,7 @@ function osc_customfields_search_conditions($params) {
                             $sql .= $table.".s_value >= ".($start)." AND ";
                             $sql .= $table.".s_value <= ".$end;
 
-                            Search::newInstance()->addConditions('pk_i_id IN ('.$sql.')');
+                            Search::newInstance()->addConditions(DB_TABLE_PREFIX.'t_item.pk_i_id IN ('.$sql.')');
                             $addTable = true;
                         }
                         break;
@@ -131,7 +131,7 @@ function osc_customfields_search_conditions($params) {
 
                             $sql_interval = "select a.fk_i_item_id from (".$sql.") a where a.fk_i_item_id IN (".$sql1.")";
 
-                            Search::newInstance()->addConditions('pk_i_id IN ('.$sql_interval.')');
+                            Search::newInstance()->addConditions(DB_TABLE_PREFIX.'t_item.pk_i_id IN ('.$sql_interval.')');
                             $addTable = true;
                         }
                         break;
