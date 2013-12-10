@@ -1,3 +1,13 @@
+Osclass 3.3 2013-12-10
+------------------------
+- Subdomains improved
+- Ajax upload of photos, with preview
+- Improved image handling, no more mess with background color
+- Passwords more secure (use of Bcrypt + individual salt isntead of SHA1)
+- Updated HTML Purifier to 4.5.0
+- Release notes added when upgrading from previous version
+- Minor bug fixes and improvements
+
 Osclass 3.2 2013-XX-XX
 ------------------------
 - Expiration date for a listing (till now you can do that only for the whole category)
