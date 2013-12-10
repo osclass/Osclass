@@ -59,7 +59,7 @@
     min-height: 40px;
 }
 .qq-upload-drop-area-active {
-    background: #FF7171;
+    background: #DFF0D8;
 }
 .qq-upload-list {
     margin: 0;
@@ -67,7 +67,6 @@
     list-style: none;
 }
 .qq-upload-list li {
-    margin: 0;
     padding: 9px;
     line-height: 15px;
     font-size: 16px;

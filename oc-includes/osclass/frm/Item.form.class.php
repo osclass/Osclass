@@ -1415,7 +1415,7 @@
                     window.removed_images = 0;
                     $('#restricted-fine-uploader').on('click', 'a.qq-upload-delete', function(event) {
                         window.removed_images = window.removed_images+1;
-                        $('#restricted-fine-uploader .alert-error').remove();
+                        $('#restricted-fine-uploader .flashmessage-error').remove();
                     });
 
                     $('#restricted-fine-uploader').fineUploader({
@@ -1454,38 +1454,40 @@
                             deleteButton: '<?php _e('Delete'); ?>',
                             deletingStatusText: '<?php _e('Deleting...'); ?>',
                             formatProgress: '<?php _e('{percent}% of {total_size}'); ?>'
-                        },
-                        showMessage: function(message) {
-                            $('#restricted-fine-uploader').append('<div class="alert alert-error">' + message + '</div>');
                         }
+                    }).on('error', function (event, id, name, errorReason, xhrOrXdr) {
+                            $('#restricted-fine-uploader .flashmessage-error').remove();
+                            $('#restricted-fine-uploader').append('<div class="flashmessage flashmessage-error">' + errorReason + '</div>');
                     }).on('statusChange', function(event, id, old_status, new_status) {
-                            $(".alert.alert-error").remove();
-                        }).on('complete', function(event, id, fileName, responseJSON) {
-                            if (responseJSON.success) {
-                                var new_id = id - removed_images;
-                                var li = $('.qq-upload-list li')[new_id];
-                                <?php if(Params::getParam('action')=='item_add') { ?>
-                                if(parseInt(new_id)==0) {
-                                    $(li).append('<div class="primary_image primary"></div>');
-                                } else {
-                                    $(li).append('<div class="primary_image"><a title="<?php echo osc_esc_html(__('Make primary image')); ?>"></a></div>');
-                                }
-                                <?php } ?>
-                                $(li).append('<div class="ajax_preview_img"><img src="<?php echo osc_base_url(); ?>oc-content/uploads/temp/'+responseJSON.uploadName+'" alt="' + responseJSON.uploadName + '"></div>');
-                                $(li).append('<input type="hidden" name="ajax_photos[]" value="'+responseJSON.uploadName+'"></input>');
+                        $(".alert.alert-error").remove();
+                    }).on('complete', function(event, id, fileName, responseJSON) {
+                        if (responseJSON.success) {
+                            var new_id = id - removed_images;
+                            var li = $('.qq-upload-list li')[new_id];
+                            <?php if(Params::getParam('action')=='item_add') { ?>
+                            if(parseInt(new_id)==0) {
+                                $(li).append('<div class="primary_image primary"></div>');
+                            } else {
+                                $(li).append('<div class="primary_image"><a title="<?php echo osc_esc_html(__('Make primary image')); ?>"></a></div>');
                             }
-                            <?php if(Params::getParam('action')=='item_edit') { ?>
-                        }).on('validateBatch', function(event, fileOrBlobDataArray) {
-                            // clear alert messages
-                            if($('#restricted-fine-uploader .alert-error').size()>0) {
-                                $('#restricted-fine-uploader .alert-error').remove();
-                            }
+                            <?php } ?>
+                            $(li).append('<div class="ajax_preview_img"><img src="<?php echo osc_base_url(); ?>oc-content/uploads/temp/'+responseJSON.uploadName+'" alt="' + responseJSON.uploadName + '"></div>');
+                            $(li).append('<input type="hidden" name="ajax_photos[]" value="'+responseJSON.uploadName+'"></input>');
+                        }
+                        <?php if(Params::getParam('action')=='item_edit') { ?>
+                    }).on('validateBatch', function(event, fileOrBlobDataArray) {
+                        // clear alert messages
+                        if($('#restricted-fine-uploader .alert-error').size()>0) {
+                            $('#restricted-fine-uploader .alert-error').remove();
+                        }
 
-                            var len = fileOrBlobDataArray.length;
-                            var result = canContinue(len);
-                            return result.success;
+                        var len = fileOrBlobDataArray.length;
+                        var result = canContinue(len);
+                        return result.success;
 
-                        });
+                    })on('error', function (event, id, name, errorReason, xhrOrXdr) {
+                        alert(qq.format("Error on file number {} - {}.  Reason: {}", id, name, errorReason));
+                    });
 
                     function canContinue(numUpload) {
                         // strUrl is whatever URL you need to call
