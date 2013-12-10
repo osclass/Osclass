@@ -31,16 +31,17 @@
             if( preg_match('/^index\.php/', $this->uri)>0) {
                 // search url without permalinks params
             } else {
+                // redirect if it ends with a slash
+                if( preg_match('|/$|', $this->uri) ) {
+                    $redirectURL = osc_base_url() . $this->uri;
+                    $redirectURL = preg_replace('|/$|', '', $redirectURL);
+                    $this->redirectTo($redirectURL, 301);
+                }
+
                 if( stripos($_SERVER['REQUEST_URI'], osc_get_preference('rewrite_search_url'))===false && osc_rewrite_enabled() && !Params::existParam('sFeed')) {
                     // clean GET html params
                     $this->uri = preg_replace('/(\/?)\?.*$/', '', $this->uri);
 
-                    // redirect if it ends with a slash
-                    if( preg_match('|/$|', $this->uri) ) {
-                        $redirectURL = osc_base_url() . $this->uri;
-                        $redirectURL = preg_replace('|/$|', '', $redirectURL);
-                        $this->redirectTo($redirectURL);
-                    }
                     $search_uri = preg_replace('|/[0-9]+$|', '', $this->uri);
                     $this->_exportVariableToView('search_uri', $search_uri);
 
@@ -368,6 +369,83 @@
 
             //SET PAGE
             $this->mSearch->page($p_iPage, $p_iPageSize);
+
+            // CUSTOM FIELDS
+            $custom_fields = Params::getParam('meta');
+            $fields = Field::newInstance()->findIDSearchableByCategories($p_sCategory);
+            $table = DB_TABLE_PREFIX.'t_item_meta';
+            if(is_array($custom_fields)) {
+                foreach($custom_fields as $key => $aux) {
+                    if(in_array($key, $fields)) {
+                        $field = Field::newInstance()->findByPrimaryKey($key);
+                        switch ($field['e_type']) {
+                            case 'TEXTAREA':
+                            case 'TEXT':
+                            case 'URL':
+                                if($aux!='') {
+                                    $aux = "%$aux%";
+                                    $sql = "SELECT fk_i_item_id FROM $table WHERE ";
+                                    $str_escaped = Search::newInstance()->dao->escape($aux);
+                                    $sql .= $table.'.fk_i_field_id = '.$key.' AND ';
+                                    $sql .= $table.".s_value LIKE ".$str_escaped;
+                                    $this->mSearch->addConditions(DB_TABLE_PREFIX.'t_item.pk_i_id IN ('.$sql.')');
+                                }
+                                break;
+                            case 'DROPDOWN':
+                            case 'RADIO':
+                                if($aux!='') {
+                                    $sql = "SELECT fk_i_item_id FROM $table WHERE ";
+                                    $str_escaped = Search::newInstance()->dao->escape($aux);
+                                    $sql .= $table.'.fk_i_field_id = '.$key.' AND ';
+                                    $sql .= $table.".s_value = ".$str_escaped;
+                                    $this->mSearch->addConditions(DB_TABLE_PREFIX.'t_item.pk_i_id IN ('.$sql.')');
+                                }
+                                break;
+                            case 'CHECKBOX':
+                                if($aux!='') {
+                                    $sql = "SELECT fk_i_item_id FROM $table WHERE ";
+                                    $sql .= $table.'.fk_i_field_id = '.$key.' AND ';
+                                    $sql .= $table.".s_value = 1";
+                                    $this->mSearch->addConditions(DB_TABLE_PREFIX.'t_item.pk_i_id IN ('.$sql.')');
+                                }
+                                break;
+                            case 'DATE':
+                                if($aux!='') {
+                                    $y = (int)date('Y', $aux);
+                                    $m = (int)date('n', $aux);
+                                    $d = (int)date('j', $aux);
+                                    $start = mktime('0', '0', '0', $m, $d, $y);
+                                    $end   = mktime('23', '59', '59', $m, $d, $y);
+                                    $sql = "SELECT fk_i_item_id FROM $table WHERE ";
+                                    $sql .= $table.'.fk_i_field_id = '.$key.' AND ';
+                                    $sql .= $table.".s_value >= ".($start)." AND ";
+                                    $sql .= $table.".s_value <= ".$end;
+                                    $this->mSearch->addConditions(DB_TABLE_PREFIX.'t_item.pk_i_id IN ('.$sql.')');
+                                }
+                                break;
+                            case 'DATEINTERVAL':
+                                if( is_array($aux) && (!empty($aux['from']) && !empty($aux['to'])) ) {
+                                    $from = $aux['from'];
+                                    $to   = $aux['to'];
+                                    $start = $from;
+                                    $end   = $to;
+                                    $sql = "SELECT fk_i_item_id FROM $table WHERE ";
+                                    $sql .= $table.'.fk_i_field_id = '.$key.' AND ';
+                                    $sql .= $start." >= ".$table.".s_value AND s_multi = 'from'";
+                                    $sql1 = "SELECT fk_i_item_id FROM $table WHERE ";
+                                    $sql1 .= $table.".fk_i_field_id = ".$key." AND ";
+                                    $sql1 .= $end." <= ".$table.".s_value AND s_multi = 'to'";
+                                    $sql_interval = "select a.fk_i_item_id from (".$sql.") a where a.fk_i_item_id IN (".$sql1.")";
+                                    $this->mSearch->addConditions(DB_TABLE_PREFIX.'t_item.pk_i_id IN ('.$sql_interval.')');
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+
+                    }
+                }
+            }
 
             osc_run_hook('search_conditions', Params::getParamsAsArray());
 

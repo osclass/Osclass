@@ -1,5 +1,6 @@
 <?php
 
+
     /*
      *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
@@ -233,5 +234,49 @@
         }
         return false;
     }
+
+
+    /*
+     * Verify an user's password
+     *
+     * @param $password plain-text
+     * @hash bcrypt/sha1
+     * @since 3.3
+     * @return boolean
+     */
+    function osc_verify_password($password, $hash) {
+        if(version_compare(PHP_VERSION, '5.3.7')>=0) {
+            return password_verify($password, $hash)?true:(sha1($password)==$hash);
+        }
+
+        require_once LIB_PATH . 'Bcrypt.php';
+        if(CRYPT_BLOWFISH==1) {
+            $bcrypt = new Bcrypt(15);
+            return $bcrypt->verify($password, $hash)?true:(sha1($password)==$hash);
+        }
+        return (sha1($password)==$hash);
+    }
+
+    /*
+     * Hash a password in available method (bcrypt/sha1)
+     *
+     * @param $password plain-text
+     * @since 3.3
+     * @return string hashed password
+     */
+    function osc_hash_password($password) {
+        if(version_compare(PHP_VERSION, '5.3.7')>=0) {
+            $options = array('cost' => 15);
+            return password_hash($password, PASSWORD_BCRYPT, $options);
+        }
+
+        require_once LIB_PATH . 'Bcrypt.php';
+        if(CRYPT_BLOWFISH==1) {
+            $bcrypt = new Bcrypt(15);
+            return $bcrypt->hash($password);
+        }
+        return sha1($password);
+    }
+
 
 ?>

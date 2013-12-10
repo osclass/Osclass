@@ -428,17 +428,7 @@
          */
         public function countByUserID($userId)
         {
-            $this->dao->select('count(i.pk_i_id) as total');
-            $this->dao->from($this->getTableName().' i');
-            $this->dao->where('i.fk_i_user_id', $userId);
-            $this->dao->orderBy('i.pk_i_id', 'DESC');
-
-            $result = $this->dao->get();
-            if($result == false) {
-                return 0;
-            }
-            $total_ads = $result->row();
-            return $total_ads['total'];
+            return $this->countItemTypesByUserID($userId, 'all');
         }
 
         /**
@@ -543,21 +533,7 @@
          */
         public function countByUserIDEnabled($userId)
         {
-            $this->dao->select('count(i.pk_i_id) as total');
-            $this->dao->from($this->getTableName().' i');
-            $array_where = array(
-                'i.b_enabled'     => 1,
-                'i.fk_i_user_id'  => $userId
-            );
-            $this->dao->where($array_where);
-            $this->dao->orderBy('i.pk_i_id', 'DESC');
-
-            $result = $this->dao->get();
-            if($result == false) {
-                return array();
-            }
-            $items  = $result->row();
-            return $items['total'];
+            return $this->countItemTypesByUserID($userId, 'enabled');
         }
 
         /**
@@ -568,16 +544,26 @@
          * @param int $userId User id
          * @param int $start beginning from $start
          * @param int $end ending
-         * @param string $itemType type item(active, expired, pending validate, premium, all)
+         * @param string $itemType type item(active, expired, pending validate, premium, all, enabled, blocked)
          * @return array of items
          */
         public function findItemTypesByUserID($userId, $start = 0, $end = null, $itemType = false)
         {
             $this->dao->from($this->getTableName());
-            $this->dao->where('b_enabled', 1);
             $this->dao->where("fk_i_user_id = $userId");
 
+            if($itemType=='blocked') {
+                $this->dao->where('b_enabled', 0);
+            } elseif($itemType != 'all') {
+                $this->dao->where('b_enabled', 1);
+            }
+
             if($itemType == 'active') {
+                $this->dao->where('b_active', 1);
+                $this->dao->where('dt_expiration > \'' . date('Y-m-d H:i:s') . '\'');
+
+            } elseif($itemType == 'nospam') {
+                $this->dao->where('b_spam', 0);
                 $this->dao->where('b_active', 1);
                 $this->dao->where('dt_expiration > \'' . date('Y-m-d H:i:s') . '\'');
 
@@ -591,7 +577,7 @@
                 $this->dao->where('b_premium', 1);
             }
 
-            $this->dao->orderBy('pk_i_id', 'DESC');
+            $this->dao->orderBy('dt_pub_date', 'DESC');
             if($end!=null) {
                 $this->dao->limit($start, $end);
             } else if ($start > 0 ) {
@@ -607,23 +593,33 @@
         }
 
         /**
-         * Count enabled items according the type
+         * Count items by User Id according the type
          *
          * @access public
          * @since unknown
          * @param int $userId User id
-         * @param string $itemType (active, expired, pending validate, premium, all)
+         * @param string $itemType (active, expired, pending validate, premium, all, enabled, blocked)
          * @return int number of items
          */
-        public function countItemTypesByUserID($userId, $itemType = false)
+        public function countItemTypesByUserID($userId, $itemType = false, $cond = '')
         {
             $this->dao->select('count(pk_i_id) as total');
             $this->dao->from($this->getTableName());
-            $this->dao->where('b_enabled', 1);
             $this->dao->where("fk_i_user_id = $userId");
-            $this->dao->orderBy('pk_i_id', 'DESC');
+            //$this->dao->orderBy('pk_i_id', 'DESC');
+
+            if($itemType=='blocked') {
+                $this->dao->where('b_enabled', 0);
+            } elseif($itemType != 'all') {
+                $this->dao->where('b_enabled', 1);
+            }
 
             if($itemType == 'active') {
+                $this->dao->where('b_active', 1);
+                $this->dao->where("dt_expiration > '" . date('Y-m-d H:i:s') . "'");
+
+            } elseif($itemType == 'nospam') {
+                $this->dao->where('b_spam', 0);
                 $this->dao->where('b_active', 1);
                 $this->dao->where("dt_expiration > '" . date('Y-m-d H:i:s') . "'");
 
@@ -637,9 +633,66 @@
                 $this->dao->where('b_premium', 1);
             }
 
+            if ($cond != '') {
+                $this->dao->where($cond);
+            }
+
             $result = $this->dao->get();
             if($result == false) {
-                return array();
+                return 0;
+            }
+            $items  = $result->row();
+            return $items['total'];
+        }
+
+        /**
+         * Count items by Email according the type 
+         * Usefull for counting item that posted by unregistered user
+         * 
+         * @access public
+         * @since unknown
+         * @param int $email Email
+         * @param string $itemType (active, expired, pending validate, premium, all, enabled, blocked)
+         * @return int number of items
+         */
+        public function countItemTypesByEmail($email, $itemType = false, $cond = '')
+        {
+            $this->dao->select('count(pk_i_id) as total');
+            $this->dao->from($this->getTableName());
+            $this->dao->where("s_contact_email = '" . $email . "'");
+
+            if($itemType=='blocked') {
+                $this->dao->where('b_enabled', 0);
+            } elseif($itemType != 'all') {
+                $this->dao->where('b_enabled', 1);
+            }
+
+            if($itemType == 'active') {
+                $this->dao->where('b_active', 1);
+                $this->dao->where("dt_expiration > '" . date('Y-m-d H:i:s') . "'");
+
+            } elseif($itemType == 'nospam') {
+                $this->dao->where('b_spam', 0);
+                $this->dao->where('b_active', 1);
+                $this->dao->where("dt_expiration > '" . date('Y-m-d H:i:s') . "'");
+
+            } elseif($itemType == 'expired'){
+                $this->dao->where("dt_expiration <= '" . date('Y-m-d H:i:s') . "'");
+
+            } elseif($itemType == 'pending_validate'){
+                $this->dao->where('b_active', 0);
+
+            } elseif($itemType == 'premium'){
+                $this->dao->where('b_premium', 1);
+            }
+
+            if ($cond != '') {
+                $this->dao->where($cond);
+            }
+
+            $result = $this->dao->get();
+            if($result == false) {
+                return 0;
             }
             $items  = $result->row();
             return $items['total'];

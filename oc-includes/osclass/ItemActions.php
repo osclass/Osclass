@@ -97,27 +97,27 @@
             $title_message = '';
             foreach(@$aItem['title'] as $key => $value) {
 
-                if( osc_validate_text($value, 1) && osc_validate_max($value, 100) ) {
+                if( osc_validate_text($value, 1) && osc_validate_max($value, osc_max_characters_per_title()) ) {
                     $title_message = '';
                     break;
                 }
 
                 $title_message .=
-                    (!osc_validate_text($value, 1) ? _m("Title too short.") . PHP_EOL : '' ) .
-                    (!osc_validate_max($value, 100) ? _m("Title too long.") . PHP_EOL : '' );
+                    (!osc_validate_text($value, 1) ? sprintf(_m("Title too short (%s)."), $key) . PHP_EOL : '' ) .
+                    (!osc_validate_max($value, osc_max_characters_per_title()) ? sprintf(_m("Title too long (%s)."), $key) . PHP_EOL : '' );
             }
             $flash_error .= $title_message;
 
             $desc_message = '';
             foreach(@$aItem['description'] as $key => $value) {
-                if( osc_validate_text($value, 3) &&  osc_validate_max($value, 5000) )  {
+                if( osc_validate_text($value, 3) &&  osc_validate_max($value, osc_max_characters_per_description()) )  {
                     $desc_message = '';
                     break;
                 }
 
                 $desc_message .=
-                    (!osc_validate_text($value, 3) ? _m("Description too short.") . PHP_EOL : '' ) .
-                    (!osc_validate_max($value, 5000) ? _m("Description too long."). PHP_EOL : '' );
+                    (!osc_validate_text($value, 3) ? sprintf(_m("Description too short (%s)."), $key) . PHP_EOL : '' ) .
+                    (!osc_validate_max($value, osc_max_characters_per_description()) ? sprintf(_m("Description too long (%s)."), $key). PHP_EOL : '' );
             }
             $flash_error .= $desc_message;
 
@@ -223,7 +223,8 @@
                     's_city_area'       => $aItem['cityArea'],
                     's_address'         => $aItem['address'],
                     'd_coord_lat'       => $aItem['d_coord_lat'],
-                    'd_coord_long'      => $aItem['d_coord_long']
+                    'd_coord_long'      => $aItem['d_coord_long'],
+                    's_zip'             => $aItem['s_zip']
                 );
 
                 $locationManager = ItemLocation::newInstance();
@@ -309,27 +310,27 @@
             $title_message  = '';
             $td_message     = '';
             foreach(@$aItem['title'] as $key => $value) {
-                if( osc_validate_text($value, 1) && osc_validate_max($value, 100) ) {
+                if( osc_validate_text($value, 1) && osc_validate_max($value, osc_max_characters_per_title()) ) {
                     $td_message = '';
                     break;
                 }
 
                 $td_message .=
                     (!osc_validate_text($value, 1) ? _m("Title too short.") . PHP_EOL : '' ) .
-                    (!osc_validate_max($value, 100) ? _m("Title too long.") . PHP_EOL : '' );
+                    (!osc_validate_max($value, osc_max_characters_per_title()) ? _m("Title too long.") . PHP_EOL : '' );
             }
             $flash_error .= $td_message;
 
             $desc_message = '';
             foreach(@$aItem['description'] as $key => $value) {
-                if( osc_validate_text($value, 3) &&  osc_validate_max($value, 5000) )  {
+                if( osc_validate_text($value, 3) &&  osc_validate_max($value, osc_max_characters_per_description()) )  {
                     $desc_message = '';
                     break;
                 }
 
                 $desc_message .=
                     (!osc_validate_text($value, 3) ? _m("Description too short.") . PHP_EOL : '' ) .
-                    (!osc_validate_max($value, 5000) ? _m("Description too long."). PHP_EOL : '' );
+                    (!osc_validate_max($value, osc_max_characters_per_description()) ? _m("Description too long."). PHP_EOL : '' );
             }
             $flash_error .= $desc_message;
 
@@ -385,7 +386,8 @@
                     's_city_area'       => $aItem['cityArea'],
                     's_address'         => $aItem['address'],
                     'd_coord_lat'       => $aItem['d_coord_lat'],
-                    'd_coord_long'      => $aItem['d_coord_long']
+                    'd_coord_long'      => $aItem['d_coord_long'],
+                    's_zip'             => $aItem['s_zip']
                 );
 
                 $locationManager = ItemLocation::newInstance();
@@ -415,6 +417,7 @@
                     ,'fk_i_category_id'   => $aItem['catId']
                     ,'i_price'            => $aItem['price']
                     ,'fk_c_currency_code' => $aItem['currency']
+                    ,'b_show_email'       => $aItem['showEmail']
                 );
 
                 // only can change the user if you're an admin
@@ -422,6 +425,7 @@
                     $aUpdate['fk_i_user_id']    = $aItem['userId'];
                     $aUpdate['s_contact_name']  = $aItem['contactName'];
                     $aUpdate['s_contact_email'] = $aItem['contactEmail'];
+
                 } else {
                     $aUpdate['s_ip'] = $aItem['s_ip'];
                 }
@@ -748,6 +752,7 @@
             CountryStats::newInstance()->increaseNumItems($item['fk_c_country_code']);
             RegionStats::newInstance()->increaseNumItems($item['fk_i_region_id']);
             CityStats::newInstance()->increaseNumItems($item['fk_i_city_id']);
+            osc_run_hook('item_increase_stat',$item);
         }
 
         /**
@@ -765,6 +770,7 @@
             CountryStats::newInstance()->decreaseNumItems($item['fk_c_country_code']);
             RegionStats::newInstance()->decreaseNumItems($item['fk_i_region_id']);
             CityStats::newInstance()->decreaseNumItems($item['fk_i_city_id']);
+            osc_run_hook('item_decrease_stat',$item);
         }
 
         /**
@@ -784,7 +790,7 @@
                 Log::newInstance()->insertLog( 'item', 'delete', $itemId, $item['s_title'], $this->is_admin ? 'admin' : 'user', $this->is_admin ? osc_logged_admin_id() : osc_logged_user_id() );
                 $result = $this->manager->deleteByPrimaryKey( $itemId );
                 if($result!==false) {
-                    osc_run_hook('after_delete_item', $itemId);
+                    osc_run_hook('after_delete_item', $itemId, $item);
                 }
                 return $result;
             }
@@ -1072,7 +1078,7 @@
                 $userId = Session::newInstance()->_get('userId');
                 if( $userId == '' ) {
                     $userId = NULL;
-                } elseif ($userId != NULL) {  
+                } elseif ($userId != NULL) {
                     $data   = User::newInstance()->findByPrimaryKey( $userId );
                 }
             }
@@ -1139,9 +1145,25 @@
             $aItem['title']         = Params::getParam('title');
             $aItem['description']   = Params::getParam('description');
             $aItem['photos']        = Params::getFiles('photos');
+            $ajax_photos            = Params::getParam('ajax_photos');
             $aItem['s_ip']          = get_ip();
             $aItem['d_coord_lat']   = (Params::getParam('d_coord_lat')  != '') ? Params::getParam('d_coord_lat') : null;
             $aItem['d_coord_long']  = (Params::getParam('d_coord_long') != '') ? Params::getParam('d_coord_long') : null;
+            $aItem['s_zip']         = (Params::getParam('s_zip')  != '') ? Params::getParam('s_zip') : null;
+
+            // $ajax_photos is an array of filenames of the photos uploaded by ajax to a temporary folder
+            // fake insert them into the array of the form-uploaded photos
+            if(is_array($ajax_photos)) {
+                foreach($ajax_photos as $photo) {
+                    if(file_exists(osc_content_path().'uploads/temp/'.$photo)) {
+                        $aItem['photos']['name'][]      = $photo;
+                        $aItem['photos']['type'][]      = 'image/*';
+                        $aItem['photos']['tmp_name'][]  = osc_content_path().'uploads/temp/'.$photo;
+                        $aItem['photos']['error'][]     = UPLOAD_ERR_OK;
+                        $aItem['photos']['size'][]      = 0;
+                    }
+                }
+            }
 
             if($is_add || $this->is_admin) {
                 $dt_expiration = Params::getParam('dt_expiration');
@@ -1336,9 +1358,8 @@
         public function uploadItemResources($aResources,$itemId)
         {
             if($aResources != '') {
-                $wat = new Watermark();
-
                 $itemResourceManager = ItemResource::newInstance();
+                $folder = osc_uploads_path().(floor($itemId/100))."/";
 
                 $numImagesItems = osc_max_images_per_item();
                 $numImages = $itemResourceManager->countResources($itemId);
@@ -1347,32 +1368,29 @@
                         if ($error == UPLOAD_ERR_OK) {
                             $tmpName = $aResources['tmp_name'][$key];
                             $imgres = ImageResizer::fromFile($tmpName);
-                            $extension = $imgres->getExt();
-                            $mime = $imgres->getMime();
-
-
-                            $total_size = 0;
+                            $extension = osc_apply_filter('upload_image_extension', $imgres->getExt());
+                            $mime = osc_apply_filter('upload_image_mime', $imgres->getMime());
 
                             // Create normal size
                             $normal_path = $path = $tmpName."_normal";
                             $size = explode('x', osc_normal_dimensions());
-                            ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($path);
-
+                            $img = ImageResizer::fromFile($tmpName)->autoRotate()->resizeTo($size[0], $size[1]);
                             if( osc_is_watermark_text() ) {
-                                $wat->doWatermarkText( $path , osc_watermark_text_color(), osc_watermark_text() , $mime);
+                                $img->doWatermarkText(osc_watermark_text(), osc_watermark_text_color());
                             } else if ( osc_is_watermark_image() ){
-                                $wat->doWatermarkImage( $path, $mime);
+                                $img->doWatermarkImage();
                             }
+                            $img->saveToFile($path, $extension);
 
                             // Create preview
                             $path = $tmpName."_preview";
                             $size = explode('x', osc_preview_dimensions());
-                            ImageResizer::fromFile($normal_path)->resizeTo($size[0], $size[1])->saveToFile($path);
+                            ImageResizer::fromFile($normal_path)->resizeTo($size[0], $size[1])->saveToFile($path, $extension);
 
                             // Create thumbnail
                             $path = $tmpName."_thumbnail";
                             $size = explode('x', osc_thumbnail_dimensions());
-                            ImageResizer::fromFile($normal_path)->resizeTo($size[0], $size[1])->saveToFile($path);
+                            ImageResizer::fromFile($normal_path)->resizeTo($size[0], $size[1])->saveToFile($path, $extension);
 
                             $numImages++;
 
@@ -1380,15 +1398,25 @@
                                 'fk_i_item_id' => $itemId
                             ));
                             $resourceId = $itemResourceManager->dao->insertedId();
-                            osc_copy($tmpName.'_normal', osc_uploads_path() . $resourceId . '.'.$extension);
-                            osc_copy($tmpName.'_preview', osc_uploads_path() . $resourceId . '_preview.'.$extension);
-                            osc_copy($tmpName.'_thumbnail', osc_uploads_path() . $resourceId . '_thumbnail.'.$extension);
-                            if( osc_keep_original_image() ) {
-                                $path = osc_uploads_path() . $resourceId.'_original.'.$extension;
-                                move_uploaded_file($tmpName, $path);
-                            }
 
-                            $s_path = str_replace(osc_base_path(), '', osc_uploads_path());
+                            if(!is_dir($folder)) {
+                                if (!@mkdir($folder, 0755, true)) {
+                                    return 3; // PATH CAN NOT BE CREATED
+                                }
+                            }
+                            osc_copy($tmpName.'_normal', $folder.$resourceId.'.'.$extension);
+                            osc_copy($tmpName.'_preview', $folder.$resourceId.'_preview.'.$extension);
+                            osc_copy($tmpName.'_thumbnail', $folder.$resourceId.'_thumbnail.'.$extension);
+                            if( osc_keep_original_image() ) {
+                                $path = $folder.$resourceId.'_original.'.$extension;
+                                osc_copy($tmpName, $path);
+                            }
+                            @unlink($tmpName."_normal");
+                            @unlink($tmpName."_preview");
+                            @unlink($tmpName."_thumbnail");
+                            @unlink($tmpName);
+
+                            $s_path = str_replace(osc_base_path(), '', $folder);
                             $itemResourceManager->update(
                                 array(
                                     's_path'          => $s_path

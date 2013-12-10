@@ -41,8 +41,8 @@
             $email,
             $validation_link
         );
-        $title = osc_mailBeauty($_title, $words);
-        $body  = osc_mailBeauty($_body , $words);
+        $title = osc_apply_filter('email_alert_validation_title_after', osc_mailBeauty($_title, $words));
+        $body  = osc_apply_filter('email_alert_validation_description_after', osc_mailBeauty($_body , $words));
 
         $params = array(
             'subject'  => $title,
@@ -87,8 +87,8 @@
             $ads,
             $unsub_link
         );
-        $title = osc_mailBeauty($_title, $words);
-        $body  = osc_mailBeauty($_body, $words);
+        $title = osc_apply_filter('alert_email_hourly_title_after', osc_mailBeauty($_title, $words));
+        $body  = osc_apply_filter('alert_email_hourly_description_after', osc_mailBeauty($_body, $words));
 
         $params = array(
             'subject'  => $title,
@@ -133,8 +133,8 @@
             $ads,
             $unsub_link
         );
-        $title = osc_mailBeauty($_title, $words);
-        $body  = osc_mailBeauty($_body, $words);
+        $title = osc_apply_filter('alert_email_daily_title_after', osc_mailBeauty($_title, $words));
+        $body  = osc_apply_filter('alert_email_daily_description_after', osc_mailBeauty($_body, $words));
 
         $params = array(
             'subject'  => $title,
@@ -179,8 +179,8 @@
             $ads,
             $unsub_link
         );
-        $title = osc_mailBeauty($_title, $words);
-        $body  = osc_mailBeauty($_body, $words);
+        $title = osc_apply_filter('alert_email_weekly_title_after', osc_mailBeauty($_title, $words));
+        $body  = osc_apply_filter('alert_email_weekly_description_after', osc_mailBeauty($_body, $words));
 
         $params = array(
             'subject'  => $title,
@@ -225,8 +225,8 @@
             $ads,
             $unsub_link
         );
-        $title = osc_mailBeauty($_title, $words);
-        $body  = osc_mailBeauty($_body, $words);
+        $title = osc_apply_filter('alert_email_instant_title_after', osc_mailBeauty($_title, $words));
+        $body  = osc_apply_filter('alert_email_instant_description_after', osc_mailBeauty($_body, $words));
 
         $params = array(
             'subject'  => $title,
@@ -273,8 +273,8 @@
                 '<a href="' . osc_item_url() . '">' . osc_item_url() . '</a>',
                 osc_item_title()
             );
-            $title = osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_comment_validated_title', $content['s_title'])), $words);
-            $body = osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_comment_validated_description', $content['s_text'])), $words);
+            $title = osc_apply_filter('email_comment_validated_title_after', osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_comment_validated_title', $content['s_title'])), $words));
+            $body = osc_apply_filter('email_comment_validated_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_comment_validated_description', $content['s_text'])), $words));
 
             $emailParams = array(
                 'subject'  => $title,
@@ -331,8 +331,8 @@
             '<a href="' . $delete_url . '">' . $delete_url . '</a>',
             $delete_url
         );
-        $title   = osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_new_item_non_register_user_title', $content['s_title'])), $words);
-        $body    = osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_new_item_non_register_user_description', $content['s_text'])), $words);
+        $title   = osc_apply_filter('email_new_item_non_register_user_title_after', osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_new_item_non_register_user_title', $content['s_title'])), $words));
+        $body    = osc_apply_filter('email_new_item_non_register_user_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_new_item_non_register_user_description', $content['s_text'])), $words));
 
         $emailParams = array(
             'subject'  => $title,
@@ -374,8 +374,8 @@
                 $password_url,
                 date('Y-m-d H:i:') . '00'
             );
-            $title = osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_user_forgot_pass_word_title',$content['s_title'])), $words);
-            $body = osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_user_forgot_password_description', $content['s_text'])), $words);
+            $title = osc_apply_filter('email_user_forgot_pass_word_title_after', osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_user_forgot_pass_word_title', $content['s_title'])), $words));
+            $body = osc_apply_filter('email_user_forgot_password_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_user_forgot_password_description', $content['s_text'])), $words));
 
             $emailParams = array(
                 'subject'  => $title,
@@ -413,8 +413,8 @@
                 $user['s_name'],
                 $user['s_email']
             );
-            $title = osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_user_registration_title', $content['s_title'])), $words);
-            $body = osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_user_regsitration_description', $content['s_text'])), $words);
+            $title = osc_apply_filter('email_user_registration_title_after', osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_user_registration_title', $content['s_title'])), $words));
+            $body = osc_apply_filter('email_user_regsitration_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_user_regsitration_description', $content['s_text'])), $words));
 
             $emailParams = array(
                 'subject'  => $title,
@@ -455,8 +455,8 @@
                 '<a href="' . $validation_url . '" >' . $validation_url . '</a>',
                 $validation_url
             );
-            $title = osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_new_email_title', $content['s_title'])), $words);
-            $body = osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_new_email_description', $content['s_text'])), $words);
+            $title = osc_apply_filter('email_new_email_title_after', osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_new_email_title', $content['s_title'])), $words));
+            $body = osc_apply_filter('email_new_email_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_new_email_description', $content['s_text'])), $words));
 
             $params = array(
                 'subject'  => $title,
@@ -501,8 +501,8 @@
                 '<a href="' . $validation_url . '" >' . $validation_url . '</a>',
                 $validation_url
             );
-            $title = osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_user_validation_title', $content['s_title'])), $words);
-            $body = osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_user_validation_description', $content['s_text'])), $words);
+            $title = osc_apply_filter('email_user_validation_title_after', osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_user_validation_title', $content['s_title'])), $words));
+            $body = osc_apply_filter('email_user_validation_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_user_validation_description', $content['s_text'])), $words));
 
             $emailParams = array(
                 'subject'  => $title,
@@ -554,8 +554,8 @@
             $item_url
         );
 
-        $title = osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_send_friend_title', $content['s_title'])), $words);
-        $body  = osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_send_friend_description', $content['s_text'])), $words);
+        $title = osc_apply_filter('email_send_friend_title_after', osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_send_friend_title', $content['s_title'])), $words));
+        $body  = osc_apply_filter('email_send_friend_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_send_friend_description', $content['s_text'])), $words));
 
         $params = array(
             'from'      => osc_contact_email(),
@@ -624,8 +624,8 @@
             $message
         );
 
-        $title = osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_item_inquiry_title', $content['s_title'])), $words);
-        $body  = osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_item_inquiry_description', $content['s_text'])), $words);
+        $title = osc_apply_filter('email_item_inquiry_title_after', osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_item_inquiry_title', $content['s_title'])), $words));
+        $body  = osc_apply_filter('email_item_inquiry_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_item_inquiry_description', $content['s_text'])), $words));
 
         $from      = osc_contact_email();
         $from_name = osc_page_title();
@@ -719,8 +719,8 @@
             osc_item_url(),
             $itemURL
         );
-        $title_email = osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_new_comment_admin_title', $content['s_title'])), $words);
-        $body_email = osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_new_comment_admin_description', $content['s_text'])), $words);
+        $title_email = osc_apply_filter('email_new_comment_admin_title_after', osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_new_comment_admin_title', $content['s_title'])), $words));
+        $body_email = osc_apply_filter('email_new_comment_admin_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_new_comment_admin_description', $content['s_text'])), $words));
 
         $emailParams = array(
             'from'      => osc_contact_email(),
@@ -807,8 +807,8 @@
             '<a href="' . $validation_url . '" >' . $validation_url . '</a>',
             $validation_url
         );
-        $title = osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_item_validation_title', $content['s_title'])), $words);
-        $body = osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_item_validation_description', $content['s_text'])), $words);
+        $title = osc_apply_filter('email_item_validation_title_after', osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_item_validation_title', $content['s_title'])), $words));
+        $body = osc_apply_filter('email_item_validation_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_item_validation_description', $content['s_text'])), $words));
 
         $emailParams =  array (
             'subject'  => $title,
@@ -900,8 +900,8 @@
             '<a href="' . $validation_url . '" >' . $validation_url . '</a>',
             $validation_url
         );
-        $title = osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_admin_new_item_title', $content['s_title'])), $words);
-        $body  = osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_admin_new_item_description', $content['s_text'])), $words);
+        $title = osc_apply_filter('email_admin_new_item_title_after', osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_admin_new_item_title', $content['s_title'])), $words));
+        $body  = osc_apply_filter('email_admin_new_item_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_admin_new_item_description', $content['s_text'])), $words));
 
         $emailParams = array(
             'subject'  => $title,
@@ -996,8 +996,8 @@
             '<a href="' . $delete_url . '">' . $delete_url . '</a>',
             $delete_url
         );
-        $title = osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_item_validation_non_register_user_title', $content['s_title'])), $words);
-        $body = osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_item_validation_non_register_user_description', $content['s_text'])), $words);
+        $title = osc_apply_filter('email_item_validation_non_register_user_title_after', osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_item_validation_non_register_user_title', $content['s_title'])), $words));
+        $body = osc_apply_filter('email_item_validation_non_register_user_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_item_validation_non_register_user_description', $content['s_text'])), $words));
 
         $emailParams = array(
             'subject'  => $title,
@@ -1034,8 +1034,8 @@
                 $user['s_name'],
                 $user['s_email']
             );
-            $title = osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_user_registration_title', $content['s_title'])), $words);
-            $body  = osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_user_regsitration_description', $content['s_text'])), $words);
+            $title = osc_apply_filter('email_admin_user_registration_title_after', osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_admin_user_registration_title', $content['s_title'])), $words));
+            $body  = osc_apply_filter('email_admin_user_regsitration_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_admin_user_regsitration_description', $content['s_text'])), $words));
 
             $emailParams = array(
                 'subject'  => $title,
@@ -1078,8 +1078,8 @@
             $message
         );
 
-        $title = osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_item_inquiry_title', $content['s_title'])), $words);
-        $body = osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_item_inquiry_description', $content['s_text'])), $words);
+        $title = osc_apply_filter('email_item_inquiry_title_after', osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_item_inquiry_title', $content['s_title'])), $words));
+        $body = osc_apply_filter('email_item_inquiry_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_item_inquiry_description', $content['s_text'])), $words));
 
         $emailParams = array (
             'from'      => osc_contact_email(),
@@ -1152,8 +1152,8 @@
             $item['s_contact_name'],
             $item['s_contact_email']
         );
-        $title_email = osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_new_comment_user_title', $content['s_title'])), $words);
-        $body_email = osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_new_comment_user_description', $content['s_text'])), $words);
+        $title_email = osc_apply_filter('email_new_comment_user_title_after', osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_new_comment_user_title', $content['s_title'])), $words));
+        $body_email = osc_apply_filter('email_new_comment_user_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_new_comment_user_description', $content['s_text'])), $words));
 
         $emailParams = array(
             'from'      => $admin_email,
@@ -1198,8 +1198,8 @@
             $data['s_password'],
             '<a href="' . osc_admin_base_url() . '">' . osc_page_title() . '</a>',
         );
-        $title_email = osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_new_admin_title', $content['s_title'])), $words);
-        $body_email  = osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_new_admin_description', $content['s_text'])), $words);
+        $title_email = osc_apply_filter('email_new_admin_title_after', osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_new_admin_title', $content['s_title'])), $words));
+        $body_email  = osc_apply_filter('email_new_admin_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_new_admin_description', $content['s_text'])), $words));
 
         $emailParams = array(
             'from'      => osc_contact_email(),
@@ -1254,8 +1254,8 @@
             $aItem['s_contact_name'],
             $aItem['s_contact_email']
         );
-        $title_email = osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_warn_expiration_title', $content['s_title'])), $words);
-        $body_email = osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_warn_expiration_description', $content['s_text'])), $words);
+        $title_email = osc_apply_filter('email_warn_expiration_title_after', osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_warn_expiration_title', $content['s_title'])), $words));
+        $body_email = osc_apply_filter('email_warn_expiration_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_warn_expiration_description', $content['s_text'])), $words));
 
         $emailParams = array(
             'from'      => $admin_email,
@@ -1269,5 +1269,49 @@
     }
     osc_add_hook('hook_email_warn_expiration', 'fn_email_warn_expiration');
 
-    /* file end: ./oc-includes/osclass/emails.php */
+    function fn_email_auto_upgrade($result) {
+
+
+        $body = __('<p>Dear {WEB_TITLE} admin,</p>');
+        if($result['error']==0 || $result['error']==6) {
+            $title = __('{WEB_TITLE} - Your site has upgraded to Osclass {VERSION}');
+            $body .= __('<p>Your site at {WEB_LINK} has been updated automatically to Osclass {VERSION}</p>');
+            if($result['error']==6) {
+                $body .= __('<p>There were some minor errors removing temporary files. Please manually remove the "oc-content/downloads/oc-temp" folder</p>');
+            }
+        } else {
+            $title = __('{WEB_TITLE} - We failed trying to upgrade your site to Osclass {VERSION}');
+            $body .= '<p>We failed trying to upgrade your site to Osclass {VERSION}. Heres is the error message: {MESSAGE}</p>';
+        }
+        $body .= '<p>If you experience any issues or need support, we will be happy to help you at the Osclass support forums</p>';
+        $body .= '<p><a href="http://forums.osclass.org/">http://forums.osclass.org/</a></p>';
+        $body .= '<p>The Osclass team</p>';
+
+
+        $words   = array();
+        $words[] = array(
+            '{MESSAGE}',
+            '{VERSION}'
+        );
+        $words[] = array(
+            $result['message'],
+            $result['version']
+        );
+
+        $title = osc_apply_filter('email_after_auto_upgrade_title_after', osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_after_auto_upgrade_title', $title)), $words));
+        $body = osc_apply_filter('email_after_auto_upgrade_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_after_auto_upgrade_description', $body)), $words));
+
+        $emailParams = array(
+            'subject'  => $title,
+            'from'     => osc_contact_email(),
+            'to'       => osc_contact_email(),
+            'to_name'  => osc_page_title(),
+            'body'     => $body,
+            'alt_body' => $body,
+        );
+        osc_sendMail($emailParams);
+    }
+    osc_add_hook('after_auto_upgrade', 'fn_email_auto_upgrade', 10);
+
+/* file end: ./oc-includes/osclass/emails.php */
 ?>

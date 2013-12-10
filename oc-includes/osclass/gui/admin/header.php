@@ -5,10 +5,13 @@
     .theme-files { min-width: 500px; }
 </style>
 <h2 class="render-title"><?php _e('Header logo', 'bender'); ?></h2>
-<?php if( is_writable( WebThemes::newInstance()->getCurrentThemePath() . "images/") ) { ?>
-    <?php if(file_exists( WebThemes::newInstance()->getCurrentThemePath() . "images/logo.jpg" ) ) { ?>
+<?php
+    $logo_prefence = osc_get_preference('logo', 'bender_theme');
+?>
+<?php if( is_writable( osc_uploads_path()) ) { ?>
+    <?php if($logo_prefence) { ?>
         <h3 class="render-title"><?php _e('Preview', 'bender') ?></h3>
-        <img border="0" alt="<?php echo osc_esc_html( osc_page_title() ); ?>" src="<?php echo osc_current_web_theme_url('images/logo.jpg');?>" />
+        <img border="0" alt="<?php echo osc_esc_html( osc_page_title() ); ?>" src="<?php echo bender_logo_url();?>" />
         <form action="<?php echo osc_admin_render_theme_url('oc-content/themes/bender/admin/header.php');?>" method="post" enctype="multipart/form-data" class="nocsrf">
             <input type="hidden" name="action_specific" value="remove" />
             <fieldset>
@@ -28,8 +31,8 @@
     <h2 class="render-title separate-top"><?php _e('Upload logo', 'bender') ?></h2>
     <p>
         <?php _e('The preferred size of the logo is 600x100.', 'bender'); ?>
-        <?php if( file_exists( WebThemes::newInstance()->getCurrentThemePath() . "images/logo.jpg" ) ) { ?>
-        <?php _e('<strong>Note:</strong> Uploading another logo will overwrite the current logo.', 'bender'); ?>
+        <?php if( $logo_prefence ) { ?>
+        <div class="flashmessage flashmessage-inline flashmessage-warning"><?php _e('<strong>Note:</strong> Uploading another logo will overwrite the current logo.', 'bender'); ?></div>
         <?php } ?>
     </p>
     <form action="<?php echo osc_admin_render_theme_url('oc-content/themes/bender/admin/header.php'); ?>" method="post" enctype="multipart/form-data" class="nocsrf">

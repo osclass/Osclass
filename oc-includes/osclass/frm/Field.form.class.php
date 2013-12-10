@@ -1,10 +1,10 @@
 <?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /*
-     *      Osclass – software for creating and publishing online classified
+     *      OSClass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2012 OSCLASS
+     *                        Copyright (C) 2013 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -27,14 +27,13 @@
         <script text="text/javascript">
 
             $.datepicker.regional['custom'] = { // Default regional settings
-		closeText: '<?php _e('Done'); ?>', // Display text for close link
-		prevText: '<?php _e('Prev'); ?>', // Display text for previous month link
-		nextText: '<?php _e('Next'); ?>', // Display text for next month link
-		currentText: '<?php _e('Today'); ?>', // Display text for current month link
-		monthNames: ['<?php _e('January'); ?>','<?php _e('February'); ?>','<?php _e('March'); ?>','<?php _e('April'); ?>','<?php _e('May'); ?>','<?php _e('June'); ?>',
-			'<?php _e('July'); ?>','<?php _e('August'); ?>','<?php _e('September'); ?>','<?php _e('October'); ?>','<?php _e('November'); ?>','<?php _e('December'); ?>'], // Names of months for drop-down and formatting
+		closeText: '<?php echo osc_esc_js ( __('Done') ); ?>', // Display text for close link
+		prevText: '<?php echo osc_esc_js ( __('Prev') ); ?>', // Display text for previous month link
+		nextText: '<?php echo osc_esc_js ( __('Next') ); ?>', // Display text for next month link
+		currentText: '<?php echo osc_esc_js ( __('Today') ); ?>', // Display text for current month link
+		monthNames: ['<?php echo osc_esc_js ( __('January') ); ?>','<?php echo osc_esc_js ( __('February') ); ?>','<?php echo osc_esc_js ( __('March') ); ?>','<?php echo osc_esc_js ( __('April') ); ?>','<?php echo osc_esc_js ( __('May') ); ?>','<?php echo osc_esc_js ( __('June') ); ?>','<?php echo osc_esc_js ( __('July') ); ?>','<?php echo osc_esc_js ( __('August') ); ?>','<?php echo osc_esc_js ( __('September') ); ?>','<?php echo osc_esc_js ( __('October') ); ?>','<?php echo osc_esc_js ( __('November') ); ?>','<?php echo osc_esc_js ( __('December') ); ?>'], // Names of months for drop-down and formatting
 		monthNamesShort: ['<?php _e('Jan'); ?>', '<?php _e('Feb'); ?>', '<?php _e('Mar'); ?>', '<?php _e('Apr'); ?>', '<?php _e('May'); ?>', '<?php _e('Jun'); ?>', '<?php _e('Jul'); ?>', '<?php _e('Aug'); ?>', '<?php _e('Sep'); ?>', '<?php _e('Oct'); ?>', '<?php _e('Nov'); ?>', '<?php _e('Dec'); ?>'], // For formatting
-		dayNames: ['<?php _e('Sunday'); ?>', '<?php _e('Monday'); ?>', '<?php _e('Tuesday'); ?>', '<?php _e('Wednesday'); ?>', '<?php _e('Thursday'); ?>', '<?php _e('Friday'); ?>', '<?php _e('Saturday'); ?>'], // For formatting
+		dayNames: ['<?php echo osc_esc_js ( __('Sunday') ); ?>', '<?php echo osc_esc_js ( __('Monday') ); ?>', '<?php echo osc_esc_js ( __('Tuesday') ); ?>', '<?php echo osc_esc_js ( __('Wednesday') ); ?>', '<?php echo osc_esc_js ( __('Thursday') ); ?>', '<?php echo osc_esc_js ( __('Friday') ); ?>', '<?php echo osc_esc_js ( __('Saturday') ); ?>'], // For formatting
 		dayNamesShort: ['<?php _e('Sun'); ?>', '<?php _e('Mon'); ?>', '<?php _e('Tue'); ?>', '<?php _e('Wed'); ?>', '<?php _e('Thu'); ?>', '<?php _e('Fri'); ?>', '<?php _e('Sat'); ?>'], // For formatting
 		dayNamesMin: ['<?php _e('Su'); ?>','<?php _e('Mo'); ?>','<?php _e('Tu'); ?>','<?php _e('We'); ?>','<?php _e('Th'); ?>','<?php _e('Fr'); ?>','<?php _e('Sa'); ?>'], // Column headings for days starting at Sunday
 		weekHeader: '<?php _e('Wk'); ?>', // Column header for week of the year
@@ -124,14 +123,14 @@ FB;
         static public function type_select($field = null) {
             ?>
             <select name="field_type" id="field_type">
-                <option value="TEXT" <?php if($field['e_type']=="TEXT") { echo 'selected="selected"';};?>>TEXT</option>
-                <option value="TEXTAREA" <?php if($field['e_type']=="TEXTAREA") { echo 'selected="selected"';};?>>TEXTAREA</option>
-                <option value="DROPDOWN" <?php if($field['e_type']=="DROPDOWN") { echo 'selected="selected"';};?>>DROPDOWN</option>
-                <option value="RADIO" <?php if($field['e_type']=="RADIO") { echo 'selected="selected"';};?>>RADIO</option>
-                <option value="CHECKBOX" <?php if($field['e_type']=="CHECKBOX") { echo 'selected="selected"';};?>>CHECKBOX</option>
-                <option value="URL" <?php if($field['e_type']=="URL") { echo 'selected="selected"';};?>>URL</option>
-                <option value="DATE" <?php if($field['e_type']=="DATE") { echo 'selected="selected"';};?>>DATE</option>
-                <option value="DATEINTERVAL" <?php if($field['e_type']=="DATEINTERVAL") { echo 'selected="selected"';};?>>DATE INTERVAL</option>
+                <option value="TEXT" <?php if($field['e_type']=="TEXT") { echo 'selected="selected"';};?>><?php _e('TEXT'); ?></option>
+                <option value="TEXTAREA" <?php if($field['e_type']=="TEXTAREA") { echo 'selected="selected"';};?>><?php _e('TEXTAREA'); ?></option>
+                <option value="DROPDOWN" <?php if($field['e_type']=="DROPDOWN") { echo 'selected="selected"';};?>><?php _e('DROPDOWN'); ?></option>
+                <option value="RADIO" <?php if($field['e_type']=="RADIO") { echo 'selected="selected"';};?>><?php _e('RADIO'); ?></option>
+                <option value="CHECKBOX" <?php if($field['e_type']=="CHECKBOX") { echo 'selected="selected"';};?>><?php _e('CHECKBOX'); ?></option>
+                <option value="URL" <?php if($field['e_type']=="URL") { echo 'selected="selected"';};?>><?php _e('URL'); ?></option>
+                <option value="DATE" <?php if($field['e_type']=="DATE") { echo 'selected="selected"';};?>><?php _e('DATE'); ?></option>
+                <option value="DATEINTERVAL" <?php if($field['e_type']=="DATEINTERVAL") { echo 'selected="selected"';};?>><?php _e('DATE INTERVAL'); ?></option>
             </select>
             <?php
             return true;
@@ -207,7 +206,7 @@ FB;
                                 echo '<select name="meta['.$field['pk_i_id'].']" id="meta_' . $field['s_slug'] . '">';
                                 echo '<option value=""></option>';
                                 foreach($options as $option) {
-                                    echo '<option value="'.osc_esc_html($option).'" '.($field['s_value']==$option?'selected="selected"':'').'>'.$option.'</option>';
+                                    echo '<option value="'.osc_esc_html($option).'"'.($field['s_value']==$option?' selected="selected"':'').'>'.$option.'</option>';
                                 }
                                 echo '</select>';
                             }
@@ -219,7 +218,7 @@ FB;
                             if(count($options)>0) {
                                 echo '<ul>';
                                 foreach($options as $key => $option) {
-                                    echo '<li><input type="radio" name="meta['.$field['pk_i_id'].']" id="meta_' . $field['s_slug'] . '_'.$key.'" value="'.osc_esc_html($option).'" '.($field['s_value']==$option?'checked="checked"':'').' /><label for="meta_' . $field['s_slug'] . '_'.$key.'">'.$option.'</label></li>';
+                                    echo '<li><input type="radio" name="meta['.$field['pk_i_id'].']" id="meta_' . $field['s_slug'] . '_'.$key.'" value="'.osc_esc_html($option).'"'.($field['s_value']==$option?' checked="checked"':'').' /><label for="meta_' . $field['s_slug'] . '_'.$key.'">'.$option.'</label></li>';
                                 }
                                 echo '</ul>';
                             }
@@ -227,7 +226,7 @@ FB;
                     }
                 } else if($field['e_type']=="CHECKBOX") {
                     if(isset($field) && isset($field['s_options'])) {
-                        echo '<input type="checkbox" name="meta['.$field['pk_i_id'].']" id="meta_' . $field['s_slug'] .'" value="1" '.((isset($field) && isset($field['s_value']) && $field['s_value']==1)?'checked="checked"':'').' />';
+                        echo '<input type="checkbox" name="meta['.$field['pk_i_id'].']" id="meta_' . $field['s_slug'] .'" value="1"'.((isset($field) && isset($field['s_value']) && $field['s_value']==1)?' checked="checked"':'').' />';
                         echo '<label for="meta_'.$field['s_slug'].'">'. $field['s_name'].' </label>';
                     }
                 } else if($field['e_type']=="DATE") {
@@ -237,8 +236,8 @@ FB;
                         echo '<label for="meta_'.$field['s_slug'].'">'.$field['s_name'].': </label>';
                     }
                     // timestamp/1000 (javascript timestamp)
-                    echo '<input type="hidden" id="meta_'.$field['s_slug'].'" name="meta['.$field['pk_i_id'].']" value=""/>';
-                    echo '<input type="text" id="" class="meta_'.$field['s_slug'].' cf_date" value=""/>';
+                    echo '<input type="hidden" id="meta_'.$field['s_slug'].'" name="meta['.$field['pk_i_id'].']" value="" />';
+                    echo '<input type="text" id="" class="meta_'.$field['s_slug'].' cf_date" value="" />';
                     FieldForm::initDatePicker('meta_'.$field['s_slug'], osc_date_format(), $field['s_value']);
 
                 } else if($field['e_type']=="DATEINTERVAL") {
@@ -249,13 +248,13 @@ FB;
                     }
 
                     echo __('from'). ' ';
-                    echo '<input type="hidden" id="meta_'.$field['s_slug'].'_from" name="meta['.$field['pk_i_id'].'][from]" value="'.$field['s_value']['from'].'"/>';
-                    echo '<input type="text" id="" class="meta_'.$field['s_slug'].'_from cf_date_interval" value=""/>';
+                    echo '<input type="hidden" id="meta_'.$field['s_slug'].'_from" name="meta['.$field['pk_i_id'].'][from]" value="'.$field['s_value']['from'].'" />';
+                    echo '<input type="text" id="" class="meta_'.$field['s_slug'].'_from cf_date_interval" value="" />';
                     FieldForm::initDatePicker('meta_'.$field['s_slug'].'_from', osc_date_format(), $field['s_value']['from'], 'from');
 
                     echo ' ' . __('to'). ' ';
-                    echo '<input type="hidden" id="meta_'.$field['s_slug'].'_to" name="meta['.$field['pk_i_id'].'][to]" value="'.$field['s_value']['to'].'"/>';
-                    echo '<input type="text" id="" class="meta_'.$field['s_slug'].'_to cf_date_interval" value=""/>';
+                    echo '<input type="hidden" id="meta_'.$field['s_slug'].'_to" name="meta['.$field['pk_i_id'].'][to]" value="'.$field['s_value']['to'].'" />';
+                    echo '<input type="text" id="" class="meta_'.$field['s_slug'].'_to cf_date_interval" value="" />';
                     FieldForm::initDatePicker('meta_'.$field['s_slug'].'_to', osc_date_format(), $field['s_value']['to'], 'to');
 
                 } else {
@@ -264,8 +263,7 @@ FB;
                     } else {
                         echo '<label for="meta_'.$field['s_slug'].'">'.$field['s_name'].': </label>';
                     }
-                    echo '<input id="meta_'.$field['s_slug'].'" type="text" name="meta['.$field['pk_i_id'].']" value="' . osc_esc_html((isset($field) && isset($field["s_value"])) ? $field["s_value"] : "") . '" ';
-                    echo '/>';
+                    echo '<input id="meta_'.$field['s_slug'].'" type="text" name="meta['.$field['pk_i_id'].']" value="' . osc_esc_html((isset($field) && isset($field["s_value"])) ? $field["s_value"] : "") . '" />';
                 }
             }
         }

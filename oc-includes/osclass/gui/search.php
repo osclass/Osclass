@@ -146,7 +146,7 @@
           <?php } ?>
         </ul>
       </div>
-      <?php } 
+      <?php }
       } ?>
      <div class="paginate" >
           <?php echo osc_search_pagination(); ?>

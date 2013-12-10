@@ -19,9 +19,18 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
-    function osc_runAlert($type = null) {
+    function osc_runAlert($type = null, $last_exec = null) {
         if ( !in_array($type, array('HOURLY', 'DAILY', 'WEEKLY', 'INSTANT')) ) {
             return;
+        }
+
+        if($last_exec==null) {
+            $cron = Cron::newInstance()->getCronByType($type);
+            if( is_array($cron) ) {
+                $last_exec = $cron['d_last_exec'];
+            } else {
+                $last_exec = '0000-00-00 00:00:00';
+            }
         }
 
         $internal_name = 'alert_email_hourly';
@@ -42,6 +51,8 @@
 
         $active   = TRUE;
         $searches = Alerts::newInstance()->findByType($type, $active);
+
+
         foreach($searches as $s_search) {
             // Get if there're new ads on this search
             $json             = base64_decode($s_search['s_search']);
@@ -49,13 +60,6 @@
 
             $new_search = Search::newInstance();
             $new_search->setJsonAlert($array_conditions);
-
-            $cron = Cron::newInstance()->getCronByType($type);
-            if( is_array($cron) ) {
-                $last_exec = $cron['d_last_exec'];
-            } else {
-                $last_exec = '0000-00-00 00:00:00';
-            }
 
             $new_search->addConditions(sprintf(" %st_item.dt_pub_date > '%s' ", DB_TABLE_PREFIX, $last_exec));
 

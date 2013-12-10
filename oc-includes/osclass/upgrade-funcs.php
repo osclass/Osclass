@@ -441,18 +441,33 @@ CREATE TABLE %st_item_description_tmp (
     }
 
     if(osc_version() < 321) {
-        osc_calculate_location_slug(osc_subdomain_type());
+        if(function_exists('osc_calculate_location_slug')) {
+            osc_calculate_location_slug(osc_subdomain_type());
+        }
     }
 
-    osc_changeVersionTo(322);
-
-    echo '<div class="well ui-rounded-corners separate-top-medium">';
-    echo '<p>'.__('Osclass &raquo; Updated correctly').'</p>';
-    echo '<p>'.__('Osclass has been updated successfully. <a href="http://forums.osclass.org/">Need more help?</a>').'</p>';
-    foreach($aMessages as $msg) {
-        echo "<p>".$msg."</p>";
+    if(osc_version() < 330) {
+        @mkdir(osc_content_path().'uploads/temp/');
+        @mkdir(osc_content_path().'downloads/oc-temp/', 0777);
+        @unlink(osc_lib_path() . 'osclass/classes/Watermark.php');
+        osc_set_preference('title_character_length', '100', 'INTEGER');
+        osc_set_preference('description_character_length', '5000', 'INTEGER');
     }
-    echo "</div>";
+
+    osc_changeVersionTo(330);
+
+    if(empty($aMessages)) {
+        osc_add_flash_ok_message(_m('Osclass has been updated successfully. <a href="http://forums.osclass.org/">Need more help?</a>'), 'admin');
+        echo '<script type="text/javascript"> window.location = "'.osc_admin_base_url(true).'?page=tools&action=version"; </script>';
+    } else {
+        echo '<div class="well ui-rounded-corners separate-top-medium">';
+        echo '<p>'.__('Osclass &raquo; Updated correctly').'</p>';
+        echo '<p>'.__('Osclass has been updated successfully. <a href="http://forums.osclass.org/">Need more help?</a>').'</p>';
+        foreach($aMessages as $msg) {
+            echo "<p>".$msg."</p>";
+        }
+        echo "</div>";
+    }
 
     /**
      * Convert alerts < 2.4, updating s_search with json encoded to based64.

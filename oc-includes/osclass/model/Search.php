@@ -816,6 +816,10 @@
                 $this->dao->from(sprintf('%st_item_stats', DB_TABLE_PREFIX));
                 $this->dao->where(sprintf('%st_item_stats.fk_i_item_id = %st_item.pk_i_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX));
                 $this->dao->where(sprintf("%st_item.b_premium = 1", DB_TABLE_PREFIX));
+                $this->dao->where(sprintf("%st_item.b_enabled = 1 ", DB_TABLE_PREFIX));
+                $this->dao->where(sprintf("%st_item.b_active = 1 ", DB_TABLE_PREFIX));
+                $this->dao->where(sprintf("%st_item.b_spam = 0", DB_TABLE_PREFIX));
+
 
                 if($this->withLocations || OC_ADMIN) {
                     $this->dao->join(sprintf('%st_item_location', DB_TABLE_PREFIX), sprintf('%st_item_location.fk_i_item_id = %st_item.pk_i_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX), 'LEFT');
@@ -836,6 +840,9 @@
                 $this->dao->from(sprintf('%st_item_stats', DB_TABLE_PREFIX));
                 $this->dao->where(sprintf('%st_item_stats.fk_i_item_id = %st_item.pk_i_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX));
                 $this->dao->where(sprintf("%st_item.b_premium = 1", DB_TABLE_PREFIX));
+                $this->dao->where(sprintf("%st_item.b_enabled = 1 ", DB_TABLE_PREFIX));
+                $this->dao->where(sprintf("%st_item.b_active = 1 ", DB_TABLE_PREFIX));
+                $this->dao->where(sprintf("%st_item.b_spam = 0", DB_TABLE_PREFIX));
 
                 if($this->withLocations || OC_ADMIN) {
                     $this->dao->join(sprintf('%st_item_location', DB_TABLE_PREFIX), sprintf('%st_item_location.fk_i_item_id = %st_item.pk_i_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX), 'LEFT');

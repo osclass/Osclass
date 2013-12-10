@@ -58,99 +58,8 @@
                                         } else {
                                             osc_add_flash_warning_message( _m('No file was uploaded'), 'admin');
                                         }
+                                        @unlink($sql['tmp_name']);
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=import');
-                break;
-                case('images'):         // calling images view
-                                        $this->doView('tools/images.php');
-                break;
-                case('images_post'):    if( defined('DEMO') ) {
-                                            osc_add_flash_warning_message( _m("This action cannot be done because it is a demo site"), 'admin');
-                                            $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=images');
-                                        }
-
-                                        osc_csrf_check();
-                                        $preferences = Preference::newInstance()->toArray();
-
-                                        $wat = new Watermark();
-                                        $aResources = ItemResource::newInstance()->getAllResources();
-                                        foreach($aResources as $resource) {
-                                            osc_run_hook('regenerate_image', $resource);
-
-                                            $path = osc_uploads_path();
-                                            // comprobar que no haya original
-                                            $img_original = $path . $resource['pk_i_id']. "_original*";
-                                            $aImages = glob($img_original);
-                                            // there is original image
-                                            if( count($aImages) == 1 ) {
-                                                $image_tmp = $aImages[0];
-                                            } else {
-                                                $img_normal = $path . $resource['pk_i_id']. ".*";
-                                                $aImages = glob( $img_normal );
-                                                if( count($aImages) == 1 ) {
-                                                    $image_tmp = $aImages[0];
-                                                } else {
-                                                    $img_thumbnail = $path . $resource['pk_i_id']. "_thumbnail*";
-                                                    $aImages = glob( $img_thumbnail );
-                                                    $image_tmp = $aImages[0];
-                                                }
-                                            }
-
-                                            // extension
-                                            preg_match('/\.(.*)$/', $image_tmp, $matches);
-                                            if( isset($matches[1]) ) {
-                                                $extension = $matches[1];
-
-                                                // Create normal size
-                                                $path_normal = $path = osc_uploads_path() . $resource['pk_i_id'] . '.jpg';
-                                                $size = explode('x', osc_normal_dimensions());
-                                                ImageResizer::fromFile($image_tmp)->resizeTo($size[0], $size[1])->saveToFile($path);
-
-                                                if( osc_is_watermark_text() ) {
-                                                    $wat->doWatermarkText( $path , osc_watermark_text_color(), osc_watermark_text() , 'image/jpeg' );
-                                                } elseif ( osc_is_watermark_image() ){
-                                                    $wat->doWatermarkImage( $path, 'image/jpeg');
-                                                }
-
-                                                // Create preview
-                                                $path = osc_uploads_path() . $resource['pk_i_id'] . '_preview.jpg';
-                                                $size = explode('x', osc_preview_dimensions());
-                                                ImageResizer::fromFile($path_normal)->resizeTo($size[0], $size[1])->saveToFile($path);
-
-                                                // Create thumbnail
-                                                $path = osc_uploads_path() . $resource['pk_i_id'] . '_thumbnail.jpg';
-                                                $size = explode('x', osc_thumbnail_dimensions());
-                                                ImageResizer::fromFile($path_normal)->resizeTo($size[0], $size[1])->saveToFile($path);
-
-                                                // update resource info
-                                                ItemResource::newInstance()->update(
-                                                    array(
-                                                        's_path'          => str_replace(osc_base_path(), '', osc_uploads_path())
-                                                        ,'s_name'         => osc_genRandomPassword()
-                                                        ,'s_extension'    => 'jpg'
-                                                        ,'s_content_type' => 'image/jpeg'
-                                                    )
-                                                    ,array(
-                                                        'pk_i_id'       => $resource['pk_i_id']
-                                                    )
-                                                );
-                                                osc_run_hook('regenerated_image', ItemResource::newInstance()->findByPrimaryKey($resource['pk_i_id']));
-                                                // si extension es direfente a jpg, eliminar las imagenes con $extension si hay
-                                                if( $extension != 'jpg' ) {
-                                                    $files_to_remove = osc_uploads_path() . $resource['pk_i_id'] . "*" . $extension;
-                                                    $fs = glob( $files_to_remove );
-                                                    if(is_array($fs)) {
-                                                        array_map( "unlink", $fs );
-                                                    }
-                                                }
-                                                // ....
-                                            } else {
-                                                // no es imagen o imagen sin extesión
-                                            }
-
-                                        }
-
-                                        osc_add_flash_ok_message( _m('Re-generation complete'), 'admin');
-                                        $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=images');
                 break;
                 case('category'):       $this->doView('tools/category.php');
                 break;
@@ -176,6 +85,8 @@
                 case('upgrade'):
                                         $this->doView('tools/upgrade.php');
                 break;
+                case 'version':         $this->doView('tools/version.php');
+                    break;
                 case('backup'):
                                         $this->doView('tools/backup.php');
                 break;

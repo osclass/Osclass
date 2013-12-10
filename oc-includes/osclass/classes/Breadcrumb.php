@@ -36,7 +36,7 @@
 
         public function init()
         {
-            if( in_array($this->getLocation(), array('item', 'page', 'search', 'login', 'register', 'user', 'contact')) ) {
+            if( in_array($this->getLocation(), array('item', 'page', 'search', 'login', 'register', 'user', 'contact', 'custom')) ) {
                 $l = array(
                     'url'   => osc_base_url(),
                     'title' => osc_page_title()
@@ -87,6 +87,10 @@
                             $l = array('title' => osc_item_title());
                             $this->addLevel($l);
                         break;
+                        default:
+                            $l = array('title' => Rewrite::newInstance()->get_title());
+                            $this->addLevel($l);
+                            break;
                     }
                 break;
                 case('search'):
@@ -230,6 +234,10 @@
                             $l = array('title' => $this->title['user_change_username']);
                             $this->addLevel($l);
                             break;
+                        default:
+                            $l = array('title' => Rewrite::newInstance()->get_title());
+                            $this->addLevel($l);
+                            break;
                     }
                 break;
                 case('login'):
@@ -258,6 +266,10 @@
                 break;
                 case('contact'):
                     $l = array('title' => $this->title['contact']);
+                    $this->addLevel($l);
+                break;
+                case('custom'):
+                    $l = array('title' => Rewrite::newInstance()->get_title());
                     $this->addLevel($l);
                 break;
             }

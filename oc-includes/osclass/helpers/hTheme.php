@@ -65,14 +65,21 @@
      * @param string $$section
      */
     function osc_resend_flash_messages($section = "pubMessages") {
-        $message = Session::newInstance()->_getMessage($section);
-        if(isset($message['msg'])) {
-            if(isset($message["type"]) && $message["type"]=="info") {
-                osc_add_flash_info_message($message['msg'], $section);
-            } else if(isset($message["type"]) && $message["type"]=="ok") {
-                osc_add_flash_ok_message($message['msg'], $section);
-            } else {
-                osc_add_flash_error_message($message['msg'], $section);
+        $messages = Session::newInstance()->_getMessage($section);
+        if (is_array($messages)) {
+
+            foreach ($messages as $message) {
+      
+                $message = Session::newInstance()->_getMessage($section);
+                if(isset($message['msg'])) {
+                    if(isset($message["type"]) && $message["type"]=="info") {
+                        osc_add_flash_info_message($message['msg'], $section);
+                    } else if(isset($message["type"]) && $message["type"]=="ok") {
+                        osc_add_flash_ok_message($message['msg'], $section);
+                    } else {
+                        osc_add_flash_error_message($message['msg'], $section);
+                    }
+                }
             }
         }
     }

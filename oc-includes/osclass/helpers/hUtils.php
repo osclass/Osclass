@@ -167,6 +167,7 @@ function osc_private_user_menu($options = null)
 {
     if($options == null) {
         $options = array();
+        $options[] = array('name' => __('Public Profile'), 'url' => osc_user_public_profile_url(), 'class' => 'opt_publicprofile');
         $options[] = array('name' => __('Dashboard'), 'url' => osc_user_dashboard_url(), 'class' => 'opt_dashboard');
         $options[] = array('name' => __('Manage your listings'), 'url' => osc_user_list_items_url(), 'class' => 'opt_items');
         $options[] = array('name' => __('Manage your alerts'), 'url' => osc_user_alerts_url(), 'class' => 'opt_alerts');
@@ -257,8 +258,8 @@ function osc_get_http_referer() {
     return '';
 }
 
-function osc_add_route($id, $regexp, $url, $file, $user_menu = false) {
-    Rewrite::newInstance()->addRoute($id, $regexp, $url, $file, $user_menu);
+function osc_add_route($id, $regexp, $url, $file, $user_menu = false, $location = "custom", $section = "custom", $title = "Custom") {
+    Rewrite::newInstance()->addRoute($id, $regexp, $url, $file, $user_menu, $location, $section, $title);
 }
 
 /**

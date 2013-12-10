@@ -115,7 +115,7 @@
             </div>
             <div class="control-group">
                 <div class="controls">
-                    <?php osc_run_hook('user_form'); ?>
+                    <?php osc_run_hook('user_form', osc_user()); ?>
                 </div>
             </div>
         </form>

@@ -249,20 +249,20 @@ function customPageHeader() { ?>
                         <div class="well ui-rounded-corners input-separate-top">
                             <h3 class="label"><?php _e('Expiration'); ?></h3>
                             <?php if( $new_item ) { ?>
-                            <div class="input-has-placeholder input-separate-top">
-                                <label><?php _e('Expire in X days'); ?></label>
-                                <?php ItemForm::expiration_input('add'); ?>
-                            </div>
-                            <?php } else if( !$new_item ) { ?>
-                            <div class="input-separate-top">
-                                <label><input type="checkbox" id="update_expiration" name="update_expiration" style="width: inherit!important;"/> <?php _e('Update expiration?'); ?></label>
-                                <div class="hide update_expiration">
-                                    <div class="input-has-placeholder input-separate-top">
-                                        <?php ItemForm::expiration_input('edit'); ?>
-                                    </div>
-                                    <label><?php _e('0, means no expiration date'); ?></label>
+                                <div class="input-has-placeholder input-separate-top">
+                                    <?php ItemForm::expiration_input('add'); ?>
                                 </div>
-                            </div>
+                                <label><?php _e('It could be an integer (days from now it will be expired, 0 to never expire) or a date in the format "yyyy-mm-dd hh:mm:ss"'); ?></label>
+                            <?php } else if( !$new_item ) { ?>
+                                <div class="input-separate-top">
+                                    <label><input type="checkbox" id="update_expiration" name="update_expiration" style="width: inherit!important;"/> <?php _e('Update expiration?'); ?></label>
+                                    <div class="hide update_expiration">
+                                        <div class="input-has-placeholder input-separate-top">
+                                            <?php ItemForm::expiration_input('edit'); ?>
+                                        </div>
+                                        <label><?php _e('It could be an integer (days from now it will be expired, 0 to never expire) or a date in the format "yyyy-mm-dd hh:mm:ss"'); ?></label>
+                                    </div>
+                                </div>
                             <?php } ?>
                         </div>
 

@@ -46,105 +46,6 @@ function osc_meta_search($catId = null) {
 }
 osc_add_hook('search_form', 'osc_meta_search');
 
-function osc_customfields_search_conditions($params) {
-
-    if(isset($params['meta']) && is_array($params['meta'])) {
-        $table = DB_TABLE_PREFIX.'t_item_meta';
-
-        $addTable = false;
-        foreach($params['meta'] as $key => $aux) {
-            if(is_numeric($key)) {
-                $field = Field::newInstance()->findByPrimaryKey($key);
-                switch ($field['e_type']) {
-                    case 'TEXTAREA':
-                    case 'TEXT':
-                    case 'URL':
-                        if($aux!='') {
-                            $aux = "%$aux%";
-                            $sql = "SELECT fk_i_item_id FROM $table WHERE ";
-                            $str_escaped = Search::newInstance()->dao->escape($aux);
-                            $sql .= $table.'.fk_i_field_id = '.$key.' AND ';
-                            $sql .= $table.".s_value LIKE ".$str_escaped;
-                            Search::newInstance()->addConditions('pk_i_id IN ('.$sql.')');
-                            $addTable = true;
-                        }
-                        break;
-                    case 'DROPDOWN':
-                    case 'RADIO':
-                        if($aux!='') {
-                            $sql = "SELECT fk_i_item_id FROM $table WHERE ";
-                            $str_escaped = Search::newInstance()->dao->escape($aux);
-                            $sql .= $table.'.fk_i_field_id = '.$key.' AND ';
-                            $sql .= $table.".s_value = ".$str_escaped;
-                            Search::newInstance()->addConditions('pk_i_id IN ('.$sql.')');
-                            $addTable = true;
-                        }
-                        break;
-                    case 'CHECKBOX':
-                        if($aux!='') {
-                            $sql = "SELECT fk_i_item_id FROM $table WHERE ";
-                            $sql .= $table.'.fk_i_field_id = '.$key.' AND ';
-                            $sql .= $table.".s_value = 1";
-                            Search::newInstance()->addConditions('pk_i_id IN ('.$sql.')');
-                            $addTable = true;
-                        }
-                        break;
-                    case 'DATE':
-                        if($aux!='') {
-                            $aux = $aux;
-
-                            $y = (int)date('Y', $aux);
-                            $m = (int)date('n', $aux);
-                            $d = (int)date('j', $aux);
-
-                            $start = mktime('0', '0', '0', $m, $d, $y);
-                            $end   = mktime('23', '59', '59', $m, $d, $y);
-
-                            $start = $start;
-                            $end   = $end;
-
-                            $sql = "SELECT fk_i_item_id FROM $table WHERE ";
-                            $sql .= $table.'.fk_i_field_id = '.$key.' AND ';
-                            $sql .= $table.".s_value >= ".($start)." AND ";
-                            $sql .= $table.".s_value <= ".$end;
-
-                            Search::newInstance()->addConditions('pk_i_id IN ('.$sql.')');
-                            $addTable = true;
-                        }
-                        break;
-                    case 'DATEINTERVAL':
-                        if( is_array($aux) && (!empty($aux['from']) && !empty($aux['to'])) ) {
-
-                            $from = $aux['from'];
-                            $to   = $aux['to'];
-
-                            $start = $from;
-                            $end   = $to;
-
-                            $sql = "SELECT fk_i_item_id FROM $table WHERE ";
-                            $sql .= $table.'.fk_i_field_id = '.$key.' AND ';
-                            $sql .= $start." >= ".$table.".s_value AND s_multi = 'from'";
-
-                            $sql1 = "SELECT fk_i_item_id FROM $table WHERE ";
-                            $sql1 .= $table.".fk_i_field_id = ".$key." AND ";
-                            $sql1 .= $end." <= ".$table.".s_value AND s_multi = 'to'";
-
-                            $sql_interval = "select a.fk_i_item_id from (".$sql.") a where a.fk_i_item_id IN (".$sql1.")";
-
-                            Search::newInstance()->addConditions('pk_i_id IN ('.$sql_interval.')');
-                            $addTable = true;
-                        }
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-    }
-}
-// When searching, add some conditions
-osc_add_hook('search_conditions', 'osc_customfields_search_conditions');
-
 function search_title() {
     $region   = osc_search_region();
     $city     = osc_search_city();
@@ -171,9 +72,7 @@ function search_title() {
         }
     }
 
-    if($b_city && $b_region) {
-        $result .= $city;
-    } else if($b_city) {
+    if($b_city) {
         $result .= $city;
     } else if($b_region) {
         $result .= $region;
@@ -214,7 +113,7 @@ function meta_title() {
                 $s_page = ' - ' . __('page') . ' ' . $i_page;
             }
 
-            $b_show_all = ($region == '' && $city == '' & $pattern == '' && $category == '');
+            $b_show_all = ($region == '' && $city == '' && $pattern == '' && $category == '');
             $b_category = ($category != '');
             $b_pattern  = ($pattern != '');
             $b_city     = ($city != '');
@@ -236,9 +135,7 @@ function meta_title() {
                 }
             }
 
-            if($b_city && $b_region) {
-                $result .= $city . ' &raquo; ';
-            } else if($b_city) {
+            if($b_city) {
                 $result .= $city . ' &raquo; ';
             } else if($b_region) {
                 $result .= $region . ' &raquo; ';
@@ -279,7 +176,7 @@ function meta_title() {
             }
         break;
         case('contact'):
-            $text = __('Contact','modern');
+            $text = __('Contact');
         break;
         default:
             $text = osc_page_title();
@@ -429,32 +326,40 @@ function osc_search_footer_links() {
     return $rs->result();
 }
 
-function osc_footer_link_url() {
-    $f   = View::newInstance()->_get('footer_link');
-    $url = osc_base_url();
-
-    if( osc_get_preference('seo_url_search_prefix') != '' ) {
-        $url .= osc_get_preference('seo_url_search_prefix') . '/';
+function osc_footer_link_url($f = null) {
+    if($f==null) {
+        if(View::newInstance()->_exists('footer_link')) {
+            $f = View::newInstance()->_get('footer_link');
+        } else {
+            return '';
+        }
+    } else {
+        View::newInstance()->_exportVariableToView('footer_link', $f);
     }
-
-    $bCategory = false;
+    $params = array();
     if( osc_search_category_id() ) {
-        $bCategory = true;
-        $cat = osc_get_category('id', $f['fk_i_category_id']);
-        $url .= $cat['s_slug'] . '_';
+        $params['sCategory'] = osc_search_category_id();
     }
 
     if( osc_search_region() == '' ) {
-        $url .= osc_sanitizeString($f['s_region']) . '-r' . $f['fk_i_region_id'];
+        $params['sRegion'] = $f['fk_i_region_id'];
     } else {
-        $url .= osc_sanitizeString($f['s_city']) . '-c' . $f['fk_i_city_id'];
+        $params['sCity'] = $f['fk_i_city_id'];
     }
 
-    return $url;
+    return osc_search_url($params);
 }
 
-function osc_footer_link_title() {
-    $f = View::newInstance()->_get('footer_link');
+function osc_footer_link_title($f = null) {
+    if($f==null) {
+        if(View::newInstance()->_exists('footer_link')) {
+            $f = View::newInstance()->_get('footer_link');
+        } else {
+            return '';
+        }
+    } else {
+        View::newInstance()->_exportVariableToView('footer_link', $f);
+    }
     $text = '';
 
     if( osc_get_preference('seo_title_keyword') != '' ) {

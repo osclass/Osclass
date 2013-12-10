@@ -648,7 +648,7 @@
                                 ?></pre>
                             </div>
                             <div class="form-row">
-                                <h3 class="separate-top"><?php _e('How your .htaccess file should looks like') ?></h3>
+                                <h3 class="separate-top"><?php _e('What your .htaccess file should look like') ?></h3>
                                 <pre><?php
                                     $rewrite_base = REL_WEB_URL;
                                     $htaccess     = <<<HTACCESS

@@ -19,7 +19,7 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-define('OSCLASS_VERSION', '3.2.2');
+define('OSCLASS_VERSION', '3.3.0');
 
 if( !defined('ABS_PATH') ) {
     define( 'ABS_PATH', str_replace('\\', '/', dirname(__FILE__) . '/' ));
@@ -99,6 +99,7 @@ require_once LIB_PATH . 'osclass/helpers/hPage.php';
 require_once LIB_PATH . 'osclass/helpers/hPagination.php';
 require_once LIB_PATH . 'osclass/helpers/hPremium.php';
 require_once LIB_PATH . 'osclass/helpers/hTheme.php';
+require_once LIB_PATH . 'osclass/helpers/hLocation.php';
 require_once LIB_PATH . 'osclass/core/Params.php';
 require_once LIB_PATH . 'osclass/core/Cookie.php';
 require_once LIB_PATH . 'osclass/core/Session.php';
@@ -159,7 +160,6 @@ require_once LIB_PATH . 'osclass/classes/ImageResizer.php';
 require_once LIB_PATH . 'osclass/classes/RSSFeed.php';
 require_once LIB_PATH . 'osclass/classes/Sitemap.php';
 require_once LIB_PATH . 'osclass/classes/Pagination.php';
-require_once LIB_PATH . 'osclass/classes/Watermark.php';
 require_once LIB_PATH . 'osclass/classes/Rewrite.php';
 require_once LIB_PATH . 'osclass/classes/Stats.php';
 require_once LIB_PATH . 'osclass/classes/AdminMenu.php';
@@ -205,31 +205,26 @@ function osc_show_maintenance() {
         <div id="maintenance" name="maintenance">
              <?php _e("The website is currently undergoing maintenance"); ?>
         </div>
-    <?php }
-}
-function osc_show_maintenance_css() {
-    if(defined('__OSC_MAINTENANCE__')) { ?>
-<style>
-#maintenance {
-    position: static;
-    top: 0px;
-    right: 0px;
-    background-color: #bc0202;
-    width: 100%;
-    height:20px;
-    text-align: center;
-    padding:5px 0;
-    font-size:14px;
-    color: #fefefe;
-}
-</style>
+        <style>
+            #maintenance {
+                position: static;
+                top: 0px;
+                right: 0px;
+                background-color: #bc0202;
+                width: 100%;
+                height:20px;
+                text-align: center;
+                padding:5px 0;
+                font-size:14px;
+                color: #fefefe;
+            }
+        </style>
     <?php }
 }
 function osc_meta_generator() {
     echo '<meta name="generator" content="Osclass ' . OSCLASS_VERSION . '" />';
 }
 osc_add_hook('header', 'osc_show_maintenance');
-osc_add_hook('header', 'osc_show_maintenance_css');
 osc_add_hook('header', 'osc_meta_generator');
 osc_add_hook('header', 'osc_load_scripts', 10);
 osc_add_hook('header', 'osc_load_styles', 10);
@@ -247,6 +242,8 @@ osc_register_script('colorpicker', osc_assets_url('js/colorpicker/js/colorpicker
 osc_register_script('fancybox', osc_assets_url('js/fancybox/jquery.fancybox.pack.js'), array('jquery'));
 osc_register_script('jquery-migrate', osc_assets_url('js/jquery-migrate.min.js'), array('jquery'));
 osc_register_script('php-date', osc_assets_url('js/date.js'));
+osc_register_script('jquery-fineuploader', osc_assets_url('js/fineuploader/jquery.fineuploader.min.js'), 'jquery');
+
 
 Plugins::init();
 osc_csrfguard_start();
