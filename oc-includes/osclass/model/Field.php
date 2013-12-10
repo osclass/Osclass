@@ -114,6 +114,39 @@
         }
 
         /**
+         * Find a field by its name
+         *
+         * @access public
+         * @since unknown
+         * @param string $ids
+         * @return array Fields' id
+         */
+        public function findIDSearchableByCategories($ids)
+        {
+            if(!is_array($ids)) { $ids = array($ids); };
+            $this->dao->select('pk_i_id');
+            $this->dao->from($this->getTableName());
+            $where = array();
+            foreach($ids as $id) {
+                if(is_numeric($id)) { $where[] = 'fk_i_category_id = '.$id; }
+            }
+            if(!empty($where)) {
+                $this->dao->where('( '.implode(' OR ', $ids).' )');
+            }
+            $this->dao->where('b_searchable', 1);
+
+            $result = $this->dao->get();
+
+            if( $result == false ) {
+                return array();
+            }
+
+            $tmp = array();
+            foreach($result->result() as $t) { $tmp[] = $t['pk_i_id']; };
+            return $tmp;
+        }
+
+        /**
          * Find fields from a category and an item
          *
          * @access public

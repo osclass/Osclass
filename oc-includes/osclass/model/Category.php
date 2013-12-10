@@ -442,15 +442,27 @@
          *
          * @access public
          * @since unknown
-         * @param integer$cat_id
+         * @param integer $categoryID
          * @return array
          */
         public function findSubcategories($categoryID)
         {
-            // juanramon: specific condition
             $this->dao->where( 'fk_i_parent_id', $categoryID );
-            // end specific condition
+            return $this->listWhere();
+        }
 
+        /**
+         * returns the children of a given category
+         *
+         * @access public
+         * @since unknown
+         * @param integer $categoryID
+         * @return array
+         */
+        public function findSubcategoriesEnabled($categoryID)
+        {
+            $this->dao->where( 'fk_i_parent_id', $categoryID );
+            $this->dao->where( 'a.b_enabled', '1' );
             return $this->listWhere();
         }
 

@@ -296,6 +296,62 @@
                         $this->redirectTo( osc_base_url() );
                     }
                 break;
+                case 'deleteResources': // Delete images via AJAX
+                    $id     = Params::getParam('id');
+                    $item   = Params::getParam('item');
+                    $code   = Params::getParam('code');
+                    $secret = Params::getParam('secret');
+
+                    if( Session::newInstance()->_get('userId') != '' ){
+                        $userId = Session::newInstance()->_get('userId');
+                        $user = User::newInstance()->findByPrimaryKey($userId);
+                    }else{
+                        $userId = null;
+                        $user = null;
+                    }
+
+                    if ( !( is_numeric($id) && is_numeric($item) && preg_match('/^([a-z0-9]+)$/i', $code) ) ) {
+                        osc_add_flash_error_message(_m("The selected photo couldn't be deleted, the url doesn't exist"));
+                        $this->redirectTo(osc_item_edit_url($secret, $item));
+                    }
+
+                    $aItem = Item::newInstance()->findByPrimaryKey($item);
+                    if(count($aItem) == 0) {
+                        osc_add_flash_error_message(_m("The listing doesn't exist"));
+                        $this->redirectTo(osc_item_edit_url($secret, $item));
+                    }
+
+                    if(!osc_is_admin_user_logged_in()) {
+                        if($userId != null && $userId != $aItem['fk_i_user_id']) {
+                            osc_add_flash_error_message(_m("The listing doesn't belong to you"));
+                            $this->redirectTo(osc_item_edit_url($secret, $item));
+                        }
+
+                        if($userId == null && $aItem['fk_i_user_id']==null && $secret != $aItem['s_secret']) {
+                            osc_add_flash_error_message(_m("The listing doesn't belong to you"));
+                            $this->redirectTo(osc_item_edit_url($secret, $item));
+                        }
+                    }
+
+                    $result = ItemResource::newInstance()->existResource($id, $code);
+
+                    if ($result > 0) {
+                        $resource = ItemResource::newInstance()->findByPrimaryKey($id);
+
+                        if($resource['fk_i_item_id']==$item) {
+                            osc_deleteResource($id, false);
+                            Log::newInstance()->insertLog('item', 'deleteResource', $id, $id, 'user', osc_logged_user_id());
+                            ItemResource::newInstance()->delete(array('pk_i_id' => $id, 'fk_i_item_id' => $item, 's_name' => $code) );
+                            osc_add_flash_ok_message(_m('The selected photo has been successfully deleted'));
+                        } else {
+                            osc_add_flash_error_message(_m("The selected photo does not belong to you"));
+                        }
+                    } else {
+                        osc_add_flash_error_message(_m("The selected photo couldn't be deleted"));
+                    }
+
+                    $this->redirectTo(osc_item_edit_url($secret, $item));
+                    break;
                 case 'mark':
                     $id = Params::getParam('id');
                     $as = Params::getParam('as');
@@ -576,8 +632,8 @@
                     }
 
                     // redirect to the correct url
-                    if( $itemURI != $URI ) {
-                        $this->redirectTo(osc_base_url() . $itemURI);
+                    if($itemURI!=$URI) {
+                        $this->redirectTo(osc_base_url().$itemURI, 301);
                     }
 
                     $this->doView('item.php');

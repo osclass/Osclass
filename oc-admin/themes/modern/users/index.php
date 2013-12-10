@@ -143,6 +143,7 @@
 <?php osc_current_admin_theme_path( 'parts/header.php' ); ?>
 <form method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" class="has-form-actions hide nocsrf">
     <input type="hidden" name="page" value="users" />
+    <input type="hidden" name="iDisplayLength" value="<?php echo $iDisplayLength;?>" />
     <input type="hidden" name="sort" value="<?php echo $sort; ?>" />
     <input type="hidden" name="direction" value="<?php echo $direction; ?>" />
     <div class="form-horizontal">
@@ -244,6 +245,18 @@
 <div class="relative">
     <div id="users-toolbar" class="table-toolbar">
         <div class="float-right">
+            <form method="get" action="<?php echo osc_admin_base_url(true); ?>"  class="inline nocsrf">
+                <?php foreach( Params::getParamsAsArray('get') as $key => $value ) { ?>
+                <?php if( $key != 'iDisplayLength' ) { ?>
+                <input type="hidden" name="<?php echo $key; ?>" value="<?php echo osc_esc_html($value); ?>" />
+                <?php } } ?>
+                <select name="iDisplayLength" class="select-box-extra select-box-medium float-left" onchange="this.form.submit();" >
+                    <option value="10"><?php printf(__('%d Users'), 10); ?></option>
+                    <option value="25" <?php if( Params::getParam('iDisplayLength') == 25 ) echo 'selected'; ?> ><?php printf(__('%d Users'), 25); ?></option>
+                    <option value="50" <?php if( Params::getParam('iDisplayLength') == 50 ) echo 'selected'; ?> ><?php printf(__('%d Users'), 50); ?></option>
+                    <option value="100" <?php if( Params::getParam('iDisplayLength') == 100 ) echo 'selected'; ?> ><?php printf(__('%d Users'), 100); ?></option>
+                </select>
+            </form>
             <form method="get" action="<?php echo osc_admin_base_url(true); ?>" id="shortcut-filters" class="inline nocsrf">
                 <input type="hidden" name="page" value="users" />
                 <a id="btn-display-filters" href="#" class="btn <?php if($withFilters) { echo 'btn-red'; } ?>"><?php _e('Show filters'); ?></a>
@@ -273,16 +286,8 @@
                 </thead>
                 <tbody>
                 <?php if( count($rows) > 0 ) { ?>
-                    <?php foreach($rows as $key => $row) {
-                    $class = ''; $aU = $aRawRows[$key];
-                        if( !$aU['b_enabled'] ) {
-                            $class = 'status-blocked';
-                        } else if( !$aU['b_active'] ) {
-                            $class = 'status-inactive';
-                        } else {
-                            $class = 'status-active';
-                        } ?>
-                        <tr class="<?php echo $class;?>">
+                    <?php foreach($rows as $key => $row) { ?>
+                        <tr class="<?php echo implode(' ', osc_apply_filter('datatable_user_class', array(), $aRawRows[$key], $row)); ?>">
                             <?php foreach($row as $k => $v) { ?>
                                 <td class="col-<?php echo $k; ?>"><?php echo $v; ?></td>
                             <?php }; ?>

@@ -313,7 +313,51 @@
                             <span class="help-box"><?php _e('It is <b>recommended</b> to have this option enabled, because some features require it.'); ?></span>
                         </div>
                     </div>
-                    <h2 class="render-title separate-top"><?php _e('Check plugin & theme updates'); ?></h2>
+                    <h2 class="render-title separate-top"><?php _e('Software updates'); ?></h2>
+                    <div class="form-row">
+                        <div class="form-label"><?php _e('Core updates'); ?></div>
+                        <div class="form-controls">
+                            <select name="auto_update[]" id="auto_update_core">
+                                <option value="disabled" ><?php _e('Disabled'); ?></option>
+                                <option value="branch" <?php if(strpos(osc_auto_update(),'branch')!==false) { ?>selected="selected"<?php } ?>><?php _e('Branch - big changes'); ?></option>
+                                <option value="major" <?php if(strpos(osc_auto_update(),'major')!==false) { ?>selected="selected"<?php } ?>><?php _e('Major - new features'); ?></option>
+                                <option value="minor" <?php if(strpos(osc_auto_update(),'minor')!==false) { ?>selected="selected"<?php } ?>><?php _e('Minor - bug fixes'); ?></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-label"><?php _e('Plugin updates'); ?></div>
+                        <div class="form-controls">
+                            <div class="form-label-checkbox">
+                                <label>
+                                    <input type="checkbox" <?php echo ( (strpos(osc_auto_update(),'plugins')!==false) ? 'checked="checked"' : '' ); ?> name="auto_update[]" value="plugins" />
+                                    <?php _e('Allow auto-updates plugins'); ?>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-label"><?php _e('Theme updates'); ?></div>
+                        <div class="form-controls">
+                            <div class="form-label-checkbox">
+                                <label>
+                                    <input type="checkbox" <?php echo ( (strpos(osc_auto_update(),'themes')!==false) ? 'checked="checked"' : '' ); ?> name="auto_update[]" value="themes" />
+                                    <?php _e('Allow auto-updates of themes'); ?>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-label"><?php _e('Language updates'); ?></div>
+                        <div class="form-controls">
+                            <div class="form-label-checkbox">
+                                <label>
+                                    <input type="checkbox" <?php echo ( (strpos(osc_auto_update(),'languages')!==false) ? 'checked="checked"' : '' ); ?> name="auto_update[]" value="languages" />
+                                    <?php _e('Allow auto-updates of languages'); ?>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
                     <div class="form-row">
                         <div class="form-label"><?php _e('Market external sources'); ?></div>
                         <div class="form-controls">
@@ -326,6 +370,7 @@
                         </div>
                     </div>
                     <div class="form-row">
+                        <div class="form-label"></div>
                         <div class="form-controls">
                             <?php printf(__('Last checked on %s'), osc_format_date( date('d-m-Y h:i:s', osc_get_preference('themes_last_version_check')) )); ?> <a class="btn btn-mini" href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=check_updates"><?php _e('Check updates');?></a>
                         </div>

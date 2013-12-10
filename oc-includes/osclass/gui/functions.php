@@ -24,7 +24,7 @@
 DEFINES
 
 */
-    define('BENDER_THEME_VERSION', '1.0');
+    define('BENDER_THEME_VERSION', '1.0.1');
     if( !osc_get_preference('keyword_placeholder', 'bender_theme') ) {
         osc_set_preference('keyword_placeholder', __('ie. PHP Programmer', 'bender'), 'bender_theme');
     }
@@ -33,6 +33,10 @@ DEFINES
     osc_enqueue_script('fancybox');
     // used for date/dateinterval custom fields
     osc_enqueue_script('php-date');
+    osc_enqueue_style('fine-uploader-css', osc_assets_url('js/fineuploader/fineuploader.css'));
+    osc_enqueue_style('bender-fine-uploader-css', osc_current_web_theme_url('css/ajax-uploader.css'));
+    osc_enqueue_script('jquery-fineuploader');
+
 
 /**
 
@@ -40,26 +44,47 @@ FUNCTIONS
 
 */
 
-    // install update options
-    if( !function_exists('benderBodyClass_theme_install') ) {
+    // install options
+    if( !function_exists('bender_theme_install') ) {
         function bender_theme_install() {
             osc_set_preference('keyword_placeholder', Params::getParam('keyword_placeholder'), 'bender_theme');
             osc_set_preference('version', BENDER_THEME_VERSION, 'bender_theme');
             osc_set_preference('footer_link', '1', 'bender_theme');
             osc_set_preference('donation', '0', 'bender_theme');
-            osc_set_preference('default_logo', '1', 'bender_theme');
             osc_set_preference('defaultShowAs@all', 'list', 'bender_theme');
             osc_set_preference('defaultShowAs@search', 'list');
             osc_reset_preferences();
         }
     }
+    // update options
+    if( !function_exists('bender_theme_update') ) {
+        function bender_theme_update() {
+            //osc_set_preference('version', BENDER_THEME_VERSION, 'bender_theme');
+            osc_delete_preference('default_logo', 'bender_theme');
 
+            $logo_prefence = osc_get_preference('logo', 'bender_theme');
+            $logo_name     = 'bender_logo';
+            $temp_name     = WebThemes::newInstance()->getCurrentThemePath() . 'images/logo.jpg';
+            if( file_exists( $temp_name ) && !$logo_prefence) {
+
+                $img = ImageResizer::fromFile($temp_name);
+                $ext = $img->getExt();
+                $logo_name .= '.'.$ext;
+                $img->saveToFile(osc_uploads_path().$logo_name);
+                @unlink($temp_name);
+                osc_set_preference('logo', $logo_name, 'bender_theme');
+            }
+            osc_reset_preferences();
+        }
+    }
     if(!function_exists('check_install_bender_theme')) {
         function check_install_bender_theme() {
             $current_version = osc_get_preference('version', 'bender_theme');
             //check if current version is installed or need an update<
             if( !$current_version ) {
                 bender_theme_install();
+            } else if($current_version < BENDER_THEME_VERSION){
+                bender_theme_update();
             }
         }
     }
@@ -122,29 +147,26 @@ FUNCTIONS
     /* logo */
     if( !function_exists('logo_header') ) {
         function logo_header() {
-             $html = '<a href="'.osc_base_url().'"><img border="0" alt="' . osc_page_title() . '" src="' . osc_current_web_theme_url('images/logo.jpg') . '"></a>';
-             if( file_exists( WebThemes::newInstance()->getCurrentThemePath() . 'images/logo.jpg' ) ) {
+             $logo = osc_get_preference('logo','bender_theme');
+             $html = '<a href="'.osc_base_url().'"><img border="0" alt="' . osc_page_title() . '" src="' . bender_logo_url() . '"></a>';
+             if( file_exists( osc_uploads_path() . $logo ) ) {
                 return $html;
              } else {
                 return '<a href="'.osc_base_url().'">'.osc_page_title().'</a>';
             }
         }
     }
-    /*
-    if( !function_exists('bender_draw_item') ) {
-        function bender_draw_item($class = false,$admin = false, $premium = false) {
-            $premiumSlug = '';
-            if($premium){
-                $premiumSlug = '-premium';
-                View::newInstance()->_exportVariableToView("item", View::newInstance()->_current('premiums'));
-            } else {
-                View::newInstance()->_exportVariableToView("item", View::newInstance()->_current('latestItems'));
+    /* logo */
+    if( !function_exists('bender_logo_url') ) {
+        function bender_logo_url() {
+            $logo = osc_get_preference('logo','bender_theme');
+            if( $logo ) {
+                return osc_uploads_url($logo);
             }
-            require WebThemes::newInstance()->getCurrentThemePath().'loop-single.php';
-            View::newInstance()->_erase('item');
+            return false;
         }
-    }*/
-     if( !function_exists('bender_draw_item') ) {
+    }
+    if( !function_exists('bender_draw_item') ) {
         function bender_draw_item($class = false,$admin = false, $premium = false) {
             $filename = 'loop-single';
             if($premium){
@@ -196,7 +218,7 @@ FUNCTIONS
         <ul class="r-list">
              <li>
                  <h1><a class="category <?php echo osc_category_slug() ; ?>" href="<?php echo osc_search_category_url() ; ?>"><?php echo osc_category_name() ; ?></a> <span>(<?php echo osc_category_total_items() ; ?>)</span></h1>
-                 <?php /**/if ( osc_count_subcategories() > 0 ) { ?>
+                 <?php if ( osc_count_subcategories() > 0 ) { ?>
                    <ul>
                          <?php while ( osc_has_subcategories() ) { ?>
                              <li>
@@ -357,6 +379,11 @@ FUNCTIONS
         function get_user_menu() {
             $options   = array();
             $options[] = array(
+                'name' => __('Public Profile'),
+                 'url' => osc_user_public_profile_url(),
+               'class' => 'opt_publicprofile'
+            );
+            $options[] = array(
                 'name'  => __('Listings', 'bender'),
                 'url'   => osc_user_list_items_url(),
                 'class' => 'opt_items'
@@ -427,6 +454,7 @@ FUNCTIONS
     }
 
     function theme_bender_actions_admin() {
+        //if(OC_ADMIN)
         if( Params::getParam('file') == 'oc-content/themes/bender/admin/settings.php' ) {
             if( Params::getParam('donation') == 'successful' ) {
                 osc_set_preference('donation', '1', 'bender_theme');
@@ -437,11 +465,9 @@ FUNCTIONS
         switch( Params::getParam('action_specific') ) {
             case('settings'):
                 $footerLink  = Params::getParam('footer_link');
-                $defaultLogo = Params::getParam('default_logo');
 
                 osc_set_preference('keyword_placeholder', Params::getParam('keyword_placeholder'), 'bender_theme');
                 osc_set_preference('footer_link', ($footerLink ? '1' : '0'), 'bender_theme');
-                osc_set_preference('default_logo', ($defaultLogo ? '1' : '0'), 'bender_theme');
                 osc_set_preference('defaultShowAs@all', Params::getParam('defaultShowAs@all'), 'bender_theme');
                 osc_set_preference('defaultShowAs@search', Params::getParam('defaultShowAs@all'));
 
@@ -451,19 +477,28 @@ FUNCTIONS
             case('upload_logo'):
                 $package = Params::getFiles('logo');
                 if( $package['error'] == UPLOAD_ERR_OK ) {
-                    if( move_uploaded_file($package['tmp_name'], WebThemes::newInstance()->getCurrentThemePath() . "images/logo.jpg" ) ) {
-                        osc_add_flash_ok_message(__('The logo image has been uploaded correctly', 'bender'), 'admin');
-                    } else {
-                        osc_add_flash_error_message(__("An error has occurred, please try again", 'bender'), 'admin');
-                    }
+                    $img = ImageResizer::fromFile($package['tmp_name']);
+                    $ext = $img->getExt();
+                    $logo_name     = 'bender_logo';
+                    $logo_name    .= '.'.$ext;
+                    $path = osc_uploads_path() . $logo_name ;
+                    $img->saveToFile($path);
+
+                    osc_set_preference('logo', $logo_name, 'bender_theme');
+
+                    osc_add_flash_ok_message(__('The logo image has been uploaded correctly', 'bender'), 'admin');
                 } else {
                     osc_add_flash_error_message(__("An error has occurred, please try again", 'bender'), 'admin');
                 }
                 osc_redirect_to(osc_admin_render_theme_url('oc-content/themes/bender/admin/header.php'));
             break;
             case('remove'):
-                if(file_exists( WebThemes::newInstance()->getCurrentThemePath() . "images/logo.jpg" ) ) {
-                    @unlink( WebThemes::newInstance()->getCurrentThemePath() . "images/logo.jpg" );
+                $logo = osc_get_preference('logo','bender_theme');
+                $path = osc_uploads_path() . $logo ;
+                if(file_exists( $path ) ) {
+                    @unlink( $path );
+                    osc_delete_preference('logo','bender_theme');
+                    osc_reset_preferences();
                     osc_add_flash_ok_message(__('The logo image has been removed', 'bender'), 'admin');
                 } else {
                     osc_add_flash_error_message(__("Image not found", 'bender'), 'admin');
@@ -480,8 +515,14 @@ FUNCTIONS
             exit;
         }
     }
+
+    function bender_delete() {
+        Preference::newInstance()->delete(array('s_section' => 'bender'));
+    }
+
     osc_add_hook('init', 'bender_redirect_user_dashboard', 2);
     osc_add_hook('init_admin', 'theme_bender_actions_admin');
+    osc_add_hook('theme_delete_bender', 'bender_delete');
     osc_admin_menu_appearance(__('Header logo', 'bender'), osc_admin_render_theme_url('oc-content/themes/bender/admin/header.php'), 'header_bender');
     osc_admin_menu_appearance(__('Theme settings', 'bender'), osc_admin_render_theme_url('oc-content/themes/bender/admin/settings.php'), 'settings_bender');
 /**
@@ -512,7 +553,7 @@ function bender_sidebar_category_search($catId = null)
         end($aCategories);
         $cat = current($aCategories);
         // if is parent of some category
-        $childCategories = Category::newInstance()->findSubcategories($cat['pk_i_id']);
+        $childCategories = Category::newInstance()->findSubcategoriesEnabled($cat['pk_i_id']);
         if(count($childCategories) > 0) {
             $aCategories[] = $childCategories;
         }
@@ -541,12 +582,12 @@ function bender_print_sidebar_category_search($aCategories, $current_category = 
     if(!isset($c['pk_i_id'])) {
         echo '<ul '.$class.'>';
         if($i==1) {
-            echo '<li><a href="'.osc_esc_html(osc_update_search_url(array('sCategory'=>null))).'">'.__('All categories')."</a></li>";
+            echo '<li><a href="'.osc_esc_html(osc_update_search_url(array('sCategory'=>null, 'iPage'=>null))).'">'.__('All categories', 'bender')."</a></li>";
         }
         foreach($c as $key => $value) {
     ?>
             <li>
-                <a id="cat_<?php echo osc_esc_html($value['pk_i_id']);?>" href="<?php echo osc_esc_html(osc_update_search_url(array('sCategory'=> $value['pk_i_id']))); ?>">
+                <a id="cat_<?php echo osc_esc_html($value['pk_i_id']);?>" href="<?php echo osc_esc_html(osc_update_search_url(array('sCategory'=> $value['pk_i_id'], 'iPage'=>null))); ?>">
                 <?php if(isset($current_category) && $current_category == $value['pk_i_id']){ echo '<strong>'.$value['s_name'].'</strong>'; }
                 else{ echo $value['s_name']; } ?>
                 </a>
@@ -563,10 +604,10 @@ function bender_print_sidebar_category_search($aCategories, $current_category = 
     ?>
     <ul <?php echo $class;?>>
         <?php if($i==1) { ?>
-        <li><a href="<?php echo osc_esc_html(osc_update_search_url(array('sCategory'=>null))); ?>"><?php _e('All categories'); ?></a></li>
+        <li><a href="<?php echo osc_esc_html(osc_update_search_url(array('sCategory'=>null, 'iPage'=>null))); ?>"><?php _e('All categories', 'bender'); ?></a></li>
         <?php } ?>
             <li>
-                <a id="cat_<?php echo osc_esc_html($c['pk_i_id']);?>" href="<?php echo osc_esc_html(osc_update_search_url(array('sCategory'=> $c['pk_i_id']))); ?>">
+                <a id="cat_<?php echo osc_esc_html($c['pk_i_id']);?>" href="<?php echo osc_esc_html(osc_update_search_url(array('sCategory'=> $c['pk_i_id'], 'iPage'=>null))); ?>">
                 <?php if(isset($current_category) && $current_category == $c['pk_i_id']){ echo '<strong>'.$c['s_name'].'</strong>'; }
                       else{ echo $c['s_name']; } ?>
                 </a>
@@ -616,6 +657,17 @@ class benderBodyClass
     public function get()
     {
         return $this->class;
+    }
+}
+
+/**
+
+HELPERS
+
+*/
+if( !function_exists('osc_uploads_url') ){
+    function osc_uploads_url($item = ''){
+        return osc_base_url().'oc-content/uploads/'.$item;
     }
 }
 ?>

@@ -40,15 +40,19 @@
 
     if( file_exists(ABS_PATH . '.maintenance') ) {
         if(!osc_is_admin_user_logged_in()) {
-            require_once LIB_PATH . 'osclass/helpers/hErrors.php';
+            if(file_exists(WebThemes::newInstance()->getCurrentThemePath().'maintenance.php')) {
+                osc_current_web_theme_path('maintenance.php');
+            } else {
+                require_once LIB_PATH . 'osclass/helpers/hErrors.php';
 
-            $title   = sprintf(__('Maintenance &raquo; %s'), osc_page_title());
-            $message = sprintf(__('We are sorry for any inconvenience. %s is undergoing maintenance.') . '.', osc_page_title() );
+                $title   = sprintf(__('Maintenance &raquo; %s'), osc_page_title());
+                $message = sprintf(__('We are sorry for any inconvenience. %s is undergoing maintenance.') . '.', osc_page_title() );
 
-            header('HTTP/1.1 503 Service Temporarily Unavailable');
-            header('Status: 503 Service Temporarily Unavailable');
-            header('Retry-After: 900');
-            osc_die($title, $message);
+                header('HTTP/1.1 503 Service Temporarily Unavailable');
+                header('Status: 503 Service Temporarily Unavailable');
+                header('Retry-After: 900');
+                osc_die($title, $message);
+            }
         } else {
             define('__OSC_MAINTENANCE__', true);
         }

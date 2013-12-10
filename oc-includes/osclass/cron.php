@@ -52,6 +52,13 @@
                 }
             }
 
+            $files = glob(osc_content_path().'uploads/temp/qqfile_*');
+            foreach($files as $file) {
+                if((time()-filectime($file))>(2*3600)) {
+                    @unlink($file);
+                }
+            }
+
             osc_run_hook('cron_hourly');
         }
     }
@@ -62,13 +69,15 @@
         $i_next = strtotime($cron['d_next_exec']);
 
         if( (CLI && (Params::getParam('cron-type') === 'daily')) || ((($i_now - $i_next) >= 0) && !CLI) ) {
-            // before update, d_last_exec
-            osc_runAlert('DAILY');
-
             // update the next execution time in t_cron
             $d_next = date('Y-m-d H:i:s', $i_now + (24 * 3600));
             Cron::newInstance()->update(array('d_last_exec' => $d_now, 'd_next_exec' => $d_next),
-                                        array('e_type'      => 'DAILY'));
+                array('e_type'      => 'DAILY'));
+
+
+            osc_do_auto_upgrade();
+
+            osc_runAlert('DAILY', $cron['d_last_exec']);
 
             // Run cron AFTER updating the next execution time to avoid double run of cron
             $purge = osc_purge_latest_searches();

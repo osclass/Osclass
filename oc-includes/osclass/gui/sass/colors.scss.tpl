@@ -1,0 +1,11 @@
+$text-color-contrasted: false;
+$maincolor: <%- theme.color.main %>;
+$text-color-contrasted: <%- theme.color.text %>;
+$buttonDarken: <%- theme.color.darken %>;
+$textcolor:#333;
+$linkcolor:#069;
+$contrasted-default-dark:   #000;
+$contrasted-default-light:  #fff;
+$contrasted-default-extremelight: #35c3d9;
+$widgetbackground: #f7f7f7;
+$widgetbordercolor: darken($widgetbackground,5%);

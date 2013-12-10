@@ -1,14 +1,25 @@
+Osclass 3.3 2013-12-10
+------------------------
+- Subdomains improved
+- Ajax upload of photos, with preview
+- Improved image handling, no more mess with background color
+- Passwords more secure (use of Bcrypt + individual salt isntead of SHA1)
+- Updated HTML Purifier to 4.5.0
+- Release notes added when upgrading from previous version
+- Minor bug fixes and improvements
+
 Osclass 3.2 2013-XX-XX
 ------------------------
 - Expiration date for a listing (till now you can do that only for the whole category)
 - Advertising by regions (region1.osclass.org/region2.osclass.org)
 - Custom searchable fields (you will be able to personalize more searches)
 - Bender responsive theme as default theme
-- Akismet for listings, (added akismet filter to new listings)
+- Akismet for listings (added akismet filter to new listings)
 - Expiration notice (emails to the users reminding them about the expiration date of each listing)
 - Added search filter to manage users
 - Sending email to new admins created from oc-admin
 - Manage users minor improvements (row colorsStatus , Link to public user profile)
+- Added ability to display a custom maintenance page (per theme. Create a maintenance.php file in the theme folder)
 - Updated JQuery to 1.8
 - New routes for plugins
 - Override email from and email name from

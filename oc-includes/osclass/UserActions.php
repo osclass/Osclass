@@ -252,7 +252,7 @@
 
                 //if we want to change the password
                 if( Params::getParam('s_password', false, false) != '') {
-                    $input['s_password'] = sha1( Params::getParam('s_password', false, false) );
+                    $input['s_password'] = osc_hash_password(Params::getParam('s_password', false, false));
                 }
                 $input['s_username']     = osc_sanitize_username(Params::getParam('s_username'));
             }

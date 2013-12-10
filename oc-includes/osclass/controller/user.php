@@ -34,14 +34,14 @@
             switch( $this->action ) {
                 case('dashboard'):      //dashboard...
                                         $max_items = (Params::getParam('max_items')!='')?Params::getParam('max_items'):5;
-                                        $aItems = Item::newInstance()->findByUserIDEnabled(Session::newInstance()->_get('userId'), 0, $max_items);
+                                        $aItems = Item::newInstance()->findByUserIDEnabled(osc_logged_user_id(), 0, $max_items);
                                         //calling the view...
                                         $this->_exportVariableToView('items', $aItems);
                                         $this->_exportVariableToView('max_items', $max_items);
                                         $this->doView('user-dashboard.php');
                 break;
                 case('profile'):        //profile...
-                                        $user = User::newInstance()->findByPrimaryKey( Session::newInstance()->_get('userId') );
+                                        $user = User::newInstance()->findByPrimaryKey( osc_logged_user_id() );
                                         $aCountries = Country::newInstance()->listAll();
                                         $aRegions = array();
                                         if( $user['fk_c_country_code'] != '' ) {
@@ -176,7 +176,7 @@
                                                     $this->redirectTo( osc_change_user_password_url() );
                                                 }
 
-                                                if( $user['s_password'] != sha1( Params::getParam('password', false, false) ) ) {
+                                                if(!osc_verify_password(Params::getParam('password', false, false), $user['s_password'])) {
                                                     osc_add_flash_error_message( _m("Current password doesn't match") );
                                                     $this->redirectTo( osc_change_user_password_url() );
                                                 }
@@ -191,7 +191,7 @@
                                                     $this->redirectTo( osc_change_user_password_url() );
                                                 }
 
-                                                User::newInstance()->update(array( 's_password' => sha1( Params::getParam ('new_password', false, false) ) )
+                                                User::newInstance()->update(array( 's_password' => osc_hash_password(Params::getParam ('new_password', false, false)))
                                                                            ,array( 'pk_i_id' => Session::newInstance()->_get('userId') ) );
 
                                                 osc_add_flash_ok_message( _m('Password has been changed') );
@@ -201,9 +201,9 @@
                                                 $itemsPerPage = (Params::getParam('itemsPerPage')!='')?Params::getParam('itemsPerPage'):10;
                                                 $page         = (Params::getParam('iPage') > 0) ? Params::getParam('iPage') -1 : 0;
                                                 $itemType     = Params::getParam('itemType');
-                                                $total_items  = Item::newInstance()->countItemTypesByUserID($_SESSION['userId'], $itemType);
+                                                $total_items  = Item::newInstance()->countItemTypesByUserID(osc_logged_user_id(), $itemType);
                                                 $total_pages  = ceil($total_items/$itemsPerPage);
-                                                $items        = Item::newInstance()->findItemTypesByUserID($_SESSION['userId'], $page*$itemsPerPage, $itemsPerPage, $itemType);
+                                                $items        = Item::newInstance()->findItemTypesByUserID(osc_logged_user_id(), $page*$itemsPerPage, $itemsPerPage, $itemType);
 
                                                 $this->_exportVariableToView('items', $items);
                                                 $this->_exportVariableToView('search_total_pages', $total_pages);
@@ -251,31 +251,6 @@
                     }
 
                     $this->redirectTo(osc_user_alerts_url());
-                break;
-                case 'deleteResource':
-                    $id   = Params::getParam('id');
-                    $name = Params::getParam('name');
-                    $fkid = Params::getParam('fkid');
-
-                    $resource = ItemResource::newInstance()->findByPrimaryKey($id);
-                    $item = Item::newInstance()->findByPrimaryKey($fkid);
-
-                    if ($resource && $item) {
-                        if($resource['fk_i_item_id']==$fkid && $item['fk_i_user_id']==  osc_logged_user_id()) {
-                            // Delete: file, db table entry
-                            osc_deleteResource($id, false);
-                            Log::newInstance()->insertLog('user', 'deleteResource', $id, $id, 'user', osc_logged_user_id());
-                            ItemResource::newInstance()->delete(array('pk_i_id' => $id, 'fk_i_item_id' => $item, 's_name' => $name) );
-
-                            osc_add_flash_ok_message(_m('The selected photo has been successfully deleted'));
-                        } else {
-                            osc_add_flash_error_message(_m("The selected photo does not belong to you"));
-                        }
-                    } else {
-                        osc_add_flash_error_message(_m("The selected photo couldn't be deleted"));
-                    }
-
-                    $this->redirectTo( osc_base_url(true) . "?page=item&action=item_edit&id=" . $fkid );
                 break;
                 case 'delete':
                     $id     = Params::getParam('id');

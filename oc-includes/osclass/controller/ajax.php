@@ -66,11 +66,30 @@
                     echo json_encode($cities);
                 break;
                 case 'delete_image': // Delete images via AJAX
-                    $id     = Params::getParam('id');
-                    $item   = Params::getParam('item');
-                    $code   = Params::getParam('code');
-                    $secret = Params::getParam('secret');
+                    $ajax_photo = Params::getParam('ajax_photo');
+                    $id         = Params::getParam('id');
+                    $item       = Params::getParam('item');
+                    $code       = Params::getParam('code');
+                    $secret     = Params::getParam('secret');
                     $json = array();
+
+                    if($ajax_photo!='') {
+                        $files = Session::newInstance()->_get('ajax_files');
+                        $success = false;
+
+                        foreach($files as $uuid => $file) {
+                            if($file==$ajax_photo) {
+                                $filename = $files[$uuid];
+                                unset($files[$uuid]);
+                                Session::newInstance()->_set('ajax_files', $files);
+                                $success = @unlink(osc_content_path().'uploads/temp/'.$filename);
+                                break;
+                            }
+                        }
+
+                        echo json_encode(array('success' => $success, 'msg' => $success?_m('The selected photo has been successfully deleted'):_m("The selected photo couldn't be deleted")));
+                        return false;
+                    }
 
                     if( Session::newInstance()->_get('userId') != '' ){
                         $userId = Session::newInstance()->_get('userId');
@@ -252,7 +271,38 @@
                         echo json_encode(array('exists' => 1, 's_username' => $username));
                     }
                 break;
-
+                case 'ajax_upload':
+                    // Include the uploader class
+                    require_once(LIB_PATH."AjaxUploader.php");
+                    $uploader = new AjaxUploader();
+                    $original = pathinfo($uploader->getOriginalName());
+                    $filename = uniqid("qqfile_").".".$original['extension'];
+                    $result = $uploader->handleUpload(osc_content_path().'uploads/temp/'.$filename);
+                    $result['uploadName'] = $filename;
+                    echo htmlspecialchars(json_encode($result), ENT_NOQUOTES);
+                    break;
+                case 'ajax_validate':
+                    $id = Params::getParam('id');
+                    if(!is_numeric($id)) { echo json_encode(array('success' => false)); die();}
+                    $secret = Params::getParam('secret');
+                    $item = Item::newInstance()->findByPrimaryKey($id);
+                    if($item['s_secret']!=$secret) { echo json_encode(array('success' => false)); die();}
+                    $nResources = ItemResource::newInstance()->countResources($id);
+                    $result = array('success' => ($nResources<osc_max_images_per_item()), 'count' => $nResources);
+                    echo json_encode($result);
+                    break;
+                case 'delete_ajax_upload':
+                    $files = Session::newInstance()->_get('ajax_files');
+                    $success = false;
+                    $filename = '';
+                    if(isset($files[Params::getParam('qquuid')]) && $files[Params::getParam('qquuid')]!='') {
+                        $filename = $files[Params::getParam('qquuid')];
+                        unset($files[Params::getParam('qquuid')]);
+                        Session::newInstance()->_set('ajax_files', $files);
+                        $success = @unlink(osc_content_path().'uploads/temp/'.$filename);
+                    };
+                    echo json_encode(array('success' => $success, 'uploadName' => $filename));
+                    break;
                 default:
                     echo json_encode(array('error' => __('no action defined')));
                 break;

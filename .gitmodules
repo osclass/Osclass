@@ -1,0 +1,3 @@
+[submodule "oc-content/themes/bender"]
+	path = oc-content/themes/bender
+	url = git@github.com:osclass/theme-bender.git

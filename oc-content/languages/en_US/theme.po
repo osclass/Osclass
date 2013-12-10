@@ -1,14 +1,14 @@
-# Copyright (C) 2013 Osclass team
+# Copyright (C) 2013 Osclass
 # This file is distributed under the same license as the {package-name} package.
 msgid ""
 msgstr ""
 "Project-Id-Version: Osclass\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-28 08:31:51+00:00\n"
+"POT-Creation-Date: 2013-12-03 16:09:56+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2013-08-28 10:35+0100\n"
+"PO-Revision-Date: 2013-12-03 17:38+0100\n"
 "Last-Translator: _CONEJO <conejo@conejo.me>\n"
 "Language-Team: Translations <translations@osclass.org>\n"
 
@@ -25,7 +25,7 @@ msgid "<strong>Search</strong> for it:"
 msgstr ""
 
 #: 404.php:18
-#: header.php:71
+#: header.php:73
 msgid "Search"
 msgstr ""
 
@@ -34,55 +34,55 @@ msgid "<strong>Look</strong> for it in the most popular categories."
 msgstr ""
 
 #: admin/header.php:7
-#: functions.php:471
+#: functions.php:526
 msgid "Header logo"
 msgstr ""
 
-#: admin/header.php:10
+#: admin/header.php:13
 msgid "Preview"
 msgstr ""
 
-#: admin/header.php:17
+#: admin/header.php:20
 msgid "Remove logo"
 msgstr ""
 
-#: admin/header.php:25
+#: admin/header.php:28
 msgid "No logo has been uploaded yet"
 msgstr ""
 
-#: admin/header.php:28
+#: admin/header.php:31
 msgid "Upload logo"
 msgstr ""
 
-#: admin/header.php:30
+#: admin/header.php:33
 msgid "The preferred size of the logo is 600x100."
 msgstr ""
 
-#: admin/header.php:32
+#: admin/header.php:35
 msgid "<strong>Note:</strong> Uploading another logo will overwrite the current logo."
 msgstr ""
 
-#: admin/header.php:40
+#: admin/header.php:43
 msgid "Logo image (png,gif,jpg)"
 msgstr ""
 
-#: admin/header.php:46
+#: admin/header.php:49
 msgid "Upload"
 msgstr ""
 
-#: admin/header.php:55
+#: admin/header.php:58
 msgid "The images folder <strong>%s</strong> is not writable on your server"
 msgstr ""
 
-#: admin/header.php:56
+#: admin/header.php:59
 msgid "Osclass can't upload the logo image from the administration panel."
 msgstr ""
 
-#: admin/header.php:57
+#: admin/header.php:60
 msgid "Please make the aforementioned image folder writable."
 msgstr ""
 
-#: admin/header.php:62
+#: admin/header.php:65
 msgid "To make a directory writable under UNIX execute this command from the shell:"
 msgstr ""
 
@@ -99,7 +99,7 @@ msgid "Donate"
 msgstr ""
 
 #: admin/settings.php:24
-#: functions.php:472
+#: functions.php:527
 msgid "Theme settings"
 msgstr ""
 
@@ -159,7 +159,7 @@ msgid "Subscribe now"
 msgstr ""
 
 #: common/head.php:3
-#: item.php:165
+#: item.php:157
 #: loop-single-premium.php:26
 #: loop-single.php:26
 msgid "Delete"
@@ -176,7 +176,7 @@ msgstr ""
 #: contact.php:40
 #: item-send-friend.php:44
 #: item-sidebar.php:76
-#: item.php:191
+#: item.php:183
 #: user-public-sidebar.php:33
 msgid "Your name"
 msgstr ""
@@ -206,53 +206,53 @@ msgstr ""
 
 #: contact.php:68
 #: item-send-friend.php:87
-#: item-sidebar.php:112
-#: item.php:216
+#: item-sidebar.php:119
+#: item.php:208
 #: user-public-sidebar.php:69
 msgid "Send"
 msgstr ""
 
-#: footer.php:33
+#: footer.php:34
 #: header.php:42
 msgid "Hi %s"
 msgstr ""
 
-#: footer.php:34
+#: footer.php:35
 #: header.php:43
 msgid "My account"
 msgstr ""
 
-#: footer.php:35
+#: footer.php:36
 #: header.php:44
 msgid "Logout"
 msgstr ""
 
-#: footer.php:38
-#: functions.php:319
+#: footer.php:39
+#: functions.php:355
 #: header.php:47
 #: item-sidebar.php:54
 msgid "Login"
 msgstr ""
 
-#: footer.php:41
+#: footer.php:42
 #: header.php:49
 #: item-sidebar.php:55
 #: user-login.php:58
 msgid "Register for a free account"
 msgstr ""
 
-#: footer.php:46
-#: header.php:53
+#: footer.php:49
+#: header.php:54
 msgid "Publish your ad for free"
 msgstr ""
 
-#: footer.php:60
-#: functions.php:323
+#: footer.php:64
+#: functions.php:359
 #: user-public-sidebar.php:26
 msgid "Contact"
 msgstr ""
 
-#: footer.php:70
+#: footer.php:74
 msgid "Language:"
 msgstr ""
 
@@ -260,126 +260,130 @@ msgstr ""
 msgid "ie. PHP Programmer"
 msgstr ""
 
-#: functions.php:304
+#: functions.php:340
 #: item-post.php:40
 msgid "Publish a listing"
 msgstr ""
 
-#: functions.php:305
+#: functions.php:341
 msgid "Edit your listing"
 msgstr ""
 
-#: functions.php:306
+#: functions.php:342
 #: item-send-friend.php:31
 msgid "Send to a friend"
 msgstr ""
 
-#: functions.php:307
+#: functions.php:343
 #: item-sidebar.php:40
 msgid "Contact publisher"
 msgstr ""
 
-#: functions.php:308
+#: functions.php:344
 msgid "Search results"
 msgstr ""
 
-#: functions.php:309
+#: functions.php:345
 msgid "Search results: %s"
 msgstr ""
 
-#: functions.php:310
+#: functions.php:346
 msgid "Dashboard"
 msgstr ""
 
-#: functions.php:311
+#: functions.php:347
 msgid "%s's profile"
 msgstr ""
 
-#: functions.php:312
-#: functions.php:356
+#: functions.php:348
+#: functions.php:397
 msgid "Account"
 msgstr ""
 
-#: functions.php:313
-#: functions.php:346
-#: user-alerts.php:53
+#: functions.php:349
+#: functions.php:387
+#: search.php:128
+#: user-alerts.php:51
 msgid "Listings"
 msgstr ""
 
-#: functions.php:314
-#: functions.php:351
+#: functions.php:350
+#: functions.php:392
 #: user-alerts.php:32
 #: user-alerts.php:37
 msgid "Alerts"
 msgstr ""
 
-#: functions.php:315
+#: functions.php:351
 #: user-profile.php:32
 #: user-profile.php:37
 msgid "Update account"
 msgstr ""
 
-#: functions.php:316
-#: functions.php:361
+#: functions.php:352
+#: functions.php:402
 msgid "Change email"
 msgstr ""
 
-#: functions.php:317
-#: functions.php:366
+#: functions.php:353
+#: functions.php:407
 #: user-change_username.php:34
 #: user-change_username.php:39
 msgid "Change username"
 msgstr ""
 
-#: functions.php:318
-#: functions.php:321
-#: functions.php:371
+#: functions.php:354
+#: functions.php:357
+#: functions.php:412
 #: user-change_password.php:32
 #: user-change_password.php:37
 #: user-forgot_password.php:52
 msgid "Change password"
 msgstr ""
 
-#: functions.php:320
+#: functions.php:356
 msgid "Recover password"
 msgstr ""
 
-#: functions.php:322
+#: functions.php:358
 msgid "Create a new account"
 msgstr ""
 
-#: functions.php:376
+#: functions.php:382
+msgid "Public Profile"
+msgstr ""
+
+#: functions.php:417
 #: user-sidebar.php:28
 msgid "Delete account"
 msgstr ""
 
-#: functions.php:434
+#: functions.php:474
 msgid "Theme settings updated correctly"
 msgstr ""
 
-#: functions.php:441
+#: functions.php:489
 msgid "The logo image has been uploaded correctly"
 msgstr ""
 
-#: functions.php:443
-#: functions.php:446
+#: functions.php:491
 msgid "An error has occurred, please try again"
 msgstr ""
 
-#: functions.php:453
+#: functions.php:502
 msgid "The logo image has been removed"
 msgstr ""
 
-#: functions.php:455
+#: functions.php:504
 msgid "Image not found"
 msgstr ""
 
-#: functions.php:530
-#: functions.php:552
+#: functions.php:585
+#: functions.php:607
 msgid "All categories"
 msgstr ""
 
-#: header.php:65
+#: header.php:67
 #: item-post.php:55
 msgid "Select a category"
 msgstr ""
@@ -393,7 +397,7 @@ msgid "Category"
 msgstr ""
 
 #: item-post.php:59
-#: item.php:204
+#: item.php:196
 msgid "Title"
 msgstr ""
 
@@ -407,67 +411,58 @@ msgstr ""
 msgid "Price"
 msgstr ""
 
-#: item-post.php:81
 #: item-post.php:83
-msgid "Photos"
-msgstr ""
-
-#: item-post.php:90
-msgid "Add new photo"
-msgstr ""
-
-#: item-post.php:96
 msgid "Listing Location"
 msgstr ""
 
-#: item-post.php:99
+#: item-post.php:86
 #: user-profile.php:70
 msgid "Country"
 msgstr ""
 
-#: item-post.php:105
+#: item-post.php:92
 #: user-profile.php:76
 msgid "Region"
 msgstr ""
 
-#: item-post.php:111
+#: item-post.php:98
 #: search-sidebar.php:44
 #: user-profile.php:82
 msgid "City"
 msgstr ""
 
-#: item-post.php:117
+#: item-post.php:104
 msgid "City Area"
 msgstr ""
 
-#: item-post.php:123
+#: item-post.php:110
 #: user-profile.php:94
 msgid "Address"
 msgstr ""
 
-#: item-post.php:132
+#: item-post.php:119
 msgid "Seller's information"
 msgstr ""
 
-#: item-post.php:134
+#: item-post.php:121
 #: item-sidebar.php:59
 #: user-profile.php:46
 #: user-register.php:39
 msgid "Name"
 msgstr ""
 
-#: item-post.php:140
+#: item-post.php:127
 #: user-login.php:38
 #: user-recover.php:37
 #: user-register.php:45
 msgid "E-mail"
 msgstr ""
 
-#: item-post.php:147
+#: item-post.php:134
 msgid "Show e-mail on the listing page"
 msgstr ""
 
-#: item-post.php:166
+#: item-post.php:153
 #: user-change_email.php:59
 #: user-change_password.php:64
 #: user-change_username.php:102
@@ -475,12 +470,12 @@ msgstr ""
 msgid "Update"
 msgstr ""
 
-#: item-post.php:166
+#: item-post.php:153
 msgid "Publish"
 msgstr ""
 
 #: item-send-friend.php:50
-#: item.php:197
+#: item.php:189
 msgid "Your e-mail"
 msgstr ""
 
@@ -553,12 +548,16 @@ msgstr ""
 msgid "Phone number"
 msgstr ""
 
-#: item-sidebar.php:106
+#: item-sidebar.php:95
+msgid "Attachment"
+msgstr ""
+
+#: item-sidebar.php:113
 #: user-public-sidebar.php:63
 msgid "Enter the words above"
 msgstr ""
 
-#: item-sidebar.php:108
+#: item-sidebar.php:115
 #: user-public-sidebar.php:65
 msgid "Help"
 msgstr ""
@@ -572,7 +571,7 @@ msgid "<strong class=\"update\">Modified date:</strong> %1$s"
 msgstr ""
 
 #: item.php:61
-#: main.php:75
+#: main.php:67
 msgid "Location"
 msgstr ""
 
@@ -619,23 +618,23 @@ msgstr ""
 msgid "Related listings"
 msgstr ""
 
-#: item.php:154
+#: item.php:146
 msgid "Comments"
 msgstr ""
 
-#: item.php:161
+#: item.php:153
 msgid "by"
 msgstr ""
 
-#: item.php:165
+#: item.php:157
 msgid "Delete your comment"
 msgstr ""
 
-#: item.php:177
+#: item.php:169
 msgid "Leave your comment (spam and offensive messages will be removed)"
 msgstr ""
 
-#: item.php:210
+#: item.php:202
 msgid "Comment"
 msgstr ""
 
@@ -662,7 +661,7 @@ msgstr ""
 msgid "Grid"
 msgstr ""
 
-#: main.php:65
+#: main.php:57
 msgid "See all listings"
 msgstr ""
 
@@ -718,7 +717,11 @@ msgstr ""
 msgid "Sort by"
 msgstr ""
 
-#: search.php:157
+#: search.php:121
+msgid "Premium listings"
+msgstr ""
+
+#: search.php:141
 msgid "Other searches that may interest you"
 msgstr ""
 
@@ -879,10 +882,7 @@ msgstr ""
 msgid "Are you sure you want to delete your account?"
 msgstr ""
 
-#. #-#-#-#-#  theme.po (Osclass)  #-#-#-#-#
 #. Theme Name of the plugin/theme
-#. #-#-#-#-#  theme.po (Osclass)  #-#-#-#-#
-#. Description of the plugin/theme
 msgid "bender"
 msgstr ""
 
@@ -890,10 +890,14 @@ msgstr ""
 #. Theme URI of the plugin/theme
 #. #-#-#-#-#  theme.po (Osclass)  #-#-#-#-#
 #. Author URI of the plugin/theme
-msgid "http://www.osclass.org/"
+msgid "http://osclass.org/"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "Bender theme"
 msgstr ""
 
 #. Author of the plugin/theme
-msgid "Osclass team"
+msgid "Osclass"
 msgstr ""
 
