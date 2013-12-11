@@ -290,7 +290,7 @@
                 </div>
                 <h3 class="render-title"><?php _e('Password'); ?></h3>
                 <div class="form-row">
-                    <div class="form-label"><?php _e('New password'); ?><?php if(!$aux['edit']) { printf('<em>%s</em>', __('(twice, required)')); } ?></div>
+                    <div class="form-label"><?php _e('New password'); ?><?php if(!$aux['edit']) { printf('<br/><em>%s</em>', __('(twice, required)')); } ?></div>
                     <div class="form-controls">
                         <?php UserForm::password_text($user); ?>
                         <?php if($aux['edit']) { ?>
