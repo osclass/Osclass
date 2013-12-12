@@ -51,7 +51,7 @@
      * @return string pagination links
      */
     function osc_comments_pagination() {
-        if( (osc_comments_per_page() == 0) || (osc_item_comments_page() === 'all') ) {
+        if( (osc_comments_per_page() == 0) || (osc_item_comments_page() === 'all') || (osc_item_total_comments() <= osc_comments_per_page()) ) {
             return '';
         } else {
             $params = array('total'    => ceil(osc_item_total_comments()/osc_comments_per_page())
