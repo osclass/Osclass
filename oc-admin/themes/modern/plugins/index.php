@@ -117,6 +117,7 @@
                     <th> &nbsp; </th>
                     <th> &nbsp; </th>
                     <th> &nbsp; </th>
+                    <th> &nbsp; </th>
                 </tr>
             </thead>
             <tbody>
@@ -327,5 +328,11 @@
 
         return false;
     });
+    function delete_plugin(plugin) {
+        var x = confirm('<?php echo osc_esc_js(__('You are about to delete the files of the plugin. Do you want to continue?'))?>');
+        if(x) {
+            window.location = '<?php echo osc_admin_base_url(true).'?page=plugins&action=delete&'.osc_csrf_token_url().'&plugin='; ?>'+plugin;
+        }
+    }
 </script>
 <?php osc_current_admin_theme_path( 'parts/footer.php' ); ?>

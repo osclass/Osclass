@@ -225,7 +225,23 @@
 
                     osc_add_flash_error_message( _m('No plugin selected'), 'admin');
                     $this->doView('plugins/index.php');
-                break;
+                    break;
+                case 'delete':
+                    osc_csrf_check();
+                    $plugin = str_replace('/index.php', '', Params::getParam("plugin"));
+                    $path = preg_replace('([\/]+)', '/', CONTENT_PATH.'plugins/'.$plugin);
+                    if($plugin!="" && strpos($plugin, '../')===false && $path!=CONTENT_PATH.'plugins/') {
+                        if(osc_deleteDir($path)) {
+                            osc_add_flash_ok_message( _m('The files were deleted'), 'admin');
+                        } else {
+                            osc_add_flash_error_message( sprintf(_m('There were an error deleting the files, please check the permissions of the files in %s'), $path."/"), 'admin');
+                        }
+                        $this->redirectTo(osc_admin_base_url(true)."?page=plugins");
+                    }
+
+                    osc_add_flash_error_message( _m('No plugin selected'), 'admin');
+                    $this->doView('plugins/index.php');
+                    break;
                 case 'error_plugin':
                     // force php errors and simulate plugin installation to show the errors in the iframe
                     if( !OSC_DEBUG ) {
@@ -311,11 +327,14 @@
                             }
                         }
                         // prepare row 6
-                        $sInstall  = '';
                         if( $installed ) {
                             $sInstall = '<a onclick="javascript:return uninstall_dialog(\'' . $pInfo['filename'] . '\', \'' . $pInfo['plugin_name'] . '\');" href="' . osc_admin_base_url(true) . '?page=plugins&amp;action=uninstall&amp;plugin=' . $pInfo['filename'] . "&amp;" . osc_csrf_token_url() . '">' . __('Uninstall') . '</a>';
                         } else {
                             $sInstall = '<a href="' . osc_admin_base_url(true) . '?page=plugins&amp;action=install&amp;plugin=' . $pInfo['filename'] . "&amp;" . osc_csrf_token_url() . '">' . __('Install') . '</a>';
+                        }
+                        $sDelete = '';
+                        if( !$installed ) {
+                            $sDelete =  '<a href="javascript:delete_plugin(\''.$pInfo['filename'].'\');" >' . __('Delete') . '</a>';
                         }
 
                         $sHelp = '';
@@ -326,7 +345,6 @@
                         if($pInfo['plugin_uri']!='') {
 							$sSiteUrl = ' | <a target="_blank" href="'. $pInfo['plugin_uri'] . '">'. __('Plugins Site'). '</a>';
 						}
-						$sAuthor = '';
 						if($pInfo['author_uri']!='') {
 							$sAuthor = __('By') . ' <a target="_blank" href="'. $pInfo['author_uri'] . '">'. $pInfo['author'] . '</a>';
 						} else {
@@ -339,6 +357,7 @@
                         $row[] = ($sConfigure!='')  ? $sConfigure   : '&nbsp;';
                         $row[] = ($sEnable!='')     ? $sEnable      : '&nbsp;';
                         $row[] = ($sInstall!='')    ? $sInstall     : '&nbsp;';
+                        $row[] = ($sDelete!='')     ? $sDelete      : '&nbsp;';
                         $aData[] = $row;
                         if(@$pInfo['plugin_update_uri'] != '') {
                             $aInfo[@$pInfo['plugin_update_uri']] = $pInfo;
