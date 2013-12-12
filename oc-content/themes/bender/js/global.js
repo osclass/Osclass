@@ -198,6 +198,11 @@ $(document).ready(function(event){
                 title : {
                     type : 'inside'
                 }
+            },
+            tpl: {
+                prev: '<a title="'+i18n_fancybox_prev+'" class="fancybox-nav fancybox-prev"><span></span></a>',
+                next: '<a title="'+i18n_fancybox_next+'" class="fancybox-nav fancybox-next"><span></span></a>',
+                closeBtn : '<a title="'+i18n_fancybox_closeBtn+'" class="fancybox-item fancybox-close" href="javascript:;"></a>'
             }
         });
 
