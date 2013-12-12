@@ -833,3 +833,15 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
+#: /var/www/osclass-themes-git/bender/common/head.php:50
+msgid "Previous image"
+msgstr ""
+
+#: /var/www/osclass-themes-git/bender/common/head.php:51
+msgid "Next image"
+msgstr ""
+
+#: /var/www/osclass-themes-git/bender/common/head.php:52
+msgid "Close"
+msgstr ""
+
