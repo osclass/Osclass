@@ -288,9 +288,9 @@
                 }
                 $this->im->annotateImage($draw, $offset['x'], $offset['y'], 0, $text);
             } else {
-                imagealphablending( $this->im, false );
+                imagealphablending( $this->im, true );
                 imagesavealpha( $this->im, true );
-                $white = imagecolorallocatealpha($this->im, 0, 0, 0, 127);
+                $white = imagecolorallocatealpha($this->im, 255, 255, 255, 127);
                 imagefill($this->im, 0, 0, $white);
                 $color  = $this->_imageColorAllocateHex($color);
                 $offset = $this->_calculateOffset($text);

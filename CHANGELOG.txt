@@ -1,3 +1,9 @@
+Osclass 3.3.1 2013-12-16
+------------------------
+- Fixed blurred watermark text
+- Fixed black background on images
+- Fixed error that makes impossible to install languages via market
+
 Osclass 3.3 2013-12-10
 ------------------------
 - Subdomains improved

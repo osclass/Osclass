@@ -2113,6 +2113,8 @@ function osc_market($section, $code) {
                                     }
                                 }
 
+                            } else if($data['e_type']=='LANGUAGE') {
+                                osc_checkLocales();
                             }
                             // recount plugins&themes for update
                             if($section == 'plugins') {
