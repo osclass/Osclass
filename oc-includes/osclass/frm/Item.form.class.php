@@ -1485,8 +1485,6 @@
                         var result = canContinue(len);
                         return result.success;
 
-                    })on('error', function (event, id, name, errorReason, xhrOrXdr) {
-                        alert(qq.format("Error on file number {} - {}.  Reason: {}", id, name, errorReason));
                     });
 
                     function canContinue(numUpload) {

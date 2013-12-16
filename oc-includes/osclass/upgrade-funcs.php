@@ -454,7 +454,7 @@ CREATE TABLE %st_item_description_tmp (
         osc_set_preference('description_character_length', '5000', 'INTEGER');
     }
 
-    osc_changeVersionTo(330);
+    osc_changeVersionTo(331);
 
     if(empty($aMessages)) {
         osc_add_flash_ok_message(_m('Osclass has been updated successfully. <a href="http://forums.osclass.org/">Need more help?</a>'), 'admin');
