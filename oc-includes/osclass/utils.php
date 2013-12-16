@@ -438,7 +438,7 @@ function osc_sendMail($params) {
     $mail->CharSet = 'utf-8';
     $mail->IsHTML(true);
 
-    $mail = osc_apply_filter('pre_send_mail', $mail);
+    $mail = osc_apply_filter('pre_send_mail',$mail, $params);
 
     // send email!
     try {
