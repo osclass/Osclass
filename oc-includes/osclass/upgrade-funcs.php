@@ -456,17 +456,19 @@ CREATE TABLE %st_item_description_tmp (
 
     osc_changeVersionTo(331);
 
-    if(empty($aMessages)) {
-        osc_add_flash_ok_message(_m('Osclass has been updated successfully. <a href="http://forums.osclass.org/">Need more help?</a>'), 'admin');
-        echo '<script type="text/javascript"> window.location = "'.osc_admin_base_url(true).'?page=tools&action=version"; </script>';
-    } else {
-        echo '<div class="well ui-rounded-corners separate-top-medium">';
-        echo '<p>'.__('Osclass &raquo; Updated correctly').'</p>';
-        echo '<p>'.__('Osclass has been updated successfully. <a href="http://forums.osclass.org/">Need more help?</a>').'</p>';
-        foreach($aMessages as $msg) {
-            echo "<p>".$msg."</p>";
+    if(!defined('IS_AJAX') || !IS_AJAX) {
+        if(empty($aMessages)) {
+            osc_add_flash_ok_message(_m('Osclass has been updated successfully. <a href="http://forums.osclass.org/">Need more help?</a>'), 'admin');
+            echo '<script type="text/javascript"> window.location = "'.osc_admin_base_url(true).'?page=tools&action=version"; </script>';
+        } else {
+            echo '<div class="well ui-rounded-corners separate-top-medium">';
+            echo '<p>'.__('Osclass &raquo; Updated correctly').'</p>';
+            echo '<p>'.__('Osclass has been updated successfully. <a href="http://forums.osclass.org/">Need more help?</a>').'</p>';
+            foreach($aMessages as $msg) {
+                echo "<p>".$msg."</p>";
+            }
+            echo "</div>";
         }
-        echo "</div>";
     }
 
     /**
