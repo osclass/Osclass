@@ -62,14 +62,14 @@
         }
     }
 
-    function osc_pagination_items($extraParams = array(), $field = false)
+    function osc_pagination_items($extraParams = array(), $field = false, $showAs = false)
     {
         if(osc_is_public_profile()) {
             $url = osc_user_list_items_pub_profile_url('{PAGE}', $field);
-            $first_url = osc_user_public_profile_url();;
+            $first_url = osc_user_public_profile_url('',$field);;
         } elseif(osc_is_list_items()) {
-            $url = osc_user_list_items_url('{PAGE}', $field);
-            $first_url = osc_user_list_items_url();
+            $url = osc_user_list_items_url('{PAGE}', $field, $showAs);
+            $first_url = osc_user_list_items_url('',$field, $showAs);
         }
 
         $params = array('total'    => osc_search_total_pages(),
@@ -127,6 +127,7 @@
             'total'    => $pageTotal,
             'selected' => $pageActual - 1,
             'url'      => $urlActual . '&iPage={PAGE}',
+            'first_url'=> $urlActual ,
             'sides'    => 5
         );
 
