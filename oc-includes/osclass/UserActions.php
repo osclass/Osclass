@@ -262,6 +262,10 @@
             $input['s_phone_land']   = trim(Params::getParam('s_phone_land'));
             $input['s_phone_mobile'] = trim(Params::getParam('s_phone_mobile'));
 
+            if(strtolower(substr($input['s_website'], 0, 4))!=='http') {
+                $input['s_website'] = 'http://'.$input['s_website'];
+            }
+
             //locations...
             $country = Country::newInstance()->findByCode( Params::getParam('countryId') );
             if(count($country) > 0) {
