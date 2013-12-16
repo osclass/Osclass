@@ -283,7 +283,7 @@ function osc_sendMail($params) {
     $mail->ClearCustomHeaders();
     $mail->ClearReplyTos();
 
-    $mail = osc_apply_filter('init_send_mail', $mail);
+    $mail = osc_apply_filter('init_send_mail', $mail, $params);
 
     if( osc_mailserver_pop() ) {
         require_once osc_lib_path() . 'phpmailer/class.pop3.php';
@@ -375,8 +375,8 @@ function osc_sendMail($params) {
         }
     }
 
-    $mail->From     = osc_apply_filter('mail_from', $from);
-    $mail->FromName = osc_apply_filter('mail_from_name', $from_name);
+    $mail->From     = osc_apply_filter('mail_from', $from, $params);
+    $mail->FromName = osc_apply_filter('mail_from_name', $from_name, $params);
 
     $to      = $params['to'];
     $to_name = '';
@@ -438,7 +438,7 @@ function osc_sendMail($params) {
     $mail->CharSet = 'utf-8';
     $mail->IsHTML(true);
 
-    $mail = osc_apply_filter('pre_send_mail', $mail);
+    $mail = osc_apply_filter('pre_send_mail', $mail, $params);
 
     // send email!
     try {
