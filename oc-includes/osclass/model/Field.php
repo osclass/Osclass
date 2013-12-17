@@ -130,7 +130,9 @@
             foreach($ids as $id) {
                 if(is_numeric($id)) { $where[] = 'c.fk_i_category_id = '.$id; }
             }
-            if(!empty($where)) {
+            if(empty($where)) {
+                return array();
+            } else {
                 $this->dao->where('( '.implode(' OR ', $where).' )');
             }
             $this->dao->where('f.pk_i_id = c.fk_i_field_id');
