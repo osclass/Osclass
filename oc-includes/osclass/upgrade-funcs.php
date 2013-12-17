@@ -454,7 +454,7 @@ CREATE TABLE %st_item_description_tmp (
         osc_set_preference('description_character_length', '5000', 'INTEGER');
     }
 
-    osc_changeVersionTo(331);
+    osc_changeVersionTo(332);
 
     if(!defined('IS_AJAX') || !IS_AJAX) {
         if(empty($aMessages)) {

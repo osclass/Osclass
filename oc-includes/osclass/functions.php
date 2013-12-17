@@ -468,6 +468,27 @@ function osc_admin_toolbar_spam()
     }
 }
 
+function osc_admin_toolbar_update_core($force = false)
+{
+    if( !osc_is_moderator() ) {
+        $data = json_decode(osc_update_core_json(), true);
+
+        if($force) {
+            AdminToolbar::newInstance()->remove_menu('update_core');
+        }
+        if(isset($data['version']) && $data['version'] > 0) {
+            $title = sprintf(__('Osclass %s is available'), $data['s_name']);
+            AdminToolbar::newInstance()->add_menu(
+                array('id'    => 'update_core',
+                    'title' => $title,
+                    'href'  => osc_admin_base_url(true) . "?page=tools&action=upgrade",
+                    'meta'  => array('class' => 'action-btn action-btn-black')
+                ) );
+        }
+    }
+}
+
+
 function osc_check_plugins_update( $force = false )
 {
     $total = 0;
@@ -509,11 +530,11 @@ function osc_admin_toolbar_update_plugins($force = false)
         if($total > 0) {
             $title = '<i class="circle circle-gray">'.$total.'</i>'.__('Plugin updates');
             AdminToolbar::newInstance()->add_menu(
-                    array('id'    => 'update_plugin',
-                          'title' => $title,
-                          'href'  => osc_admin_base_url(true) . "?page=plugins#update-plugins",
-                          'meta'  => array('class' => 'action-btn action-btn-black')
-                    ) );
+                array('id'    => 'update_plugin',
+                    'title' => $title,
+                    'href'  => osc_admin_base_url(true) . "?page=plugins#update-plugins",
+                    'meta'  => array('class' => 'action-btn action-btn-black')
+                ) );
         }
     }
 }

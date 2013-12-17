@@ -1,3 +1,8 @@
+Osclass 3.3.2 2013-12-17
+------------------------
+- Fixed issue #1239
+- Improved a little upgrade process and warning
+
 Osclass 3.3.1 2013-12-16
 ------------------------
 - Fixed blurred watermark text
