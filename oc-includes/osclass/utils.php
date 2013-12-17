@@ -1278,7 +1278,7 @@ function osc_save_permissions( $dir = ABS_PATH ) {
                         $perms[$k] = $v;
                     }
                 } else {
-                    $perms[str_replace("//", "/", $dir . "/" . $file)] = fileperms( str_replace("//", "/", $dir . "/" . $file));
+                    $perms[str_replace("//", "/", $dir . "/" . $file)] = @fileperms( str_replace("//", "/", $dir . "/" . $file));
                 }
             }
         }
