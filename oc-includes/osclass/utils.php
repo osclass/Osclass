@@ -1905,23 +1905,23 @@ function osc_do_auto_upgrade() {
         if(substr($json->version,0,1)!=substr(osc_version(),0,1)) {
             // NEW BRANCH
             if(strpos(osc_auto_update(), 'branch')!==false) {
-                osc_run_hook('before_auto_update');
+                osc_run_hook('before_auto_upgrade');
                 $result = osc_do_upgrade();
-                osc_run_hook('after_auto_update', $result);
+                osc_run_hook('after_auto_upgrade', $result);
             }
         } else if(substr($json->version,1,1)!=substr(osc_version(),1,1)) {
             // MAJOR RELEASE
             if(strpos(osc_auto_update(), 'branch')!==false || strpos(osc_auto_update(), 'major')!==false) {
-                osc_run_hook('before_auto_update');
+                osc_run_hook('before_auto_upgrade');
                 $result = osc_do_upgrade();
-                osc_run_hook('after_auto_update', $result);
+                osc_run_hook('after_auto_upgrade', $result);
             }
         } else if(substr($json->version,2,1)!=substr(osc_version(),2,1)) {
             // MINOR RELEASE
             if(strpos(osc_auto_update(), 'branch')!==false || strpos(osc_auto_update(), 'major')!==false || strpos(osc_auto_update(), 'minor')!==false) {
-                osc_run_hook('before_auto_update');
+                osc_run_hook('before_auto_upgrade');
                 $result = osc_do_upgrade();
-                osc_run_hook('after_auto_update', $result);
+                osc_run_hook('after_auto_upgrade', $result);
             }
         }
     } else {
