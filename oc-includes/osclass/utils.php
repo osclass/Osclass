@@ -283,7 +283,7 @@ function osc_sendMail($params) {
     $mail->ClearCustomHeaders();
     $mail->ClearReplyTos();
 
-    $mail = osc_apply_filter('init_send_mail', $mail);
+    $mail = osc_apply_filter('init_send_mail', $mail, $params);
 
     if( osc_mailserver_pop() ) {
         require_once osc_lib_path() . 'phpmailer/class.pop3.php';
@@ -375,8 +375,8 @@ function osc_sendMail($params) {
         }
     }
 
-    $mail->From     = osc_apply_filter('mail_from', $from);
-    $mail->FromName = osc_apply_filter('mail_from_name', $from_name);
+    $mail->From     = osc_apply_filter('mail_from', $from, $params);
+    $mail->FromName = osc_apply_filter('mail_from_name', $from_name, $params);
 
     $to      = $params['to'];
     $to_name = '';
@@ -438,7 +438,7 @@ function osc_sendMail($params) {
     $mail->CharSet = 'utf-8';
     $mail->IsHTML(true);
 
-    $mail = osc_apply_filter('pre_send_mail',$mail, $params);
+    $mail = osc_apply_filter('pre_send_mail', $mail, $params);
 
     // send email!
     try {
@@ -1278,7 +1278,7 @@ function osc_save_permissions( $dir = ABS_PATH ) {
                         $perms[$k] = $v;
                     }
                 } else {
-                    $perms[str_replace("//", "/", $dir . "/" . $file)] = fileperms( str_replace("//", "/", $dir . "/" . $file));
+                    $perms[str_replace("//", "/", $dir . "/" . $file)] = @fileperms( str_replace("//", "/", $dir . "/" . $file));
                 }
             }
         }
@@ -1905,23 +1905,23 @@ function osc_do_auto_upgrade() {
         if(substr($json->version,0,1)!=substr(osc_version(),0,1)) {
             // NEW BRANCH
             if(strpos(osc_auto_update(), 'branch')!==false) {
-                osc_run_hook('before_auto_update');
+                osc_run_hook('before_auto_upgrade');
                 $result = osc_do_upgrade();
-                osc_run_hook('after_auto_update', $result);
+                osc_run_hook('after_auto_upgrade', $result);
             }
         } else if(substr($json->version,1,1)!=substr(osc_version(),1,1)) {
             // MAJOR RELEASE
             if(strpos(osc_auto_update(), 'branch')!==false || strpos(osc_auto_update(), 'major')!==false) {
-                osc_run_hook('before_auto_update');
+                osc_run_hook('before_auto_upgrade');
                 $result = osc_do_upgrade();
-                osc_run_hook('after_auto_update', $result);
+                osc_run_hook('after_auto_upgrade', $result);
             }
         } else if(substr($json->version,2,1)!=substr(osc_version(),2,1)) {
             // MINOR RELEASE
             if(strpos(osc_auto_update(), 'branch')!==false || strpos(osc_auto_update(), 'major')!==false || strpos(osc_auto_update(), 'minor')!==false) {
-                osc_run_hook('before_auto_update');
+                osc_run_hook('before_auto_upgrade');
                 $result = osc_do_upgrade();
-                osc_run_hook('after_auto_update', $result);
+                osc_run_hook('after_auto_upgrade', $result);
             }
         }
     } else {
