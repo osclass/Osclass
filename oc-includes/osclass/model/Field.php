@@ -124,16 +124,19 @@
         public function findIDSearchableByCategories($ids)
         {
             if(!is_array($ids)) { $ids = array($ids); };
-            $this->dao->select('pk_i_id');
-            $this->dao->from($this->getTableName());
+            $this->dao->select('f.pk_i_id');
+            $this->dao->from($this->getTableName()." f, ".DB_TABLE_PREFIX."t_meta_categories c");
             $where = array();
             foreach($ids as $id) {
-                if(is_numeric($id)) { $where[] = 'fk_i_category_id = '.$id; }
+                if(is_numeric($id)) { $where[] = 'c.fk_i_category_id = '.$id; }
             }
-            if(!empty($where)) {
-                $this->dao->where('( '.implode(' OR ', $ids).' )');
+            if(empty($where)) {
+                return array();
+            } else {
+                $this->dao->where('( '.implode(' OR ', $where).' )');
             }
-            $this->dao->where('b_searchable', 1);
+            $this->dao->where('f.pk_i_id = c.fk_i_field_id');
+            $this->dao->where('f.b_searchable', 1);
 
             $result = $this->dao->get();
 
