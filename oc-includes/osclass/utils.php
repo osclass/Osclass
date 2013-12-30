@@ -94,6 +94,7 @@ function osc_deleteDir($path) {
     while ($file = @readdir($fd)) {
         if ($file != '.' && $file != '..') {
             if (!is_dir($path . '/' . $file)) {
+                @chmod($path."/".$file, 0777);
                 if (!@unlink($path . '/' . $file)) {
                     closedir($fd);
                     return false;
