@@ -93,20 +93,6 @@ CREATE TABLE /*TABLE_PREFIX*/t_widget (
         PRIMARY KEY (pk_i_id)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
 
-CREATE TABLE /*TABLE_PREFIX*/t_admin (
-    pk_i_id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-    s_name VARCHAR(100) NOT NULL,
-    s_username VARCHAR(40) NOT NULL,
-    s_password CHAR(60) NOT NULL,
-    s_email VARCHAR(100) NULL,
-    s_secret VARCHAR(40) NULL,
-    b_moderator TINYINT(1) NOT NULL DEFAULT 0,
-
-        PRIMARY KEY (pk_i_id),
-        UNIQUE KEY (s_username),
-        UNIQUE KEY (s_email)
-) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
-
 CREATE TABLE /*TABLE_PREFIX*/t_user (
     pk_i_id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
     dt_reg_date DATETIME NOT NULL,
@@ -134,13 +120,12 @@ CREATE TABLE /*TABLE_PREFIX*/t_user (
     s_city VARCHAR(100) NULL,
     fk_i_city_area_id INT(10) UNSIGNED NULL,
     s_city_area VARCHAR(200) NULL,
-    d_coord_lat DECIMAL(10,6),
-    d_coord_long DECIMAL(10,6),
     b_company TINYINT(1) NOT NULL DEFAULT 0,
     i_items INT(10) UNSIGNED NULL DEFAULT 0,
     i_comments INT(10) UNSIGNED NULL DEFAULT 0,
     dt_access_date DATETIME NOT NULL DEFAULT  '0000-00-00 00:00:00',
     s_access_ip VARCHAR(15) NOT NULL DEFAULT '',
+    e_permission ENUM('USER', 'ADMIN', 'MODERATOR') NOT NULL DEFAULT  'USER',
 
         PRIMARY KEY (pk_i_id),
         UNIQUE KEY (s_email),

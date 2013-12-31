@@ -1130,12 +1130,23 @@
      * @return boolean
      */
     function osc_is_moderator() {
-        $admin = Admin::newInstance()->findByPrimaryKey(osc_logged_admin_id());
-
-        if( isset($admin['b_moderator']) && $admin['b_moderator']!=0 ) {
+        $user = osc_logged_user();
+        if(isset($user['e_permission']) && $user['e_permission']=='MODERATOR') {
             return true;
         }
+        return false;
+    }
 
+    /**
+     * Check is an admin is a super admin or only a moderator
+     *
+     * @return boolean
+     */
+    function osc_is_admin() {
+        $user = osc_logged_user();
+        if(isset($user['e_permission']) && $user['e_permission']=='ADMIN') {
+            return true;
+        }
         return false;
     }
 

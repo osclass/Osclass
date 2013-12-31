@@ -454,7 +454,34 @@ CREATE TABLE %st_item_description_tmp (
         osc_set_preference('description_character_length', '5000', 'INTEGER');
     }
 
-    osc_changeVersionTo(332);
+    if(osc_version() < 333) {
+        $admins = Admin::newInstance()->listAll();
+        $mUser = User::newInstance();
+        foreach($admins as $admin) {
+            unset($admin['pk_i_id']);
+            $admin['e_permission'] = $admin['b_moderator']?'MODERATOR':'ADMIN';
+            unset($admin['b_moderator']);
+            $admin['dt_reg_date'] = date('Y-m-d H:i:s');
+            $exists = $mUser->findByEmail($admin['s_email']);
+            if($exists) {
+                $mUser->update(array('e_permission' => $admin['e_permission']), array('pk_i_id' => $exists['pk_i_id']));
+            } else {
+                $exists = $mUser->findByUsername($admin['s_username']);
+                if($exists) {
+                    $admin['s_username'] = 'admin_'.$admin['s_username'];
+                }
+                $mUser->insert($admin);
+            }
+        }
+        @unlink(osc_admin_base_path().'admins.php');
+        @unlink(osc_admin_base_path().'themes/modern/admins/frm.php');
+        @unlink(osc_admin_base_path().'themes/modern/admins/index.php');
+        @rmdir(osc_admin_base_path().'/themes/modern/admins/');
+        @unlink(osc_lib_path().'osclass/model/Admin.php');
+        @unlink(osc_lib_path().'osclass/frm/Admin.form.class.php');
+    }
+
+    osc_changeVersionTo(333);
 
     if(!defined('IS_AJAX') || !IS_AJAX) {
         if(empty($aMessages)) {

@@ -74,13 +74,12 @@
                 's_city',
                 'fk_i_city_area_id',
                 's_city_area',
-                'd_coord_lat',
-                'd_coord_long',
                 'b_company',
                 'i_items',
                 'i_comments',
                 'dt_access_date',
-                's_access_ip'
+                's_access_ip',
+                'e_permission'
             );
             $this->setFields($array_fields);
         }
