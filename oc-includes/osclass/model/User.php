@@ -30,6 +30,7 @@
          * @var type
          */
         private static $instance;
+        private static $loggedUser = null;
 
         public static function newInstance()
         {
@@ -571,7 +572,16 @@
             $sql = sprintf('UPDATE %s SET i_items = i_items - 1 WHERE pk_i_id = %d', $this->getTableName(), $id);
             return $this->dao->query($sql);
         }
+
+        public static function loggedUser() {
+            $args = func_get_args();
+            if(count($args)==0) {
+                return self::$loggedUser;
+            } else {
+                self::$loggedUser = $args[0];
+            }
+        }
+
     }
 
-    /* file end: ./oc-includes/osclass/model/User.php */
 ?>

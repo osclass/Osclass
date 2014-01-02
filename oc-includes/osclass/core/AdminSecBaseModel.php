@@ -75,7 +75,7 @@
 
         function isLogged()
         {
-            return osc_is_admin_user_logged_in();
+            return (osc_is_user_logged_in() && (osc_is_ad_page() || osc_is_moderator()));
         }
 
         function isModerator()
@@ -85,17 +85,7 @@
 
         function logout()
         {
-            //destroying session
-            Session::newInstance()->_drop('adminId');
-            Session::newInstance()->_drop('adminUserName');
-            Session::newInstance()->_drop('adminName');
-            Session::newInstance()->_drop('adminEmail');
-            Session::newInstance()->_drop('adminLocale');
-
-            Cookie::newInstance()->pop('oc_adminId');
-            Cookie::newInstance()->pop('oc_adminSecret');
-            Cookie::newInstance()->pop('oc_adminLocale');
-            Cookie::newInstance()->set();
+            parent::logout();
         }
 
         function showAuthFailPage()
@@ -120,5 +110,4 @@
         }
     }
 
-    /* file end: ./oc-includes/osclass/core/AdminSecBaseModel.php */
 ?>
