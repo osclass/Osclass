@@ -50,7 +50,6 @@
         {
             Session::newInstance()->session_destroy();
             Session::newInstance()->_drop('userId');
-            Session::newInstance()->_drop('user');
 
             Cookie::newInstance()->pop('oc_userId');
             Cookie::newInstance()->pop('oc_userSecret');

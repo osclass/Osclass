@@ -37,6 +37,10 @@
         return($user);
     }
 
+    function osc_logged_user() {
+        return User::loggedUser();
+    }
+
     /**
      * Gets true if user is logged in web
      *
@@ -56,7 +60,7 @@
      * @return boolean
      */
     function osc_is_user_logged_in() {
-        $user = User::loggedUser();
+        $user = osc_logged_user();
         if(isset($user['pk_i_id'])) {
             return true;
         } else {
@@ -92,7 +96,7 @@
      * @return int
      */
     function osc_logged_user_id() {
-        $user = Session::newInstance()->_get("user");
+        $user = osc_logged_user();
         return @$user['pk_i_id'];
     }
 
@@ -102,7 +106,7 @@
      * @return string
      */
     function osc_logged_user_email() {
-        $user = Session::newInstance()->_get("user");
+        $user = osc_logged_user();
         return @$user['s_email'];
     }
 
@@ -112,7 +116,7 @@
      * @return string
      */
     function osc_logged_user_name() {
-        $user = Session::newInstance()->_get("user");
+        $user = osc_logged_user();
         return @$user['s_name'];
     }
 
@@ -122,7 +126,7 @@
      * @return string
      */
     function osc_logged_user_username() {
-        $user = Session::newInstance()->_get("user");
+        $user = osc_logged_user();
         return @$user['s_username'];
     }
 
@@ -132,7 +136,7 @@
      * @return string
      */
     function osc_logged_user_phone() {
-        $user = Session::newInstance()->_get("user");
+        $user = osc_logged_user();
         if(@$user['s_phone_land']!='') { return @$user['s_phone_land']; }
         return @$user['s_phone_mobile'];
     }

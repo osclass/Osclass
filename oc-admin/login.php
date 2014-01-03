@@ -54,7 +54,7 @@
                                         }
 
                                         // fields are not empty
-                                        $admin = Admin::newInstance()->findByUsername( Params::getParam('user') );
+                                        $admin = User::newInstance()->findByUsername( Params::getParam('user') );
 
                                         if( !$admin ) {
                                             osc_add_flash_error_message( sprintf(_m('Sorry, incorrect username. <a href="%s">Have you lost your password?</a>'), osc_admin_base_url(true) . '?page=login&amp;action=recover' ), 'admin');
@@ -71,24 +71,21 @@
                                             require_once osc_lib_path() . 'osclass/helpers/hSecurity.php';
                                             $secret = osc_genRandomPassword();
 
-                                            Admin::newInstance()->update(
+                                            User::newInstance()->update(
                                                 array('s_secret' => $secret),
                                                 array('pk_i_id' => $admin['pk_i_id'])
                                             );
 
                                             Cookie::newInstance()->set_expires( osc_time_cookie() );
-                                            Cookie::newInstance()->push('oc_adminId', $admin['pk_i_id']);
-                                            Cookie::newInstance()->push('oc_adminSecret', $secret);
-                                            Cookie::newInstance()->push('oc_adminLocale', Params::getParam('locale'));
+                                            Cookie::newInstance()->push('oc_userId', $admin['pk_i_id']);
+                                            Cookie::newInstance()->push('oc_userSecret', $secret);
+                                            Cookie::newInstance()->push('oc_userLocale', Params::getParam('locale'));
                                             Cookie::newInstance()->set();
                                         }
 
                                         // we are logged in... let's go!
-                                        Session::newInstance()->_set('adminId', $admin['pk_i_id']);
-                                        Session::newInstance()->_set('adminUserName', $admin['s_username']);
-                                        Session::newInstance()->_set('adminName', $admin['s_name']);
-                                        Session::newInstance()->_set('adminEmail', $admin['s_email']);
-                                        Session::newInstance()->_set('adminLocale', Params::getParam('locale'));
+                                        Session::newInstance()->_set('userId', $admin['pk_i_id']);
+                                        Session::newInstance()->_set('userLocale', Params::getParam('locale'));
 
                                         osc_run_hook('login_admin', $admin);
 
@@ -104,7 +101,7 @@
                                         osc_csrf_check();
 
                                         // post execution to recover the password
-                                        $admin = Admin::newInstance()->findByEmail( Params::getParam('email') );
+                                        $admin = User::newInstance()->findByEmail( Params::getParam('email') );
                                         if( $admin ) {
                                             if( (osc_recaptcha_private_key() != '') ) {
                                                 if( !osc_check_recaptcha() ) {
@@ -117,7 +114,7 @@
                                             require_once osc_lib_path() . 'osclass/helpers/hSecurity.php';
                                             $newPassword = osc_genRandomPassword(40);
 
-                                            Admin::newInstance()->update(
+                                            User::newInstance()->update(
                                                 array('s_secret' => $newPassword),
                                                 array('pk_i_id' => $admin['pk_i_id'])
                                             );
@@ -130,7 +127,7 @@
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=login');
                 break;
                 case('forgot'):         // form to recover the password (in this case we have the form in /gui/)
-                                        $admin = Admin::newInstance()->findByIdSecret(Params::getParam('adminId'), Params::getParam('code'));
+                                        $admin = User::newInstance()->findByIdSecret(Params::getParam('adminId'), Params::getParam('code'));
                                         if( !$admin ) {
                                             osc_add_flash_error_message( _m('Sorry, the link is not valid'), 'admin');
                                             $this->redirectTo( osc_admin_base_url() );
@@ -140,14 +137,14 @@
                 break;
                 case('forgot_post'):
                                         osc_csrf_check();
-                                        $admin = Admin::newInstance()->findByIdSecret(Params::getParam('adminId'), Params::getParam('code'));
+                                        $admin = User::newInstance()->findByIdSecret(Params::getParam('adminId'), Params::getParam('code'));
                                         if( !$admin ) {
                                             osc_add_flash_error_message( _m('Sorry, the link is not valid'), 'admin');
                                             $this->redirectTo( osc_admin_base_url() );
                                         }
 
                                         if( Params::getParam('new_password', false, false) == Params::getParam('new_password2', false, false) ) {
-                                            Admin::newInstance()->update(
+                                            User::newInstance()->update(
                                                 array('s_secret' => osc_genRandomPassword()
                                                     , 's_password' => osc_hash_password(Params::getParam('new_password', false, false))
                                                 ), array('pk_i_id' => $admin['pk_i_id'])

@@ -25,7 +25,6 @@
         function __construct()
         {
             parent::__construct();
-
             // check if is moderator and can enter to this page
             if( $this->isModerator() ) {
                 if( !in_array($this->page, osc_apply_filter('moderator_access', array('items', 'comments', 'media', 'login', 'admins', 'ajax', 'stats',''))) ) {
@@ -75,7 +74,7 @@
 
         function isLogged()
         {
-            return (osc_is_user_logged_in() && (osc_is_ad_page() || osc_is_moderator()));
+            return (osc_is_user_logged_in() && (osc_is_admin() || osc_is_moderator()));
         }
 
         function isModerator()
