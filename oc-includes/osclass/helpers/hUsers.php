@@ -67,6 +67,8 @@
             if (Session::newInstance()->_get("userId")!='') {
                 $user = User::newInstance()->findByPrimaryKey(Session::newInstance()->_get("userId"));
                 if(isset($user['b_enabled']) && $user['b_enabled']==1) {
+                    Session::newInstance()->_set('userName', $user['s_name']);
+                    Session::newInstance()->_set('userEmail', $user['s_email']);
                     User::loggedUser($user);
                     return true;
                 } else {
@@ -79,6 +81,8 @@
                 $user = User::newInstance()->findByIdSecret( Cookie::newInstance()->get_value('oc_userId'), Cookie::newInstance()->get_value('oc_userSecret') );
                 if(isset($user['b_enabled']) && $user['b_enabled']==1) {
                     Session::newInstance()->_set('userId', $user['pk_i_id']);
+                    Session::newInstance()->_set('userName', $user['s_name']);
+                    Session::newInstance()->_set('userEmail', $user['s_email']);
                     User::loggedUser($user);
                     return true;
                 } else {

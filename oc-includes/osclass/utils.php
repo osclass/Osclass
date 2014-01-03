@@ -1573,8 +1573,8 @@ function osc_update_location_stats($force = false, $limit = 1000) {
  *
  */
 function osc_translate_categories($locale) {
-    $old_locale = Session::newInstance()->_get('adminLocale');
-    Session::newInstance()->_set('adminLocale', $locale);
+    $old_locale = Session::newInstance()->_get('userLocale');
+    Session::newInstance()->_set('userLocale', $locale);
     Translation::newInstance()->_load(osc_translations_path().$locale.'/core.mo', 'cat_'.$locale);
     $catManager = Category::newInstance();
     $old_categories = $catManager->_findNameIDByLocale($old_locale);
@@ -1603,7 +1603,7 @@ function osc_translate_categories($locale) {
             $catManager->insertDescription($fieldsDescription);
         }
     }
-    Session::newInstance()->_set('adminLocale', $old_locale);
+    Session::newInstance()->_set('userLocale', $old_locale);
 
 }
 

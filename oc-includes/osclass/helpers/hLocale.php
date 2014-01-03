@@ -249,8 +249,8 @@
      * @return string OSCLocale Code
      */
     function osc_current_admin_locale( ) {
-        if(Session::newInstance()->_get('adminLocale') != '') {
-            return Session::newInstance()->_get('adminLocale');
+        if(Session::newInstance()->_get('userLocale') != '') {
+            return Session::newInstance()->_get('userLocale');
         }
 
         return osc_admin_language();
