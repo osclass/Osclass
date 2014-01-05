@@ -388,6 +388,10 @@
          */
         public function findBySlug($slug)
         {
+            //Encoding slug as url
+            $slug = urlencode($slug) ;
+            //end slug encoding
+            
             // juanramon: specific condition
             $this->dao->where( 'b.s_slug', $slug );
             // end specific condition
