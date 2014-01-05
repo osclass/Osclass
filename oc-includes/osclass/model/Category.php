@@ -23,7 +23,7 @@
     /**
      * Category DAO
      */
-    class Category extends DAO
+    class Category extends DAOslu
     {
         /**
          *
@@ -388,6 +388,10 @@
          */
         public function findBySlug($slug)
         {
+            //encode slug as url to match encoding of databse category slug
+            $slug = urlencode($slug) ; 
+            //end slug encoding
+            
             // juanramon: specific condition
             $this->dao->where( 'b.s_slug', $slug );
             // end specific condition
