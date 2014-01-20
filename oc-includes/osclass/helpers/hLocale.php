@@ -221,7 +221,9 @@
      * @return array
      */
     function osc_get_current_user_locale() {
-        View::newInstance()->_exportVariableToView('locale', OSCLocale::newInstance()->findByPrimaryKey(osc_current_user_locale()) );
+        $locale = OSCLocale::newInstance()->findByPrimaryKey(osc_current_user_locale());
+        View::newInstance()->_exportVariableToView('locale', $locale );
+        return $locale;
     }
 
     /**
