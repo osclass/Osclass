@@ -92,7 +92,7 @@
             $pluginsPath = osc_plugins_path();
             $dir = opendir($pluginsPath);
             while($file = readdir($dir)) {
-                if(preg_match('/^[a-zA-Z0-9_]+$/', $file, $matches)) {
+                if(preg_match('/^[a-zA-Z0-9-_]+$/', $file, $matches)) {
                     // This has to change in order to catch any .php file
                     $pluginPath = $pluginsPath . "$file/index.php";
                     if(file_exists($pluginPath)) {
