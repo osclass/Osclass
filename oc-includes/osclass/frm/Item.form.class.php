@@ -1505,7 +1505,7 @@
                             json.success = true;
                         } else {
                             json.success = false;
-                            $('#restricted-fine-uploader .qq-uploader').after($('<div class="alert alert-error"><?php echo sprintf(__('Too many items were uploaded. Item limit is %d.'), $maxImages); ?></div>'));
+                            $('#restricted-fine-uploader .qq-uploader').after($('<div class="alert alert-error"><?php echo osc_esc_js(sprintf(__('Too many items were uploaded. Item limit is %d.'), $maxImages)); ?></div>'));
                         }
                         return json;
                     }
