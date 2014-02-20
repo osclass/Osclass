@@ -49,7 +49,7 @@
             $this->class_prev         = isset($params['class_prev']) ? $params['class_prev'] : 'searchPaginationPrev';
             $this->class_next         = isset($params['class_next']) ? $params['class_next'] : 'searchPaginationNext';
             $this->text_first         = isset($params['text_first']) ? $params['text_first'] : '&laquo;';
-            $this->text_last          = isset($params['text_last']) ? $params['text_last'] : '&raquo';
+            $this->text_last          = isset($params['text_last']) ? $params['text_last'] : '&raquo;';
             $this->text_prev          = isset($params['text_prev']) ? $params['text_prev'] : '&lt;';
             $this->text_next          = isset($params['text_next']) ? $params['text_next'] : '&gt;';
             $this->class_selected     = isset($params['class_selected']) ? $params['class_selected'] : 'searchPaginationSelected';
