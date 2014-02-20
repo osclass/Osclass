@@ -1373,7 +1373,7 @@
         {
             error_log(' ----- START updateDB ----- ');
             if(!is_array($queries)) {
-                $queries = explode(";", $queries);
+                $queries = $this->splitSQL($queries, ';');
             }
 
             // Prepare and separate the queries
