@@ -90,7 +90,7 @@
     }
 
     /**
-     * Gets logged user email
+     * Gets logged user name
      *
      * @return string
      */
