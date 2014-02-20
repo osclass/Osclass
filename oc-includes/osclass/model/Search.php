@@ -831,7 +831,7 @@
                 $this->dao->where(DB_TABLE_PREFIX.'t_item.pk_i_id IN ('.$subSelect.')');
 
                 $this->dao->groupBy(DB_TABLE_PREFIX.'t_item.pk_i_id');
-                $this->dao->orderBy(sprintf('%st_item_stats.i_num_premium_views', DB_TABLE_PREFIX), 'ASC');
+                $this->dao->orderBy(sprintf('SUM(%st_item_stats.i_num_premium_views)', DB_TABLE_PREFIX), 'ASC');
                 $this->dao->orderBy(null, 'random');
                 $this->dao->limit(0, $num);
             } else {
@@ -853,7 +853,7 @@
                 }
 
                 $this->dao->groupBy(DB_TABLE_PREFIX.'t_item.pk_i_id');
-                $this->dao->orderBy(sprintf('%st_item_stats.i_num_premium_views', DB_TABLE_PREFIX), 'ASC');
+                $this->dao->orderBy(sprintf('SUM(%st_item_stats.i_num_premium_views)', DB_TABLE_PREFIX), 'ASC');
                 $this->dao->orderBy(null, 'random');
                 $this->dao->limit(0, $num);
             }
