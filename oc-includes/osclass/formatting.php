@@ -48,7 +48,7 @@ function osc_sanitizeString($string) {
 
     $string = strtolower($string);
     $string = preg_replace('/&.+?;/', '', $string);
-    $string = str_replace('.', '-', $string);
+    $string = str_replace(array('.','\''), '-', $string);
     $string = preg_replace('/\s+/', '-', $string);
     $string = preg_replace('|[\p{Ps}\p{Pe}\p{Pi}\p{Pf}\p{Po}\p{S}\p{Z}\p{C}\p{No}]+|u', '', $string);
 
