@@ -47,8 +47,11 @@ function osc_sanitizeString($string) {
     $string = remove_accents($string);
 
     $string = strtolower($string);
+    // @TODO  retrieve $arr_stop_words from Locale user custom list. as editable in /oc-admin/index.php?page=languages
+    //        and do a 
+    //        str_replace($arr_stop_words, '', $string);
     $string = preg_replace('/&.+?;/', '', $string);
-    $string = str_replace('.', '-', $string);
+    $string = str_replace(array('.','\'','--'), '-', $string);
     $string = preg_replace('/\s+/', '-', $string);
     $string = preg_replace('|[\p{Ps}\p{Pe}\p{Pi}\p{Pf}\p{Po}\p{S}\p{Z}\p{C}\p{No}]+|u', '', $string);
 
