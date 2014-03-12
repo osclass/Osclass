@@ -1106,6 +1106,17 @@
 
 
     /**
+     * Get if the user is on 404 error page
+     *
+     * @return boolean
+     */
+    function osc_is_404() {
+        return ( Rewrite::newInstance()->get_location() === 'error' );
+    }
+
+
+
+    /**
      * Get location
      *
      * @return string
