@@ -132,24 +132,15 @@
      * @return string
      */
     function osc_static_page_meta($field = null) {
-        if($field == null) {
-            if ( !View::newInstance()->_exists('page_meta') ) {
-                return json_decode(osc_static_page_field("s_meta"),  true);
-            } else {
-                return View::newInstance()->_get('s_meta');
-            }
+        if ( !View::newInstance()->_exists('page_meta') ) {
+            $meta = json_decode(osc_static_page_field("s_meta"),  true);
         } else {
-            if ( !View::newInstance()->_exists('page_meta') ) {
-                $meta = json_decode(osc_static_page_field("s_meta"),  true);
-            } else {
-                $meta = View::newInstance()->_get('page_meta');
-            }
-            if(isset($meta[$field])) {
-                return $meta[$field];
-            } else {
-                return '';
-            }
+            $meta = View::newInstance()->_get('page_meta');
         }
+        if ($field == null) {
+            $meta = (isset($meta[$field]) && !empty($meta[$field])) ? $meta[$field] : '';
+        }
+        return $meta;
     }
 
     /**
