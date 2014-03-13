@@ -139,7 +139,7 @@
                     if( $res ) {
                         osc_add_flash_ok_message( _m('Widget updated correctly'), 'admin');
                     } else {
-                        osc_add_flash_ok_message( _m('Widget cannot be updated correctly'), 'admin');
+                        osc_add_flash_error_message( _m('Widget cannot be updated correctly'), 'admin');
                     }
                     $this->redirectTo( osc_admin_base_url(true) . "?page=appearance&action=widgets" );
                     break;
