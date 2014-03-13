@@ -231,11 +231,9 @@
                         Cookie::newInstance()->set();
                     } else {
                         // set a default value if it's set in the cookie
-                        if( Cookie::newInstance()->get_value('listing_iDisplayLength') != '' ) {
-                            Params::setParam('iDisplayLength', Cookie::newInstance()->get_value('listing_iDisplayLength'));
-                        } else {
-                            Params::setParam('iDisplayLength', 10 );
-                        }
+                        $listing_iDisplayLength = (int) Cookie::newInstance()->get_value('listing_iDisplayLength');
+                        if ($listing_iDisplayLength == 0) $listing_iDisplayLength = 10;
+                        Params::setParam('iDisplayLength', $listing_iDisplayLength );
                     }
                     $this->_exportVariableToView('iDisplayLength', Params::getParam('iDisplayLength'));
 
