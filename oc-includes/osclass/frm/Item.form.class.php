@@ -63,7 +63,7 @@
                     }
                 } else {
                     $selected = ( (isset($item["fk_i_category_id"]) && $item["fk_i_category_id"] == $c['pk_i_id']) || (isset($catId) && $catId == $c['pk_i_id']) );
-                    echo '<option value="' . $c['pk_i_id'] . '"' . ($selected ? 'selected="selected"' : '' ). '>' . $c['s_name'] . '</option>';
+                    echo '<option value="' . $c['pk_i_id'] . '"' . ($selected ? ' selected="selected"' : '' ). '>' . $c['s_name'] . '</option>';
                     if(isset($c['categories']) && is_array($c['categories'])) {
                         ItemForm::subcategory_select($c['categories'], $item, $default_item, 1);
                     }
@@ -299,7 +299,7 @@
             foreach($categories as $c) {
                 $selected = ( (isset($item["fk_i_category_id"]) && $item["fk_i_category_id"] == $c['pk_i_id']) || (isset($catId) && $catId == $c['pk_i_id']) );
 
-                echo '<option value="' . $c['pk_i_id'] . '"' . ($selected ? 'selected="selected'.$item["fk_i_category_id"].'"' : '') . '>' . $deep_string . $c['s_name'] . '</option>';
+                echo '<option value="' . $c['pk_i_id'] . '"' . ($selected ? ' selected="selected'.$item["fk_i_category_id"].'"' : '') . '>' . $deep_string . $c['s_name'] . '</option>';
                 if(isset($c['categories']) && is_array($c['categories'])) {
                     ItemForm::subcategory_select($c['categories'], $item, $default_item, $deep);
                 }
@@ -321,7 +321,7 @@
                     $bool = false;
                     if($userId != '' && $userId == $user['pk_i_id']){$bool = true;}
                     if((isset($item["fk_i_user_id"]) && $item["fk_i_user_id"] == $user['pk_i_id'])){$bool = true;}
-                    echo '<option value="' . $user['pk_i_id'] . '"' . ( $bool ? 'selected="selected"' : '' ) . '>';
+                    echo '<option value="' . $user['pk_i_id'] . '"' . ( $bool ? ' selected="selected"' : '' ) . '>';
 
                     if( isset($user['s_name']) && !empty($user['s_name']) ) {
                         echo $user['s_name'];
