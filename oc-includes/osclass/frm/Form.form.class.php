@@ -26,24 +26,24 @@
             if (isset($default_item)) echo '<option value="">' . $default_item . '</option>';
             foreach($items as $i) {
                 if(isset($fld_key) && isset($fld_name))
-                echo '<option value="' . osc_esc_html($i[$fld_key]) . '"' . ( ($id == $i[$fld_key]) ? 'selected="selected"' : '' ) . '>' . $i[$fld_name] . '</option>';
+                echo '<option value="' . osc_esc_html($i[$fld_key]) . '"' . ( ($id == $i[$fld_key]) ? ' selected="selected"' : '' ) . '>' . $i[$fld_name] . '</option>';
             }
             echo '</select>';
         }
 
         static protected function generic_input_text($name, $value, $maxLength = null, $readOnly = false, $autocomplete = true) {
-            echo '<input id="' . preg_replace('|([^_a-zA-Z0-9-]+)|', '', $name) . '" type="text" name="' . $name . '" value="' . osc_esc_html(htmlentities($value, ENT_COMPAT, "UTF-8")) . '" ';
-            if (isset($maxLength)) echo 'maxlength="' . $maxLength . '" ';
-            if (!$autocomplete) echo ' autocomplete="off" ';
-            if ($readOnly) echo 'disabled="disabled" readonly="readonly" ';
-            echo '/>';
+            echo '<input id="' . preg_replace('|([^_a-zA-Z0-9-]+)|', '', $name) . '" type="text" name="' . $name . '" value="' . osc_esc_html(htmlentities($value, ENT_COMPAT, "UTF-8")) . '"';
+            if (isset($maxLength)) echo ' maxlength="' . $maxLength . '"';
+            if (!$autocomplete) echo ' autocomplete="off"';
+            if ($readOnly) echo ' disabled="disabled" readonly="readonly"';
+            echo ' />';
         }
 
         static protected function generic_password($name, $value, $maxLength = null, $readOnly = false) {
-            echo '<input id="' . preg_replace('|([^_a-zA-Z0-9-]+)|', '', $name) . '" type="password" name="' . $name . '" value="' . osc_esc_html(htmlentities($value, ENT_COMPAT, "UTF-8")) . '" ';
-            if (isset($maxLength)) echo 'maxlength="' . $maxLength . '" ';
-            if ($readOnly) echo 'disabled="disabled" readonly="readonly" ';
-            echo '/>';
+            echo '<input id="' . preg_replace('|([^_a-zA-Z0-9-]+)|', '', $name) . '" type="password" name="' . $name . '" value="' . osc_esc_html(htmlentities($value, ENT_COMPAT, "UTF-8")) . '"';
+            if (isset($maxLength)) echo ' maxlength="' . $maxLength . '"';
+            if ($readOnly) echo ' disabled="disabled" readonly="readonly"';
+            echo ' />';
         }
 
         static protected function generic_input_hidden($name, $value) {
@@ -51,9 +51,9 @@
         }
 
         static protected function generic_input_checkbox($name, $value, $checked = false) {
-            echo '<input id="' . preg_replace('|([^_a-zA-Z0-9-]+)|', '', $name) . '" type="checkbox" name="' . $name . '" value="' . osc_esc_html(htmlentities($value, ENT_COMPAT, "UTF-8")) . '" ';
-            if ($checked) echo 'checked="checked" ';
-            echo '/>';
+            echo '<input id="' . preg_replace('|([^_a-zA-Z0-9-]+)|', '', $name) . '" type="checkbox" name="' . $name . '" value="' . osc_esc_html(htmlentities($value, ENT_COMPAT, "UTF-8")) . '"';
+            if ($checked) echo ' checked="checked"';
+            echo ' />';
         }
 
         static protected function generic_textarea($name, $value) {
