@@ -169,8 +169,8 @@
          *
          * @access public
          * @since unknown
-         * @param bool $indelible It's true if the page is indelible and false if not.
-         * @param string $locale It's
+        *  @param bool $indelible true if the page is indelible
+         * @param string $locale
          * @param int $start
          * @param int $limit
          * @return array Return all the pages that have been found with the criteria selected. If there's no pages, the
