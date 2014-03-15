@@ -466,8 +466,8 @@ function osc_mailBeauty($text, $params) {
         osc_base_url(),
         osc_page_title(),
         '<a href="' . osc_base_url() . '">' . osc_page_title() . '</a>',
-        date('Y-m-d H:i:s'),
-        date('H:i'),
+		date(osc_date_format()?:'Y-m-d').' '.date(osc_time_format()?:'H:i:s'),
+		date(osc_time_format()?:'H:i'),
         $_SERVER['REMOTE_ADDR']
     );
     $text = str_ireplace($kwords, $rwords, $text);
