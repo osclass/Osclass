@@ -294,7 +294,8 @@
      * @return int
      */
     function osc_max_characters_per_title() {
-        return (getPreference('title_character_length'));
+        $value = getPreference('title_character_length');
+        return ( !empty($value) ? $value : 128);
     }
 
     /**
@@ -303,7 +304,8 @@
      * @return int
      */
     function osc_max_characters_per_description() {
-        return (getPreference('description_character_length'));
+        $value = getPreference('description_character_length');
+        return ( !empty($value) ? $value : 4096);
     }
 
     /**
