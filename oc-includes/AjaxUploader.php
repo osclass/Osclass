@@ -33,7 +33,8 @@ class AjaxUploader {
         $ext = @$pathinfo['extension'];
         $uuid = pathinfo($uploadFilename);
 
-        if($this->_allowedExtensions && stripos($this->_allowedExtensions, strtolower($ext))===false){
+        if(($this->_allowedExtensions && stripos($this->_allowedExtensions, strtolower($ext))===false) ) {
+            @unlink($uploadFilename); // Wrong extension, remove it for security reasons
             return array('error' => sprintf(__('File has an invalid extension, it should be one of %s.'), $this->_allowedExtensions));
         }
 
@@ -44,6 +45,11 @@ class AjaxUploader {
         }
 
         if($this->_file->save($uploadFilename)){
+            $result = $this->checkAllowedExt($uploadFilename);
+            if(!$result) {
+                @unlink($uploadFilename); // Wrong extension, remove it for security reasons
+                return array('error' => sprintf(__('File has an invalid extension, it should be one of %s.'), $this->_allowedExtensions));
+            }
             $files = Session::newInstance()->_get('ajax_files');
             $files[Params::getParam('qquuid')] = $uuid['basename'];
             Session::newInstance()->_set('ajax_files', $files);
@@ -51,8 +57,58 @@ class AjaxUploader {
         } else {
             return array('error' => 'Could not save uploaded file. The upload was cancelled, or server error encountered');
         }
-
     }
+
+    function checkAllowedExt($file) {
+        require LIB_PATH . 'osclass/mimes.php';
+        if($file!='') {
+            $aMimesAllowed = array();
+            $aExt = explode(',', osc_allowed_extension());
+            foreach($aExt as $ext){
+                if(isset($mimes[$ext])) {
+                    $mime = $mimes[$ext];
+                    if( is_array($mime) ){
+                        foreach($mime as $aux){
+                            if( !in_array($aux, $aMimesAllowed) ) {
+                                array_push($aMimesAllowed, $aux );
+                            }
+                        }
+                    } else {
+                        if( !in_array($mime, $aMimesAllowed) ) {
+                            array_push($aMimesAllowed, $mime );
+                        }
+                    }
+                }
+            }
+            $bool_img = false;
+            $fileMime = '';
+            if(function_exists('finfo_file') && function_exists('finfo_open')) {
+                $finfo = finfo_open(FILEINFO_MIME_TYPE);
+                $fileMime = finfo_file($finfo, $file);
+            } else if(function_exists('mime_content_type')) {
+                $fileMime = mime_content_type($file);
+            } else {
+                return false; // *WARNING* There's no way check the mime type of the file, change to 'return true' if you blindly trust on your users' input!
+            }
+
+            if(stripos($fileMime, "image/")!==FALSE) {
+                if(function_exists("getimagesize")) {
+                    $info = getimagesize($file);
+                    if(isset($info['mime'])) {
+                        $fileMime = $info['mime'];
+                    } else {
+                        $fileMime = '';
+                    }
+                };
+            };
+
+            if(in_array($fileMime,$aMimesAllowed)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
 
 class AjaxUploadedFileXhr {
