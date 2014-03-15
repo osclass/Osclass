@@ -112,6 +112,12 @@ $(document).ready(function(){
                                 <input type="checkbox" <?php echo ( osc_comments_enabled() ? 'checked="checked"' : '' ); ?> name="enabled_comments" value="1" /> <?php _e('Allow people to post comments on listings'); ?>
                             </label>
                         </div>
+                        <div>
+                            <?php printf( __('An user has to wait %s seconds between each added comment'), '<input type="text" class="input-small" name="spam_wait_time" value="' . osc_comment_spam_delay() . '" />'); ?>
+                            <div class="help-box">
+                                <?php _e('If the value is set to zero, there is no wait period'); ?>
+                            </div>
+                        </div>
                         <div class="form-label-checkbox">
                             <label>
                                 <input type="checkbox" <?php echo ( osc_reg_user_post_comments() ? 'checked="checked"' : '' ); ?> name="reg_user_post_comments" value="1" /> <?php _e('Users must be registered and logged in to comment'); ?>
