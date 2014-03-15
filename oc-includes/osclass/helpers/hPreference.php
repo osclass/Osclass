@@ -885,7 +885,7 @@
      * @return int
      */
     function osc_comment_spam_delay() {
-        return 60; // need to be changed
+        return (getPreference('spam_wait_time')?:getPreference('items_wait_time'));
     }
 
     /**
