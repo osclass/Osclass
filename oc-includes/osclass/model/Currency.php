@@ -40,6 +40,12 @@
         private static $instance;
 
         /**
+         * array for save currencies
+         * @var array
+         */
+        private $aCurrencies;
+
+        /**
          * It creates a new Currency object class ir if it has been created
          * before, it return the previous object
          *
@@ -64,8 +70,43 @@
             $this->setTableName('t_currency');
             $this->setPrimaryKey('pk_c_code');
             $this->setFields(array('pk_c_code', 's_name', 's_description', 'b_enabled'));
+            $this->toArray();
+        }
+        /**
+         * Modify the structure of table.
+         *
+         * @access public
+         * @since unknown
+         */
+        public function toArray()
+        {
+            $this->dao->select();
+            $this->dao->from($this->getTableName());
+            $result = $this->dao->get();
+
+            if( $result == false ) {
+                return false;
+            }
+
+            if( $result->numRows() == 0 ) {
+                return false;
+            }
+
+            $aTmp = $result->result();
+            foreach($aTmp as $tmp) {
+                $this->aCurrencies[$tmp['pk_c_code']] = $tmp;
+            }
+
+            return true;
         }
 
+        public function get($key)
+        {
+            if ( !isset($this->aCurrencies[$key]) ) {
+                return '';
+            }
+            return $this->aCurrencies[$key];
+        }
     }
 
     /* file end: ./oc-includes/osclass/model/Currency.php */
