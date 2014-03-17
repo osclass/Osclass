@@ -1169,10 +1169,8 @@
 
     function fn_email_new_admin($data) {
 
-        $name       = trim($data['s_name']);
-        $name       = strip_tags($name);
-        $username   = trim($data['s_username']);
-        $username   = strip_tags($username);
+        $name       = strip_tags(trim($data['s_name']));
+        $username   = strip_tags(trim($data['s_username']));
 
         $mPages = new Page();
         $aPage = $mPages->findByInternalName('email_new_admin');
@@ -1193,8 +1191,8 @@
             '{WEB_ADMIN_LINK}'
         );
         $words[] = array(
-            $data['s_name'],
-            $data['s_username'],
+            $name,
+            $username,
             $data['s_password'],
             '<a href="' . osc_admin_base_url() . '">' . osc_page_title() . '</a>',
         );
