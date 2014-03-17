@@ -176,7 +176,7 @@
             $this->aOrderby   = array();
             $this->aWherein   = array();
 
-            $this->log        = LogDatabase::newInstance();
+            if ( OSC_DEBUG_DB || OSC_DEBUG_DB_EXPLAIN ) $this->log = LogDatabase::newInstance();
         }
 
         /**
