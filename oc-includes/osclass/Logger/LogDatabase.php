@@ -141,7 +141,7 @@
             }
 
             fwrite($fp, '==================================================' . PHP_EOL);
-            fwrite($fp, '=' . str_pad('Date: ' . date('Y-m-d H:i:s'), 48, " ", STR_PAD_BOTH) . '=' . PHP_EOL);
+            fwrite($fp, '=' . str_pad('Date: ' . date(osc_date_format()?:'Y-m-d').' '.date(osc_time_format()?:'H:i:s'), 48, " ", STR_PAD_BOTH) . '=' . PHP_EOL);
             fwrite($fp, '=' . str_pad('Total queries: ' . $this->getTotalNumberQueries(), 48, " ", STR_PAD_BOTH) . '=' . PHP_EOL);
             fwrite($fp, '=' . str_pad('Total queries time: ' . $this->getTotalQueriesTime(), 48, " ", STR_PAD_BOTH) . '='  . PHP_EOL);
             fwrite($fp, '==================================================' . PHP_EOL . PHP_EOL);
@@ -177,7 +177,7 @@
             }
 
             fwrite($fp, '==================================================' . PHP_EOL);
-            fwrite($fp, '=' . str_pad('Date: ' . date('Y-m-d H:i:s'), 48, " ", STR_PAD_BOTH) . '=' . PHP_EOL);
+            fwrite($fp, '=' . str_pad('Date: ' . date(osc_date_format()?:'Y-m-d').' '.date(osc_time_format()?:'H:i:s'), 48, " ", STR_PAD_BOTH) . '=' . PHP_EOL);
             fwrite($fp, '==================================================' . PHP_EOL . PHP_EOL);
 
             $title  = '|' . str_pad('id', 3, " ", STR_PAD_BOTH) . '|';
