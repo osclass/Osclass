@@ -600,6 +600,15 @@
             return true;
         }
 
+        static public function zip_text($item = null) {
+            if($item==null) { $item = osc_item(); };
+            if( Session::newInstance()->_getForm('zip')) {
+                $item['s_zip'] = Session::newInstance()->_getForm('zip');
+            }
+            parent::generic_input_text('zip', (isset($item['s_zip'])) ? $user['s_zip'] : null);
+            return true;
+        }
+
         static public function contact_name_text($item = null) {
             if($item==null) { $item = osc_item(); };
             if( Session::newInstance()->_getForm('contactName') != "" ) {
