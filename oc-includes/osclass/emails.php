@@ -372,7 +372,7 @@
                 $user['s_email'],
                 '<a href="' . $password_url . '">' . $password_url . '</a>',
                 $password_url,
-                date('Y-m-d H:i:') . '00'
+                date(osc_date_format()?:'Y-m-d').' '.date(osc_time_format()?:'H:i:00')
             );
             $title = osc_apply_filter('email_user_forgot_pass_word_title_after', osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_user_forgot_pass_word_title', $content['s_title'])), $words));
             $body = osc_apply_filter('email_user_forgot_password_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_user_forgot_password_description', $content['s_text'])), $words));
