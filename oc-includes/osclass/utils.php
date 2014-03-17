@@ -588,9 +588,7 @@ function osc_dbdump($path, $file) {
         return -3;
     }
 
-    $_str = '';
-    $_str .= '/* OSCLASS MYSQL Autobackup (' . date('Y-m-d H:i:s') . ') */';
-    $_str .= "\n";
+    $_str = '/* OSCLASS MYSQL Autobackup (' . date(osc_date_format()?:'Y-m-d').' '.date(osc_time_format()?:'H:i:s') . ') */'."\n";
 
     $f = fopen($path, "a");
     fwrite($f, $_str);
