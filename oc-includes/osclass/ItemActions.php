@@ -865,12 +865,14 @@
             $aItem = $this->prepareDataForFunction( 'contact' );
 
             // check parameters
+            if ( !osc_validate_text($aItem['yourName']) ){
+                $flash_error = __("Your name: this field is required") . PHP_EOL;
+            }
             if( !osc_validate_email($aItem['yourEmail'], true) ){
                 $flash_error .= __("Invalid email address") . PHP_EOL;
-            } else if( !osc_validate_text($aItem['message']) ){
+            }
+            if( !osc_validate_text($aItem['message']) ){
                 $flash_error .= __("Message: this field is required") . PHP_EOL;
-            } else if ( !osc_validate_text($aItem['yourName']) ){
-                $flash_error .= __("Your name: this field is required") . PHP_EOL;
             }
 
             if($flash_error != ''){
@@ -1013,6 +1015,8 @@
             switch ( $action ){
                 case 'send_friend':
                     $item = $this->manager->findByPrimaryKey( Params::getParam('id') );
+                    if ($item===false || !is_array($item) || count($item)==0)
+                        break;
 
                     $aItem['item']          = $item;
                     View::newInstance()->_exportVariableToView('item', $aItem['item']);
@@ -1027,6 +1031,8 @@
                 break;
                 case 'contact':
                     $item = $this->manager->findByPrimaryKey( Params::getParam('id') );
+                    if ($item===false || !is_array($item) || count($item)==0)
+                        break;
 
                     $aItem['item']          = $item;
                     View::newInstance()->_exportVariableToView('item', $aItem['item']);
@@ -1038,6 +1044,8 @@
                 break;
                 case 'add_comment':
                     $item = $this->manager->findByPrimaryKey( Params::getParam('id') );
+                    if ($item===false || !is_array($item) || count($item)==0)
+                        break;
 
                     $aItem['item']          = $item;
                     View::newInstance()->_exportVariableToView('item', $aItem['item']);
