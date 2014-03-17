@@ -514,7 +514,7 @@
                 case 'delete_comment':
                     osc_csrf_check();
                     $mItem = new ItemActions(false);
-                    $status = $mItem->add_comment();
+                    $status = $mItem->add_comment(); // @TOFIX @FIXME $status never used + ?? need to add_comment() before deleting it??
 
                     $itemId    = Params::getParam('id');
                     $commentId = Params::getParam('comment');
