@@ -239,13 +239,16 @@ function is_serialized($data) {
 /**
  * VERY BASIC
  * Perform a POST request, so we could launch fake-cron calls and other core-system calls without annoying the user
+ * @return bool false on error or number of bytes sent.
  */
 function osc_doRequest($url, $_data) {
     if (function_exists('fsockopen')) {
-        $data = http_build_query($_data);
 
         // parse the given URL
         $url = parse_url($url);
+
+        if ($url === false || !isset($url['host']) || !isset($url['path']))
+            return false;
 
         // extract host and path:
         $host = $url['host'];
@@ -255,17 +258,21 @@ function osc_doRequest($url, $_data) {
         // use localhost in case of issues with NATs (hairpinning)
         $fp = @fsockopen($host, 80);
 
-        if($fp!==false) {
-            $out  = "POST $path HTTP/1.1\r\n";
-            $out .= "Host: $host\r\n";
-            $out .= "Referer: Osclass (v.". osc_version() .")\r\n";
-            $out .= "Content-type: application/x-www-form-urlencoded\r\n";
-            $out .= "Content-Length: ".strlen($data)."\r\n";
-            $out .= "Connection: Close\r\n\r\n";
-            $out .= "$data";
-            fwrite($fp, $out);
-            fclose($fp);
-        }
+        if($fp===false)
+            return false;
+
+        $data = http_build_query($_data);
+        $out  = "POST $path HTTP/1.1\r\n";
+        $out .= "Host: $host\r\n";
+        $out .= "Referer: Osclass (v.". osc_version() .")\r\n";
+        $out .= "Content-type: application/x-www-form-urlencoded\r\n";
+        $out .= "Content-Length: ".strlen($data)."\r\n";
+        $out .= "Connection: Close\r\n\r\n";
+        $out .= "$data";
+        $number_bytes_sent = fwrite($fp, $out);
+        fclose($fp);
+
+        return $number_bytes_sent; // or false on fwrite() error
     }
 }
 
