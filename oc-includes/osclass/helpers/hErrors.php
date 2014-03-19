@@ -41,6 +41,7 @@
                 <link rel="stylesheet" type="text/css" media="all" href="<?php echo osc_get_absolute_url(); ?>oc-includes/osclass/installer/install.css" />
             </head>
             <body class="page-error">
+                <h1><?php echo $title; ?></h1>
                 <p><?php echo $message; ?></p>
             </body>
         </html>
