@@ -224,7 +224,7 @@
                     $options = array();
                     // -- prepare data --
                     // prepare item title
-                    $title = mb_substr($aRow['s_title'], 0, 30, 'utf-8');
+                    $title = mb_strcut($aRow['s_title'], 0, 30, 'utf-8');
                     if($title != $aRow['s_title']) {
                         $title .= '...';
                     }
@@ -320,7 +320,7 @@
                     $options = array();
                     // -- prepare data --
                     // prepare item title
-                    $title = mb_substr($aRow['s_title'], 0, 30, 'utf-8');
+                    $title = mb_strcut($aRow['s_title'], 0, 30, 'utf-8');
                     if($title != $aRow['s_title']) {
                         $title .= '...';
                     }
