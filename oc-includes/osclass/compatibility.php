@@ -74,7 +74,7 @@ if ( !function_exists('mb_substr') ) {
 
 if ( !function_exists('mb_strlen') ) {
     function mb_strlen($str, $encoding = null ) {
-        return strlen($str);
+        return strlen(utf8_decode($str));
     }
 }
 
