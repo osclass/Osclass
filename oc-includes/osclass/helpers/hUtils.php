@@ -211,7 +211,7 @@ function osc_highlight($txt, $len = 300, $start_tag = '<strong>', $end_tag = '</
     $txt = str_replace("\n", ' ', $txt);
     $txt = trim($txt);
     if( mb_strlen($txt, 'utf8') > $len ) {
-        $txt = mb_substr($txt, 0, $len, 'utf-8') . "...";
+        $txt = mb_strcut($txt, 0, $len, 'utf-8') . "...";
     }
     $query = osc_search_pattern();
     $query = str_replace(array('(',')','+','-','~','>','<'), array('','','','','','',''), $query);
