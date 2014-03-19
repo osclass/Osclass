@@ -46,10 +46,9 @@
                     $currencyDescription = Params::getParam('s_description');
 
                     // cleaning parameters
-                    $currencyName        = strip_tags($currencyName);
-                    $currencyDescription = strip_tags($currencyDescription);
-                    $currencyCode        = strip_tags($currencyCode);
-                    $currencyCode        = trim($currencyCode);
+                    $currencyName        = trim(strip_tags($currencyName));
+                    $currencyDescription = trim(strip_tags($currencyDescription));
+                    $currencyCode        = trim(strip_tags($currencyCode));
 
                     if( !preg_match('/^.{1,3}$/', $currencyCode) ) {
                         osc_add_flash_error_message( _m('The currency code is not in the correct format'), 'admin');
@@ -74,8 +73,7 @@
                 case('edit'):
                     // calling edit currency view
                     $currencyCode = Params::getParam('code');
-                    $currencyCode = strip_tags($currencyCode);
-                    $currencyCode = trim($currencyCode);
+                    $currencyCode = trim(strip_tags($currencyCode));
 
                     if( $currencyCode == '' ) {
                         osc_add_flash_warning_message( sprintf( _m("The currency code '%s' doesn't exist"), $currencyCode ), 'admin');
@@ -102,10 +100,9 @@
                     $currencyCode        = Params::getParam('pk_c_code');
 
                     // cleaning parameters
-                    $currencyName        = strip_tags($currencyName);
-                    $currencyDescription = strip_tags($currencyDescription);
-                    $currencyCode        = strip_tags($currencyCode);
-                    $currencyCode        = trim($currencyCode);
+                    $currencyName        = trim(strip_tags($currencyName));
+                    $currencyDescription = trim(strip_tags($currencyDescription));
+                    $currencyCode        = trim(strip_tags($currencyCode));
 
                     if(!preg_match('/.{1,3}/', $currencyCode)) {
                         osc_add_flash_error_message( _m('Error: the currency code is not in the correct format'), 'admin');
