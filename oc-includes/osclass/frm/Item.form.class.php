@@ -1468,7 +1468,7 @@
                             if(parseInt(new_id)==0) {
                                 $(li).append('<div class="primary_image primary"></div>');
                             } else {
-                                $(li).append('<div class="primary_image"><a title="<?php echo osc_esc_html(__('Make primary image')); ?>"></a></div>');
+                                $(li).append('<div class="primary_image"><a title="<?php echo osc_esc_js(osc_esc_html(__('Make primary image'))); ?>"></a></div>');
                             }
                             <?php } ?>
                             $(li).append('<div class="ajax_preview_img"><img src="<?php echo osc_base_url(); ?>oc-content/uploads/temp/'+responseJSON.uploadName+'" alt="' + responseJSON.uploadName + '"></div>');
