@@ -1446,14 +1446,14 @@
                             showButton: true
                         },
                         text: {
-                            uploadButton: '<?php _e('Click or Drop for upload images'); ?>',
-                            waitingForResponse: '<?php _e('Processing...'); ?>',
-                            retryButton: '<?php _e('Retry'); ?>',
-                            cancelButton: '<?php _e('Cancel'); ?>',
-                            failUpload: '<?php _e('Upload failed'); ?>',
-                            deleteButton: '<?php _e('Delete'); ?>',
-                            deletingStatusText: '<?php _e('Deleting...'); ?>',
-                            formatProgress: '<?php _e('{percent}% of {total_size}'); ?>'
+                            uploadButton: '<?php echo osc_esc_js(__('Click or Drop for upload images')); ?>',
+                            waitingForResponse: '<?php echo osc_esc_js(__('Processing...')); ?>',
+                            retryButton: '<?php echo osc_esc_js(__('Retry')); ?>',
+                            cancelButton: '<?php echo osc_esc_js(__('Cancel')); ?>',
+                            failUpload: '<?php echo osc_esc_js(__('Upload failed')); ?>',
+                            deleteButton: '<?php echo osc_esc_js(__('Delete')); ?>',
+                            deletingStatusText: '<?php echo osc_esc_js(__('Deleting...')); ?>',
+                            formatProgress: '<?php echo osc_esc_js(__('{percent}% of {total_size}')); ?>'
                         }
                     }).on('error', function (event, id, name, errorReason, xhrOrXdr) {
                             $('#restricted-fine-uploader .flashmessage-error').remove();
