@@ -1306,7 +1306,7 @@
                     <?php foreach($aImages as $img){ ?>
                         <li class=" qq-upload-success">
                             <span class="qq-upload-file"><?php echo $img; ?></span>
-                            <a class="qq-upload-delete" href="#" ajaxfile="<?php echo $img; ?>" style="display: inline; cursor:pointer;"><?php _e('Delete'); ?></a>
+                            <a class="qq-upload-delete" href="#" ajaxfile="<?php echo osc_esc_html($img); ?>" style="display: inline; cursor:pointer;"><?php _e('Delete'); ?></a>
                             <div class="ajax_preview_img"><img src="<?php echo osc_base_url(); ?>oc-content/uploads/temp/<?php echo osc_esc_html($img); ?>" alt="<?php echo osc_esc_html($img); ?>"></div>
                             <input type="hidden" name="ajax_photos[]" value="<?php echo osc_esc_html($img); ?>">
                         </li>
