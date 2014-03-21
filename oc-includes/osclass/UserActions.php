@@ -73,13 +73,13 @@
                 }
             }
 
-            // hook pre add or edit
-            osc_run_hook('pre_user_post');
-
             if( is_numeric($error) && $error > 0) {
                 osc_run_hook('user_register_failed', $error);
                 return $error;
             }
+
+            // hook pre add or edit
+            osc_run_hook('pre_user_post');
 
 
             $this->manager->insert($input);
