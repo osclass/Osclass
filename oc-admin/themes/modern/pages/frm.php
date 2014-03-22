@@ -142,9 +142,15 @@
         <div class="input-description-wide">
             <?php printLocaleDescriptionPage($locales, $page); ?>
         </div>
-        <div>
-			<label><?php _e('Show a link in footer'); ?></label>
-			<?php PageForm::link_checkbox($page); ?>
+        <div class="form-controls">
+            <div class="form-label-checkbox">
+		<label><?php PageForm::link_checkbox($page); ?> <?php _e('Show a link in footer'); ?></label>
+            </div>
+        </div>
+         <div class="form-controls">
+            <div class="form-label-checkbox">
+                <label><?php PageForm::indexed_checkbox($page); ?> <?php _e('Index and include in sitemap.xml'); ?></label>
+            </div>
         </div>
         <div>
             <?php osc_run_hook('page_meta'); ?>
