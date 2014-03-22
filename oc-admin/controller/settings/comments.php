@@ -36,6 +36,7 @@
                     $iUpdated         = 0;
                     $enabledComments  = Params::getParam('enabled_comments');
                     $enabledComments  = (($enabledComments != '') ? true : false);
+                    $commentsSpamTime = Params::getParam('spam_wait_time');
                     $moderateComments = Params::getParam('moderate_comments');
                     $moderateComments = (($moderateComments != '') ? true : false);
                     $numModerateComments = Params::getParam('num_moderate_comments');
@@ -48,10 +49,13 @@
                     $regUserPostComments  = (($regUserPostComments != '') ? true : false);
 
                     $msg = '';
-                    if(!osc_validate_int(Params::getParam("num_moderate_comments"))) {
+                    if(!osc_validate_int($commentsSpamTime)) {
+                        $msg .= _m("Wait time must only contain numeric characters")."<br/>";
+                    }
+                    if(!osc_validate_int($numModerateComments)) {
                         $msg .= _m("Number of moderate comments must only contain numeric characters")."<br/>";
                     }
-                    if(!osc_validate_int(Params::getParam("comments_per_page"))) {
+                    if(!osc_validate_int($commentsPerPage)) {
                         $msg .= _m("Comments per page must only contain numeric characters")."<br/>";
                     }
                     if($msg!='') {
@@ -60,6 +64,7 @@
                     }
 
                     $iUpdated += osc_set_preference('enabled_comments', $enabledComments);
+                    $iUpdated += osc_set_preference('spam_wait_time', $commentsSpamTime);
                     if($moderateComments) {
                         $iUpdated += osc_set_preference('moderate_comments', $numModerateComments);
                     } else {
