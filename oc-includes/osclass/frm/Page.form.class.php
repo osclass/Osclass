@@ -40,12 +40,15 @@
         }
         
         static public function link_checkbox($page = null) {
-            $checked = true;
-            if( is_array($page) && isset($page['b_link']) && $page['b_link']==0 ) {
-                $checked = false;
-            }
+            $checked = ! ( is_array($page) && isset($page['b_link']) && $page['b_link'] == 0 );
 
             parent::generic_input_checkbox('b_link', "1", $checked);
+        }
+
+        static public function indexed_checkbox($page = null) {
+            $checked = ! ( is_array($page) && isset($page['b_indexed']) && $page['b_indexed'] == 0 );
+
+            parent::generic_input_checkbox('b_indexed', "1", $checked);
         }
 
         static public function multilanguage_name_description($locales, $page = null) {
