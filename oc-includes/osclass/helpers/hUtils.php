@@ -208,7 +208,7 @@ function osc_private_user_menu($options = null)
  */
 function osc_highlight($txt, $len = 300, $start_tag = '<strong>', $end_tag = '</strong>') {
     $txt = strip_tags($txt);
-    $txt = str_replace("\n", ' ', $txt);
+    $txt = str_replace(array("\n\r","\r\n","\n","\r","\t"), ' ', $txt);
     $txt = trim($txt);
     if( mb_strlen($txt, 'utf8') > $len ) {
         $txt = mb_substr($txt, 0, $len, 'utf-8') . "...";
