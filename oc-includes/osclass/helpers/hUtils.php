@@ -207,11 +207,9 @@ function osc_private_user_menu($options = null)
  * @return string
  */
 function osc_highlight($txt, $len = 300, $start_tag = '<strong>', $end_tag = '</strong>') {
-    $txt = strip_tags($txt);
-    $txt = str_replace("\n", ' ', $txt);
-    $txt = trim($txt);
-    if( mb_strlen($txt, 'utf8') > $len ) {
-        $txt = mb_substr($txt, 0, $len, 'utf-8') . "...";
+    $txt = trim(str_replace("\n", ' ', strip_tags($txt)));
+    if( mb_strlen(html_entity_decode($txt, ENT_NOQUOTES | ENT_XHTML, 'UTF-8')) > $len ) {
+        $txt = htmlentities(mb_strcut(html_entity_decode($txt, ENT_NOQUOTES | ENT_XHTML, 'UTF-8'), 0, $len, 'UTF-8'), ENT_COMPAT | ENT_XHTML, 'UTF-8') . '...';
     }
     $query = osc_search_pattern();
     $query = str_replace(array('(',')','+','-','~','>','<'), array('','','','','','',''), $query);
