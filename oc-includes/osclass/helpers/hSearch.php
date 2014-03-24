@@ -451,6 +451,7 @@
                 if( osc_get_preference('seo_url_search_prefix') != '' ) {
                     $url .= osc_get_preference('seo_url_search_prefix') . '/';
                 }
+                if(isset($params['sCategory'])) {
                 if(osc_category_id()==$params['sCategory']) {
                     $category['s_slug'] = osc_category_slug();
                 } else {
@@ -460,7 +461,8 @@
                         $category = Category::newInstance()->findBySlug($params['sCategory']);
                     }
                 }
-                if(@$category['s_slug']!='') { $url .= $category['s_slug']."_"; }
+                }
+                if(isset($category['s_slug']) && $category['s_slug']!='') { $url .= $category['s_slug'].'_'; }
 
                 if(osc_list_region_id()==$params['sRegion']) {
                     $url .= osc_sanitizeString(osc_list_region_slug()) . '-r' . osc_list_region_id();
