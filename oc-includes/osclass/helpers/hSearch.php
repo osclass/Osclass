@@ -47,11 +47,18 @@
      * @return array
      */
     function osc_list_orders() {
-        return  array(
+        if (osc_price_enabled_at_items()) {
+        return array(
                      __('Newly listed')        => array('sOrder' => 'dt_pub_date', 'iOrderType' => 'desc')
                     ,__('Lower price first')   => array('sOrder' => 'i_price', 'iOrderType' => 'asc')
                     ,__('Higher price first')  => array('sOrder' => 'i_price', 'iOrderType' => 'desc')
                 );
+        }
+        else {
+        return array(
+                     __('Newly listed')        => array('sOrder' => 'dt_pub_date', 'iOrderType' => 'desc')
+                );
+        }
     }
 
     /**
