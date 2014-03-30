@@ -136,7 +136,7 @@
             if (is_array($this->aExported[$key])) {
                 return count($this->aExported[$key]);
             }
-            return -1;
+            return -1; // @TOFIX @FIXME ?? why ? why not 0 ?
         }
 
         function _erase($key)
