@@ -435,6 +435,11 @@
                 break;
                 case 'contact_post':
                     osc_csrf_check();
+                    if( osc_reg_user_can_contact() && !osc_is_web_user_logged_in() ){
+                        osc_add_flash_warning_message( _m("You can't contact the seller, only registered users can") );
+                        $this->redirectTo( osc_base_url(true) );
+                    }
+
                     $item = $this->itemManager->findByPrimaryKey( Params::getParam('id') );
                     $this->_exportVariableToView('item', $item);
                     if ((osc_recaptcha_private_key() != '')) {
