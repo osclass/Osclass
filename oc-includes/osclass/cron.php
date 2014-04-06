@@ -22,6 +22,9 @@
 
     $d_now = date('Y-m-d H:i:s');
     $i_now = strtotime($d_now);
+    if ( ! defined('CLI')) {
+        define('CLI', (PHP_SAPI==='cli'));
+    }
 
     // Hourly crons
     $cron = Cron::newInstance()->getCronByType('HOURLY');
