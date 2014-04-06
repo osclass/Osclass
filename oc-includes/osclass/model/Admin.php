@@ -39,6 +39,12 @@
          */
         private static $instance;
 
+        /**
+         * array for save currencies
+         * @var array
+         */
+        private $cachedAdmin;
+
         public static function newInstance()
         {
             if( !self::$instance instanceof self ) {
@@ -63,6 +69,16 @@
             } else {
                 $this->setFields( array('pk_i_id', 's_name', 's_username', 's_password', 's_email', 's_secret') );
             }
+        }
+
+        public function findByPrimaryKey($id, $locale = null)
+        {
+            if ($id == '') return '';
+            if (isset($this->cachedAdmin[$id])) {
+                return $this->cachedAdmin[$id];
+            }
+            $this->cachedAdmin[$id] = parent::findByPrimaryKey($id, $locale);
+            return $this->cachedAdmin[$id];
         }
 
         /**
