@@ -265,6 +265,8 @@
             if(strtolower(substr($input['s_website'], 0, 4))!=='http') {
                 $input['s_website'] = 'http://'.$input['s_website'];
             }
+            $input['s_website'] = osc_sanitize_url($input['s_website']);
+            if ( ! osc_validate_url($input['s_website'])) $input['s_website'] = '';
 
             //locations...
             $country = Country::newInstance()->findByCode( Params::getParam('countryId') );
