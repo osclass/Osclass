@@ -57,16 +57,16 @@
                     $sAutoUpdate       = join("|", Params::getParam('auto_update'));
 
                     // preparing parameters
-                    $sPageTitle        = strip_tags($sPageTitle);
-                    $sPageDesc         = strip_tags($sPageDesc);
-                    $sContactEmail     = strip_tags($sContactEmail);
-                    $sLanguage         = strip_tags($sLanguage);
-                    $sDateFormat       = strip_tags($sDateFormat);
-                    $sCurrency         = strip_tags($sCurrency);
-                    $sWeekStart        = strip_tags($sWeekStart);
-                    $sTimeFormat       = strip_tags($sTimeFormat);
-                    $sNumRssItems      = (int) strip_tags($sNumRssItems);
-                    $maxLatestItems    = (int) strip_tags($maxLatestItems);
+                    $sPageTitle        = trim(strip_tags($sPageTitle));
+                    $sPageDesc         = trim(strip_tags($sPageDesc));
+                    $sContactEmail     = trim(strip_tags($sContactEmail));
+                    $sLanguage         = trim(strip_tags($sLanguage));
+                    $sDateFormat       = trim(strip_tags($sDateFormat));
+                    $sCurrency         = trim(strip_tags($sCurrency));
+                    $sWeekStart        = trim(strip_tags($sWeekStart));
+                    $sTimeFormat       = trim(strip_tags($sTimeFormat));
+                    $sNumRssItems      = (int) trim(strip_tags($sNumRssItems));
+                    $maxLatestItems    = (int) trim(strip_tags($maxLatestItems));
                     $numItemsSearch    = (int) $numItemsSearch;
                     $contactAttachment = ($contactAttachment != '' ? true : false);
                     $bAutoCron         = ($bAutoCron != '' ? true : false);
