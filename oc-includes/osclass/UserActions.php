@@ -58,14 +58,14 @@
             }
 
             $email_taken = $this->manager->findByEmail($input['s_email']);
-            if( !$error && $email_taken != null ) {
+            if( !$error && $email_taken != false ) {
                 osc_run_hook('register_email_taken', $input['s_email']);
                 $error = 3;
             }
 
             if(!$error && $input['s_username']!='') {
                 $username_taken = $this->manager->findByUsername($input['s_username']);
-                if( !$error && $username_taken != null ) {
+                if( !$error && $username_taken != false ) {
                     $error = 8;
                 }
                 if(osc_is_username_blacklisted($input['s_username'])) {
