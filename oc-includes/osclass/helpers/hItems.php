@@ -984,7 +984,7 @@
      *
      * @return boolean It returns true if there is another item available or false if there isn't
      */
-    function osc_has_latest_items($total_latest_items = null, $options = array(), $withPicture = false) {
+    function osc_has_latest_items($total_latest_items = null, $options = array()) {
         // if we don't have the latest items loaded, do the query
         if ( !View::newInstance()->_exists('latestItems') ) {
             $search = Search::newInstance();
@@ -992,7 +992,7 @@
                 $total_latest_items = osc_max_latest_items();
             }
 
-            View::newInstance()->_exportVariableToView('latestItems', $search->getLatestItems($total_latest_items, $options, $withPicture));
+            View::newInstance()->_exportVariableToView('latestItems', $search->getLatestItems($total_latest_items, $options));
         }
 
         // keys we want to erase from View
