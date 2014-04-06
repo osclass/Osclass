@@ -108,13 +108,13 @@
 
         static private function _purify($value, $xss_check)
         {
-            self::$config = HTMLPurifier_Config::createDefault();
-            self::$config->set('HTML.Allowed', '');
-            self::$config->set('Cache.SerializerPath', osc_uploads_path());
-
             if( !$xss_check ) {
                 return $value;
             }
+
+            self::$config = HTMLPurifier_Config::createDefault();
+            self::$config->set('HTML.Allowed', '');
+            self::$config->set('Cache.SerializerPath', osc_uploads_path());
 
             if( !isset(self::$purifier) ) {
                 self::$purifier = new HTMLPurifier(self::$config);
@@ -122,7 +122,7 @@
 
             if( is_array($value) ) {
                 foreach($value as $k => &$v) {
-                    $v = self::_purify($v, $xss_check);
+                    $v = self::_purify($v, $xss_check); // recursive
                 }
             } else {
                 $value = self::$purifier->purify($value);
