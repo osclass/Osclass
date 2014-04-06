@@ -374,8 +374,8 @@
      */
     function osc_premium_views() {
         $item = osc_premium();
-        if(isset($item['i_num_views'])) {
-            return (int) osc_premium_field("i_num_views");
+        if(isset($item['i_num_premium_views'])) {
+            return (int) osc_premium_field("i_num_premium_views");
         } else {
             return ItemStats::newInstance()->getViews(osc_premium_id());
         }
