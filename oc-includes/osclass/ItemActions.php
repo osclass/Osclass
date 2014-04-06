@@ -892,13 +892,10 @@
 
             $aItem  = $this->prepareDataForFunction('add_comment');
 
-            $authorName     = trim($aItem['authorName']);
-            $authorName     = strip_tags($authorName);
-            $authorEmail    = trim($aItem['authorEmail']);
-            $authorEmail    = strip_tags($authorEmail);
-            $body           = trim($aItem['body']);
-            $body           = strip_tags($body);
-            $title          = $aItem['title'];
+            $authorName     = trim(strip_tags($aItem['authorName']));
+            $authorEmail    = trim(strip_tags($aItem['authorEmail']));
+            $body           = trim(strip_tags($aItem['body']));
+            $title          = trim(strip_tags($aItem['title']));
             $itemId         = $aItem['id'];
             $userId         = $aItem['userId'];
             $status_num     = -1;
