@@ -123,9 +123,9 @@
      * @param string $section
      * @return string Message
      */
-    function osc_get_flash_message($section = 'pubMessages') {
+    function osc_get_flash_message($section = 'pubMessages', $dropMessages = true) {
         $message = Session::newInstance()->_getMessage($section);
-        Session::newInstance()->_dropMessage($section);
+        if ($dropMessages) Session::newInstance()->_dropMessage($section);
 
         return $message;
     }
