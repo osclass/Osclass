@@ -267,14 +267,20 @@
      *
      * @since 3.0
      * @param string $file
+     * @param string $assets_base_url
      * @return string
      */
-    function osc_assets_url($file = '') {
+    function osc_assets_url($file = '', $assets_base_url = null) {
         if( stripos($file, '../') !== false ) {
             $file = '';
         }
 
-        return osc_base_url() . 'oc-includes/osclass/assets/' . $file;
+        if ( is_null($assets_base_url) ) {
+            return osc_base_url() . 'oc-includes/osclass/assets/' . $file;
+        }
+        else {
+            return $assets_base_url . $file;
+        }
     }
 
     /////////////////////////////////////
