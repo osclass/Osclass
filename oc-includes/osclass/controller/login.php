@@ -60,7 +60,6 @@
 											$this->redirectTo( osc_user_login_url() );
 										}
 
-										require_once LIB_PATH . 'osclass/UserActions.php';
 										$user = User::newInstance()->findByEmail( $email );
 										if ( empty($user) ) {
 											$user = User::newInstance()->findByUsername( $email );
@@ -108,10 +107,9 @@
 													}
 												}
 											}
-										//} else if(preg_match('|[\?&]page=([^&]+)|', $url_redirect.'&', $match)) {
-										//    $page_redirect = $match[1];
 										}
 
+                                        require_once LIB_PATH . 'osclass/UserActions.php';
 										$uActions = new UserActions(false);
 										$logged = $uActions->bootstrap_login($user['pk_i_id']);
 
