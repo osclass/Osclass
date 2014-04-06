@@ -1105,8 +1105,13 @@
         public function getLatestItems($numItems = 10, $options = array(), $withPicture = false)
         {
             $this->set_rpp($numItems);
+            // LEFT FOR COMPATIBILITY ISSUES BUT SOON TO BE DEPRECATED
             if($withPicture) {
                 $this->withPicture(true);
+            }
+            // THIS IS HOW IT SHOULD BE DONE
+            if(isset($options['withPicture'])) {
+                $this->withPicture($options['withPicture']);
             }
             if(isset($options['sCategory'])) {
                 $this->addCategory($options['sCategory']);
