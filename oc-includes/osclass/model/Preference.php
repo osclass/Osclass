@@ -185,7 +185,7 @@
                 's_name'    => $key,
                 's_value'   => $value,
                 's_section' => $section,
-                'e_type'    => $type
+                'e_type'    => in_array($type, array('STRING','INTEGER','BOOLEAN')) ? $type : 'STRING'
             );
             return $this->dao->replace($this->getTableName(), $array_replace);
         }
