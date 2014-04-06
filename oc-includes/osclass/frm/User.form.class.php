@@ -99,10 +99,10 @@
         }
 
         static public function country_select($countries, $user = null) {
-            if( count($countries) >= 1 ) {
+            if( count($countries) > 1 ) {
                 parent::generic_select('countryId', $countries, 'pk_c_code', 's_name', __('Select a country...'), (isset($user['fk_c_country_code'])) ? $user['fk_c_country_code'] : null);
             } else {
-                parent::generic_input_text('country', (isset($user['s_country'])) ? $user['s_country'] : null);
+                parent::generic_input_text('country', ( ! empty($user['s_country']) ? $user['s_country'] : $countries[0]['s_name']));
             }
         }
 
