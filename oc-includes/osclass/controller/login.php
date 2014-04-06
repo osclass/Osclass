@@ -37,107 +37,128 @@
                                             osc_add_flash_error_message(_m('Users are not enabled'));
                                             $this->redirectTo(osc_base_url());
                                         }
-                                        osc_csrf_check();
-                                        osc_run_hook('before_login');
+										osc_csrf_check();
+										osc_run_hook('before_validating_login');
+
+										// e-mail or/and password is/are empty or incorrect
+										$wrong_credentials = false;
+										$email = Params::getParam('email');
+										$password = Params::getParam('password', false, false);
+										if ( $email == '' ) {
+											osc_add_flash_error_message( _m('Please provide an email address') );
+											$wrong_credentials = true;
+										}
+										elseif ( ! osc_validate_email($email) ) {
+											osc_add_flash_error_message( _m('Invalid email address') );
+											$wrong_credentials = true;
+										}
+										if ( $password == '' ) {
+											osc_add_flash_error_message( _m('Empty passwords are not allowed. Please provide a password') );
+											$wrong_credentials = true;
+										}
+										if ( $wrong_credentials ) {
+											$this->redirectTo( osc_user_login_url() );
+										}
+
+										$user = User::newInstance()->findByEmail( $email );
+										if ( empty($user) ) {
+											$user = User::newInstance()->findByUsername( $email );
+										}
+										if ( empty($user) ) {
+											osc_add_flash_error_message(_m("The user doesn't exist"));
+											$this->redirectTo( osc_user_login_url() );
+										}
+										if ( ! osc_verify_password($password, (isset($user['s_password'])?$user['s_password']:'') )) {
+											osc_add_flash_error_message( _m('The password is incorrect'));
+											$this->redirectTo( osc_user_login_url() ); // @TODO if valid user, send email parameter back to the login form
+										}
+										// e-mail or/and IP is/are banned
+										$banned = osc_is_banned($email); // int 0: not banned or unknown, 1: email is banned, 2: IP is banned, 3: both email & IP are banned
+										if($banned & 1) {
+											osc_add_flash_error_message( _m('Your current email is not allowed'));
+										}
+										if($banned & 2) {
+											osc_add_flash_error_message( _m('Your current IP is not allowed'));
+										}
+										if($banned !== 0) {
+											$this->redirectTo( osc_user_login_url() );
+										}
+
+										osc_run_hook('before_login');
+
+										$url_redirect = osc_get_http_referer();
+										$page_redirect = '';
+										if(osc_rewrite_enabled()) {
+											if($url_redirect!='') {
+												$request_uri = urldecode(preg_replace('@^' . osc_base_url() . '@', "", $url_redirect));
+												$tmp_ar = explode("?", $request_uri);
+												$request_uri = $tmp_ar[0];
+												$rules = Rewrite::newInstance()->listRules();
+												foreach($rules as $match => $uri) {
+													if(preg_match('#'.$match.'#', $request_uri, $m)) {
+														$request_uri = preg_replace('#'.$match.'#', $uri, $request_uri);
+														if(preg_match('|([&?]{1})page=([^&]*)|', '&'.$request_uri.'&', $match)) {
+															$page_redirect = $match[2];
+															if($page_redirect=='' || $page_redirect=='login') {
+																$url_redirect = osc_user_dashboard_url();
+															}
+														}
+														break;
+													}
+												}
+											}
+										}
+
                                         require_once LIB_PATH . 'osclass/UserActions.php';
-                                        $user = User::newInstance()->findByEmail( Params::getParam('email') );
-                                        if (!$user) {
-                                            $user = User::newInstance()->findByUsername( Params::getParam('email') );
-                                        }
+										$uActions = new UserActions(false);
+										$logged = $uActions->bootstrap_login($user['pk_i_id']);
 
-                                        $url_redirect = osc_get_http_referer();
-                                        $page_redirect = '';
-                                        if(osc_rewrite_enabled()) {
-                                            if($url_redirect!='') {
-                                                $request_uri = urldecode(preg_replace('@^' . osc_base_url() . '@', "", $url_redirect));
-                                                $tmp_ar = explode("?", $request_uri);
-                                                $request_uri = $tmp_ar[0];
-                                                $rules = Rewrite::newInstance()->listRules();
-                                                foreach($rules as $match => $uri) {
-                                                    if(preg_match('#'.$match.'#', $request_uri, $m)) {
-                                                        $request_uri = preg_replace('#'.$match.'#', $uri, $request_uri);
-                                                        if(preg_match('|([&?]{1})page=([^&]*)|', '&'.$request_uri.'&', $match)) {
-                                                            $page_redirect = $match[2];
-                                                            if($page_redirect=='' || $page_redirect=='login') {
-                                                                $url_redirect = osc_user_dashboard_url();
-                                                            }
-                                                        }
-                                                        break;
-                                                    }
-                                                }
-                                            }
-                                        //} else if(preg_match('|[\?&]page=([^&]+)|', $url_redirect.'&', $match)) {
-                                        //    $page_redirect = $match[1];
-                                        }
-                                        if($url_redirect=='') {
-                                            $url_redirect = osc_user_dashboard_url();
-                                        }
+										if($logged==0) {
+											osc_add_flash_error_message(_m("The user doesn't exist"));
+										} else if($logged==1) {
+											if((time()-strtotime($user['dt_access_date']))>1200) { // EACH 20 MINUTES
+												osc_add_flash_error_message(sprintf(_m('The user has not been validated yet. Would you like to re-send your <a href="%s">activation?</a>'), osc_user_resend_activation_link($user['pk_i_id'], $user['s_email'])));
+											} else {
+												osc_add_flash_error_message(_m('The user has not been validated yet'));
+											}
+										} else if($logged==2) {
+											osc_add_flash_error_message(_m('The user has been suspended'));
+										} else if($logged==3) {
+											if ( Params::getParam('remember') == 1 ) {
 
-                                        if (!$user) {
-                                            osc_add_flash_error_message(_m("The user doesn't exist"));
-                                            $this->redirectTo(osc_user_login_url());
-                                        }
+												//this include contains de osc_genRandomPassword function
+												require_once osc_lib_path() . 'osclass/helpers/hSecurity.php';
+												$secret = osc_genRandomPassword();
 
-                                        if(!osc_verify_password(Params::getParam('password', false, false), $user['s_password'])) {
-                                            osc_add_flash_error_message( _m('The password is incorrect'));
-                                            $this->redirectTo(osc_user_login_url());
-                                        }
+												User::newInstance()->update(
+													array('s_secret' => $secret)
+													,array('pk_i_id' => $user['pk_i_id'])
+												);
 
-                                        $banned = osc_is_banned(Params::getParam('email'));
-                                        if($banned==1) {
-                                            osc_add_flash_error_message( _m('Your current email is not allowed'));
-                                            $this->redirectTo(osc_user_login_url());
-                                        } else if($banned==2) {
-                                            osc_add_flash_error_message( _m('Your current IP is not allowed'));
-                                            $this->redirectTo(osc_user_login_url());
-                                        }
+												Cookie::newInstance()->set_expires( osc_time_cookie() );
+												Cookie::newInstance()->push('oc_userId', $user['pk_i_id']);
+												Cookie::newInstance()->push('oc_userSecret', $secret);
+												Cookie::newInstance()->set();
+											}
 
-                                        $uActions = new UserActions(false);
-                                        $logged = $uActions->bootstrap_login($user['pk_i_id']);
+											if($url_redirect=='') {
+												$url_redirect = osc_user_dashboard_url();
+											}
 
-                                        if($logged==0) {
-                                            osc_add_flash_error_message(_m("The user doesn't exist"));
-                                        } else if($logged==1) {
-                                            if((time()-strtotime($user['dt_access_date']))>1200) { // EACH 20 MINUTES
-                                                osc_add_flash_error_message(sprintf(_m('The user has not been validated yet. Would you like to re-send your <a href="%s">activation?</a>'), osc_user_resend_activation_link($user['pk_i_id'], $user['s_email'])));
-                                            } else {
-                                                osc_add_flash_error_message(_m('The user has not been validated yet'));
-                                            }
-                                        } else if($logged==2) {
-                                            osc_add_flash_error_message(_m('The user has been suspended'));
-                                        } else if($logged==3) {
-                                            if ( Params::getParam('remember') == 1 ) {
+											osc_run_hook("after_login", $user, $url_redirect);
 
-                                                //this include contains de osc_genRandomPassword function
-                                                require_once osc_lib_path() . 'osclass/helpers/hSecurity.php';
-                                                $secret = osc_genRandomPassword();
+											$this->redirectTo( osc_apply_filter('correct_login_url_redirect', $url_redirect) );
 
-                                                User::newInstance()->update(
-                                                    array('s_secret' => $secret)
-                                                    ,array('pk_i_id' => $user['pk_i_id'])
-                                                );
+										} else {
+											osc_add_flash_error_message(_m('This should never happen'));
+										}
 
-                                                Cookie::newInstance()->set_expires( osc_time_cookie() );
-                                                Cookie::newInstance()->push('oc_userId', $user['pk_i_id']);
-                                                Cookie::newInstance()->push('oc_userSecret', $secret);
-                                                Cookie::newInstance()->set();
+										if( ! $user['b_enabled']) {
+											$this->redirectTo(osc_user_login_url());
+										}
 
-                                            }
-
-                                            osc_run_hook("after_login", $user, $url_redirect);
-
-                                            $this->redirectTo( osc_apply_filter('correct_login_url_redirect', $url_redirect) );
-
-                                        } else {
-                                            osc_add_flash_error_message(_m('This should never happen'));
-                                        }
-
-                                        if(!$user['b_enabled']) {
-                                            $this->redirectTo(osc_user_login_url());
-                                        }
-
-                                        $this->redirectTo(osc_user_login_url());
-                                        break;
+										$this->redirectTo(osc_user_login_url());
+										break;
                 case('resend'):
                                         $id = Params::getParam('id');
                                         $email = Params::getParam('email');
