@@ -573,7 +573,6 @@
         $yourEmail  = $aItem['yourEmail'];
         $yourName   = $aItem['yourName'];
         $phoneNumber= $aItem['phoneNumber'];
-        // contact - strip_tags + nl2br
         $message    = nl2br( strip_tags( $aItem['message'] ) );
 
         $path = null;
@@ -663,10 +662,8 @@
     osc_add_hook('hook_email_item_inquiry', 'fn_email_item_inquiry');
 
     function fn_email_new_comment_admin($aItem) {
-        $authorName  = trim($aItem['authorName']);
-        $authorName  = strip_tags($authorName);
-        $authorEmail = trim($aItem['authorEmail']);
-        $authorEmail = strip_tags($authorEmail);
+        $authorName  = trim(strip_tags($aItem['authorName']));
+        $authorEmail = trim(strip_tags($aItem['authorEmail']));
         $body        = trim($aItem['body']);
         // only \n -> <br/>
         $body        = nl2br(strip_tags($body));
@@ -1085,9 +1082,10 @@
     osc_add_hook('hook_email_contact_user', 'fn_email_contact_user');
 
     function fn_email_new_comment_user($aItem) {
-        $authorName  = strip_tags(trim($aItem['authorName']));
-        $authorEmail = strip_tags(trim($aItem['authorEmail']));
-        $body        = nl2br(strip_tags(trim($aItem['body']))); // only \n -> <br/>
+        $authorName  = trim(strip_tags($aItem['authorName']));
+        $authorEmail = trim(strip_tags($aItem['authorEmail']));
+        $body        = trim(strip_tags($aItem['body']));
+        $body        = nl2br($body);
         $title       = $aItem['title'];
         $itemId      = $aItem['id'];
         $admin_email = osc_contact_email();
@@ -1101,7 +1099,6 @@
         $aPage = $mPages->findByInternalName('email_new_comment_user');
         $locale = osc_current_user_locale();
 
-        $content = array();
         if(isset($aPage['locale'][$locale]['s_title'])) {
             $content = $aPage['locale'][$locale];
         } else {
@@ -1150,16 +1147,13 @@
 
     function fn_email_new_admin($data) {
 
-        $name       = trim($data['s_name']);
-        $name       = strip_tags($name);
-        $username   = trim($data['s_username']);
-        $username   = strip_tags($username);
+        $name       = trim(strip_tags($data['s_name']));
+        $username   = trim(strip_tags($data['s_username']));
 
         $mPages = new Page();
         $aPage = $mPages->findByInternalName('email_new_admin');
         $locale = osc_current_user_locale();
 
-        $content = array();
         if(isset($aPage['locale'][$locale]['s_title'])) {
             $content = $aPage['locale'][$locale];
         } else {
@@ -1174,8 +1168,8 @@
             '{WEB_ADMIN_LINK}'
         );
         $words[] = array(
-            $data['s_name'],
-            $data['s_username'],
+            $name,
+            $username,
             $data['s_password'],
             '<a href="' . osc_admin_base_url() . '">' . osc_page_title() . '</a>',
         );
@@ -1207,7 +1201,6 @@
         $aPage = $mPages->findByInternalName('email_warn_expiration');
         $locale = osc_current_user_locale();
 
-        $content = array();
         if(isset($aPage['locale'][$locale]['s_title'])) {
             $content = $aPage['locale'][$locale];
         } else {
