@@ -247,8 +247,9 @@ function osc_doRequest($url, $_data) {
         // parse the given URL
         $url = parse_url($url);
 
-        if ($url === false || !isset($url['host']) || !isset($url['path']))
+        if ($url === false || !isset($url['host']) || !isset($url['path'])) {
             return false;
+        }
 
         // extract host and path:
         $host = $url['host'];
@@ -258,8 +259,7 @@ function osc_doRequest($url, $_data) {
         // use localhost in case of issues with NATs (hairpinning)
         $fp = @fsockopen($host, 80);
 
-        if($fp===false)
-            return false;
+        if($fp===false) { return false; };
 
         $data = http_build_query($_data);
         $out  = "POST $path HTTP/1.1\r\n";
