@@ -54,7 +54,7 @@
          *
          * @access public
          * @since unknown
-         * @param type $location
+         * @param string $location
          * @return array
          */
         function findByLocation($location)
@@ -70,6 +70,29 @@
 
             return $result->result();
         }
+
+        /**
+         *
+         * @access public
+         * @since 3.3.3+
+         * @param string $description
+         * @return array
+         */
+        function findByDescription($description)
+        {
+            $this->dao->select('*');
+            $this->dao->from($this->getTableName());
+            $this->dao->where('s_description', $description);
+            $result = $this->dao->get();
+
+            if( $result == false ) {
+                return array();
+            }
+
+            return $result->result();
+        }
+    }
+
     }
 
     /* file end: ./oc-includes/osclass/model/Widget.php */

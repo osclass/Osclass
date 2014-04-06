@@ -91,6 +91,18 @@ function osc_show_widgets($location) {
 }
 
 /**
+ * Print all widgets named $description
+ *
+ * @param string $description
+ * @return void
+ */
+function osc_show_widgets_by_description($description) {
+    $widgets = Widget::newInstance()->findByDescription($description);
+    foreach ($widgets as $w)
+        echo $w['s_content'];
+}
+
+/**
  * Print recaptcha html, if $section = "recover_password"
  * set 'recover_time' at session.
  *

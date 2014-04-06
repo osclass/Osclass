@@ -454,7 +454,13 @@ CREATE TABLE %st_item_description_tmp (
         osc_set_preference('description_character_length', '5000', 'INTEGER');
     }
 
-    osc_changeVersionTo(332);
+	if(osc_version() < 333) {
+		osc_set_preference('spam_wait_time', '20', 'osclass', 'INTEGER');
+		$comm->query(sprintf("ALTER TABLE `%st_pages` ADD `b_indexed` TINYINT(1) NOT NULL DEFAULT 1 AFTER `b_link`", DB_TABLE_PREFIX));
+		$comm->query(sprintf("ALTER TABLE `%st_widget` ADD INDEX `idx_s_description` (`s_description`);", DB_TABLE_PREFIX)); // for new Widget->findByDescription()
+	}
+
+    osc_changeVersionTo(333); // or 340 ?
 
     if(!defined('IS_AJAX') || !IS_AJAX) {
         if(empty($aMessages)) {
