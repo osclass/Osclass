@@ -181,11 +181,12 @@
          */
         public function replace($key, $value, $section = 'osclass', $type = 'STRING')
         {
+            static $aValidEnumTypes = array('STRING','INTEGER','BOOLEAN');
             $array_replace = array(
                 's_name'    => $key,
                 's_value'   => $value,
                 's_section' => $section,
-                'e_type'    => in_array($type, array('STRING','INTEGER','BOOLEAN')) ? $type : 'STRING'
+                'e_type'    => in_array($type, $aValidEnumTypes) ? $type : 'STRING'
             );
             return $this->dao->replace($this->getTableName(), $array_replace);
         }
