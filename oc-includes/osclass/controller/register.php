@@ -66,43 +66,20 @@
                                         $userActions = new UserActions(false);
                                         $success     = $userActions->add();
 
-                                        switch($success) {
-                                            case 1: osc_add_flash_ok_message( _m('The user has been created. An activation email has been sent'));
-                                                    $this->redirectTo( osc_base_url() );
-                                            break;
-                                            case 2: osc_add_flash_ok_message( _m('Your account has been created successfully'));
-                                                    Params::setParam('action', 'login_post');
-                                                    Params::setParam('email', Params::getParam('s_email'));
-                                                    Params::setParam('password', Params::getParam('s_password', false, false));
-                                                    require_once(osc_lib_path() . 'osclass/controller/login.php');
-                                                    $do = new CWebLogin();
-                                                    $do->doModel();
-                                                    //$this->doView('user-login.php');
-                                            break;
-                                            case 3: osc_add_flash_warning_message( _m('The specified e-mail is already in use'));
-                                                    $this->doView('user-register.php');
-                                            break;
-                                            case 4: osc_add_flash_error_message( _m('The reCAPTCHA was not entered correctly'));
-                                                    $this->doView('user-register.php');
-                                            break;
-                                            case 5: osc_add_flash_warning_message( _m('The email is not valid'));
-                                                    $this->doView('user-register.php');
-                                            break;
-                                            case 6: osc_add_flash_warning_message( _m('The password cannot be empty'));
-                                                    $this->doView('user-register.php');
-                                            break;
-                                            case 7: osc_add_flash_warning_message( _m("Passwords don't match"));
-                                                    $this->doView('user-register.php');
-                                            break;
-                                            case 8: osc_add_flash_warning_message( _m("Username is already taken"));
-                                                $this->doView('user-register.php');
-                                            break;
-                                            case 9: osc_add_flash_warning_message( _m("The specified username is not valid, it contains some invalid words"));
-                                                $this->doView('user-register.php');
-                                            break;
-                                            case 10: osc_add_flash_warning_message( _m('The name cannot be empty'));
-                                                $this->doView('user-register.php');
-                                            break;
+                                        if ($success == 1) {
+                                            osc_add_flash_ok_message( _m('The user has been created. An activation email has been sent'));
+                                            $this->redirectTo( osc_base_url() );
+                                        } elseif ($success == 2) {
+                                            osc_add_flash_ok_message( _m('Your account has been created successfully'));
+                                            Params::setParam('action', 'login_post');
+                                            Params::setParam('email', Params::getParam('s_email'));
+                                            Params::setParam('password', Params::getParam('s_password', false, false));
+                                            require_once(osc_lib_path() . 'osclass/controller/login.php');
+                                            $do = new CWebLogin();
+                                            $do->doModel();
+                                        } else {
+                                            osc_add_flash_error_message( $success);
+                                            $this->doView('user-register.php');
                                         }
                 break;
                 case('validate'):       //validate account
