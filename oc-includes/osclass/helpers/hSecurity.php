@@ -249,7 +249,7 @@
             return password_verify($password, $hash)?true:(sha1($password)==$hash);
         }
 
-        require_once LIB_PATH . 'Bcrypt.php';
+        include_once LIB_PATH . 'Bcrypt.php';
         if(CRYPT_BLOWFISH==1) {
             $bcrypt = new Bcrypt(15);
             return $bcrypt->verify($password, $hash)?true:(sha1($password)==$hash);
@@ -266,11 +266,10 @@
      */
     function osc_hash_password($password) {
         if(version_compare(PHP_VERSION, '5.3.7')>=0) {
-            $options = array('cost' => 15);
-            return password_hash($password, PASSWORD_BCRYPT, $options);
+            return password_hash($password, PASSWORD_BCRYPT, array('cost' => 15));
         }
 
-        require_once LIB_PATH . 'Bcrypt.php';
+        include_once LIB_PATH . 'Bcrypt.php';
         if(CRYPT_BLOWFISH==1) {
             $bcrypt = new Bcrypt(15);
             return $bcrypt->hash($password);
