@@ -305,6 +305,9 @@
             $this->dao->select();
             $this->dao->from($this->getTableName());
             $this->dao->where('s_search', $alert);
+            
+            $this->dao->where('dt_unsub_date IS NULL');
+            
             if($userid == 0 || $userid == null){
                 $this->dao->where('fk_i_user_id', 0);
                 $this->dao->where('s_email', $email);
