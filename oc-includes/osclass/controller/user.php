@@ -72,12 +72,12 @@
                                         require_once LIB_PATH . 'osclass/UserActions.php';
                                         $userActions = new UserActions(false);
                                         $success = $userActions->edit( $userId );
-                                        switch($success) {
-                                            case 10: osc_add_flash_warning_message( _m("The name cannot be empty"));
-                                                break;
-                                            default:
-                                                osc_add_flash_ok_message( _m('Your profile has been updated successfully') );
-                                                break;
+                                        if($success==1 || $success==2) {
+                                            osc_add_flash_ok_message( _m('Your profile has been updated successfully') );
+                                            $this->redirectTo( osc_user_profile_url() );
+                                        } else {
+                                            osc_add_flash_error_message( $success);
+                                            $this->redirectTo( osc_user_profile_url() );
                                         }
 
                                         $this->redirectTo( osc_user_profile_url() );

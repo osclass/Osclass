@@ -59,14 +59,9 @@
             $input['s_email']     = Params::getParam('s_email');
             $input['s_username']  = osc_sanitize_username(Params::getParam('s_username'));
 
-            if( !$error && $input['s_name']=='' ) {
-                $flash_error .= _m('The name cannot be empty');
-            }
-
             if(!osc_validate_email($input['s_email']) ) {
-                $flash_error .=  _m('The email is not valid');
+                $flash_error .= _m('The email is not valid');
             }
-
             $email_taken = $this->manager->findByEmail($input['s_email']);
             if($email_taken != null ) {
                 osc_run_hook('register_email_taken', $input['s_email']);
@@ -81,6 +76,9 @@
                 if(osc_is_username_blacklisted($input['s_username'])) {
                     $flash_error .= _m("The specified username is not valid, it contains some invalid words"); 
                 }
+            }
+            if( $input['s_name']=='' ) {
+                $flash_error .= _m('The name cannot be empty');
             }
             if ($flash_error) {
                 osc_run_hook('user_register_failed', $flash_error);
@@ -156,12 +154,31 @@
             if($this->is_admin) {
                 $user_email = $this->manager->findByEmail($input['s_email']);
                 if(isset($user_email['pk_i_id']) && $user_email['pk_i_id']!=$userId) {
-                    return 3;
+                    $flash_error .= _m('The specified e-mail is already used by ').$user_email['s_username'].PHP_EOL;
+                }
+                if (!is_numeric($input['i_max_item'])) {
+                    $flash_error .= _m("Maximum allowed item must be numeric").PHP_EOL;
+                }    
+                if( Params::getParam('s_password', false, false) != Params::getParam('s_password2', false, false) ) {
+                    $flash_error .= _m("Passwords don't match").PHP_EOL;
+                }
+
+            }
+            if($input['s_zip'] != '') {
+                if (strlen($input['s_zip']) != 5) {
+                    $flash_error .= _m("Zip code must more than 5 character").PHP_EOL;
                 }
             }
 
             if($input['s_name']=='') {
-                return 10;
+                $flash_error .= _m('The name cannot be empty').PHP_EOL;
+            }
+
+            /*
+             * Return on error
+             */
+            if ($flash_error) {
+                return $flash_error;
             }
 
             $this->manager->update($input, array('pk_i_id' => $userId));
@@ -213,7 +230,7 @@
                 }
             }
 
-            return 0;
+            return 1;
         }
 
         function recover_password()
