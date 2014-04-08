@@ -31,55 +31,66 @@
         //add...
         function add()
         {
+            $input = array();
             $success    = 0;
-            $error      = false;
+            $flash_error = '';
+            
             if( !$error && (osc_recaptcha_private_key() != '') && !$this->is_admin ) {
                 if( !osc_check_recaptcha() ) {
-                    $error = 4;
+                    $flash_error .= _m('The reCAPTCHA was not entered correctly');
                 }
             }
 
-            if( !$error && Params::getParam('s_password', false, false) == '' ) {
-                $error = 6;
+            if(Params::getParam('s_password', false, false) == '' || Params::getParam('s_password2', false, false) == '' ) {
+                $flash_error .= _m('The password cannot be empty');
+            } elseif(Params::getParam('s_password', false, false) != Params::getParam('s_password2', false, false) ) {
+                $flash_error .= _m("Passwords don't match");
+            }
+            
+            if(mb_strlen(Params::getParam('s_password', false, false)) < 5) {
+                $flash_error .= _m("Password: enter at least 5 characters");
             }
 
-            if( !$error && Params::getParam('s_password', false, false) != Params::getParam('s_password2', false, false) ) {
-                $error = 7;
+            $input['dt_reg_date'] = date('Y-m-d H:i:s');
+            $input['s_secret']    = osc_genRandomPassword();
+            $input['s_name']      = ucwords(trim(Params::getParam('s_name')));
+
+            //only for administration, in the public website this two params are edited separately
+            $input['s_email']     = Params::getParam('s_email');
+            $input['s_username']  = osc_sanitize_username(Params::getParam('s_username'));
+
+            if(!osc_validate_email($input['s_email']) ) {
+                $flash_error .= _m('The email is not valid');
             }
-
-            $input = $this->prepareData(true);
-
-            if( !$error && $input['s_name']=='' ) {
-                $error = 10;
-            }
-
-            if( !$error && !osc_validate_email($input['s_email']) ) {
-                $error = 5;
-            }
-
             $email_taken = $this->manager->findByEmail($input['s_email']);
-            if( !$error && $email_taken != null ) {
+            if($email_taken != null ) {
                 osc_run_hook('register_email_taken', $input['s_email']);
-                $error = 3;
+                $flash_error .= _m('The specified e-mail is already in use');
             }
 
             if(!$error && $input['s_username']!='') {
                 $username_taken = $this->manager->findByUsername($input['s_username']);
-                if( !$error && $username_taken != null ) {
-                    $error = 8;
+                if( !$username_taken != null ) {
+                    _$flash_error .= _m("Username is already taken");
                 }
                 if(osc_is_username_blacklisted($input['s_username'])) {
-                    $error = 9;
+                    $flash_error .= _m("The specified username is not valid, it contains some invalid words"); 
                 }
             }
+            if( $input['s_name']=='' ) {
+                $flash_error .= _m('The name cannot be empty');
+            }
+            if ($flash_error) {
+                osc_run_hook('user_register_failed', $flash_error);
+                return $flash_error;
+            }
 
+            if( Params::getParam('s_password', false, false) != '') {
+                $input['s_password'] = osc_hash_password(Params::getParam('s_password', false, false));
+            }
+            
             // hook pre add or edit
             osc_run_hook('pre_user_post');
-
-            if( is_numeric($error) && $error > 0) {
-                osc_run_hook('user_register_failed', $error);
-                return $error;
-            }
 
 
             $this->manager->insert($input);
@@ -143,12 +154,31 @@
             if($this->is_admin) {
                 $user_email = $this->manager->findByEmail($input['s_email']);
                 if(isset($user_email['pk_i_id']) && $user_email['pk_i_id']!=$userId) {
-                    return 3;
+                    $flash_error .= _m('The specified e-mail is already used by ').$user_email['s_username'].PHP_EOL;
+                }
+                if (!is_numeric($input['i_max_item'])) {
+                    $flash_error .= _m("Maximum allowed item must be numeric").PHP_EOL;
+                }    
+                if( Params::getParam('s_password', false, false) != Params::getParam('s_password2', false, false) ) {
+                    $flash_error .= _m("Passwords don't match").PHP_EOL;
+                }
+
+            }
+            if($input['s_zip'] != '') {
+                if (strlen($input['s_zip']) != 5) {
+                    $flash_error .= _m("Zip code must more than 5 character").PHP_EOL;
                 }
             }
 
             if($input['s_name']=='') {
-                return 10;
+                $flash_error .= _m('The name cannot be empty').PHP_EOL;
+            }
+
+            /*
+             * Return on error
+             */
+            if ($flash_error) {
+                return $flash_error;
             }
 
             $this->manager->update($input, array('pk_i_id' => $userId));
@@ -200,7 +230,7 @@
                 }
             }
 
-            return 0;
+            return 1;
         }
 
         function recover_password()
