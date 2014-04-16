@@ -67,6 +67,12 @@
                 echo $item['description'], ']]>';
                 echo '</description>', PHP_EOL;
 
+                echo '<country>', $item['country'], '</country>', PHP_EOL;
+                echo '<region>', $item['region'], '</region>', PHP_EOL;
+                echo '<city>', $item['city'], '</city>', PHP_EOL;
+                echo '<cityArea>', $item['city_area'], '</cityArea>', PHP_EOL;
+                echo '<category>', $item['category'], '</category>', PHP_EOL;
+
                 echo '<pubDate>', date('r',strtotime($item['dt_pub_date'])) , '</pubDate>', PHP_EOL;
                 
                 echo '</item>', PHP_EOL;
