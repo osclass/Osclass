@@ -535,6 +535,11 @@
                                     'title' => osc_item_title(),
                                     'link' => htmlentities( osc_item_url(),  ENT_COMPAT, "UTF-8" ),
                                     'description' => osc_item_description(),
+                                    'country' => osc_item_country(),
+                                    'region' => osc_item_region(),
+                                    'city' => osc_item_city(),
+                                    'city_area' => osc_item_city_area(),
+                                    'category' => osc_item_category(),
                                     'dt_pub_date' => osc_item_pub_date(),
                                     'image'     => array(  'url'    => htmlentities(osc_resource_thumbnail_url(),  ENT_COMPAT, "UTF-8"),
                                                            'title'  => osc_item_title(),
@@ -545,6 +550,11 @@
                                     'title' => osc_item_title(),
                                     'link' => htmlentities( osc_item_url() , ENT_COMPAT, "UTF-8"),
                                     'description' => osc_item_description(),
+                                    'country' => osc_item_country(),
+                                    'region' => osc_item_region(),
+                                    'city' => osc_item_city(),
+                                    'city_area' => osc_item_city_area(),
+                                    'category' => osc_item_category(),
                                     'dt_pub_date' => osc_item_pub_date()
                                 ));
                             }
