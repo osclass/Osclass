@@ -46,7 +46,7 @@
         }
 
         $active   = TRUE;
-        $searches = Alerts::newInstance()->findByType($type, $active);
+        $searches = Alerts::newInstance()->findByTypeGroup($type, $active);
 
 
         foreach($searches as $s_search) {
