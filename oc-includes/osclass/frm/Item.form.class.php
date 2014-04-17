@@ -1,24 +1,20 @@
 <?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
-    /*
-     *      Osclass – software for creating and publishing online classified
-     *                           advertising platforms
-     *
-     *                        Copyright (C) 2012 OSCLASS
-     *
-     *       This program is free software: you can redistribute it and/or
-     *     modify it under the terms of the GNU Affero General Public License
-     *     as published by the Free Software Foundation, either version 3 of
-     *            the License, or (at your option) any later version.
-     *
-     *     This program is distributed in the hope that it will be useful, but
-     *         WITHOUT ANY WARRANTY; without even the implied warranty of
-     *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-     *             GNU Affero General Public License for more details.
-     *
-     *      You should have received a copy of the GNU Affero General Public
-     * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
-     */
+/*
+ * Copyright 2014 Osclass
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
     class ItemForm extends Form {
 
@@ -63,7 +59,7 @@
                     }
                 } else {
                     $selected = ( (isset($item["fk_i_category_id"]) && $item["fk_i_category_id"] == $c['pk_i_id']) || (isset($catId) && $catId == $c['pk_i_id']) );
-                    echo '<option value="' . $c['pk_i_id'] . '"' . ($selected ? 'selected="selected"' : '' ). '>' . $c['s_name'] . '</option>';
+                    echo '<option value="' . $c['pk_i_id'] . '"' . ($selected ? ' selected="selected"' : '' ). '>' . $c['s_name'] . '</option>';
                     if(isset($c['categories']) && is_array($c['categories'])) {
                         ItemForm::subcategory_select($c['categories'], $item, $default_item, 1);
                     }
@@ -299,7 +295,7 @@
             foreach($categories as $c) {
                 $selected = ( (isset($item["fk_i_category_id"]) && $item["fk_i_category_id"] == $c['pk_i_id']) || (isset($catId) && $catId == $c['pk_i_id']) );
 
-                echo '<option value="' . $c['pk_i_id'] . '"' . ($selected ? 'selected="selected'.$item["fk_i_category_id"].'"' : '') . '>' . $deep_string . $c['s_name'] . '</option>';
+                echo '<option value="' . $c['pk_i_id'] . '"' . ($selected ? ' selected="selected'.$item["fk_i_category_id"].'"' : '') . '>' . $deep_string . $c['s_name'] . '</option>';
                 if(isset($c['categories']) && is_array($c['categories'])) {
                     ItemForm::subcategory_select($c['categories'], $item, $default_item, $deep);
                 }
@@ -321,7 +317,7 @@
                     $bool = false;
                     if($userId != '' && $userId == $user['pk_i_id']){$bool = true;}
                     if((isset($item["fk_i_user_id"]) && $item["fk_i_user_id"] == $user['pk_i_id'])){$bool = true;}
-                    echo '<option value="' . $user['pk_i_id'] . '"' . ( $bool ? 'selected="selected"' : '' ) . '>';
+                    echo '<option value="' . $user['pk_i_id'] . '"' . ( $bool ? ' selected="selected"' : '' ) . '>';
 
                     if( isset($user['s_name']) && !empty($user['s_name']) ) {
                         echo $user['s_name'];
@@ -1314,10 +1310,10 @@
                     <?php }; ?>
                     <?php foreach($aImages as $img){ ?>
                         <li class=" qq-upload-success">
-                            <span class="qq-upload-file"><?php echo $img; ?></span>
+                            <span class="qq-upload-file"><?php echo $img; $img = osc_esc_html($img); ?></span>
                             <a class="qq-upload-delete" href="#" ajaxfile="<?php echo $img; ?>" style="display: inline; cursor:pointer;"><?php _e('Delete'); ?></a>
-                            <div class="ajax_preview_img"><img src="<?php echo osc_base_url(); ?>oc-content/uploads/temp/<?php echo osc_esc_html($img); ?>" alt="<?php echo osc_esc_html($img); ?>"></div>
-                            <input type="hidden" name="ajax_photos[]" value="<?php echo osc_esc_html($img); ?>">
+                            <div class="ajax_preview_img"><img src="<?php echo osc_base_url(); ?>oc-content/uploads/temp/<?php echo $img; ?>" alt="<?php echo $img; ?>"></div>
+                            <input type="hidden" name="ajax_photos[]" value="<?php echo $img; ?>">
                         </li>
                     <?php } ?>
                 </ul>
@@ -1455,14 +1451,14 @@
                             showButton: true
                         },
                         text: {
-                            uploadButton: '<?php _e('Click or Drop for upload images'); ?>',
-                            waitingForResponse: '<?php _e('Processing...'); ?>',
-                            retryButton: '<?php _e('Retry'); ?>',
-                            cancelButton: '<?php _e('Cancel'); ?>',
-                            failUpload: '<?php _e('Upload failed'); ?>',
-                            deleteButton: '<?php _e('Delete'); ?>',
-                            deletingStatusText: '<?php _e('Deleting...'); ?>',
-                            formatProgress: '<?php _e('{percent}% of {total_size}'); ?>'
+                            uploadButton: '<?php echo osc_esc_js(__('Click or Drop for upload images')); ?>',
+                            waitingForResponse: '<?php echo osc_esc_js(__('Processing...')); ?>',
+                            retryButton: '<?php echo osc_esc_js(__('Retry')); ?>',
+                            cancelButton: '<?php echo osc_esc_js(__('Cancel')); ?>',
+                            failUpload: '<?php echo osc_esc_js(__('Upload failed')); ?>',
+                            deleteButton: '<?php echo osc_esc_js(__('Delete')); ?>',
+                            deletingStatusText: '<?php echo osc_esc_js(__('Deleting...')); ?>',
+                            formatProgress: '<?php echo osc_esc_js(__('{percent}% of {total_size}')); ?>'
                         }
                     }).on('error', function (event, id, name, errorReason, xhrOrXdr) {
                             $('#restricted-fine-uploader .flashmessage-error').remove();
@@ -1477,9 +1473,11 @@
                             if(parseInt(new_id)==0) {
                                 $(li).append('<div class="primary_image primary"></div>');
                             } else {
-                                $(li).append('<div class="primary_image"><a title="<?php echo osc_esc_html(__('Make primary image')); ?>"></a></div>');
+                                $(li).append('<div class="primary_image"><a title="<?php echo osc_esc_js(osc_esc_html(__('Make primary image'))); ?>"></a></div>');
                             }
-                            <?php } ?>
+                            <?php } 
+                            // @TOFIX @FIXME escape $responseJSON_uploadName below
+                            // need a js function similar to osc_esc_js(osc_esc_html()) ?>
                             $(li).append('<div class="ajax_preview_img"><img src="<?php echo osc_base_url(); ?>oc-content/uploads/temp/'+responseJSON.uploadName+'" alt="' + responseJSON.uploadName + '"></div>');
                             $(li).append('<input type="hidden" name="ajax_photos[]" value="'+responseJSON.uploadName+'"></input>');
                         }
