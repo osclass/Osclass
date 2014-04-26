@@ -76,6 +76,15 @@
             if( file_exists($functions_path) ) {
                 require_once $functions_path;
             }
+
+            $info = $this->loadThemeInfo($this->theme);
+            if($info['template'] != '' ) {
+				//$this->setCurrentTheme($info['template']);
+				$parent_functions_path = osc_base_path() . 'oc-content/themes/' . $info['template'] . '/functions.php';
+				if( file_exists($parent_functions_path) ) {
+					require_once $parent_functions_path;
+				}
+			}
         }
 
         public function setCurrentThemePath()
@@ -130,6 +139,22 @@
             }
         }
 
+        public function setParentTheme()
+        {
+			$info = $this->loadThemeInfo($this->theme);
+
+            $this->theme = $info['template'];
+
+            $this->theme_exists = true;
+            $this->theme_path   = $this->path . $this->theme . '/';
+            $this->theme_url    = osc_base_url() . str_replace(osc_base_path(), '', $this->theme_path);
+
+            //$functions_path = $this->getCurrentThemePath() . 'functions.php';
+            //if( file_exists($functions_path) ) {
+              //  require_once $functions_path;
+            //}
+        }
+
         /**
          * This function returns an array of themes (those copied in the oc-content/themes folder)
          * @return <type>
@@ -166,6 +191,12 @@
                 $info['name'] = trim($match[1]);
             } else {
                 $info['name'] = "";
+            }
+
+            if( preg_match('|Parent Theme:([^\\r\\t\\n]*)|i', $s_info, $match) ) {
+                $info['template'] = trim($match[1]);
+            } else {
+                $info['template'] = "";
             }
 
             if( preg_match('|Theme URI:([^\\r\\t\\n]*)|i', $s_info, $match) ) {
