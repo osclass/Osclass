@@ -1,21 +1,20 @@
 <?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
-    /**
-     * Osclass – software for creating and publishing online classified advertising platforms
-     *
-     * Copyright (C) 2012 OSCLASS
-     *
-     * This program is free software: you can redistribute it and/or modify it under the terms
-     * of the GNU Affero General Public License as published by the Free Software Foundation,
-     * either version 3 of the License, or (at your option) any later version.
-     *
-     * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-     * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-     * See the GNU Affero General Public License for more details.
-     *
-     * You should have received a copy of the GNU Affero General Public
-     * License along with this program. If not, see <http://www.gnu.org/licenses/>.
-     */
+/*
+ * Copyright 2014 Osclass
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
     Class UserActions
     {
@@ -58,14 +57,14 @@
             }
 
             $email_taken = $this->manager->findByEmail($input['s_email']);
-            if( !$error && $email_taken != null ) {
+            if( !$error && $email_taken != false ) {
                 osc_run_hook('register_email_taken', $input['s_email']);
                 $error = 3;
             }
 
             if(!$error && $input['s_username']!='') {
                 $username_taken = $this->manager->findByUsername($input['s_username']);
-                if( !$error && $username_taken != null ) {
+                if( !$error && $username_taken != false ) {
                     $error = 8;
                 }
                 if(osc_is_username_blacklisted($input['s_username'])) {
@@ -73,13 +72,13 @@
                 }
             }
 
-            // hook pre add or edit
-            osc_run_hook('pre_user_post');
-
             if( is_numeric($error) && $error > 0) {
                 osc_run_hook('user_register_failed', $error);
                 return $error;
             }
+
+            // hook pre add or edit
+            osc_run_hook('pre_user_post');
 
 
             $this->manager->insert($input);
@@ -265,6 +264,8 @@
             if(strtolower(substr($input['s_website'], 0, 4))!=='http') {
                 $input['s_website'] = 'http://'.$input['s_website'];
             }
+            $input['s_website'] = osc_sanitize_url($input['s_website']);
+            if ( ! osc_validate_url($input['s_website'])) $input['s_website'] = '';
 
             //locations...
             $country = Country::newInstance()->findByCode( Params::getParam('countryId') );

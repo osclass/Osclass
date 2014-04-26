@@ -1,23 +1,19 @@
 <?php
-    /*
-     *      Osclass – software for creating and publishing online classified
-     *                           advertising platforms
-     *
-     *                        Copyright (C) 2012 OSCLASS
-     *
-     *       This program is free software: you can redistribute it and/or
-     *     modify it under the terms of the GNU Affero General Public License
-     *     as published by the Free Software Foundation, either version 3 of
-     *            the License, or (at your option) any later version.
-     *
-     *     This program is distributed in the hope that it will be useful, but
-     *         WITHOUT ANY WARRANTY; without even the implied warranty of
-     *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-     *             GNU Affero General Public License for more details.
-     *
-     *      You should have received a copy of the GNU Affero General Public
-     * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
-     */
+/*
+ * Copyright 2014 Osclass
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
     /**
     * Helper Search
@@ -47,11 +43,18 @@
      * @return array
      */
     function osc_list_orders() {
-        return  array(
+        if (osc_price_enabled_at_items()) {
+        return array(
                      __('Newly listed')        => array('sOrder' => 'dt_pub_date', 'iOrderType' => 'desc')
                     ,__('Lower price first')   => array('sOrder' => 'i_price', 'iOrderType' => 'asc')
                     ,__('Higher price first')  => array('sOrder' => 'i_price', 'iOrderType' => 'desc')
                 );
+        }
+        else {
+        return array(
+                     __('Newly listed')        => array('sOrder' => 'dt_pub_date', 'iOrderType' => 'desc')
+                );
+        }
     }
 
     /**
@@ -245,7 +248,7 @@
             return null;
         }
 
-        // TODO: not the best way to do it
+        // @TODO @TOFIX: not the best way to do it
         $categories = Category::newInstance()->listWhere( implode(" OR ", $where) );
         foreach($categories as $cat) {
             $category[] = $cat['pk_i_id'];
@@ -443,14 +446,15 @@
                 // DEPRECATED : CATEGORY_SLUG is going to be removed in 3.4
                 $url = str_replace('{CATEGORY_SLUG}', $category['s_slug'], $url);
                 $url = str_replace('{CATEGORY_ID}', $category['pk_i_id'], $url);
-                if(@$params['iPage']!='' && @$params['iPage']!=1) { $url .= "/".$params['iPage']; };
+                if(isset($params['iPage']) && $params['iPage']!='' && $params['iPage']!=1) { $url .= '/'.$params['iPage']; };
                 $url = $base_url.$seo_prefix.$url;
-            } else if(isset($params['sRegion']) && !is_array($params['sRegion']) && strpos($params['sRegion'], ',')===false &&
+            } else if(isset($params['sRegion']) && is_string($params['sRegion']) && strpos($params['sRegion'], ',')===false &&
                 ($countP==1 || ($countP==2 && (isset($params['iPage']) || isset($params['sCategory']))) || ($countP==3 && isset($params['iPage']) && isset($params['sCategory'])))) {
                 $url = $base_url;
                 if( osc_get_preference('seo_url_search_prefix') != '' ) {
                     $url .= osc_get_preference('seo_url_search_prefix') . '/';
                 }
+                if(isset($params['sCategory'])) {
                 if(osc_category_id()==$params['sCategory']) {
                     $category['s_slug'] = osc_category_slug();
                 } else {
@@ -460,8 +464,10 @@
                         $category = Category::newInstance()->findBySlug($params['sCategory']);
                     }
                 }
-                if(@$category['s_slug']!='') { $url .= $category['s_slug']."_"; }
+                }
+                if(isset($category['s_slug']) && $category['s_slug']!='') { $url .= $category['s_slug'].'_'; }
 
+                if(isset($params['sRegion'])) {
                 if(osc_list_region_id()==$params['sRegion']) {
                     $url .= osc_sanitizeString(osc_list_region_slug()) . '-r' . osc_list_region_id();
                 } else {
@@ -472,13 +478,15 @@
                     }
                     $url .= osc_sanitizeString($region['s_slug']) . '-r' . $region['pk_i_id'];
                 }
-                if(@$params['iPage']!='' && @$params['iPage']!=1) { $url .= "/".$params['iPage']; };
+                }
+                if(isset($params['iPage']) && $params['iPage']!='' && $params['iPage']!=1) { $url .= '/'.$params['iPage']; };
             } else if(isset($params['sCity']) && !is_array($params['sCity']) && strpos($params['sCity'], ',')===false &&
                 ($countP==1 || ($countP==2 && (isset($params['iPage']) || isset($params['sCategory']))) || ($countP==3 && isset($params['iPage']) && isset($params['sCategory'])))) {
                 $url = $base_url;
                 if( osc_get_preference('seo_url_search_prefix') != '' ) {
                     $url .= osc_get_preference('seo_url_search_prefix') . '/';
                 }
+                if(isset($params['sCategory'])) {
                 if(osc_category_id()==$params['sCategory']) {
                     $category['s_slug'] = osc_category_slug();
                 } else {
@@ -488,7 +496,9 @@
                         $category = Category::newInstance()->findBySlug($params['sCategory']);
                     }
                 }
-                if(@$category['s_slug']!='') { $url .= $category['s_slug']."_"; }
+                }
+                if(isset($category['s_slug']) && $category['s_slug']!='') { $url .= $category['s_slug'].'_'; }
+                if(isset($params['sCity'])) {
                 if(osc_list_region_id()==$params['sCity']) {
                     $url .= osc_sanitizeString(osc_list_city_slug()) . '-c' . osc_list_city_id();
                 } else {
@@ -499,8 +509,9 @@
                     }
                     $url .= osc_sanitizeString($city['s_slug']) . '-c' . $city['pk_i_id'];
                 }
-                if(@$params['iPage']!='' && @$params['iPage']!=1) { $url .= "/".$params['iPage']; };
-            } else if($params!=null) {
+                }
+                if(isset($params['iPage']) && $params['iPage']!='' && $params['iPage']!=1) { $url .= '/'.$params['iPage']; };
+            } else if($params!=null && is_array($params)) {
                 foreach($params as $k => $v) {
                     switch($k) {
                         case 'sCountry':
@@ -554,7 +565,7 @@
             }
         } else {
             $url = $base_url.'index.php?page=search';
-            if($params!=null) {
+            if($params!=null && is_array($params)) {
                 foreach($params as $k => $v) {
                     if($k=='meta') {
                         if( is_array($v) ) {
