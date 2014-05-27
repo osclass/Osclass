@@ -40,22 +40,18 @@
 										osc_run_hook('before_validating_login');
 
 										// e-mail or/and password is/are empty or incorrect
-										$wrong_credentials = false;
+										$wrongCredentials = false;
 										$email = Params::getParam('email');
 										$password = Params::getParam('password', false, false);
 										if ( $email == '' ) {
 											osc_add_flash_error_message( _m('Please provide an email address') );
-											$wrong_credentials = true;
-										}
-										elseif ( ! osc_validate_email($email) ) {
-											osc_add_flash_error_message( _m('Invalid email address') );
-											$wrong_credentials = true;
+											$wrongCredentials = true;
 										}
 										if ( $password == '' ) {
 											osc_add_flash_error_message( _m('Empty passwords are not allowed. Please provide a password') );
-											$wrong_credentials = true;
+											$wrongCredentials = true;
 										}
-										if ( $wrong_credentials ) {
+										if ( $wrongCredentials ) {
 											$this->redirectTo( osc_user_login_url() );
 										}
 
