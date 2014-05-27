@@ -498,6 +498,10 @@
                 }
 
                 $category = $result->row();
+
+                if(!isset($category['pk_i_id'])) {
+                    return false;
+                }
             }
 
             $this->dao->select();
@@ -513,7 +517,9 @@
             $sub_rows = $result->result();
             $row      = array();
             foreach ($sub_rows as $sub_row) {
-                $row[$sub_row['fk_c_locale_code']] = $sub_row;
+                if(isset($sub_row['fk_c_locale_code'])) {
+                    $row[$sub_row['fk_c_locale_code']] = $sub_row;
+                }
             }
             $category['locale'] = $row;
 
