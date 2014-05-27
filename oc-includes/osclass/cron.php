@@ -54,9 +54,11 @@
             }
 
             $files = glob(osc_content_path().'uploads/temp/qqfile_*');
-            foreach($files as $file) {
-                if((time()-filectime($file))>(2*3600)) {
-                    @unlink($file);
+            if(is_array($files)) {
+                foreach($files as $file) {
+                    if((time()-filectime($file))>(2*3600)) {
+                        @unlink($file);
+                    }
                 }
             }
 
