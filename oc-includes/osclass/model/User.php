@@ -458,11 +458,7 @@
             $this->dao->limit($start, $end);
 
             foreach($fields as $k => $v) {
-                if($k=='s_username' || $k=='s_name' || $k=='s_email') {
-                    $this->dao->where($k, $v);
-                } else {
-                    $this->dao->where($k, $v);
-                }
+                $this->dao->where($k, $v);
             }
 
             $rs = $this->dao->get();
