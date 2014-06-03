@@ -582,6 +582,8 @@
                     } else if ($item['b_enabled'] == 0) {
                         if( osc_is_admin_user_logged_in() ) {
                             osc_add_flash_warning_message( _m("The listing hasn't been enabled. Please enable it in order to make it public") );
+                        } else if(osc_is_web_user_logged_in() && osc_logged_user_id()==$item['fk_i_user_id']) {
+                            osc_add_flash_warning_message( _m("The listing has been blocked or is awaiting moderation from the admin") );
                         } else {
                             $this->do400();
                             return;
