@@ -478,13 +478,25 @@ function osc_mailBeauty($text, $params) {
     return $text;
 }
 
+function osc_mkdir($dir, $mode=0777, $recursive=true) {
+    if (is_null($dir) || $dir==="") {
+        return false;
+    }
+    if (is_dir($dir) || $dir==="/") {
+        return true;
+    }
+    if (osc_mkdir(dirname($dir), $mode, $recursive)) {
+        return mkdir($dir, $mode);
+    }
+    return false;
+}
 
 function osc_copy($source, $dest, $options=array('folderPermission'=>0755,'filePermission'=>0755)) {
     $result =true;
     if (is_file($source)) {
         if ($dest[strlen($dest)-1]=='/') {
             if (!file_exists($dest)) {
-                cmfcDirectory::makeAll($dest,$options['folderPermission'],true);
+                osc_mkdir($dest, $options['folderPermission'], true);
             }
             $__dest=$dest."/".basename($source);
         } else {
