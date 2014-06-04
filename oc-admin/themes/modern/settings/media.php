@@ -207,6 +207,16 @@
                 </div>
                 <h2 class="render-title"><?php _e('Restrictions'); ?></h2>
                 <div class="form-row">
+                    <div class="form-label"><?php _e('Force JPEG'); ?></div>
+                    <div class="form-controls">
+                        <div class="form-label-checkbox">
+                            <input type="checkbox" id="force_jpeg" name="force_jpeg" value="1" <?php echo ( osc_force_jpeg() ? 'checked="checked"' : '' ); ?> />
+                            <label for="force_jpeg"><?php _e('Force JPEG extension.'); ?></label>
+                            <span class="help-box"><?php _e('Uploaded images will be saved in JPG/JPEG format, saves space, but images will not have transparent background.'); ?></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
                     <div class="form-label"><?php _e('Maximum size'); ?></div>
                     <div class="form-controls">
                         <input type="text" class="input-medium" name="maxSizeKb" value="<?php echo osc_esc_html( osc_max_size_kb() ); ?>" />
