@@ -50,6 +50,7 @@
                     $dimNormal         = strtolower(Params::getParam('dimNormal'));
                     $keepOriginalImage = Params::getParam('keep_original_image');
                     $forceAspectImage  = Params::getParam('force_aspect_image');
+                    $forceJPEG         = Params::getParam('force_jpeg');
                     $use_imagick       = Params::getParam('use_imagick');
                     $type_watermark    = Params::getParam('watermark_type');
                     $watermark_color   = Params::getParam('watermark_text_color');
@@ -105,6 +106,7 @@
                     $dimNormal         = strip_tags($dimNormal);
                     $keepOriginalImage = ($keepOriginalImage != '' ? true : false);
                     $forceAspectImage  = ($forceAspectImage != '' ? true : false);
+                    $forceJPEG         = ($forceJPEG != '' ? true : false);
                     $use_imagick       = ($use_imagick != '' ? true : false);
 
                     if(!preg_match('|([0-9]+)x([0-9]+)|', $dimThumbnail, $match)) {
@@ -142,6 +144,7 @@
                     $iUpdated += osc_set_preference('dimNormal', $dimNormal);
                     $iUpdated += osc_set_preference('keep_original_image', $keepOriginalImage);
                     $iUpdated += osc_set_preference('force_aspect_image', $forceAspectImage);
+                    $iUpdated += osc_set_preference('force_jpeg', $forceJPEG);
                     $iUpdated += osc_set_preference('use_imagick', $use_imagick);
 
                     if( $error != '' ) {

@@ -42,6 +42,15 @@
     }
 
     /**
+     * Force uploaded images to be JPEG
+     *
+     * @return boolean
+     */
+    function osc_force_jpeg() {
+        return (getBoolPreference('force_jpeg'));
+    }
+
+    /**
      * Gets comments per page
      *
      * @return int
