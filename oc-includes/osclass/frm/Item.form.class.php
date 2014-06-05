@@ -601,7 +601,7 @@
             if( Session::newInstance()->_getForm('zip') != "") {
                 $item['s_zip'] = Session::newInstance()->_getForm('zip');
             }
-            parent::generic_input_text('zip', (isset($item['s_zip'])) ? $user['s_zip'] : null);
+            parent::generic_input_text('zip', (isset($item['s_zip'])) ? $item['s_zip'] : null);
             return true;
         }
 
