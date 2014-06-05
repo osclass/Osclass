@@ -55,7 +55,7 @@
             $this->sides              = isset($params['sides']) ? $params['sides'] : 2;
             $this->url                = isset($params['url']) ? $params['url'] : osc_update_search_url(array('iPage' => '{PAGE}'));
             $this->firstUrl           = isset($params['first_url']) ? $params['first_url'] : $this->url;
-            $this->nofollow           = isset($params['nofollow']) ? $params['nofollow'] : true;
+            $this->nofollow           = isset($params['nofollow']) ? $params['nofollow'] : false;
         }
 
         public function get_raw_pages($params = null)
