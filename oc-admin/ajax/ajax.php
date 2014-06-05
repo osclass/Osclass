@@ -455,7 +455,7 @@
                     // replace por valores por defecto
                     $email = Params::getParam("email");
                     $title = Params::getParam("title");
-                    $body  = Params::getParam("body");
+                    $body  = Params::getParam("body", false, false);
 
                     $emailParams = array(
                         'subject'  => $title,

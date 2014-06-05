@@ -100,7 +100,7 @@
                         action: 'test_mail_template',
                         email:  $('input[name="test_email"]:visible').val(),
                         title:  $('input[name*="s_title"]:visible').val(),
-                        body: escape(tinyMCE.get(idTinymce).getContent({format : 'html'}) )
+                        body: tinyMCE.get(idTinymce).getContent({format : 'html'})
                     },
                     function(data) {
                         alert(data.html); 
