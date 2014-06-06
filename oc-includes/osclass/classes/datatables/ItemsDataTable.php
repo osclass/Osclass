@@ -289,8 +289,12 @@
                     $status = $this->get_row_status();
                     $row['status-border'] = '';
                     $row['status'] = $status['text'];
-                    $row['title'] = '<a href="' . osc_item_url().'" target="_blank">' . $title. '</a>'. $actions;
-                    $row['user'] = $aRow['s_user_name'];
+                    $row['title'] = '<a href="' . osc_item_url() . '" target="_blank">' . $title. '</a>'. $actions;
+                    if($aRow['fk_i_user_id']!=null) {
+                        $row['user'] = '<a href="' . osc_admin_base_url(true) . '?page=users&action=edit&id=' . $aRow['fk_i_user_id'] . '" target="_blank">' . $aRow['s_user_name'] . '</a>';
+                    } else {
+                        $row['user'] = $aRow['s_user_name'];
+                    }
                     $row['category'] = $aRow['s_category_name'];
                     $row['location'] = $this->get_row_location();
                     $row['date'] = osc_format_date($aRow['dt_pub_date']);
