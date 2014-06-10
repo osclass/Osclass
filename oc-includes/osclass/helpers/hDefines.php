@@ -962,17 +962,12 @@
     }
 
     /**
-     * Get if user is on ad page
+     * Get if user is on homepage
      *
      * @return boolean
      */
-    function osc_is_ad_page() {
-        $location = Rewrite::newInstance()->get_location();
-        $section = Rewrite::newInstance()->get_section();
-        if($location=='item' && $section=='') {
-            return true;
-        }
-        return false;
+    function osc_is_home_page() {
+        return osc_is_current_page('', '');
     }
 
     /**
@@ -981,11 +976,7 @@
      * @return boolean
      */
     function osc_is_search_page() {
-        $location = Rewrite::newInstance()->get_location();
-        if($location=='search') {
-            return true;
-        }
-        return false;
+        return osc_is_current_page('search', '');
     }
 
     /**
@@ -994,39 +985,25 @@
      * @return boolean
      */
     function osc_is_static_page() {
-        $location = Rewrite::newInstance()->get_location();
-        if($location=='page') {
-            return true;
-        }
-        return false;
+        return osc_is_current_page('page', '');
     }
 
     /**
-     * Get if user is on homepage
+     * Get if user is on a contact page
      *
      * @return boolean
      */
-    function osc_is_home_page() {
-        $location = Rewrite::newInstance()->get_location();
-        $section = Rewrite::newInstance()->get_section();
-        if($location=='' && $section=='') {
-            return true;
-        }
-        return false;
+    function osc_is_contact_page() {
+        return osc_is_current_page('contact', '');
     }
 
     /**
-     * Get if user is on user dashboard
+     * Get if user is on ad page
      *
      * @return boolean
      */
-    function osc_is_user_dashboard() {
-        $location = Rewrite::newInstance()->get_location();
-        $section = Rewrite::newInstance()->get_section();
-        if($location=='user' && $section=='dashboard') {
-            return true;
-        }
-        return false;
+    function osc_is_ad_page() {
+        return osc_is_current_page('item', '');
     }
 
     /**
@@ -1035,12 +1012,25 @@
      * @return boolean
      */
     function osc_is_publish_page() {
-        $location = Rewrite::newInstance()->get_location();
-        $section = Rewrite::newInstance()->get_section();
-        if($location=='item' && $section=='item_add') {
-            return true;
-        }
-        return false;
+        return osc_is_current_page('item', 'item_add');
+    }
+
+    /**
+     * Get if user is on edit page
+     *
+     * @return boolean
+     */
+    function osc_is_edit_page() {
+        return osc_is_current_page('item', 'item_edit');
+    }
+
+    /**
+     * Get if user is on a item contact page
+     *
+     * @return boolean
+     */
+    function osc_is_item_contact_page() {
+        return osc_is_current_page('item', 'contact');
     }
 
     /**
@@ -1049,12 +1039,25 @@
      * @return boolean
      */
     function osc_is_login_form() {
-        $location = Rewrite::newInstance()->get_location();
-        $section = Rewrite::newInstance()->get_section();
-        if($location=='login' && $section=='') {
-            return true;
-        }
-        return false;
+        return osc_is_current_page('login', '');
+    }
+
+    /**
+     * Get if the user is on recover page
+     *
+     * @return boolean
+     */
+    function osc_is_recover_page() {
+        return osc_is_current_page('login', 'recover');
+    }
+
+    /**
+     * Get if the user is on forgot page
+     *
+     * @return boolean
+     */
+    function osc_is_forgot_page() {
+        return osc_is_current_page('login', 'forgot');
     }
 
     /**
@@ -1077,29 +1080,85 @@
      * @return boolean
      */
     function osc_is_public_profile() {
-        $location = Rewrite::newInstance()->get_location();
-        $section  = Rewrite::newInstance()->get_section();
-        if( $location === 'user' && $section === 'pub_profile' ) {
-            return true;
-        }
-        return false;
+        return osc_is_current_page('user', 'pub_profile');
     }
 
     /**
-     * Get if the user is on items page
+     * Get if user is on user dashboard
+     *
+     * @return boolean
+     */
+    function osc_is_user_dashboard() {
+        return osc_is_current_page('user', 'dashboard');
+    }
+
+    /**
+     * Get if user is on user profile
+     *
+     * @return boolean
+     */
+    function osc_is_user_profile() {
+        return osc_is_current_page('user', 'profile');
+    }
+
+    /**
+     * Get if the user is on user's items page
      *
      * @return boolean
      */
     function osc_is_list_items() {
-        $location = Rewrite::newInstance()->get_location();
-        $section  = Rewrite::newInstance()->get_section();
-        if( $location === 'user' && $section === 'items' ) {
+        return osc_is_current_page('user', 'items');
+    }
+
+    /**
+     * Get if the user is on user's alerts page
+     *
+     * @return boolean
+     */
+    function osc_is_list_alerts() {
+        return osc_is_current_page('user', 'alerts');
+    }
+
+    /**
+     * Get if user is on change email page
+     *
+     * @return boolean
+     */
+    function osc_is_change_email_page() {
+        return osc_is_current_page('user', 'change_email');
+    }
+
+    /**
+     * Get if user is on change username page
+     *
+     * @return boolean
+     */
+    function osc_is_change_username_page() {
+        return osc_is_current_page('user', 'change_username');
+    }
+
+    /**
+     * Get if user is on change password page
+     *
+     * @return boolean
+     */
+    function osc_is_change_password_page() {
+        return osc_is_current_page('user', 'change_password');
+    }
+
+    /**
+     * Get if the user is on page
+     *
+     * @param string $location of the resource
+     * @param string $section
+     * @return boolean
+     */
+    function osc_is_current_page($location, $section) {
+        if( osc_get_osclass_location() === $location && osc_get_osclass_section() === $section ) {
             return true;
         }
         return false;
-    }
-
-
+    }    
 
     /**
      * Get location
