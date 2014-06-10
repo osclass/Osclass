@@ -315,7 +315,11 @@
                 $this->dao->delete(DB_TABLE_PREFIX.'t_user_email_tmp', array('fk_i_user_id' => $id));
                 $this->dao->delete(DB_TABLE_PREFIX.'t_user_description', array('fk_i_user_id' => $id));
                 $this->dao->delete(DB_TABLE_PREFIX.'t_alerts', array('fk_i_user_id' => $id));
-                return $this->dao->delete($this->getTableName(), array('pk_i_id' => $id));
+                $deleted = $this->dao->delete($this->getTableName(), array('pk_i_id' => $id));
+                if($deleted===1) {
+                    osc_run_hook('after_delete_user', $id);
+                    return true;
+                }
             }
             return false;
         }
