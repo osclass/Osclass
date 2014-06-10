@@ -250,6 +250,7 @@
 
         // @TODO @TOFIX: not the best way to do it
         $categories = Category::newInstance()->listWhere( implode(" OR ", $where) );
+        $category = null;
         foreach($categories as $cat) {
             $category[] = $cat['pk_i_id'];
         }

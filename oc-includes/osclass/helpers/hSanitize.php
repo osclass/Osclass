@@ -173,12 +173,13 @@
      * @return string
      */
     function osc_esc_js($str) {
-        static $new_lines = array('<br>','<br/>','<br />');
-        $str = trim(strip_tags($str, implode('',$new_lines)));
+        static $sNewLines = '<br><br/><br />';
+        static $aNewLines = array('<br>','<br/>','<br />');
+        $str = trim(strip_tags($str, $sNewLines));
         $str = str_replace("\r", '', $str);
         $str = addslashes($str);
         $str = str_replace("\n", '\n', $str);
-        $str = str_replace($new_lines, '\n', $str);
+        $str = str_replace($aNewLines, '\n', $str);
 
         return $str;
     }
