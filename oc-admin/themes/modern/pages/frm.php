@@ -65,7 +65,7 @@
                 language: 'en',
                 theme_advanced_toolbar_align : "left",
                 theme_advanced_toolbar_location : "top",
-                plugins : "adimage,advlink,media,contextmenu",
+                plugins : "advimage,advlink,media,contextmenu",
                 entity_encoding : "raw",
                 theme_advanced_buttons1_add : "forecolorpicker,fontsizeselect",
                 theme_advanced_buttons2_add: "media",
