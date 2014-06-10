@@ -384,7 +384,7 @@
          */
         public function findBySlug($slug)
         {
-            // juanramon: specific condition
+            $slug = urlencode($slug);
             $this->dao->where( 'b.s_slug', $slug );
             // end specific condition
 
