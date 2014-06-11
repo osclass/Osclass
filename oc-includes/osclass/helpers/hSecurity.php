@@ -17,6 +17,7 @@
  * limitations under the License.
  */
 
+    if(!defined('BCRYPT_COST')) { define('BCRYPT_COST', 15); };
 
     /**
     * Helper Security
@@ -247,7 +248,7 @@
 
         require_once LIB_PATH . 'Bcrypt.php';
         if(CRYPT_BLOWFISH==1) {
-            $bcrypt = new Bcrypt(15);
+            $bcrypt = new Bcrypt(BCRYPT_COST);
             return $bcrypt->verify($password, $hash)?true:(sha1($password)==$hash);
         }
         return (sha1($password)==$hash);
@@ -262,17 +263,15 @@
      */
     function osc_hash_password($password) {
         if(version_compare(PHP_VERSION, '5.3.7')>=0) {
-            $options = array('cost' => 15);
+            $options = array('cost' => BCRYPT_COST);
             return password_hash($password, PASSWORD_BCRYPT, $options);
         }
 
         require_once LIB_PATH . 'Bcrypt.php';
         if(CRYPT_BLOWFISH==1) {
-            $bcrypt = new Bcrypt(15);
+            $bcrypt = new Bcrypt(BCRYPT_COST);
             return $bcrypt->hash($password);
         }
         return sha1($password);
     }
 
-
-?>
