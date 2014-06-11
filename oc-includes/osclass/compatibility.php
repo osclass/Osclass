@@ -88,6 +88,7 @@ if (!defined('PASSWORD_DEFAULT')) {
 
     define('PASSWORD_BCRYPT', 1);
     define('PASSWORD_DEFAULT', PASSWORD_BCRYPT);
+    if(!defined('BCRYPT_COST')) { define('BCRYPT_COST', 15); };
 
     /**
      * Hash the password using the specified algorithm
@@ -114,7 +115,7 @@ if (!defined('PASSWORD_DEFAULT')) {
         switch ($algo) {
             case PASSWORD_BCRYPT:
                 // Note that this is a C constant, but not exposed to PHP, so we don't define it here.
-                $cost = 10;
+                $cost = BCRYPT_COST;
                 if (isset($options['cost'])) {
                     $cost = $options['cost'];
                     if ($cost < 4 || $cost > 31) {
