@@ -141,8 +141,8 @@
 
                 if(osc==undefined) { var osc = {}; }
                 if(osc.langs==undefined) { osc.langs = {}; }
-                if(osc.langs.select_subcategory==undefined) { osc.langs.select_subcategory = '<?php _e('Select subcategory') ?>'; }
-                if(osc.langs.no_subcategory==undefined) { osc.langs.no_subcategory = '<?php _e('No subcategory') ?>'; }
+                if(osc.langs.select_subcategory==undefined) { osc.langs.select_subcategory = '<?php echo osc_esc_js(__('Select subcategory')); ?>'; }
+                if(osc.langs.no_subcategory==undefined) { osc.langs.no_subcategory = '<?php echo osc_esc_js(__('No subcategory')); ?>'; }
 
                 $(document).ready(function(){
                     $("#parentCategory").bind('change', function(){
@@ -217,8 +217,8 @@
 
                 if(osc==undefined) { var osc = {}; }
                 if(osc.langs==undefined) { osc.langs = {}; }
-                if(osc.langs.select_category==undefined) { osc.langs.select_category = '<?php _e('Select category') ?>'; }
-                if(osc.langs.select_subcategory==undefined) { osc.langs.select_subcategory = '<?php _e('Select subcategory') ?>'; }
+                if(osc.langs.select_category==undefined) { osc.langs.select_category = '<?php echo osc_esc_js(__('Select category')); ?>'; }
+                if(osc.langs.select_subcategory==undefined) { osc.langs.select_subcategory = '<?php echo osc_esc_js(__('Select subcategory')); ?>'; }
                 osc.item_post = {};
                 osc.item_post.category_id    = '<?php echo $categoryID; ?>';
                 osc.item_post.category_tree_id    = <?php echo json_encode($categories_tree); ?>;
@@ -362,23 +362,23 @@
                 });
                 if(osc==undefined) { var osc = {}; }
                 if(osc.langs==undefined) { osc.langs = {}; }
-                if(osc.langs.nochange_expiration==undefined) { osc.langs.nochange_expiration = '<?php _e('No change expiration') ?>'; }
-                if(osc.langs.without_expiration==undefined) { osc.langs.without_expiration = '<?php _e('Without expiration') ?>'; }
-                if(osc.langs.expiration_day==undefined) { osc.langs.expiration_day = '<?php _e('1 day') ?>'; }
-                if(osc.langs.expiration_days==undefined) { osc.langs.expiration_days = '<?php _e('%d days') ?>'; }
+                if(osc.langs.nochange_expiration==undefined) { osc.langs.nochange_expiration = '<?php echo osc_esc_js(__('No change expiration')); ?>'; }
+                if(osc.langs.without_expiration==undefined) { osc.langs.without_expiration = '<?php echo osc_esc_js(__('Without expiration')); ?>'; }
+                if(osc.langs.expiration_day==undefined) { osc.langs.expiration_day = '<?php echo osc_esc_js(__('1 day')); ?>'; }
+                if(osc.langs.expiration_days==undefined) { osc.langs.expiration_days = '<?php echo osc_esc_js(__('%d days')); ?>'; }
                 function draw_expiration(max_exp) {
                     $('#dt_expiration').html("");
                     var options = '';
                     <?php foreach($options as $o) {
                         if($o==-1) {?>
-                            options += '<option value="-1" >' + (osc.langs.nochange_expiration!=null?osc.langs.nochange_expiration:'<?php _e('No change expiration'); ?>') + '</option>';
+                            options += '<option value="-1" >' + (osc.langs.nochange_expiration!=null?osc.langs.nochange_expiration:'<?php echo osc_esc_js(__('No change expiration')); ?>') + '</option>';
                         <?php } else if($o==0) { ?>
-                            options += '<option value="" >' + (osc.langs.without_expiration!=null?osc.langs.without_expiration:'<?php _e('Without expiration'); ?>') + '</option>';
+                            options += '<option value="" >' + (osc.langs.without_expiration!=null?osc.langs.without_expiration:'<?php echo osc_esc_js(__('Without expiration')); ?>') + '</option>';
                         <?php } else if($o==1) { ?>
-                            options += '<option value="1" >' + (osc.langs.expiration_day!=null?osc.langs.expiration_day:'<?php _e('1 day'); ?>')+ '</option>';
+                            options += '<option value="1" >' + (osc.langs.expiration_day!=null?osc.langs.expiration_day:'<?php echo osc_esc_js(__('1 day')); ?>')+ '</option>';
                         <?php } else { ?>
                             if(max_exp==0 || <?php echo $o; ?><=max_exp) {
-                                options += '<option value="<?php echo $o; ?>" >' + (osc.langs.expiration_days!=null?osc.langs.expiration_days:'<?php _e('%d days'); ?>').replace("%d", <?php echo $o; ?>) + '</option>';
+                                options += '<option value="<?php echo $o; ?>" >' + (osc.langs.expiration_days!=null?osc.langs.expiration_days:'<?php echo osc_esc_js(__('%d days')); ?>').replace("%d", <?php echo $o; ?>) + '</option>';
                             }
                     <?php };
                     }; ?>
@@ -715,7 +715,7 @@
                     return true;
                 }
             },
-            "<?php echo osc_esc_js(__("Description needs to be longer")); ?>."
+            '<?php echo osc_esc_js(__("Description needs to be longer")); ?>.'
         );
 
         // Code for form validation
@@ -733,7 +733,7 @@
                 <?php } ?>
                 <?php if(osc_images_enabled_at_items()) { ?>
                 "photos[]": {
-                    accept: "<?php echo osc_allowed_extension(); ?>"
+                    accept: "<?php echo osc_esc_js(osc_allowed_extension()); ?>"
                 },
                 <?php } ?>
                 <?php if($path == 'front') { ?>
@@ -891,7 +891,7 @@
                         }
 
                         $("#regionId").html(result);
-                        $("#cityId").html('<option selected value=""><?php _e("Select a city..."); ?></option>');
+                        $("#cityId").html('<option selected value=""><?php echo osc_esc_js(__("Select a city...")); ?></option>');
                     }
                  });
 
