@@ -26,7 +26,7 @@
 
     //customize Head
     function customHead() { ?>
-        <link rel="stylesheet" media="screen" type="text/css" href="<?php echo osc_current_admin_theme_js_url('colorpicker/css/colorpicker.css'); ?>" />
+        <link rel="stylesheet" media="screen" type="text/css" href="<?php echo osc_assets_url('js/colorpicker/css/colorpicker.css'); ?>" />
         <script type="text/javascript">
             $(document).ready(function(){
                 // Code for form validation
