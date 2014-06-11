@@ -1462,7 +1462,7 @@
                         }
                     }).on('error', function (event, id, name, errorReason, xhrOrXdr) {
                             $('#restricted-fine-uploader .flashmessage-error').remove();
-                            $('#restricted-fine-uploader').append('<div class="flashmessage flashmessage-error">' + errorReason + '</div>');
+                            $('#restricted-fine-uploader').append('<div class="flashmessage flashmessage-error">' + errorReason + '<a class="close" onclick="javascript:$(\'.flashmessage-error\').remove();" >X</a></div>');
                     }).on('statusChange', function(event, id, old_status, new_status) {
                         $(".alert.alert-error").remove();
                     }).on('complete', function(event, id, fileName, responseJSON) {

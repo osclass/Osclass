@@ -252,6 +252,7 @@
                 $this->dao->where('fk_c_locale_code', $locale);
             }
             $results       = $this->dao->get();
+            if($results===false) { return array(); }
             $aDescriptions = $results->result();
 
             if( count($aDescriptions) == 0 ) {

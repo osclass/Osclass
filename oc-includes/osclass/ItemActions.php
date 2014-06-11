@@ -1472,7 +1472,7 @@
             return 'jpg';
         }
         function osc_force_jpeg_mime($content) {
-            return 'mime/jpeg';
+            return 'image/jpeg';
         }
         osc_add_filter('upload_image_extension', 'osc_force_jpeg_extension');
         osc_add_filter('upload_image_mime', 'osc_force_jpeg_mime');

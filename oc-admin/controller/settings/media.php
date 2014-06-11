@@ -178,11 +178,15 @@
                         if(strpos($resource['s_content_type'], 'image')!==false) {
                             if(file_exists(osc_base_path().$resource['s_path'].$resource['pk_i_id']."_original.".$resource['s_extension'])) {
                                 $image_tmp = osc_base_path().$resource['s_path'].$resource['pk_i_id']."_original.".$resource['s_extension'];
+                                $use_original = true;
                             } else if(file_exists(osc_base_path().$resource['s_path'].$resource['pk_i_id'].".".$resource['s_extension'])) {
                                 $image_tmp = osc_base_path().$resource['s_path'].$resource['pk_i_id'].".".$resource['s_extension'];
+                                $use_original = false;
                             } else if(file_exists(osc_base_path().$resource['s_path'].$resource['pk_i_id']."_preview.".$resource['s_extension'])) {
                                 $image_tmp = osc_base_path().$resource['s_path'].$resource['pk_i_id']."_preview.".$resource['s_extension'];
+                                $use_original = false;
                             } else {
+                                $use_original = false;
                                 continue;
                             };
 
@@ -190,10 +194,12 @@
                             $path_normal = $path = osc_base_path().$resource['s_path'].$resource['pk_i_id'].'.'.$resource['s_extension'];
                             $size = explode('x', osc_normal_dimensions());
                             $img = ImageResizer::fromFile($image_tmp)->resizeTo($size[0], $size[1]);
-                            if( osc_is_watermark_text() ) {
-                                $img->doWatermarkText(osc_watermark_text(), osc_watermark_text_color());
-                            } elseif ( osc_is_watermark_image() ){
-                                $img->doWatermarkImage();
+                            if($use_original) {
+                                if( osc_is_watermark_text() ) {
+                                    $img->doWatermarkText(osc_watermark_text(), osc_watermark_text_color());
+                                } elseif ( osc_is_watermark_image() ){
+                                    $img->doWatermarkImage();
+                                }
                             }
                             $img->saveToFile($path);
 
