@@ -61,7 +61,7 @@ function search_title() {
         $result .= osc_get_preference('seo_title_keyword') . ' ';
     }
 
-    if($b_category && is_array($category) && count($category) > 0) {
+    if($b_category && !empty($category)) {
         $cat = Category::newInstance()->findByPrimaryKey($category[0]);
         if(isset($cat['s_name'])) {
             $result .= $cat['s_name'].' ';
@@ -109,8 +109,8 @@ function meta_title() {
                 $s_page = ' - ' . __('page') . ' ' . $i_page;
             }
 
-            $b_show_all = ($region == '' && $city == '' && $pattern == '' && $category == '');
-            $b_category = ($category != '');
+            $b_show_all = ($region == '' && $city == '' && $pattern == '' && empty($category));
+            $b_category = (!empty($category));
             $b_pattern  = ($pattern != '');
             $b_city     = ($city != '');
             $b_region   = ($region != '');
@@ -261,9 +261,8 @@ function osc_search_footer_links() {
         return array();
     }
 
-    $categoryID = '';
-    if( osc_search_category_id() ) {
-        $categoryID = osc_search_category_id();
+    $categoryID = osc_search_category_id();
+    if( !empty($categoryID) ) {
 
         if( Category::newInstance()->isRoot( current($categoryID) ) ) {
             $cat = Category::newInstance()->findSubcategories(current($categoryID));
@@ -297,7 +296,7 @@ function osc_search_footer_links() {
     $comm->select('COUNT(*) AS total');
     $comm->from(DB_TABLE_PREFIX . 't_item as i');
     $comm->from(DB_TABLE_PREFIX . 't_item_location as l');
-    if( $categoryID != '' ) {
+    if( !empty($categoryID) ) {
         $comm->whereIn('i.fk_i_category_id', $categoryID);
     }
     $comm->where('i.pk_i_id = l.fk_i_item_id');
@@ -333,8 +332,9 @@ function osc_footer_link_url($f = null) {
         View::newInstance()->_exportVariableToView('footer_link', $f);
     }
     $params = array();
-    if( osc_search_category_id() ) {
-        $params['sCategory'] = osc_search_category_id();
+    $tmp = osc_search_category_id();
+    if( !empty($tmp) ) {
+        $params['sCategory'] = $tmp;
     }
 
     if( osc_search_region() == '' ) {
@@ -362,7 +362,8 @@ function osc_footer_link_title($f = null) {
         $text .= osc_get_preference('seo_title_keyword') . ' ';
     }
 
-    if( osc_search_category_id() ) {
+    $tmp = osc_search_category_id();
+    if( !empty($tmp) ) {
         $cat = osc_get_category('id', $f['fk_i_category_id']);
         $text .= $cat['s_name'].' ';
     }
