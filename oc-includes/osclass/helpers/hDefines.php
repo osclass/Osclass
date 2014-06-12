@@ -49,6 +49,7 @@
         $fields['country'] = 'sCountry';
         $fields['region'] = 'sRegion';
         $fields['city'] = 'sCity';
+        $fields['user'] = 'sUser';
         if(isset($fields[osc_subdomain_type()])) {
             $field = $fields[osc_subdomain_type()];
             if(isset($params[$field]) && !is_array($params[$field]) && $params[$field]!='' && strpos($params[$field], ',')===false) {
@@ -1239,4 +1240,4 @@
         return View::newInstance()->_get('subdomain_slug')!='';
     }
     /* file end: ./oc-includes/osclass/helpers/hDefines.php */
-?>
+

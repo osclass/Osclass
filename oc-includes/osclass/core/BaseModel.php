@@ -163,6 +163,15 @@
                             } else {
                                 $this->do400();
                             }
+                        } else if($subdomain_type=='user') {
+                            $user = User::newInstance()->findByUsername($subdomain);
+                            if(isset($user['pk_i_id'])) {
+                                View::newInstance()->_exportVariableToView('subdomain_name', $user['s_name']);
+                                View::newInstance()->_exportVariableToView('subdomain_slug', $user['s_username']);
+                                Params::setParam('sUser', $user['pk_i_id']);
+                            } else {
+                                $this->do400();
+                            }
                         } else {
                             $this->do400();
                         }
@@ -173,4 +182,3 @@
     }
 
     /* file end: ./oc-includes/osclass/core/BaseModel.php */
-?>
