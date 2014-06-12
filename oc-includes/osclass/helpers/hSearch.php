@@ -245,12 +245,12 @@
         }
 
         if( empty($where) ) {
-            return null;
+            return array();
         }
 
         // @TODO @TOFIX: not the best way to do it
         $categories = Category::newInstance()->listWhere( implode(" OR ", $where) );
-        $category = null;
+        $category = array();
         foreach($categories as $cat) {
             $category[] = $cat['pk_i_id'];
         }
