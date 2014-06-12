@@ -188,7 +188,7 @@ $(document).ready(function(event){
     });
 
     if(typeof $.fancybox == 'function') {
-        $("a[rel=image_group]").fancybox({
+        $("a.fancybox").fancybox({
             openEffect : 'none',
             closeEffect : 'none',
             nextEffect : 'fade',
@@ -203,7 +203,7 @@ $(document).ready(function(event){
 
         $(".main-photo").on('click', function(e) {
             e.preventDefault();
-            $("a[rel=image_group]").first().click();
+            $("a.fancybox").first().click();
         });
 
 
