@@ -98,6 +98,7 @@
         //Business Layer...
         function doModel()
         {
+
             osc_run_hook('before_search');
 
             if(osc_rewrite_enabled()) {
@@ -160,6 +161,13 @@
                         unset($_POST['sParams']);
                     }
                 }
+            }
+
+
+            $uriParams = Params::getParamsAsArray();
+            $searchUri = osc_search_url($uriParams);
+            if($searchUri!=(WEB_PATH . urldecode($this->uri))) {
+                $this->redirectTo($searchUri, 301);
             }
 
             ////////////////////////////////
