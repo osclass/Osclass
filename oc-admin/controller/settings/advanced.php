@@ -34,7 +34,7 @@
                     }
                     osc_csrf_check();
                     $subdomain_type = Params::getParam('e_type');
-                    if(!in_array($subdomain_type, array('category', 'country', 'region', 'city'))) {
+                    if(!in_array($subdomain_type, array('category', 'country', 'region', 'city', 'user'))) {
                         $subdomain_type = '';
                     }
                     $iUpdated = osc_set_preference('subdomain_type', $subdomain_type);

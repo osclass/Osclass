@@ -69,6 +69,7 @@
                                 <option value="country" <?php if(osc_subdomain_type() == 'country') { ?>selected="selected"<?php } ?>><?php _e('Country based'); ?></option>
                                 <option value="region" <?php if(osc_subdomain_type() == 'region') { ?>selected="selected"<?php } ?>><?php _e('Region based'); ?></option>
                                 <option value="city" <?php if(osc_subdomain_type() == 'city') { ?>selected="selected"<?php } ?>><?php _e('City based'); ?></option>
+                                <option value="user" <?php if(osc_subdomain_type() == 'user') { ?>selected="selected"<?php } ?>><?php _e('User based'); ?></option>
                             </select>
                         </div>
                     </div>

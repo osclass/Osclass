@@ -283,6 +283,8 @@
                 unset($request['sCountry']);
                 unset($request['sRegion']);
                 unset($request['sCity']);
+            } else if($subdomain_type=='user') {
+                unset($request['sUser']);
             }
         }
         $merged = array_merge($request, $params);
@@ -408,6 +410,26 @@
                 }
             } else if(osc_is_subdomain()) {
                 unset($params['sCity']);
+            }
+        } else if(osc_subdomain_type()=='user' && isset($params['sUser'])) {
+            if($params['sUser']!=Params::getParam('sUser')) {
+                if(is_array($params['sUser'])) {
+                    $params['sUser'] = implode(",", $params['sUser']);
+                }
+                if($params['sUser']!='' && strpos($params['sUser'], ",")===false) {
+                    if(is_numeric($params['sUser'])) {
+                        $user = User::newInstance()->findByPrimaryKey($params['sUser']);
+                    } else {
+                        $user = User::newInstance()->findByUsername($params['sUser']);
+                    }
+                    if(isset($user['s_username'])) {
+                        $base_url = $http_url.$user['s_username'].".".osc_subdomain_host().REL_WEB_URL;
+                        unset($params['sUser']);
+                    }
+
+                }
+            } else if(osc_is_subdomain()) {
+                unset($params['sUser']);
             }
         }
 
