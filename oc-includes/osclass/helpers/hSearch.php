@@ -380,7 +380,10 @@
                     if(is_numeric($params['sRegion'])) {
                         $region = Region::newInstance()->findByPrimaryKey($params['sRegion']);
                     } else {
-                        $region = Region::newInstance()->findByName($params['sRegion']);
+                        $region = Region::newInstance()->findBySlug($params['sRegion']);
+                        if (!isset($region['s_slug'])) {
+                            $region = Region::newInstance()->findByName($params['sRegion']);
+                        }
                     }
                     if(isset($region['s_slug'])) {
                         $base_url = $http_url.$region['s_slug'].".".osc_subdomain_host().REL_WEB_URL;
@@ -400,7 +403,10 @@
                     if(is_numeric($params['sCity'])) {
                         $city = City::newInstance()->findByPrimaryKey($params['sCity']);
                     } else {
-                        $city = City::newInstance()->findByName($params['sCity']);
+                        $city = City::newInstance()->findBySlug($params['sCity']);
+                        if(!isset($city['s_slug'])) {
+                            $city = City::newInstance()->findByName($params['sCity']);
+                        }
                     }
                     if(isset($city['s_slug'])) {
                         $base_url = $http_url.$city['s_slug'].".".osc_subdomain_host().REL_WEB_URL;
@@ -497,7 +503,10 @@
                     if(is_numeric($params['sRegion'])) {
                         $region = Region::newInstance()->findByPrimaryKey($params['sRegion']);
                     } else {
-                        $region = Region::newInstance()->findByName($params['sRegion']);
+                        $region = Region::newInstance()->findBySlug($params['sRegion']);
+                        if (!isset($region['s_slug'])) {
+                            $region = Region::newInstance()->findByName($params['sRegion']);
+                        } 
                     }
                     $url .= osc_sanitizeString($region['s_slug']) . '-r' . $region['pk_i_id'];
                 }
@@ -528,7 +537,10 @@
                     if(is_numeric($params['sCity'])) {
                         $city = City::newInstance()->findByPrimaryKey($params['sCity']);
                     } else {
-                        $city = City::newInstance()->findByName($params['sCity']);
+                        $city = City::newInstance()->findBySlug($params['sCity']);
+                        if(!isset($city['s_slug'])) {
+                            $city = City::newInstance()->findByName($params['sCity']);
+                        }
                     }
                     $url .= osc_sanitizeString($city['s_slug']) . '-c' . $city['pk_i_id'];
                 }
