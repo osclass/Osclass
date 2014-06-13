@@ -45,7 +45,7 @@
 
         $params = array(
             'subject'  => $title,
-            'from'     => osc_contact_email(),
+            'from'     => _osc_from_email_aux(),
             'to'       => $email,
             'to_name'  => $user['s_name'],
             'body'     => $body,
@@ -91,7 +91,7 @@
 
         $params = array(
             'subject'  => $title,
-            'from'     => osc_contact_email(),
+            'from'     => _osc_from_email_aux(),
             'to'       => $user['s_email'],
             'to_name'  => $user['s_name'],
             'body'     => $body,
@@ -137,7 +137,7 @@
 
         $params = array(
             'subject'  => $title,
-            'from'     => osc_contact_email(),
+            'from'     => _osc_from_email_aux(),
             'to'       => $user['s_email'],
             'to_name'  => $user['s_name'],
             'body'     => $body,
@@ -183,7 +183,7 @@
 
         $params = array(
             'subject'  => $title,
-            'from'     => osc_contact_email(),
+            'from'     => _osc_from_email_aux(),
             'to'       => $user['s_email'],
             'to_name'  => $user['s_name'],
             'body'     => $body,
@@ -229,7 +229,7 @@
 
         $params = array(
             'subject'  => $title,
-            'from'     => osc_contact_email(),
+            'from'     => _osc_from_email_aux(),
             'to'       => $user['s_email'],
             'to_name'  => $user['s_name'],
             'body'     => $body,
@@ -276,7 +276,7 @@
 
             $emailParams = array(
                 'subject'  => $title,
-                'from'     => osc_contact_email(),
+                'from'     => _osc_from_email_aux(),
                 'to'       => $aComment['s_author_email'],
                 'to_name'  => $aComment['s_author_name'],
                 'body'     => $body,
@@ -333,7 +333,7 @@
 
         $emailParams = array(
             'subject'  => $title,
-            'from'     => osc_contact_email(),
+            'from'     => _osc_from_email_aux(),
             'to'       => $item['s_contact_email'],
             'to_name'  => $item['s_contact_name'],
             'body'     => $body,
@@ -375,7 +375,7 @@
 
             $emailParams = array(
                 'subject'  => $title,
-                'from'     => osc_contact_email(),
+                'from'     => _osc_from_email_aux(),
                 'to'       => $user['s_email'],
                 'to_name'  => $user['s_name'],
                 'body'     => $body,
@@ -413,7 +413,7 @@
 
             $emailParams = array(
                 'subject'  => $title,
-                'from'     => osc_contact_email(),
+                'from'     => _osc_from_email_aux(),
                 'to'       => $user['s_email'],
                 'to_name'  => $user['s_name'],
                 'body'     => $body,
@@ -454,7 +454,7 @@
 
             $params = array(
                 'subject'  => $title,
-                'from'     => osc_contact_email(),
+                'from'     => _osc_from_email_aux(),
                 'to'       => $new_email,
                 'to_name'  => Session::newInstance()->_get('userName'),
                 'body'     => $body,
@@ -499,7 +499,7 @@
 
             $emailParams = array(
                 'subject'  => $title,
-                'from'     => osc_contact_email(),
+                'from'     => _osc_from_email_aux(),
                 'to'       => $user['s_email'],
                 'to_name'  => $user['s_name'],
                 'body'     => $body,
@@ -797,7 +797,7 @@
 
         $emailParams =  array (
             'subject'  => $title,
-            'from'     => osc_contact_email(),
+            'from'     => _osc_from_email_aux(),
             'to'       => $contactEmail,
             'to_name'  => $contactName,
             'body'     => $body,
@@ -889,7 +889,7 @@
 
         $emailParams = array(
             'subject'  => $title,
-            'from'     => osc_contact_email(),
+            'from'     => _osc_from_email_aux(),
             'to'       => osc_contact_email(),
             'to_name'  => 'admin',
             'body'     => $body,
@@ -984,7 +984,7 @@
 
         $emailParams = array(
             'subject'  => $title,
-            'from'     => osc_contact_email(),
+            'from'     => _osc_from_email_aux(),
             'to'       => $item['s_contact_email'],
             'to_name'  => $item['s_contact_name'],
             'body'     => $body,
@@ -1021,7 +1021,7 @@
 
             $emailParams = array(
                 'subject'  => $title,
-                'from'     => osc_contact_email(),
+                'from'     => _osc_from_email_aux(),
                 'to'       => osc_contact_email(),
                 'to_name'  => osc_page_title(),
                 'body'     => $body,
@@ -1276,7 +1276,7 @@
 
         $emailParams = array(
             'subject'  => $title,
-            'from'     => osc_contact_email(),
+            'from'     => _osc_from_email_aux(),
             'to'       => osc_contact_email(),
             'to_name'  => osc_page_title(),
             'body'     => $body,
@@ -1286,5 +1286,11 @@
     }
     osc_add_hook('after_auto_upgrade', 'fn_email_auto_upgrade', 10);
 
+
+    function _osc_from_email_aux() {
+        $tmp = osc_mailserver_mail_from();
+        return !empty($tmp)?$tmp:osc_contact_email();
+    } 
+
+
 /* file end: ./oc-includes/osclass/emails.php */
-?>
