@@ -478,29 +478,29 @@
                     $url .= osc_get_preference('seo_url_search_prefix') . '/';
                 }
                 if(isset($params['sCategory'])) {
-                if(osc_category_id()==$params['sCategory']) {
-                    $category['s_slug'] = osc_category_slug();
-                } else {
-                    if(is_numeric($params['sCategory'])) {
-                        $category = Category::newInstance()->findByPrimaryKey($params['sCategory']);
+                    if(osc_category_id()==$params['sCategory']) {
+                        $category['s_slug'] = osc_category_slug();
                     } else {
-                        $category = Category::newInstance()->findBySlug($params['sCategory']);
+                        if(is_numeric($params['sCategory'])) {
+                            $category = Category::newInstance()->findByPrimaryKey($params['sCategory']);
+                        } else {
+                            $category = Category::newInstance()->findBySlug($params['sCategory']);
+                        }
                     }
-                }
                 }
                 if(isset($category['s_slug']) && $category['s_slug']!='') { $url .= $category['s_slug'].'_'; }
 
                 if(isset($params['sRegion'])) {
-                if(osc_list_region_id()==$params['sRegion']) {
-                    $url .= osc_sanitizeString(osc_list_region_slug()) . '-r' . osc_list_region_id();
-                } else {
-                    if(is_numeric($params['sRegion'])) {
-                        $region = Region::newInstance()->findByPrimaryKey($params['sRegion']);
+                    if(osc_list_region_id()==$params['sRegion']) {
+                        $url .= osc_sanitizeString(osc_list_region_slug()) . '-r' . osc_list_region_id();
                     } else {
-                        $region = Region::newInstance()->findByName($params['sRegion']);
+                        if(is_numeric($params['sRegion'])) {
+                            $region = Region::newInstance()->findByPrimaryKey($params['sRegion']);
+                        } else {
+                            $region = Region::newInstance()->findByName($params['sRegion']);
+                        }
+                        $url .= osc_sanitizeString($region['s_slug']) . '-r' . $region['pk_i_id'];
                     }
-                    $url .= osc_sanitizeString($region['s_slug']) . '-r' . $region['pk_i_id'];
-                }
                 }
                 if(isset($params['iPage']) && $params['iPage']!='' && $params['iPage']!=1) { $url .= '/'.$params['iPage']; };
             } else if(isset($params['sCity']) && !is_array($params['sCity']) && strpos($params['sCity'], ',')===false &&
@@ -510,28 +510,30 @@
                     $url .= osc_get_preference('seo_url_search_prefix') . '/';
                 }
                 if(isset($params['sCategory'])) {
-                if(osc_category_id()==$params['sCategory']) {
-                    $category['s_slug'] = osc_category_slug();
-                } else {
-                    if(is_numeric($params['sCategory'])) {
-                        $category = Category::newInstance()->findByPrimaryKey($params['sCategory']);
+                    if(osc_category_id()==$params['sCategory']) {
+                        $category['s_slug'] = osc_category_slug();
                     } else {
-                        $category = Category::newInstance()->findBySlug($params['sCategory']);
+                        if(is_numeric($params['sCategory'])) {
+                            $category = Category::newInstance()->findByPrimaryKey($params['sCategory']);
+                        } else {
+                            $category = Category::newInstance()->findBySlug($params['sCategory']);
+                        }
                     }
-                }
                 }
                 if(isset($category['s_slug']) && $category['s_slug']!='') { $url .= $category['s_slug'].'_'; }
                 if(isset($params['sCity'])) {
-                if(osc_list_region_id()==$params['sCity']) {
-                    $url .= osc_sanitizeString(osc_list_city_slug()) . '-c' . osc_list_city_id();
-                } else {
-                    if(is_numeric($params['sCity'])) {
-                        $city = City::newInstance()->findByPrimaryKey($params['sCity']);
+                    if(osc_list_region_id()==$params['sCity']) {
+                        $url .= osc_sanitizeString(osc_list_city_slug()) . '-c' . osc_list_city_id();
                     } else {
-                        $city = City::newInstance()->findByName($params['sCity']);
+                        if(is_numeric($params['sCity'])) {
+                            $city = City::newInstance()->findByPrimaryKey($params['sCity']);
+                        } else {
+                            $city = City::newInstance()->findByName($params['sCity']);
+                        }
+                        if(isset($city['s_slug'])) {
+                            $url .= osc_sanitizeString($city['s_slug']) . '-c' . $city['pk_i_id'];
+                        }
                     }
-                    $url .= osc_sanitizeString($city['s_slug']) . '-c' . $city['pk_i_id'];
-                }
                 }
                 if(isset($params['iPage']) && $params['iPage']!='' && $params['iPage']!=1) { $url .= '/'.$params['iPage']; };
             } else if($params!=null && is_array($params)) {
