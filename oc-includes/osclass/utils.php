@@ -1303,7 +1303,7 @@ function osc_save_permissions( $dir = ABS_PATH ) {
 
 
 function osc_prepare_price($price) {
-    return $price/1000000;
+    return number_format($price/1000000, osc_locale_num_dec(), osc_locale_dec_point(), osc_locale_thousands_sep())
 }
 
 /**
