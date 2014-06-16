@@ -488,20 +488,32 @@
                     return $category;
                 }
             } else {
-                $this->dao->select( $this->getFields() );
-                $this->dao->from( $this->getTableName() );
-                $this->dao->where( 'pk_i_id', $categoryID );
-                $result = $this->dao->get();
+                $this->dao->select( sprintf("a.*, b.*, c.i_num_items, FIELD(fk_c_locale_code, '%s') as locale_order", $this->dao->connId->real_escape_string(osc_current_user_locale()) ) );
+                $this->dao->from( $this->getTableName().' as a' );
+                $this->dao->join(DB_TABLE_PREFIX.'t_category_description as b', 'a.pk_i_id = b.fk_i_category_id', 'INNER');
+                $this->dao->join(DB_TABLE_PREFIX.'t_category_stats  as c ', 'a.pk_i_id = c.fk_i_category_id', 'LEFT');
+                $this->dao->where("b.s_name != ''");
+                $this->dao->where("a.pk_i_id = ".$categoryID);
+                $this->dao->orderBy('locale_order', 'DESC');
+                $subquery = $this->dao->_getSelect();
+                $this->dao->_resetSelect();
 
-                if( $result == false ) {
-                    return false;
+                $this->dao->select();
+                $this->dao->from( sprintf( '(%s) dummytable', $subquery ) ); // $subselect.'  dummytable');
+                $this->dao->groupBy('pk_i_id');
+                $this->dao->orderBy('i_position', 'ASC');
+                $rs = $this->dao->get();
+
+                if( $rs === false ) {
+                    return array();
                 }
 
-                $category = $result->row();
+                $category = $rs->row();
 
                 if(!isset($category['pk_i_id'])) {
                     return false;
                 }
+
             }
 
             $this->dao->select();
