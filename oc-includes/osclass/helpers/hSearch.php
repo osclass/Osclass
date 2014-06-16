@@ -452,23 +452,29 @@
                         $category = Category::newInstance()->findBySlug($params['sCategory']);
                     }
                 }
-                $url = osc_get_preference('rewrite_cat_url');
-                if( preg_match('|{CATEGORIES}|', $url) ) {
-                    $categories = Category::newInstance()->hierarchy($category['pk_i_id']);
-                    $sanitized_categories = array();
-                    for ($i = count($categories); $i > 0; $i--) {
-                        $sanitized_categories[] = $categories[$i - 1]['s_slug'];
+                if(isset($category['pk_i_id'])) {
+                    $url = osc_get_preference('rewrite_cat_url');
+                    if( preg_match('|{CATEGORIES}|', $url) ) {
+                        $categories = Category::newInstance()->hierarchy($category['pk_i_id']);
+                        $sanitized_categories = array();
+                        $mCat = Category::newInstance();
+                        for ($i = count($categories); $i > 0; $i--) {
+                            $tmpcat = $mCat->findByPrimaryKey($categories[$i - 1]['pk_i_id']);
+                            $sanitized_categories[] = $tmpcat['s_slug'];
+                        }
+                        $url = str_replace('{CATEGORIES}', implode("/", $sanitized_categories), $url);
                     }
-                    $url = str_replace('{CATEGORIES}', implode("/", $sanitized_categories), $url);
+                    $seo_prefix = '';
+                    if( osc_get_preference('seo_url_search_prefix') != '' ) {
+                        $seo_prefix = osc_get_preference('seo_url_search_prefix') . '/';
+                    }
+                    $url = str_replace('{CATEGORY_NAME}', $category['s_slug'], $url);
+                    // DEPRECATED : CATEGORY_SLUG is going to be removed in 3.4
+                    $url = str_replace('{CATEGORY_SLUG}', $category['s_slug'], $url);
+                    $url = str_replace('{CATEGORY_ID}', $category['pk_i_id'], $url);
+                } else {
+                    $url = $seo_prefix = '';
                 }
-                $seo_prefix = '';
-                if( osc_get_preference('seo_url_search_prefix') != '' ) {
-                    $seo_prefix = osc_get_preference('seo_url_search_prefix') . '/';
-                }
-                $url = str_replace('{CATEGORY_NAME}', $category['s_slug'], $url);
-                // DEPRECATED : CATEGORY_SLUG is going to be removed in 3.4
-                $url = str_replace('{CATEGORY_SLUG}', $category['s_slug'], $url);
-                $url = str_replace('{CATEGORY_ID}', $category['pk_i_id'], $url);
                 if(isset($params['iPage']) && $params['iPage']!='' && $params['iPage']!=1) { $url .= '/'.$params['iPage']; };
                 $url = $base_url.$seo_prefix.$url;
             } else if(isset($params['sRegion']) && is_string($params['sRegion']) && strpos($params['sRegion'], ',')===false &&
@@ -496,10 +502,11 @@
                     } else {
                         if(is_numeric($params['sRegion'])) {
                             $region = Region::newInstance()->findByPrimaryKey($params['sRegion']);
+                            $url .= osc_sanitizeString($region['s_slug']) . '-r' . $region['pk_i_id'];
                         } else {
                             $region = Region::newInstance()->findByName($params['sRegion']);
+                            $url .= osc_sanitizeString($region['s_slug']) . '-r' . $region['pk_i_id'];
                         }
-                        $url .= osc_sanitizeString($region['s_slug']) . '-r' . $region['pk_i_id'];
                     }
                 }
                 if(isset($params['iPage']) && $params['iPage']!='' && $params['iPage']!=1) { $url .= '/'.$params['iPage']; };
@@ -527,10 +534,9 @@
                     } else {
                         if(is_numeric($params['sCity'])) {
                             $city = City::newInstance()->findByPrimaryKey($params['sCity']);
+                            $url .= osc_sanitizeString($city['s_slug']) . '-c' . $city['pk_i_id'];
                         } else {
                             $city = City::newInstance()->findByName($params['sCity']);
-                        }
-                        if(isset($city['s_slug'])) {
                             $url .= osc_sanitizeString($city['s_slug']) . '-c' . $city['pk_i_id'];
                         }
                     }
