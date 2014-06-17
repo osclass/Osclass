@@ -473,7 +473,9 @@
                     $url = str_replace('{CATEGORY_SLUG}', $category['s_slug'], $url);
                     $url = str_replace('{CATEGORY_ID}', $category['pk_i_id'], $url);
                 } else {
-                    $url = $seo_prefix = '';
+                    // Search by a category which does not exists (by form)
+                    // TODO CHANGE TO NEW ROUTES!!
+                    return $base_url . 'index.php?page=search&sCategory=' . $params['sCategory'];
                 }
                 if(isset($params['iPage']) && $params['iPage']!='' && $params['iPage']!=1) { $url .= '/'.$params['iPage']; };
                 $url = $base_url.$seo_prefix.$url;
@@ -502,11 +504,16 @@
                     } else {
                         if(is_numeric($params['sRegion'])) {
                             $region = Region::newInstance()->findByPrimaryKey($params['sRegion']);
-                            $url .= osc_sanitizeString($region['s_slug']) . '-r' . $region['pk_i_id'];
                         } else {
                             $region = Region::newInstance()->findByName($params['sRegion']);
-                            $url .= osc_sanitizeString($region['s_slug']) . '-r' . $region['pk_i_id'];
                         }
+                        if(isset($region['s_slug'])) {
+                            $url .= osc_sanitizeString($region['s_slug']) . '-r' . $region['pk_i_id'];
+                        } else {
+                            // Search by a region which does not exists (by form)
+                            // TODO CHANGE TO NEW ROUTES!!
+                            return $url . 'index.php?page=search&sRegion=' . $params['sRegion'];
+                        };
                     }
                 }
                 if(isset($params['iPage']) && $params['iPage']!='' && $params['iPage']!=1) { $url .= '/'.$params['iPage']; };
@@ -534,11 +541,16 @@
                     } else {
                         if(is_numeric($params['sCity'])) {
                             $city = City::newInstance()->findByPrimaryKey($params['sCity']);
-                            $url .= osc_sanitizeString($city['s_slug']) . '-c' . $city['pk_i_id'];
                         } else {
                             $city = City::newInstance()->findByName($params['sCity']);
-                            $url .= osc_sanitizeString($city['s_slug']) . '-c' . $city['pk_i_id'];
                         }
+                        if(isset($city['s_slug'])) {
+                            $url .= osc_sanitizeString($city['s_slug']) . '-c' . $city['pk_i_id'];
+                        } else {
+                            // Search by a city which does not exists (by form)
+                            // TODO CHANGE TO NEW ROUTES!!
+                            return $url . 'index.php?page=search&sCity=' . $params['sCity'];
+                        };
                     }
                 }
                 if(isset($params['iPage']) && $params['iPage']!='' && $params['iPage']!=1) { $url .= '/'.$params['iPage']; };
@@ -595,7 +607,7 @@
                 }
             }
         } else {
-            $url = $base_url.'index.php?page=search';
+            $url = $base_url . 'index.php?page=search';
             if($params!=null && is_array($params)) {
                 foreach($params as $k => $v) {
                     if($k=='meta') {
@@ -838,6 +850,15 @@
      */
     function osc_list_city_name() {
         return osc_field(osc_list_city(), 'city_name', '');
+    }
+
+    /**
+     * Gets the the name of current "list city""
+     *
+     * @return string
+     */
+    function osc_list_city_slug() {
+        return osc_field(osc_list_city(), 'city_slug', '');
     }
 
     /**
