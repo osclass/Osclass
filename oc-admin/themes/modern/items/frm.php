@@ -240,6 +240,10 @@ function customPageHeader() { ?>
                                 <?php ItemForm::city_area_text(); ?>
                             </div>
                             <div class="input-has-placeholder input-separate-top">
+                                <label><?php _e('Zip code'); ?></label>
+                                <?php ItemForm::zip_text(); ?>
+                            </div>
+                            <div class="input-has-placeholder input-separate-top">
                                 <label><?php _e('Address'); ?></label>
                                 <?php ItemForm::address_text(); ?>
                             </div>

@@ -1153,7 +1153,7 @@
             $aItem['s_ip']          = get_ip();
             $aItem['d_coord_lat']   = (Params::getParam('d_coord_lat')  != '') ? Params::getParam('d_coord_lat') : null;
             $aItem['d_coord_long']  = (Params::getParam('d_coord_long') != '') ? Params::getParam('d_coord_long') : null;
-            $aItem['s_zip']         = (Params::getParam('s_zip')  != '') ? Params::getParam('s_zip') : null;
+            $aItem['s_zip']         = (Params::getParam('zip')  != '') ? Params::getParam('zip') : null;
 
             // $ajax_photos is an array of filenames of the photos uploaded by ajax to a temporary folder
             // fake insert them into the array of the form-uploaded photos
