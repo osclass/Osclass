@@ -282,7 +282,7 @@
                     </div>
                 </div>
                 <div class="form-row">
-                    <div class="form-label"><?php _e('City area'); ?></div>
+                    <div class="form-label"><?php _e('Zip code'); ?></div>
                     <div class="form-controls">
                         <?php UserForm::zip_text($user); ?>
                     </div>
