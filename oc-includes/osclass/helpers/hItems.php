@@ -410,7 +410,7 @@
     }
 
     /**
-     * Gets zup code of current item
+     * Gets zip code of current item
      *
      * @return string
      */
