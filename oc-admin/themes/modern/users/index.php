@@ -132,6 +132,7 @@
 
     $aData      = __get('aData');
     $aRawRows   = __get('aRawRows');
+    $iDisplayLength = __get('iDisplayLength');
     $sort       = Params::getParam('sort');
     $direction  = Params::getParam('direction');
 
