@@ -125,7 +125,7 @@
     }
 
     /**
-     * Gets current search region
+     * Gets current search country
      *
      * @return string
      */
