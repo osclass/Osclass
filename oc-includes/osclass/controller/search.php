@@ -33,7 +33,7 @@
                 $this->uri = preg_replace('|/$|', '', $this->uri);
                 // redirect if it ends with a slash NOT NEEDED ANYMORE, SINCE WE CHECK WITH osc_search_url
 
-                if( stripos($_SERVER['REQUEST_URI'], osc_get_preference('rewrite_search_url') . '/')===false && osc_rewrite_enabled() && !Params::existParam('sFeed')) {
+                if( $this->uri!=osc_get_preference('rewrite_search_url') && osc_rewrite_enabled() && !Params::existParam('sFeed')) {
                     // clean GET html params
                     $this->uri = preg_replace('/(\/?)\?.*$/', '', $this->uri);
                     $search_uri = preg_replace('|/[0-9]+$|', '', $this->uri);
