@@ -476,6 +476,13 @@
                 osc_run_hook('search', $this->mSearch);
 
                 //preparing variables...
+                $countryName = $p_sCountry;
+                if( strlen($p_sCountry)==2 ) {
+                    $c = Country::newInstance()->findByCode($p_sCountry);
+                    if( $c ) {
+                        $countryName = $c['s_name'];
+                    }
+                }
                 $regionName = $p_sRegion;
                 if( is_numeric($p_sRegion) ) {
                     $r = Region::newInstance()->findByPrimaryKey($p_sRegion);
@@ -506,6 +513,7 @@
                 $this->_exportVariableToView('search_page', $p_iPage);
                 $this->_exportVariableToView('search_has_pic', $p_bPic);
                 $this->_exportVariableToView('search_only_premium', $p_bPremium);
+                $this->_exportVariableToView('search_country', $countryName);
                 $this->_exportVariableToView('search_region', $regionName);
                 $this->_exportVariableToView('search_city', $cityName);
                 $this->_exportVariableToView('search_price_min', $p_sPriceMin);

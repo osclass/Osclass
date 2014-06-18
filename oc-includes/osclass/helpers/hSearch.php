@@ -129,6 +129,15 @@
      *
      * @return string
      */
+    function osc_search_country() {
+        return View::newInstance()->_get('search_country');
+    }
+
+    /**
+     * Gets current search region
+     *
+     * @return string
+     */
     function osc_search_region() {
         return View::newInstance()->_get('search_region');
     }
