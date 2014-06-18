@@ -2184,6 +2184,3 @@ function osc_market($section, $code) {
 function osc_is_ssl() {
     return (isset($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS'])=='on' || $_SERVER['HTTPS']=='1'));
 }
-
-// END OF FILE utils.php
-?>
