@@ -327,7 +327,7 @@
     }
 
     /**
-     * Gets zup code of current premium
+     * Gets zip code of current premium
      *
      * @return string
      */
