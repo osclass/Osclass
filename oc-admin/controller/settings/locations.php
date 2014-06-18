@@ -63,7 +63,7 @@
                                                 }
                                             }
                                         }
-                                        if(osc_subdomain_type()=='country' || osc_subdomain_type()=='region' || osc_subdomain_type()=='city') { osc_calculate_location_slug(osc_subdomain_type()); }
+                                        osc_calculate_location_slug(osc_subdomain_type());
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
                 break;
                 case('edit_country'):   // edit country
@@ -183,7 +183,7 @@
                                                 }
                                             }
                                         }
-                                        if(osc_subdomain_type()=='region' || osc_subdomain_type()=='city') { osc_calculate_location_slug(osc_subdomain_type()); }
+                                        osc_calculate_location_slug(osc_subdomain_type());
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations&country_code='.@$countryCode."&country=".@$country['s_name']);
                 break;
                 case('edit_region'):    // edit region
@@ -284,6 +284,11 @@
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
                                         }
                                         osc_csrf_check();
+                                        $regionId    = Params::getParam('region_parent');
+                                        $countryCode = Params::getParam('country_c_parent');
+                                        $mRegion     = new Region();
+                                        $region = $mRegion->findByPrimaryKey($regionId);
+                                        $country = Country::newInstance()->findByCode($region['fk_c_country_code']);
                                         if( !Params::getParam('ci_manual') ) {
                                             $cityId    = Params::getParam('city_id');
                                             $cityName  = Params::getParam('city');
@@ -302,18 +307,13 @@
                                             }
 
                                         } else {
-                                            $mRegion     = new Region();
                                             $mCities     = new City();
-                                            $regionId    = Params::getParam('region_parent');
-                                            $countryCode = Params::getParam('country_c_parent');
                                             $newCity     = Params::getParam('city');
 
                                             if(!osc_validate_min($newCity, 1)) {
                                                 osc_add_flash_error_message(_m('New city name cannot be blank'), 'admin');
                                             } else {
                                                 $exists = $mCities->findByName($newCity, $regionId);
-                                                $region = $mRegion->findByPrimaryKey($regionId);
-                                                $country = Country::newInstance()->findByCode($region['fk_c_country_code']);
                                                 if(!isset($exists['s_name'])) {
                                                     $mCities->insert(array('fk_i_region_id'    => $regionId
                                                                         ,'s_name'            => $newCity
@@ -327,7 +327,7 @@
                                                 }
                                             }
                                         }
-                                        if(osc_subdomain_type()=='city') { osc_calculate_location_slug('city'); }
+                                        osc_calculate_location_slug('city');
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations&country_code='.@$country['pk_c_code']."&country=".@$country['s_name']."&region=".$regionId);
                 break;
                 case('edit_city'):      // edit city
