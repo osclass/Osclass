@@ -770,7 +770,7 @@
 
     // country attributes
     /**
-     * Gets the the name of current "list country"
+     * Gets the name of current "list country"
      *
      * @return string
      */
@@ -797,7 +797,7 @@
     }
 
     /**
-     * Gets the url of current "list country""
+     * Gets the url of current "list country"
      *
      * @return string
      */
@@ -807,7 +807,7 @@
 
     // region attributes
     /**
-     * Gets the name of current "list region"
+     * Gets the name of current "list region" by name
      *
      * @return string
      */
@@ -816,7 +816,7 @@
     }
 
     /**
-     * Gets the slug of current "list region"
+     * Gets the name of current "list region" by slug
      *
      * @return string
      */
@@ -825,7 +825,7 @@
     }
 
     /**
-     * Gets the id of current "list region"
+     * Gets the ID of current "list region"
      *
      * @return string
      */
@@ -853,7 +853,7 @@
 
     // city attributes
     /**
-     * Gets the the name of current "list city""
+     * Gets the name of current "list city" by name
      *
      * @return string
      */
@@ -862,7 +862,7 @@
     }
 
     /**
-     * Gets the the name of current "list city""
+     * Gets the list of current "list city" by slug
      *
      * @return string
      */
@@ -871,7 +871,7 @@
     }
 
     /**
-     * Gets the id of current "list city"
+     * Gets the ID of current "list city"
      *
      * @return string
      */
@@ -889,7 +889,7 @@
     }
 
     /**
-     * Gets the url of current "list city""
+     * Gets the url of current "list city"
      *
      * @return string
      */
