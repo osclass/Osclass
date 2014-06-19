@@ -195,16 +195,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-row">
-                    <div class="form-label"><?php _e('Force aspect'); ?></div>
-                    <div class="form-controls">
-                        <div class="form-label-checkbox">
-                            <input type="checkbox" id="force_aspect_image" name="force_aspect_image" value="1" <?php echo ( osc_force_aspect_image() ? 'checked="checked"' : '' ); ?> />
-                            <label for="force_aspect_image"><?php _e('Force image aspect.'); ?></label>
-                            <span class="help-box"><?php _e('No white background will be added to keep the size.'); ?></span>
-                        </div>
-                    </div>
-                </div>
                 <h2 class="render-title"><?php _e('Restrictions'); ?></h2>
                 <div class="form-row">
                     <div class="form-label"><?php _e('Force JPEG'); ?></div>
@@ -213,6 +203,16 @@
                             <input type="checkbox" id="force_jpeg" name="force_jpeg" value="1" <?php echo ( osc_force_jpeg() ? 'checked="checked"' : '' ); ?> />
                             <label for="force_jpeg"><?php _e('Force JPEG extension.'); ?></label>
                             <span class="help-box"><?php _e('Uploaded images will be saved in JPG/JPEG format, saves space, but images will not have transparent background.'); ?></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label"><?php _e('Force aspect'); ?></div>
+                    <div class="form-controls">
+                        <div class="form-label-checkbox">
+                            <input type="checkbox" id="force_aspect_image" name="force_aspect_image" value="1" <?php echo ( osc_force_aspect_image() ? 'checked="checked"' : '' ); ?> />
+                            <label for="force_aspect_image"><?php _e('Force image aspect.'); ?></label>
+                            <span class="help-box"><?php _e('No white background will be added to keep the size.'); ?></span>
                         </div>
                     </div>
                 </div>
