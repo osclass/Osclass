@@ -186,7 +186,7 @@
                     <div class="form-controls"><input type="text" class="input-medium"  name="dimNormal" value="<?php echo osc_esc_html( osc_normal_dimensions() ); ?>" /></div>
                 </div>
                 <div class="form-row">
-                    <div class="form-label"><?php _e('Normal size'); ?></div>
+                    <div class="form-label"><?php _e('Original size'); ?></div>
                     <div class="form-controls">
                         <div class="form-label-checkbox">
                             <input type="checkbox" id="keep_original_image" name="keep_original_image" value="1" <?php echo ( osc_keep_original_image() ? 'checked="checked"' : '' ); ?> />
