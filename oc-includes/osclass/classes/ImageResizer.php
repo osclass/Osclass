@@ -63,14 +63,15 @@
                 default:
                     $this->ext = 'jpg';
                     $this->mime = 'image/jpeg';
-                    $bg = imagecreatetruecolor($this->_width, $this->_height);
-                    imagefill($bg, 0, 0, imagecolorallocatealpha($bg, 255, 255, 255, 127));
-                    imagesavealpha($bg, true);
-                    imagealphablending($bg, TRUE);
-                    imagecopy($bg, $this->im, 0, 0, 0, 0, $this->_width, $this->_height);
-                    imagedestroy($this->im);
-                    $this->im = $bg;
-
+                    if(!osc_use_imagick()) {
+                        $bg = imagecreatetruecolor($this->_width, $this->_height);
+                        imagefill($bg, 0, 0, imagecolorallocatealpha($bg, 255, 255, 255, 127));
+                        imagesavealpha($bg, true);
+                        imagealphablending($bg, TRUE);
+                        imagecopy($bg, $this->im, 0, 0, 0, 0, $this->_width, $this->_height);
+                        imagedestroy($this->im);
+                        $this->im = $bg;
+                    }
                     break;
             }
 
