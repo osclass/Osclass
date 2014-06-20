@@ -130,7 +130,7 @@ $(function(){
                             screenshots = '<tr>'
                                 +'<td colspan="3"><h4>'+theme.langs.screenshots+'</h4>';
                                 for(i = 0; i < item.a_images.length; i++){
-                                    screenshots += '<a class="fancybox screnshot" href="'+item.a_images[i]['s_image']+'" class="screnshot"><img src="'+item.a_images[i]['s_thumbnail']+'" /></a>';
+                                    screenshots += '<a class="fancybox screenshot" href="'+item.a_images[i]['s_image']+'" ><img src="'+item.a_images[i]['s_thumbnail']+'" /></a>';
                                     if(i == 2) break;
                                 }
                              screenshots += '</td></tr>';
@@ -191,9 +191,9 @@ $(function(){
                             +'</div>'
                         +'</div>';
                     var $print = $(print);
-                    $print.find('.screnshot:last img').addClass('last');
+                    $print.find('.screenshot:last img').addClass('last');
 
-                    $print.find('a.screnshot').fancybox({
+                    $print.find('a.screenshot').fancybox({
                         openEffect : 'none',
                         closeEffect : 'none',
                         nextEffect : 'fade',
