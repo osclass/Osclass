@@ -130,7 +130,7 @@ $(function(){
                             screenshots = '<tr>'
                                 +'<td colspan="3"><h4>'+theme.langs.screenshots+'</h4>';
                                 for(i = 0; i < item.a_images.length; i++){
-                                    screenshots += '<a class="fancybox'+item.fk_i_market_id+'" href="'+item.a_images[i]['s_image']+'" class="screnshot"><img src="'+item.a_images[i]['s_thumbnail']+'" /></a>';
+                                    screenshots += '<a class="fancybox screnshot" href="'+item.a_images[i]['s_image']+'" class="screnshot"><img src="'+item.a_images[i]['s_thumbnail']+'" /></a>';
                                     if(i == 2) break;
                                 }
                              screenshots += '</td></tr>';
