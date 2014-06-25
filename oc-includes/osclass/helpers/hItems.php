@@ -296,7 +296,7 @@
      * @return string
      */
     function osc_item_currency_symbol() {
-        $aCurrency = Currency::newInstance()->findByPrimaryKey(osc_item_currency());
+        $aCurrency = Currency::newInstance()->get(osc_item_currency());
         return $aCurrency['s_description'];
     }
 
