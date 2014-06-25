@@ -1,24 +1,20 @@
 <?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
-    /*
-     *      Osclass – software for creating and publishing online classified
-     *                           advertising platforms
-     *
-     *                        Copyright (C) 2012 OSCLASS
-     *
-     *       This program is free software: you can redistribute it and/or
-     *     modify it under the terms of the GNU Affero General Public License
-     *     as published by the Free Software Foundation, either version 3 of
-     *            the License, or (at your option) any later version.
-     *
-     *     This program is distributed in the hope that it will be useful, but
-     *         WITHOUT ANY WARRANTY; without even the implied warranty of
-     *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-     *             GNU Affero General Public License for more details.
-     *
-     *      You should have received a copy of the GNU Affero General Public
-     * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
-     */
+/*
+ * Copyright 2014 Osclass
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
     class ItemForm extends Form {
 
@@ -63,7 +59,7 @@
                     }
                 } else {
                     $selected = ( (isset($item["fk_i_category_id"]) && $item["fk_i_category_id"] == $c['pk_i_id']) || (isset($catId) && $catId == $c['pk_i_id']) );
-                    echo '<option value="' . $c['pk_i_id'] . '"' . ($selected ? 'selected="selected"' : '' ). '>' . $c['s_name'] . '</option>';
+                    echo '<option value="' . $c['pk_i_id'] . '"' . ($selected ? ' selected="selected"' : '' ). '>' . $c['s_name'] . '</option>';
                     if(isset($c['categories']) && is_array($c['categories'])) {
                         ItemForm::subcategory_select($c['categories'], $item, $default_item, 1);
                     }
@@ -145,8 +141,8 @@
 
                 if(osc==undefined) { var osc = {}; }
                 if(osc.langs==undefined) { osc.langs = {}; }
-                if(osc.langs.select_subcategory==undefined) { osc.langs.select_subcategory = '<?php _e('Select subcategory') ?>'; }
-                if(osc.langs.no_subcategory==undefined) { osc.langs.no_subcategory = '<?php _e('No subcategory') ?>'; }
+                if(osc.langs.select_subcategory==undefined) { osc.langs.select_subcategory = '<?php echo osc_esc_js(__('Select subcategory')); ?>'; }
+                if(osc.langs.no_subcategory==undefined) { osc.langs.no_subcategory = '<?php echo osc_esc_js(__('No subcategory')); ?>'; }
 
                 $(document).ready(function(){
                     $("#parentCategory").bind('change', function(){
@@ -221,8 +217,8 @@
 
                 if(osc==undefined) { var osc = {}; }
                 if(osc.langs==undefined) { osc.langs = {}; }
-                if(osc.langs.select_category==undefined) { osc.langs.select_category = '<?php _e('Select category') ?>'; }
-                if(osc.langs.select_subcategory==undefined) { osc.langs.select_subcategory = '<?php _e('Select subcategory') ?>'; }
+                if(osc.langs.select_category==undefined) { osc.langs.select_category = '<?php echo osc_esc_js(__('Select category')); ?>'; }
+                if(osc.langs.select_subcategory==undefined) { osc.langs.select_subcategory = '<?php echo osc_esc_js(__('Select subcategory')); ?>'; }
                 osc.item_post = {};
                 osc.item_post.category_id    = '<?php echo $categoryID; ?>';
                 osc.item_post.category_tree_id    = <?php echo json_encode($categories_tree); ?>;
@@ -299,7 +295,7 @@
             foreach($categories as $c) {
                 $selected = ( (isset($item["fk_i_category_id"]) && $item["fk_i_category_id"] == $c['pk_i_id']) || (isset($catId) && $catId == $c['pk_i_id']) );
 
-                echo '<option value="' . $c['pk_i_id'] . '"' . ($selected ? 'selected="selected'.$item["fk_i_category_id"].'"' : '') . '>' . $deep_string . $c['s_name'] . '</option>';
+                echo '<option value="' . $c['pk_i_id'] . '"' . ($selected ? ' selected="selected'.$item["fk_i_category_id"].'"' : '') . '>' . $deep_string . $c['s_name'] . '</option>';
                 if(isset($c['categories']) && is_array($c['categories'])) {
                     ItemForm::subcategory_select($c['categories'], $item, $default_item, $deep);
                 }
@@ -321,7 +317,7 @@
                     $bool = false;
                     if($userId != '' && $userId == $user['pk_i_id']){$bool = true;}
                     if((isset($item["fk_i_user_id"]) && $item["fk_i_user_id"] == $user['pk_i_id'])){$bool = true;}
-                    echo '<option value="' . $user['pk_i_id'] . '"' . ( $bool ? 'selected="selected"' : '' ) . '>';
+                    echo '<option value="' . $user['pk_i_id'] . '"' . ( $bool ? ' selected="selected"' : '' ) . '>';
 
                     if( isset($user['s_name']) && !empty($user['s_name']) ) {
                         echo $user['s_name'];
@@ -366,23 +362,23 @@
                 });
                 if(osc==undefined) { var osc = {}; }
                 if(osc.langs==undefined) { osc.langs = {}; }
-                if(osc.langs.nochange_expiration==undefined) { osc.langs.nochange_expiration = '<?php _e('No change expiration') ?>'; }
-                if(osc.langs.without_expiration==undefined) { osc.langs.without_expiration = '<?php _e('Without expiration') ?>'; }
-                if(osc.langs.expiration_day==undefined) { osc.langs.expiration_day = '<?php _e('1 day') ?>'; }
-                if(osc.langs.expiration_days==undefined) { osc.langs.expiration_days = '<?php _e('%d days') ?>'; }
+                if(osc.langs.nochange_expiration==undefined) { osc.langs.nochange_expiration = '<?php echo osc_esc_js(__('No change expiration')); ?>'; }
+                if(osc.langs.without_expiration==undefined) { osc.langs.without_expiration = '<?php echo osc_esc_js(__('Without expiration')); ?>'; }
+                if(osc.langs.expiration_day==undefined) { osc.langs.expiration_day = '<?php echo osc_esc_js(__('1 day')); ?>'; }
+                if(osc.langs.expiration_days==undefined) { osc.langs.expiration_days = '<?php echo osc_esc_js(__('%d days')); ?>'; }
                 function draw_expiration(max_exp) {
                     $('#dt_expiration').html("");
                     var options = '';
                     <?php foreach($options as $o) {
                         if($o==-1) {?>
-                            options += '<option value="-1" >' + (osc.langs.nochange_expiration!=null?osc.langs.nochange_expiration:'<?php _e('No change expiration'); ?>') + '</option>';
+                            options += '<option value="-1" >' + (osc.langs.nochange_expiration!=null?osc.langs.nochange_expiration:'<?php echo osc_esc_js(__('No change expiration')); ?>') + '</option>';
                         <?php } else if($o==0) { ?>
-                            options += '<option value="" >' + (osc.langs.without_expiration!=null?osc.langs.without_expiration:'<?php _e('Without expiration'); ?>') + '</option>';
+                            options += '<option value="" >' + (osc.langs.without_expiration!=null?osc.langs.without_expiration:'<?php echo osc_esc_js(__('Without expiration')); ?>') + '</option>';
                         <?php } else if($o==1) { ?>
-                            options += '<option value="1" >' + (osc.langs.expiration_day!=null?osc.langs.expiration_day:'<?php _e('1 day'); ?>')+ '</option>';
+                            options += '<option value="1" >' + (osc.langs.expiration_day!=null?osc.langs.expiration_day:'<?php echo osc_esc_js(__('1 day')); ?>')+ '</option>';
                         <?php } else { ?>
                             if(max_exp==0 || <?php echo $o; ?><=max_exp) {
-                                options += '<option value="<?php echo $o; ?>" >' + (osc.langs.expiration_days!=null?osc.langs.expiration_days:'<?php _e('%d days'); ?>').replace("%d", <?php echo $o; ?>) + '</option>';
+                                options += '<option value="<?php echo $o; ?>" >' + (osc.langs.expiration_days!=null?osc.langs.expiration_days:'<?php echo osc_esc_js(__('%d days')); ?>').replace("%d", <?php echo $o; ?>) + '</option>';
                             }
                     <?php };
                     }; ?>
@@ -600,6 +596,15 @@
             return true;
         }
 
+        static public function zip_text($item = null) {
+            if($item==null) { $item = osc_item(); };
+            if( Session::newInstance()->_getForm('zip') != "") {
+                $item['s_zip'] = Session::newInstance()->_getForm('zip');
+            }
+            parent::generic_input_text('zip', (isset($item['s_zip'])) ? $item['s_zip'] : null);
+            return true;
+        }
+
         static public function contact_name_text($item = null) {
             if($item==null) { $item = osc_item(); };
             if( Session::newInstance()->_getForm('contactName') != "" ) {
@@ -710,7 +715,7 @@
                     return true;
                 }
             },
-            "<?php echo osc_esc_js(__("Description needs to be longer")); ?>."
+            '<?php echo osc_esc_js(__("Description needs to be longer")); ?>.'
         );
 
         // Code for form validation
@@ -728,7 +733,7 @@
                 <?php } ?>
                 <?php if(osc_images_enabled_at_items()) { ?>
                 "photos[]": {
-                    accept: "<?php echo osc_allowed_extension(); ?>"
+                    accept: "<?php echo osc_esc_js(osc_allowed_extension()); ?>"
                 },
                 <?php } ?>
                 <?php if($path == 'front') { ?>
@@ -886,7 +891,7 @@
                         }
 
                         $("#regionId").html(result);
-                        $("#cityId").html('<option selected value=""><?php _e("Select a city..."); ?></option>');
+                        $("#cityId").html('<option selected value=""><?php echo osc_esc_js(__("Select a city...")); ?></option>');
                     }
                  });
 
@@ -1305,10 +1310,10 @@
                     <?php }; ?>
                     <?php foreach($aImages as $img){ ?>
                         <li class=" qq-upload-success">
-                            <span class="qq-upload-file"><?php echo $img; ?></span>
+                            <span class="qq-upload-file"><?php echo $img; $img = osc_esc_html($img); ?></span>
                             <a class="qq-upload-delete" href="#" ajaxfile="<?php echo $img; ?>" style="display: inline; cursor:pointer;"><?php _e('Delete'); ?></a>
-                            <div class="ajax_preview_img"><img src="<?php echo osc_base_url(); ?>oc-content/uploads/temp/<?php echo osc_esc_html($img); ?>" alt="<?php echo osc_esc_html($img); ?>"></div>
-                            <input type="hidden" name="ajax_photos[]" value="<?php echo osc_esc_html($img); ?>">
+                            <div class="ajax_preview_img"><img src="<?php echo osc_base_url(); ?>oc-content/uploads/temp/<?php echo $img; ?>" alt="<?php echo $img; ?>"></div>
+                            <input type="hidden" name="ajax_photos[]" value="<?php echo $img; ?>">
                         </li>
                     <?php } ?>
                 </ul>
@@ -1446,18 +1451,18 @@
                             showButton: true
                         },
                         text: {
-                            uploadButton: '<?php _e('Click or Drop for upload images'); ?>',
-                            waitingForResponse: '<?php _e('Processing...'); ?>',
-                            retryButton: '<?php _e('Retry'); ?>',
-                            cancelButton: '<?php _e('Cancel'); ?>',
-                            failUpload: '<?php _e('Upload failed'); ?>',
-                            deleteButton: '<?php _e('Delete'); ?>',
-                            deletingStatusText: '<?php _e('Deleting...'); ?>',
-                            formatProgress: '<?php _e('{percent}% of {total_size}'); ?>'
+                            uploadButton: '<?php echo osc_esc_js(__('Click or Drop for upload images')); ?>',
+                            waitingForResponse: '<?php echo osc_esc_js(__('Processing...')); ?>',
+                            retryButton: '<?php echo osc_esc_js(__('Retry')); ?>',
+                            cancelButton: '<?php echo osc_esc_js(__('Cancel')); ?>',
+                            failUpload: '<?php echo osc_esc_js(__('Upload failed')); ?>',
+                            deleteButton: '<?php echo osc_esc_js(__('Delete')); ?>',
+                            deletingStatusText: '<?php echo osc_esc_js(__('Deleting...')); ?>',
+                            formatProgress: '<?php echo osc_esc_js(__('{percent}% of {total_size}')); ?>'
                         }
                     }).on('error', function (event, id, name, errorReason, xhrOrXdr) {
                             $('#restricted-fine-uploader .flashmessage-error').remove();
-                            $('#restricted-fine-uploader').append('<div class="flashmessage flashmessage-error">' + errorReason + '</div>');
+                            $('#restricted-fine-uploader').append('<div class="flashmessage flashmessage-error">' + errorReason + '<a class="close" onclick="javascript:$(\'.flashmessage-error\').remove();" >X</a></div>');
                     }).on('statusChange', function(event, id, old_status, new_status) {
                         $(".alert.alert-error").remove();
                     }).on('complete', function(event, id, fileName, responseJSON) {
@@ -1468,9 +1473,11 @@
                             if(parseInt(new_id)==0) {
                                 $(li).append('<div class="primary_image primary"></div>');
                             } else {
-                                $(li).append('<div class="primary_image"><a title="<?php echo osc_esc_html(__('Make primary image')); ?>"></a></div>');
+                                $(li).append('<div class="primary_image"><a title="<?php echo osc_esc_js(osc_esc_html(__('Make primary image'))); ?>"></a></div>');
                             }
-                            <?php } ?>
+                            <?php } 
+                            // @TOFIX @FIXME escape $responseJSON_uploadName below
+                            // need a js function similar to osc_esc_js(osc_esc_html()) ?>
                             $(li).append('<div class="ajax_preview_img"><img src="<?php echo osc_base_url(); ?>oc-content/uploads/temp/'+responseJSON.uploadName+'" alt="' + responseJSON.uploadName + '"></div>');
                             $(li).append('<input type="hidden" name="ajax_photos[]" value="'+responseJSON.uploadName+'"></input>');
                         }
@@ -1505,7 +1512,7 @@
                             json.success = true;
                         } else {
                             json.success = false;
-                            $('#restricted-fine-uploader .qq-uploader').after($('<div class="alert alert-error"><?php echo sprintf(__('Too many items were uploaded. Item limit is %d.'), $maxImages); ?></div>'));
+                            $('#restricted-fine-uploader .qq-uploader').after($('<div class="alert alert-error"><?php echo osc_esc_js(sprintf(__('Too many items were uploaded. Item limit is %d.'), $maxImages)); ?></div>'));
                         }
                         return json;
                     }

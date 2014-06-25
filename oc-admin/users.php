@@ -1,24 +1,20 @@
 <?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
-    /*
-     *      Osclass – software for creating and publishing online classified
-     *                           advertising platforms
-     *
-     *                        Copyright (C) 2012 OSCLASS
-     *
-     *       This program is free software: you can redistribute it and/or
-     *     modify it under the terms of the GNU Affero General Public License
-     *     as published by the Free Software Foundation, either version 3 of
-     *            the License, or (at your option) any later version.
-     *
-     *     This program is distributed in the hope that it will be useful, but
-     *         WITHOUT ANY WARRANTY; without even the implied warranty of
-     *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-     *             GNU Affero General Public License for more details.
-     *
-     *      You should have received a copy of the GNU Affero General Public
-     * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
-     */
+/*
+ * Copyright 2014 Osclass
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
     class CAdminUsers extends AdminSecBaseModel
     {
@@ -73,21 +69,7 @@
                                             break;
                                             case 2: osc_add_flash_ok_message( _m('The user has been created successfully'), 'admin');
                                             break;
-                                            case 3: osc_add_flash_warning_message( _m('Sorry, but that e-mail is already in use'), 'admin');
-                                            break;
-                                            case 5: osc_add_flash_warning_message( _m('The specified e-mail is not valid'), 'admin');
-                                            break;
-                                            case 6: osc_add_flash_warning_message( _m('Sorry, the password cannot be empty'), 'admin');
-                                            break;
-                                            case 7: osc_add_flash_warning_message( _m("Sorry, passwords don't match"), 'admin');
-                                            break;
-                                            case 8: osc_add_flash_warning_message( _m("Username is already taken"), 'admin');
-                                            break;
-                                            case 9: osc_add_flash_warning_message( _m("The specified username is not valid, it contains some invalid words"), 'admin');
-                                            break;
-                                            case 10: osc_add_flash_warning_message( _m("The name cannot be empty"), 'admin');
-                                            break;
-                                            default: osc_add_flash_error_message( _m("There was some error"), 'admin');
+                                            default: osc_add_flash_error_message( $success, 'admin');
                                             break;
                                         }
 
@@ -135,25 +117,14 @@
                                         require_once LIB_PATH . 'osclass/UserActions.php';
                                         $userActions = new UserActions(true);
                                         $success = $userActions->edit( Params::getParam("id") );
-
-                                        switch($success) {
-                                            case 1:
-                                                osc_add_flash_error_message( _m("Passwords don't match"), 'admin');
-                                                $this->redirectTo(osc_admin_base_url(true) . '?page=users&action=edit&id='.Params::getParam('id'));
-                                            break;
-                                            case 2:  osc_add_flash_ok_message( _m('The user has been updated and activated'), 'admin');
-                                            break;
-                                            case 3:
-                                                osc_add_flash_error_message( _m('E-mail is already in used by another user'), 'admin');
-                                                $this->redirectTo(osc_admin_base_url(true) . '?page=users&action=edit&id='.Params::getParam('id'));
-                                            break;
-                                            case 10: osc_add_flash_error_message( _m("The name cannot be empty"), 'admin');
-                                                $this->redirectTo(osc_admin_base_url(true) . '?page=users&action=edit&id='.Params::getParam('id'));
-                                            break;
-                                            default:   osc_add_flash_ok_message( _m('The user has been updated'), 'admin');
-                                            break;
+                                        if($success==1) {
+                                            osc_add_flash_ok_message( _m('The user has been updated'), 'admin');
+                                        } else if($success==2) {
+                                            osc_add_flash_ok_message( _m('The user has been updated and activated'), 'admin');
+                                        } else {
+                                            osc_add_flash_error_message( $success);
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=users&action=edit&id='.Params::getParam('id'));
                                         }
-
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=users');
                 break;
                 case('resend_activation'):

@@ -1,24 +1,20 @@
 <?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
-    /*
-     *      Osclass – software for creating and publishing online classified
-     *                           advertising platforms
-     *
-     *                        Copyright (C) 2012 OSCLASS
-     *
-     *       This program is free software: you can redistribute it and/or
-     *     modify it under the terms of the GNU Affero General Public License
-     *     as published by the Free Software Foundation, either version 3 of
-     *            the License, or (at your option) any later version.
-     *
-     *     This program is distributed in the hope that it will be useful, but
-     *         WITHOUT ANY WARRANTY; without even the implied warranty of
-     *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-     *             GNU Affero General Public License for more details.
-     *
-     *      You should have received a copy of the GNU Affero General Public
-     * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
-     */
+/*
+ * Copyright 2014 Osclass
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
     /**
      *
@@ -797,7 +793,10 @@
                 // sub select for JOIN ----------------------
                 $this->dao->select('distinct d.fk_i_item_id');
                 $this->dao->from(DB_TABLE_PREFIX . 't_item_description as d');
+                $this->dao->from(DB_TABLE_PREFIX . 't_item as ti');
+                $this->dao->where('ti.pk_i_id = d.fk_i_item_id');
                 $this->dao->where(sprintf("MATCH(d.s_title, d.s_description) AGAINST('%s' IN BOOLEAN MODE)", $this->sPattern));
+                $this->dao->where("ti.b_premium = 1");
 
                 if(empty($this->locale_code)) {
                     if(OC_ADMIN) {
@@ -831,7 +830,7 @@
                 $this->dao->where(DB_TABLE_PREFIX.'t_item.pk_i_id IN ('.$subSelect.')');
 
                 $this->dao->groupBy(DB_TABLE_PREFIX.'t_item.pk_i_id');
-                $this->dao->orderBy(sprintf('%st_item_stats.i_num_premium_views', DB_TABLE_PREFIX), 'ASC');
+                $this->dao->orderBy(sprintf('SUM(%st_item_stats.i_num_premium_views)', DB_TABLE_PREFIX), 'ASC');
                 $this->dao->orderBy(null, 'random');
                 $this->dao->limit(0, $num);
             } else {
@@ -853,7 +852,7 @@
                 }
 
                 $this->dao->groupBy(DB_TABLE_PREFIX.'t_item.pk_i_id');
-                $this->dao->orderBy(sprintf('%st_item_stats.i_num_premium_views', DB_TABLE_PREFIX), 'ASC');
+                $this->dao->orderBy(sprintf('SUM(%st_item_stats.i_num_premium_views)', DB_TABLE_PREFIX), 'ASC');
                 $this->dao->orderBy(null, 'random');
                 $this->dao->limit(0, $num);
             }
@@ -1105,8 +1104,13 @@
         public function getLatestItems($numItems = 10, $options = array(), $withPicture = false)
         {
             $this->set_rpp($numItems);
+            // LEFT FOR COMPATIBILITY ISSUES BUT SOON TO BE DEPRECATED
             if($withPicture) {
                 $this->withPicture(true);
+            }
+            // THIS IS HOW IT SHOULD BE DONE
+            if(isset($options['withPicture'])) {
+                $this->withPicture($options['withPicture']);
             }
             if(isset($options['sCategory'])) {
                 $this->addCategory($options['sCategory']);

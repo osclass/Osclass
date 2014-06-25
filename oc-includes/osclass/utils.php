@@ -1,23 +1,19 @@
 <?php
 
 /*
- *      Osclass – software for creating and publishing online classified
- *                           advertising platforms
+ * Copyright 2014 Osclass
  *
- *                        Copyright (C) 2012 OSCLASS
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- *       This program is free software: you can redistribute it and/or
- *     modify it under the terms of the GNU Affero General Public License
- *     as published by the Free Software Foundation, either version 3 of
- *            the License, or (at your option) any later version.
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
- *     This program is distributed in the hope that it will be useful, but
- *         WITHOUT ANY WARRANTY; without even the implied warranty of
- *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *             GNU Affero General Public License for more details.
- *
- *      You should have received a copy of the GNU Affero General Public
- * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 
@@ -239,13 +235,17 @@ function is_serialized($data) {
 /**
  * VERY BASIC
  * Perform a POST request, so we could launch fake-cron calls and other core-system calls without annoying the user
+ * @return bool false on error or number of bytes sent.
  */
 function osc_doRequest($url, $_data) {
     if (function_exists('fsockopen')) {
-        $data = http_build_query($_data);
 
         // parse the given URL
         $url = parse_url($url);
+
+        if ($url === false || !isset($url['host']) || !isset($url['path'])) {
+            return false;
+        }
 
         // extract host and path:
         $host = $url['host'];
@@ -255,17 +255,20 @@ function osc_doRequest($url, $_data) {
         // use localhost in case of issues with NATs (hairpinning)
         $fp = @fsockopen($host, 80);
 
-        if($fp!==false) {
-            $out  = "POST $path HTTP/1.1\r\n";
-            $out .= "Host: $host\r\n";
-            $out .= "Referer: Osclass (v.". osc_version() .")\r\n";
-            $out .= "Content-type: application/x-www-form-urlencoded\r\n";
-            $out .= "Content-Length: ".strlen($data)."\r\n";
-            $out .= "Connection: Close\r\n\r\n";
-            $out .= "$data";
-            fwrite($fp, $out);
-            fclose($fp);
-        }
+        if($fp===false) { return false; };
+
+        $data = http_build_query($_data);
+        $out  = "POST $path HTTP/1.1\r\n";
+        $out .= "Host: $host\r\n";
+        $out .= "Referer: Osclass (v.". osc_version() .")\r\n";
+        $out .= "Content-type: application/x-www-form-urlencoded\r\n";
+        $out .= "Content-Length: ".strlen($data)."\r\n";
+        $out .= "Connection: Close\r\n\r\n";
+        $out .= "$data";
+        $number_bytes_sent = fwrite($fp, $out);
+        fclose($fp);
+
+        return $number_bytes_sent; // or false on fwrite() error
     }
 }
 
@@ -466,8 +469,8 @@ function osc_mailBeauty($text, $params) {
         osc_base_url(),
         osc_page_title(),
         '<a href="' . osc_base_url() . '">' . osc_page_title() . '</a>',
-        date('Y-m-d H:i:s'),
-        date('H:i'),
+		date(osc_date_format()?:'Y-m-d').' '.date(osc_time_format()?:'H:i:s'),
+		date(osc_time_format()?:'H:i'),
         $_SERVER['REMOTE_ADDR']
     );
     $text = str_ireplace($kwords, $rwords, $text);
@@ -475,13 +478,25 @@ function osc_mailBeauty($text, $params) {
     return $text;
 }
 
+function osc_mkdir($dir, $mode=0777, $recursive=true) {
+    if (is_null($dir) || $dir==="") {
+        return false;
+    }
+    if (is_dir($dir) || $dir==="/") {
+        return true;
+    }
+    if (osc_mkdir(dirname($dir), $mode, $recursive)) {
+        return mkdir($dir, $mode);
+    }
+    return false;
+}
 
 function osc_copy($source, $dest, $options=array('folderPermission'=>0755,'filePermission'=>0755)) {
     $result =true;
     if (is_file($source)) {
         if ($dest[strlen($dest)-1]=='/') {
             if (!file_exists($dest)) {
-                cmfcDirectory::makeAll($dest,$options['folderPermission'],true);
+                osc_mkdir($dest, $options['folderPermission'], true);
             }
             $__dest=$dest."/".basename($source);
         } else {
@@ -588,9 +603,7 @@ function osc_dbdump($path, $file) {
         return -3;
     }
 
-    $_str = '';
-    $_str .= '/* OSCLASS MYSQL Autobackup (' . date('Y-m-d H:i:s') . ') */';
-    $_str .= "\n";
+    $_str = '/* OSCLASS MYSQL Autobackup (' . date(osc_date_format()?:'Y-m-d').' '.date(osc_time_format()?:'H:i:s') . ') */'."\n";
 
     $f = fopen($path, "a");
     fwrite($f, $_str);
@@ -1290,7 +1303,7 @@ function osc_save_permissions( $dir = ABS_PATH ) {
 
 
 function osc_prepare_price($price) {
-    return $price/1000000;
+    return number_format($price/1000000, osc_locale_num_dec(), osc_locale_dec_point(), osc_locale_thousands_sep());
 }
 
 /**
@@ -2171,5 +2184,3 @@ function osc_market($section, $code) {
 function osc_is_ssl() {
     return (isset($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS'])=='on' || $_SERVER['HTTPS']=='1'));
 }
-
-?>

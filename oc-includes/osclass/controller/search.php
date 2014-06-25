@@ -1,21 +1,20 @@
 <?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
-    /**
-     * Osclass – software for creating and publishing online classified advertising platforms
-     *
-     * Copyright (C) 2012 OSCLASS
-     *
-     * This program is free software: you can redistribute it and/or modify it under the terms
-     * of the GNU Affero General Public License as published by the Free Software Foundation,
-     * either version 3 of the License, or (at your option) any later version.
-     *
-     * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-     * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-     * See the GNU Affero General Public License for more details.
-     *
-     * You should have received a copy of the GNU Affero General Public
-     * License along with this program. If not, see <http://www.gnu.org/licenses/>.
-     */
+/*
+ * Copyright 2014 Osclass
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
     class CWebSearch extends BaseModel
     {
@@ -31,17 +30,15 @@
             if( preg_match('/^index\.php/', $this->uri)>0) {
                 // search url without permalinks params
             } else {
-                // redirect if it ends with a slash
-                if( preg_match('|/$|', $this->uri) ) {
-                    $redirectURL = osc_base_url() . $this->uri;
-                    $redirectURL = preg_replace('|/$|', '', $redirectURL);
-                    $this->redirectTo($redirectURL, 301);
-                }
-
-                if( stripos($_SERVER['REQUEST_URI'], osc_get_preference('rewrite_search_url'))===false && osc_rewrite_enabled() && !Params::existParam('sFeed')) {
+                $this->uri = preg_replace('|/$|', '', $this->uri);
+                // redirect if it ends with a slash NOT NEEDED ANYMORE, SINCE WE CHECK WITH osc_search_url
+                /*print_r($_SERVER['REQUEST_URI'] . PHP_EOL);
+                print_r($this->uri . PHP_EOL);
+                print_r(osc_get_preference('rewrite_search_url') . PHP_EOL);*/
+                //if( stripos($_SERVER['REQUEST_URI'], osc_get_preference('rewrite_search_url'))===false && osc_rewrite_enabled() && !Params::existParam('sFeed')) {
+                if(($this->uri!=osc_get_preference('rewrite_search_url') && stripos($this->uri, osc_get_preference('rewrite_search_url') . '/')===false) && osc_rewrite_enabled() && !Params::existParam('sFeed')) {
                     // clean GET html params
                     $this->uri = preg_replace('/(\/?)\?.*$/', '', $this->uri);
-
                     $search_uri = preg_replace('|/[0-9]+$|', '', $this->uri);
                     $this->_exportVariableToView('search_uri', $search_uri);
 
@@ -90,6 +87,18 @@
                                 $this->do404();
                             }
                             Params::setParam('sCategory', $search_uri);
+                        } else {
+                            if(stripos(Params::getParam('sCategory'), '/')!==false) {
+                                $tmp = explode("/", preg_replace('|/$|', '', Params::getParam('sCategory')));
+                                $category  = Category::newInstance()->findBySlug($tmp[count($tmp)-1]);
+                                Params::setParam('sCategory', $tmp[count($tmp)-1]);
+                            } else {
+                                $category  = Category::newInstance()->findBySlug(Params::getParam('sCategory'));
+                                Params::setParam('sCategory', Params::getParam('sCategory'));
+                            }
+                            if( count($category) === 0 ) {
+                                $this->do404();
+                            }
                         }
                     }
                 }
@@ -99,6 +108,7 @@
         //Business Layer...
         function doModel()
         {
+
             osc_run_hook('before_search');
 
             if(osc_rewrite_enabled()) {
@@ -161,6 +171,13 @@
                         unset($_POST['sParams']);
                     }
                 }
+            }
+
+
+            $uriParams = Params::getParamsAsArray();
+            $searchUri = osc_search_url($uriParams);
+            if($searchUri!=(WEB_PATH . urldecode($this->uri))) {
+                $this->redirectTo($searchUri, 301);
             }
 
             ////////////////////////////////
@@ -461,6 +478,13 @@
                 osc_run_hook('search', $this->mSearch);
 
                 //preparing variables...
+                $countryName = $p_sCountry;
+                if( strlen($p_sCountry)==2 ) {
+                    $c = Country::newInstance()->findByCode($p_sCountry);
+                    if( $c ) {
+                        $countryName = $c['s_name'];
+                    }
+                }
                 $regionName = $p_sRegion;
                 if( is_numeric($p_sRegion) ) {
                     $r = Region::newInstance()->findByPrimaryKey($p_sRegion);
@@ -491,6 +515,7 @@
                 $this->_exportVariableToView('search_page', $p_iPage);
                 $this->_exportVariableToView('search_has_pic', $p_bPic);
                 $this->_exportVariableToView('search_only_premium', $p_bPremium);
+                $this->_exportVariableToView('search_country', $countryName);
                 $this->_exportVariableToView('search_region', $regionName);
                 $this->_exportVariableToView('search_city', $cityName);
                 $this->_exportVariableToView('search_price_min', $p_sPriceMin);
@@ -535,6 +560,11 @@
                                     'title' => osc_item_title(),
                                     'link' => htmlentities( osc_item_url(),  ENT_COMPAT, "UTF-8" ),
                                     'description' => osc_item_description(),
+                                    'country' => osc_item_country(),
+                                    'region' => osc_item_region(),
+                                    'city' => osc_item_city(),
+                                    'city_area' => osc_item_city_area(),
+                                    'category' => osc_item_category(),
                                     'dt_pub_date' => osc_item_pub_date(),
                                     'image'     => array(  'url'    => htmlentities(osc_resource_thumbnail_url(),  ENT_COMPAT, "UTF-8"),
                                                            'title'  => osc_item_title(),
@@ -545,6 +575,11 @@
                                     'title' => osc_item_title(),
                                     'link' => htmlentities( osc_item_url() , ENT_COMPAT, "UTF-8"),
                                     'description' => osc_item_description(),
+                                    'country' => osc_item_country(),
+                                    'region' => osc_item_region(),
+                                    'city' => osc_item_city(),
+                                    'city_area' => osc_item_city_area(),
+                                    'category' => osc_item_category(),
                                     'dt_pub_date' => osc_item_pub_date()
                                 ));
                             }

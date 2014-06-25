@@ -1,21 +1,20 @@
 <?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
-    /**
-     * Osclass – software for creating and publishing online classified advertising platforms
-     *
-     * Copyright (C) 2012 OSCLASS
-     *
-     * This program is free software: you can redistribute it and/or modify it under the terms
-     * of the GNU Affero General Public License as published by the Free Software Foundation,
-     * either version 3 of the License, or (at your option) any later version.
-     *
-     * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-     * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-     * See the GNU Affero General Public License for more details.
-     *
-     * You should have received a copy of the GNU Affero General Public
-     * License along with this program. If not, see <http://www.gnu.org/licenses/>.
-     */
+/*
+ * Copyright 2014 Osclass
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
     Class ItemActions
     {
@@ -865,12 +864,14 @@
             $aItem = $this->prepareDataForFunction( 'contact' );
 
             // check parameters
+            if ( !osc_validate_text($aItem['yourName']) ){
+                $flash_error = __("Your name: this field is required") . PHP_EOL;
+            }
             if( !osc_validate_email($aItem['yourEmail'], true) ){
                 $flash_error .= __("Invalid email address") . PHP_EOL;
-            } else if( !osc_validate_text($aItem['message']) ){
+            }
+            if( !osc_validate_text($aItem['message']) ){
                 $flash_error .= __("Message: this field is required") . PHP_EOL;
-            } else if ( !osc_validate_text($aItem['yourName']) ){
-                $flash_error .= __("Your name: this field is required") . PHP_EOL;
             }
 
             if($flash_error != ''){
@@ -892,13 +893,10 @@
 
             $aItem  = $this->prepareDataForFunction('add_comment');
 
-            $authorName     = trim($aItem['authorName']);
-            $authorName     = strip_tags($authorName);
-            $authorEmail    = trim($aItem['authorEmail']);
-            $authorEmail    = strip_tags($authorEmail);
-            $body           = trim($aItem['body']);
-            $body           = strip_tags($body);
-            $title          = $aItem['title'];
+            $authorName     = trim(strip_tags($aItem['authorName']));
+            $authorEmail    = trim(strip_tags($aItem['authorEmail']));
+            $body           = trim(strip_tags($aItem['body']));
+            $title          = trim(strip_tags($aItem['title']));
             $itemId         = $aItem['id'];
             $userId         = $aItem['userId'];
             $status_num     = -1;
@@ -1013,6 +1011,8 @@
             switch ( $action ){
                 case 'send_friend':
                     $item = $this->manager->findByPrimaryKey( Params::getParam('id') );
+                    if ($item===false || !is_array($item) || count($item)==0)
+                        break;
 
                     $aItem['item']          = $item;
                     View::newInstance()->_exportVariableToView('item', $aItem['item']);
@@ -1027,6 +1027,8 @@
                 break;
                 case 'contact':
                     $item = $this->manager->findByPrimaryKey( Params::getParam('id') );
+                    if ($item===false || !is_array($item) || count($item)==0)
+                        break;
 
                     $aItem['item']          = $item;
                     View::newInstance()->_exportVariableToView('item', $aItem['item']);
@@ -1038,6 +1040,8 @@
                 break;
                 case 'add_comment':
                     $item = $this->manager->findByPrimaryKey( Params::getParam('id') );
+                    if ($item===false || !is_array($item) || count($item)==0)
+                        break;
 
                     $aItem['item']          = $item;
                     View::newInstance()->_exportVariableToView('item', $aItem['item']);
@@ -1149,7 +1153,7 @@
             $aItem['s_ip']          = get_ip();
             $aItem['d_coord_lat']   = (Params::getParam('d_coord_lat')  != '') ? Params::getParam('d_coord_lat') : null;
             $aItem['d_coord_long']  = (Params::getParam('d_coord_long') != '') ? Params::getParam('d_coord_long') : null;
-            $aItem['s_zip']         = (Params::getParam('s_zip')  != '') ? Params::getParam('s_zip') : null;
+            $aItem['s_zip']         = (Params::getParam('zip')  != '') ? Params::getParam('zip') : null;
 
             // $ajax_photos is an array of filenames of the photos uploaded by ajax to a temporary folder
             // fake insert them into the array of the form-uploaded photos
@@ -1463,4 +1467,13 @@
         }
     }
 
-?>
+    if(osc_force_jpeg()) {
+        function osc_force_jpeg_extension($content) {
+            return 'jpg';
+        }
+        function osc_force_jpeg_mime($content) {
+            return 'image/jpeg';
+        }
+        osc_add_filter('upload_image_extension', 'osc_force_jpeg_extension');
+        osc_add_filter('upload_image_mime', 'osc_force_jpeg_mime');
+    }
