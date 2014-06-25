@@ -455,7 +455,12 @@ CREATE TABLE %st_item_description_tmp (
     }
 
     if(osc_version() < 333) {
-        $admins = Admin::newInstance()->listAll();
+        $dao = new DAO();
+        $result = $dao->dao->query(sprintf('SELECT * FROM %s ', DB_TABLE_PREFIX . 't_admin'));
+        if($result == false) {
+            $admins = array();
+        }
+        $admins = $result->result();
         $mUser = User::newInstance();
         foreach($admins as $admin) {
             unset($admin['pk_i_id']);
