@@ -793,7 +793,10 @@
                 // sub select for JOIN ----------------------
                 $this->dao->select('distinct d.fk_i_item_id');
                 $this->dao->from(DB_TABLE_PREFIX . 't_item_description as d');
+                $this->dao->from(DB_TABLE_PREFIX . 't_item as ti');
+                $this->dao->where('ti.pk_i_id = d.fk_i_item_id');
                 $this->dao->where(sprintf("MATCH(d.s_title, d.s_description) AGAINST('%s' IN BOOLEAN MODE)", $this->sPattern));
+                $this->dao->where("ti.b_premium = 1");
 
                 if(empty($this->locale_code)) {
                     if(OC_ADMIN) {
