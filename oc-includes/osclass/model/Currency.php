@@ -34,6 +34,7 @@
          * @var Currency
          */
         private static $instance;
+        private static $_currencies;
 
         /**
          * It creates a new Currency object class ir if it has been created
@@ -60,6 +61,29 @@
             $this->setTableName('t_currency');
             $this->setPrimaryKey('pk_c_code');
             $this->setFields(array('pk_c_code', 's_name', 's_description', 'b_enabled'));
+        }
+
+        function findByPrimaryKey($value)
+        {
+            if(isset(Currency::$_currencies[$value])) {
+                return Currency::$_currencies[$value];
+            }
+
+            $this->dao->select($this->fields);
+            $this->dao->from($this->getTableName());
+            $this->dao->where($this->getPrimaryKey(), $value);
+            $result = $this->dao->get();
+
+            if( $result === false ) {
+                return false;
+            }
+
+            if( $result->numRows() !== 1 ) {
+                return false;
+            }
+
+            Currency::$_currencies[$value] = $result->row();
+            return Currency::$_currencies[$value];
         }
 
     }
