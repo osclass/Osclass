@@ -76,7 +76,7 @@
                 's_action'      => $action,
                 'fk_i_id'       => $id,
                 's_data'        => $data,
-                's_ip'          => $_SERVER['REMOTE_ADDR'],
+                's_ip'          => @$_SERVER['REMOTE_ADDR'],
                 's_who'         => $who,
                 'fk_i_who_id'   => $whoId
             );
