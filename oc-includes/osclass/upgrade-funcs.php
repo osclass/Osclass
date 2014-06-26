@@ -475,6 +475,8 @@ CREATE TABLE %st_item_description_tmp (
             $admin['e_permission'] = $admin['b_moderator']?'MODERATOR':'ADMIN';
             unset($admin['b_moderator']);
             $admin['dt_reg_date'] = date('Y-m-d H:i:s');
+            $admin['b_enabled'] = 1;
+            $admin['b_active'] = 1;
             $exists = $mUser->findByEmail($admin['s_email']);
             if($exists) {
                 $mUser->update(array('e_permission' => $admin['e_permission']), array('pk_i_id' => $exists['pk_i_id']));
