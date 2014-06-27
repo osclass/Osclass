@@ -333,11 +333,9 @@
 
         public function activate($user_id)
         {
+            if($user_id==osc_logged_user_id()) { return false; };
             $user = $this->manager->findByPrimaryKey($user_id);
-
-            if( !$user ) {
-                return false;
-            }
+            if(!$user) { return false; }
 
             $this->manager->update( array('b_active' => 1), array('pk_i_id' => $user_id) );
 
@@ -361,11 +359,9 @@
 
         public function deactivate($user_id)
         {
+            if($user_id==osc_logged_user_id()) { return false; };
             $user = $this->manager->findByPrimaryKey($user_id);
-
-            if( !$user ) {
-                return false;
-            }
+            if(!$user) { return false; }
 
             $this->manager->update( array('b_active' => 0), array('pk_i_id' => $user_id) );
 
@@ -385,11 +381,9 @@
 
         public function enable($user_id)
         {
+            if($user_id==osc_logged_user_id()) { return false; };
             $user = $this->manager->findByPrimaryKey($user_id);
-
-            if( !$user ) {
-                return false;
-            }
+            if(!$user) { return false; }
 
             $this->manager->update( array('b_enabled' => 1), array('pk_i_id' => $user_id) );
 
@@ -409,11 +403,9 @@
 
         public function disable($user_id)
         {
+            if($user_id==osc_logged_user_id()) { return false; };
             $user = $this->manager->findByPrimaryKey($user_id);
-
-            if( !$user ) {
-                return false;
-            }
+            if(!$user) { return false; }
 
             $this->manager->update( array('b_enabled' => 0), array('pk_i_id' => $user_id) );
 
