@@ -71,6 +71,8 @@ function basic_info() {
             ,'s_username'   => $admin
             ,'s_password'   => osc_hash_password($password)
             ,'s_email'      => Params::getParam('email')
+            ,'b_active'     => 1
+            ,'b_enabled'    => 1
             ,'e_permission' => 'ADMIN'
         )
     );
