@@ -49,7 +49,7 @@
      */
     function osc_is_web_user_logged_in() {
         if(osc_is_user_logged_in()) {
-            return !(osc_is_ad_page() || osc_is_moderator());
+            return !(osc_is_admin() || osc_is_moderator());
         }
         return false;
     }
