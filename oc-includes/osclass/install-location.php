@@ -73,7 +73,7 @@ function basic_info() {
             ,'s_email'      => Params::getParam('email')
             ,'b_active'     => 1
             ,'b_enabled'    => 1
-            ,'e_permission' => 'ADMIN'
+            ,'e_role' => 'ADMIN'
         )
     );
 

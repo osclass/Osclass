@@ -1215,7 +1215,7 @@
      */
     function osc_is_moderator() {
         $user = osc_logged_user();
-        if(isset($user['e_permission']) && $user['e_permission']=='MODERATOR') {
+        if(isset($user['e_role']) && $user['e_role']=='MODERATOR') {
             return true;
         }
         return false;
@@ -1228,7 +1228,7 @@
      */
     function osc_is_admin() {
         $user = osc_logged_user();
-        if(isset($user['e_permission']) && $user['e_permission']=='ADMIN') {
+        if(isset($user['e_role']) && $user['e_role']=='ADMIN') {
             return true;
         }
         return false;

@@ -125,7 +125,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_user (
     i_comments INT(10) UNSIGNED NULL DEFAULT 0,
     dt_access_date DATETIME NOT NULL DEFAULT  '0000-00-00 00:00:00',
     s_access_ip VARCHAR(15) NOT NULL DEFAULT '',
-    e_permission ENUM('USER', 'ADMIN', 'MODERATOR') NOT NULL DEFAULT  'USER',
+    e_role ENUM('USER', 'ADMIN', 'MODERATOR') NOT NULL DEFAULT  'USER',
 
         PRIMARY KEY (pk_i_id),
         UNIQUE KEY (s_email),

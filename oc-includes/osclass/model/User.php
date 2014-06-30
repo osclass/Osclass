@@ -76,7 +76,7 @@
                 'i_comments',
                 'dt_access_date',
                 's_access_ip',
-                'e_permission'
+                'e_role'
             );
             $this->setFields($array_fields);
         }

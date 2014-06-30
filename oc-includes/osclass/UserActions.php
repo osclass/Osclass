@@ -277,6 +277,10 @@
             $input['s_phone_land']   = trim(Params::getParam('s_phone_land'));
             $input['s_phone_mobile'] = trim(Params::getParam('s_phone_mobile'));
 
+            if(Params::existParam('e_role') && in_array(Params::getParam('e_role'), array('USER', 'MODERATOR', 'ADMIN'))) {
+                $input['e_role'] = Params::getParam('e_role');
+            }
+
             if(strtolower(substr($input['s_website'], 0, 4))!=='http') {
                 $input['s_website'] = 'http://'.$input['s_website'];
             }

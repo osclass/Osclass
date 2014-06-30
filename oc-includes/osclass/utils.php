@@ -1226,7 +1226,7 @@ function osc_check_dir_writable( $dir = ABS_PATH ) {
 
 
 
-function osc_change_permissions( $dir = ABS_PATH ) {
+function osc_change_roles( $dir = ABS_PATH ) {
     if(strpos($dir, "../")!==false) {
         return false;
     }
@@ -1242,23 +1242,23 @@ function osc_change_permissions( $dir = ABS_PATH ) {
                     }
                     if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/themes")) {
                         if($file=="modern" || $file=="index.php") {
-                            $res = osc_change_permissions( str_replace("//", "/", $dir . "/" . $file));
+                            $res = osc_change_roles( str_replace("//", "/", $dir . "/" . $file));
                             if(!$res) { return false; };
                         }
                     } else if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/plugins")) {
                         if($file=="google_maps" || $file=="google_analytics" || $file=="index.php") {
-                            $res = osc_change_permissions( str_replace("//", "/", $dir . "/" . $file));
+                            $res = osc_change_roles( str_replace("//", "/", $dir . "/" . $file));
                             if(!$res) { return false; };
                         }
                     } else if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/languages")) {
                         if($file=="en_US" || $file=="index.php") {
-                            $res = osc_change_permissions( str_replace("//", "/", $dir . "/" . $file));
+                            $res = osc_change_roles( str_replace("//", "/", $dir . "/" . $file));
                             if(!$res) { return false; };
                         }
                     } else if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/downloads")) {
                     } else if(str_replace("//", "/", $dir)==(osc_uploads_path())) {
                     } else {
-                        $res = osc_change_permissions( str_replace("//", "/", $dir . "/" . $file));
+                        $res = osc_change_roles( str_replace("//", "/", $dir . "/" . $file));
                         if(!$res) { return false; };
                     }
                 } else {
@@ -1275,7 +1275,7 @@ function osc_change_permissions( $dir = ABS_PATH ) {
     return true;
 }
 
-function osc_save_permissions( $dir = ABS_PATH ) {
+function osc_save_roles( $dir = ABS_PATH ) {
     if(strpos($dir, "../")!==false) {
         return false;
     }
@@ -1287,7 +1287,7 @@ function osc_save_permissions( $dir = ABS_PATH ) {
         while (($file = readdir($dh)) !== false) {
             if($file!="." && $file!="..") {
                 if(is_dir(str_replace("//", "/", $dir . "/" . $file))) {
-                    $res = osc_save_permissions( str_replace("//", "/", $dir . "/" . $file));
+                    $res = osc_save_roles( str_replace("//", "/", $dir . "/" . $file));
                     foreach($res as $k => $v) {
                         $perms[$k] = $v;
                     }
@@ -1773,8 +1773,8 @@ function osc_do_upgrade() {
     $error = 0;
     $sql_error_msg = "";
     $rm_errors = 0;
-    $perms = osc_save_permissions();
-    osc_change_permissions();
+    $perms = osc_save_roles();
+    osc_change_roles();
 
     $maintenance_file = ABS_PATH . '.maintenance';
     $fileHandler = @fopen($maintenance_file, 'w');

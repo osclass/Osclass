@@ -472,14 +472,14 @@ CREATE TABLE %st_item_description_tmp (
         $mUser = User::newInstance();
         foreach($admins as $admin) {
             unset($admin['pk_i_id']);
-            $admin['e_permission'] = $admin['b_moderator']?'MODERATOR':'ADMIN';
+            $admin['e_role'] = $admin['b_moderator']?'MODERATOR':'ADMIN';
             unset($admin['b_moderator']);
             $admin['dt_reg_date'] = date('Y-m-d H:i:s');
             $admin['b_enabled'] = 1;
             $admin['b_active'] = 1;
             $exists = $mUser->findByEmail($admin['s_email']);
             if($exists) {
-                $mUser->update(array('e_permission' => $admin['e_permission']), array('pk_i_id' => $exists['pk_i_id']));
+                $mUser->update(array('e_role' => $admin['e_role']), array('pk_i_id' => $exists['pk_i_id']));
             } else {
                 $exists = $mUser->findByUsername($admin['s_username']);
                 if($exists) {

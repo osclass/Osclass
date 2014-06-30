@@ -146,10 +146,20 @@
         static public function is_company_select($user = null, $user_label = null, $company_label = null) {
             $options = array(
                 array( 'i_value' => '0', 's_text' => ($user_label?:__('User')) )
-                ,array( 'i_value' => '1', 's_text' => ($company_label?:__('Company')) )
+            ,array( 'i_value' => '1', 's_text' => ($company_label?:__('Company')) )
             );
 
             parent::generic_select( 'b_company', $options, 'i_value', 's_text', null, (isset($user['b_company'])) ? $user['b_company'] : null );
+        }
+
+        static public function role_select($user = null) {
+            $options = array(
+                array( 'i_value' => 'USER', 's_text' => __('User') ),
+                array( 'i_value' => 'MODERATOR', 's_text' => __('Moderator') ),
+                array( 'i_value' => 'ADMIN', 's_text' => __('Admin') )
+            );
+
+            parent::generic_select( 'e_role', $options, 'i_value', 's_text', null, (isset($user['e_role'])) ? $user['e_role'] : null );
         }
 
         static public function user_select($users){
