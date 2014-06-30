@@ -367,7 +367,12 @@
             $this->mSearch->order( $p_sOrder, $allowedTypesForSorting[$p_iOrderType]);
 
             //SET PAGE
-            $this->mSearch->page($p_iPage, $p_iPageSize);
+            if($p_sFeed == 'rss') {
+                // If param sFeed=rss, just output last 'osc_num_rss_items()'
+                $this->mSearch->page(0, osc_num_rss_items());
+            } else {
+                $this->mSearch->page($p_iPage, $p_iPageSize);
+            }
 
             // CUSTOM FIELDS
             $custom_fields = Params::getParam('meta');
@@ -448,76 +453,72 @@
 
             osc_run_hook('search_conditions', Params::getParamsAsArray());
 
+            // RETRIEVE ITEMS AND TOTAL
+            $aItems      = $this->mSearch->doSearch();
+            $iTotalItems = $this->mSearch->count();
+
+            $iStart    = $p_iPage * $p_iPageSize;
+            $iEnd      = min(($p_iPage+1) * $p_iPageSize, $iTotalItems);
+            $iNumPages = ceil($iTotalItems / $p_iPageSize);
+
+            osc_run_hook('search', $this->mSearch);
+
+            //preparing variables...
+            $regionName = $p_sRegion;
+            if( is_numeric($p_sRegion) ) {
+                $r = Region::newInstance()->findByPrimaryKey($p_sRegion);
+                if( $r ) {
+                    $regionName = $r['s_name'];
+                }
+            }
+            $cityName = $p_sCity;
+            if( is_numeric($p_sCity) ) {
+                $c = City::newInstance()->findByPrimaryKey($p_sCity);
+                if( $c ) {
+                    $cityName = $c['s_name'];
+                }
+            }
+
+            //$this->_exportVariableToView('non_empty_categories', $aCategories);
+            $this->_exportVariableToView('search_start', $iStart);
+            $this->_exportVariableToView('search_end', $iEnd);
+            $this->_exportVariableToView('search_category', $p_sCategory);
+            // hardcoded - non pattern and order by relevance
+            $p_sOrder = $old_order;
+            $this->_exportVariableToView('search_order_type', $p_iOrderType);
+            $this->_exportVariableToView('search_order', $p_sOrder);
+
+            $this->_exportVariableToView('search_pattern', $p_sPattern);
+            $this->_exportVariableToView('search_from_user', $p_sUser);
+            $this->_exportVariableToView('search_total_pages', $iNumPages);
+            $this->_exportVariableToView('search_page', $p_iPage);
+            $this->_exportVariableToView('search_has_pic', $p_bPic);
+            $this->_exportVariableToView('search_only_premium', $p_bPremium);
+            $this->_exportVariableToView('search_region', $regionName);
+            $this->_exportVariableToView('search_city', $cityName);
+            $this->_exportVariableToView('search_price_min', $p_sPriceMin);
+            $this->_exportVariableToView('search_price_max', $p_sPriceMax);
+            $this->_exportVariableToView('search_total_items', $iTotalItems);
+            $this->_exportVariableToView('items', $aItems);
+            $this->_exportVariableToView('search_show_as', $p_sShowAs);
+            $this->_exportVariableToView('search', $this->mSearch);
+
+            // json
+            $json = $this->mSearch->toJson();
+
+            $this->_exportVariableToView('search_alert', base64_encode($json));
+
+            // calling the view...
+            if( count($aItems) === 0 ) {
+                header('HTTP/1.1 404 Not Found');
+            }
+            
+            osc_run_hook("after_search");
+
             if(!Params::existParam('sFeed')) {
-                // RETRIEVE ITEMS AND TOTAL
-                $aItems      = $this->mSearch->doSearch();
-                $iTotalItems = $this->mSearch->count();
-
-                $iStart    = $p_iPage * $p_iPageSize;
-                $iEnd      = min(($p_iPage+1) * $p_iPageSize, $iTotalItems);
-                $iNumPages = ceil($iTotalItems / $p_iPageSize);
-
-                osc_run_hook('search', $this->mSearch);
-
-                //preparing variables...
-                $regionName = $p_sRegion;
-                if( is_numeric($p_sRegion) ) {
-                    $r = Region::newInstance()->findByPrimaryKey($p_sRegion);
-                    if( $r ) {
-                        $regionName = $r['s_name'];
-                    }
-                }
-                $cityName = $p_sCity;
-                if( is_numeric($p_sCity) ) {
-                    $c = City::newInstance()->findByPrimaryKey($p_sCity);
-                    if( $c ) {
-                        $cityName = $c['s_name'];
-                    }
-                }
-
-                //$this->_exportVariableToView('non_empty_categories', $aCategories);
-                $this->_exportVariableToView('search_start', $iStart);
-                $this->_exportVariableToView('search_end', $iEnd);
-                $this->_exportVariableToView('search_category', $p_sCategory);
-                // hardcoded - non pattern and order by relevance
-                $p_sOrder = $old_order;
-                $this->_exportVariableToView('search_order_type', $p_iOrderType);
-                $this->_exportVariableToView('search_order', $p_sOrder);
-
-                $this->_exportVariableToView('search_pattern', $p_sPattern);
-                $this->_exportVariableToView('search_from_user', $p_sUser);
-                $this->_exportVariableToView('search_total_pages', $iNumPages);
-                $this->_exportVariableToView('search_page', $p_iPage);
-                $this->_exportVariableToView('search_has_pic', $p_bPic);
-                $this->_exportVariableToView('search_only_premium', $p_bPremium);
-                $this->_exportVariableToView('search_region', $regionName);
-                $this->_exportVariableToView('search_city', $cityName);
-                $this->_exportVariableToView('search_price_min', $p_sPriceMin);
-                $this->_exportVariableToView('search_price_max', $p_sPriceMax);
-                $this->_exportVariableToView('search_total_items', $iTotalItems);
-                $this->_exportVariableToView('items', $aItems);
-                $this->_exportVariableToView('search_show_as', $p_sShowAs);
-                $this->_exportVariableToView('search', $this->mSearch);
-
-                // json
-                $json = $this->mSearch->toJson();
-
-                $this->_exportVariableToView('search_alert', base64_encode($json));
-
-                // calling the view...
-                if( count($aItems) === 0 ) {
-                    header('HTTP/1.1 404 Not Found');
-                }
                 $this->doView('search.php');
-
             } else {
-                $this->mSearch->page(0, osc_num_rss_items());
-                // RETRIEVE ITEMS AND TOTAL
-                $iTotalItems = $this->mSearch->count();
-                $aItems = $this->mSearch->doSearch();
-
-                $this->_exportVariableToView('items', $aItems);
-                if($p_sFeed=='' || $p_sFeed=='rss') {
+                if($p_sFeed == '' || $p_sFeed=='rss') {
                     // FEED REQUESTED!
                     header('Content-type: text/xml; charset=utf-8');
 
