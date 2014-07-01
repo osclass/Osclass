@@ -55,10 +55,12 @@
 											$this->redirectTo( osc_user_login_url() );
 										}
 
-										$user = User::newInstance()->findByEmail( $email );
-										if ( empty($user) ) {
-											$user = User::newInstance()->findByUsername( $email );
-										}
+                                        if(osc_validate_email($email)) {
+										    $user = User::newInstance()->findByEmail( $email );
+                                        }
+									    if ( empty($user) ) {
+										    $user = User::newInstance()->findByUsername( $email );
+                                        }
 										if ( empty($user) ) {
 											osc_add_flash_error_message(_m("The user doesn't exist"));
 											$this->redirectTo( osc_user_login_url() );
