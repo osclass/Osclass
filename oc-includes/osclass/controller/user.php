@@ -103,7 +103,7 @@
                 break;
                 case('change_email_post'):      //change email post
                                                 osc_csrf_check();
-                                                if(!preg_match("/^[_a-z0-9-\+]+(\.[_a-z0-9-\+]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/", Params::getParam('new_email'))) {
+                                                if(!osc_validate_email(Params::getParam('new_email'))) {
                                                     osc_add_flash_error_message( _m('The specified e-mail is not valid'));
                                                     $this->redirectTo( osc_change_user_email_url() );
                                                 } else {
