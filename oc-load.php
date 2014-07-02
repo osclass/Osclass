@@ -158,9 +158,7 @@ require_once LIB_PATH . 'osclass/model/LocationsTmp.php';
 /* cache */
 if(file_exists(CONTENT_PATH . 'Object_Cache.php')) {
     require_once CONTENT_PATH. 'Object_Cache.php';
-    echo "load CUSTOM cache";
 } else {
-    echo "load core cache";
     require_once LIB_PATH . 'osclass/Object_Cache.php';
 }
 osc_cache_init();
