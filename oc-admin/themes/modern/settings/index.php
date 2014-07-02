@@ -210,48 +210,50 @@
                     <div class="form-row">
                         <div class="form-label"><?php _e('Date & time format'); ?></div>
                         <div class="form-controls">
-                            <table class="table-small">
-                                <tr>
-                                    <td>
-                                        <?php
-                                        $custom_checked = true;
-                                        foreach( $dateFormats as $df ) {
-                                        $checked = false;
-                                        if( $df == osc_date_format() ) {
-                                        $custom_checked = false;
-                                        $checked        = true;
-                                        } ?>
-                                        <div>
-                                            <input type="radio" name="df" id="<?php echo $df; ?>" value="<?php echo $df; ?>" <?php echo ( $checked ? 'checked="checked"' : '' ); ?> onclick="javascript:document.getElementById('dateFormat').value = '<?php echo $df; ?>';" />
-                                            <?php echo date($df); ?>
-                                        </div>
-                                        <?php } ?>
-                                            <input type="radio" name="df" id="df_custom" value="df_custom" <?php echo ( $custom_checked ? 'checked="checked"' : '' ); ?> />
-                                            <input type="text" name="df_custom_text" id="df_custom_text" class="input-medium" <?php echo ( $custom_checked ? 'value="' . osc_esc_html( osc_date_format() ) . '"' : '' ); ?> onchange="javascript:document.getElementById('dateFormat').value = this.value;" onkeyup="javascript:custom_date(this.value);" /><span id="custom_date"></span>
-                                            <input type="hidden" name="dateFormat" id="dateFormat" value="<?php echo osc_date_format(); ?>" />
-                                    </td>
-                                    <td>
-                                        <?php
-                                        $custom_checked = true;
-                                        foreach( $timeFormats as $tf ) {
-                                        $checked = false;
-                                        if( $tf == osc_time_format() ) {
-                                        $custom_checked = false;
-                                        $checked        = true;
-                                        }
-                                        ?>
-                                        <div>
-                                            <input type="radio" name="tf" id="<?php echo $tf; ?>" value="<?php echo $tf; ?>" <?php echo ( $checked ? 'checked="checked"' : '' ); ?> onclick="javascript:document.getElementById('timeFormat').value = '<?php echo $tf; ?>';" />
-                                            <?php echo date($tf); ?>
-                                        </div>
-                                        <?php } ?>
-                                        <input type="radio" name="tf" id="tf_custom" value="tf_custom" <?php echo ( $custom_checked ? 'checked="checked"' : '' ); ?> />
-                                        <input type="text" class="input-medium" <?php echo ( $custom_checked ? 'value="' . osc_esc_html( osc_time_format() ) . '"' : ''); ?> onchange="javascript:document.getElementById('timeFormat').value = this.value;" onkeyup="javascript:custom_time(this.value);" /><span id="custom_time"></span>
-                                        <input type="hidden" name="timeFormat" id="timeFormat" value="<?php echo osc_esc_html( osc_time_format() ); ?>" />
-                                    </td>
-                                </tr>
-                            </table>
-                            <div class="help-box"><a href="http://php.net/date" target="_blank"><?php _e('Documentation on date and time formatting'); ?></a></div>
+                            <div class="custom-date-time">
+                                <div id="date">
+                                    <?php
+                                    $custom_checked = true;
+                                    foreach( $dateFormats as $df ) {
+                                    $checked = false;
+                                    if( $df == osc_date_format() ) {
+                                    $custom_checked = false;
+                                    $checked        = true;
+                                    } ?>
+                                    <div>
+                                        <input type="radio" name="df" id="<?php echo $df; ?>" value="<?php echo $df; ?>" <?php echo ( $checked ? 'checked="checked"' : '' ); ?> onclick="javascript:document.getElementById('dateFormat').value = '<?php echo $df; ?>';" />
+                                        <?php echo date($df); ?>
+                                    </div>
+                                    <?php } ?>
+                                        <input type="radio" name="df" id="df_custom" value="df_custom" <?php echo ( $custom_checked ? 'checked="checked"' : '' ); ?> />
+                                        <input type="text" name="df_custom_text" id="df_custom_text" class="input-medium" <?php echo ( $custom_checked ? 'value="' . osc_esc_html( osc_date_format() ) . '"' : '' ); ?> onchange="javascript:document.getElementById('dateFormat').value = this.value;" onkeyup="javascript:custom_date(this.value);" />
+                                        <br />
+                                        <span id="custom_date"></span>
+                                        <input type="hidden" name="dateFormat" id="dateFormat" value="<?php echo osc_date_format(); ?>" />
+                                </div>
+                                <div id="time">
+                                    <?php
+                                    $custom_checked = true;
+                                    foreach( $timeFormats as $tf ) {
+                                    $checked = false;
+                                    if( $tf == osc_time_format() ) {
+                                    $custom_checked = false;
+                                    $checked        = true;
+                                    }
+                                    ?>
+                                    <div>
+                                        <input type="radio" name="tf" id="<?php echo $tf; ?>" value="<?php echo $tf; ?>" <?php echo ( $checked ? 'checked="checked"' : '' ); ?> onclick="javascript:document.getElementById('timeFormat').value = '<?php echo $tf; ?>';" />
+                                        <?php echo date($tf); ?>
+                                    </div>
+                                    <?php } ?>
+                                    <input type="radio" name="tf" id="tf_custom" value="tf_custom" <?php echo ( $custom_checked ? 'checked="checked"' : '' ); ?> />
+                                    <input type="text" class="input-medium" <?php echo ( $custom_checked ? 'value="' . osc_esc_html( osc_time_format() ) . '"' : ''); ?> onchange="javascript:document.getElementById('timeFormat').value = this.value;" onkeyup="javascript:custom_time(this.value);" />
+                                    <br />
+                                    <span id="custom_time"></span>
+                                    <input type="hidden" name="timeFormat" id="timeFormat" value="<?php echo osc_esc_html( osc_time_format() ); ?>" />
+                                </div>
+                            </div>
+                            <div class="help-box" style="clear:both; float:none;"><a href="http://php.net/date" target="_blank"><?php _e('Documentation on date and time formatting'); ?></a></div>
                         </div>
                     </div>
                     <div class="form-row">
