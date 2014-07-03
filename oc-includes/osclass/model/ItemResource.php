@@ -94,17 +94,25 @@
          * @return array of resources
          */
         function getAllResourcesFromItem($itemId) {
-            $this->dao->select();
-            $this->dao->from($this->getTableName());
-            $this->dao->where('fk_i_item_id', (int)$itemId);
+            $key    = md5('ItemResource:getAllResourcesFromItem:'.$itemId);
+            $cache  = osc_cache_get($key);
+            if($cache===false) {
+                $this->dao->select();
+                $this->dao->from($this->getTableName());
+                $this->dao->where('fk_i_item_id', (int)$itemId);
 
-            $result = $this->dao->get();
+                $result = $this->dao->get();
 
-            if( $result == false ) {
-                return array();
+                if( $result == false ) {
+                    return array();
+                }
+
+                $return = $result->result();
+                osc_cache_set($key, $return, 3);
+                return $return;
+            } else {
+                return $cache;
             }
-
-            return $result->result();
         }
 
         /**
