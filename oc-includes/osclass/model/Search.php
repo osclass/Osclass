@@ -1103,31 +1103,34 @@
          */
         public function getLatestItems($numItems = 10, $options = array(), $withPicture = false)
         {
-            $this->set_rpp($numItems);
-            // LEFT FOR COMPATIBILITY ISSUES BUT SOON TO BE DEPRECATED
-            if($withPicture) {
-                $this->withPicture(true);
+            $key = md5((string)$numItems.json_encode($options).(string)$withPicture);
+            $latestItems = osc_cache_get($key);
+            if($latestItems===false) {
+                $this->set_rpp($numItems);
+                if($withPicture) {
+                    $this->withPicture(true);
+                }
+                if(isset($options['sCategory'])) {
+                    $this->addCategory($options['sCategory']);
+                }
+                if(isset($options['sCountry'])) {
+                    $this->addCountry($options['sCountry']);
+                }
+                if(isset($options['sRegion'])) {
+                    $this->addRegion($options['sRegion']);
+                }
+                if(isset($options['sCity'])) {
+                    $this->addCity($options['sCity']);
+                }
+                if(isset($options['sUser'])) {
+                    $this->fromUser($options['sUser']);
+                }
+                $return = $this->doSearch();
+                osc_cache_set($key, $return, 2);  // HOURLY
+                return $return;
+            } else {
+                return $latestItems;
             }
-            // THIS IS HOW IT SHOULD BE DONE
-            if(isset($options['withPicture'])) {
-                $this->withPicture($options['withPicture']);
-            }
-            if(isset($options['sCategory'])) {
-                $this->addCategory($options['sCategory']);
-            }
-            if(isset($options['sCountry'])) {
-                $this->addCountry($options['sCountry']);
-            }
-            if(isset($options['sRegion'])) {
-                $this->addRegion($options['sRegion']);
-            }
-            if(isset($options['sCity'])) {
-                $this->addCity($options['sCity']);
-            }
-            if(isset($options['sUser'])) {
-                $this->fromUser($options['sUser']);
-            }
-            return $this->doSearch();
         }
 
         /**
