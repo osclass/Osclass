@@ -301,7 +301,7 @@ class Object_Cache {
      * @since 2.0.0
      */
     function stats() {
-        echo "<div style='position:absolute; width:100%;top:0px;'><div style='float:right;margin-right:30px;margin-top:30px;border: 1px red solid;
+        echo "<div style='position:absolute; width:200px;top:0px;'><div style='float:right;margin-right:30px;margin-top:15px;border: 1px red solid;
 border-radius: 17px;
 padding: 1em;'><h2>apc stats</h2>";
         echo "<p>";
