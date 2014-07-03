@@ -160,37 +160,44 @@
          */
         public function toTree($empty = true)
         {
-            if($empty==$this->empty_tree && $this->tree!=null) {
-                return $this->tree;
-            }
-            $this->empty_tree = $empty;
-            // if listEnabled has been called before, don't redo the query
-            if($this->categoriesEnabled) {
-                $categories = $this->categoriesEnabled;
-            } else {
-                $this->categoriesEnabled = $this->listEnabled();
-                $categories              = $this->categoriesEnabled;
-            }
-            $this->categories = array();
-            $this->relation = array();
-            foreach($categories as $c) {
-                if($empty || (!$empty && $c['i_num_items']>0)) {
-                    $this->categories[$c['pk_i_id']] = $c;
-                    if($c['fk_i_parent_id']==null) {
-                        $this->tree[] = $c;
-                        $this->relation[0][] = $c['pk_i_id'];
-                    } else {
-                        $this->relation[$c['fk_i_parent_id']][] = $c['pk_i_id'];
+            $key    = md5((string)$this->language.(string)$empty);
+            $cache  = osc_cache_get($key);
+            if($cache===false) {
+                if($empty==$this->empty_tree && $this->tree!=null) {
+                    return $this->tree;
+                }
+                $this->empty_tree = $empty;
+                // if listEnabled has been called before, don't redo the query
+                if($this->categoriesEnabled) {
+                    $categories = $this->categoriesEnabled;
+                } else {
+                    $this->categoriesEnabled = $this->listEnabled();
+                    $categories              = $this->categoriesEnabled;
+                }
+                $this->categories = array();
+                $this->relation = array();
+                foreach($categories as $c) {
+                    if($empty || (!$empty && $c['i_num_items']>0)) {
+                        $this->categories[$c['pk_i_id']] = $c;
+                        if($c['fk_i_parent_id']==null) {
+                            $this->tree[] = $c;
+                            $this->relation[0][] = $c['pk_i_id'];
+                        } else {
+                            $this->relation[$c['fk_i_parent_id']][] = $c['pk_i_id'];
+                        }
                     }
                 }
-            }
 
-            if(count($this->relation) == 0 || !isset($this->relation[0]) ) {
-                return array();
-            }
+                if(count($this->relation) == 0 || !isset($this->relation[0]) ) {
+                    return array();
+                }
 
-            $this->tree = $this->sideTree($this->relation[0], $this->categories, $this->relation);
-            return $this->tree;
+                $this->tree = $this->sideTree($this->relation[0], $this->categories, $this->relation);
+                osc_cache_set($key, $this->tree, 3);
+                return $this->tree;
+            } else {
+                return $cache;
+            }
         }
 
         /**
