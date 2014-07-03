@@ -174,7 +174,7 @@
             $this->categories = array();
             $this->relation = array();
             foreach($categories as $c) {
-                if($empty || (!$empty && $c['i_num_items']>0)) {
+                if($empty || $c['i_num_items']>0) {
                     $this->categories[$c['pk_i_id']] = $c;
                     if($c['fk_i_parent_id']==null) {
                         $this->tree[] = $c;
@@ -336,13 +336,15 @@
             if($cat!=null) {
                 $tree_b = array();
                 if(is_numeric($cat)) {
-                    $cat = $this->findByPrimaryKey($cat);
+                    //$cat = $this->findByPrimaryKey($cat);
+                    $cat = $this->categories[$cat];
                 } else {
                     $cat = $this->findBySlug($cat);
                 }
                 $tree[0] = $cat;
                 while($cat['fk_i_parent_id']!=null) {
-                    $cat = $this->findByPrimaryKey($cat['fk_i_parent_id']);
+                    //$cat = $this->findByPrimaryKey($cat['fk_i_parent_id']);
+                    $cat = $this->categories[$cat['fk_i_parent_id']];
                     array_unshift($tree, '');//$cat);
                     $tree[0] = $cat;
                 }
@@ -541,6 +543,36 @@
             }
 
             return $category;
+        }
+
+        /**
+         * Return a category given an id
+         *
+         * @access public
+         * @since unknown
+         * @param int $categoryID primary key
+         * @return array
+         */
+        public function getByPrimaryKey($categoryID)
+        {
+            if($categoryID == null) {
+                return false;
+            }
+
+            if( array_key_exists($categoryID, $this->categories) ) {
+                return $this->categories[$categoryID];
+
+            } else {
+                $this->dao->select( $this->getFields() );
+                $this->dao->from( $this->getTableName() );
+                $this->dao->where( 'pk_i_id', $categoryID );
+                $result = $this->dao->get();
+
+                if( $result == false ) {
+                    return false;
+                }
+                return $result->row();
+            }
         }
 
         /**
