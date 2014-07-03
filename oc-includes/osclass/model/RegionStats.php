@@ -156,29 +156,38 @@
          */
         public function listRegions($country = '%%%%', $zero = ">", $order = "region_name ASC")
         {
-            $order_split = explode(' ', $order);
+            $key = md5((string)$country.(string)$zero.(string)$order);
+            $cache = osc_cache_get($key);
+            if($cache===false) {
+                $order_split = explode(' ', $order);
 
-            $this->dao->from( DB_TABLE_PREFIX.'t_region , '.$this->getTableName() );
-            $this->dao->where( $this->getTableName().'.fk_i_region_id = '.DB_TABLE_PREFIX.'t_region.pk_i_id' );
+                $this->dao->from( DB_TABLE_PREFIX.'t_region , '.$this->getTableName() );
+                $this->dao->where( $this->getTableName().'.fk_i_region_id = '.DB_TABLE_PREFIX.'t_region.pk_i_id' );
 
-            if( $order_split[0] == 'region_name' ) {
-                $this->dao->select('STRAIGHT_JOIN '.$this->getTableName().'.fk_i_region_id as region_id, '.$this->getTableName().'.i_num_items as items, '.DB_TABLE_PREFIX.'t_region.s_name as region_name, '.DB_TABLE_PREFIX.'t_region.s_slug as region_slug');
-            } else if( $order_split[0] == 'items') {
-                $this->dao->select($this->getTableName().'.fk_i_region_id as region_id, '.$this->getTableName().'.i_num_items as items, '.DB_TABLE_PREFIX.'t_region.s_name as region_name');
+                if( $order_split[0] == 'region_name' ) {
+                    $this->dao->select('STRAIGHT_JOIN '.$this->getTableName().'.fk_i_region_id as region_id, '.$this->getTableName().'.i_num_items as items, '.DB_TABLE_PREFIX.'t_region.s_name as region_name, '.DB_TABLE_PREFIX.'t_region.s_slug as region_slug');
+                } else if( $order_split[0] == 'items') {
+                    $this->dao->select($this->getTableName().'.fk_i_region_id as region_id, '.$this->getTableName().'.i_num_items as items, '.DB_TABLE_PREFIX.'t_region.s_name as region_name');
+                }
+
+                $this->dao->where('i_num_items '.$zero.' 0' );
+                if( $country != '%%%%') {
+                    $this->dao->where(DB_TABLE_PREFIX.'t_region.fk_c_country_code = \''.$this->dao->connId->real_escape_string($country).'\' ');
+                }
+                $this->dao->orderBy($order);
+
+                $rs = $this->dao->get();
+
+                if($rs === false) {
+                    return array();
+                }
+                $return = $rs->result();
+                osc_cache_set($key, $return, 3);
+                return $return;
+            } else {
+                return $cache;
             }
 
-            $this->dao->where('i_num_items '.$zero.' 0' );
-            if( $country != '%%%%') {
-                $this->dao->where(DB_TABLE_PREFIX.'t_region.fk_c_country_code = \''.$this->dao->connId->real_escape_string($country).'\' ');
-            }
-            $this->dao->orderBy($order);
-
-            $rs = $this->dao->get();
-
-            if($rs === false) {
-                return array();
-            }
-            return $rs->result();
         }
 
         /**

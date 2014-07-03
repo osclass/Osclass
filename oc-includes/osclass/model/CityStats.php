@@ -163,21 +163,29 @@
          */
         public function listCities($region = null, $zero = ">", $order = "city_name ASC")
         {
-            $this->dao->select($this->getTableName().'.fk_i_city_id as city_id, '.$this->getTableName().'.i_num_items as items, '.DB_TABLE_PREFIX.'t_city.s_name as city_name, '.DB_TABLE_PREFIX.'t_city.s_slug as city_slug');
-            $this->dao->from( $this->getTableName() );
-            $this->dao->join(DB_TABLE_PREFIX.'t_city', $this->getTableName().'.fk_i_city_id = '.DB_TABLE_PREFIX.'t_city.pk_i_id', 'LEFT');
-            $this->dao->where('i_num_items '.$zero.' 0' );
-            if( is_numeric($region) ) {
-                $this->dao->where(DB_TABLE_PREFIX.'t_city.fk_i_region_id = '.$region);
-            }
-            $this->dao->orderBy($order);
+            $key = md5((string)$region.(string)$zero.(string)$order);
+            $cache = osc_cache_get($key);
+            if($cache===false) {
+                $this->dao->select($this->getTableName().'.fk_i_city_id as city_id, '.$this->getTableName().'.i_num_items as items, '.DB_TABLE_PREFIX.'t_city.s_name as city_name, '.DB_TABLE_PREFIX.'t_city.s_slug as city_slug');
+                $this->dao->from( $this->getTableName() );
+                $this->dao->join(DB_TABLE_PREFIX.'t_city', $this->getTableName().'.fk_i_city_id = '.DB_TABLE_PREFIX.'t_city.pk_i_id', 'LEFT');
+                $this->dao->where('i_num_items '.$zero.' 0' );
+                if( is_numeric($region) ) {
+                    $this->dao->where(DB_TABLE_PREFIX.'t_city.fk_i_region_id = '.$region);
+                }
+                $this->dao->orderBy($order);
 
-            $rs = $this->dao->get();
+                $rs = $this->dao->get();
 
-            if($rs === false) {
-                return array();
+                if($rs === false) {
+                    return array();
+                }
+                $return = $rs->result();
+                osc_cache_set($key, $return, 3);
+                return $return;
+            } else {
+                return $cache;
             }
-            return $rs->result();
         }
 
         /**
