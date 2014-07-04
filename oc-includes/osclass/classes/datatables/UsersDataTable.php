@@ -64,6 +64,7 @@
             $this->addColumn('username', __('Username'));
             $this->addColumn('name', __('Name'));
             $this->addColumn('date', __('Date'));
+            $this->addColumn('items', __('Items'));
             $this->addColumn('update_date', __('Update date'));
 
             $dummy = &$this;
@@ -126,6 +127,7 @@
                     $row['username'] = $aRow['s_username'];
                     $row['name'] = $aRow['s_name'];
                     $row['date'] = osc_format_date($aRow['dt_reg_date']);
+                    $row['date'] = $aRow['i_items'];
                     $row['update_date'] = osc_format_date($aRow['dt_mod_date']);
 
                     $row = osc_apply_filter('users_processing_row', $row, $aRow);
