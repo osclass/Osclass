@@ -127,7 +127,7 @@
                     $row['username'] = $aRow['s_username'];
                     $row['name'] = $aRow['s_name'];
                     $row['date'] = osc_format_date($aRow['dt_reg_date']);
-                    $row['date'] = $aRow['i_items'];
+                    $row['items'] = $aRow['i_items'];
                     $row['update_date'] = osc_format_date($aRow['dt_mod_date']);
 
                     $row = osc_apply_filter('users_processing_row', $row, $aRow);
