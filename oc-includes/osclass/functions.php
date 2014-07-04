@@ -199,13 +199,13 @@ function meta_description( ) {
     // search
     if( osc_is_search_page() ) {
         if( osc_has_items() ) {
-            $text = osc_item_category() . ' ' . osc_item_city() . ', ' . osc_highlight(osc_item_description(), 120) . ', ' . osc_item_category() . ' ' . osc_item_city();
+            $text = osc_item_category() . ' ' . osc_item_city() . ', ' . osc_highlight(osc_item_description(), 120);
         }
         osc_reset_items();
     }
     // listing
     if( osc_is_ad_page() ) {
-        $text = osc_item_category() . ' ' . osc_item_city() . ', ' . osc_highlight(osc_item_description(), 120) . ', ' . osc_item_category() . ' ' . osc_item_city();
+        $text = osc_item_category() . ' ' . osc_item_city() . ', ' . osc_highlight(osc_item_description(), 120);
     }
 
     return (osc_apply_filter('meta_description_filter', $text));
