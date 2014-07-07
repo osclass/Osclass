@@ -34,6 +34,10 @@ if(extension_loaded('mysqli')) {
     require_once LIB_PATH . 'osclass/model/Preference.php';
     require_once LIB_PATH . 'osclass/helpers/hPreference.php';
 }
+require_once LIB_PATH . 'osclass/core/iObject_Cache.php';
+require_once LIB_PATH . 'osclass/core/Object_Cache_Factory.php';
+require_once LIB_PATH . 'osclass/helpers/hCache.php';
+
 require_once LIB_PATH . 'osclass/core/Session.php';
 require_once LIB_PATH . 'osclass/core/Params.php';
 require_once LIB_PATH . 'osclass/helpers/hDatabaseInfo.php';
