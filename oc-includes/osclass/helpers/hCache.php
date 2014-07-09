@@ -17,34 +17,34 @@
  */
 
 function osc_cache_add($key, $data, $expire = 0) {
-    return Object_Cache_Factory::getCache()->add($key, $data, $expire);
+    return Object_Cache_Factory::newInstance()->add($key, $data, $expire);
 }
 
 function osc_cache_close() {
-    return Object_Cache_Factory::getCache()->close();
+    return Object_Cache_Factory::newInstance()->close();
 }
 
 function osc_cache_delete($key) {
-    return Object_Cache_Factory::getCache()->delete($key);
+    return Object_Cache_Factory::newInstance()->delete($key);
 }
 
 function osc_cache_flush() {
-    return Object_Cache_Factory::getCache()->flush();
+    return Object_Cache_Factory::newInstance()->flush();
 }
 
 function osc_cache_init() {
-    Object_Cache_Factory::getCache();
+    Object_Cache_Factory::newInstance();
 }
 
 function osc_cache_replace($key, $data, $expire = 0) {
-    return Object_Cache_Factory::getCache()->replace($key, $data, $expire);
+    return Object_Cache_Factory::newInstance()->replace($key, $data, $expire);
 }
 
 function osc_cache_get($key, $force = false) {
-    return Object_Cache_Factory::getCache()->get($key, $force);
+    return Object_Cache_Factory::newInstance()->get($key, $force);
 }
 
 function osc_cache_set($key, $data, $expire = 0) {
-    return Object_Cache_Factory::getCache()->set($key, $data, $expire);
+    return Object_Cache_Factory::newInstance()->set($key, $data, $expire);
 }
 ?>
