@@ -85,7 +85,7 @@
     </div>
     <div id="recaptcha-settings" class="separate-top">
         <h3 class="render-title"><?php _e('reCAPTCHA'); ?></h3>
-        <p><?php printf(__('reCAPTCHA helps prevent automated abuse of your site by using a CAPTCHA to ensure that only humans perform certain actions. <a href="%s" target="_blank">Get your key</a>'), 'http://www.google.com/recaptcha/whyrecaptcha'); ?></p>
+        <p><?php printf(__('reCAPTCHA helps prevent automated abuse of your site by using a CAPTCHA to ensure that only humans perform certain actions. <a href="%s" target="_blank">Get your key</a>'), 'https://www.google.com/recaptcha/admin#whyrecaptcha'); ?></p>
         <form name="settings_form" action="<?php echo osc_admin_base_url(true); ?>" method="post">
             <input type="hidden" name="page" value="settings" />
             <input type="hidden" name="action" value="recaptcha_post" />
