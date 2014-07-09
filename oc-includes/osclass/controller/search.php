@@ -246,12 +246,13 @@
                 }
             }
 
-            $p_sPattern   = strip_tags(Params::getParam('sPattern'));
+            $p_sPattern   = trim(strip_tags(Params::getParam('sPattern')));
 
             // ADD TO THE LIST OF LAST SEARCHES
             if(osc_save_latest_searches()) {
-                if(trim($p_sPattern)!='') {
-                    LatestSearches::newInstance()->insert(array( 's_search' => trim($p_sPattern), 'd_date' => date('Y-m-d H:i:s')));
+                $savePattern = osc_apply_filter('save_latest_searches_pattern', $p_sPattern);
+                if($savePattern!='') {
+                    LatestSearches::newInstance()->insert(array( 's_search' => $savePattern, 'd_date' => date('Y-m-d H:i:s')));
                 }
             }
 
