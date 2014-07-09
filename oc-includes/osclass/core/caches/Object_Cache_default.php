@@ -27,7 +27,7 @@ class Object_Cache_default implements iObject_Cache{
      *
      * @var int
      * @access public
-     * @since 2.0.0
+     * @since 3.4
      */
     var $cache_misses = 0;
 
@@ -36,15 +36,14 @@ class Object_Cache_default implements iObject_Cache{
      *
      * @var int
      * @access private
-     * @since 3.5.0
+     * @since 3.4
      */
     var $site_prefix;
     var $multisite;
 
     /**
      * Adds data to the cache if it doesn't already exist.
-     *
-     * @since 2.0.0
+     * @since 3.4
      *
      * @param int|string $key What to call the contents in the cache
      * @param mixed $data The contents to store in the cache
@@ -64,20 +63,17 @@ class Object_Cache_default implements iObject_Cache{
 
     /**
      * Remove the contents of the cache key
-     *
      * @since 3.4
      *
      * @param int|string $key What the contents in the cache are called
-     * @param bool $force Optional. Whether to force the unsetting of the cache
-     *		key in the group
      * @return bool False if the contents weren't deleted and true on success
      */
-    function delete($key, $force = false) {
+    function delete($key) {
 
         if ( $this->multisite )
             $key = $this->site_prefix . $key;
 
-        if ( ! $force && ! $this->_exists( $key ) )
+        if ( ! $this->_exists( $key ) )
             return false;
 
         unset( $this->cache[$key] );
@@ -86,8 +82,7 @@ class Object_Cache_default implements iObject_Cache{
 
     /**
      * Clears the object cache of all data
-     *
-     * @since 2.0.0
+     * @since 3.4
      *
      * @return bool Always returns true
      */
@@ -99,17 +94,14 @@ class Object_Cache_default implements iObject_Cache{
 
     /**
      * Retrieves the cache contents, if it exists
-     *
-     * On failure, the number of cache misses will be incremented.
-     *
      * @since 3.4
      *
      * @param int|string $key What the contents in the cache are called
-     * @param string $force Whether to force a refetch rather than relying on the local cache (default is false)
+     * @param bool $found if can be retrieved from cache
      * @return bool|mixed False on failure to retrieve contents or the cache
      *		contents on success
      */
-    function get( $key, $force = false, &$found = null ) {
+    function get( $key, &$found = null ) {
 
         if ( $this->multisite )
             $key = $this->site_prefix . $key;
@@ -129,7 +121,6 @@ class Object_Cache_default implements iObject_Cache{
 
     /**
      * Sets the data contents into the cache
-     *
      * @since 3.4
      *
      * @param int|string $key What to call the contents in the cache
@@ -150,28 +141,24 @@ class Object_Cache_default implements iObject_Cache{
 
     /**
      * Echoes the stats of the caching.
+     * Gives the cache hits, and cache misses.
      *
-     * Gives the cache hits, and cache misses. Also prints every cached group,
-     * key and the data.
-     *
-     * @since 2.0.0
+     * @since 3.4
      */
     function stats() {
+        echo "<div style='position:absolute; width:200px;top:0px;'><div style='float:right;margin-right:30px;margin-top:15px;border: 1px red solid;
+border-radius: 17px;
+padding: 1em;'><h2>Default(dummy) stats</h2>";
         echo "<p>";
         echo "<strong>Cache Hits:</strong> {$this->cache_hits}<br />";
         echo "<strong>Cache Misses:</strong> {$this->cache_misses}<br />";
         echo "</p>";
-        echo '<ul>';
-        foreach ($this->cache as $key => $cache) {
-            echo "<li><strong>Group:</strong> $key - ( " . number_format( strlen( serialize( $cache ) ) / 1024, 2 ) . 'k )</li>';
-        }
-        echo '</ul>';
+        echo '</div></div>';
     }
 
     /**
      * Utility function to determine whether a key exists in the cache.
-     *
-     * @since 3.4.0
+     * @since 3.4
      *
      * @access protected
      */
@@ -213,7 +200,7 @@ class Object_Cache_default implements iObject_Cache{
     {
         return true;
     }
-    
+
     function __destruct() {
         return true;
     }
