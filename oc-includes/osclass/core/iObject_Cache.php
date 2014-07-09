@@ -10,7 +10,8 @@ interface iObject_Cache {
     function get( $key, $force = false, &$found = null ) ;
     function set($key, $data, $expire = 0);
     function stats();
-    
+    static function is_supported();
+
 
     function __destruct();
 }

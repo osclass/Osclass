@@ -204,6 +204,16 @@ class Object_Cache_default implements iObject_Cache{
         $this->site_prefix =  $this->multisite ? $site_id . ':' : '';
     }
 
+    /**
+     * is_supported()
+     *
+     * Check to see if APC is available on this system, bail if it isn't.
+     */
+    static function is_supported()
+    {
+        return true;
+    }
+    
     function __destruct() {
         return true;
     }
