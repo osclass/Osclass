@@ -592,7 +592,7 @@ function is_osclass_installed( ) {
 }
 
 function finish_installation( $password ) {
-    require_once LIB_PATH . 'osclass/model/Admin.php';
+    require_once LIB_PATH . 'osclass/model/User.php';
     require_once LIB_PATH . 'osclass/model/Category.php';
     require_once LIB_PATH . 'osclass/model/Item.php';
     require_once LIB_PATH . 'osclass/helpers/hPlugins.php';
@@ -601,7 +601,7 @@ function finish_installation( $password ) {
 
     $data = array();
 
-    $mAdmin = new Admin();
+    $mAdmin = new User();
 
     $mPreference = Preference::newInstance();
     $mPreference->insert (

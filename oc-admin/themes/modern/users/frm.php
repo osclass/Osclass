@@ -208,6 +208,12 @@
                 </div>
                 <?php }; ?>
                 <div class="form-row">
+                    <div class="form-label"><?php _e('Role'); ?></div>
+                    <div class="form-controls">
+                        <?php UserForm::role_select($user); ?>
+                    </div>
+                </div>
+                <div class="form-row">
                     <div class="form-label"><?php _e('Name'); ?></div>
                     <div class="form-controls">
                         <?php UserForm::name_text($user); ?>

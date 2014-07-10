@@ -52,7 +52,7 @@ if($_POST['skip-location-input']==0 && $_POST['country-input']!='skip') {
 echo json_encode($json_message);
 
 function basic_info() {
-    require_once LIB_PATH . 'osclass/model/Admin.php';
+    require_once LIB_PATH . 'osclass/model/User.php';
     require_once LIB_PATH . 'osclass/helpers/hSecurity.php';
 
     $admin = Params::getParam('s_name');
@@ -65,12 +65,15 @@ function basic_info() {
         $password = osc_genRandomPassword();
     }
 
-    Admin::newInstance()->insert(
+    User::newInstance()->insert(
         array(
-            's_name'      => 'Administrator'
-            ,'s_username' => $admin
-            ,'s_password' => osc_hash_password($password)
-            ,'s_email'    => Params::getParam('email')
+            's_name'        => 'Administrator'
+            ,'s_username'   => $admin
+            ,'s_password'   => osc_hash_password($password)
+            ,'s_email'      => Params::getParam('email')
+            ,'b_active'     => 1
+            ,'b_enabled'    => 1
+            ,'e_role' => 'ADMIN'
         )
     );
 

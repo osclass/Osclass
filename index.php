@@ -58,9 +58,6 @@
 
     if(!osc_users_enabled() && osc_is_web_user_logged_in()) {
         Session::newInstance()->_drop('userId');
-        Session::newInstance()->_drop('userName');
-        Session::newInstance()->_drop('userEmail');
-        Session::newInstance()->_drop('userPhone');
 
         Cookie::newInstance()->pop('oc_userId');
         Cookie::newInstance()->pop('oc_userSecret');

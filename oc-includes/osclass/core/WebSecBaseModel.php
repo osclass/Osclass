@@ -25,22 +25,13 @@
 
         function isLogged()
         {
-            return osc_is_web_user_logged_in();
+            return osc_is_user_logged_in();
         }
 
         //destroying current session
         function logout()
         {
-            //destroying session
-            Session::newInstance()->session_destroy();
-            Session::newInstance()->_drop('userId');
-            Session::newInstance()->_drop('userName');
-            Session::newInstance()->_drop('userEmail');
-            Session::newInstance()->_drop('userPhone');
-
-            Cookie::newInstance()->pop('oc_userId');
-            Cookie::newInstance()->pop('oc_userSecret');
-            Cookie::newInstance()->set();
+            parent::logout();
         }
 
         function showAuthFailPage()
@@ -49,5 +40,4 @@
         }
     }
 
-    /* file end: ./oc-includes/osclass/core/WebSecBaseModel.php */
 ?>

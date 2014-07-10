@@ -97,8 +97,7 @@
             $this->add_menu( __('Users'), osc_admin_base_url(true) .'?page=users', 'users', 'moderator');
             $this->add_submenu( 'users', __('Users'), osc_admin_base_url(true) .'?page=users', 'users_manage', 'administrator');
             $this->add_submenu( 'users', __('User Settings'), osc_admin_base_url(true) .'?page=users&action=settings', 'users_settings', 'administrator');
-            $this->add_submenu( 'users', __('Administrators'), osc_admin_base_url(true) .'?page=admins', 'users_administrators_manage', 'administrator');
-            $this->add_submenu( 'users', __('Your Profile'), osc_admin_base_url(true) .'?page=admins&action=edit', 'users_administrators_profile', 'moderator');
+            $this->add_submenu( 'users', __('Your Profile'), osc_admin_base_url(true) .'?page=users&action=edit', 'users_administrators_profile', 'moderator');
             $this->add_submenu( 'users', __('Alerts'), osc_admin_base_url(true) .'?page=users&action=alerts', 'users_alerts', 'administrator');
             $this->add_submenu( 'users', __('Ban rules'), osc_admin_base_url(true) .'?page=users&action=ban', 'users_ban', 'administrator');
 

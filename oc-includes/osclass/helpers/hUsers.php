@@ -37,38 +37,61 @@
         return($user);
     }
 
+    function osc_logged_user() {
+        return User::loggedUser();
+    }
+
+    /**
+     * Gets true if user is logged in web
+     *
+     * @return boolean
+     * @deprecated deprecated sin 3.4, will be removed in 4.0
+     */
+    function osc_is_web_user_logged_in() {
+        if(osc_is_user_logged_in()) {
+            return !(osc_is_admin() || osc_is_moderator());
+        }
+        return false;
+    }
+
     /**
      * Gets true if user is logged in web
      *
      * @return boolean
      */
-    function osc_is_web_user_logged_in() {
-        if (Session::newInstance()->_get("userId") != '') {
-            $user = User::newInstance()->findByPrimaryKey(Session::newInstance()->_get("userId"));
-            if(isset($user['b_enabled']) && $user['b_enabled']==1) {
-                return true;
-            } else {
-                return false;
+    function osc_is_user_logged_in() {
+        $user = osc_logged_user();
+        if(isset($user['pk_i_id'])) {
+            return true;
+        } else {
+            if (Session::newInstance()->_get("userId")!='') {
+                $user = User::newInstance()->findByPrimaryKey(Session::newInstance()->_get("userId"));
+                if(isset($user['b_enabled']) && $user['b_enabled']==1) {
+                    Session::newInstance()->_set('userName', $user['s_name']);
+                    Session::newInstance()->_set('userEmail', $user['s_email']);
+                    User::loggedUser($user);
+                    return true;
+                } else {
+                    return false;
+                }
             }
-        }
 
-        //can already be a logged user or not, we'll take a look into the cookie
-        if ( Cookie::newInstance()->get_value('oc_userId') != '' && Cookie::newInstance()->get_value('oc_userSecret') != '') {
-            $user = User::newInstance()->findByIdSecret( Cookie::newInstance()->get_value('oc_userId'), Cookie::newInstance()->get_value('oc_userSecret') );
-            if(isset($user['b_enabled']) && $user['b_enabled']==1) {
-                Session::newInstance()->_set('userId', $user['pk_i_id']);
-                Session::newInstance()->_set('userName', $user['s_name']);
-                Session::newInstance()->_set('userEmail', $user['s_email']);
-                $phone = ($user['s_phone_mobile'])? $user['s_phone_mobile'] : $user['s_phone_land'];
-                Session::newInstance()->_set('userPhone', $phone);
-
-                return true;
-            } else {
-                return false;
+            //can already be a logged user or not, we'll take a look into the cookie
+            if ( Cookie::newInstance()->get_value('oc_userId') != '' && Cookie::newInstance()->get_value('oc_userSecret') != '') {
+                $user = User::newInstance()->findByIdSecret( Cookie::newInstance()->get_value('oc_userId'), Cookie::newInstance()->get_value('oc_userSecret') );
+                if(isset($user['b_enabled']) && $user['b_enabled']==1) {
+                    Session::newInstance()->_set('userId', $user['pk_i_id']);
+                    Session::newInstance()->_set('userName', $user['s_name']);
+                    Session::newInstance()->_set('userEmail', $user['s_email']);
+                    User::loggedUser($user);
+                    return true;
+                } else {
+                    return false;
+                }
             }
-        }
 
-        return false;
+            return false;
+        }
     }
 
     /**
@@ -77,7 +100,8 @@
      * @return int
      */
     function osc_logged_user_id() {
-        return (int) Session::newInstance()->_get("userId");
+        $user = osc_logged_user();
+        return @$user['pk_i_id'];
     }
 
     /**
@@ -86,7 +110,8 @@
      * @return string
      */
     function osc_logged_user_email() {
-        return (string) Session::newInstance()->_get('userEmail');
+        $user = osc_logged_user();
+        return @$user['s_email'];
     }
 
     /**
@@ -95,7 +120,18 @@
      * @return string
      */
     function osc_logged_user_name() {
-        return (string) Session::newInstance()->_get('userName');
+        $user = osc_logged_user();
+        return @$user['s_name'];
+    }
+
+    /**
+     * Gets logged user username
+     *
+     * @return string
+     */
+    function osc_logged_user_username() {
+        $user = osc_logged_user();
+        return @$user['s_username'];
     }
 
     /**
@@ -104,7 +140,9 @@
      * @return string
      */
     function osc_logged_user_phone() {
-        return (string) Session::newInstance()->_get('userPhone');
+        $user = osc_logged_user();
+        if(@$user['s_phone_land']!='') { return @$user['s_phone_land']; }
+        return @$user['s_phone_mobile'];
     }
 
     /**
@@ -155,33 +193,12 @@
      * Gets true if admin user is logged in
      *
      * @return boolean
+     * @deprecated deprecated sin 3.4, will be removed in 4.0
      */
     function osc_is_admin_user_logged_in() {
-        if (Session::newInstance()->_get("adminId") != '') {
-            $admin = Admin::newInstance()->findByPrimaryKey( Session::newInstance()->_get("adminId") );
-            if(isset($admin['pk_i_id'])) {
-                return true;
-            } else {
-                return false;
-            }
+        if(osc_is_user_logged_in()) {
+            return (osc_is_admin() || osc_is_moderator());
         }
-
-        //can already be a logged user or not, we'll take a look into the cookie
-        if ( Cookie::newInstance()->get_value('oc_adminId') != '' && Cookie::newInstance()->get_value('oc_adminSecret') != '') {
-            $admin = Admin::newInstance()->findByIdSecret( Cookie::newInstance()->get_value('oc_adminId'), Cookie::newInstance()->get_value('oc_adminSecret') );
-            if(isset($admin['pk_i_id'])) {
-                Session::newInstance()->_set('adminId', $admin['pk_i_id']);
-                Session::newInstance()->_set('adminUserName', $admin['s_username']);
-                Session::newInstance()->_set('adminName', $admin['s_name']);
-                Session::newInstance()->_set('adminEmail', $admin['s_email']);
-                Session::newInstance()->_set('adminLocale', Cookie::newInstance()->get_value('oc_adminLocale'));
-
-                return true;
-            } else {
-                return false;
-            }
-        }
-
         return false;
     }
 
@@ -189,35 +206,39 @@
      * Gets logged admin id
      *
      * @return int
+     * @deprecated deprecated sin 3.4, will be removed in 4.0
      */
     function osc_logged_admin_id() {
-        return (int) Session::newInstance()->_get("adminId");
+        return osc_logged_user_id();
     }
 
     /**
      * Gets logged admin username
      *
      * @return string
+     * @deprecated deprecated sin 3.4, will be removed in 4.0
      */
     function osc_logged_admin_username() {
-        return (string) Session::newInstance()->_get('adminUserName');
+        return osc_logged_user_username();
     }
 
     /**
      * Gets logged admin name
      * @return string
+     * @deprecated deprecated sin 3.4, will be removed in 4.0
      */
     function osc_logged_admin_name() {
-        return (string) Session::newInstance()->_get('adminName');
+        return osc_logged_user_name();
     }
 
     /**
      * Gets logged admin email
      *
      * @return string
+     * @deprecated deprecated sin 3.4, will be removed in 4.0
      */
     function osc_logged_admin_email() {
-        return (string) Session::newInstance()->_get('adminEmail');
+        return osc_logged_user_email();
     }
 
     /**

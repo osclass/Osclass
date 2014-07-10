@@ -44,8 +44,14 @@
         //destroying current session
         function logout()
         {
-            //destroying session
             Session::newInstance()->session_destroy();
+            Session::newInstance()->_drop('userId');
+           @Session::newInstance()->_drop('userName');
+            Session::newInstance()->_drop('userEmail');
+
+            Cookie::newInstance()->pop('oc_userId');
+            Cookie::newInstance()->pop('oc_userSecret');
+            Cookie::newInstance()->set();
         }
 
         function doModel() {}
@@ -53,5 +59,4 @@
         function doView($file) {}
     }
 
-    /* file end: ./oc-includes/osclass/core/SecBaseModel.php */
 ?>

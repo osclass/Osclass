@@ -62,6 +62,7 @@
             $this->addColumn('bulkactions', '<input id="check_all" type="checkbox" />');
             $this->addColumn('email', __('E-mail'));
             $this->addColumn('username', __('Username'));
+            $this->addColumn('permission', __('Permission'));
             $this->addColumn('name', __('Name'));
             $this->addColumn('date', __('Date'));
             $this->addColumn('items', __('Items'));
@@ -125,6 +126,7 @@
                     $row['bulkactions'] = '<input type="checkbox" name="id[]" value="' . $aRow['pk_i_id'] . '" /></div>';
                     $row['email'] = '<a href="' . osc_admin_base_url(true) . '?page=items&userId='. $aRow['pk_i_id'] .'&user='. $aRow['s_name'] .'">' . $aRow['s_email'] . '</a>'. $actions;
                     $row['username'] = $aRow['s_username'];
+                    $row['permission'] = $aRow['e_role'];
                     $row['name'] = $aRow['s_name'];
                     $row['date'] = osc_format_date($aRow['dt_reg_date']);
                     $row['items'] = $aRow['i_items'];

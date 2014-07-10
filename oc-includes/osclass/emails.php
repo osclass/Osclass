@@ -1000,7 +1000,7 @@
         $locale      = osc_current_user_locale();
         $aPage       = $pageManager->findByInternalName('email_admin_new_user');
 
-        if( isset($aPage['locale'][$locale]['s_title']) ) {
+        if( isset($aPage['locale'][$locale]) && isset($aPage['locale'][$locale]['s_title']) ) {
             $content = $aPage['locale'][$locale];
         } else {
             $content = current($aPage['locale']);

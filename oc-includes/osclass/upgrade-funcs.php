@@ -453,15 +453,48 @@ CREATE TABLE %st_item_description_tmp (
         osc_set_preference('description_character_length', '5000', 'osclass', 'INTEGER');
     }
 
-	if(osc_version() < 333) {
-		$comm->query(sprintf("ALTER TABLE `%st_widget` ADD INDEX `idx_s_description` (`s_description`);", DB_TABLE_PREFIX));
+    if(osc_version() < 333) {
+        $comm->query(sprintf("ALTER TABLE `%st_widget` ADD INDEX `idx_s_description` (`s_description`);", DB_TABLE_PREFIX));
         osc_set_preference('force_jpeg', '0', 'osclass', 'BOOLEAN');
 
         // THESE LINES PROBABLY HIT LOW TIMEOUT SCRIPTS, RUN THE LAST OF THE UPGRADE PROCESS
         osc_calculate_location_slug('country');
         osc_calculate_location_slug('region');
         osc_calculate_location_slug('city');
-	}
+
+
+        $dao = new DAO();
+        $result = $dao->dao->query(sprintf('SELECT * FROM %s ', DB_TABLE_PREFIX . 't_admin'));
+        if($result == false) {
+            $admins = array();
+        }
+        $admins = $result->result();
+        $mUser = User::newInstance();
+        foreach($admins as $admin) {
+            unset($admin['pk_i_id']);
+            $admin['e_role'] = $admin['b_moderator']?'MODERATOR':'ADMIN';
+            unset($admin['b_moderator']);
+            $admin['dt_reg_date'] = date('Y-m-d H:i:s');
+            $admin['b_enabled'] = 1;
+            $admin['b_active'] = 1;
+            $exists = $mUser->findByEmail($admin['s_email']);
+            if($exists) {
+                $mUser->update(array('e_role' => $admin['e_role']), array('pk_i_id' => $exists['pk_i_id']));
+            } else {
+                $exists = $mUser->findByUsername($admin['s_username']);
+                if($exists) {
+                    $admin['s_username'] = 'admin_'.$admin['s_username'];
+                }
+                $mUser->insert($admin);
+            }
+        }
+        @unlink(osc_admin_base_path().'admins.php');
+        @unlink(osc_admin_base_path().'themes/modern/admins/frm.php');
+        @unlink(osc_admin_base_path().'themes/modern/admins/index.php');
+        @rmdir(osc_admin_base_path().'/themes/modern/admins/');
+        @unlink(osc_lib_path().'osclass/model/Admin.php');
+        @unlink(osc_lib_path().'osclass/frm/Admin.form.class.php');
+    }
 
     osc_changeVersionTo(333);
 

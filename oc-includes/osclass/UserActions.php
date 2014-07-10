@@ -190,8 +190,6 @@
 
             if(!$this->is_admin) {
                 Session::newInstance()->_set('userName', $input['s_name']);
-                $phone = ($input['s_phone_mobile'])? $input['s_phone_mobile'] : $input['s_phone_land'];
-                Session::newInstance()->_set('userPhone', $phone);
             }
 
             if ( is_array( Params::getParam('s_info') ) ) {
@@ -279,6 +277,10 @@
             $input['s_phone_land']   = trim(Params::getParam('s_phone_land'));
             $input['s_phone_mobile'] = trim(Params::getParam('s_phone_mobile'));
 
+            if($this->is_admin && Params::existParam('e_role') && in_array(Params::getParam('e_role'), array('USER', 'MODERATOR', 'ADMIN'))) {
+                $input['e_role'] = Params::getParam('e_role');
+            }
+
             if(strtolower(substr($input['s_website'], 0, 4))!=='http') {
                 $input['s_website'] = 'http://'.$input['s_website'];
             }
@@ -326,8 +328,8 @@
             $input['s_city_area']    = Params::getParam('cityArea');
             $input['s_address']      = Params::getParam('address');
             $input['s_zip']          = Params::getParam('zip');
-            $input['d_coord_lat']    = (Params::getParam('d_coord_lat')  != '') ? Params::getParam('d_coord_lat') : null;
-            $input['d_coord_long']   = (Params::getParam('d_coord_long') != '') ? Params::getParam('d_coord_long') : null;
+            //$input['d_coord_lat']    = (Params::getParam('d_coord_lat')  != '') ? Params::getParam('d_coord_lat') : null;
+            //$input['d_coord_long']   = (Params::getParam('d_coord_long') != '') ? Params::getParam('d_coord_long') : null;
             $input['b_company']      = (Params::getParam('b_company') != '' && Params::getParam('b_company') != 0) ? 1 : 0;
 
             return($input);
@@ -335,11 +337,9 @@
 
         public function activate($user_id)
         {
+            if($user_id==osc_logged_user_id()) { return false; };
             $user = $this->manager->findByPrimaryKey($user_id);
-
-            if( !$user ) {
-                return false;
-            }
+            if(!$user) { return false; }
 
             $this->manager->update( array('b_active' => 1), array('pk_i_id' => $user_id) );
 
@@ -363,11 +363,9 @@
 
         public function deactivate($user_id)
         {
+            if($user_id==osc_logged_user_id()) { return false; };
             $user = $this->manager->findByPrimaryKey($user_id);
-
-            if( !$user ) {
-                return false;
-            }
+            if(!$user) { return false; }
 
             $this->manager->update( array('b_active' => 0), array('pk_i_id' => $user_id) );
 
@@ -387,11 +385,9 @@
 
         public function enable($user_id)
         {
+            if($user_id==osc_logged_user_id()) { return false; };
             $user = $this->manager->findByPrimaryKey($user_id);
-
-            if( !$user ) {
-                return false;
-            }
+            if(!$user) { return false; }
 
             $this->manager->update( array('b_enabled' => 1), array('pk_i_id' => $user_id) );
 
@@ -411,11 +407,9 @@
 
         public function disable($user_id)
         {
+            if($user_id==osc_logged_user_id()) { return false; };
             $user = $this->manager->findByPrimaryKey($user_id);
-
-            if( !$user ) {
-                return false;
-            }
+            if(!$user) { return false; }
 
             $this->manager->update( array('b_enabled' => 0), array('pk_i_id' => $user_id) );
 
@@ -468,10 +462,6 @@
 
             //we are logged in... let's go!
             Session::newInstance()->_set('userId', $user['pk_i_id']);
-            Session::newInstance()->_set('userName', $user['s_name']);
-            Session::newInstance()->_set('userEmail', $user['s_email']);
-            $phone = ($user['s_phone_mobile']) ? $user['s_phone_mobile'] : $user['s_phone_land'];
-            Session::newInstance()->_set('userPhone', $phone);
 
             return 3;
         }

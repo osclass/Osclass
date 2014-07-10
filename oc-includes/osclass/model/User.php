@@ -26,6 +26,7 @@
          * @var type
          */
         private static $instance;
+        private static $loggedUser = null;
 
         public static function newInstance()
         {
@@ -70,13 +71,12 @@
                 's_city',
                 'fk_i_city_area_id',
                 's_city_area',
-                'd_coord_lat',
-                'd_coord_long',
                 'b_company',
                 'i_items',
                 'i_comments',
                 'dt_access_date',
-                's_access_ip'
+                's_access_ip',
+                'e_role'
             );
             $this->setFields($array_fields);
         }
@@ -568,7 +568,16 @@
             $sql = sprintf('UPDATE %s SET i_items = i_items - 1 WHERE pk_i_id = %d', $this->getTableName(), $id);
             return $this->dao->query($sql);
         }
+
+        public static function loggedUser() {
+            $args = func_get_args();
+            if(count($args)==0) {
+                return self::$loggedUser;
+            } else {
+                self::$loggedUser = $args[0];
+            }
+        }
+
     }
 
-    /* file end: ./oc-includes/osclass/model/User.php */
 ?>

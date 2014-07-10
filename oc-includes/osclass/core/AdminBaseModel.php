@@ -28,5 +28,4 @@
         function doView($file) {}
     }
 
-    /* file end: ./oc-includes/osclass/core/AdminBaseModel.php */
 ?>

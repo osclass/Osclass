@@ -83,10 +83,6 @@
                             $do = new CAdminLanguages();
                             $do->doModel();
         break;
-        case('admins'):     require_once(osc_admin_base_path() . 'admins.php');
-                            $do = new CAdminAdmins();
-                            $do->doModel();
-        break;
         case('users'):      require_once(osc_admin_base_path() . 'users.php');
                             $do = new CAdminUsers();
                             $do->doModel();

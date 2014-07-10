@@ -119,7 +119,6 @@ require_once LIB_PATH . 'osclass/classes/Plugins.php';
 require_once LIB_PATH . 'osclass/helpers/hPlugins.php';
 require_once LIB_PATH . 'osclass/ItemActions.php';
 require_once LIB_PATH . 'osclass/emails.php';
-require_once LIB_PATH . 'osclass/model/Admin.php';
 require_once LIB_PATH . 'osclass/model/Alerts.php';
 require_once LIB_PATH . 'osclass/model/AlertsStats.php';
 require_once LIB_PATH . 'osclass/model/Cron.php';
@@ -181,7 +180,6 @@ require_once LIB_PATH . 'osclass/frm/Language.form.class.php';
 require_once LIB_PATH . 'osclass/frm/SendFriend.form.class.php';
 require_once LIB_PATH . 'osclass/frm/Alert.form.class.php';
 require_once LIB_PATH . 'osclass/frm/Field.form.class.php';
-require_once LIB_PATH . 'osclass/frm/Admin.form.class.php';
 require_once LIB_PATH . 'osclass/frm/ManageItems.form.class.php';
 require_once LIB_PATH . 'osclass/frm/BanRule.form.class.php';
 

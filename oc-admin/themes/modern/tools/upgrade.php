@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-    $perms = osc_save_permissions();
-    $ok    = osc_change_permissions();
+    $perms = osc_save_roles();
+    $ok    = osc_change_roles();
 
     //customize Head
     function customHead(){
@@ -26,8 +26,8 @@
                 $("#steps_div").hide();
             });
         <?php
-        $perms = osc_save_permissions();
-        $ok    = osc_change_permissions();
+        $perms = osc_save_roles();
+        $ok    = osc_change_roles();
         foreach($perms as $k => $v) {
             @chmod($k, $v);
         }
