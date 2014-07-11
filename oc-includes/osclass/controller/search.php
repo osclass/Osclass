@@ -174,12 +174,13 @@
             }
 
 
-            $uriParams = Params::getParamsAsArray();
-            $searchUri = osc_search_url($uriParams);
+            $uriParams = Params::getParamsAsArray("get");
+            unset ($uiParams["page"]);
+             $searchUri = osc_search_url($uriParams);
             if($searchUri!=(WEB_PATH . urldecode($this->uri))) {
                 $this->redirectTo($searchUri, 301);
             }
-
+            
             ////////////////////////////////
             //GETTING AND FIXING SENT DATA//
             ////////////////////////////////
