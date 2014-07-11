@@ -176,7 +176,7 @@
             if(!Params::existParam('sFeed')) {
                 $uriParams = Params::getParamsAsArray("get");
                 $searchUri = osc_search_url($uriParams);
-                if($searchUri!=(WEB_PATH . osc_get_preference('seo_url_search_prefix') . "/" . urldecode($this->uri))) {
+                if(str_replace( osc_get_preference('seo_url_search_prefix') . '/', '', osc_search_url($uriParams))!=(WEB_PATH . str_replace( osc_get_preference('seo_url_search_prefix') . '/', '', urldecode($this->uri)))) {
                     $this->redirectTo($searchUri, 301);
                 }
             }
