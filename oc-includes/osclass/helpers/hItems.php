@@ -187,9 +187,8 @@
      * @return string
      */
     function osc_item_category($locale = "") {
-        if ($locale == "") $locale = osc_current_user_locale();
         if ( !View::newInstance()->_exists('item_category') ) {
-            View::newInstance()->_exportVariableToView('item_category', Category::newInstance()->findByPrimaryKey( osc_item_category_id() ) );
+            View::newInstance()->_exportVariableToView('item_category', Category::newInstance()->findByPrimaryKey( osc_item_category_id(), $locale ) );
         }
         $category = View::newInstance()->_get('item_category');
         return (string) osc_field($category, "s_name", $locale);
@@ -202,9 +201,8 @@
      * @return string
      */
     function osc_item_category_description($locale = "") {
-        if ($locale == "") $locale = osc_current_user_locale();
         if ( !View::newInstance()->_exists('item_category') ) {
-            View::newInstance()->_exportVariableToView('item_category', Category::newInstance()->findByPrimaryKey( osc_item_category_id() ) );
+            View::newInstance()->_exportVariableToView('item_category', Category::newInstance()->findByPrimaryKey( osc_item_category_id(), $locale ) );
         }
         $category = View::newInstance()->_get('item_category');
         return osc_field($category, "s_description", $locale);

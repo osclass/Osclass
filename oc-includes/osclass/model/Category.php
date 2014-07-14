@@ -472,7 +472,7 @@
          * @param int $categoryID primary key
          * @return array
          */
-        public function findByPrimaryKey($categoryID)
+        public function findByPrimaryKey($categoryID, $locale = "")
         {
             if($categoryID == null) {
                 return false;
@@ -480,11 +480,11 @@
 
             $category = array();
 
-            if( array_key_exists($categoryID, $this->_categories) ) {
+            if( isset($this->_categories[$categoryID]) ) {
                 $category = $this->_categories[$categoryID];
 
                 // if we already have locale data, we return the category
-                if( array_key_exists('locale', $category)) {
+                if( $locale=="" || ($locale!="" && isset($category['locale']))) {
                     return $category;
                 }
             } else {
