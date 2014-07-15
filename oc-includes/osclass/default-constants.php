@@ -79,4 +79,8 @@
     if( !defined('CLI') ) {
         define('CLI', false);
     }
+
+    if( !defined('OSC_CACHE_TTL') ) {
+        define('OSC_CACHE_TTL', 1800);
+    }
 ?>
