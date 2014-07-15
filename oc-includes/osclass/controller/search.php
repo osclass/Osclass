@@ -472,13 +472,26 @@
             osc_run_hook('search_conditions', Params::getParamsAsArray());
 
             // RETRIEVE ITEMS AND TOTAL
-            $aItems      = $this->mSearch->doSearch();
-            $iTotalItems = $this->mSearch->count();
+            $key    = md5($this->mSearch->toJson());
+            $cache  = osc_cache_get($key);
+            $aItems         = null;
+            $iTotalItems    = null;
+            if($cache) {
+                $aItems         = $cache['aItems'];
+                $iTotalItems    = $cache['iTotalItems'];
+            } else {
+                $aItems      = $this->mSearch->doSearch();
+                $iTotalItems = $this->mSearch->count();
+                $_cache['aItems']      = $aItems;
+                $_cache['iTotalItems'] = $iTotalItems;
+                osc_cache_set($key, $_cache, OSC_CACHE_TTL);
+            }
 
             $iStart    = $p_iPage * $p_iPageSize;
             $iEnd      = min(($p_iPage+1) * $p_iPageSize, $iTotalItems);
             $iNumPages = ceil($iTotalItems / $p_iPageSize);
 
+            // works with cache enabled ?
             osc_run_hook('search', $this->mSearch);
 
             //preparing variables...
