@@ -125,11 +125,12 @@ class Object_Cache_memcache implements iObject_Cache{
      *		contents on success
      */
     function get( $key, &$found = null ) {
-
+        $found = false;
         if ( $this->multisite )
             $key = $this->site_prefix . $key;
 
         if ( isset($this->cache[$key]) ) {
+            $found = true;
             if ( is_object( $this->cache[$key] ) ) {
                 $value = clone $this->cache[$key];
             } else {
@@ -138,12 +139,13 @@ class Object_Cache_memcache implements iObject_Cache{
             $this->cache_hits += 1;
             $return = $value;
         } else {
+            $found = true;
             $value = $this->_memcached->get($key);
-
             if ( is_object( $value ) && 'ArrayObject' == get_class( $value ) ) {
                 $value = $value->getArrayCopy();
             }
             if ( NULL === $value ) {
+                $found = false;
                 $value = false;
             }
 
@@ -240,15 +242,16 @@ padding: 1em;'><h2>Memcache stats</h2>";
         $cache_server = array();
         global $_cache_config;
         if( !isset($_cache_config) && !is_array($_cache_config) ) {
-            $cache_server['hostname'] = $this->_memcache_conf['default']['default_host'];
-            $cache_server['port']     = $this->_memcache_conf['default']['default_port'];
-            $cache_server['weight']   = $this->_memcache_conf['default']['default_weight'];
+            $_t['hostname'] = $this->_memcache_conf['default']['default_host'];
+            $_t['port']     = $this->_memcache_conf['default']['default_port'];
+            $_t['weight']   = $this->_memcache_conf['default']['default_weight'];
+            $cache_server[] = $_t;
         } else {
             foreach($_cache_config as $_server) {
                 $_array = array(
-                    'hostname' => $this->_memcache_conf['default']['default_host'],
-                    'port'     => $this->_memcache_conf['default']['default_port'],
-                    'weight'   => $this->_memcache_conf['default']['default_weight']
+                    'hostname' => $_server['default_host'],
+                    'port'     => $_server['default_port'],
+                    'weight'   => $_server['default_weight']
                 );
                 $cache_server[] = $_array;
             }
