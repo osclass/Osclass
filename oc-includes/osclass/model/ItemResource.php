@@ -108,9 +108,10 @@
                 }
 
                 $return = $result->result();
-                osc_cache_set($key, $return, 3);
+                osc_cache_set($key, $return, OSC_CACHE_TTL);
                 return $return;
             } else {
+                error_log('from cache');
                 return $cache;
             }
         }

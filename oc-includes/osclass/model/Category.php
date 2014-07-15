@@ -162,6 +162,7 @@
         {
             $key    = md5((string)$this->language.(string)$empty);
             $cache  = osc_cache_get($key);
+
             if($cache===false) {
                 if($empty==$this->empty_tree && $this->tree!=null) {
                     return $this->tree;
@@ -193,7 +194,7 @@
                 }
 
                 $this->tree = $this->sideTree($this->relation[0], $this->categories, $this->relation);
-                osc_cache_set($key, $this->tree, 3);
+                osc_cache_set($key, $this->tree, OSC_CACHE_TTL);
                 return $this->tree;
             } else {
                 return $cache;
@@ -548,7 +549,7 @@
                 if( array_key_exists($categoryID, $this->categories) ) {
                     $this->categories[$categoryID] = $category;
                 }
-                osc_cache_set($key, $category, 3);
+                osc_cache_set($key, $category, OSC_CACHE_TTL);
                 return $category;
             }else {
                 return $cache;

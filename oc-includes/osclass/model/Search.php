@@ -1126,7 +1126,7 @@
                     $this->fromUser($options['sUser']);
                 }
                 $return = $this->doSearch();
-                osc_cache_set($key, $return, 2);  // HOURLY
+                osc_cache_set($key, $return, OSC_CACHE_TTL);
                 return $return;
             } else {
                 return $latestItems;
