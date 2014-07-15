@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-function osc_cache_add($key, $data, $expire = 0) {
+function osc_cache_add($key, $data, $expire = 0) { 
     return Object_Cache_Factory::newInstance()->add($key, $data, $expire);
 }
 
@@ -40,8 +40,8 @@ function osc_cache_replace($key, $data, $expire = 0) {
     return Object_Cache_Factory::newInstance()->replace($key, $data, $expire);
 }
 
-function osc_cache_get($key, $force = false) {
-    return Object_Cache_Factory::newInstance()->get($key, $force);
+function osc_cache_get($key) {
+    return Object_Cache_Factory::newInstance()->get($key);
 }
 
 function osc_cache_set($key, $data, $expire = 0) {
