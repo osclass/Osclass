@@ -233,6 +233,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_item (
         FOREIGN KEY (fk_c_currency_code) REFERENCES /*TABLE_PREFIX*/t_currency (pk_c_code),
 
         INDEX (fk_i_user_id),
+        INDEX idx_b_premium (b_premium),
         INDEX idx_s_contact_email (s_contact_email(10)),
         INDEX (fk_i_category_id),
         INDEX (fk_c_currency_code),
