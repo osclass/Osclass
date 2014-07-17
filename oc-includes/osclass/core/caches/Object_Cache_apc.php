@@ -253,4 +253,8 @@ padding: 1em;'><h2>APC stats</h2>";
     function __destruct() {
         return true;
     }
+
+    function _get_cache() {
+        return 'apc';
+    }
 }

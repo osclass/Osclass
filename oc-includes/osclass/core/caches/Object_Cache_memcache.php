@@ -268,7 +268,7 @@ padding: 1em;'><h2>Memcache stats</h2>";
      *
      * Check to see if Memcache is available on this system, bail if it isn't.
      */
-    static function is_supported(){
+    static function is_supported() {
         if ( !class_exists('Memcache') ) {
             error_log('The Memcached Extension must be loaded to use Memcached Cache.');
             return false;
@@ -278,5 +278,9 @@ padding: 1em;'><h2>Memcache stats</h2>";
 
     function __destruct() {
         return true;
+    }
+
+    function _get_cache() {
+        return 'memcache';
     }
 }

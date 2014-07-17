@@ -24,6 +24,7 @@
             switch($this->action) {
                 case('advanced'):
                 case('advanced_post'):
+                case('advanced_cache_flush'):
                     require_once(osc_admin_base_path() . 'controller/settings/advanced.php');
                     $do = new CAdminSettingsAdvanced();
                 break;

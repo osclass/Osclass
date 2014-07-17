@@ -204,4 +204,8 @@ padding: 1em;'><h2>Default(dummy) stats</h2>";
     function __destruct() {
         return true;
     }
+
+    function _get_cache() {
+        return 'default';
+    }
 }

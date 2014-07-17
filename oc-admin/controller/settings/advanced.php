@@ -46,6 +46,11 @@
                     osc_calculate_location_slug(osc_subdomain_type());
                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=advanced');
                 break;
+                case('advanced_cache_flush'):
+                    osc_cache_flush();
+                    osc_add_flash_ok_message( _m("Cache flushed correctly"), 'admin');
+                    $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=advanced');
+                break;
             }
         }
     }
