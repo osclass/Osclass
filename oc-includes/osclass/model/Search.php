@@ -703,7 +703,6 @@
 
                 $category  = $category['pk_i_id'];
             }
-
             $tree = Category::newInstance()->toSubTree($category);
             if( !in_array($category, $this->categories) ) {
                 $this->categories[] = $category;
@@ -1104,7 +1103,8 @@
         public function getLatestItems($numItems = 10, $options = array(), $withPicture = false)
         {
             $key = md5((string)$numItems.json_encode($options).(string)$withPicture);
-            $latestItems = osc_cache_get($key);
+            $found  = null;
+            $latestItems = osc_cache_get($key, $found);
             if($latestItems===false) {
                 $this->set_rpp($numItems);
                 if($withPicture) {

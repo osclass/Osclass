@@ -95,7 +95,8 @@
          */
         function getAllResourcesFromItem($itemId) {
             $key    = md5('ItemResource:getAllResourcesFromItem:'.$itemId);
-            $cache  = osc_cache_get($key);
+            $found  = null;
+            $cache  = osc_cache_get($key, $found);
             if($cache===false) {
                 $this->dao->select();
                 $this->dao->from($this->getTableName());

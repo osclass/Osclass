@@ -161,8 +161,8 @@
         public function toTree($empty = true)
         {
             $key    = md5((string)$this->language.(string)$empty);
-            $cache  = osc_cache_get($key);
-
+            $found  = null;
+            $cache  = osc_cache_get($key, $found);
             if($cache===false) {
                 if($empty==$this->empty_tree && $this->tree!=null) {
                     return $this->tree;
@@ -194,10 +194,22 @@
                 }
 
                 $this->tree = $this->sideTree($this->relation[0], $this->categories, $this->relation);
-                osc_cache_set($key, $this->tree, OSC_CACHE_TTL);
+
+
+                $cache['tree']         = $this->tree;
+                $cache['empty_tree']   = $this->empty_tree;
+                $cache['relation']     = $this->relation;
+                $cache['categories']   = $this->categories;
+                $cache['categoriesEnabled']   = $this->categoriesEnabled;
+                osc_cache_set($key, $cache, OSC_CACHE_TTL);
                 return $this->tree;
             } else {
-                return $cache;
+                $this->tree         = $cache['tree'];
+                $this->empty_tree   = $cache['empty_tree'];
+                $this->relation     = $cache['relation'];
+                $this->categories   = $cache['categories'];
+                $this->categoriesEnabled = $cache['categoriesEnabled'];
+                return $this->tree;
             }
         }
 
@@ -486,7 +498,8 @@
                 return false;
             }
             $key    = md5('Category:findByPrimaryKey:'.$categoryID);
-            $cache  = osc_cache_get($key);
+            $found  = null;
+            $cache  = osc_cache_get($key, $found);
             if($cache===false) {
                 $category = array();
 

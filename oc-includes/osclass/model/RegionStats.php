@@ -156,8 +156,9 @@
          */
         public function listRegions($country = '%%%%', $zero = ">", $order = "region_name ASC")
         {
-            $key = md5((string)$country.(string)$zero.(string)$order);
-            $cache = osc_cache_get($key);
+            $key    = md5((string)$country.(string)$zero.(string)$order);
+            $found  = null;
+            $cache  = osc_cache_get($key, $found);
             if($cache===false) {
                 $order_split = explode(' ', $order);
 

@@ -163,8 +163,9 @@
          */
         public function listCities($region = null, $zero = ">", $order = "city_name ASC")
         {
-            $key = md5((string)$region.(string)$zero.(string)$order);
-            $cache = osc_cache_get($key);
+            $key    = md5((string)$region.(string)$zero.(string)$order);
+            $found  = null;
+            $cache  = osc_cache_get($key, $found);
             if($cache===false) {
                 $this->dao->select($this->getTableName().'.fk_i_city_id as city_id, '.$this->getTableName().'.i_num_items as items, '.DB_TABLE_PREFIX.'t_city.s_name as city_name, '.DB_TABLE_PREFIX.'t_city.s_slug as city_slug');
                 $this->dao->from( $this->getTableName() );

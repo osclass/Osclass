@@ -473,7 +473,9 @@
 
             // RETRIEVE ITEMS AND TOTAL
             $key    = md5($this->mSearch->toJson());
-            $cache  = osc_cache_get($key);
+            $found  = null;
+            $cache  = osc_cache_get($key, $found);
+            
             $aItems         = null;
             $iTotalItems    = null;
             if($cache) {

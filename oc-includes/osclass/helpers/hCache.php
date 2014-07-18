@@ -1,5 +1,4 @@
 <?php
-
 /*
  * Copyright 2014 Osclass
  *
@@ -16,7 +15,8 @@
  * limitations under the License.
  */
 
-function osc_cache_add($key, $data, $expire = 0) { 
+function osc_cache_add($key, $data, $expire = 0) {
+    $key .= osc_current_user_locale();
     return Object_Cache_Factory::newInstance()->add($key, $data, $expire);
 }
 
@@ -25,6 +25,7 @@ function osc_cache_close() {
 }
 
 function osc_cache_delete($key) {
+    $key .= osc_current_user_locale();
     return Object_Cache_Factory::newInstance()->delete($key);
 }
 
@@ -36,15 +37,13 @@ function osc_cache_init() {
     Object_Cache_Factory::newInstance();
 }
 
-function osc_cache_replace($key, $data, $expire = 0) {
-    return Object_Cache_Factory::newInstance()->replace($key, $data, $expire);
-}
-
-function osc_cache_get($key) {
-    return Object_Cache_Factory::newInstance()->get($key);
+function osc_cache_get($key, &$found) {
+    $key .= osc_current_user_locale();
+    return Object_Cache_Factory::newInstance()->get($key, $found);
 }
 
 function osc_cache_set($key, $data, $expire = 0) {
+    $key .= osc_current_user_locale();
     return Object_Cache_Factory::newInstance()->set($key, $data, $expire);
 }
 ?>
