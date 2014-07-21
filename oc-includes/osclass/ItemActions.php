@@ -893,6 +893,7 @@
 
             $aItem  = $this->prepareDataForFunction('add_comment');
 
+
             $authorName     = trim(strip_tags($aItem['authorName']));
             $authorEmail    = trim(strip_tags($aItem['authorEmail']));
             $body           = trim(strip_tags($aItem['body']));
@@ -900,6 +901,15 @@
             $itemId         = $aItem['id'];
             $userId         = $aItem['userId'];
             $status_num     = -1;
+
+            $banned = osc_is_banned(trim(strip_tags($aItem['authorEmail'])));
+            if($banned==1 || $banned==2) {
+                Session::newInstance()->_setForm('commentAuthorName', $authorName);
+                Session::newInstance()->_setForm('commentTitle', $title);
+                Session::newInstance()->_setForm('commentBody', $body);
+                Session::newInstance()->_setForm('commentAuthorEmail', $authorEmail);
+                return 5;
+            }
 
             $item = $this->manager->findByPrimaryKey($itemId);
             View::newInstance()->_exportVariableToView('item', $item);
