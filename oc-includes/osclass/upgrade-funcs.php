@@ -453,7 +453,7 @@ CREATE TABLE %st_item_description_tmp (
         osc_set_preference('description_character_length', '5000', 'osclass', 'INTEGER');
     }
 
-	if(osc_version() < 333) {
+	if(osc_version() < 340) {
 		$comm->query(sprintf("ALTER TABLE `%st_widget` ADD INDEX `idx_s_description` (`s_description`);", DB_TABLE_PREFIX));
         osc_set_preference('force_jpeg', '0', 'osclass', 'BOOLEAN');
 
@@ -463,7 +463,7 @@ CREATE TABLE %st_item_description_tmp (
         osc_calculate_location_slug('city');
 	}
 
-    osc_changeVersionTo(333);
+    osc_changeVersionTo(340);
 
     if(!defined('IS_AJAX') || !IS_AJAX) {
         if(empty($aMessages)) {

@@ -16,7 +16,7 @@
  */
 
 
-define('OSCLASS_VERSION', '3.3.2');
+define('OSCLASS_VERSION', '3.4.0');
 
 if( !defined('ABS_PATH') ) {
     define( 'ABS_PATH', str_replace('\\', '/', dirname(__FILE__) . '/' ));

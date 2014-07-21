@@ -160,11 +160,11 @@
          */
         public function toTree($empty = true)
         {
-            $key    = md5((string)$this->language.(string)$empty);
+            $key    = md5((string)$this->_language.(string)$empty);
             $found  = null;
             $cache  = osc_cache_get($key, $found);
             if($cache===false) {
-                if($empty==$this->_empty_tree && $this->_tree!=null) {
+                if($empty==$this->_emptyTree && $this->_tree!=null) {
                     return $this->_tree;
                 }
                 $this->_empty_tree = $empty;
@@ -196,7 +196,7 @@
                 $this->_tree = $this->sideTree($this->_relation[0], $this->_categories, $this->_relation);
 
                 $cache['tree']         = $this->_tree;
-                $cache['empty_tree']   = $this->_empty_tree;
+                $cache['empty_tree']   = $this->_emptyTree;
                 $cache['relation']     = $this->_relation;
                 $cache['categories']   = $this->_categories;
                 $cache['categoriesEnabled']   = $this->_categoriesEnabled;
