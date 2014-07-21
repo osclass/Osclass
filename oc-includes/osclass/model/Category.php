@@ -164,7 +164,7 @@
             $found  = null;
             $cache  = osc_cache_get($key, $found);
             if($cache===false) {
-                if($empty==$this->empty_tree && $this->_tree!=null) {
+                if($empty==$this->_empty_tree && $this->_tree!=null) {
                     return $this->_tree;
                 }
                 $this->_empty_tree = $empty;
@@ -501,7 +501,6 @@
             $cache  = osc_cache_get($key, $found);
             if($cache===false) {
                 $category = array();
-
 
                 if( isset($this->_categories[$categoryID]) ) {
                     $category = $this->_categories[$categoryID];
