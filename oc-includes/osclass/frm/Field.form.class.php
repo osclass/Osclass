@@ -137,6 +137,7 @@ FB;
             if($field!=null) {
                 // date interval
                 if($field['e_type']=='DATEINTERVAL') {
+                    $field['s_value'] = array();
                     $field['s_value']['from']   = '';
                     $field['s_value']['to']     = '';
 
