@@ -1,19 +1,23 @@
 <?php
-/*
- * Copyright 2014 Osclass
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+    /*
+     *      Osclass – software for creating and publishing online classified
+     *                           advertising platforms
+     *
+     *                        Copyright (C) 2014 OSCLASS
+     *
+     *       This program is free software: you can redistribute it and/or
+     *     modify it under the terms of the GNU Affero General Public License
+     *     as published by the Free Software Foundation, either version 3 of
+     *            the License, or (at your option) any later version.
+     *
+     *     This program is distributed in the hope that it will be useful, but
+     *         WITHOUT ANY WARRANTY; without even the implied warranty of
+     *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+     *             GNU Affero General Public License for more details.
+     *
+     *      You should have received a copy of the GNU Affero General Public
+     * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
+     */
 ?>
 </div><!-- content -->
 <?php osc_run_hook('after-main'); ?>
@@ -21,6 +25,7 @@
 <div id="responsive-trigger"></div>
 <!-- footer -->
 <div class="clear"></div>
+<?php osc_show_widgets('footer');?>
 <div id="footer">
     <div class="wrapper">
         <ul class="resp-toogle">
@@ -62,7 +67,7 @@
         </ul>
         <?php
         if( osc_get_preference('footer_link', 'bender_theme') !== '0') {
-            echo '<div>This website is proudly using the <a title="Osclass web" href="http://osclass.org/">classifieds scripts</a> software <strong>Osclass</strong></div>';
+            echo '<div>' . sprintf(__('This website is proudly using the <a title="Osclass web" href="%s">classifieds scripts</a> software <strong>Osclass</strong>'), 'http://osclass.org/') . '</div>';
         }
         ?>
         <?php if ( osc_count_web_enabled_locales() > 1) { ?>

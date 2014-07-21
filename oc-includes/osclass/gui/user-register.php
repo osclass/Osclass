@@ -1,19 +1,23 @@
 <?php
-/*
- * Copyright 2014 Osclass
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+    /*
+     *      Osclass – software for creating and publishing online classified
+     *                           advertising platforms
+     *
+     *                        Copyright (C) 2014 OSCLASS
+     *
+     *       This program is free software: you can redistribute it and/or
+     *     modify it under the terms of the GNU Affero General Public License
+     *     as published by the Free Software Foundation, either version 3 of
+     *            the License, or (at your option) any later version.
+     *
+     *     This program is distributed in the hope that it will be useful, but
+     *         WITHOUT ANY WARRANTY; without even the implied warranty of
+     *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+     *             GNU Affero General Public License for more details.
+     *
+     *      You should have received a copy of the GNU Affero General Public
+     * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
+     */
 
     // meta tag robots
     osc_add_hook('header','bender_nofollow_construct');
@@ -41,7 +45,6 @@
                 <label class="control-label" for="email"><?php _e('E-mail', 'bender'); ?></label>
                 <div class="controls">
                     <?php UserForm::email_text(); ?>
-                    <?php osc_show_recaptcha('register'); ?>
                 </div>
             </div>
             <div class="control-group">
@@ -60,6 +63,11 @@
                 </div>
             </div>
             <?php osc_run_hook('user_register_form'); ?>
+            <div class="control-group">
+                <div class="controls">
+                    <?php osc_show_recaptcha('register'); ?>
+                </div>
+            </div>
             <div class="control-group">
                 <div class="controls">
                     <button type="submit" class="ui-button ui-button-middle ui-button-main"><?php _e("Create", 'bender'); ?></button>

@@ -75,7 +75,8 @@ ul.r-list>li:nth-child(odd){
 .r-list>li:nth-child(4n){
     clear:none;
 }
-ul.r-list li a{
+
+ul.r-list li a.sub-category{
     text-decoration: none;
     white-space: nowrap;
     overflow: hidden;
@@ -83,15 +84,33 @@ ul.r-list li a{
     @include prefixer(box-sizing, border-box, webkit moz ms o spec);
     width: 100%;
     font-weight: bold;
-    display: block;
+    display: inline-block;
     padding: 10px;
     border-radius: 3px;
     border-style:solid;
     border-width:1px;
     box-shadow: 0 1px 0 rgba(255, 255, 255, .75);
-    font-size: 0.8em;
+    font-size:0.8em;
     @include r-list-style(true);
 }
+
+ul.r-list li h1{
+    text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    @include prefixer(box-sizing, border-box, webkit moz ms o spec);
+    width: 100%;
+    font-weight: bold;
+    display: inline-block;
+    padding: 10px;
+    border-radius: 3px;
+    border-style:solid;
+    border-width:1px;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, .75);
+    @include r-list-style(true);
+}
+
 ul.r-list li h1{
     margin:0;
 }
@@ -104,11 +123,20 @@ ul.r-list li ul{
     height: 0;
     overflow: hidden;
 }
+ul.r-list li.active h1,
 ul.r-list li.active a{
     $darkenColor:darken($maincolor, 10% );
     @include contrasted($maincolor);
     border-color:$darkenColor;
+    $color: $text-color-contrasted;
     text-shadow:0 1px 1px $darkenColor;
+}
+ul.r-list li span.collapse{
+    width:16px;
+    height:16px;
+
+    margin-right: 10px;
+    display:inline-block;
 }
 ul.r-list li.active ul{
     opacity: 1;
