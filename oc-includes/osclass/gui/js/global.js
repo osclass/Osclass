@@ -102,13 +102,17 @@ function selectUi(thatSelect){
 }
 $(document).ready(function(event){
     //OK
-    $('.r-list h1 a').click(function(){
+    $('.r-list h1 span').click(function(){
         if(bender.responsive()){
-            var $parent = $(this).parent().parent();
+            var $parent     = $(this).parent().parent();
             if($parent.hasClass('active')){
                 $parent.removeClass('active');
+                $(this).find('i').removeClass('fa-caret-down');
+                $(this).find('i').addClass('fa-caret-right');
             } else {
                 $parent.addClass('active');
+                $(this).find('i').removeClass('fa-caret-right');
+                $(this).find('i').addClass('fa-caret-down');
             }
             return false;
         }
@@ -198,6 +202,11 @@ $(document).ready(function(event){
                 title : {
                     type : 'inside'
                 }
+            },
+            tpl: {
+                prev: '<a title="'+bender.fancybox_prev+'" class="fancybox-nav fancybox-prev"><span></span></a>',
+                next: '<a title="'+bender.fancybox_next+'" class="fancybox-nav fancybox-next"><span></span></a>',
+                closeBtn : '<a title="'+bender.fancybox_closeBtn+'" class="fancybox-item fancybox-close" href="javascript:;"></a>'
             }
         });
 

@@ -1,19 +1,23 @@
 <?php
-/*
- * Copyright 2014 Osclass
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+    /*
+     *      Osclass – software for creating and publishing online classified
+     *                           advertising platforms
+     *
+     *                        Copyright (C) 2014 OSCLASS
+     *
+     *       This program is free software: you can redistribute it and/or
+     *     modify it under the terms of the GNU Affero General Public License
+     *     as published by the Free Software Foundation, either version 3 of
+     *            the License, or (at your option) any later version.
+     *
+     *     This program is distributed in the hope that it will be useful, but
+     *         WITHOUT ANY WARRANTY; without even the implied warranty of
+     *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+     *             GNU Affero General Public License for more details.
+     *
+     *      You should have received a copy of the GNU Affero General Public
+     * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
+     */
 
 /**
 
@@ -27,10 +31,14 @@ DEFINES
     osc_register_script('fancybox', osc_current_web_theme_url('js/fancybox/jquery.fancybox.pack.js'), array('jquery'));
     osc_enqueue_style('fancybox', osc_current_web_theme_url('js/fancybox/jquery.fancybox.css'));
     osc_enqueue_script('fancybox');
+
+    osc_enqueue_style('font-awesome', osc_current_web_theme_url('css/font-awesome-4.1.0/css/font-awesome.min.css'));
     // used for date/dateinterval custom fields
     osc_enqueue_script('php-date');
-    osc_enqueue_style('fine-uploader-css', osc_assets_url('js/fineuploader/fineuploader.css'));
-    osc_enqueue_style('bender-fine-uploader-css', osc_current_web_theme_url('css/ajax-uploader.css'));
+    if(!OC_ADMIN) {
+        osc_enqueue_style('fine-uploader-css', osc_assets_url('js/fineuploader/fineuploader.css'));
+        osc_enqueue_style('bender-fine-uploader-css', osc_current_web_theme_url('css/ajax-uploader.css'));
+    }
     osc_enqueue_script('jquery-fineuploader');
 
 
@@ -145,7 +153,7 @@ FUNCTIONS
         function logo_header() {
              $logo = osc_get_preference('logo','bender_theme');
              $html = '<a href="'.osc_base_url().'"><img border="0" alt="' . osc_page_title() . '" src="' . bender_logo_url() . '"></a>';
-             if( file_exists( osc_uploads_path() . $logo ) ) {
+             if( $logo!='' && file_exists( osc_uploads_path() . $logo ) ) {
                 return $html;
              } else {
                 return '<a href="'.osc_base_url().'">'.osc_page_title().'</a>';
@@ -213,14 +221,22 @@ FUNCTIONS
         ?>
         <ul class="r-list">
              <li>
-                 <h1><a class="category <?php echo osc_category_slug() ; ?>" href="<?php echo osc_search_category_url() ; ?>"><?php echo osc_category_name() ; ?></a> <span>(<?php echo osc_category_total_items() ; ?>)</span></h1>
+                 <h1>
+                    <?php if ( osc_count_subcategories() > 0 ) { ?>
+                    <span class="collapse resp-toogle"><i class="fa fa-caret-right fa-lg"></i></span>
+                    <?php } ?>
+                    <a class="category <?php echo osc_category_slug() ; ?>" href="<?php echo osc_search_category_url() ; ?>"><?php echo osc_category_name() ; ?></a> <span>(<?php echo osc_category_total_items() ; ?>)</span>
+                 </h1>
                  <?php if ( osc_count_subcategories() > 0 ) { ?>
                    <ul>
                          <?php while ( osc_has_subcategories() ) { ?>
                              <li>
-                             <?php if( osc_category_total_items() > 0 ) { ?><a class="category <?php echo osc_category_slug() ; ?>" href="<?php echo osc_search_category_url() ; ?>"><?php echo osc_category_name() ; ?></a> <span>(<?php echo osc_category_total_items() ; ?>)</span>
-                             <?php } else { ?><span><?php echo osc_category_name() ; ?> (<?php echo osc_category_total_items() ; ?>)</span></li>
+                             <?php if( osc_category_total_items() > 0 ) { ?>
+                                 <a class="category sub-category <?php echo osc_category_slug() ; ?>" href="<?php echo osc_search_category_url() ; ?>"><?php echo osc_category_name() ; ?></a> <span>(<?php echo osc_category_total_items() ; ?>)</span>
+                             <?php } else { ?>
+                                 <a class="category sub-category <?php echo osc_category_slug() ; ?>" href="#"><?php echo osc_category_name() ; ?></a> (<?php echo osc_category_total_items() ; ?>)</span>
                              <?php } ?>
+                             </li>
                          <?php } ?>
                    </ul>
                  <?php } ?>

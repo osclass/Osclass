@@ -458,9 +458,9 @@ CREATE TABLE %st_item_description_tmp (
         osc_set_preference('force_jpeg', '0', 'osclass', 'BOOLEAN');
 
         // THESE LINES PROBABLY HIT LOW TIMEOUT SCRIPTS, RUN THE LAST OF THE UPGRADE PROCESS
-        osc_calculate_location_slug('country');
-        osc_calculate_location_slug('region');
-        osc_calculate_location_slug('city');
+        //osc_calculate_location_slug('country');
+        //osc_calculate_location_slug('region');
+        //osc_calculate_location_slug('city');
 	}
 
     osc_changeVersionTo(340);
