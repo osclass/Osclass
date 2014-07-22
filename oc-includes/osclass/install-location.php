@@ -37,7 +37,7 @@ if( is_osclass_installed() ) {
 }
 
 $json_message = array();
-$json_message['status'] = '200';
+$json_message['status'] = true;
 
 $result = basic_info();
 $json_message['email_status']   = $result['email_status'];
