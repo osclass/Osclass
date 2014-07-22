@@ -773,7 +773,7 @@ function download_fsockopen($sourceFile, $fileout = null)
     if (!$fp) {
         return false;
     } else {
-        $ua  = $_SERVER['HTTP_USER_AGENT'] . ' Osclass (v.' . osc_version() . ')';
+        $ua  = @$_SERVER['HTTP_USER_AGENT'] . ' Osclass (v.' . osc_version() . ')';
         $out = "GET $link HTTP/1.1\r\n";
         $out .= "Host: $host\r\n";
         $out .= "User-Agent: $ua\r\n";
@@ -841,7 +841,7 @@ function osc_downloadFile($sourceFile, $downloadedFile)
         if($fp) {
             $ch = curl_init($sourceFile);
             @curl_setopt($ch, CURLOPT_TIMEOUT, 50);
-            curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT'] . ' Osclass (v.' . osc_version() . ')');
+            curl_setopt($ch, CURLOPT_USERAGENT, @$_SERVER['HTTP_USER_AGENT'] . ' Osclass (v.' . osc_version() . ')');
             curl_setopt($ch, CURLOPT_FILE, $fp);
             @curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
             curl_setopt($ch, CURLOPT_REFERER, osc_base_url());
