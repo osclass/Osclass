@@ -243,25 +243,17 @@
         $categories = osc_search_category();
         $category   = array();
         $where      = array();
+        $mCat = Category::newInstance();
 
         foreach($categories as $cat) {
             if( is_numeric($cat) ) {
-                $where[] = "a.pk_i_id = " . $cat;
+                $tmp = $mCat->findByPrimaryKey($cat);
+                if(isset($tmp['pk_i_id'])) { $category[] = $tmp['pk_i_id']; }
             } else {
                 $slug_cat = explode( "/", trim($cat, "/") );
-                $where[]  = "b.s_slug = '" . addslashes( $slug_cat[count($slug_cat)-1] ) . "'";
+                $tmp = $mCat->findBySlug($slug_cat[count($slug_cat)-1]);
+                if(isset($tmp['pk_i_id'])) { $category[] = $tmp['pk_i_id']; }
             }
-        }
-
-        if( empty($where) ) {
-            return array();
-        }
-
-        // @TODO @TOFIX: not the best way to do it
-        $categories = Category::newInstance()->listWhere( implode(" OR ", $where) );
-        $category = array();
-        foreach($categories as $cat) {
-            $category[] = $cat['pk_i_id'];
         }
 
         return $category;
@@ -495,17 +487,9 @@
                     $url .= osc_get_preference('seo_url_search_prefix') . '/';
                 }
                 if(isset($params['sCategory'])) {
-                    if(osc_category_id()==$params['sCategory']) {
-                        $category['s_slug'] = osc_category_slug();
-                    } else {
-                        if(is_numeric($params['sCategory'])) {
-                            $category = Category::newInstance()->findByPrimaryKey($params['sCategory']);
-                        } else {
-                            $category = Category::newInstance()->findBySlug($params['sCategory']);
-                        }
-                    }
+                    $_auxSlug = _aux_search_category_slug($params['sCategory']);
+                    if ($_auxSlug != '') { $url .= $_auxSlug . '_'; }
                 }
-                if(isset($category['s_slug']) && $category['s_slug']!='') { $url .= $category['s_slug'].'_'; }
 
                 if(isset($params['sRegion'])) {
                     if(osc_list_region_id()==$params['sRegion']) {
@@ -533,17 +517,9 @@
                     $url .= osc_get_preference('seo_url_search_prefix') . '/';
                 }
                 if(isset($params['sCategory'])) {
-                    if(osc_category_id()==$params['sCategory']) {
-                        $category['s_slug'] = osc_category_slug();
-                    } else {
-                        if(is_numeric($params['sCategory'])) {
-                            $category = Category::newInstance()->findByPrimaryKey($params['sCategory']);
-                        } else {
-                            $category = Category::newInstance()->findBySlug($params['sCategory']);
-                        }
-                    }
+                    $_auxSlug = _aux_search_category_slug($params['sCategory']);
+                    if ($_auxSlug != '') { $url .= $_auxSlug . '_'; }
                 }
-                if(isset($category['s_slug']) && $category['s_slug']!='') { $url .= $category['s_slug'].'_'; }
                 if(isset($params['sCity'])) {
                     if(osc_list_region_id()==$params['sCity']) {
                         $url .= osc_sanitizeString(osc_list_city_slug()) . '-c' . osc_list_city_id();
@@ -1026,6 +1002,27 @@
         unset($conditions['limit_init']);
         unset($conditions['results_per_page']);
         return $conditions;
+    }
+
+    function _aux_search_category_slug($paramCat) {
+        if (is_array($paramCat)) {
+            if(count($paramCat) == 1) {
+                $paramCat = $paramCat[0];
+            } else {
+                return '';
+            }
+        }
+
+        if (osc_category_id() == $paramCat) {
+            $category['s_slug'] = osc_category_slug();
+        } else {
+            if (is_numeric($paramCat)) {
+                $category = Category::newInstance()->findByPrimaryKey($paramCat);
+            } else {
+                $category = Category::newInstance()->findBySlug($paramCat);
+            }
+        }
+        return isset($category['s_slug'])?$category['s_slug']:'';
     }
 
 ?>
