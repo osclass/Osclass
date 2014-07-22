@@ -865,7 +865,7 @@ function osc_file_get_contents($url)
     if( testCurl() ) {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT'] . ' Osclass (v.' . osc_version() . ')');
+        curl_setopt($ch, CURLOPT_USERAGENT, @$_SERVER['HTTP_USER_AGENT'] . ' Osclass (v.' . osc_version() . ')');
         if( !defined('CURLOPT_RETURNTRANSFER') ) define('CURLOPT_RETURNTRANSFER', 1);
         @curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
         curl_setopt($ch, CURLOPT_REFERER, osc_base_url());
