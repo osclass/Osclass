@@ -222,10 +222,15 @@ FUNCTIONS
         <ul class="r-list">
              <li>
                  <h1>
-                    <?php if ( osc_count_subcategories() > 0 ) { ?>
+                    <?php
+                    $_slug      = osc_category_slug();
+                    $_url       = osc_search_category_url();
+                    $_name      = osc_category_name();
+                    $_total_items = osc_category_total_items();
+                    if ( osc_count_subcategories() > 0 ) { ?>
                     <span class="collapse resp-toogle"><i class="fa fa-caret-right fa-lg"></i></span>
                     <?php } ?>
-                    <a class="category <?php echo osc_category_slug() ; ?>" href="<?php echo osc_search_category_url() ; ?>"><?php echo osc_category_name() ; ?></a> <span>(<?php echo osc_category_total_items() ; ?>)</span>
+                    <a class="category <?php echo $_slug; ?>" href="<?php echo $_url; ?>"><?php echo $_name ; ?></a> <span>(<?php echo $_total_items ; ?>)</span>
                  </h1>
                  <?php if ( osc_count_subcategories() > 0 ) { ?>
                    <ul>
@@ -234,7 +239,7 @@ FUNCTIONS
                              <?php if( osc_category_total_items() > 0 ) { ?>
                                  <a class="category sub-category <?php echo osc_category_slug() ; ?>" href="<?php echo osc_search_category_url() ; ?>"><?php echo osc_category_name() ; ?></a> <span>(<?php echo osc_category_total_items() ; ?>)</span>
                              <?php } else { ?>
-                                 <a class="category sub-category <?php echo osc_category_slug() ; ?>" href="#"><?php echo osc_category_name() ; ?></a> (<?php echo osc_category_total_items() ; ?>)</span>
+                                 <a class="category sub-category <?php echo osc_category_slug() ; ?>" href="#"><?php echo osc_category_name() ; ?></a> <span>(<?php echo osc_category_total_items() ; ?>)</span>
                              <?php } ?>
                              </li>
                          <?php } ?>
