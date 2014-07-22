@@ -32,6 +32,7 @@
         private $_categoriesEnabled;
         private $_relation;
         private $_emptyTree;
+        private $_slugs;
 
         public static function newInstance()
         {
@@ -403,15 +404,21 @@
          */
         public function findBySlug($slug)
         {
-            $slug = urlencode($slug);
-            $this->dao->where( 'b.s_slug', $slug );
-            // end specific condition
+            $slug = trim($slug);
+            if($slug!='') {
+                if(isset($this->_slugs[$slug])) {
+                    return $this->findByPrimaryKey($this->_slugs[$slug]);
+                }
+                $slug = urlencode($slug);
+                $this->dao->where('b.s_slug', $slug);
+                // end specific condition
 
-            $results = $this->listWhere();
-            if( count($results) > 0 ) {
-                return $results[0];
+                $results = $this->listWhere();
+                if (count($results) > 0) {
+                    $this->_slugs[$slug] = $results[0]['pk_i_id'];
+                    return $results[0];
+                }
             }
-
             return array();
         }
 
@@ -510,27 +517,7 @@
                         return $category;
                     }
                 } else {
-                    $this->dao->select( sprintf("a.*, b.*, c.i_num_items, FIELD(fk_c_locale_code, '%s') as locale_order", $this->dao->connId->real_escape_string($this->_language) ) );
-                    $this->dao->from( $this->getTableName().' as a' );
-                    $this->dao->join(DB_TABLE_PREFIX.'t_category_description as b', 'a.pk_i_id = b.fk_i_category_id', 'INNER');
-                    $this->dao->join(DB_TABLE_PREFIX.'t_category_stats  as c ', 'a.pk_i_id = c.fk_i_category_id', 'LEFT');
-                    $this->dao->where("b.s_name != ''");
-                    $this->dao->where("a.pk_i_id = ".$categoryID);
-                    $this->dao->orderBy('locale_order', 'DESC');
-                    $subquery = $this->dao->_getSelect();
-                    $this->dao->_resetSelect();
-
-                    $this->dao->select();
-                    $this->dao->from( sprintf( '(%s) dummytable', $subquery ) ); // $subselect.'  dummytable');
-                    $this->dao->groupBy('pk_i_id');
-                    $this->dao->orderBy('i_position', 'ASC');
-                    $rs = $this->dao->get();
-
-                    if( $rs === false ) {
-                        return array();
-                    }
-
-                    $category = $rs->row();
+                    $category = $this->listWhere();
 
                     if(!isset($category['pk_i_id'])) {
                         return false;

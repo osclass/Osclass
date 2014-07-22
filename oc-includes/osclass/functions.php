@@ -334,7 +334,7 @@ function osc_footer_link_url($f = null) {
     $params = array();
     $tmp = osc_search_category_id();
     if( !empty($tmp) ) {
-        $params['sCategory'] = $tmp;
+        $params['sCategory'] = $f['fk_i_category_id'];
     }
 
     if( osc_search_region() == '' ) {
@@ -362,9 +362,8 @@ function osc_footer_link_title($f = null) {
         $text .= osc_get_preference('seo_title_keyword') . ' ';
     }
 
-    $tmp = osc_search_category_id();
-    if( !empty($tmp) ) {
-        $cat = osc_get_category('id', $f['fk_i_category_id']);
+    $cat = osc_get_category('id', $f['fk_i_category_id']);
+    if(@$cat['s_name']!='') {
         $text .= $cat['s_name'].' ';
     }
 
