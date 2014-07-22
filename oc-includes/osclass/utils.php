@@ -1194,7 +1194,7 @@ function osc_check_dir_writable( $dir = ABS_PATH ) {
             if($file!="." && $file!="..") {
                 if(is_dir(str_replace("//", "/", $dir . "/" . $file))) {
                     if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/themes")) {
-                        if($file=="modern" || $file=="index.php") {
+                        if($file=="bender" || $file=="index.php") {
                             $res = osc_check_dir_writable( str_replace("//", "/", $dir . "/" . $file));
                             if(!$res) { return false; };
                         }
@@ -1885,18 +1885,22 @@ function osc_do_upgrade() {
                 } else {
                     $message = __('Nothing to copy');
                     $error = 99; // Nothing to copy. THIS SHOULD NEVER HAPPEN, means we don't update any file!
+                    $deleted = @unlink(ABS_PATH . '.maintenance');
                 }
             } else {
                 $message = __('Unzip failed');
                 $error = 3; // Unzip failed
+                $deleted = @unlink(ABS_PATH . '.maintenance');
             }
         } else {
             $message = __('Download failed');
             $error = 2; // Download failed
+            $deleted = @unlink(ABS_PATH . '.maintenance');
         }
     } else {
         $message = __('Missing download URL');
         $error = 1; // Missing download URL
+        $deleted = @unlink(ABS_PATH . '.maintenance');
     }
 
     if ($error == 5) {
@@ -1914,7 +1918,7 @@ function osc_do_auto_upgrade() {
     $data = preg_replace('|^\?\((.*?)\);$|', '$01', $data);
     $json = json_decode($data);
     $result['error'] = 0;
-    if($json->version>osc_version()) {
+    if($json->version>osc_version() && osc_check_dir_writable()) {
         osc_set_preference('update_core_json', $data);
         if(substr($json->version,0,1)!=substr(osc_version(),0,1)) {
             // NEW BRANCH
