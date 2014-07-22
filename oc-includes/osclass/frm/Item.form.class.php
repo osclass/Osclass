@@ -141,8 +141,8 @@
 
                 if(osc==undefined) { var osc = {}; }
                 if(osc.langs==undefined) { osc.langs = {}; }
-                if(osc.langs.select_subcategory==undefined) { osc.langs.select_subcategory = '<?php echo osc_esc_js(__('Select subcategory')); ?>'; }
-                if(osc.langs.no_subcategory==undefined) { osc.langs.no_subcategory = '<?php echo osc_esc_js(__('No subcategory')); ?>'; }
+                if(osc.langs.select_subcategory==undefined) { osc.langs.select_subcategory = '<?php echo osc_esc_js(__('Select Subcategory')); ?>'; }
+                if(osc.langs.no_subcategory==undefined) { osc.langs.no_subcategory = '<?php echo osc_esc_js(__('No Subcategory')); ?>'; }
 
                 $(document).ready(function(){
                     $("#parentCategory").bind('change', function(){
