@@ -20,17 +20,22 @@
 
     class Params
     {
-        private static $purifier;
-        private static $config;
+        private static $_purifier;
+        private static $_config;
+        private static $_request;
 
         function __construct() { }
+
+        static function init() {
+            self::$_request = array_merge($_GET, $_POST);
+        }
 
         static function getParam($param, $htmlencode = false, $xss_check = true, $quotes_encode = true)
         {
             if ($param == "") return '';
-            if (!isset($_REQUEST[$param])) return '';
+            if (!isset(self::$_request[$param])) return '';
 
-            $value = self::_purify($_REQUEST[$param], $xss_check);
+            $value = self::_purify(self::$_request[$param], $xss_check);
 
             if ($htmlencode) {
                 if($quotes_encode) {
@@ -50,7 +55,7 @@
         static function existParam($param)
         {
             if ($param == "") return false;
-            if (!isset($_REQUEST[$param])) return false;
+            if (!isset(self::$_request[$param])) return false;
             return true;
         }
 
@@ -63,7 +68,6 @@
             return "";
         }
 
-        //$what = "post, get, cookie"
         static function getParamsAsArray($what = "", $xss_check = true)
         {
             switch ($what) {
@@ -75,9 +79,15 @@
                 break;
                 case("cookie"):
                     return $_COOKIE;
-                break;
+                    break;
+                case("files"):
+                    return $_FILES;
+                    break;
+                case("request"): // This should not be called, as it depends on server's configuration
+                    return $_REQUEST;
+                    break;
                 default:
-                    $value = $_REQUEST;
+                    $value = self::$_request;
                 break;
             }
 
@@ -92,9 +102,7 @@
 
         static function setParam($key, $value)
         {
-            $_REQUEST[$key] = $value;
-            $_GET[$key] = $value;
-            $_POST[$key] = $value;
+            self::$_request[$key] = $value;
         }
 
         static function _view()
@@ -108,12 +116,12 @@
                 return $value;
             }
 
-            self::$config = HTMLPurifier_Config::createDefault();
-            self::$config->set('HTML.Allowed', '');
-            self::$config->set('Cache.SerializerPath', osc_uploads_path());
+            self::$_config = HTMLPurifier_Config::createDefault();
+            self::$_config->set('HTML.Allowed', '');
+            self::$_config->set('Cache.SerializerPath', osc_uploads_path());
 
-            if( !isset(self::$purifier) ) {
-                self::$purifier = new HTMLPurifier(self::$config);
+            if( !isset(self::$_purifier) ) {
+                self::$_purifier = new HTMLPurifier(self::$_config);
             }
 
             if( is_array($value) ) {
@@ -121,7 +129,7 @@
                     $v = self::_purify($v, $xss_check); // recursive
                 }
             } else {
-                $value = self::$purifier->purify($value);
+                $value = self::$_purifier->purify($value);
             }
 
             return $value;

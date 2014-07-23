@@ -33,7 +33,7 @@ function __get($key) {
 }
 
 /**
- * Get variable from $_REQUEST[$key]
+ * Get variable from $_GET or $_POST
  *
  * @param string $key
  * @return mixed
