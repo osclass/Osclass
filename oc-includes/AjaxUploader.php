@@ -88,7 +88,9 @@ class AjaxUploader {
             } else if(function_exists('mime_content_type')) {
                 $fileMime = mime_content_type($file);
             } else {
-                return false; // *WARNING* There's no way check the mime type of the file, change to 'return true' if you blindly trust on your users' input!
+                // *WARNING* There's no way check the mime type of the file, you should not blindly trust on your users' input!
+                $ftmp = Params::getFiles('qqfile');
+                $fileMime = @$ftmp['type'];
             }
 
             if(stripos($fileMime, "image/")!==FALSE) {

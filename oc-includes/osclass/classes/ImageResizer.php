@@ -75,10 +75,6 @@
                     break;
             }
 
-            /*var_dump($imagePath); echo PHP_EOL;
-            var_dump($this->ext); echo PHP_EOL;
-            var_dump($this->mime); echo PHP_EOL;
-            echo PHP_EOL; echo PHP_EOL;*/
             return $this;
         }
 
