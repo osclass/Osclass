@@ -503,7 +503,7 @@
             if($categoryID == null) {
                 return false;
             }
-            $key    = md5('Category:findByPrimaryKey:'.$categoryID);
+            $key    = md5('Category:findByPrimaryKey:'.$categoryID.$locale);
             $found  = null;
             $cache  = osc_cache_get($key, $found);
             if($cache===false) {
@@ -514,6 +514,10 @@
 
                     // if we already have locale data, we return the category
                     if( $locale=="" || ($locale!="" && isset($category['locale']))) {
+                        if($locale!='' && isset($category['locale'][$locale])) {
+                            $category['s_name'] = $category['locale'][$locale]['s_name'];
+                            $category['s_description'] = $category['locale'][$locale]['s_description'];
+                        }
                         return $category;
                     }
                 } else {
@@ -546,6 +550,10 @@
                 // if it exists in the $categories array, we copy the row data
                 if( array_key_exists($categoryID, $this->_categories) ) {
                     $this->_categories[$categoryID] = $category;
+                }
+                if($locale!='' && isset($category['locale'][$locale])) {
+                    $category['s_name'] = $category['locale'][$locale]['s_name'];
+                    $category['s_description'] = $category['locale'][$locale]['s_description'];
                 }
                 osc_cache_set($key, $category, OSC_CACHE_TTL);
                 return $category;
