@@ -675,6 +675,20 @@ function display_database_config() {
                         $('#advanced_install').removeClass('expanded');
                     }
                 });
+                $('#createdb').on('click', function() {
+                    if($("#createdb").is(':checked')) {
+                        if ($("#admin_username").attr("value") == '') {
+                            $("#admin_username").attr("value", $("#username").attr("value"));
+                        };
+                        if ($("#admin_password").attr("value") == '') {
+                            $("#admin_password").attr("value", $("#password").attr("value"));
+                            $("#password_copied").show();
+                        };
+                    } else {
+                        $("#password_copied").hide();
+                    };
+                });
+                $("#password_copied").hide();
             });
         </script>
         <div style="clear:both;"></div>
@@ -692,7 +706,7 @@ function display_database_config() {
                 </tr>
                 <tr id="admin_password_row">
                     <th align="left"><label for="admin_password"><?php _e('DB admin password'); ?></label></th>
-                    <td><input type="password" id="admin_password" name="admin_password" value="" size="25" disabled="disabled" /></td>
+                    <td><input type="password" id="admin_password" name="admin_password" value="" size="25" disabled="disabled" /> <span id="password_copied"><?php _e('Password copied from above'); ?></span></td>
                     <td></td>
                 </tr>
             </tbody>
