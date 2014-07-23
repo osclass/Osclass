@@ -126,7 +126,7 @@
                     echo json_encode($result);
                 break;
                 case 'category_edit_iframe':
-                    $this->_exportVariableToView( 'category', Category::newInstance()->findByPrimaryKey( Params::getParam("id") ) );
+                    $this->_exportVariableToView('category', Category::newInstance()->findByPrimaryKey(Params::getParam("id"), 'all'));
                     if(count(Category::newInstance()->findSubcategories( Params::getParam("id") ) )>0) {
                         $this->_exportVariableToView( 'has_subcategories', true);
                     } else {
