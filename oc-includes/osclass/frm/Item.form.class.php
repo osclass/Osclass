@@ -1229,9 +1229,13 @@
         if(cat_id != '') {
 			if(catPriceEnabled[cat_id] == 1) {
 				$("#price").closest("div").show();
+                                // trigger show-price event
+                                $('#price').trigger('show-price');
 			} else {
 				$("#price").closest("div").hide();
 				$('#price').val('') ;
+                                // trigger hide-price event
+                                $('#price').trigger('hide-price');
 			}
 
             $.ajax({
@@ -1475,7 +1479,7 @@
                             } else {
                                 $(li).append('<div class="primary_image"><a title="<?php echo osc_esc_js(osc_esc_html(__('Make primary image'))); ?>"></a></div>');
                             }
-                            <?php } 
+                            <?php }
                             // @TOFIX @FIXME escape $responseJSON_uploadName below
                             // need a js function similar to osc_esc_js(osc_esc_html()) ?>
                             $(li).append('<div class="ajax_preview_img"><img src="<?php echo osc_base_url(); ?>oc-content/uploads/temp/'+responseJSON.uploadName+'" alt="' + responseJSON.uploadName + '"></div>');
