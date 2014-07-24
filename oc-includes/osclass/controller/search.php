@@ -145,8 +145,8 @@
                                     $meta_key   = $m[1][$k];
                                     $meta_value = $m[2][$k];
                                     $array_r    = array();
-                                    if(isset($_REQUEST['meta'])) {
-                                        $array_r    = $_REQUEST['meta'];
+                                    if(Params::existParam('meta')) {
+                                        $array_r = Params::getParam('meta');
                                     }
                                     if($results[2]=='') {
                                         // meta[meta_id] = meta_value
@@ -163,6 +163,7 @@
                                 }
                                 break;
                         }
+
 
                         $_REQUEST[$m[1][$k]] = $m[2][$k];
                         $_GET[$m[1][$k]] = $m[2][$k];
