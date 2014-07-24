@@ -36,7 +36,7 @@
 
             //specific things for this class
             switch ($this->action) {
-                case('create'):         // callign create view
+                case('create'):         // calling create view
                                         $aRegions   = array();
                                         $aCities    = array();
 
