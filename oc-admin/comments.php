@@ -225,7 +225,7 @@
                                             if($page==0) { $page = 1; };
                                             Params::setParam('iPage', $page);
 
-                                            $params = Params::getParamsAsArray("get");
+                                            $params = Params::getParamsAsArray();
 
                                             $commentsDataTable = new CommentsDataTable();
                                             $commentsDataTable->table($params);

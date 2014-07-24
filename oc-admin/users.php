@@ -413,7 +413,7 @@
                                         if($page==0) { $page = 1; };
                                         Params::setParam('iPage', $page);
 
-                                        $params = Params::getParamsAsArray("get");
+                                        $params = Params::getParamsAsArray();
 
                                         $alertsDataTable = new AlertsDataTable();
                                         $alertsDataTable->table($params);
@@ -476,7 +476,7 @@
                                         if($page==0) { $page = 1; };
                                         Params::setParam('iPage', $page);
 
-                                        $params = Params::getParamsAsArray("get");
+                                        $params = Params::getParamsAsArray();
 
                                         $banRulesDataTable = new BanRulesDataTable();
                                         $banRulesDataTable->table($params);
@@ -606,7 +606,7 @@
                                         if($page==0) { $page = 1; };
                                         Params::setParam('iPage', $page);
 
-                                        $params = Params::getParamsAsArray("get");
+                                        $params = Params::getParamsAsArray();
 
                                         $usersDataTable = new UsersDataTable();
                                         $usersDataTable->table($params);
