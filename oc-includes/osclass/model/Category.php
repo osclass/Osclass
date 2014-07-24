@@ -521,11 +521,13 @@
                         return $category;
                     }
                 } else {
+                    $this->dao->where('pk_i_id', $categoryID);
                     $category = $this->listWhere();
 
-                    if(!isset($category['pk_i_id'])) {
+                    if(!isset($category[0]) || !isset($category[0]['pk_i_id'])) {
                         return false;
                     }
+                    $category = $category[0];
                 }
 
                 $this->dao->select();
