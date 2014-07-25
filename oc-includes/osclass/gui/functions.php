@@ -3,7 +3,7 @@
      *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2013 OSCLASS
+     *                        Copyright (C) 2014 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -31,10 +31,14 @@ DEFINES
     osc_register_script('fancybox', osc_current_web_theme_url('js/fancybox/jquery.fancybox.pack.js'), array('jquery'));
     osc_enqueue_style('fancybox', osc_current_web_theme_url('js/fancybox/jquery.fancybox.css'));
     osc_enqueue_script('fancybox');
+
+    osc_enqueue_style('font-awesome', osc_current_web_theme_url('css/font-awesome-4.1.0/css/font-awesome.min.css'));
     // used for date/dateinterval custom fields
     osc_enqueue_script('php-date');
-    osc_enqueue_style('fine-uploader-css', osc_assets_url('js/fineuploader/fineuploader.css'));
-    osc_enqueue_style('bender-fine-uploader-css', osc_current_web_theme_url('css/ajax-uploader.css'));
+    if(!OC_ADMIN) {
+        osc_enqueue_style('fine-uploader-css', osc_assets_url('js/fineuploader/fineuploader.css'));
+        osc_enqueue_style('bender-fine-uploader-css', osc_current_web_theme_url('css/ajax-uploader.css'));
+    }
     osc_enqueue_script('jquery-fineuploader');
 
 
@@ -149,7 +153,7 @@ FUNCTIONS
         function logo_header() {
              $logo = osc_get_preference('logo','bender_theme');
              $html = '<a href="'.osc_base_url().'"><img border="0" alt="' . osc_page_title() . '" src="' . bender_logo_url() . '"></a>';
-             if( file_exists( osc_uploads_path() . $logo ) ) {
+             if( $logo!='' && file_exists( osc_uploads_path() . $logo ) ) {
                 return $html;
              } else {
                 return '<a href="'.osc_base_url().'">'.osc_page_title().'</a>';
@@ -217,14 +221,27 @@ FUNCTIONS
         ?>
         <ul class="r-list">
              <li>
-                 <h1><a class="category <?php echo osc_category_slug() ; ?>" href="<?php echo osc_search_category_url() ; ?>"><?php echo osc_category_name() ; ?></a> <span>(<?php echo osc_category_total_items() ; ?>)</span></h1>
+                 <h1>
+                    <?php
+                    $_slug      = osc_category_slug();
+                    $_url       = osc_search_category_url();
+                    $_name      = osc_category_name();
+                    $_total_items = osc_category_total_items();
+                    if ( osc_count_subcategories() > 0 ) { ?>
+                    <span class="collapse resp-toogle"><i class="fa fa-caret-right fa-lg"></i></span>
+                    <?php } ?>
+                    <a class="category <?php echo $_slug; ?>" href="<?php echo $_url; ?>"><?php echo $_name ; ?></a> <span>(<?php echo $_total_items ; ?>)</span>
+                 </h1>
                  <?php if ( osc_count_subcategories() > 0 ) { ?>
                    <ul>
                          <?php while ( osc_has_subcategories() ) { ?>
                              <li>
-                             <?php if( osc_category_total_items() > 0 ) { ?><a class="category <?php echo osc_category_slug() ; ?>" href="<?php echo osc_search_category_url() ; ?>"><?php echo osc_category_name() ; ?></a> <span>(<?php echo osc_category_total_items() ; ?>)</span>
-                             <?php } else { ?><span><?php echo osc_category_name() ; ?> (<?php echo osc_category_total_items() ; ?>)</span></li>
+                             <?php if( osc_category_total_items() > 0 ) { ?>
+                                 <a class="category sub-category <?php echo osc_category_slug() ; ?>" href="<?php echo osc_search_category_url() ; ?>"><?php echo osc_category_name() ; ?></a> <span>(<?php echo osc_category_total_items() ; ?>)</span>
+                             <?php } else { ?>
+                                 <a class="category sub-category <?php echo osc_category_slug() ; ?>" href="#"><?php echo osc_category_name() ; ?></a> <span>(<?php echo osc_category_total_items() ; ?>)</span>
                              <?php } ?>
+                             </li>
                          <?php } ?>
                    </ul>
                  <?php } ?>

@@ -1,24 +1,20 @@
 <?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
-    /*
-     *      Osclass – software for creating and publishing online classified
-     *                           advertising platforms
-     *
-     *                        Copyright (C) 2012 OSCLASS
-     *
-     *       This program is free software: you can redistribute it and/or
-     *     modify it under the terms of the GNU Affero General Public License
-     *     as published by the Free Software Foundation, either version 3 of
-     *            the License, or (at your option) any later version.
-     *
-     *     This program is distributed in the hope that it will be useful, but
-     *         WITHOUT ANY WARRANTY; without even the implied warranty of
-     *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-     *             GNU Affero General Public License for more details.
-     *
-     *      You should have received a copy of the GNU Affero General Public
-     * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
-     */
+/*
+ * Copyright 2014 Osclass
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
     class CAdminPlugins extends AdminSecBaseModel
     {
@@ -225,7 +221,23 @@
 
                     osc_add_flash_error_message( _m('No plugin selected'), 'admin');
                     $this->doView('plugins/index.php');
-                break;
+                    break;
+                case 'delete':
+                    osc_csrf_check();
+                    $plugin = str_replace('/index.php', '', Params::getParam("plugin"));
+                    $path = preg_replace('([\/]+)', '/', CONTENT_PATH.'plugins/'.$plugin);
+                    if($plugin!="" && strpos($plugin, '../')===false && $path!=CONTENT_PATH.'plugins/') {
+                        if(osc_deleteDir($path)) {
+                            osc_add_flash_ok_message( _m('The files were deleted'), 'admin');
+                        } else {
+                            osc_add_flash_error_message( sprintf(_m('There were an error deleting the files, please check the permissions of the files in %s'), $path."/"), 'admin');
+                        }
+                        $this->redirectTo(osc_admin_base_url(true)."?page=plugins");
+                    }
+
+                    osc_add_flash_error_message( _m('No plugin selected'), 'admin');
+                    $this->doView('plugins/index.php');
+                    break;
                 case 'error_plugin':
                     // force php errors and simulate plugin installation to show the errors in the iframe
                     if( !OSC_DEBUG ) {
@@ -311,11 +323,14 @@
                             }
                         }
                         // prepare row 6
-                        $sInstall  = '';
                         if( $installed ) {
                             $sInstall = '<a onclick="javascript:return uninstall_dialog(\'' . $pInfo['filename'] . '\', \'' . $pInfo['plugin_name'] . '\');" href="' . osc_admin_base_url(true) . '?page=plugins&amp;action=uninstall&amp;plugin=' . $pInfo['filename'] . "&amp;" . osc_csrf_token_url() . '">' . __('Uninstall') . '</a>';
                         } else {
                             $sInstall = '<a href="' . osc_admin_base_url(true) . '?page=plugins&amp;action=install&amp;plugin=' . $pInfo['filename'] . "&amp;" . osc_csrf_token_url() . '">' . __('Install') . '</a>';
+                        }
+                        $sDelete = '';
+                        if( !$installed ) {
+                            $sDelete =  '<a href="javascript:delete_plugin(\''.$pInfo['filename'].'\');" >' . __('Delete') . '</a>';
                         }
 
                         $sHelp = '';
@@ -326,7 +341,6 @@
                         if($pInfo['plugin_uri']!='') {
 							$sSiteUrl = ' | <a target="_blank" href="'. $pInfo['plugin_uri'] . '">'. __('Plugins Site'). '</a>';
 						}
-						$sAuthor = '';
 						if($pInfo['author_uri']!='') {
 							$sAuthor = __('By') . ' <a target="_blank" href="'. $pInfo['author_uri'] . '">'. $pInfo['author'] . '</a>';
 						} else {
@@ -339,6 +353,7 @@
                         $row[] = ($sConfigure!='')  ? $sConfigure   : '&nbsp;';
                         $row[] = ($sEnable!='')     ? $sEnable      : '&nbsp;';
                         $row[] = ($sInstall!='')    ? $sInstall     : '&nbsp;';
+                        $row[] = ($sDelete!='')     ? $sDelete      : '&nbsp;';
                         $aData[] = $row;
                         if(@$pInfo['plugin_update_uri'] != '') {
                             $aInfo[@$pInfo['plugin_update_uri']] = $pInfo;

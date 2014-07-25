@@ -130,7 +130,7 @@ $(function(){
                             screenshots = '<tr>'
                                 +'<td colspan="3"><h4>'+theme.langs.screenshots+'</h4>';
                                 for(i = 0; i < item.a_images.length; i++){
-                                    screenshots += '<a rel="image_group'+item.fk_i_market_id+'" href="'+item.a_images[i]['s_image']+'" class="screnshot"><img src="'+item.a_images[i]['s_thumbnail']+'" /></a>';
+                                    screenshots += '<a class="fancybox screenshot" data-fancybox-group="'+item.s_title+'" href="'+item.a_images[i]['s_image']+'" ><img src="'+item.a_images[i]['s_thumbnail']+'" /></a>';
                                     if(i == 2) break;
                                 }
                              screenshots += '</td></tr>';
@@ -191,9 +191,9 @@ $(function(){
                             +'</div>'
                         +'</div>';
                     var $print = $(print);
-                    $print.find('.screnshot:last img').addClass('last');
+                    $print.find('.screenshot:last img').addClass('last');
 
-                    $print.find('a.screnshot').fancybox({
+                    $print.find('a.screenshot').fancybox({
                         openEffect : 'none',
                         closeEffect : 'none',
                         nextEffect : 'fade',
@@ -203,6 +203,11 @@ $(function(){
                             title : {
                             type : 'inside'
                             }
+                        },
+                        tpl: {
+                            prev: '<a class="fancybox-nav fancybox-prev"><span></span></a>',
+                            next: '<a class="fancybox-nav fancybox-next"><span></span></a>',
+                            closeBtn : '<a class="fancybox-item fancybox-close" href="javascript:;"></a>'
                         }
                     });
 

@@ -3,7 +3,7 @@
      *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2013 OSCLASS
+     *                        Copyright (C) 2014 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -25,6 +25,7 @@
 <div id="responsive-trigger"></div>
 <!-- footer -->
 <div class="clear"></div>
+<?php osc_show_widgets('footer');?>
 <div id="footer">
     <div class="wrapper">
         <ul class="resp-toogle">
@@ -66,7 +67,7 @@
         </ul>
         <?php
         if( osc_get_preference('footer_link', 'bender_theme') !== '0') {
-            echo '<div>This website is proudly using the <a title="Osclass web" href="http://osclass.org/">classifieds scripts</a> software <strong>Osclass</strong></div>';
+            echo '<div>' . sprintf(__('This website is proudly using the <a title="Osclass web" href="%s">classifieds scripts</a> software <strong>Osclass</strong>'), 'http://osclass.org/') . '</div>';
         }
         ?>
         <?php if ( osc_count_web_enabled_locales() > 1) { ?>

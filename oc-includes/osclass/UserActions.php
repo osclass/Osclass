@@ -1,21 +1,20 @@
 <?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
-    /**
-     * Osclass – software for creating and publishing online classified advertising platforms
-     *
-     * Copyright (C) 2012 OSCLASS
-     *
-     * This program is free software: you can redistribute it and/or modify it under the terms
-     * of the GNU Affero General Public License as published by the Free Software Foundation,
-     * either version 3 of the License, or (at your option) any later version.
-     *
-     * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-     * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-     * See the GNU Affero General Public License for more details.
-     *
-     * You should have received a copy of the GNU Affero General Public
-     * License along with this program. If not, see <http://www.gnu.org/licenses/>.
-     */
+/*
+ * Copyright 2014 Osclass
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
     Class UserActions
     {
@@ -31,55 +30,63 @@
         //add...
         function add()
         {
-            $success    = 0;
-            $error      = false;
-            if( !$error && (osc_recaptcha_private_key() != '') && !$this->is_admin ) {
+            $error = array();
+            $flash_error = '';
+            if( (osc_recaptcha_private_key() != '') && !$this->is_admin ) {
                 if( !osc_check_recaptcha() ) {
-                    $error = 4;
+                    $flash_error .= _m('The reCAPTCHA was not entered correctly') . PHP_EOL;
+                    $error[] = 4;
                 }
             }
 
-            if( !$error && Params::getParam('s_password', false, false) == '' ) {
-                $error = 6;
+            if( Params::getParam('s_password', false, false) == '' ) {
+                $flash_error .= _m('The password cannot be empty') . PHP_EOL;
+                $error[] = 6;
             }
 
-            if( !$error && Params::getParam('s_password', false, false) != Params::getParam('s_password2', false, false) ) {
-                $error = 7;
+            if( Params::getParam('s_password', false, false) != Params::getParam('s_password2', false, false) ) {
+                $flash_error .= _m("Passwords don't match") . PHP_EOL;
+                $error[] = 7;
             }
 
             $input = $this->prepareData(true);
 
-            if( !$error && $input['s_name']=='' ) {
-                $error = 10;
+            if( $input['s_name']=='' ) {
+                $flash_error .= _m('The name cannot be empty') . PHP_EOL;
+                $error[] = 10;
             }
 
-            if( !$error && !osc_validate_email($input['s_email']) ) {
-                $error = 5;
+            if( !osc_validate_email($input['s_email']) ) {
+                $flash_error .= _m('The email is not valid') . PHP_EOL;
+                $error[] = 5;
             }
 
             $email_taken = $this->manager->findByEmail($input['s_email']);
-            if( !$error && $email_taken != null ) {
+            if( $email_taken != false ) {
                 osc_run_hook('register_email_taken', $input['s_email']);
-                $error = 3;
+                $flash_error .= _m('The specified e-mail is already in use') . PHP_EOL;
+                $error[] = 3;
             }
 
-            if(!$error && $input['s_username']!='') {
+            if($input['s_username']!='') {
                 $username_taken = $this->manager->findByUsername($input['s_username']);
-                if( !$error && $username_taken != null ) {
-                    $error = 8;
+                if( !$error && $username_taken != false ) {
+                    $flash_error .= _m("Username is already taken") . PHP_EOL;
+                    $error[] = 8;
                 }
                 if(osc_is_username_blacklisted($input['s_username'])) {
-                    $error = 9;
+                    $flash_error .= _m("The specified username is not valid, it contains some invalid words") . PHP_EOL;
+                    $error[] = 9;
                 }
+            }
+
+            if($flash_error!='') {
+                osc_run_hook('user_register_failed', $error);
+                return $flash_error;
             }
 
             // hook pre add or edit
             osc_run_hook('pre_user_post');
-
-            if( is_numeric($error) && $error > 0) {
-                osc_run_hook('user_register_failed', $error);
-                return $error;
-            }
 
 
             $this->manager->insert($input);
@@ -139,16 +146,30 @@
 
             // hook pre add or edit
             osc_run_hook('pre_user_post');
-
+            $flash_error = '';
+            $error = array();
             if($this->is_admin) {
                 $user_email = $this->manager->findByEmail($input['s_email']);
                 if(isset($user_email['pk_i_id']) && $user_email['pk_i_id']!=$userId) {
-                    return 3;
+                    $flash_error .= sprintf(_m('The specified e-mail is already used by %') , $user_email['s_username']) . PHP_EOL;
+                    $error[] = 3;
                 }
             }
 
             if($input['s_name']=='') {
-                return 10;
+                $flash_error .= _m('The name cannot be empty').PHP_EOL;
+                $error[] = 10;
+            }
+
+            if($this->is_admin){
+                if( Params::getParam('s_password', false, false) != Params::getParam('s_password2', false, false) ) {
+                    $flash_error .= _m("Passwords don't match") . PHP_EOL;
+                    $error[] = 7;
+                }
+            }
+
+            if($flash_error!='') {
+                return $flash_error;
             }
 
             $this->manager->update($input, array('pk_i_id' => $userId));
@@ -200,7 +221,7 @@
                 }
             }
 
-            return 0;
+            return 1;
         }
 
         function recover_password()
@@ -246,10 +267,6 @@
             if ( $this->is_admin || $is_add ) {
                 $input['s_email'] = Params::getParam('s_email');
 
-                if( Params::getParam('s_password', false, false) != Params::getParam('s_password2', false, false) ) {
-                    return 1;
-                }
-
                 //if we want to change the password
                 if( Params::getParam('s_password', false, false) != '') {
                     $input['s_password'] = osc_hash_password(Params::getParam('s_password', false, false));
@@ -265,6 +282,8 @@
             if(strtolower(substr($input['s_website'], 0, 4))!=='http') {
                 $input['s_website'] = 'http://'.$input['s_website'];
             }
+            $input['s_website'] = osc_sanitize_url($input['s_website']);
+            if ( ! osc_validate_url($input['s_website'])) $input['s_website'] = '';
 
             //locations...
             $country = Country::newInstance()->findByCode( Params::getParam('countryId') );

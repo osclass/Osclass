@@ -1,22 +1,18 @@
 <?php
 /*
- *      Osclass – software for creating and publishing online classified
- *                           advertising platforms
+ * Copyright 2014 Osclass
  *
- *                        Copyright (C) 2012 OSCLASS
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- *       This program is free software: you can redistribute it and/or
- *     modify it under the terms of the GNU Affero General Public License
- *     as published by the Free Software Foundation, either version 3 of
- *            the License, or (at your option) any later version.
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
- *     This program is distributed in the hope that it will be useful, but
- *         WITHOUT ANY WARRANTY; without even the implied warranty of
- *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *             GNU Affero General Public License for more details.
- *
- *      You should have received a copy of the GNU Affero General Public
- * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 /**
@@ -91,6 +87,18 @@ function osc_show_widgets($location) {
 }
 
 /**
+ * Print all widgets named $description
+ *
+ * @param string $description
+ * @return void
+ */
+function osc_show_widgets_by_description($description) {
+    $widgets = Widget::newInstance()->findByDescription($description);
+    foreach ($widgets as $w)
+        echo $w['s_content'];
+}
+
+/**
  * Print recaptcha html, if $section = "recover_password"
  * set 'recover_time' at session.
  *
@@ -104,12 +112,12 @@ function osc_show_recaptcha($section = '') {
             case('recover_password'):
                 $time  = Session::newInstance()->_get('recover_time');
                 if((time()-$time)<=1200) {
-                    echo recaptcha_get_html( osc_recaptcha_public_key() )."<br />";
+                    echo recaptcha_get_html( osc_recaptcha_public_key(), null, osc_is_ssl() )."<br />";
                 }
                 break;
 
             default:
-                echo recaptcha_get_html( osc_recaptcha_public_key() );
+                echo recaptcha_get_html( osc_recaptcha_public_key(), null, osc_is_ssl() );
                 break;
         }
     }
@@ -208,10 +216,11 @@ function osc_private_user_menu($options = null)
  */
 function osc_highlight($txt, $len = 300, $start_tag = '<strong>', $end_tag = '</strong>') {
     $txt = strip_tags($txt);
-    $txt = str_replace("\n", ' ', $txt);
+    $txt = str_replace(array("\n\r","\r\n","\n","\r","\t"), ' ', $txt);
     $txt = trim($txt);
-    if( mb_strlen($txt, 'utf8') > $len ) {
-        $txt = mb_substr($txt, 0, $len, 'utf-8') . "...";
+    $txt = preg_replace('/\s+/', ' ', $txt);
+    if( mb_strlen($txt, 'UTF-8') > $len ) {
+        $txt = mb_substr($txt, 0, $len, 'UTF-8') . "...";
     }
     $query = osc_search_pattern();
     $query = str_replace(array('(',')','+','-','~','>','<'), array('','','','','','',''), $query);
@@ -279,6 +288,9 @@ function osc_get_subdomain_params() {
         }
         if(Params::getParam('sCategory')!='') {
             $options['sCategory'] = Params::getParam('sCategory');
+        }
+        if(Params::getParam('sUser')!='') {
+            $options['sUser'] = Params::getParam('sUser');
         }
     }
     return $options;

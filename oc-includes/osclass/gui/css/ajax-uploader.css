@@ -26,14 +26,15 @@
 }
 
 .qq-upload-list li {
-    float: left;
     background-color: #dff0d8!important;
     color: #333333!important;
-    display: block;
+    display: inline-block;
     min-height: 200px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    height: 200px;
+    overflow: hidden;
 }
-
-/*    width: 47%;*/
 
 .qq-upload-button {
     background-color: #f2dede;
@@ -50,4 +51,17 @@
 
 .qq-uploader {
     width: 100%;
+}
+
+.qq-upload-fail .qq-upload-status-text {
+    background-color: #F2DEDE;
+    padding: 5px 10px;
+    display: block;
+    border: solid 1px #D5B3B3;
+    font-size: 14px;
+    color: #7E0000;
+    border-radius: 4px;
+}
+.qq-upload-status-text {
+    display:none
 }

@@ -3,7 +3,7 @@
      *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2013 OSCLASS
+     *                        Copyright (C) 2014 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -45,7 +45,6 @@
                 <label class="control-label" for="email"><?php _e('E-mail', 'bender'); ?></label>
                 <div class="controls">
                     <?php UserForm::email_text(); ?>
-                    <?php osc_show_recaptcha('register'); ?>
                 </div>
             </div>
             <div class="control-group">
@@ -64,6 +63,11 @@
                 </div>
             </div>
             <?php osc_run_hook('user_register_form'); ?>
+            <div class="control-group">
+                <div class="controls">
+                    <?php osc_show_recaptcha('register'); ?>
+                </div>
+            </div>
             <div class="control-group">
                 <div class="controls">
                     <button type="submit" class="ui-button ui-button-middle ui-button-main"><?php _e("Create", 'bender'); ?></button>

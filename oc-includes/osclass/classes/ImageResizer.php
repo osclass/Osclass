@@ -1,23 +1,19 @@
 <?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
-    /*
-     *      Osclass – software for creating and publishing online classified
-     *                           advertising platforms
-     *
-     *                        Copyright (C) 2012 OSCLASS
-     *
-     *       This program is free software: you can redistribute it and/or
-     *     modify it under the terms of the GNU Affero General Public License
-     *     as published by the Free Software Foundation, either version 3 of
-     *            the License, or (at your option) any later version.
-     *
-     *     This program is distributed in the hope that it will be useful, but
-     *         WITHOUT ANY WARRANTY; without even the implied warranty of
-     *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-     *             GNU Affero General Public License for more details.
-     *
-     *      You should have received a copy of the GNU Affero General Public
-     * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
-     */
+/*
+ * Copyright 2014 Osclass
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
     /**
      * This class represents a utility to load and resize images easily.
@@ -37,6 +33,7 @@
         private $_color;
         private $_width;
         private $_height;
+        private $_watermarked = false;
 
 
         private function __construct($imagePath) {
@@ -66,9 +63,22 @@
                 default:
                     $this->ext = 'jpg';
                     $this->mime = 'image/jpeg';
+                    if(!osc_use_imagick()) {
+                        $bg = imagecreatetruecolor($this->_width, $this->_height);
+                        imagefill($bg, 0, 0, imagecolorallocatealpha($bg, 255, 255, 255, 127));
+                        imagesavealpha($bg, true);
+                        imagealphablending($bg, TRUE);
+                        imagecopy($bg, $this->im, 0, 0, 0, 0, $this->_width, $this->_height);
+                        imagedestroy($this->im);
+                        $this->im = $bg;
+                    }
                     break;
             }
 
+            /*var_dump($imagePath); echo PHP_EOL;
+            var_dump($this->ext); echo PHP_EOL;
+            var_dump($this->mime); echo PHP_EOL;
+            echo PHP_EOL; echo PHP_EOL;*/
             return $this;
         }
 
@@ -143,25 +153,10 @@
                 switch ($ext) {
                     case 'gif':
                     case 'png':
-                        if($this->ext!='png' && $this->ext!='gif') {
-                            $bg = imagecreatetruecolor($this->_width, $this->_height);
-                            imagefill($bg, 0, 0, imagecolorallocatealpha($bg, 255, 255, 255, 127));
-                            imagesavealpha($bg, true);
-                            imagealphablending($bg, TRUE);
-                            imagecopy($bg, $this->im, 0, 0, 0, 0, $this->_width, $this->_height);
-                            imagedestroy($this->im);
-                            $this->im = $bg;
-                        }
                         imagepng($this->im, $imagePath, 0);
                         break;
                     default:
-                        if($ext=='jpeg' && ($this->ext!='jpeg' && $this->ext!='jpg')) {
-                            $bg = imagecreatetruecolor($this->_width, $this->_height);
-                            imagefill($bg, 0, 0, imagecolorallocate($bg, 255, 255, 255));
-                            imagealphablending($bg, TRUE);
-                            imagecopy($bg, $this->im, 0, 0, 0, 0, $this->_width, $this->_height);
-                            imagedestroy($this->im);
-                            $this->im = $bg;
+                        if(($ext=='jpeg' && ($this->ext!='jpeg' && $this->ext!='jpg')) || $this->_watermarked) {
                             $this->ext = 'jpeg';
                         }
                         imagejpeg($this->im, $imagePath);
@@ -257,6 +252,7 @@
         }
 
         public function doWatermarkText($text, $color = 'ff0000') {
+            $this->_watermarked = true;
             $this->_font = osc_apply_filter('watermark_font_path', LIB_PATH . "osclass/assets/fonts/Arial.ttf");
             if(osc_use_imagick()) {
                 $draw = new ImagickDraw();
@@ -290,8 +286,10 @@
             } else {
                 imagealphablending( $this->im, true );
                 imagesavealpha( $this->im, true );
-                $white = imagecolorallocatealpha($this->im, 255, 255, 255, 127);
-                imagefill($this->im, 0, 0, $white);
+                if($this->ext!='jpg') {
+                    $white = imagecolorallocatealpha($this->im, 255, 255, 255, 127);
+                    imagefill($this->im, 0, 0, $white);
+                }
                 $color  = $this->_imageColorAllocateHex($color);
                 $offset = $this->_calculateOffset($text);
                 imagettftext($this->im, 20, 0, $offset['x'], $offset['y'], $color, $this->_font , html_entity_decode($text, null, "UTF-8"));
@@ -374,7 +372,7 @@
 
         public function doWatermarkImage()
         {
-
+            $this->_watermarked = true;
             $path_watermark = osc_uploads_path() . 'watermark.png';
             if(osc_use_imagick()) {
                 $wm = new Imagick($path_watermark);
@@ -516,4 +514,3 @@ if(!function_exists('imageflip')) {
     }
     define('IMG_FLIP_HORIZONTAL', 0);
 }
-?>

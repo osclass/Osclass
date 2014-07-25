@@ -1,24 +1,20 @@
 <?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
-    /*
-     *      Osclass – software for creating and publishing online classified
-     *                           advertising platforms
-     *
-     *                        Copyright (C) 2012 OSCLASS
-     *
-     *       This program is free software: you can redistribute it and/or
-     *     modify it under the terms of the GNU Affero General Public License
-     *     as published by the Free Software Foundation, either version 3 of
-     *            the License, or (at your option) any later version.
-     *
-     *     This program is distributed in the hope that it will be useful, but
-     *         WITHOUT ANY WARRANTY; without even the implied warranty of
-     *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-     *             GNU Affero General Public License for more details.
-     *
-     *      You should have received a copy of the GNU Affero General Public
-     * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
-     */
+/*
+ * Copyright 2014 Osclass
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
     /**
      * Category DAO
@@ -30,12 +26,13 @@
          * @var type
          */
         private static $instance;
-        private $language;
-        private $tree;
-        private $categories;
-        private $categoriesEnabled;
-        private $relation;
-        private $empty_tree;
+        private $_language;
+        private $_tree;
+        private $_categories;
+        private $_categoriesEnabled;
+        private $_relation;
+        private $_emptyTree;
+        private $_slugs;
 
         public static function newInstance()
         {
@@ -68,11 +65,11 @@
                 $l = osc_current_user_locale();
             }
 
-            $this->language   = $l;
-            $this->tree       = null;
-            $this->relation   = null;
-            $this->categories = null;
-            $this->empty_tree = true;
+            $this->_language   = $l;
+            $this->_tree       = null;
+            $this->_relation   = null;
+            $this->_categories = null;
+            $this->_emptyTree = true;
             $this->toTree();
         }
 
@@ -92,7 +89,7 @@
                 $this->dao->where( $where );
             }
 
-            $this->dao->select( sprintf("a.*, b.*, c.i_num_items, FIELD(fk_c_locale_code, '%s') as locale_order", $this->dao->connId->real_escape_string(osc_current_user_locale()) ) );
+            $this->dao->select( sprintf("a.*, b.*, c.i_num_items, FIELD(fk_c_locale_code, '%s') as locale_order", $this->dao->connId->real_escape_string($this->_language) ) );
             $this->dao->from( $this->getTableName().' as a' );
             $this->dao->join(DB_TABLE_PREFIX.'t_category_description as b', 'a.pk_i_id = b.fk_i_category_id', 'INNER');
             $this->dao->join(DB_TABLE_PREFIX.'t_category_stats  as c ', 'a.pk_i_id = c.fk_i_category_id', 'LEFT');
@@ -127,7 +124,7 @@
          */
         public function listEnabled()
         {
-            $this->dao->select( sprintf("a.*, b.*, c.i_num_items, FIELD(fk_c_locale_code, '%s') as locale_order", $this->dao->connId->real_escape_string(osc_current_user_locale()) ) );
+            $this->dao->select( sprintf("a.*, b.*, c.i_num_items, FIELD(fk_c_locale_code, '%s') as locale_order", $this->dao->connId->real_escape_string($this->_language) ) );
             $this->dao->from( $this->getTableName().' as a' );
             $this->dao->join(DB_TABLE_PREFIX.'t_category_description as b', 'a.pk_i_id = b.fk_i_category_id', 'INNER');
             $this->dao->join(DB_TABLE_PREFIX.'t_category_stats  as c ', 'a.pk_i_id = c.fk_i_category_id', 'LEFT');
@@ -164,37 +161,56 @@
          */
         public function toTree($empty = true)
         {
-            if($empty==$this->empty_tree && $this->tree!=null) {
-                return $this->tree;
-            }
-            $this->empty_tree = $empty;
-            // if listEnabled has been called before, don't redo the query
-            if($this->categoriesEnabled) {
-                $categories = $this->categoriesEnabled;
-            } else {
-                $this->categoriesEnabled = $this->listEnabled();
-                $categories              = $this->categoriesEnabled;
-            }
-            $this->categories = array();
-            $this->relation = array();
-            foreach($categories as $c) {
-                if($empty || (!$empty && $c['i_num_items']>0)) {
-                    $this->categories[$c['pk_i_id']] = $c;
-                    if($c['fk_i_parent_id']==null) {
-                        $this->tree[] = $c;
-                        $this->relation[0][] = $c['pk_i_id'];
-                    } else {
-                        $this->relation[$c['fk_i_parent_id']][] = $c['pk_i_id'];
+            $key    = md5((string)$this->_language.(string)$empty);
+            $found  = null;
+            $cache  = osc_cache_get($key, $found);
+            if($cache===false) {
+                if($empty==$this->_emptyTree && $this->_tree!=null) {
+                    return $this->_tree;
+                }
+                $this->_empty_tree = $empty;
+                // if listEnabled has been called before, don't redo the query
+                if($this->_categoriesEnabled) {
+                    $categories = $this->_categoriesEnabled;
+                } else {
+                    $this->_categoriesEnabled = $this->listEnabled();
+                    $categories               = $this->_categoriesEnabled;
+                }
+                $this->_categories = array();
+                $this->_relation = array();
+                foreach($categories as $c) {
+                    if($empty || (!$empty && $c['i_num_items']>0)) {
+                        $this->_categories[$c['pk_i_id']] = $c;
+                        if($c['fk_i_parent_id']==null) {
+                            $this->_tree[] = $c;
+                            $this->_relation[0][] = $c['pk_i_id'];
+                        } else {
+                            $this->_relation[$c['fk_i_parent_id']][] = $c['pk_i_id'];
+                        }
                     }
                 }
-            }
 
-            if(count($this->relation) == 0 || !isset($this->relation[0]) ) {
-                return array();
-            }
+                if(count($this->_relation) == 0 || !isset($this->_relation[0]) ) {
+                    return array();
+                }
 
-            $this->tree = $this->sideTree($this->relation[0], $this->categories, $this->relation);
-            return $this->tree;
+                $this->_tree = $this->sideTree($this->_relation[0], $this->_categories, $this->_relation);
+
+                $cache['tree']         = $this->_tree;
+                $cache['empty_tree']   = $this->_emptyTree;
+                $cache['relation']     = $this->_relation;
+                $cache['categories']   = $this->_categories;
+                $cache['categoriesEnabled']   = $this->_categoriesEnabled;
+                osc_cache_set($key, $cache, OSC_CACHE_TTL);
+                return $this->_tree;
+            } else {
+                $this->_tree         = $cache['tree'];
+                $this->_empty_tree   = $cache['empty_tree'];
+                $this->_relation     = $cache['relation'];
+                $this->_categories   = $cache['categories'];
+                $this->_categoriesEnabled = $cache['categoriesEnabled'];
+                return $this->_tree;
+            }
         }
 
         /**
@@ -271,8 +287,8 @@
             if($category==null) {
                 return array();
             } else {
-                if(isset($this->relation[$category])) {
-                    $tree = $this->sideTree($this->relation[$category], $this->categories, $this->relation);
+                if(isset($this->_relation[$category])) {
+                    $tree = $this->sideTree($this->_relation[$category], $this->_categories, $this->_relation);
                     return $tree;
                 } else {
                     array();
@@ -388,15 +404,21 @@
          */
         public function findBySlug($slug)
         {
-            // juanramon: specific condition
-            $this->dao->where( 'b.s_slug', $slug );
-            // end specific condition
+            $slug = trim($slug);
+            if($slug!='') {
+                if(isset($this->_slugs[$slug])) {
+                    return $this->findByPrimaryKey($this->_slugs[$slug]);
+                }
+                $slug = urlencode($slug);
+                $this->dao->where('b.s_slug', $slug);
+                // end specific condition
 
-            $results = $this->listWhere();
-            if( count($results) > 0 ) {
-                return $results[0];
+                $results = $this->listWhere();
+                if (count($results) > 0) {
+                    $this->_slugs[$slug] = $results[0]['pk_i_id'];
+                    return $results[0];
+                }
             }
-
             return array();
         }
 
@@ -476,57 +498,60 @@
          * @param int $categoryID primary key
          * @return array
          */
-        public function findByPrimaryKey($categoryID)
+        public function findByPrimaryKey($categoryID, $locale = "")
         {
             if($categoryID == null) {
                 return false;
             }
+            $key    = md5('Category:findByPrimaryKey:'.$categoryID);
+            $found  = null;
+            $cache  = osc_cache_get($key, $found);
+            if($cache===false) {
+                $category = array();
 
-            $category = array();
+                if( isset($this->_categories[$categoryID]) ) {
+                    $category = $this->_categories[$categoryID];
 
-            if( array_key_exists($categoryID, $this->categories) ) {
-                $category = $this->categories[$categoryID];
+                    // if we already have locale data, we return the category
+                    if( $locale=="" || ($locale!="" && isset($category['locale']))) {
+                        return $category;
+                    }
+                } else {
+                    $category = $this->listWhere();
 
-                // if we already have locale data, we return the category
-                if( array_key_exists('locale', $category)) {
-                    return $category;
+                    if(!isset($category['pk_i_id'])) {
+                        return false;
+                    }
                 }
-            } else {
-                $this->dao->select( $this->getFields() );
-                $this->dao->from( $this->getTableName() );
-                $this->dao->where( 'pk_i_id', $categoryID );
+
+                $this->dao->select();
+                $this->dao->from( $this->getTablePrefix() . 't_category_description' );
+                $this->dao->where( 'fk_i_category_id', $category['pk_i_id'] );
+                $this->dao->orderBy( 'fk_c_locale_code' );
                 $result = $this->dao->get();
 
                 if( $result == false ) {
                     return false;
                 }
 
-                $category = $result->row();
+                $sub_rows = $result->result();
+                $row      = array();
+                foreach ($sub_rows as $sub_row) {
+                    if(isset($sub_row['fk_c_locale_code'])) {
+                        $row[$sub_row['fk_c_locale_code']] = $sub_row;
+                    }
+                }
+                $category['locale'] = $row;
+
+                // if it exists in the $categories array, we copy the row data
+                if( array_key_exists($categoryID, $this->_categories) ) {
+                    $this->_categories[$categoryID] = $category;
+                }
+                osc_cache_set($key, $category, OSC_CACHE_TTL);
+                return $category;
+            } else {
+                return $cache;
             }
-
-            $this->dao->select();
-            $this->dao->from( $this->getTablePrefix() . 't_category_description' );
-            $this->dao->where( 'fk_i_category_id', $category['pk_i_id'] );
-            $this->dao->orderBy( 'fk_c_locale_code' );
-            $result = $this->dao->get();
-
-            if( $result == false ) {
-                return false;
-            }
-
-            $sub_rows = $result->result();
-            $row      = array();
-            foreach ($sub_rows as $sub_row) {
-                $row[$sub_row['fk_c_locale_code']] = $sub_row;
-            }
-            $category['locale'] = $row;
-
-            // if it exists in the $categories array, we copy the row data
-            if( array_key_exists($categoryID, $this->categories) ) {
-                $this->categories[$categoryID] = $category;
-            }
-
-            return $category;
         }
 
         /**
@@ -545,8 +570,8 @@
 
             $category = array();
 
-            if( array_key_exists($categoryID, $this->categories) ) {
-                $category = $this->categories[$categoryID];
+            if( array_key_exists($categoryID, $this->_categories) ) {
+                $category = $this->_categories[$categoryID];
             } else {
                 $this->dao->select( "s_name" );
                 $this->dao->from( $this->getTablePrefix() . 't_category_description' );
@@ -870,4 +895,4 @@
     }
 
     /* file end: ./oc-includes/osclass/model/Category.php */
-?>
+

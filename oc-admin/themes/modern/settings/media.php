@@ -1,20 +1,19 @@
 <?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.');
-    /**
-     * Osclass – software for creating and publishing online classified advertising platforms
-     *
-     * Copyright (C) 2012 OSCLASS
-     *
-     * This program is free software: you can redistribute it and/or modify it under the terms
-     * of the GNU Affero General Public License as published by the Free Software Foundation,
-     * either version 3 of the License, or (at your option) any later version.
-     *
-     * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-     * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-     * See the GNU Affero General Public License for more details.
-     *
-     * You should have received a copy of the GNU Affero General Public
-     * License along with this program. If not, see <http://www.gnu.org/licenses/>.
-     */
+/*
+ * Copyright 2014 Osclass
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
     osc_enqueue_script('jquery-validate');
     osc_enqueue_script('colorpicker');
@@ -27,7 +26,7 @@
 
     //customize Head
     function customHead() { ?>
-        <link rel="stylesheet" media="screen" type="text/css" href="<?php echo osc_current_admin_theme_js_url('colorpicker/css/colorpicker.css'); ?>" />
+        <link rel="stylesheet" media="screen" type="text/css" href="<?php echo osc_assets_url('js/colorpicker/css/colorpicker.css'); ?>" />
         <script type="text/javascript">
             $(document).ready(function(){
                 // Code for form validation
@@ -187,12 +186,23 @@
                     <div class="form-controls"><input type="text" class="input-medium"  name="dimNormal" value="<?php echo osc_esc_html( osc_normal_dimensions() ); ?>" /></div>
                 </div>
                 <div class="form-row">
-                    <div class="form-label"><?php _e('Normal size'); ?></div>
+                    <div class="form-label"><?php _e('Original size'); ?></div>
                     <div class="form-controls">
                         <div class="form-label-checkbox">
                             <input type="checkbox" id="keep_original_image" name="keep_original_image" value="1" <?php echo ( osc_keep_original_image() ? 'checked="checked"' : '' ); ?> />
                             <label for="keep_original_image"><?php _e('Keep original image, unaltered after uploading.'); ?></label>
                             <span class="help-box"><?php _e('Image may occupy more space than usual.'); ?></span>
+                        </div>
+                    </div>
+                </div>
+                <h2 class="render-title"><?php _e('Restrictions'); ?></h2>
+                <div class="form-row">
+                    <div class="form-label"><?php _e('Force JPEG'); ?></div>
+                    <div class="form-controls">
+                        <div class="form-label-checkbox">
+                            <input type="checkbox" id="force_jpeg" name="force_jpeg" value="1" <?php echo ( osc_force_jpeg() ? 'checked="checked"' : '' ); ?> />
+                            <label for="force_jpeg"><?php _e('Force JPEG extension.'); ?></label>
+                            <span class="help-box"><?php _e('Uploaded images will be saved in JPG/JPEG format, saves space, but images will not have transparent background.'); ?></span>
                         </div>
                     </div>
                 </div>
@@ -206,7 +216,6 @@
                         </div>
                     </div>
                 </div>
-                <h2 class="render-title"><?php _e('Restrictions'); ?></h2>
                 <div class="form-row">
                     <div class="form-label"><?php _e('Maximum size'); ?></div>
                     <div class="form-controls">
