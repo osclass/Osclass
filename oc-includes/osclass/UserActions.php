@@ -151,7 +151,7 @@
             if($this->is_admin) {
                 $user_email = $this->manager->findByEmail($input['s_email']);
                 if(isset($user_email['pk_i_id']) && $user_email['pk_i_id']!=$userId) {
-                    $flash_error .= sprintf(_m('The specified e-mail is already used by %') , $user_email['s_username']) . PHP_EOL;
+                    $flash_error .= sprintf(_m('The specified e-mail is already used by %s') , $user_email['s_username']) . PHP_EOL;
                     $error[] = 3;
                 }
             }

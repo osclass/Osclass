@@ -197,7 +197,7 @@ osc_cache_init();
 
 define('__OSC_LOADED__', true);
 
-// Moved from BaseModel, since we need some session magic on index.php;)
+Params::init();
 Session::newInstance()->session_start();
 
 if( osc_timezone() != '' ) {
