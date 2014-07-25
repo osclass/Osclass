@@ -633,6 +633,24 @@
                         echo json_encode(array('html' => $content) );
                     }
                     break;
+                case 'market_header':
+                    $error = 0;
+                    // make market call
+                    $url = osc_get_preference('marketURL') . 'market_header/';
+
+                    $content = '';
+                    if(false===($json=@osc_file_get_contents($url))) {
+                        $error = 1;
+                    } else {
+                        $content = $json;
+                    }
+
+                    if($error==1) {
+                        echo json_encode(array('error' => 1));
+                    } else {
+                        echo json_encode(array('html' => $content) );
+                    }
+                    break;
                 case 'location_stats':
                     osc_csrf_check(false);
                     $workToDo = osc_update_location_stats();

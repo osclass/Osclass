@@ -305,7 +305,7 @@
 <script type="text/javascript">
     $(function(){
         $.getJSON(
-            '<?php echo osc_admin_base_url(true); ?>?page=ajax&action=dashboardbox_market',
+            '<?php echo osc_admin_base_url(true); ?>?page=ajax&action=market_header',
             function(data){
                 if(data.error==1) {
                     $('<p style="text-align:center; padding-top:15px;"><?php _e('Has been a problem loading the contents, sorry for the inconvenience'); ?></p>').insertAfter('#banner_market');
