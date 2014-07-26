@@ -105,6 +105,11 @@
             self::$_request[$key] = $value;
         }
 
+        static function unsetParam($key)
+        {
+            unset(self::$_request[$key]);
+        }
+
         static function _view()
         {
             print_r(self::getParamsAsArray());
