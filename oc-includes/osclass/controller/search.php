@@ -164,13 +164,9 @@
                                 break;
                         }
 
-
-                        $_REQUEST[$m[1][$k]] = $m[2][$k];
-                        $_GET[$m[1][$k]] = $m[2][$k];
-                        unset($_REQUEST['sParams']);
-                        unset($_GET['sParams']);
-                        unset($_POST['sParams']);
+                        Params::setParam($m[1][$k], $m[2][$k]);
                     }
+                    Params::unsetParam('sParams');
                 }
             }
 
