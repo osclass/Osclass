@@ -1,22 +1,18 @@
 <?php
 /*
- *      Osclass – software for creating and publishing online classified
- *                           advertising platforms
+ * Copyright 2014 Osclass
  *
- *                        Copyright (C) 2012 OSCLASS
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- *       This program is free software: you can redistribute it and/or
- *     modify it under the terms of the GNU Affero General Public License
- *     as published by the Free Software Foundation, either version 3 of
- *            the License, or (at your option) any later version.
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
- *     This program is distributed in the hope that it will be useful, but
- *         WITHOUT ANY WARRANTY; without even the implied warranty of
- *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *             GNU Affero General Public License for more details.
- *
- *      You should have received a copy of the GNU Affero General Public
- * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 function osc_meta_publish($catId = null) {
@@ -65,7 +61,7 @@ function search_title() {
         $result .= osc_get_preference('seo_title_keyword') . ' ';
     }
 
-    if($b_category && is_array($category) && count($category) > 0) {
+    if($b_category && !empty($category)) {
         $cat = Category::newInstance()->findByPrimaryKey($category[0]);
         if(isset($cat['s_name'])) {
             $result .= $cat['s_name'].' ';
@@ -113,8 +109,8 @@ function meta_title() {
                 $s_page = ' - ' . __('page') . ' ' . $i_page;
             }
 
-            $b_show_all = ($region == '' && $city == '' && $pattern == '' && $category == '');
-            $b_category = ($category != '');
+            $b_show_all = ($region == '' && $city == '' && $pattern == '' && empty($category));
+            $b_category = (!empty($category));
             $b_pattern  = ($pattern != '');
             $b_city     = ($city != '');
             $b_region   = ($region != '');
@@ -203,13 +199,13 @@ function meta_description( ) {
     // search
     if( osc_is_search_page() ) {
         if( osc_has_items() ) {
-            $text = osc_item_category() . ' ' . osc_item_city() . ', ' . osc_highlight(osc_item_description(), 120) . ', ' . osc_item_category() . ' ' . osc_item_city();
+            $text = osc_item_category() . ' ' . osc_item_city() . ', ' . osc_highlight(osc_item_description(), 120);
         }
         osc_reset_items();
     }
     // listing
     if( osc_is_ad_page() ) {
-        $text = osc_item_category() . ' ' . osc_item_city() . ', ' . osc_highlight(osc_item_description(), 120) . ', ' . osc_item_category() . ' ' . osc_item_city();
+        $text = osc_item_category() . ' ' . osc_item_city() . ', ' . osc_highlight(osc_item_description(), 120);
     }
 
     return (osc_apply_filter('meta_description_filter', $text));
@@ -265,9 +261,8 @@ function osc_search_footer_links() {
         return array();
     }
 
-    $categoryID = '';
-    if( osc_search_category_id() ) {
-        $categoryID = osc_search_category_id();
+    $categoryID = osc_search_category_id();
+    if( !empty($categoryID) ) {
 
         if( Category::newInstance()->isRoot( current($categoryID) ) ) {
             $cat = Category::newInstance()->findSubcategories(current($categoryID));
@@ -301,7 +296,7 @@ function osc_search_footer_links() {
     $comm->select('COUNT(*) AS total');
     $comm->from(DB_TABLE_PREFIX . 't_item as i');
     $comm->from(DB_TABLE_PREFIX . 't_item_location as l');
-    if( $categoryID != '' ) {
+    if( !empty($categoryID) ) {
         $comm->whereIn('i.fk_i_category_id', $categoryID);
     }
     $comm->where('i.pk_i_id = l.fk_i_item_id');
@@ -337,8 +332,9 @@ function osc_footer_link_url($f = null) {
         View::newInstance()->_exportVariableToView('footer_link', $f);
     }
     $params = array();
-    if( osc_search_category_id() ) {
-        $params['sCategory'] = osc_search_category_id();
+    $tmp = osc_search_category_id();
+    if( !empty($tmp) ) {
+        $params['sCategory'] = $f['fk_i_category_id'];
     }
 
     if( osc_search_region() == '' ) {
@@ -366,8 +362,8 @@ function osc_footer_link_title($f = null) {
         $text .= osc_get_preference('seo_title_keyword') . ' ';
     }
 
-    if( osc_search_category_id() ) {
-        $cat = osc_get_category('id', $f['fk_i_category_id']);
+    $cat = osc_get_category('id', $f['fk_i_category_id']);
+    if(@$cat['s_name']!='') {
         $text .= $cat['s_name'].' ';
     }
 
@@ -468,6 +464,27 @@ function osc_admin_toolbar_spam()
     }
 }
 
+function osc_admin_toolbar_update_core($force = false)
+{
+    if( !osc_is_moderator() ) {
+        $data = json_decode(osc_update_core_json(), true);
+
+        if($force) {
+            AdminToolbar::newInstance()->remove_menu('update_core');
+        }
+        if(isset($data['version']) && $data['version'] > 0) {
+            $title = sprintf(__('Osclass %s is available'), $data['s_name']);
+            AdminToolbar::newInstance()->add_menu(
+                array('id'    => 'update_core',
+                    'title' => $title,
+                    'href'  => osc_admin_base_url(true) . "?page=tools&action=upgrade",
+                    'meta'  => array('class' => 'action-btn action-btn-black')
+                ) );
+        }
+    }
+}
+
+
 function osc_check_plugins_update( $force = false )
 {
     $total = 0;
@@ -509,11 +526,11 @@ function osc_admin_toolbar_update_plugins($force = false)
         if($total > 0) {
             $title = '<i class="circle circle-gray">'.$total.'</i>'.__('Plugin updates');
             AdminToolbar::newInstance()->add_menu(
-                    array('id'    => 'update_plugin',
-                          'title' => $title,
-                          'href'  => osc_admin_base_url(true) . "?page=plugins#update-plugins",
-                          'meta'  => array('class' => 'action-btn action-btn-black')
-                    ) );
+                array('id'    => 'update_plugin',
+                    'title' => $title,
+                    'href'  => osc_admin_base_url(true) . "?page=plugins#update-plugins",
+                    'meta'  => array('class' => 'action-btn action-btn-black')
+                ) );
         }
     }
 }

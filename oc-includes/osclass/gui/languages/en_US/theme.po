@@ -169,6 +169,18 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
+#: common/head.php:50
+msgid "Previous image"
+msgstr ""
+
+#: common/head.php:51
+msgid "Next image"
+msgstr ""
+
+#: common/head.php:52
+msgid "Close"
+msgstr ""
+
 #: contact.php:31
 msgid "Contact us"
 msgstr ""

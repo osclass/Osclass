@@ -1,24 +1,20 @@
 <?php
 
-    /*
-     *      Osclass – software for creating and publishing online classified
-     *                           advertising platforms
-     *
-     *                        Copyright (C) 2012 OSCLASS
-     *
-     *       This program is free software: you can redistribute it and/or
-     *     modify it under the terms of the GNU Affero General Public License
-     *     as published by the Free Software Foundation, either version 3 of
-     *            the License, or (at your option) any later version.
-     *
-     *     This program is distributed in the hope that it will be useful, but
-     *         WITHOUT ANY WARRANTY; without even the implied warranty of
-     *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-     *             GNU Affero General Public License for more details.
-     *
-     *      You should have received a copy of the GNU Affero General Public
-     * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
-     */
+/*
+ * Copyright 2014 Osclass
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 
     /**
@@ -53,6 +49,7 @@
         $fields['country'] = 'sCountry';
         $fields['region'] = 'sRegion';
         $fields['city'] = 'sCity';
+        $fields['user'] = 'sUser';
         if(isset($fields[osc_subdomain_type()])) {
             $field = $fields[osc_subdomain_type()];
             if(isset($params[$field]) && !is_array($params[$field]) && $params[$field]!='' && strpos($params[$field], ',')===false) {
@@ -231,9 +228,20 @@
      * @return string
      */
     function osc_current_web_theme_path($file = '') {
+		$info = WebThemes::newInstance()->loadThemeInfo(WebThemes::newInstance()->getCurrentTheme());
 
         if( file_exists(WebThemes::newInstance()->getCurrentThemePath() . $file) ){
             require WebThemes::newInstance()->getCurrentThemePath() . $file;
+        } elseif($info['template'] != '') {
+			WebThemes::newInstance()->setParentTheme();
+            if( file_exists(WebThemes::newInstance()->getCurrentThemePath() . $file) ) {
+              require WebThemes::newInstance()->getCurrentThemePath() . $file;
+            } else {
+				WebThemes::newInstance()->setGuiTheme();
+	            if( file_exists(WebThemes::newInstance()->getCurrentThemePath() . $file) ) {
+	                require WebThemes::newInstance()->getCurrentThemePath() . $file;
+	            }
+			}
         } else {
             WebThemes::newInstance()->setGuiTheme();
             if( file_exists(WebThemes::newInstance()->getCurrentThemePath() . $file) ) {
@@ -267,14 +275,20 @@
      *
      * @since 3.0
      * @param string $file
+     * @param string $assets_base_url
      * @return string
      */
-    function osc_assets_url($file = '') {
+    function osc_assets_url($file = '', $assets_base_url = null) {
         if( stripos($file, '../') !== false ) {
             $file = '';
         }
 
-        return osc_base_url() . 'oc-includes/osclass/assets/' . $file;
+        if ( is_null($assets_base_url) ) {
+            return osc_base_url() . 'oc-includes/osclass/assets/' . $file;
+        }
+        else {
+            return $assets_base_url . $file;
+        }
     }
 
     /////////////////////////////////////
@@ -966,17 +980,12 @@
     }
 
     /**
-     * Get if user is on ad page
+     * Get if user is on homepage
      *
      * @return boolean
      */
-    function osc_is_ad_page() {
-        $location = Rewrite::newInstance()->get_location();
-        $section = Rewrite::newInstance()->get_section();
-        if($location=='item' && $section=='') {
-            return true;
-        }
-        return false;
+    function osc_is_home_page() {
+        return osc_is_current_page('', '');
     }
 
     /**
@@ -985,11 +994,7 @@
      * @return boolean
      */
     function osc_is_search_page() {
-        $location = Rewrite::newInstance()->get_location();
-        if($location=='search') {
-            return true;
-        }
-        return false;
+        return osc_is_current_page('search', '');
     }
 
     /**
@@ -998,39 +1003,25 @@
      * @return boolean
      */
     function osc_is_static_page() {
-        $location = Rewrite::newInstance()->get_location();
-        if($location=='page') {
-            return true;
-        }
-        return false;
+        return osc_is_current_page('page', '');
     }
 
     /**
-     * Get if user is on homepage
+     * Get if user is on a contact page
      *
      * @return boolean
      */
-    function osc_is_home_page() {
-        $location = Rewrite::newInstance()->get_location();
-        $section = Rewrite::newInstance()->get_section();
-        if($location=='' && $section=='') {
-            return true;
-        }
-        return false;
+    function osc_is_contact_page() {
+        return osc_is_current_page('contact', '');
     }
 
     /**
-     * Get if user is on user dashboard
+     * Get if user is on ad page
      *
      * @return boolean
      */
-    function osc_is_user_dashboard() {
-        $location = Rewrite::newInstance()->get_location();
-        $section = Rewrite::newInstance()->get_section();
-        if($location=='user' && $section=='dashboard') {
-            return true;
-        }
-        return false;
+    function osc_is_ad_page() {
+        return osc_is_current_page('item', '');
     }
 
     /**
@@ -1039,12 +1030,25 @@
      * @return boolean
      */
     function osc_is_publish_page() {
-        $location = Rewrite::newInstance()->get_location();
-        $section = Rewrite::newInstance()->get_section();
-        if($location=='item' && $section=='item_add') {
-            return true;
-        }
-        return false;
+        return osc_is_current_page('item', 'item_add');
+    }
+
+    /**
+     * Get if user is on edit page
+     *
+     * @return boolean
+     */
+    function osc_is_edit_page() {
+        return osc_is_current_page('item', 'item_edit');
+    }
+
+    /**
+     * Get if user is on a item contact page
+     *
+     * @return boolean
+     */
+    function osc_is_item_contact_page() {
+        return osc_is_current_page('item', 'contact');
     }
 
     /**
@@ -1053,12 +1057,25 @@
      * @return boolean
      */
     function osc_is_login_form() {
-        $location = Rewrite::newInstance()->get_location();
-        $section = Rewrite::newInstance()->get_section();
-        if($location=='login' && $section=='') {
-            return true;
-        }
-        return false;
+        return osc_is_current_page('login', '');
+    }
+
+    /**
+     * Get if the user is on recover page
+     *
+     * @return boolean
+     */
+    function osc_is_recover_page() {
+        return osc_is_current_page('login', 'recover');
+    }
+
+    /**
+     * Get if the user is on forgot page
+     *
+     * @return boolean
+     */
+    function osc_is_forgot_page() {
+        return osc_is_current_page('login', 'forgot');
     }
 
     /**
@@ -1081,26 +1098,93 @@
      * @return boolean
      */
     function osc_is_public_profile() {
-        $location = Rewrite::newInstance()->get_location();
-        $section  = Rewrite::newInstance()->get_section();
-        if( $location === 'user' && $section === 'pub_profile' ) {
-            return true;
-        }
-        return false;
+        return osc_is_current_page('user', 'pub_profile');
     }
 
     /**
-     * Get if the user is on items page
+     * Get if user is on user dashboard
+     *
+     * @return boolean
+     */
+    function osc_is_user_dashboard() {
+        return osc_is_current_page('user', 'dashboard');
+    }
+
+    /**
+     * Get if user is on user profile
+     *
+     * @return boolean
+     */
+    function osc_is_user_profile() {
+        return osc_is_current_page('user', 'profile');
+    }
+
+    /**
+     * Get if the user is on user's items page
      *
      * @return boolean
      */
     function osc_is_list_items() {
-        $location = Rewrite::newInstance()->get_location();
-        $section  = Rewrite::newInstance()->get_section();
-        if( $location === 'user' && $section === 'items' ) {
+        return osc_is_current_page('user', 'items');
+    }
+
+    /**
+     * Get if the user is on user's alerts page
+     *
+     * @return boolean
+     */
+    function osc_is_list_alerts() {
+        return osc_is_current_page('user', 'alerts');
+    }
+
+    /**
+     * Get if user is on change email page
+     *
+     * @return boolean
+     */
+    function osc_is_change_email_page() {
+        return osc_is_current_page('user', 'change_email');
+    }
+
+    /**
+     * Get if user is on change username page
+     *
+     * @return boolean
+     */
+    function osc_is_change_username_page() {
+        return osc_is_current_page('user', 'change_username');
+    }
+
+    /**
+     * Get if user is on change password page
+     *
+     * @return boolean
+     */
+    function osc_is_change_password_page() {
+        return osc_is_current_page('user', 'change_password');
+    }
+
+    /**
+     * Get if the user is on page
+     *
+     * @param string $location of the resource
+     * @param string $section
+     * @return boolean
+     */
+    function osc_is_current_page($location, $section) {
+        if( osc_get_osclass_location() === $location && osc_get_osclass_section() === $section ) {
             return true;
         }
         return false;
+    }    
+
+    /**
+     * Get if the user is on 404 error page
+     *
+     * @return boolean
+     */
+    function osc_is_404() {
+        return ( Rewrite::newInstance()->get_location() === 'error' );
     }
 
 
@@ -1167,4 +1251,4 @@
         return View::newInstance()->_get('subdomain_slug')!='';
     }
     /* file end: ./oc-includes/osclass/helpers/hDefines.php */
-?>
+

@@ -14,7 +14,7 @@ themes, multi-language, CAPTCHA, dashboard, SEO friendly.
 * [Code repository][code]
 * [Mailing list][mailing]
 * IRC Channel [#osclass][irc]
-* License: [GNU Affero GPL 3][license]
+* License: [Apache License V2.0][license]
 
 ## Develop
 
@@ -33,5 +33,5 @@ Go to [our site][installing] to get detailed information on installing Osclass.
 [code]: https://github.com/osclass/Osclass
 [mailing]: http://list.osclass.org/listinfo/osc-develop
 [irc]: http://webchat.freenode.net/?channels=osclass
-[license]: http://www.gnu.org/licenses/agpl-3.0.html
+[license]: http://www.apache.org/licenses/LICENSE-2.0
 [installing]: http://osclass.org/installing-osclass/

@@ -1,25 +1,22 @@
 <?php
 /*
- *      Osclass – software for creating and publishing online classified
- *                           advertising platforms
+ * Copyright 2014 Osclass
  *
- *                        Copyright (C) 2012 OSCLASS
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- *       This program is free software: you can redistribute it and/or
- *     modify it under the terms of the GNU Affero General Public License
- *     as published by the Free Software Foundation, either version 3 of
- *            the License, or (at your option) any later version.
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
- *     This program is distributed in the hope that it will be useful, but
- *         WITHOUT ANY WARRANTY; without even the implied warranty of
- *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *             GNU Affero General Public License for more details.
- *
- *      You should have received a copy of the GNU Affero General Public
- * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
-define('OSCLASS_VERSION', '3.3.1');
+
+define('OSCLASS_VERSION', '3.4.0');
 
 if( !defined('ABS_PATH') ) {
     define( 'ABS_PATH', str_replace('\\', '/', dirname(__FILE__) . '/' ));
@@ -191,9 +188,16 @@ require_once LIB_PATH . 'osclass/frm/BanRule.form.class.php';
 require_once LIB_PATH . 'osclass/functions.php';
 require_once LIB_PATH . 'osclass/helpers/hAdminMenu.php';
 
+
+require_once LIB_PATH . 'osclass/core/iObject_Cache.php';
+require_once LIB_PATH . 'osclass/core/Object_Cache_Factory.php';
+require_once LIB_PATH . 'osclass/helpers/hCache.php';
+
+osc_cache_init();
+
 define('__OSC_LOADED__', true);
 
-// Moved from BaseModel, since we need some session magic on index.php;)
+Params::init();
 Session::newInstance()->session_start();
 
 if( osc_timezone() != '' ) {

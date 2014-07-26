@@ -1,40 +1,41 @@
 <?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
-    /*
-     *      Osclass – software for creating and publishing online classified
-     *                           advertising platforms
-     *
-     *                        Copyright (C) 2012 OSCLASS
-     *
-     *       This program is free software: you can redistribute it and/or
-     *     modify it under the terms of the GNU Affero General Public License
-     *     as published by the Free Software Foundation, either version 3 of
-     *            the License, or (at your option) any later version.
-     *
-     *     This program is distributed in the hope that it will be useful, but
-     *         WITHOUT ANY WARRANTY; without even the implied warranty of
-     *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-     *             GNU Affero General Public License for more details.
-     *
-     *      You should have received a copy of the GNU Affero General Public
-     * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
-     */
+/*
+ * Copyright 2014 Osclass
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
     require_once LIB_PATH . 'htmlpurifier/HTMLPurifier.auto.php';
 
     class Params
     {
-        private static $purifier;
-        private static $config;
+        private static $_purifier;
+        private static $_config;
+        private static $_request;
 
         function __construct() { }
+
+        static function init() {
+            self::$_request = array_merge($_GET, $_POST);
+        }
 
         static function getParam($param, $htmlencode = false, $xss_check = true, $quotes_encode = true)
         {
             if ($param == "") return '';
-            if (!isset($_REQUEST[$param])) return '';
+            if (!isset(self::$_request[$param])) return '';
 
-            $value = self::_purify($_REQUEST[$param], $xss_check);
+            $value = self::_purify(self::$_request[$param], $xss_check);
 
             if ($htmlencode) {
                 if($quotes_encode) {
@@ -54,7 +55,7 @@
         static function existParam($param)
         {
             if ($param == "") return false;
-            if (!isset($_REQUEST[$param])) return false;
+            if (!isset(self::$_request[$param])) return false;
             return true;
         }
 
@@ -67,7 +68,6 @@
             return "";
         }
 
-        //$what = "post, get, cookie"
         static function getParamsAsArray($what = "", $xss_check = true)
         {
             switch ($what) {
@@ -79,9 +79,15 @@
                 break;
                 case("cookie"):
                     return $_COOKIE;
-                break;
+                    break;
+                case("files"):
+                    return $_FILES;
+                    break;
+                case("request"): // This should not be called, as it depends on server's configuration
+                    return $_REQUEST;
+                    break;
                 default:
-                    $value = $_REQUEST;
+                    $value = self::$_request;
                 break;
             }
 
@@ -96,9 +102,12 @@
 
         static function setParam($key, $value)
         {
-            $_REQUEST[$key] = $value;
-            $_GET[$key] = $value;
-            $_POST[$key] = $value;
+            self::$_request[$key] = $value;
+        }
+
+        static function unsetParam($key)
+        {
+            unset(self::$_request[$key]);
         }
 
         static function _view()
@@ -108,24 +117,24 @@
 
         static private function _purify($value, $xss_check)
         {
-            self::$config = HTMLPurifier_Config::createDefault();
-            self::$config->set('HTML.Allowed', '');
-            self::$config->set('Cache.SerializerPath', osc_uploads_path());
-
             if( !$xss_check ) {
                 return $value;
             }
 
-            if( !isset(self::$purifier) ) {
-                self::$purifier = new HTMLPurifier(self::$config);
+            self::$_config = HTMLPurifier_Config::createDefault();
+            self::$_config->set('HTML.Allowed', '');
+            self::$_config->set('Cache.SerializerPath', osc_uploads_path());
+
+            if( !isset(self::$_purifier) ) {
+                self::$_purifier = new HTMLPurifier(self::$_config);
             }
 
             if( is_array($value) ) {
                 foreach($value as $k => &$v) {
-                    $v = self::_purify($v, $xss_check);
+                    $v = self::_purify($v, $xss_check); // recursive
                 }
             } else {
-                $value = self::$purifier->purify($value);
+                $value = self::$_purifier->purify($value);
             }
 
             return $value;

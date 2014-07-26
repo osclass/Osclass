@@ -3,7 +3,7 @@
      *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2013 OSCLASS
+     *                        Copyright (C) 2014 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -20,7 +20,11 @@
      */
 
     // meta tag robots
-    osc_add_hook('header','bender_follow_construct');
+    if( osc_item_is_spam() || osc_premium_is_spam() ) {
+        osc_add_hook('header','bender_nofollow_construct');
+    } else {
+        osc_add_hook('header','bender_follow_construct');
+    }
 
     osc_enqueue_script('fancybox');
     osc_enqueue_style('fancybox', osc_current_web_theme_url('js/fancybox/jquery.fancybox.css'));
@@ -57,9 +61,11 @@
             <div>
                 <?php if ( osc_item_mod_date() !== '' ) { printf( __('<strong class="update">Modified date:</strong> %1$s', 'bender'), osc_format_date( osc_item_mod_date() ) ); } ?>
             </div>
-            <ul id="item_location">
-                <li><strong><?php _e("Location", 'bender'); ?></strong>: <?php echo implode(', ', $location); ?></li>
-            </ul>
+            <?php if (count($location)>0) { ?>
+                <ul id="item_location">
+                    <li><strong><?php _e("Location", 'bender'); ?></strong>: <?php echo implode(', ', $location); ?></li>
+                </ul>
+            <?php }; ?>
         </div>
         <?php if(osc_is_web_user_logged_in() && osc_logged_user_id()==osc_item_user_id()) { ?>
             <p id="edit_item_view">
@@ -81,7 +87,7 @@
             </a>
             <div class="thumbs">
                 <?php for ( $i = 0; osc_has_item_resources(); $i++ ) { ?>
-                <a href="<?php echo osc_resource_url(); ?>" rel="image_group" title="<?php _e('Image', 'bender'); ?> <?php echo $i+1;?> / <?php echo osc_count_item_resources();?>">
+                <a href="<?php echo osc_resource_url(); ?>" class="fancybox" data-fancybox-group="group" title="<?php _e('Image', 'bender'); ?> <?php echo $i+1;?> / <?php echo osc_count_item_resources();?>">
                     <img src="<?php echo osc_resource_thumbnail_url(); ?>" width="75" alt="<?php echo osc_item_title(); ?>" title="<?php echo osc_item_title(); ?>" />
                 </a>
                 <?php } ?>

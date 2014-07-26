@@ -1,21 +1,20 @@
 <?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
-    /**
-     * Osclass – software for creating and publishing online classified advertising platforms
-     *
-     * Copyright (C) 2012 OSCLASS
-     *
-     * This program is free software: you can redistribute it and/or modify it under the terms
-     * of the GNU Affero General Public License as published by the Free Software Foundation,
-     * either version 3 of the License, or (at your option) any later version.
-     *
-     * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-     * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-     * See the GNU Affero General Public License for more details.
-     *
-     * You should have received a copy of the GNU Affero General Public
-     * License along with this program. If not, see <http://www.gnu.org/licenses/>.
-     */
+/*
+ * Copyright 2014 Osclass
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
     function fn_email_alert_validation($alert, $email, $secret) {
         $user['s_name'] = "";
@@ -25,8 +24,8 @@
         $page = Page::newInstance()->findByInternalName('email_alert_validation');
         $page_description = $page['locale'];
 
-        $_title = osc_apply_filter('email_title', osc_apply_filter('email_alert_validation_title', $page_description[$prefLocale]['s_title']));
-        $_body  = osc_apply_filter('email_description', osc_apply_filter('email_alert_validation_description', $page_description[$prefLocale]['s_text']));
+        $_title = osc_apply_filter('email_title', osc_apply_filter('email_alert_validation_title', $page_description[$prefLocale]['s_title'], $alert, $email, $secret));
+        $_body  = osc_apply_filter('email_description', osc_apply_filter('email_alert_validation_description', $page_description[$prefLocale]['s_text'], $alert, $email, $secret));
 
         $validation_link = osc_user_activate_alert_url( $alert['pk_i_id'], $secret, $email );
 
@@ -41,12 +40,12 @@
             $email,
             $validation_link
         );
-        $title = osc_apply_filter('email_alert_validation_title_after', osc_mailBeauty($_title, $words));
-        $body  = osc_apply_filter('email_alert_validation_description_after', osc_mailBeauty($_body , $words));
+        $title = osc_apply_filter('email_alert_validation_title_after', osc_mailBeauty($_title, $words), $alert, $email, $secret);
+        $body  = osc_apply_filter('email_alert_validation_description_after', osc_mailBeauty($_body , $words), $alert, $email, $secret);
 
         $params = array(
             'subject'  => $title,
-            'from'     => osc_contact_email(),
+            'from'     => _osc_from_email_aux(),
             'to'       => $email,
             'to_name'  => $user['s_name'],
             'body'     => $body,
@@ -62,8 +61,8 @@
         $page = Page::newInstance()->findByInternalName('alert_email_hourly');
         $page_description = $page['locale'];
 
-        $_title = osc_apply_filter('email_title', osc_apply_filter('alert_email_hourly_title', $page_description[$prefLocale]['s_title']));
-        $_body  = osc_apply_filter('email_description', osc_apply_filter('alert_email_hourly_description', $page_description[$prefLocale]['s_text']));
+        $_title = osc_apply_filter('email_title', osc_apply_filter('alert_email_hourly_title', $page_description[$prefLocale]['s_title'], $user, $ads, $s_search));
+        $_body  = osc_apply_filter('email_description', osc_apply_filter('alert_email_hourly_description', $page_description[$prefLocale]['s_text'], $user, $ads, $s_search));
 
         if( $user['fk_i_user_id'] != 0 ) {
             $user = User::newInstance()->findByPrimaryKey($user['fk_i_user_id']);
@@ -87,12 +86,12 @@
             $ads,
             $unsub_link
         );
-        $title = osc_apply_filter('alert_email_hourly_title_after', osc_mailBeauty($_title, $words));
-        $body  = osc_apply_filter('alert_email_hourly_description_after', osc_mailBeauty($_body, $words));
+        $title = osc_apply_filter('alert_email_hourly_title_after', osc_mailBeauty($_title, $words), $user, $ads, $s_search);
+        $body  = osc_apply_filter('alert_email_hourly_description_after', osc_mailBeauty($_body, $words), $user, $ads, $s_search);
 
         $params = array(
             'subject'  => $title,
-            'from'     => osc_contact_email(),
+            'from'     => _osc_from_email_aux(),
             'to'       => $user['s_email'],
             'to_name'  => $user['s_name'],
             'body'     => $body,
@@ -108,8 +107,8 @@
         $page = Page::newInstance()->findByInternalName('alert_email_daily');
         $page_description = $page['locale'];
 
-        $_title = osc_apply_filter('email_title', osc_apply_filter('alert_email_daily_title', $page_description[$prefLocale]['s_title']));
-        $_body  = osc_apply_filter('email_description', osc_apply_filter('alert_email_daily_description', $page_description[$prefLocale]['s_text']));
+        $_title = osc_apply_filter('email_title', osc_apply_filter('alert_email_daily_title', $page_description[$prefLocale]['s_title'], $user, $ads, $s_search));
+        $_body  = osc_apply_filter('email_description', osc_apply_filter('alert_email_daily_description', $page_description[$prefLocale]['s_text'], $user, $ads, $s_search));
 
         if( $user['fk_i_user_id'] != 0 ) {
             $user = User::newInstance()->findByPrimaryKey($user['fk_i_user_id']);
@@ -133,12 +132,12 @@
             $ads,
             $unsub_link
         );
-        $title = osc_apply_filter('alert_email_daily_title_after', osc_mailBeauty($_title, $words));
-        $body  = osc_apply_filter('alert_email_daily_description_after', osc_mailBeauty($_body, $words));
+        $title = osc_apply_filter('alert_email_daily_title_after', osc_mailBeauty($_title, $words), $user, $ads, $s_search);
+        $body  = osc_apply_filter('alert_email_daily_description_after', osc_mailBeauty($_body, $words), $user, $ads, $s_search);
 
         $params = array(
             'subject'  => $title,
-            'from'     => osc_contact_email(),
+            'from'     => _osc_from_email_aux(),
             'to'       => $user['s_email'],
             'to_name'  => $user['s_name'],
             'body'     => $body,
@@ -154,8 +153,8 @@
         $page = Page::newInstance()->findByInternalName('alert_email_weekly');
         $page_description = $page['locale'];
 
-        $_title = osc_apply_filter('email_title', osc_apply_filter('alert_email_weekly_title', $page_description[$prefLocale]['s_title']));
-        $_body  = osc_apply_filter('email_description', osc_apply_filter('alert_email_weekly_description', $page_description[$prefLocale]['s_text']));
+        $_title = osc_apply_filter('email_title', osc_apply_filter('alert_email_weekly_title', $page_description[$prefLocale]['s_title'], $user, $ads, $s_search));
+        $_body  = osc_apply_filter('email_description', osc_apply_filter('alert_email_weekly_description', $page_description[$prefLocale]['s_text'], $user, $ads, $s_search));
 
         if( $user['fk_i_user_id'] != 0 ) {
             $user = User::newInstance()->findByPrimaryKey($user['fk_i_user_id']);
@@ -179,12 +178,12 @@
             $ads,
             $unsub_link
         );
-        $title = osc_apply_filter('alert_email_weekly_title_after', osc_mailBeauty($_title, $words));
-        $body  = osc_apply_filter('alert_email_weekly_description_after', osc_mailBeauty($_body, $words));
+        $title = osc_apply_filter('alert_email_weekly_title_after', osc_mailBeauty($_title, $words), $user, $ads, $s_search);
+        $body  = osc_apply_filter('alert_email_weekly_description_after', osc_mailBeauty($_body, $words), $user, $ads, $s_search);
 
         $params = array(
             'subject'  => $title,
-            'from'     => osc_contact_email(),
+            'from'     => _osc_from_email_aux(),
             'to'       => $user['s_email'],
             'to_name'  => $user['s_name'],
             'body'     => $body,
@@ -200,8 +199,8 @@
         $page = Page::newInstance()->findByInternalName('alert_email_instant');
         $page_description = $page['locale'];
 
-        $_title = osc_apply_filter('email_title', osc_apply_filter('alert_email_instant_title', $page_description[$prefLocale]['s_title']));
-        $_body  = osc_apply_filter('email_description', osc_apply_filter('alert_email_instant_description', $page_description[$prefLocale]['s_text']));
+        $_title = osc_apply_filter('email_title', osc_apply_filter('alert_email_instant_title', $page_description[$prefLocale]['s_title'], $user, $ads, $s_search));
+        $_body  = osc_apply_filter('email_description', osc_apply_filter('alert_email_instant_description', $page_description[$prefLocale]['s_text'], $user, $ads, $s_search));
 
         if( $user['fk_i_user_id'] != 0 ) {
             $user = User::newInstance()->findByPrimaryKey($user['fk_i_user_id']);
@@ -225,12 +224,12 @@
             $ads,
             $unsub_link
         );
-        $title = osc_apply_filter('alert_email_instant_title_after', osc_mailBeauty($_title, $words));
-        $body  = osc_apply_filter('alert_email_instant_description_after', osc_mailBeauty($_body, $words));
+        $title = osc_apply_filter('alert_email_instant_title_after', osc_mailBeauty($_title, $words), $user, $ads, $s_search);
+        $body  = osc_apply_filter('alert_email_instant_description_after', osc_mailBeauty($_body, $words), $user, $ads, $s_search);
 
         $params = array(
             'subject'  => $title,
-            'from'     => osc_contact_email(),
+            'from'     => _osc_from_email_aux(),
             'to'       => $user['s_email'],
             'to_name'  => $user['s_name'],
             'body'     => $body,
@@ -246,7 +245,6 @@
         $locale = osc_current_user_locale();
         $aPage = $mPages->findByInternalName('email_comment_validated');
 
-        $content = array();
         if(isset($aPage['locale'][$locale]['s_title'])) {
             $content = $aPage['locale'][$locale];
         } else {
@@ -273,12 +271,12 @@
                 '<a href="' . osc_item_url() . '">' . osc_item_url() . '</a>',
                 osc_item_title()
             );
-            $title = osc_apply_filter('email_comment_validated_title_after', osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_comment_validated_title', $content['s_title'])), $words));
-            $body = osc_apply_filter('email_comment_validated_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_comment_validated_description', $content['s_text'])), $words));
+            $title = osc_apply_filter('email_comment_validated_title_after', osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_comment_validated_title', $content['s_title'], $aComment)), $words), $aComment);
+            $body = osc_apply_filter('email_comment_validated_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_comment_validated_description', $content['s_text'], $aComment)), $words), $aComment);
 
             $emailParams = array(
                 'subject'  => $title,
-                'from'     => osc_contact_email(),
+                'from'     => _osc_from_email_aux(),
                 'to'       => $aComment['s_author_email'],
                 'to_name'  => $aComment['s_author_name'],
                 'body'     => $body,
@@ -294,7 +292,6 @@
         $aPage = $mPages->findByInternalName('email_new_item_non_register_user');
         $locale = osc_current_user_locale();
 
-        $content = array();
         if(isset($aPage['locale'][$locale]['s_title'])) {
             $content = $aPage['locale'][$locale];
         } else {
@@ -331,12 +328,12 @@
             '<a href="' . $delete_url . '">' . $delete_url . '</a>',
             $delete_url
         );
-        $title   = osc_apply_filter('email_new_item_non_register_user_title_after', osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_new_item_non_register_user_title', $content['s_title'])), $words));
-        $body    = osc_apply_filter('email_new_item_non_register_user_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_new_item_non_register_user_description', $content['s_text'])), $words));
+        $title   = osc_apply_filter('email_new_item_non_register_user_title_after', osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_new_item_non_register_user_title', $content['s_title'],$item)), $words),$item);
+        $body    = osc_apply_filter('email_new_item_non_register_user_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_new_item_non_register_user_description', $content['s_text'],$item)), $words),$item);
 
         $emailParams = array(
             'subject'  => $title,
-            'from'     => osc_contact_email(),
+            'from'     => _osc_from_email_aux(),
             'to'       => $item['s_contact_email'],
             'to_name'  => $item['s_contact_name'],
             'body'     => $body,
@@ -351,7 +348,6 @@
         $aPage = Page::newInstance()->findByInternalName('email_user_forgot_password');
         $locale = osc_current_user_locale();
 
-        $content = array();
         if(isset($aPage['locale'][$locale]['s_title'])) {
             $content = $aPage['locale'][$locale];
         } else {
@@ -372,14 +368,14 @@
                 $user['s_email'],
                 '<a href="' . $password_url . '">' . $password_url . '</a>',
                 $password_url,
-                date('Y-m-d H:i:') . '00'
+                date(osc_date_format()?:'Y-m-d').' '.date(osc_time_format()?:'H:i:00')
             );
-            $title = osc_apply_filter('email_user_forgot_pass_word_title_after', osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_user_forgot_pass_word_title', $content['s_title'])), $words));
-            $body = osc_apply_filter('email_user_forgot_password_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_user_forgot_password_description', $content['s_text'])), $words));
+            $title = osc_apply_filter('email_user_forgot_pass_word_title_after', osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_user_forgot_pass_word_title', $content['s_title'], $user, $password_url)), $words), $user, $password_url);
+            $body = osc_apply_filter('email_user_forgot_password_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_user_forgot_password_description', $content['s_text'], $user, $password_url)), $words), $user, $password_url);
 
             $emailParams = array(
                 'subject'  => $title,
-                'from'     => osc_contact_email(),
+                'from'     => _osc_from_email_aux(),
                 'to'       => $user['s_email'],
                 'to_name'  => $user['s_name'],
                 'body'     => $body,
@@ -396,7 +392,6 @@
         $locale = osc_current_user_locale();
         $aPage = $pageManager->findByInternalName('email_user_registration');
 
-        $content = array();
         if(isset($aPage['locale'][$locale]['s_title'])) {
             $content = $aPage['locale'][$locale];
         } else {
@@ -413,12 +408,12 @@
                 $user['s_name'],
                 $user['s_email']
             );
-            $title = osc_apply_filter('email_user_registration_title_after', osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_user_registration_title', $content['s_title'])), $words));
-            $body = osc_apply_filter('email_user_regsitration_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_user_regsitration_description', $content['s_text'])), $words));
+            $title = osc_apply_filter('email_user_registration_title_after', osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_user_registration_title', $content['s_title'], $user)), $words), $user);
+            $body = osc_apply_filter('email_user_regsitration_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_user_regsitration_description', $content['s_text'], $user)), $words), $user);
 
             $emailParams = array(
                 'subject'  => $title,
-                'from'     => osc_contact_email(),
+                'from'     => _osc_from_email_aux(),
                 'to'       => $user['s_email'],
                 'to_name'  => $user['s_name'],
                 'body'     => $body,
@@ -434,7 +429,6 @@
         $locale = osc_current_user_locale();
         $aPage = Page::newInstance()->findByInternalName('email_new_email');
 
-        $content = array();
         if(isset($aPage['locale'][$locale]['s_title'])) {
             $content = $aPage['locale'][$locale];
         } else {
@@ -455,12 +449,12 @@
                 '<a href="' . $validation_url . '" >' . $validation_url . '</a>',
                 $validation_url
             );
-            $title = osc_apply_filter('email_new_email_title_after', osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_new_email_title', $content['s_title'])), $words));
-            $body = osc_apply_filter('email_new_email_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_new_email_description', $content['s_text'])), $words));
+            $title = osc_apply_filter('email_new_email_title_after', osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_new_email_title', $content['s_title'], $new_email, $validation_url)), $words), $new_email, $validation_url);
+            $body = osc_apply_filter('email_new_email_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_new_email_description', $content['s_text'], $new_email, $validation_url)), $words), $new_email, $validation_url);
 
             $params = array(
                 'subject'  => $title,
-                'from'     => osc_contact_email(),
+                'from'     => _osc_from_email_aux(),
                 'to'       => $new_email,
                 'to_name'  => Session::newInstance()->_get('userName'),
                 'body'     => $body,
@@ -479,7 +473,6 @@
         $locale = osc_current_user_locale();
         $aPage = $mPages->findByInternalName('email_user_validation');
 
-        $content = array();
         if(isset($aPage['locale'][$locale]['s_title'])) {
             $content = $aPage['locale'][$locale];
         } else {
@@ -501,12 +494,12 @@
                 '<a href="' . $validation_url . '" >' . $validation_url . '</a>',
                 $validation_url
             );
-            $title = osc_apply_filter('email_user_validation_title_after', osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_user_validation_title', $content['s_title'])), $words));
-            $body = osc_apply_filter('email_user_validation_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_user_validation_description', $content['s_text'])), $words));
+            $title = osc_apply_filter('email_user_validation_title_after', osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_user_validation_title', $content['s_title'], $user, $input)), $words), $user, $input);
+            $body = osc_apply_filter('email_user_validation_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_user_validation_description', $content['s_text'], $user, $input)), $words), $user, $input);
 
             $emailParams = array(
                 'subject'  => $title,
-                'from'     => osc_contact_email(),
+                'from'     => _osc_from_email_aux(),
                 'to'       => $user['s_email'],
                 'to_name'  => $user['s_name'],
                 'body'     => $body,
@@ -522,7 +515,6 @@
         $aPage = $mPages->findByInternalName('email_send_friend');
         $locale = osc_current_user_locale();
 
-        $content = array();
         if(isset($aPage['locale'][$locale]['s_title'])) {
             $content = $aPage['locale'][$locale];
         } else {
@@ -554,8 +546,8 @@
             $item_url
         );
 
-        $title = osc_apply_filter('email_send_friend_title_after', osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_send_friend_title', $content['s_title'])), $words));
-        $body  = osc_apply_filter('email_send_friend_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_send_friend_description', $content['s_text'])), $words));
+        $title = osc_apply_filter('email_send_friend_title_after', osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_send_friend_title', $content['s_title'], $aItem)), $words), $aItem);
+        $body  = osc_apply_filter('email_send_friend_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_send_friend_description', $content['s_text'], $aItem)), $words), $aItem);
 
         $params = array(
             'from'      => osc_contact_email(),
@@ -580,7 +572,6 @@
         $yourEmail  = $aItem['yourEmail'];
         $yourName   = $aItem['yourName'];
         $phoneNumber= $aItem['phoneNumber'];
-        // contact - strip_tags + nl2br
         $message    = nl2br( strip_tags( $aItem['message'] ) );
 
         $path = null;
@@ -591,7 +582,6 @@
         $aPage  = $mPages->findByInternalName('email_item_inquiry');
         $locale = osc_current_user_locale();
 
-        $content = array();
         if( isset($aPage['locale'][$locale]['s_title']) ) {
             $content = $aPage['locale'][$locale];
         } else {
@@ -624,8 +614,8 @@
             $message
         );
 
-        $title = osc_apply_filter('email_item_inquiry_title_after', osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_item_inquiry_title', $content['s_title'])), $words));
-        $body  = osc_apply_filter('email_item_inquiry_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_item_inquiry_description', $content['s_text'])), $words));
+        $title = osc_apply_filter('email_item_inquiry_title_after', osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_item_inquiry_title', $content['s_title'], $aItem)), $words), $aItem);
+        $body  = osc_apply_filter('email_item_inquiry_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_item_inquiry_description', $content['s_text'], $aItem)), $words), $aItem);
 
         $from      = osc_contact_email();
         $from_name = osc_page_title();
@@ -671,10 +661,8 @@
     osc_add_hook('hook_email_item_inquiry', 'fn_email_item_inquiry');
 
     function fn_email_new_comment_admin($aItem) {
-        $authorName  = trim($aItem['authorName']);
-        $authorName  = strip_tags($authorName);
-        $authorEmail = trim($aItem['authorEmail']);
-        $authorEmail = strip_tags($authorEmail);
+        $authorName  = trim(strip_tags($aItem['authorName']));
+        $authorEmail = trim(strip_tags($aItem['authorEmail']));
         $body        = trim($aItem['body']);
         // only \n -> <br/>
         $body        = nl2br(strip_tags($body));
@@ -691,7 +679,6 @@
         $aPage = $mPages->findByInternalName('email_new_comment_admin');
         $locale = osc_current_user_locale();
 
-        $content = array();
         if(isset($aPage['locale'][$locale]['s_title'])) {
             $content = $aPage['locale'][$locale];
         } else {
@@ -719,8 +706,8 @@
             osc_item_url(),
             $itemURL
         );
-        $title_email = osc_apply_filter('email_new_comment_admin_title_after', osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_new_comment_admin_title', $content['s_title'])), $words));
-        $body_email = osc_apply_filter('email_new_comment_admin_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_new_comment_admin_description', $content['s_text'])), $words));
+        $title_email = osc_apply_filter('email_new_comment_admin_title_after', osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_new_comment_admin_title', $content['s_title'], $aItem)), $words), $aItem);
+        $body_email = osc_apply_filter('email_new_comment_admin_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_new_comment_admin_description', $content['s_text'], $aItem)), $words), $aItem);
 
         $emailParams = array(
             'from'      => osc_contact_email(),
@@ -736,14 +723,12 @@
 
     function fn_email_item_validation($item) {
         View::newInstance()->_exportVariableToView('item', $item);
-        $title  = osc_item_title();
         $contactEmail   = $item['s_contact_email'];
         $contactName    = $item['s_contact_name'];
         $mPages = new Page();
         $locale = osc_current_user_locale();
         $aPage = $mPages->findByInternalName('email_item_validation');
 
-        $content = array();
         if(isset($aPage['locale'][$locale]['s_title'])) {
             $content = $aPage['locale'][$locale];
         } else {
@@ -807,12 +792,12 @@
             '<a href="' . $validation_url . '" >' . $validation_url . '</a>',
             $validation_url
         );
-        $title = osc_apply_filter('email_item_validation_title_after', osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_item_validation_title', $content['s_title'])), $words));
-        $body = osc_apply_filter('email_item_validation_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_item_validation_description', $content['s_text'])), $words));
+        $title = osc_apply_filter('email_item_validation_title_after', osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_item_validation_title', $content['s_title'], $item)), $words), $item);
+        $body = osc_apply_filter('email_item_validation_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_item_validation_description', $content['s_text'], $item)), $words), $item);
 
         $emailParams =  array (
             'subject'  => $title,
-            'from'     => osc_contact_email(),
+            'from'     => _osc_from_email_aux(),
             'to'       => $contactEmail,
             'to_name'  => $contactName,
             'body'     => $body,
@@ -829,7 +814,6 @@
         $locale = osc_current_user_locale();
         $aPage = $mPages->findByInternalName('email_admin_new_item');
 
-        $content = array();
         if(isset($aPage['locale'][$locale]['s_title'])) {
             $content = $aPage['locale'][$locale];
         } else {
@@ -900,12 +884,12 @@
             '<a href="' . $validation_url . '" >' . $validation_url . '</a>',
             $validation_url
         );
-        $title = osc_apply_filter('email_admin_new_item_title_after', osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_admin_new_item_title', $content['s_title'])), $words));
-        $body  = osc_apply_filter('email_admin_new_item_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_admin_new_item_description', $content['s_text'])), $words));
+        $title = osc_apply_filter('email_admin_new_item_title_after', osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_admin_new_item_title', $content['s_title'], $item)), $words), $item);
+        $body  = osc_apply_filter('email_admin_new_item_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_admin_new_item_description', $content['s_text'], $item)), $words), $item);
 
         $emailParams = array(
             'subject'  => $title,
-            'from'     => osc_contact_email(),
+            'from'     => _osc_from_email_aux(),
             'to'       => osc_contact_email(),
             'to_name'  => 'admin',
             'body'     => $body,
@@ -922,7 +906,6 @@
         $aPage = $mPages->findByInternalName('email_item_validation_non_register_user');
         $locale = osc_current_user_locale();
 
-        $content = array();
         if(isset($aPage['locale'][$locale]['s_title'])) {
             $content = $aPage['locale'][$locale];
         } else {
@@ -996,12 +979,12 @@
             '<a href="' . $delete_url . '">' . $delete_url . '</a>',
             $delete_url
         );
-        $title = osc_apply_filter('email_item_validation_non_register_user_title_after', osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_item_validation_non_register_user_title', $content['s_title'])), $words));
-        $body = osc_apply_filter('email_item_validation_non_register_user_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_item_validation_non_register_user_description', $content['s_text'])), $words));
+        $title = osc_apply_filter('email_item_validation_non_register_user_title_after', osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_item_validation_non_register_user_title', $content['s_title'], $item)), $words), $item);
+        $body = osc_apply_filter('email_item_validation_non_register_user_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_item_validation_non_register_user_description', $content['s_text'], $item)), $words), $item);
 
         $emailParams = array(
             'subject'  => $title,
-            'from'     => osc_contact_email(),
+            'from'     => _osc_from_email_aux(),
             'to'       => $item['s_contact_email'],
             'to_name'  => $item['s_contact_name'],
             'body'     => $body,
@@ -1016,7 +999,6 @@
         $pageManager = new Page();
         $locale      = osc_current_user_locale();
         $aPage       = $pageManager->findByInternalName('email_admin_new_user');
-        $content     = array();
 
         if( isset($aPage['locale'][$locale]['s_title']) ) {
             $content = $aPage['locale'][$locale];
@@ -1034,12 +1016,12 @@
                 $user['s_name'],
                 $user['s_email']
             );
-            $title = osc_apply_filter('email_admin_user_registration_title_after', osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_admin_user_registration_title', $content['s_title'])), $words));
-            $body  = osc_apply_filter('email_admin_user_regsitration_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_admin_user_regsitration_description', $content['s_text'])), $words));
+            $title = osc_apply_filter('email_admin_user_registration_title_after', osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_admin_user_registration_title', $content['s_title'], $user)), $words), $user);
+            $body  = osc_apply_filter('email_admin_user_regsitration_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_admin_user_regsitration_description', $content['s_text'], $user)), $words), $user);
 
             $emailParams = array(
                 'subject'  => $title,
-                'from'     => osc_contact_email(),
+                'from'     => _osc_from_email_aux(),
                 'to'       => osc_contact_email(),
                 'to_name'  => osc_page_title(),
                 'body'     => $body,
@@ -1055,7 +1037,6 @@
         $aPage = $mPages->findByInternalName('email_contact_user');
         $locale = osc_current_user_locale();
 
-        $content = array();
         if(isset($aPage['locale'][$locale]['s_title'])) {
             $content = $aPage['locale'][$locale];
         } else {
@@ -1078,8 +1059,8 @@
             $message
         );
 
-        $title = osc_apply_filter('email_item_inquiry_title_after', osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_item_inquiry_title', $content['s_title'])), $words));
-        $body = osc_apply_filter('email_item_inquiry_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_item_inquiry_description', $content['s_text'])), $words));
+        $title = osc_apply_filter('email_item_inquiry_title_after', osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_item_inquiry_title', $content['s_title'], $id, $yourEmail, $yourName, $phoneNumber, $message)), $words), $id, $yourEmail, $yourName, $phoneNumber, $message);
+        $body = osc_apply_filter('email_item_inquiry_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_item_inquiry_description', $content['s_text'], $id, $yourEmail, $yourName, $phoneNumber, $message)), $words), $id, $yourEmail, $yourName, $phoneNumber, $message);
 
         $emailParams = array (
             'from'      => osc_contact_email(),
@@ -1100,13 +1081,10 @@
     osc_add_hook('hook_email_contact_user', 'fn_email_contact_user');
 
     function fn_email_new_comment_user($aItem) {
-        $authorName  = trim($aItem['authorName']);
-        $authorName  = strip_tags($authorName);
-        $authorEmail = trim($aItem['authorEmail']);
-        $authorEmail = strip_tags($authorEmail);
-        $body        = trim($aItem['body']);
-        // only \n -> <br/>
-        $body        = nl2br(strip_tags($body));
+        $authorName  = trim(strip_tags($aItem['authorName']));
+        $authorEmail = trim(strip_tags($aItem['authorEmail']));
+        $body        = trim(strip_tags($aItem['body']));
+        $body        = nl2br($body);
         $title       = $aItem['title'];
         $itemId      = $aItem['id'];
         $admin_email = osc_contact_email();
@@ -1120,7 +1098,6 @@
         $aPage = $mPages->findByInternalName('email_new_comment_user');
         $locale = osc_current_user_locale();
 
-        $content = array();
         if(isset($aPage['locale'][$locale]['s_title'])) {
             $content = $aPage['locale'][$locale];
         } else {
@@ -1152,8 +1129,8 @@
             $item['s_contact_name'],
             $item['s_contact_email']
         );
-        $title_email = osc_apply_filter('email_new_comment_user_title_after', osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_new_comment_user_title', $content['s_title'])), $words));
-        $body_email = osc_apply_filter('email_new_comment_user_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_new_comment_user_description', $content['s_text'])), $words));
+        $title_email = osc_apply_filter('email_new_comment_user_title_after', osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_new_comment_user_title', $content['s_title'], $aItem)), $words), $aItem);
+        $body_email = osc_apply_filter('email_new_comment_user_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_new_comment_user_description', $content['s_text'], $aItem)), $words), $aItem);
 
         $emailParams = array(
             'from'      => $admin_email,
@@ -1169,16 +1146,13 @@
 
     function fn_email_new_admin($data) {
 
-        $name       = trim($data['s_name']);
-        $name       = strip_tags($name);
-        $username   = trim($data['s_username']);
-        $username   = strip_tags($username);
+        $name       = trim(strip_tags($data['s_name']));
+        $username   = trim(strip_tags($data['s_username']));
 
         $mPages = new Page();
         $aPage = $mPages->findByInternalName('email_new_admin');
         $locale = osc_current_user_locale();
 
-        $content = array();
         if(isset($aPage['locale'][$locale]['s_title'])) {
             $content = $aPage['locale'][$locale];
         } else {
@@ -1193,13 +1167,13 @@
             '{WEB_ADMIN_LINK}'
         );
         $words[] = array(
-            $data['s_name'],
-            $data['s_username'],
+            $name,
+            $username,
             $data['s_password'],
             '<a href="' . osc_admin_base_url() . '">' . osc_page_title() . '</a>',
         );
-        $title_email = osc_apply_filter('email_new_admin_title_after', osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_new_admin_title', $content['s_title'])), $words));
-        $body_email  = osc_apply_filter('email_new_admin_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_new_admin_description', $content['s_text'])), $words));
+        $title_email = osc_apply_filter('email_new_admin_title_after', osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_new_admin_title', $content['s_title'], $data)), $words), $data);
+        $body_email  = osc_apply_filter('email_new_admin_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_new_admin_description', $content['s_text'], $data)), $words), $data);
 
         $emailParams = array(
             'from'      => osc_contact_email(),
@@ -1226,7 +1200,6 @@
         $aPage = $mPages->findByInternalName('email_warn_expiration');
         $locale = osc_current_user_locale();
 
-        $content = array();
         if(isset($aPage['locale'][$locale]['s_title'])) {
             $content = $aPage['locale'][$locale];
         } else {
@@ -1254,8 +1227,8 @@
             $aItem['s_contact_name'],
             $aItem['s_contact_email']
         );
-        $title_email = osc_apply_filter('email_warn_expiration_title_after', osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_warn_expiration_title', $content['s_title'])), $words));
-        $body_email = osc_apply_filter('email_warn_expiration_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_warn_expiration_description', $content['s_text'])), $words));
+        $title_email = osc_apply_filter('email_warn_expiration_title_after', osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_warn_expiration_title', $content['s_title'], $aItem)), $words), $aItem);
+        $body_email = osc_apply_filter('email_warn_expiration_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_warn_expiration_description', $content['s_text'], $aItem)), $words), $aItem);
 
         $emailParams = array(
             'from'      => $admin_email,
@@ -1298,12 +1271,12 @@
             $result['version']
         );
 
-        $title = osc_apply_filter('email_after_auto_upgrade_title_after', osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_after_auto_upgrade_title', $title)), $words));
-        $body = osc_apply_filter('email_after_auto_upgrade_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_after_auto_upgrade_description', $body)), $words));
+        $title = osc_apply_filter('email_after_auto_upgrade_title_after', osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_after_auto_upgrade_title', $title, $result)), $words), $result);
+        $body = osc_apply_filter('email_after_auto_upgrade_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_after_auto_upgrade_description', $body, $result)), $words), $result);
 
         $emailParams = array(
             'subject'  => $title,
-            'from'     => osc_contact_email(),
+            'from'     => _osc_from_email_aux(),
             'to'       => osc_contact_email(),
             'to_name'  => osc_page_title(),
             'body'     => $body,
@@ -1313,5 +1286,11 @@
     }
     osc_add_hook('after_auto_upgrade', 'fn_email_auto_upgrade', 10);
 
+
+    function _osc_from_email_aux() {
+        $tmp = osc_mailserver_mail_from();
+        return !empty($tmp)?$tmp:osc_contact_email();
+    } 
+
+
 /* file end: ./oc-includes/osclass/emails.php */
-?>

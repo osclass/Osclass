@@ -1,24 +1,20 @@
 <?php
 
-    /*
-     *      Osclass – software for creating and publishing online classified
-     *                           advertising platforms
-     *
-     *                        Copyright (C) 2012 OSCLASS
-     *
-     *       This program is free software: you can redistribute it and/or
-     *     modify it under the terms of the GNU Affero General Public License
-     *     as published by the Free Software Foundation, either version 3 of
-     *            the License, or (at your option) any later version.
-     *
-     *     This program is distributed in the hope that it will be useful, but
-     *         WITHOUT ANY WARRANTY; without even the implied warranty of
-     *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-     *             GNU Affero General Public License for more details.
-     *
-     *      You should have received a copy of the GNU Affero General Public
-     * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
-     */
+/*
+ * Copyright 2014 Osclass
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
      /**
      * Helper Items - returns object from the static class (View)
@@ -191,9 +187,8 @@
      * @return string
      */
     function osc_item_category($locale = "") {
-        if ($locale == "") $locale = osc_current_user_locale();
         if ( !View::newInstance()->_exists('item_category') ) {
-            View::newInstance()->_exportVariableToView('item_category', Category::newInstance()->findByPrimaryKey( osc_item_category_id() ) );
+            View::newInstance()->_exportVariableToView('item_category', Category::newInstance()->findByPrimaryKey( osc_item_category_id(), $locale ) );
         }
         $category = View::newInstance()->_get('item_category');
         return (string) osc_field($category, "s_name", $locale);
@@ -206,9 +201,8 @@
      * @return string
      */
     function osc_item_category_description($locale = "") {
-        if ($locale == "") $locale = osc_current_user_locale();
         if ( !View::newInstance()->_exists('item_category') ) {
-            View::newInstance()->_exportVariableToView('item_category', Category::newInstance()->findByPrimaryKey( osc_item_category_id() ) );
+            View::newInstance()->_exportVariableToView('item_category', Category::newInstance()->findByPrimaryKey( osc_item_category_id(), $locale ) );
         }
         $category = View::newInstance()->_get('item_category');
         return osc_field($category, "s_description", $locale);
@@ -414,7 +408,7 @@
     }
 
     /**
-     * Gets zup code of current item
+     * Gets zip code of current item
      *
      * @return string
      */

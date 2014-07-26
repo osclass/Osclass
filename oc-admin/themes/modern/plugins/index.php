@@ -1,20 +1,19 @@
 <?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.');
-    /**
-     * Osclass – software for creating and publishing online classified advertising platforms
-     *
-     * Copyright (C) 2012 OSCLASS
-     *
-     * This program is free software: you can redistribute it and/or modify it under the terms
-     * of the GNU Affero General Public License as published by the Free Software Foundation,
-     * either version 3 of the License, or (at your option) any later version.
-     *
-     * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-     * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-     * See the GNU Affero General Public License for more details.
-     *
-     * You should have received a copy of the GNU Affero General Public
-     * License along with this program. If not, see <http://www.gnu.org/licenses/>.
-     */
+/*
+ * Copyright 2014 Osclass
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
     function addHelp() {
         echo '<p>' . __("Install or uninstall the plugins available in your installation. In some cases, you'll have to configure the plugin in order to get it to work.") . '</p>';
@@ -113,6 +112,7 @@
                 <tr>
                     <th><?php _e('Name'); ?></th>
                     <th colspan=""><?php _e('Description'); ?></th>
+                    <th> &nbsp; </th>
                     <th> &nbsp; </th>
                     <th> &nbsp; </th>
                     <th> &nbsp; </th>
@@ -327,5 +327,11 @@
 
         return false;
     });
+    function delete_plugin(plugin) {
+        var x = confirm('<?php echo osc_esc_js(__('You are about to delete the files of the plugin. Do you want to continue?'))?>');
+        if(x) {
+            window.location = '<?php echo osc_admin_base_url(true).'?page=plugins&action=delete&'.osc_csrf_token_url().'&plugin='; ?>'+plugin;
+        }
+    }
 </script>
 <?php osc_current_admin_theme_path( 'parts/footer.php' ); ?>

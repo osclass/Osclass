@@ -1,24 +1,20 @@
 <?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
-    /*
-     *      Osclass – software for creating and publishing online classified
-     *                           advertising platforms
-     *
-     *                        Copyright (C) 2012 OSCLASS
-     *
-     *       This program is free software: you can redistribute it and/or
-     *     modify it under the terms of the GNU Affero General Public License
-     *     as published by the Free Software Foundation, either version 3 of
-     *            the License, or (at your option) any later version.
-     *
-     *     This program is distributed in the hope that it will be useful, but
-     *         WITHOUT ANY WARRANTY; without even the implied warranty of
-     *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-     *             GNU Affero General Public License for more details.
-     *
-     *      You should have received a copy of the GNU Affero General Public
-     * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
-     */
+/*
+ * Copyright 2014 Osclass
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
     /**
      * Model database for Admin table
@@ -38,6 +34,12 @@
          * @var Admin
          */
         private static $instance;
+
+        /**
+         * array for save currencies
+         * @var array
+         */
+        private $cachedAdmin;
 
         public static function newInstance()
         {
@@ -63,6 +65,16 @@
             } else {
                 $this->setFields( array('pk_i_id', 's_name', 's_username', 's_password', 's_email', 's_secret') );
             }
+        }
+
+        public function findByPrimaryKey($id, $locale = null)
+        {
+            if ($id == '') return '';
+            if (isset($this->cachedAdmin[$id])) {
+                return $this->cachedAdmin[$id];
+            }
+            $this->cachedAdmin[$id] = parent::findByPrimaryKey($id, $locale);
+            return $this->cachedAdmin[$id];
         }
 
         /**
