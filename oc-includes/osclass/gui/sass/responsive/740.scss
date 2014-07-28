@@ -41,6 +41,11 @@ body.user-public-profile #main{
 .contact_button a{
     margin-bottom:10px;
 }
+
+div#recaptcha_widget{width:100% !important;}
+div#recaptcha_image{width:100% !important;height:auto !important;}
+div#recaptcha_image > img{width:100% !important;}
+
 @import "responsive/header.scss";
 @import "responsive/ui.scss";
 @import "responsive/show-hide.scss";

@@ -3,7 +3,7 @@
      *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2013 OSCLASS
+     *                        Copyright (C) 2014 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -26,7 +26,7 @@ Description: Bender theme
 Version: 1.1.0
 Author: Osclass
 Author URI: http://osclass.org/
-Widgets:
+Widgets: header, footer
 Theme update URI:
 */
 

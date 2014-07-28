@@ -1,23 +1,19 @@
 <?php
-    /*
-    *      Osclass software for creating and publishing online classified
-    *                           advertising platforms
-    *
-    *                        Copyright (C) 2012 OSCLASS
-    *
-    *       This program is free software: you can redistribute it and/or
-    *     modify it under the terms of the GNU Affero General Public License
-    *     as published by the Free Software Foundation, either version 3 of
-    *            the License, or (at your option) any later version.
-    *
-    *     This program is distributed in the hope that it will be useful, but
-    *         WITHOUT ANY WARRANTY; without even the implied warranty of
-    *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    *             GNU Affero General Public License for more details.
-    *
-    *      You should have received a copy of the GNU Affero General Public
-    * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
-    */
+/*
+ * Copyright 2014 Osclass
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
     /**
     * Helper Validation
@@ -95,7 +91,7 @@
      * @return boolean
      */
     function osc_validate_phone ($value = null, $count = 10, $required = false) {
-        if ($required || mb_strlen($value, 'utf8') > 0) {
+        if ($required || mb_strlen($value, 'UTF-8') > 0) {
             if ( !preg_match("/([\p{Nd}][^\p{Nd}]*){".$count."}/i", strip_tags($value)) ) {
                 return false;
             }
@@ -111,7 +107,7 @@
      * @return boolean
      */
     function osc_validate_min ($value = null, $min = 6) {
-        if ( mb_strlen($value, 'utf8') < $min ) {
+        if ( mb_strlen($value, 'UTF-8') < $min ) {
             return false;
         }
         return true;
@@ -124,7 +120,7 @@
      * @return boolean
      */
     function osc_validate_max ($value = null, $max = 255) {
-        if ( mb_strlen($value, 'utf8') > $max ) {
+        if ( mb_strlen($value, 'UTF-8') > $max ) {
             return false;
         }
         return true;
@@ -138,7 +134,7 @@
      * @return boolean
      */
     function osc_validate_range ($value, $min = 6, $max = 255) {
-        if ( mb_strlen($value, 'utf8')>=$min && mb_strlen($value, 'utf8')<=$max ) {
+        if ( mb_strlen($value, 'UTF-8')>=$min && mb_strlen($value, 'UTF-8')<=$max ) {
             return true;
         }
         return false;
@@ -207,7 +203,7 @@
      * @return boolean
      */
     function osc_validate_url ($value, $required = false) {
-        if ($required || mb_strlen($value, 'utf8') > 0) {
+        if ($required || mb_strlen($value, 'UTF-8') > 0) {
             $value = osc_sanitize_url($value);
             if(!function_exists('filter_var')) {
                 $success = preg_match('|^(http\:\/\/[a-zA-Z0-9_\-]+(?:\.[a-zA-Z0-9_\-]+)*\.[a-zA-Z]{2,4}(?:\/[a-zA-Z0-9_]+)*(?:\/[a-zA-Z0-9_]+\.[a-zA-Z]{2,4}(?:\?[a-zA-Z0-9_]+\=[a-zA-Z0-9_]+)?)?(?:\&[a-zA-Z0-9_]+\=[a-zA-Z0-9_]+)*)$|', $value, $m);
@@ -297,7 +293,7 @@
      * @param $min
      */
     function osc_validate_username( $value, $min = 1 ) {
-        if(mb_strlen($value, 'utf8') >= $min && preg_match('/^[A-Za-z0-9_]+$/',$value) ){
+        if(mb_strlen($value, 'UTF-8') >= $min && preg_match('/^[A-Za-z0-9_]+$/',$value) ){
             return true;
         } else {
             return false;

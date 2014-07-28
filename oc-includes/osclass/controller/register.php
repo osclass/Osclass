@@ -1,21 +1,20 @@
 <?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
-    /**
-     * Osclass – software for creating and publishing online classified advertising platforms
-     *
-     * Copyright (C) 2012 OSCLASS
-     *
-     * This program is free software: you can redistribute it and/or modify it under the terms
-     * of the GNU Affero General Public License as published by the Free Software Foundation,
-     * either version 3 of the License, or (at your option) any later version.
-     *
-     * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-     * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-     * See the GNU Affero General Public License for more details.
-     *
-     * You should have received a copy of the GNU Affero General Public
-     * License along with this program. If not, see <http://www.gnu.org/licenses/>.
-     */
+/*
+ * Copyright 2014 Osclass
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
     class CWebRegister extends BaseModel
     {
@@ -64,45 +63,21 @@
 
                                         require_once LIB_PATH . 'osclass/UserActions.php';
                                         $userActions = new UserActions(false);
-                                        $success     = $userActions->add();
-
-                                        switch($success) {
-                                            case 1: osc_add_flash_ok_message( _m('The user has been created. An activation email has been sent'));
-                                                    $this->redirectTo( osc_base_url() );
-                                            break;
-                                            case 2: osc_add_flash_ok_message( _m('Your account has been created successfully'));
-                                                    Params::setParam('action', 'login_post');
-                                                    Params::setParam('email', Params::getParam('s_email'));
-                                                    Params::setParam('password', Params::getParam('s_password', false, false));
-                                                    require_once(osc_lib_path() . 'osclass/controller/login.php');
-                                                    $do = new CWebLogin();
-                                                    $do->doModel();
-                                                    //$this->doView('user-login.php');
-                                            break;
-                                            case 3: osc_add_flash_warning_message( _m('The specified e-mail is already in use'));
-                                                    $this->doView('user-register.php');
-                                            break;
-                                            case 4: osc_add_flash_error_message( _m('The reCAPTCHA was not entered correctly'));
-                                                    $this->doView('user-register.php');
-                                            break;
-                                            case 5: osc_add_flash_warning_message( _m('The email is not valid'));
-                                                    $this->doView('user-register.php');
-                                            break;
-                                            case 6: osc_add_flash_warning_message( _m('The password cannot be empty'));
-                                                    $this->doView('user-register.php');
-                                            break;
-                                            case 7: osc_add_flash_warning_message( _m("Passwords don't match"));
-                                                    $this->doView('user-register.php');
-                                            break;
-                                            case 8: osc_add_flash_warning_message( _m("Username is already taken"));
-                                                $this->doView('user-register.php');
-                                            break;
-                                            case 9: osc_add_flash_warning_message( _m("The specified username is not valid, it contains some invalid words"));
-                                                $this->doView('user-register.php');
-                                            break;
-                                            case 10: osc_add_flash_warning_message( _m('The name cannot be empty'));
-                                                $this->doView('user-register.php');
-                                            break;
+                                        $success = $userActions->add();
+                                        if($success==1) {
+                                            osc_add_flash_ok_message( _m('The user has been created. An activation email has been sent'));
+                                            $this->redirectTo(osc_base_url());
+                                        } else if($success==2) {
+                                            osc_add_flash_ok_message( _m('Your account has been created successfully'));
+                                            Params::setParam('action', 'login_post');
+                                            Params::setParam('email', Params::getParam('s_email'));
+                                            Params::setParam('password', Params::getParam('s_password', false, false));
+                                            require_once(osc_lib_path() . 'osclass/controller/login.php');
+                                            $do = new CWebLogin();
+                                            $do->doModel();
+                                        } else {
+                                            osc_add_flash_error_message($success);
+                                            $this->doView('user-register.php');
                                         }
                 break;
                 case('validate'):       //validate account
@@ -122,22 +97,26 @@
                                         }
 
                                         $userManager = new User();
-                                        $userManager->update(
+                                        $success = $userManager->update(
                                                  array('b_active' => '1')
                                                 ,array('pk_i_id' => $id, 's_secret' => $code)
                                         );
 
-                                        // Auto-login
-                                        Session::newInstance()->_set('userId', $user['pk_i_id']);
-                                        Session::newInstance()->_set('userName', $user['s_name']);
-                                        Session::newInstance()->_set('userEmail', $user['s_email']);
-                                        $phone = ($user['s_phone_mobile']) ? $user['s_phone_mobile'] : $user['s_phone_land'];
-                                        Session::newInstance()->_set('userPhone', $phone);
+                                        if($success) {
+                                            // Auto-login
+                                            Session::newInstance()->_set('userId', $user['pk_i_id']);
+                                            Session::newInstance()->_set('userName', $user['s_name']);
+                                            Session::newInstance()->_set('userEmail', $user['s_email']);
+                                            $phone = ($user['s_phone_mobile']) ? $user['s_phone_mobile'] : $user['s_phone_land'];
+                                            Session::newInstance()->_set('userPhone', $phone);
 
-                                        osc_run_hook('hook_email_user_registration', $user);
-                                        osc_run_hook('validate_user', $user);
+                                            osc_run_hook('hook_email_user_registration', $user);
+                                            osc_run_hook('validate_user', $user);
 
-                                        osc_add_flash_ok_message( _m('Your account has been validated'));
+                                            osc_add_flash_ok_message( _m('Your account has been validated'));
+                                        } else {
+                                            osc_add_flash_ok_message( _m('Account validation failed'));
+                                        }
                                         $this->redirectTo( osc_base_url() );
                 break;
             }

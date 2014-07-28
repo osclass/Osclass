@@ -82,14 +82,32 @@
 
     function customPageHeader() {
         $action = Params::getParam("action"); ?>
-        <h1><?php _e('Discover how to improve your Osclass!'); ?></h1>
-        <h2>Osclass offers many templates and plugins.<br/>Turn your Osclass installation into a classifieds site in a minute!</h2>
+        <div class="header-title-market">
+            <h1><?php _e('Discover how to improve your Osclass!'); ?></h1>
+            <h2>Osclass offers many templates and plugins.<br/>Turn your Osclass installation into a classifieds site in a minute!</h2>
+        </div>
+        <div class="banner-market">
+
+        </div>
         <ul class="tabs">
             <li <?php if($action == ''){ echo 'class="active"';} ?>><a href="<?php echo osc_admin_base_url(true).'?page=market'; ?>"><?php _e('Market'); ?></a></li>
             <li <?php if($action == 'plugins'){ echo 'class="active"';} ?>><a href="<?php echo osc_admin_base_url(true).'?page=market&action=plugins'; ?>"><?php _e('Plugins'); ?></a></li>
             <li <?php if($action == 'themes'){ echo 'class="active"';} ?>><a href="<?php echo osc_admin_base_url(true).'?page=market&action=themes'; ?>"><?php _e('Themes'); ?></a></li>
             <li <?php if($action == 'languages'){ echo 'class="active"';} ?>><a href="<?php echo osc_admin_base_url(true).'?page=market&action=languages'; ?>"><?php _e('Languages'); ?></a></li>
         </ul>
+
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $.getJSON(
+                    '<?php echo osc_admin_base_url(true); ?>?page=ajax&action=market_header',
+                    function(data){
+                        if(data.error==1) {
+                        } else {
+                            $('#content-head div.banner-market').html(data.html);
+                        }
+                    });
+                });
+        </script>
 <?php
     }
     osc_add_hook('admin_page_header','customPageHeader');

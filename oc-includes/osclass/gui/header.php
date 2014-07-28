@@ -3,7 +3,7 @@
      *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2013 OSCLASS
+     *                        Copyright (C) 2014 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -77,6 +77,7 @@
     </form>
     <?php } ?>
 </div>
+<?php osc_show_widgets('header'); ?>
 <div class="wrapper wrapper-flash">
     <?php
         $breadcrumb = osc_breadcrumb('&raquo;', false, get_breadcrumb_lang());
