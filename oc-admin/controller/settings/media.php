@@ -100,10 +100,10 @@
                     }
 
                     // format parameters
-                    $maxSizeKb         = strip_tags($maxSizeKb);
-                    $dimThumbnail      = strip_tags($dimThumbnail);
-                    $dimPreview        = strip_tags($dimPreview);
-                    $dimNormal         = strip_tags($dimNormal);
+                    $maxSizeKb         = trim(strip_tags($maxSizeKb));
+                    $dimThumbnail      = trim(strip_tags($dimThumbnail));
+                    $dimPreview        = trim(strip_tags($dimPreview));
+                    $dimNormal         = trim(strip_tags($dimNormal));
                     $keepOriginalImage = ($keepOriginalImage != '' ? true : false);
                     $forceAspectImage  = ($forceAspectImage != '' ? true : false);
                     $forceJPEG         = ($forceJPEG != '' ? true : false);
