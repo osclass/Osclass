@@ -202,7 +202,7 @@
                         <div class="form-label-checkbox">
                             <input type="checkbox" id="force_jpeg" name="force_jpeg" value="1" <?php echo ( osc_force_jpeg() ? 'checked="checked"' : '' ); ?> />
                             <label for="force_jpeg"><?php _e('Force JPEG extension.'); ?></label>
-                            <span class="help-box"><?php _e('Uploaded images will be saved in JPG/JPEG format, saves space, but images will not have transparent background.'); ?></span>
+                            <span class="help-box"><?php _e('Uploaded images will be saved in JPG/JPEG format, it saves space but images will not have transparent background.'); ?></span>
                         </div>
                     </div>
                 </div>
