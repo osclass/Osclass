@@ -230,8 +230,8 @@ function osc_meta_generator() {
 }
 osc_add_hook('header', 'osc_show_maintenance');
 osc_add_hook('header', 'osc_meta_generator');
+osc_add_hook('header', 'osc_load_styles', 9);
 osc_add_hook('header', 'osc_load_scripts', 10);
-osc_add_hook('header', 'osc_load_styles', 10);
 
 // register scripts
 osc_register_script('jquery', osc_assets_url('js/jquery.min.js'));
