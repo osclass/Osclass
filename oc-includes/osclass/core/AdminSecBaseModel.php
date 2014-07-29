@@ -34,7 +34,7 @@
 
             // check if exist a new version each day
             if( (time() - osc_last_version_check()) > (24 * 3600) ) {
-                $data = osc_file_get_contents('http://osclass.org/latest_version.php?callback=?');
+                $data = osc_file_get_contents('http://osclass.org/latest_version_new.php?callback=?');
                 $data = preg_replace('|^\?\((.*?)\);$|', '$01', $data);
                 $json = json_decode($data);
                 if( $json->version > osc_version() ) {
