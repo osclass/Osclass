@@ -115,7 +115,7 @@
      * @param type $id
      */
     function osc_unregister_script($id) {
-        Scripts::newInstance()->unregisterScript($id, $url, $dependencies);
+        Scripts::newInstance()->unregisterScript($id);
     }
 
     /**
