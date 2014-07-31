@@ -2070,6 +2070,7 @@ function osc_market($section, $code) {
                 /**********************
                  ***** UNZIP FILE *****
                  **********************/
+                @mkdir(osc_content_path() . 'downloads/oc-temp/');
                 $res = osc_unzip_file(osc_content_path() . 'downloads/' . $filename, osc_content_path() . 'downloads/oc-temp/');
                 if ($res == 1) { // Everything is OK, continue
                     /**********************
