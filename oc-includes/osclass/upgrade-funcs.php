@@ -457,6 +457,8 @@ CREATE TABLE %st_item_description_tmp (
 		$comm->query(sprintf("ALTER TABLE `%st_widget` ADD INDEX `idx_s_description` (`s_description`);", DB_TABLE_PREFIX));
         osc_set_preference('force_jpeg', '0', 'osclass', 'BOOLEAN');
 
+        @unlink(ABS_PATH . '.maintenance');
+
         // THESE LINES PROBABLY HIT LOW TIMEOUT SCRIPTS, RUN THE LAST OF THE UPGRADE PROCESS
         //osc_calculate_location_slug('country');
         //osc_calculate_location_slug('region');
