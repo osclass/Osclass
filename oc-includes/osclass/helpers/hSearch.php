@@ -588,7 +588,7 @@
                         default:
                             break;
                     }
-                    if(!is_array($v)  && $v!='') { $url .= "/".$k.",".$v; }
+                    if(!is_array($v)  && $v!='') { $url .= "/".$k.",".urlencode($v); }
                 }
             }
         } else {

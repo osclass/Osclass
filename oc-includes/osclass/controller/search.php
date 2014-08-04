@@ -32,10 +32,6 @@
             } else {
                 $this->uri = preg_replace('|/$|', '', $this->uri);
                 // redirect if it ends with a slash NOT NEEDED ANYMORE, SINCE WE CHECK WITH osc_search_url
-                /*print_r($_SERVER['REQUEST_URI'] . PHP_EOL);
-                print_r($this->uri . PHP_EOL);
-                print_r(osc_get_preference('rewrite_search_url') . PHP_EOL);*/
-                //if( stripos($_SERVER['REQUEST_URI'], osc_get_preference('rewrite_search_url'))===false && osc_rewrite_enabled() && !Params::existParam('sFeed')) {
                 if(($this->uri!=osc_get_preference('rewrite_search_url') && stripos($this->uri, osc_get_preference('rewrite_search_url') . '/')===false) && osc_rewrite_enabled() && !Params::existParam('sFeed')) {
                     // clean GET html params
                     $this->uri = preg_replace('/(\/?)\?.*$/', '', $this->uri);
@@ -173,7 +169,7 @@
 
             $uriParams = Params::getParamsAsArray();
             $searchUri = osc_search_url($uriParams);
-            if($searchUri!=(WEB_PATH . urldecode($this->uri))) {
+            if($searchUri!=(WEB_PATH . $this->uri)) {
                 $this->redirectTo($searchUri, 301);
             }
 
