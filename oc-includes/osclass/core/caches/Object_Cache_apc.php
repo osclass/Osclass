@@ -104,7 +104,11 @@ class Object_Cache_apc implements iObject_Cache{
      */
     function flush() {
         $this->cache = array ();
-        return apc_clear_cache( 'user' );
+        // apc and apcu cache
+        @apc_clear_cache( );
+        // apc user cache
+        @apc_clear_cache( 'user' );
+        return true;
     }
 
     /**
