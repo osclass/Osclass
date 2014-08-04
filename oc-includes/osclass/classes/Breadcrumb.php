@@ -295,7 +295,7 @@
                 // create span tag
                 $title = '<span itemprop="title">' . $this->aLevel[$i]['title'] . '</span>';
                 if( array_key_exists('url', $this->aLevel[$i]) ) {
-                    $title = '<a href="' . $this->aLevel[$i]['url'] . '" itemprop="url">' . $title . '</a>';
+                    $title = '<a href="' . osc_esc_html($this->aLevel[$i]['url']) . '" itemprop="url">' . $title . '</a>';
                 }
                 $node[] = $text . $title . '</li>' . PHP_EOL;
             }
