@@ -465,7 +465,7 @@ CREATE TABLE %st_item_description_tmp (
         //osc_calculate_location_slug('city');
 	}
 
-    osc_changeVersionTo(340);
+    osc_changeVersionTo(341);
 
     if(!defined('IS_AJAX') || !IS_AJAX) {
         if(empty($aMessages)) {
