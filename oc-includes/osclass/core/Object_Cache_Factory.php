@@ -25,7 +25,7 @@ class Object_Cache_Factory {
                 require_once $file;
                 if(class_exists($cache_class)) {
                     // all correct ?
-                    if($cache_class::is_supported()) {
+                    if( call_user_func(array($cache_class, 'is_supported')) ) {
                         self::$instance = new $cache_class();
                     } else {
                         $file = dirname(__FILE__) . '/caches/Object_Cache_default.php';

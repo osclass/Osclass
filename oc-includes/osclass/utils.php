@@ -469,8 +469,8 @@ function osc_mailBeauty($text, $params) {
         osc_base_url(),
         osc_page_title(),
         '<a href="' . osc_base_url() . '">' . osc_page_title() . '</a>',
-		date(osc_date_format()?:'Y-m-d').' '.date(osc_time_format()?:'H:i:s'),
-		date(osc_time_format()?:'H:i'),
+		date(osc_date_format()?osc_date_format():'Y-m-d').' '.date(osc_time_format()?osc_time_format():'H:i:s'),
+		date(osc_time_format()?osc_time_format():'H:i'),
         $_SERVER['REMOTE_ADDR']
     );
     $text = str_ireplace($kwords, $rwords, $text);
@@ -603,7 +603,7 @@ function osc_dbdump($path, $file) {
         return -3;
     }
 
-    $_str = '/* OSCLASS MYSQL Autobackup (' . date(osc_date_format()?:'Y-m-d').' '.date(osc_time_format()?:'H:i:s') . ') */'."\n";
+    $_str = '/* OSCLASS MYSQL Autobackup (' . date(osc_date_format()?osc_date_format():'Y-m-d').' '.date(osc_time_format()?osc_time_format():'H:i:s') . ') */'."\n";
 
     $f = fopen($path, "a");
     fwrite($f, $_str);
