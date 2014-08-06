@@ -145,8 +145,8 @@
 
         static public function is_company_select($user = null, $user_label = null, $company_label = null) {
             $options = array(
-                array( 'i_value' => '0', 's_text' => ($user_label?:__('User')) )
-                ,array( 'i_value' => '1', 's_text' => ($company_label?:__('Company')) )
+                array( 'i_value' => '0', 's_text' => ($user_label?$user_label:__('User')) )
+                ,array( 'i_value' => '1', 's_text' => ($company_label?$company_label:__('Company')) )
             );
 
             parent::generic_select( 'b_company', $options, 'i_value', 's_text', null, (isset($user['b_company'])) ? $user['b_company'] : null );
