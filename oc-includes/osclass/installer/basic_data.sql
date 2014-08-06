@@ -126,7 +126,7 @@ INSERT INTO /*TABLE_PREFIX*/t_preference VALUES
     ,('osclass', 'watermark_place', 'centre', 'STRING')
     ,('osclass', 'watermark_image', '', 'STRING')
     ,('osclass', 'last_version_check', '', 'STRING')
-    ,('osclass', 'auto_update', 'major|plugins|themes|languages', 'STRING')
+    ,('osclass', 'auto_update', 'disabled', 'STRING')
     ,('osclass', 'title_character_length', '100', 'INTEGER')
     ,('osclass', 'description_character_length', '5000', 'INTEGER')
     ,('osclass', 'update_core_json', '', 'STRING');
