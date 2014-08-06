@@ -1,3 +1,8 @@
+Osclass 3.4.1 2014-08-04
+------------------------
+- Fixed some compatibility issues with PHP 5.2
+- Minor bug fixes and improvements
+
 Osclass 3.4.0 2014-08-04
 ------------------------
 - Extensible cache support (memcache, APC,...)
