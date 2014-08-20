@@ -134,6 +134,7 @@
             $this->addColumn('status-border', '');
             $this->addColumn('status', __('Status'));
             $this->addColumn('bulkactions', '<input id="check_all" type="checkbox" />');
+            $this->addColumn('ID', __('ID'));
             $this->addColumn('title', __('Title'));
             $this->addColumn('user', __('User'));
             $this->addColumn('category', __('Category'));
@@ -195,6 +196,7 @@
             $url_expiration = $url_base.$arg_expiration;
 
             $this->addColumn('bulkactions', '<input id="check_all" type="checkbox" />');
+            $this->addColumn('ID', __('ID'));
             $this->addColumn('title', __('Title'));
             $this->addColumn('user', __('User'));
             $this->addColumn('spam', '<a id="order_spam" href="'.$url_spam.'">'.__('Spam').'</a>');
@@ -289,6 +291,7 @@
                     $status = $this->get_row_status();
                     $row['status-border'] = '';
                     $row['status'] = $status['text'];
+                    $row['ID'] = osc_item_id();
                     $row['title'] = '<a href="' . osc_item_url() . '" target="_blank">' . $title. '</a>'. $actions;
                     if($aRow['fk_i_user_id']!=null) {
                         $row['user'] = '<a href="' . osc_admin_base_url(true) . '?page=users&action=edit&id=' . $aRow['fk_i_user_id'] . '" target="_blank">' . $aRow['s_user_name'] . '</a>';
@@ -357,6 +360,7 @@
 
                     // fill a row
                     $row['bulkactions'] = '<input type="checkbox" name="id[]" value="' . $aRow['pk_i_id'] . '" active="' . $aRow['b_active'] . '" blocked="' . $aRow['b_enabled'] . '"/>';
+                    $row['ID'] = osc_item_id();
                     $row['title'] = '<a href="' . osc_item_url().'" target="_blank">' . $title . '</a>'. $actions;
                     $row['user'] = $aRow['s_user_name'];
                     $row['spam'] = $aRow['i_num_spam'];
