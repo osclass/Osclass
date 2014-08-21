@@ -297,8 +297,8 @@
                     }
                     $row['category'] = $aRow['s_category_name'];
                     $row['location'] = $this->get_row_location();
-                    $row['date'] = osc_format_date($aRow['dt_pub_date']);
-                    $row['expiration'] = osc_format_date($aRow['dt_expiration']);
+                    $row['date'] = $row['date'] = osc_format_date($aRow['dt_pub_date'], osc_date_format() . ' ' . osc_time_format() );
+                    $row['expiration'] = ($aRow['dt_expiration'] != '9999-12-31 23:59:59') ? osc_format_date($aRow['dt_expiration'], osc_date_format() . ' ' . osc_time_format() ) : __('<span style="color:#F00;">') . __('Never expires') . __('</span>');
 
                     $row = osc_apply_filter('items_processing_row', $row, $aRow);
 
@@ -364,8 +364,8 @@
                     $row['rep'] = $aRow['i_num_repeated'];
                     $row['exp'] = $aRow['i_num_expired'];
                     $row['off'] = $aRow['i_num_offensive'];
-                    $row['date'] = osc_format_date($aRow['dt_pub_date']);
-                    $row['expiration'] = ($aRow['dt_expiration'] != '9999-12-31 23:59:59') ? osc_format_date($aRow['dt_expiration']) : __('Never expires');
+                    $row['date'] = $row['date'] = osc_format_date($aRow['dt_pub_date'], osc_date_format() . ' ' . osc_time_format() );
+                    $row['expiration'] = ($aRow['dt_expiration'] != '9999-12-31 23:59:59') ? osc_format_date($aRow['dt_expiration'], osc_date_format() . ' ' . osc_time_format() ) : __('<span style="color:#F00;">') . __('Never expires') . __('</span>');
 
                     $row = osc_apply_filter('items_processing_reported_row', $row, $aRow);
 
