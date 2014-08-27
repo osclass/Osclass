@@ -80,6 +80,7 @@
                 }
             }
 
+            $flash_error = osc_apply_filter('user_add_flash_error', $flash_error);
             if($flash_error!='') {
                 osc_run_hook('user_register_failed', $error);
                 return $flash_error;
@@ -168,6 +169,7 @@
                 }
             }
 
+            $flash_error = osc_apply_filter('user_edit_flash_error', $flash_error, $userId);
             if($flash_error!='') {
                 return $flash_error;
             }
