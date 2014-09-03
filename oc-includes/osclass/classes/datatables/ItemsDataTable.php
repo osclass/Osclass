@@ -138,8 +138,8 @@
             $this->addColumn('user', __('User'));
             $this->addColumn('category', __('Category'));
             $this->addColumn('location', __('Location'));
-            $this->addColumn('date', '<a href="'.$url_base.$arg_date.'">'.__('Date').'</a>');
-            $this->addColumn('expiration', '<a href="'.$url_base.$arg_expiration.'">'.__('Expiration date').'</a>');
+            $this->addColumn('date', '<a href="'.osc_esc_html($url_base.$arg_date).'">'.__('Date').'</a>');
+            $this->addColumn('expiration', '<a href="'.osc_esc_html($url_base.$arg_expiration).'">'.__('Expiration date').'</a>');
 
             $dummy = &$this;
             osc_run_hook("admin_items_table", $dummy);
@@ -197,13 +197,13 @@
             $this->addColumn('bulkactions', '<input id="check_all" type="checkbox" />');
             $this->addColumn('title', __('Title'));
             $this->addColumn('user', __('User'));
-            $this->addColumn('spam', '<a id="order_spam" href="'.$url_spam.'">'.__('Spam').'</a>');
-            $this->addColumn('bad', '<a id="order_bad" href="'.$url_bad.'">'.__('Misclassified').'</a>');
-            $this->addColumn('rep', '<a id="order_rep" href="'.$url_rep.'">'.__('Duplicated').'</a>');
-            $this->addColumn('exp', '<a id="order_exp" href="'.$url_exp.'">'.__('Expired').'</a>');
-            $this->addColumn('off', '<a id="order_off" href="'.$url_off.'">'.__('Offensive').'</a>');
-            $this->addColumn('date', '<a id="order_date" href="'.$url_date.'">'.__('Date').'</a>');
-            $this->addColumn('expiration', '<a id="order_expiration" href="'.$url_expiration.'">'.__('Expiration date').'</a>');
+            $this->addColumn('spam', '<a id="order_spam" href="'.osc_esc_html($url_spam).'">'.__('Spam').'</a>');
+            $this->addColumn('bad', '<a id="order_bad" href="'.osc_esc_html($url_bad).'">'.__('Misclassified').'</a>');
+            $this->addColumn('rep', '<a id="order_rep" href="'.osc_esc_html($url_rep).'">'.__('Duplicated').'</a>');
+            $this->addColumn('exp', '<a id="order_exp" href="'.osc_esc_html($url_exp).'">'.__('Expired').'</a>');
+            $this->addColumn('off', '<a id="order_off" href="'.osc_esc_html($url_off).'">'.__('Offensive').'</a>');
+            $this->addColumn('date', '<a id="order_date" href="'.osc_esc_html($url_date).'">'.__('Date').'</a>');
+            $this->addColumn('expiration', '<a id="order_expiration" href="'.osc_esc_html($url_expiration).'">'.__('Expiration date').'</a>');
 
             $dummy = &$this;
             osc_run_hook("admin_items_reported_table", $dummy);
