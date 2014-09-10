@@ -500,7 +500,7 @@
                 $path = osc_base_url().$url;
             }
         } else {
-            $path = osc_item_url_ns(osc_item_id(), $locale);
+            $path = osc_item_url_ns($item['pk_i_id'], $locale);
         }
         return $path;
     }
