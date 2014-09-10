@@ -1215,7 +1215,9 @@
             '{ITEM_URL}',
             '{ITEM_LINK}',
             '{SELLER_NAME}',
-            '{SELLER_EMAIL}'
+            '{SELLER_EMAIL}',
+            '{CONTACT_NAME}',
+            '{CONTACT_EMAIL}'
         );
         $words[] = array(
             $aItem['s_contact_name'],
@@ -1224,6 +1226,8 @@
             $aItem['dt_expiration'],
             osc_item_url(),
             $itemURL,
+            $aItem['s_contact_name'],
+            $aItem['s_contact_email'],
             $aItem['s_contact_name'],
             $aItem['s_contact_email']
         );
