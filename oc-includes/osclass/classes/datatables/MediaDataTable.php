@@ -73,8 +73,8 @@
             $this->addColumn('bulkactions', '<input id="check_all" type="checkbox" />');
             $this->addColumn('file', __('File'));
             $this->addColumn('action', __('Action'));
-            $this->addColumn('attached_to', '<a href="'.$url_base.$arg_item.'">'.__('Attached to').'</a>');
-            $this->addColumn('date', '<a href="'.$url_base.$arg_date.'">'.__('Date').'</a>');
+            $this->addColumn('attached_to', '<a href="'.osc_esc_html($url_base.$arg_item).'">'.__('Attached to').'</a>');
+            $this->addColumn('date', '<a href="'.osc_esc_html($url_base.$arg_date).'">'.__('Date').'</a>');
 
             $dummy = &$this;
             osc_run_hook("admin_media_table", $dummy);

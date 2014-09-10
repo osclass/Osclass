@@ -22,7 +22,7 @@
         var $is_admin;
         var $data;
 
-        function __construct($is_admin) {
+        function __construct($is_admin = false) {
             $this->is_admin = $is_admin;
             $this->manager = Item::newInstance();
         }
