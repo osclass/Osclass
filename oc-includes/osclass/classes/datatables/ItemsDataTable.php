@@ -489,7 +489,7 @@
 
             // column sort
             $sort       = $_get['sort'];
-            $arraySortColumns = array('date'  => 'dt_pub_date');
+            $arraySortColumns = array('date'  => 'dt_pub_date', 'expiration'  => 'dt_expiration');
             if(!key_exists($sort, $arraySortColumns)) {
                 $sort       = 'dt_pub_date';
             } else {
