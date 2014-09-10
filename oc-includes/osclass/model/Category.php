@@ -161,7 +161,7 @@
          */
         public function toTree($empty = true)
         {
-            $key    = md5((string)$this->_language.(string)$empty);
+            $key    = md5(osc_base_url().(string)$this->_language.(string)$empty);
             $found  = null;
             $cache  = osc_cache_get($key, $found);
             if($cache===false) {
@@ -503,7 +503,7 @@
             if($categoryID == null) {
                 return false;
             }
-            $key    = md5('Category:findByPrimaryKey:'.$categoryID.$locale);
+            $key    = md5(osc_base_url().'Category:findByPrimaryKey:'.$categoryID.$locale);
             $found  = null;
             $cache  = osc_cache_get($key, $found);
             if($cache===false) {
