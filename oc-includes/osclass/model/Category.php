@@ -518,6 +518,7 @@
                             $category['s_name'] = $category['locale'][$locale]['s_name'];
                             $category['s_description'] = $category['locale'][$locale]['s_description'];
                         }
+                        osc_cache_set($key, $category, OSC_CACHE_TTL);
                         return $category;
                     }
                 } else {
