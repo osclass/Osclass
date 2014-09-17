@@ -461,10 +461,10 @@
             osc_run_hook('search_conditions', Params::getParamsAsArray());
 
             // RETRIEVE ITEMS AND TOTAL
-            $key    = md5($this->mSearch->toJson());
+            $key    = md5(osc_base_url().$this->mSearch->toJson());
             $found  = null;
             $cache  = osc_cache_get($key, $found);
-            
+
             $aItems         = null;
             $iTotalItems    = null;
             if($cache) {
