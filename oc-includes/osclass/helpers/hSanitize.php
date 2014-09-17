@@ -175,7 +175,7 @@
     function osc_esc_js($str) {
         static $sNewLines = '<br><br/><br />';
         static $aNewLines = array('<br>','<br/>','<br />');
-        $str = trim(strip_tags($str, $sNewLines));
+        $str = strip_tags($str, $sNewLines);
         $str = str_replace("\r", '', $str);
         $str = addslashes($str);
         $str = str_replace("\n", '\n', $str);
