@@ -163,7 +163,7 @@
          */
         public function listCities($region = null, $zero = ">", $order = "city_name ASC")
         {
-            $key    = md5((string)$region.(string)$zero.(string)$order);
+            $key    = md5(osc_base_url().(string)$region.(string)$zero.(string)$order);
             $found  = null;
             $cache  = osc_cache_get($key, $found);
             if($cache===false) {

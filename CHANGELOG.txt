@@ -1,3 +1,9 @@
+Osclass 3.4.2 2014-09-10
+------------------------
+- Fixed two vulnerabilities thanks to Robert & Onur from http://www.netsparker.com
+- Fixed some issues with the cache
+- Minor bug fixes and improvements
+
 Osclass 3.4.1 2014-08-04
 ------------------------
 - Fixed some compatibility issues with PHP 5.2

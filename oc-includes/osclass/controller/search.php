@@ -38,11 +38,6 @@
                     $search_uri = preg_replace('|/[0-9]+$|', '', $this->uri);
                     $this->_exportVariableToView('search_uri', $search_uri);
 
-                    // remove seo_url_search_prefix
-                    if( osc_get_preference('seo_url_search_prefix') != '' ) {
-                        $this->uri = str_replace( osc_get_preference('seo_url_search_prefix') . '/', '', $this->uri);
-                    }
-
                     // get page if it's set in the url
                     $iPage = preg_replace('|.*/([0-9]+)$|', '$01', $this->uri);
                     if( is_numeric($iPage) && $iPage > 0 ) {
@@ -466,10 +461,10 @@
             osc_run_hook('search_conditions', Params::getParamsAsArray());
 
             // RETRIEVE ITEMS AND TOTAL
-            $key    = md5($this->mSearch->toJson());
+            $key    = md5(osc_base_url().$this->mSearch->toJson());
             $found  = null;
             $cache  = osc_cache_get($key, $found);
-            
+
             $aItems         = null;
             $iTotalItems    = null;
             if($cache) {

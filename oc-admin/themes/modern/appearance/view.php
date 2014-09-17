@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+    $file = __get('file');
     osc_add_hook('admin_page_header','customPageHeader');
     function customPageHeader() { ?>
         <h1><?php echo osc_apply_filter('custom_appearance_title', __('Appearance')); ?></h1>
@@ -30,8 +30,8 @@
 <!-- theme files -->
 <div class="theme-files">
     <?php
-        if( file_exists(__get('file')) ) {
-            require_once __get('file');
+        if(strpos($file, '../')===false && file_exists($file)) {
+            require_once $file;
         }
     ?>
 </div>
