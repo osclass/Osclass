@@ -59,6 +59,7 @@
                             $this->do404();
                         }
                         Params::setParam('sRegion', $region['pk_i_id']);
+                        Params::unsetParam('sCategory');
                         if(preg_match('|(.*?)_.*?-r[0-9]+|', $search_uri, $match)) {
                             Params::setParam('sCategory', $match[1]);
                         }
@@ -68,6 +69,7 @@
                             $this->do404();
                         }
                         Params::setParam('sCity', $city['pk_i_id']);
+                        Params::unsetParam('sCategory');
                         if(preg_match('|(.*?)_.*?-c[0-9]+|', $search_uri, $match)) {
                             Params::setParam('sCategory', $match[1]);
                         }
