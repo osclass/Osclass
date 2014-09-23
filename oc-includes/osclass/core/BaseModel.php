@@ -26,9 +26,9 @@
         function __construct()
         {
             // this is necessary because if HTTP_HOST doesn't have the PORT the parse_url is null
-            $current_host = parse_url($_SERVER['HTTP_HOST'], PHP_URL_HOST);
+            $current_host = parse_url(@$_SERVER['HTTP_HOST'], PHP_URL_HOST);
             if( $current_host === null ) {
-                $current_host = $_SERVER['HTTP_HOST'];
+                $current_host = @$_SERVER['HTTP_HOST'];
             }
 
             if( parse_url(osc_base_url(), PHP_URL_HOST) !== $current_host ) {
@@ -40,12 +40,12 @@
                 // append the domain
                 $url .= parse_url(osc_base_url(), PHP_URL_HOST);
                 // append the port number if it's necessary
-                $http_port = parse_url($_SERVER['HTTP_HOST'], PHP_URL_PORT);
+                $http_port = parse_url(@$_SERVER['HTTP_HOST'], PHP_URL_PORT);
                 if( $http_port !== 80 ) {
-                    $url .= ':' . parse_url($_SERVER['HTTP_HOST'], PHP_URL_PORT);
+                    $url .= ':' . parse_url(@$_SERVER['HTTP_HOST'], PHP_URL_PORT);
                 }
                 // append the request
-                $url .= $_SERVER['REQUEST_URI'];
+                $url .= @$_SERVER['REQUEST_URI'];
                 $this->redirectTo($url);
             }
 

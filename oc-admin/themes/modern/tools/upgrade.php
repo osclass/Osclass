@@ -39,7 +39,7 @@
                 var steps = document.getElementById('steps');
                 var version = <?php echo osc_version(); ?>;
                 var fileToUnzip = '';
-                steps.innerHTML += '<?php echo osc_esc_js( sprintf( __('Checking for updates (Current version %s)'), osc_version() )); ?>';
+                steps.innerHTML += '<?php echo osc_esc_js( sprintf( __('Checking for updates (Current version %s)'), osc_version() )); ?> ';
 
                 $.getJSON("http://osclass.org/latest_version_v1.php?callback=?", function(data) {
                     if(data.version <= version) {
