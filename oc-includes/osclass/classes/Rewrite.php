@@ -116,7 +116,7 @@
                 $route_used = false;
                 foreach($this->routes as $id => $route) {
                     // UNCOMMENT TO DEBUG
-                    //echo 'Request URI: '.$request_uri." # Match : ".$match." # URI to go : ".$uri." <br />";
+                    //echo 'Request URI: '.$request_uri." # Match : ".$route['regexp']." # URI to go : ".$route['url']." <br />";
                     if(preg_match('#^'.$route['regexp'].'#', $request_uri, $m)) {
                         if(!preg_match_all('#\{([^\}]+)\}#', $route['url'], $args)) {
                             $args[1] = array();
