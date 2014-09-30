@@ -1,3 +1,10 @@
+Osclass 3.4.3 2014-09-30
+------------------------
+- Fixed four critical vulnerabilities thanks to Egidio Romano ( http://karmainsecurity.com/ )
+- Fixed some issues with the thousand separator in prices
+- Fixed some issues with search urls creating a redirection loop
+- Minor bug fixes and improvements
+
 Osclass 3.4.2 2014-09-10
 ------------------------
 - Fixed two vulnerabilities thanks to Robert & Onur from http://www.netsparker.com
