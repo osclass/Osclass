@@ -74,7 +74,7 @@ function osc_deleteResource( $id , $admin) {
  * @return true on success.
  */
 function osc_deleteDir($path) {
-    if(strpos($path, "../")!==false) {
+    if(strpos($path, "../")!==false || strpos($path, "..\\")!==false) {
         return false;
     }
 
@@ -113,7 +113,7 @@ function osc_deleteDir($path) {
  * @return true on success.
  */
 function osc_packageExtract($zipPath, $path) {
-    if(strpos($path, "../")!==false) {
+    if(strpos($path, "../")!==false || strpos($path, "..\\")!==false) {
         return false;
     }
 
@@ -831,7 +831,7 @@ function download_fsockopen($sourceFile, $fileout = null)
 
 function osc_downloadFile($sourceFile, $downloadedFile)
 {
-    if(strpos($downloadedFile, "../")!==false) {
+    if(strpos($downloadedFile, "../")!==false || strpos($downloadedFile, "..\\")!==false) {
         return false;
     }
 
@@ -936,7 +936,7 @@ function strip_slashes_extended($array) {
  *  -1 : file could not be created (or error reading the file from the zip)
  */
 function osc_unzip_file($file, $to) {
-    if(strpos($to, "../")!==false) {
+    if(strpos($to, "../")!==false || strpos($to, "..\\")!==false) {
         return 0;
     }
 
@@ -968,7 +968,7 @@ function osc_unzip_file($file, $to) {
  * @return int
  */
 function _unzip_file_ziparchive($file, $to) {
-    if(strpos($to, "../")!==false) {
+    if(strpos($to, "../")!==false || strpos($to, "..\\")!==false) {
         return 0;
     }
 
@@ -1027,7 +1027,7 @@ function _unzip_file_ziparchive($file, $to) {
  * @return int
  */
 function _unzip_file_pclzip($zip_file, $to) {
-    if(strpos($to, "../")!==false) {
+    if(strpos($to, "../")!==false || strpos($to, "..\\")!==false) {
         return false;
     }
 
@@ -1077,7 +1077,7 @@ function _unzip_file_pclzip($zip_file, $to) {
  * @return int
  */
 function osc_zip_folder($archive_folder, $archive_name) {
-    if(strpos($archive_folder, "../")!==false || strpos($archive_name,"../")!==false) {
+    if(strpos($archive_folder, "../")!==false || strpos($archive_name,"../")!==false || strpos($archive_folder, "..\\")!==false || strpos($archive_name,"..\\")!==false) {
         return false;
     }
 
@@ -1096,7 +1096,7 @@ function osc_zip_folder($archive_folder, $archive_name) {
  * @return int
  */
 function _zip_folder_ziparchive($archive_folder, $archive_name) {
-    if(strpos($archive_folder, "../")!==false || strpos($archive_name,"../")!==false) {
+    if(strpos($archive_folder, "../")!==false || strpos($archive_name,"../")!==false || strpos($archive_folder, "..\\")!==false || strpos($archive_name,"..\\")!==false) {
         return false;
     }
 
@@ -1138,7 +1138,7 @@ function _zip_folder_ziparchive($archive_folder, $archive_name) {
  * @return int
  */
 function _zip_folder_pclzip($archive_folder, $archive_name) {
-    if(strpos($archive_folder, "../")!==false || strpos($archive_name,"../")!==false) {
+    if(strpos($archive_folder, "../")!==false || strpos($archive_name,"../")!==false || strpos($archive_folder, "..\\")!==false || strpos($archive_name,"..\\")!==false) {
         return false;
     }
 
@@ -1184,7 +1184,7 @@ function osc_check_recaptcha() {
 }
 
 function osc_check_dir_writable( $dir = ABS_PATH ) {
-    if(strpos($dir, "../")!==false) {
+    if(strpos($dir, "../")!==false || strpos($dir, "..\\")!==false) {
         return false;
     }
 
@@ -1227,7 +1227,7 @@ function osc_check_dir_writable( $dir = ABS_PATH ) {
 
 
 function osc_change_permissions( $dir = ABS_PATH ) {
-    if(strpos($dir, "../")!==false) {
+    if(strpos($dir, "../")!==false || strpos($dir, "..\\")!==false) {
         return false;
     }
 
@@ -1276,7 +1276,7 @@ function osc_change_permissions( $dir = ABS_PATH ) {
 }
 
 function osc_save_permissions( $dir = ABS_PATH ) {
-    if(strpos($dir, "../")!==false) {
+    if(strpos($dir, "../")!==false || strpos($dir, "..\\")!==false) {
         return false;
     }
 

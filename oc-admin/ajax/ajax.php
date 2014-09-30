@@ -419,7 +419,7 @@
                     }
 
                     // valid file?
-                    if( stripos($file, '../') !== false ) {
+                    if( stripos($file, '../') !== false || stripos($file, '..\\') !== false ) {
                         echo json_encode(array('error' => 'no valid file'));
                         break;
                     }

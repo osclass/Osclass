@@ -16,7 +16,7 @@
  */
 
 
-define('OSCLASS_VERSION', '3.4.2');
+define('OSCLASS_VERSION', '3.4.3');
 
 if( !defined('ABS_PATH') ) {
     define( 'ABS_PATH', str_replace('\\', '/', dirname(__FILE__) . '/' ));
@@ -192,6 +192,10 @@ require_once LIB_PATH . 'osclass/helpers/hAdminMenu.php';
 require_once LIB_PATH . 'osclass/core/iObject_Cache.php';
 require_once LIB_PATH . 'osclass/core/Object_Cache_Factory.php';
 require_once LIB_PATH . 'osclass/helpers/hCache.php';
+
+if( !defined('OSC_CRYPT_KEY') ) {
+    define('OSC_CRYPT_KEY', osc_get_preference('crypt_key'));
+}
 
 osc_cache_init();
 
