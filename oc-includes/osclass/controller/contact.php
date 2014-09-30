@@ -94,6 +94,7 @@ MESSAGE;
                                             'body'      => nl2br($message)
                                         );
 
+
                                         $error = true;
                                         if( osc_contact_attachment() ) {
                                             $attachment   = Params::getFiles('attachment');
@@ -124,7 +125,7 @@ MESSAGE;
                                                     if ( is_array($output) ) {
                                                         $output = $output[0];
                                                     }
-                                                    $resourceName = $output;
+                                                    $resourceType = $output;
                                                 }
 
                                                 // check mime file
@@ -151,6 +152,10 @@ MESSAGE;
                                             osc_run_hook('pre_contact_post', $params);
 
                                             osc_sendMail(osc_apply_filter('contact_params', $params));
+
+                                            if( isset($path) ) {
+                                                @unlink($path);
+                                            }
 
                                             osc_add_flash_ok_message( _m('Your email has been sent properly. Thank you for contacting us!') );
                                         } else {
