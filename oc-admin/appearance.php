@@ -193,7 +193,7 @@
                         };
                     }
 
-                    if(strpos($file, '../')!==false || !file_exists(osc_base_path() . $file)) {
+                    if(strpos($file, '../')!==false || strpos($file, '..\\')!==false || !file_exists(osc_base_path() . $file)) {
                         osc_add_flash_warning_message(__('Error loading theme custom file'), 'admin');
                     };
                     $this->_exportVariableToView('file', osc_base_path() . $file);

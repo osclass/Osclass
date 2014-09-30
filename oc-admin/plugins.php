@@ -188,7 +188,7 @@
                         };
                     }
                     osc_run_hook('renderplugin_controller');
-                    if(stripos($file, '../')===false && $file!="") {
+                    if(stripos($file, '../')===false && stripos($file, '..\\')===false && $file!="") {
                         $this->_exportVariableToView("file", osc_plugins_path() . $file);
                         $this->doView("plugins/view.php");
                     }
@@ -226,7 +226,7 @@
                     osc_csrf_check();
                     $plugin = str_replace('/index.php', '', Params::getParam("plugin"));
                     $path = preg_replace('([\/]+)', '/', CONTENT_PATH.'plugins/'.$plugin);
-                    if($plugin!="" && strpos($plugin, '../')===false && $path!=CONTENT_PATH.'plugins/') {
+                    if($plugin!="" && strpos($plugin, '../')===false && strpos($plugin, '..\\')===false && $path!=CONTENT_PATH.'plugins/') {
                         if(osc_deleteDir($path)) {
                             osc_add_flash_ok_message( _m('The files were deleted'), 'admin');
                         } else {

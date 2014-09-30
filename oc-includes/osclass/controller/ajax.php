@@ -242,7 +242,7 @@
                     }
 
                     // valid file?
-                    if( stripos($file, '../') !== false  || stripos($file, '/admin/') !== false ) { //If the file is inside an "admin" folder, it should NOT be opened in frontend
+                    if( strpos($file, '../') !== false  || strpos($file, '..\\') !== false || stripos($file, '/admin/') !== false ) { //If the file is inside an "admin" folder, it should NOT be opened in frontend
                         echo json_encode(array('error' => 'no valid ajaxFile'));
                         break;
                     }
