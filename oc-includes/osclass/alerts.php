@@ -51,7 +51,7 @@
 
         foreach($searches as $s_search) {
             // Get if there're new ads on this search
-            $json             = base64_decode($s_search['s_search']);
+            $json             = $s_search['s_search'];
             $array_conditions = (array)json_decode($json);
 
             $new_search = Search::newInstance();
