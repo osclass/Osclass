@@ -308,7 +308,7 @@
                 $cipherText = mdecrypt_generic($cipher, $string);
                 mcrypt_generic_deinit($cipher);
             }
-            return substr($cipherText, 32);
+            return trim(substr($cipherText, 32));
         };
         require_once LIB_PATH . 'phpseclib/Crypt/Rijndael.php';
         $cipher = new Crypt_Rijndael(CRYPT_RIJNDAEL_MODE_CBC);
@@ -316,7 +316,7 @@
         $cipher->setBlockLength(256);
         $cipher->setKey($key);
         $cipher->setIV($key);
-        return substr($cipher->decrypt($string), 32);
+        return trim(substr($cipher->decrypt($string), 32));
     }
 
     function osc_random_string($length) {
