@@ -83,4 +83,3 @@
     if( !defined('OSC_CACHE_TTL') ) {
         define('OSC_CACHE_TTL', 60);
     }
-?>

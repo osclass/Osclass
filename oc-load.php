@@ -193,6 +193,10 @@ require_once LIB_PATH . 'osclass/core/iObject_Cache.php';
 require_once LIB_PATH . 'osclass/core/Object_Cache_Factory.php';
 require_once LIB_PATH . 'osclass/helpers/hCache.php';
 
+if( !defined('OSC_CRYPT_KEY') ) {
+    define('OSC_CRYPT_KEY', osc_get_preference('crypt_key'));
+}
+
 osc_cache_init();
 
 define('__OSC_LOADED__', true);

@@ -536,8 +536,7 @@
 
             // json
             $json = $this->mSearch->toJson();
-
-            $this->_exportVariableToView('search_alert', base64_encode($json));
+            $this->_exportVariableToView('search_alert', base64_encode(osc_encrypt_alert($json)));
 
             // calling the view...
             if( count($aItems) === 0 ) {

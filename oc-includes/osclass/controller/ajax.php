@@ -163,9 +163,15 @@
                     return true;
                 break;
                 case 'alerts': // Allow to register to an alert given (not sure it's used on admin)
-                    $alert = Params::getParam("alert");
+                    $alert = osc_decrypt_alert(base64_decode(Params::getParam("alert")));
                     $email = Params::getParam("email");
                     $userid = Params::getParam("userid");
+
+                    if(osc_is_web_user_logged_in()) {
+                        $userid = osc_logged_user_id();
+                        $user = User::newInstance()->findByPrimaryKey($userid);
+                        $email = $user['s_email'];
+                    }
 
                     if($alert!='' && $email!='') {
                         if(osc_validate_email($email)) {
