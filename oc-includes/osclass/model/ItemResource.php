@@ -94,7 +94,7 @@
          * @return array of resources
          */
         function getAllResourcesFromItem($itemId) {
-            $key    = md5('ItemResource:getAllResourcesFromItem:'.$itemId);
+            $key    = md5(osc_base_url().'ItemResource:getAllResourcesFromItem:'.$itemId);
             $found  = null;
             $cache  = osc_cache_get($key, $found);
             if($cache===false) {

@@ -68,7 +68,7 @@
                             </div>
                         </div>
                         <?php if( osc_price_enabled_at_items() ) { ?>
-                        <div class="control-group">
+                        <div class="control-group control-group-price">
                             <label class="control-label" for="price"><?php _e('Price', 'bender'); ?></label>
                             <div class="controls">
                                 <?php ItemForm::price_input_text(); ?>
@@ -158,6 +158,14 @@
             </div>
         </div>
         <script type="text/javascript">
+            $('#price').bind('hide-price', function(){
+                $('.control-group-price').hide();
+            });
+
+            $('#price').bind('show-price', function(){
+                $('.control-group-price').show();
+            });
+
     <?php if(osc_locale_thousands_sep()!='' || osc_locale_dec_point() != '') { ?>
     $().ready(function(){
         $("#price").blur(function(event) {

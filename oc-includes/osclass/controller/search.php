@@ -32,20 +32,11 @@
             } else {
                 $this->uri = preg_replace('|/$|', '', $this->uri);
                 // redirect if it ends with a slash NOT NEEDED ANYMORE, SINCE WE CHECK WITH osc_search_url
-                /*print_r($_SERVER['REQUEST_URI'] . PHP_EOL);
-                print_r($this->uri . PHP_EOL);
-                print_r(osc_get_preference('rewrite_search_url') . PHP_EOL);*/
-                //if( stripos($_SERVER['REQUEST_URI'], osc_get_preference('rewrite_search_url'))===false && osc_rewrite_enabled() && !Params::existParam('sFeed')) {
                 if(($this->uri!=osc_get_preference('rewrite_search_url') && stripos($this->uri, osc_get_preference('rewrite_search_url') . '/')===false) && osc_rewrite_enabled() && !Params::existParam('sFeed')) {
                     // clean GET html params
                     $this->uri = preg_replace('/(\/?)\?.*$/', '', $this->uri);
                     $search_uri = preg_replace('|/[0-9]+$|', '', $this->uri);
                     $this->_exportVariableToView('search_uri', $search_uri);
-
-                    // remove seo_url_search_prefix
-                    if( osc_get_preference('seo_url_search_prefix') != '' ) {
-                        $this->uri = str_replace( osc_get_preference('seo_url_search_prefix') . '/', '', $this->uri);
-                    }
 
                     // get page if it's set in the url
                     $iPage = preg_replace('|.*/([0-9]+)$|', '$01', $this->uri);
@@ -145,8 +136,8 @@
                                     $meta_key   = $m[1][$k];
                                     $meta_value = $m[2][$k];
                                     $array_r    = array();
-                                    if(isset($_REQUEST['meta'])) {
-                                        $array_r    = $_REQUEST['meta'];
+                                    if(Params::existParam('meta')) {
+                                        $array_r = Params::getParam('meta');
                                     }
                                     if($results[2]=='') {
                                         // meta[meta_id] = meta_value
@@ -164,19 +155,16 @@
                                 break;
                         }
 
-                        $_REQUEST[$m[1][$k]] = $m[2][$k];
-                        $_GET[$m[1][$k]] = $m[2][$k];
-                        unset($_REQUEST['sParams']);
-                        unset($_GET['sParams']);
-                        unset($_POST['sParams']);
+                        Params::setParam($m[1][$k], $m[2][$k]);
                     }
+                    Params::unsetParam('sParams');
                 }
             }
 
 
             $uriParams = Params::getParamsAsArray();
             $searchUri = osc_search_url($uriParams);
-            if($searchUri!=(WEB_PATH . urldecode($this->uri))) {
+            if(str_replace("%20", '+', $searchUri)!=str_replace("%20", '+', (WEB_PATH . $this->uri))) {
                 $this->redirectTo($searchUri, 301);
             }
 
@@ -473,10 +461,10 @@
             osc_run_hook('search_conditions', Params::getParamsAsArray());
 
             // RETRIEVE ITEMS AND TOTAL
-            $key    = md5($this->mSearch->toJson());
+            $key    = md5(osc_base_url().$this->mSearch->toJson());
             $found  = null;
             $cache  = osc_cache_get($key, $found);
-            
+
             $aItems         = null;
             $iTotalItems    = null;
             if($cache) {

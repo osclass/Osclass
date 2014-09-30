@@ -265,7 +265,7 @@
      * @return string
      */
     function osc_update_search_url($params = array(), $forced = false) {
-        $request = Params::getParamsAsArray('get');
+        $request = Params::getParamsAsArray();
         unset($request['osclass']);
         if(isset($request['sCategory[0]'])) { unset($request['sCategory']); }
         unset($request['sCategory[]']);
@@ -476,7 +476,7 @@
                 } else {
                     // Search by a category which does not exists (by form)
                     // TODO CHANGE TO NEW ROUTES!!
-                    return $base_url . 'index.php?page=search&sCategory=' . $params['sCategory'];
+                    return $base_url . 'index.php?page=search&sCategory=' . urlencode($params['sCategory']);
                 }
                 if(isset($params['iPage']) && $params['iPage']!='' && $params['iPage']!=1) { $url .= '/'.$params['iPage']; };
                 $url = $base_url.$seo_prefix.$url;
@@ -505,7 +505,7 @@
                         } else {
                             // Search by a region which does not exists (by form)
                             // TODO CHANGE TO NEW ROUTES!!
-                            return $url . 'index.php?page=search&sRegion=' . $params['sRegion'];
+                            return $url . 'index.php?page=search&sRegion=' . urlencode($params['sRegion']);
                         };
                     }
                 }
@@ -534,7 +534,7 @@
                         } else {
                             // Search by a city which does not exists (by form)
                             // TODO CHANGE TO NEW ROUTES!!
-                            return $url . 'index.php?page=search&sCity=' . $params['sCity'];
+                            return $url . 'index.php?page=search&sCity=' . urlencode($params['sCity']);
                         };
                     }
                 }
@@ -575,12 +575,12 @@
                                 if(is_array($value)) {
                                     foreach ($value as $_key => $_value) {
                                         if($value!='') {
-                                            $url .= '/meta'.$key.'-'.$_key.','.$_value;
+                                            $url .= '/meta'.$key.'-'.$_key.','.urlencode($_value);
                                         }
                                     }
                                 } else {
                                     if($value!='') {
-                                        $url .= '/meta'.$key.','.$value;
+                                        $url .= '/meta'.$key.','.urlencode($value);
                                     }
                                 }
                             }
@@ -588,7 +588,7 @@
                         default:
                             break;
                     }
-                    if(!is_array($v)  && $v!='') { $url .= "/".$k.",".$v; }
+                    if(!is_array($v)  && $v!='') { $url .= "/".$k.",".urlencode($v); }
                 }
             }
         } else {
@@ -600,16 +600,16 @@
                             foreach($v as $_k => $aux) {
                                 if(is_array($aux)) {
                                     foreach( array_keys($aux) as $aux_k ) {
-                                        $url .= "&" . $k . "[$_k][$aux_k]=" . $aux[$aux_k];
+                                        $url .= "&" . $k . "[$_k][$aux_k]=" . urlencode($aux[$aux_k]);
                                     }
                                 } else {
-                                    $url .= "&" . $_k . "[]=" . $aux;
+                                    $url .= "&" . $_k . "[]=" . urlencode($aux);
                                 }
                             }
                         }
                     } else {
                         if(is_array($v)) { $v = implode(",", $v); }
-                        $url .= "&" . $k . "=" . $v;
+                        $url .= "&" . $k . "=" . urlencode($v);
                     }
                 }
             }

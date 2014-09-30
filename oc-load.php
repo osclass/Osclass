@@ -16,7 +16,7 @@
  */
 
 
-define('OSCLASS_VERSION', '3.4.0');
+define('OSCLASS_VERSION', '3.4.2');
 
 if( !defined('ABS_PATH') ) {
     define( 'ABS_PATH', str_replace('\\', '/', dirname(__FILE__) . '/' ));
@@ -197,7 +197,7 @@ osc_cache_init();
 
 define('__OSC_LOADED__', true);
 
-// Moved from BaseModel, since we need some session magic on index.php;)
+Params::init();
 Session::newInstance()->session_start();
 
 if( osc_timezone() != '' ) {
@@ -230,8 +230,8 @@ function osc_meta_generator() {
 }
 osc_add_hook('header', 'osc_show_maintenance');
 osc_add_hook('header', 'osc_meta_generator');
+osc_add_hook('header', 'osc_load_styles', 9);
 osc_add_hook('header', 'osc_load_scripts', 10);
-osc_add_hook('header', 'osc_load_styles', 10);
 
 // register scripts
 osc_register_script('jquery', osc_assets_url('js/jquery.min.js'));

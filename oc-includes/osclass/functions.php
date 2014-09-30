@@ -80,6 +80,7 @@ function search_title() {
 function meta_title() {
     $location = Rewrite::newInstance()->get_location();
     $section  = Rewrite::newInstance()->get_section();
+    $text = '';
 
     switch ($location) {
         case ('item'):
@@ -180,7 +181,11 @@ function meta_title() {
     }
 
     if( !osc_is_home_page() ) {
-        $text .= ' - ' . osc_page_title();
+        if($text!='') {
+            $text .= ' - ' . osc_page_title();
+        } else {
+            $text = osc_page_title();
+        }
     }
 
     return (osc_apply_filter('meta_title_filter', $text));

@@ -184,7 +184,7 @@
                                 }
                             }
                         } else {
-                            $file = $_REQUEST['file'];
+                            $file = Params::getParam('file');
                         };
                     }
                     osc_run_hook('renderplugin_controller');

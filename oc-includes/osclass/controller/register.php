@@ -77,7 +77,7 @@
                                             $do->doModel();
                                         } else {
                                             osc_add_flash_error_message($success);
-                                            $this->doView('user-register.php');
+                                            $this->redirectTo(osc_register_account_url());
                                         }
                 break;
                 case('validate'):       //validate account

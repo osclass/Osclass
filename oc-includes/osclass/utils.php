@@ -469,8 +469,8 @@ function osc_mailBeauty($text, $params) {
         osc_base_url(),
         osc_page_title(),
         '<a href="' . osc_base_url() . '">' . osc_page_title() . '</a>',
-		date(osc_date_format()?:'Y-m-d').' '.date(osc_time_format()?:'H:i:s'),
-		date(osc_time_format()?:'H:i'),
+		date(osc_date_format()?osc_date_format():'Y-m-d').' '.date(osc_time_format()?osc_time_format():'H:i:s'),
+		date(osc_time_format()?osc_time_format():'H:i'),
         $_SERVER['REMOTE_ADDR']
     );
     $text = str_ireplace($kwords, $rwords, $text);
@@ -603,7 +603,7 @@ function osc_dbdump($path, $file) {
         return -3;
     }
 
-    $_str = '/* OSCLASS MYSQL Autobackup (' . date(osc_date_format()?:'Y-m-d').' '.date(osc_time_format()?:'H:i:s') . ') */'."\n";
+    $_str = '/* OSCLASS MYSQL Autobackup (' . date(osc_date_format()?osc_date_format():'Y-m-d').' '.date(osc_time_format()?osc_time_format():'H:i:s') . ') */'."\n";
 
     $f = fopen($path, "a");
     fwrite($f, $_str);
@@ -1783,7 +1783,7 @@ function osc_do_upgrade() {
     /***********************
      **** DOWNLOAD FILE ****
      ***********************/
-    $data = osc_file_get_contents("http://osclass.org/latest_version.php");
+    $data = osc_file_get_contents("http://osclass.org/latest_version_v1.php");
     $data = json_decode(substr($data, 1, strlen($data)-3), true);
     $source_file = $data['url'];
     if ($source_file != '') {
@@ -1797,6 +1797,7 @@ function osc_do_upgrade() {
              ***** UNZIP FILE *****
              **********************/
             $tmp_path = osc_content_path().'downloads/oc-temp/core-'.$data['version'].'/';
+            @mkdir(osc_content_path().'downloads/oc-temp/', 0777);
             @mkdir($tmp_path, 0777);
             $res = osc_unzip_file(osc_content_path().'downloads/'.$filename, $tmp_path);
             if ($res == 1) { // Everything is OK, continue
@@ -1914,7 +1915,7 @@ function osc_do_upgrade() {
 }
 
 function osc_do_auto_upgrade() {
-    $data = osc_file_get_contents('http://osclass.org/latest_version.php?callback=?');
+    $data = osc_file_get_contents('http://osclass.org/latest_version_v1.php?callback=?');
     $data = preg_replace('|^\?\((.*?)\);$|', '$01', $data);
     $json = json_decode($data);
     $result['error'] = 0;
@@ -2069,6 +2070,7 @@ function osc_market($section, $code) {
                 /**********************
                  ***** UNZIP FILE *****
                  **********************/
+                @mkdir(osc_content_path() . 'downloads/oc-temp/');
                 $res = osc_unzip_file(osc_content_path() . 'downloads/' . $filename, osc_content_path() . 'downloads/oc-temp/');
                 if ($res == 1) { // Everything is OK, continue
                     /**********************

@@ -123,8 +123,16 @@
             $this->dao->select('f.pk_i_id');
             $this->dao->from($this->getTableName()." f, ".DB_TABLE_PREFIX."t_meta_categories c");
             $where = array();
+            $mCat = Category::newInstance();
             foreach($ids as $id) {
-                if(is_numeric($id)) { $where[] = 'c.fk_i_category_id = '.$id; }
+                if(is_numeric($id)) {
+                    $where[] = 'c.fk_i_category_id = '.$id;
+                } else {
+                    $cat = $mCat->findBySlug($id);
+                    if(isset($cat['pk_i_id'])) {
+                        $where[] = 'c.fk_i_category_id = ' . $cat['pk_i_id'];
+                    }
+                }
             }
             if(empty($where)) {
                 return array();

@@ -156,7 +156,7 @@
          */
         public function listRegions($country = '%%%%', $zero = ">", $order = "region_name ASC")
         {
-            $key    = md5((string)$country.(string)$zero.(string)$order);
+            $key    = md5(osc_base_url().(string)$country.(string)$zero.(string)$order);
             $found  = null;
             $cache  = osc_cache_get($key, $found);
             if($cache===false) {

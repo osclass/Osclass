@@ -169,7 +169,34 @@
                     $this->redirectTo( osc_admin_base_url(true) . "?page=appearance" );
                 break;
                 case('render'):
-                    $this->_exportVariableToView('file', osc_base_path() . Params::getParam("file"));
+                    if(Params::existParam('route')) {
+                        $routes = Rewrite::newInstance()->getRoutes();
+                        $rid = Params::getParam('route');
+                        $file = '../';
+                        if(isset($routes[$rid]) && isset($routes[$rid]['file'])) {
+                            $file = $routes[$rid]['file'];
+                        }
+                    } else {
+                        // DEPRECATED: Disclosed path in URL is deprecated, use routes instead
+                        // This will be REMOVED in 3.6
+                        $file = Params::getParam('file');
+                        // We pass the GET variables (in case we have somes)
+                        if(preg_match('|(.+?)\?(.*)|', $file, $match)) {
+                            $file = $match[1];
+                            if(preg_match_all('|&([^=]+)=([^&]*)|', urldecode('&'.$match[2].'&'), $get_vars)) {
+                                for($var_k=0;$var_k<count($get_vars[1]);$var_k++) {
+                                    Params::setParam($get_vars[1][$var_k], $get_vars[2][$var_k]);
+                                }
+                            }
+                        } else {
+                            $file = Params::getParam('file');
+                        };
+                    }
+
+                    if(strpos($file, '../')!==false || !file_exists(osc_base_path() . $file)) {
+                        osc_add_flash_warning_message(__('Error loading theme custom file'), 'admin');
+                    };
+                    $this->_exportVariableToView('file', osc_base_path() . $file);
                     $this->doView('appearance/view.php');
                 break;
                 default:

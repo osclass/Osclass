@@ -58,8 +58,12 @@
 
             $this->_exportVariableToView('file', $file);
             if($user_menu) {
-                Params::setParam('in_user_menu', true);
-                $this->doView('user-custom.php');
+                if(osc_is_web_user_logged_in()) {
+                    Params::setParam('in_user_menu', true);
+                    $this->doView('user-custom.php');
+                } else {
+                    $this->redirectTo(osc_user_login_url());
+                }
             } else {
                 $this->doView('custom.php');
             }
