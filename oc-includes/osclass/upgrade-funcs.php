@@ -483,7 +483,7 @@ CREATE TABLE %st_item_description_tmp (
         if(!$success) {
             osc_set_preference('crypt_key', $crypt_key);
         }
-        /*
+
         // update t_alerts - Save them in plain json instead of base64
         $mAlerts = Alerts::newInstance();
         $aAlerts = $mAlerts->findByType('HOURLY');
@@ -502,7 +502,7 @@ CREATE TABLE %st_item_description_tmp (
         foreach($aAlerts as $alert) {
             $mAlerts->update(array('s_search' => base64_decode($alert['s_search'])), array('pk_i_id' => $alert['pk_i_id']));
         }
-        unset($aAlerts);  */
+        unset($aAlerts);
     }
 
     osc_changeVersionTo(343);
