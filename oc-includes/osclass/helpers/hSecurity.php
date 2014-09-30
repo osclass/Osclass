@@ -275,3 +275,94 @@
         return sha1($password);
     }
 
+    function osc_encrypt_alert($alert) {
+        $string = osc_genRandomPassword(32) . $alert;
+        $key = hash("sha256", OSC_CRYPT_KEY, true);
+        if(function_exists('mcrypt_module_open')) {
+            $cipher = mcrypt_module_open(MCRYPT_RIJNDAEL_256, '', MCRYPT_MODE_CBC, '');
+            $cipherText = '';
+            if (mcrypt_generic_init($cipher, $key, $key) != -1) {
+                $cipherText = mcrypt_generic($cipher, $string);
+                mcrypt_generic_deinit($cipher);
+            }
+            return $cipherText;
+        };
+        while (strlen($string) % 16 != 0) {
+            $string .= "\0";
+        }
+        require_once LIB_PATH . 'phpseclib/Crypt/Rijndael.php';
+        $cipher = new Crypt_Rijndael(CRYPT_RIJNDAEL_MODE_CBC);
+        $cipher->disablePadding();
+        $cipher->setBlockLength(256);
+        $cipher->setKey($key);
+        $cipher->setIV($key);
+        return $cipher->encrypt($string);
+    }
+
+    function osc_decrypt_alert($string) {
+        $key = hash("sha256", OSC_CRYPT_KEY, true);
+        if(function_exists('mcrypt_module_open')) {
+            $cipher = mcrypt_module_open(MCRYPT_RIJNDAEL_256, '', MCRYPT_MODE_CBC, '');
+            $cipherText = '';
+            if (mcrypt_generic_init($cipher, $key, $key) != -1) {
+                $cipherText = mdecrypt_generic($cipher, $string);
+                mcrypt_generic_deinit($cipher);
+            }
+            return trim(substr($cipherText, 32));
+        };
+        require_once LIB_PATH . 'phpseclib/Crypt/Rijndael.php';
+        $cipher = new Crypt_Rijndael(CRYPT_RIJNDAEL_MODE_CBC);
+        $cipher->disablePadding();
+        $cipher->setBlockLength(256);
+        $cipher->setKey($key);
+        $cipher->setIV($key);
+        return trim(substr($cipher->decrypt($string), 32));
+    }
+
+    function osc_random_string($length) {
+        $buffer = '';
+        $buffer_valid = false;
+        if (function_exists('mcrypt_create_iv') && !defined('PHALANGER')) {
+            $buffer = mcrypt_create_iv($length, MCRYPT_DEV_URANDOM);
+            if ($buffer) {
+                $buffer_valid = true;
+            }
+        }
+        if (!$buffer_valid && function_exists('openssl_random_pseudo_bytes')) {
+            $buffer = openssl_random_pseudo_bytes($length);
+            if ($buffer) {
+                $buffer_valid = true;
+            }
+        }
+        if (!$buffer_valid && is_readable('/dev/urandom')) {
+            $f = fopen('/dev/urandom', 'r');
+            $read = strlen($buffer);
+            while ($read < $length) {
+                $buffer .= fread($f, $length - $read);
+                $read = strlen($buffer);
+            }
+            fclose($f);
+            if ($read >= $length) {
+                $buffer_valid = true;
+            }
+        }
+        if (!$buffer_valid || strlen($buffer) < $length) {
+            $bl = strlen($buffer);
+            for ($i = 0; $i < $length; $i++) {
+                if ($i < $bl) {
+                    $buffer[$i] = $buffer[$i] ^ chr(mt_rand(0, 255));
+                } else {
+                    $buffer .= chr(mt_rand(0, 255));
+                }
+            }
+        }
+        if(!$buffer_valid) {
+            $buffer = osc_genRandomPassword(2*$length);
+        }
+        return substr(str_replace('+', '.', base64_encode($buffer)), 0, $length);
+    }
+
+
+
+
+

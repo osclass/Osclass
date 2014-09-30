@@ -335,7 +335,7 @@
                     <h3 class="render-title"><?php _e('Alerts'); ?></h3>
                     <div class="form-row">
                         <?php for($k=0;$k<count($aux['alerts']);$k++) { 
-                            $array_conditions = (array)json_decode(base64_decode($aux['alerts'][$k]['s_search']), true);
+                            $array_conditions = (array)json_decode($aux['alerts'][$k]['s_search'], true);
                             $raw_data = osc_get_raw_search($array_conditions);
                             $new_search = new Search();
                             $new_search->setJsonAlert($array_conditions);

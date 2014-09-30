@@ -279,7 +279,7 @@
      * @return string
      */
     function osc_assets_url($file = '', $assets_base_url = null) {
-        if( stripos($file, '../') !== false ) {
+        if( strpos($file, '../') !== false || strpos($file, '..\\') !== false) {
             $file = '';
         }
 

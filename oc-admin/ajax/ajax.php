@@ -419,7 +419,7 @@
                     }
 
                     // valid file?
-                    if( stripos($file, '../') !== false ) {
+                    if( stripos($file, '../') !== false || stripos($file, '..\\') !== false ) {
                         echo json_encode(array('error' => 'no valid file'));
                         break;
                     }
@@ -504,7 +504,7 @@
                 case 'upgrade': // AT THIS POINT WE KNOW IF THERE'S AN UPDATE OR NOT
                     osc_csrf_check();
                     $result = osc_do_upgrade();
-                    if(!__FROM_CRON__) {
+                    if(!defined(__FROM_CRON__) || !__FROM_CRON__) {
                         if($result['error']==0) {
                             osc_add_flash_ok_message($result['message'], 'admin');
                         } else if($result['error']==6) {

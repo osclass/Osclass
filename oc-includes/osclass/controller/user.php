@@ -82,8 +82,7 @@
                                         $aAlerts = Alerts::newInstance()->findByUser( Session::newInstance()->_get('userId'), false );
                                         $user = User::newInstance()->findByPrimaryKey( Session::newInstance()->_get('userId'));
                                         foreach($aAlerts as $k => $a) {
-                                            $json               = base64_decode($a['s_search']);
-                                            $array_conditions   = (array)json_decode($json);
+                                            $array_conditions   = (array)json_decode($a['s_search']);
 
 //                                            $search = Search::newInstance();
                                             $search = new Search();
