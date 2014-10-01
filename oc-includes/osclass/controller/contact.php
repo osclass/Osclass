@@ -98,7 +98,7 @@ MESSAGE;
                                         $error = true;
                                         if( osc_contact_attachment() ) {
                                             $attachment   = Params::getFiles('attachment');
-                                            if(isset($attachment['tmp_name'])) {
+                                            if(isset($attachment['error']) && $attachment['error']==UPLOAD_ERR_OK) {
                                                 $mime_array = array(
                                                     'text/php',
                                                     'text/x-php',
@@ -130,31 +130,23 @@ MESSAGE;
 
                                                 // check mime file
                                                 if(!in_array($resourceType, $mime_array)) {
-                                                    $path = osc_uploads_path() . time() . '_' . $resourceName;
-                                                    if( !is_writable(osc_uploads_path()) ) {
-                                                        osc_add_flash_error_message( _m('There have been some errors sending the message'));
-                                                        $this->redirectTo( osc_contact_url() );
-                                                    }
-
-                                                    if( !move_uploaded_file($tmpName, $path) ) {
-                                                        unset($path);
-                                                    }
+                                                    $emailAttachment = array('path' => $tmpName, 'name' => $resourceName);
                                                     $error = false;
                                                 }
                                                 // --- check mime file
                                             }
                                         }
                                         if(!$error) {
-                                            if( isset($path) ) {
-                                                $params['attachment'] = $path;
+                                            if( isset($emailAttachment) ) {
+                                                $params['attachment'] = $emailAttachment;
                                             }
 
                                             osc_run_hook('pre_contact_post', $params);
 
                                             osc_sendMail(osc_apply_filter('contact_params', $params));
 
-                                            if( isset($path) ) {
-                                                @unlink($path);
+                                            if( isset($tmpName) ) {
+                                                @unlink($tmpName);
                                             }
 
                                             osc_add_flash_ok_message( _m('Your email has been sent properly. Thank you for contacting us!') );
