@@ -426,13 +426,19 @@ function osc_sendMail($params) {
     $mail->Body    = $params['body'];
 
     if( array_key_exists('attachment', $params) ) {
-        if( !is_array($params['attachment']) ) {
+        if( !is_array($params['attachment']) || isset($params['attachment']['path'])) {
             $params['attachment'] = array( $params['attachment'] );
         }
 
         foreach($params['attachment'] as $attachment) {
             try {
-                $mail->AddAttachment($attachment);
+                if(is_array($attachment)) {
+                    if(isset($attachment['path']) && isset($attachment['name'])) {
+                        $mail->AddAttachment($attachment['path'], $attachment['name']);
+                    }
+                } else {
+                    $mail->AddAttachment($attachment);
+                }
             } catch (phpmailerException $e) {
                 continue;
             }
