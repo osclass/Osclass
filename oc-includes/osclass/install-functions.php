@@ -182,7 +182,6 @@ function oc_install( ) {
     $tableprefix = Params::getParam('tableprefix');
     $createdb    = false;
     require_once LIB_PATH . 'osclass/helpers/hSecurity.php';
-    $crypt_key   = osc_random_string(32);
 
     if( $tableprefix == '' ) {
         $tableprefix = 'oc_';
@@ -274,7 +273,7 @@ function oc_install( ) {
             }
             return array('error' => __("Can't write in config.php file. Check if the file is writable."));
         }
-        create_config_file($dbname, $username, $password, $dbhost, $tableprefix, $crypt_key);
+        create_config_file($dbname, $username, $password, $dbhost, $tableprefix);
     } else {
         if( !file_exists(ABS_PATH . 'config-sample.php') ) {
             if( reportToOsclass() ) {
@@ -290,7 +289,7 @@ function oc_install( ) {
 
             return array('error' => __('Can\'t copy config-sample.php. Check if the root directory is writable.'));
         }
-        copy_config_file($dbname, $username, $password, $dbhost, $tableprefix, $crypt_key);
+        copy_config_file($dbname, $username, $password, $dbhost, $tableprefix);
     }
 
     require_once ABS_PATH . 'config.php';
@@ -489,7 +488,7 @@ function oc_install_example_data() {
  * @param string $tableprefix Prefix for table names
  * @return mixed Error messages of the installation
  */
-function create_config_file($dbname, $username, $password, $dbhost, $tableprefix, $crypt_key) {
+function create_config_file($dbname, $username, $password, $dbhost, $tableprefix) {
     $password = addslashes($password);
     $abs_url = get_absolute_url();
     $rel_url = get_relative_url();
@@ -519,8 +518,6 @@ define('REL_WEB_URL', '$rel_url');
 
 define('WEB_PATH', '$abs_url');
 
-define('OSC_CRYPT_KEY', '$crypt_key');
-
 CONFIG;
 
     file_put_contents(ABS_PATH . 'config.php', $config_text);
@@ -531,7 +528,7 @@ CONFIG;
  *
  * @since 1.2
  */
-function copy_config_file($dbname, $username, $password, $dbhost, $tableprefix, $crypt_key) {
+function copy_config_file($dbname, $username, $password, $dbhost, $tableprefix) {
     $password = addslashes($password);
     $abs_url = get_absolute_url();
     $rel_url = get_relative_url();
@@ -559,9 +556,6 @@ function copy_config_file($dbname, $username, $password, $dbhost, $tableprefix, 
                 break;
             case "define('WEB_PATH":
                 $config_sample[$line_num] = str_replace('http://localhost', $abs_url, $line);
-                break;
-            case "define('OSC_CRYP":
-                $config_sample[$line_num] = str_replace('CHANGE_THIS_STRING', $crypt_key, $line);
                 break;
         }
     }

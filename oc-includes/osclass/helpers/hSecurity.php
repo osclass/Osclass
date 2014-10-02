@@ -277,7 +277,9 @@
 
     function osc_encrypt_alert($alert) {
         $string = osc_genRandomPassword(32) . $alert;
-        $key = hash("sha256", OSC_CRYPT_KEY, true);
+        osc_set_alert_private_key(); // renew private key and
+        osc_set_alert_public_key();  // public key
+        $key = hash("sha256", osc_get_alert_private_key(), true);
         if(function_exists('mcrypt_module_open')) {
             $cipher = mcrypt_module_open(MCRYPT_RIJNDAEL_256, '', MCRYPT_MODE_CBC, '');
             $cipherText = '';
@@ -300,7 +302,7 @@
     }
 
     function osc_decrypt_alert($string) {
-        $key = hash("sha256", OSC_CRYPT_KEY, true);
+        $key = hash("sha256", osc_get_alert_private_key(), true);
         if(function_exists('mcrypt_module_open')) {
             $cipher = mcrypt_module_open(MCRYPT_RIJNDAEL_256, '', MCRYPT_MODE_CBC, '');
             $cipherText = '';
@@ -317,6 +319,22 @@
         $cipher->setKey($key);
         $cipher->setIV($key);
         return trim(substr($cipher->decrypt($string), 32));
+    }
+
+    function osc_set_alert_public_key() {
+        Session::newInstance()->_set('alert_public_key', osc_random_string(32) );
+    }
+
+    function osc_get_alert_public_key() {
+        return Session::newInstance()->_get('alert_public_key');
+    }
+
+    function osc_set_alert_private_key() {
+        Session::newInstance()->_set('alert_private_key', osc_random_string(32) );
+    }
+
+    function osc_get_alert_private_key() {
+        return Session::newInstance()->_get('alert_private_key');
     }
 
     function osc_random_string($length) {

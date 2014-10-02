@@ -24,11 +24,6 @@
         define('__OSC_MAINTENANCE__', true);
     }
 
-    if(!defined('OSC_CRYPT_KEY')) {
-        Session::newInstance()->_dropMessage('admin');
-        osc_add_flash_error_message(sprintf(__("Please add this \"define('OSC_CRYPT_KEY', '%s');\" to your config.php"), osc_random_string(32)), 'admin');
-    }
-
     // register admin scripts
     osc_register_script('admin-osc', osc_current_admin_theme_js_url('osc.js'), 'jquery');
     osc_register_script('admin-ui-osc', osc_current_admin_theme_js_url('ui-osc.js'), 'jquery');

@@ -535,8 +535,15 @@
             $this->_exportVariableToView('search', $this->mSearch);
 
             // json
-            $json = $this->mSearch->toJson();
-            $this->_exportVariableToView('search_alert', base64_encode(osc_encrypt_alert($json)));
+            $json           = $this->mSearch->toJson();
+            $encoded_alert  = base64_encode(osc_encrypt_alert($json));
+
+            // Create the HMAC signature and convert the resulting hex hash into base64
+            $stringToSign     = osc_get_alert_public_key() . $encoded_alert;
+            $signature        = hex2b64(hmacsha1(osc_get_alert_private_key(), $stringToSign));
+            $server_signature = Session::newInstance()->_set('alert_signature', $signature);
+
+            $this->_exportVariableToView('search_alert', $encoded_alert);
 
             // calling the view...
             if( count($aItems) === 0 ) {
