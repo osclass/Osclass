@@ -95,7 +95,7 @@ MESSAGE;
                                         );
 
 
-                                        $error = true;
+                                        $error = false;
                                         if( osc_contact_attachment() ) {
                                             $attachment   = Params::getFiles('attachment');
                                             if(isset($attachment['error']) && $attachment['error']==UPLOAD_ERR_OK) {
@@ -132,8 +132,12 @@ MESSAGE;
                                                 if(!in_array($resourceType, $mime_array)) {
                                                     $emailAttachment = array('path' => $tmpName, 'name' => $resourceName);
                                                     $error = false;
+                                                } else {
+                                                    $error = true;
                                                 }
                                                 // --- check mime file
+                                            } else {
+                                                $error = true;
                                             }
                                         }
                                         if(!$error) {
