@@ -289,7 +289,8 @@
             }
             return $cipherText;
         };
-        while (strlen($string) % 16 != 0) {
+
+        while (strlen($string) % 32 != 0) {
             $string .= "\0";
         }
         require_once LIB_PATH . 'phpseclib/Crypt/Rijndael.php';
@@ -322,7 +323,9 @@
     }
 
     function osc_set_alert_public_key() {
-        Session::newInstance()->_set('alert_public_key', osc_random_string(32) );
+        if(!View::newInstance()->_exists('alert_public_key')) {
+            Session::newInstance()->_set('alert_public_key', osc_random_string(32) );
+        }
     }
 
     function osc_get_alert_public_key() {
@@ -330,7 +333,9 @@
     }
 
     function osc_set_alert_private_key() {
-        Session::newInstance()->_set('alert_private_key', osc_random_string(32) );
+        if(!View::newInstance()->_exists('alert_private_key')) {
+            Session::newInstance()->_set('alert_private_key', osc_random_string(32) );
+        }
     }
 
     function osc_get_alert_private_key() {
