@@ -21,7 +21,7 @@ class Object_Cache_Factory {
             $cache_class = 'Object_Cache_'.$cache;
             $file = dirname(__FILE__) . '/caches/' . $cache_class. '.php';
 
-            if(strpos($file, '../')===false && file_exists($file)) {
+            if(strpos($file, '../')===false && strpos($file, '..\\')===false && file_exists($file)) {
                 require_once $file;
                 if(class_exists($cache_class)) {
                     // all correct ?

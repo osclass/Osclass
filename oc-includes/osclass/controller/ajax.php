@@ -163,9 +163,27 @@
                     return true;
                 break;
                 case 'alerts': // Allow to register to an alert given (not sure it's used on admin)
-                    $alert = Params::getParam("alert");
+                    $encoded_alert  = Params::getParam("alert");
+                    $alert          = osc_decrypt_alert(base64_decode($encoded_alert));
+
+                    // check alert integrity / signature
+                    $stringToSign     = osc_get_alert_public_key() . $encoded_alert;
+                    $signature        = hex2b64(hmacsha1(osc_get_alert_private_key(), $stringToSign));
+                    $server_signature = Session::newInstance()->_get('alert_signature');
+                    
+                    if($server_signature != $signature) {
+                        echo '-2';
+                        return false;
+                    }
+
                     $email = Params::getParam("email");
                     $userid = Params::getParam("userid");
+
+                    if(osc_is_web_user_logged_in()) {
+                        $userid = osc_logged_user_id();
+                        $user = User::newInstance()->findByPrimaryKey($userid);
+                        $email = $user['s_email'];
+                    }
 
                     if($alert!='' && $email!='') {
                         if(osc_validate_email($email)) {
@@ -242,7 +260,7 @@
                     }
 
                     // valid file?
-                    if( stripos($file, '../') !== false  || stripos($file, '/admin/') !== false ) { //If the file is inside an "admin" folder, it should NOT be opened in frontend
+                    if( strpos($file, '../') !== false  || strpos($file, '..\\') !== false || stripos($file, '/admin/') !== false ) { //If the file is inside an "admin" folder, it should NOT be opened in frontend
                         echo json_encode(array('error' => 'no valid ajaxFile'));
                         break;
                     }

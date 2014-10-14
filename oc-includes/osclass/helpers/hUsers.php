@@ -603,15 +603,6 @@
     }
 
     /**
-     * Gets the search object of a specific alert
-     *
-     * @return Search
-     */
-    function osc_alert_search_object() {
-        return osc_unserialize(base64_decode(osc_alert_field('s_search')));
-    }
-
-    /**
      * Gets next user in users array
      *
      * @return <type>

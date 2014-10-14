@@ -614,7 +614,7 @@
                 }
             }
         }
-        return $url;
+        return str_replace('%2C', ',', $url);
     }
 
     /**

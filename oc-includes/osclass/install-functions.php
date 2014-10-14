@@ -181,6 +181,7 @@ function oc_install( ) {
     $password    = Params::getParam('password', false, false);
     $tableprefix = Params::getParam('tableprefix');
     $createdb    = false;
+    require_once LIB_PATH . 'osclass/helpers/hSecurity.php';
 
     if( $tableprefix == '' ) {
         $tableprefix = 'oc_';

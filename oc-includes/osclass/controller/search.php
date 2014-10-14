@@ -59,6 +59,7 @@
                             $this->do404();
                         }
                         Params::setParam('sRegion', $region['pk_i_id']);
+                        Params::unsetParam('sCategory');
                         if(preg_match('|(.*?)_.*?-r[0-9]+|', $search_uri, $match)) {
                             Params::setParam('sCategory', $match[1]);
                         }
@@ -68,6 +69,7 @@
                             $this->do404();
                         }
                         Params::setParam('sCity', $city['pk_i_id']);
+                        Params::unsetParam('sCategory');
                         if(preg_match('|(.*?)_.*?-c[0-9]+|', $search_uri, $match)) {
                             Params::setParam('sCategory', $match[1]);
                         }
@@ -533,9 +535,15 @@
             $this->_exportVariableToView('search', $this->mSearch);
 
             // json
-            $json = $this->mSearch->toJson();
+            $json           = $this->mSearch->toJson();
+            $encoded_alert  = base64_encode(osc_encrypt_alert($json));
 
-            $this->_exportVariableToView('search_alert', base64_encode($json));
+            // Create the HMAC signature and convert the resulting hex hash into base64
+            $stringToSign     = osc_get_alert_public_key() . $encoded_alert;
+            $signature        = hex2b64(hmacsha1(osc_get_alert_private_key(), $stringToSign));
+            $server_signature = Session::newInstance()->_set('alert_signature', $signature);
+
+            $this->_exportVariableToView('search_alert', $encoded_alert);
 
             // calling the view...
             if( count($aItems) === 0 ) {

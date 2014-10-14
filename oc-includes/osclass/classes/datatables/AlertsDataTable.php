@@ -92,7 +92,7 @@
                     // third row
 
                     $pieces = array();
-                    $conditions = osc_get_raw_search((array)json_decode(base64_decode($aRow['s_search']), true));
+                    $conditions = osc_get_raw_search((array)json_decode($aRow['s_search'], true));
                     if(isset($conditions['sPattern']) && $conditions['sPattern']!='') {
                         $pieces[] = sprintf(__("<b>Pattern:</b> %s"), $conditions['sPattern']);
                     }

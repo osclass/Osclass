@@ -74,7 +74,7 @@ function osc_deleteResource( $id , $admin) {
  * @return true on success.
  */
 function osc_deleteDir($path) {
-    if(strpos($path, "../")!==false) {
+    if(strpos($path, "../")!==false || strpos($path, "..\\")!==false) {
         return false;
     }
 
@@ -113,7 +113,7 @@ function osc_deleteDir($path) {
  * @return true on success.
  */
 function osc_packageExtract($zipPath, $path) {
-    if(strpos($path, "../")!==false) {
+    if(strpos($path, "../")!==false || strpos($path, "..\\")!==false) {
         return false;
     }
 
@@ -426,13 +426,19 @@ function osc_sendMail($params) {
     $mail->Body    = $params['body'];
 
     if( array_key_exists('attachment', $params) ) {
-        if( !is_array($params['attachment']) ) {
+        if( !is_array($params['attachment']) || isset($params['attachment']['path'])) {
             $params['attachment'] = array( $params['attachment'] );
         }
 
         foreach($params['attachment'] as $attachment) {
             try {
-                $mail->AddAttachment($attachment);
+                if(is_array($attachment)) {
+                    if(isset($attachment['path']) && isset($attachment['name'])) {
+                        $mail->AddAttachment($attachment['path'], $attachment['name']);
+                    }
+                } else {
+                    $mail->AddAttachment($attachment);
+                }
             } catch (phpmailerException $e) {
                 continue;
             }
@@ -831,7 +837,7 @@ function download_fsockopen($sourceFile, $fileout = null)
 
 function osc_downloadFile($sourceFile, $downloadedFile)
 {
-    if(strpos($downloadedFile, "../")!==false) {
+    if(strpos($downloadedFile, "../")!==false || strpos($downloadedFile, "..\\")!==false) {
         return false;
     }
 
@@ -936,7 +942,7 @@ function strip_slashes_extended($array) {
  *  -1 : file could not be created (or error reading the file from the zip)
  */
 function osc_unzip_file($file, $to) {
-    if(strpos($to, "../")!==false) {
+    if(strpos($to, "../")!==false || strpos($to, "..\\")!==false) {
         return 0;
     }
 
@@ -968,7 +974,7 @@ function osc_unzip_file($file, $to) {
  * @return int
  */
 function _unzip_file_ziparchive($file, $to) {
-    if(strpos($to, "../")!==false) {
+    if(strpos($to, "../")!==false || strpos($to, "..\\")!==false) {
         return 0;
     }
 
@@ -1027,7 +1033,7 @@ function _unzip_file_ziparchive($file, $to) {
  * @return int
  */
 function _unzip_file_pclzip($zip_file, $to) {
-    if(strpos($to, "../")!==false) {
+    if(strpos($to, "../")!==false || strpos($to, "..\\")!==false) {
         return false;
     }
 
@@ -1077,7 +1083,7 @@ function _unzip_file_pclzip($zip_file, $to) {
  * @return int
  */
 function osc_zip_folder($archive_folder, $archive_name) {
-    if(strpos($archive_folder, "../")!==false || strpos($archive_name,"../")!==false) {
+    if(strpos($archive_folder, "../")!==false || strpos($archive_name,"../")!==false || strpos($archive_folder, "..\\")!==false || strpos($archive_name,"..\\")!==false) {
         return false;
     }
 
@@ -1096,7 +1102,7 @@ function osc_zip_folder($archive_folder, $archive_name) {
  * @return int
  */
 function _zip_folder_ziparchive($archive_folder, $archive_name) {
-    if(strpos($archive_folder, "../")!==false || strpos($archive_name,"../")!==false) {
+    if(strpos($archive_folder, "../")!==false || strpos($archive_name,"../")!==false || strpos($archive_folder, "..\\")!==false || strpos($archive_name,"..\\")!==false) {
         return false;
     }
 
@@ -1138,7 +1144,7 @@ function _zip_folder_ziparchive($archive_folder, $archive_name) {
  * @return int
  */
 function _zip_folder_pclzip($archive_folder, $archive_name) {
-    if(strpos($archive_folder, "../")!==false || strpos($archive_name,"../")!==false) {
+    if(strpos($archive_folder, "../")!==false || strpos($archive_name,"../")!==false || strpos($archive_folder, "..\\")!==false || strpos($archive_name,"..\\")!==false) {
         return false;
     }
 
@@ -1184,7 +1190,7 @@ function osc_check_recaptcha() {
 }
 
 function osc_check_dir_writable( $dir = ABS_PATH ) {
-    if(strpos($dir, "../")!==false) {
+    if(strpos($dir, "../")!==false || strpos($dir, "..\\")!==false) {
         return false;
     }
 
@@ -1227,7 +1233,7 @@ function osc_check_dir_writable( $dir = ABS_PATH ) {
 
 
 function osc_change_permissions( $dir = ABS_PATH ) {
-    if(strpos($dir, "../")!==false) {
+    if(strpos($dir, "../")!==false || strpos($dir, "..\\")!==false) {
         return false;
     }
 
@@ -1276,7 +1282,7 @@ function osc_change_permissions( $dir = ABS_PATH ) {
 }
 
 function osc_save_permissions( $dir = ABS_PATH ) {
-    if(strpos($dir, "../")!==false) {
+    if(strpos($dir, "../")!==false || strpos($dir, "..\\")!==false) {
         return false;
     }
 
@@ -2189,4 +2195,46 @@ function osc_market($section, $code) {
 
 function osc_is_ssl() {
     return (isset($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS'])=='on' || $_SERVER['HTTPS']=='1'));
+}
+
+if(!function_exists('hex2b64')) {
+    /*
+     * Used to encode a field for Amazon Auth
+     * (taken from the Amazon S3 PHP example library)
+     */
+    function hex2b64($str)
+    {
+        $raw = '';
+        for ($i=0; $i < strlen($str); $i+=2)
+        {
+            $raw .= chr(hexdec(substr($str, $i, 2)));
+        }
+        return base64_encode($raw);
+    }
+}
+
+if(!function_exists('hmacsha1')) {
+    /*
+     * Calculate HMAC-SHA1 according to RFC2104
+     * See http://www.faqs.org/rfcs/rfc2104.html
+     */
+    function hmacsha1($key,$data) {
+        $blocksize=64;
+        $hashfunc='sha1';
+        if (strlen($key)>$blocksize)
+            $key=pack('H*', $hashfunc($key));
+        $key=str_pad($key,$blocksize,chr(0x00));
+        $ipad=str_repeat(chr(0x36),$blocksize);
+        $opad=str_repeat(chr(0x5c),$blocksize);
+        $hmac = pack(
+                    'H*',$hashfunc(
+                        ($key^$opad).pack(
+                            'H*',$hashfunc(
+                                ($key^$ipad).$data
+                            )
+                        )
+                    )
+                );
+        return bin2hex($hmac);
+    }
 }

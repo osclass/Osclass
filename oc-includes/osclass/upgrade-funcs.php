@@ -465,7 +465,44 @@ CREATE TABLE %st_item_description_tmp (
         //osc_calculate_location_slug('city');
 	}
 
-    osc_changeVersionTo(342);
+    if(osc_version() < 343) {
+        // update t_alerts - Save them in plain json instead of base64
+        $mAlerts = Alerts::newInstance();
+        $aAlerts = $mAlerts->findByType('HOURLY');
+        foreach($aAlerts as $alert) {
+            $s_search = base64_decode($alert['s_search']);
+            if(stripos(strtolower($s_search), 'union select')!==false || stripos(strtolower($s_search), 't_admin')!==false) {
+                $mAlerts->delete(array('pk_i_id' => $alert['pk_i_id']));
+            } else {
+                $mAlerts->update(array('s_search' => $s_search), array('pk_i_id' => $alert['pk_i_id']));
+            }
+        }
+        unset($aAlerts);
+
+        $aAlerts = $mAlerts->findByType('DAILY');
+        foreach($aAlerts as $alert) {
+            $s_search = base64_decode($alert['s_search']);
+            if(stripos(strtolower($s_search), 'union select')!==false || stripos(strtolower($s_search), 't_admin')!==false) {
+                $mAlerts->delete(array('pk_i_id' => $alert['pk_i_id']));
+            } else {
+                $mAlerts->update(array('s_search' => $s_search), array('pk_i_id' => $alert['pk_i_id']));
+            }
+        }
+        unset($aAlerts);
+
+        $aAlerts = $mAlerts->findByType('WEEKLY');
+        foreach($aAlerts as $alert) {
+            $s_search = base64_decode($alert['s_search']);
+            if(stripos(strtolower($s_search), 'union select')!==false || stripos(strtolower($s_search), 't_admin')!==false) {
+                $mAlerts->delete(array('pk_i_id' => $alert['pk_i_id']));
+            } else {
+                $mAlerts->update(array('s_search' => $s_search), array('pk_i_id' => $alert['pk_i_id']));
+            }
+        }
+        unset($aAlerts);
+    }
+
+    osc_changeVersionTo(343);
 
     if(!defined('IS_AJAX') || !IS_AJAX) {
         if(empty($aMessages)) {
