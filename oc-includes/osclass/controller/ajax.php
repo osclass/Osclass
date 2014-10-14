@@ -163,7 +163,19 @@
                     return true;
                 break;
                 case 'alerts': // Allow to register to an alert given (not sure it's used on admin)
-                    $alert = osc_decrypt_alert(base64_decode(Params::getParam("alert")));
+                    $encoded_alert  = Params::getParam("alert");
+                    $alert          = osc_decrypt_alert(base64_decode($encoded_alert));
+
+                    // check alert integrity / signature
+                    $stringToSign     = osc_get_alert_public_key() . $encoded_alert;
+                    $signature        = hex2b64(hmacsha1(osc_get_alert_private_key(), $stringToSign));
+                    $server_signature = Session::newInstance()->_get('alert_signature');
+                    
+                    if($server_signature != $signature) {
+                        echo '-2';
+                        return false;
+                    }
+
                     $email = Params::getParam("email");
                     $userid = Params::getParam("userid");
 

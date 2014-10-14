@@ -466,30 +466,12 @@ CREATE TABLE %st_item_description_tmp (
 	}
 
     if(osc_version() < 343) {
-        $success = false;
-        $crypt_key = osc_random_string(32);
-        if(is_writable(ABS_PATH . 'config.php')) {
-            $config = file_get_contents(ABS_PATH . 'config.php');
-            if(strpos($config, 'OSC_CRYPT_KEY')!==false) {
-                $success = true;
-            } else {
-                $config = preg_replace('|\<\?php|', '<?php define(\'OSC_CRYPT_KEY\', \'' . $crypt_key . '\'); ', $config, 1);
-                $handle = fopen(ABS_PATH . 'config.php', 'w');
-                $success = fwrite($handle, $config);
-                @fclose($handle);
-                @chmod(ABS_PATH . 'config.php', 0666);
-            }
-        }
-        if(!$success) {
-            osc_set_preference('crypt_key', $crypt_key);
-        }
-
         // update t_alerts - Save them in plain json instead of base64
         $mAlerts = Alerts::newInstance();
         $aAlerts = $mAlerts->findByType('HOURLY');
         foreach($aAlerts as $alert) {
             $s_search = base64_decode($alert['s_search']);
-            if(stripos($s_search, 'union select')!==false || stripos($s_search, 't_admin')!==false) {
+            if(stripos(strtolower($s_search), 'union select')!==false || stripos(strtolower($s_search), 't_admin')!==false) {
                 $mAlerts->delete(array('pk_i_id' => $alert['pk_i_id']));
             } else {
                 $mAlerts->update(array('s_search' => $s_search), array('pk_i_id' => $alert['pk_i_id']));
@@ -500,7 +482,7 @@ CREATE TABLE %st_item_description_tmp (
         $aAlerts = $mAlerts->findByType('DAILY');
         foreach($aAlerts as $alert) {
             $s_search = base64_decode($alert['s_search']);
-            if(stripos($s_search, 'union select')!==false || stripos($s_search, 't_admin')!==false) {
+            if(stripos(strtolower($s_search), 'union select')!==false || stripos(strtolower($s_search), 't_admin')!==false) {
                 $mAlerts->delete(array('pk_i_id' => $alert['pk_i_id']));
             } else {
                 $mAlerts->update(array('s_search' => $s_search), array('pk_i_id' => $alert['pk_i_id']));
@@ -511,7 +493,7 @@ CREATE TABLE %st_item_description_tmp (
         $aAlerts = $mAlerts->findByType('WEEKLY');
         foreach($aAlerts as $alert) {
             $s_search = base64_decode($alert['s_search']);
-            if(stripos($s_search, 'union select')!==false || stripos($s_search, 't_admin')!==false) {
+            if(stripos(strtolower($s_search), 'union select')!==false || stripos(strtolower($s_search), 't_admin')!==false) {
                 $mAlerts->delete(array('pk_i_id' => $alert['pk_i_id']));
             } else {
                 $mAlerts->update(array('s_search' => $s_search), array('pk_i_id' => $alert['pk_i_id']));

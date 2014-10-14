@@ -24,4 +24,4 @@ define('REL_WEB_URL', 'rel_here');
 
 define('WEB_PATH', 'http://localhost');
 
-define('OSC_CRYPT_KEY', 'CHANGE_THIS_STRING');
+?>

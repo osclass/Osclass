@@ -426,13 +426,19 @@ function osc_sendMail($params) {
     $mail->Body    = $params['body'];
 
     if( array_key_exists('attachment', $params) ) {
-        if( !is_array($params['attachment']) ) {
+        if( !is_array($params['attachment']) || isset($params['attachment']['path'])) {
             $params['attachment'] = array( $params['attachment'] );
         }
 
         foreach($params['attachment'] as $attachment) {
             try {
-                $mail->AddAttachment($attachment);
+                if(is_array($attachment)) {
+                    if(isset($attachment['path']) && isset($attachment['name'])) {
+                        $mail->AddAttachment($attachment['path'], $attachment['name']);
+                    }
+                } else {
+                    $mail->AddAttachment($attachment);
+                }
             } catch (phpmailerException $e) {
                 continue;
             }
@@ -2189,4 +2195,46 @@ function osc_market($section, $code) {
 
 function osc_is_ssl() {
     return (isset($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS'])=='on' || $_SERVER['HTTPS']=='1'));
+}
+
+if(!function_exists('hex2b64')) {
+    /*
+     * Used to encode a field for Amazon Auth
+     * (taken from the Amazon S3 PHP example library)
+     */
+    function hex2b64($str)
+    {
+        $raw = '';
+        for ($i=0; $i < strlen($str); $i+=2)
+        {
+            $raw .= chr(hexdec(substr($str, $i, 2)));
+        }
+        return base64_encode($raw);
+    }
+}
+
+if(!function_exists('hmacsha1')) {
+    /*
+     * Calculate HMAC-SHA1 according to RFC2104
+     * See http://www.faqs.org/rfcs/rfc2104.html
+     */
+    function hmacsha1($key,$data) {
+        $blocksize=64;
+        $hashfunc='sha1';
+        if (strlen($key)>$blocksize)
+            $key=pack('H*', $hashfunc($key));
+        $key=str_pad($key,$blocksize,chr(0x00));
+        $ipad=str_repeat(chr(0x36),$blocksize);
+        $opad=str_repeat(chr(0x5c),$blocksize);
+        $hmac = pack(
+                    'H*',$hashfunc(
+                        ($key^$opad).pack(
+                            'H*',$hashfunc(
+                                ($key^$ipad).$data
+                            )
+                        )
+                    )
+                );
+        return bin2hex($hmac);
+    }
 }
