@@ -502,7 +502,12 @@ CREATE TABLE %st_item_description_tmp (
         unset($aAlerts);
     }
 
-    osc_changeVersionTo(343);
+    if(osc_version() < 350) {
+        osc_set_preference('marketURL', 'http://market.osclass.org.local/api/v2/');
+        osc_set_preference('marketAPIConnect', '');
+    }
+
+    osc_changeVersionTo(350);
 
     if(!defined('IS_AJAX') || !IS_AJAX) {
         if(empty($aMessages)) {

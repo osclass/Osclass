@@ -532,7 +532,7 @@
                     if ($code != '' && $section != '') {
                         if(stripos($code, "http://")===FALSE) {
                             // OSCLASS OFFICIAL REPOSITORY
-                            $data = json_decode(osc_file_get_contents(osc_market_url($section, $code)), true);
+                            $data = json_decode(osc_file_get_contents(osc_market_url($section, $code), array('api_key' => osc_market_api_connect())), true);
                         } else {
                             // THIRD PARTY REPOSITORY
                             if(osc_market_external_sources()) {
@@ -582,7 +582,7 @@
 
                     $data = array();
 
-                    $data = json_decode(osc_file_get_contents($url), true);
+                    $data = json_decode(osc_file_get_contents($url, array('api_key' => osc_market_api_connect())), true);
 
                     if( !isset($data[$section])) {
                         $data = array('error' => 1, 'error_msg' => __('No market data'));
@@ -594,7 +594,7 @@
                     $marketPage = Params::getParam("mPage");
                     if($marketPage>=1) $marketPage--;
 
-                    $out    = osc_file_get_contents(osc_market_url(Params::getParam("section"))."page/".$marketPage);
+                    $out    = osc_file_get_contents(osc_market_url(Params::getParam("section"))."page/".$marketPage, array('api_key' => osc_market_api_connect()));
                     $array  = json_decode($out, true);
                     // do pagination
                     $pageActual = $array['page'];
@@ -611,6 +611,16 @@
                     $array['pagination_content'] = $aux;
                     // encode to json
                     echo json_encode($array);
+                    break;
+                case 'market_connect':
+                    $json = osc_file_get_contents(osc_market_url() . 'connect/', array('s_email' => Params::getParam('s_email'), 's_password' => Params::getParam('s_password')));
+                    $data = json_decode($json, true);
+                    if($data['error']==0) {
+                        osc_set_preference('marketAPIConnect', $data['api_key']);
+                        unset($data['api_key']);
+                        $json = json_encode($data);
+                    }
+                    echo $json;
                     break;
                 case 'dashboardbox_market':
                     $error = 0;

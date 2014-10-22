@@ -30,6 +30,12 @@
 
                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings');
                 break;
+                case('market_disconnect'):
+                    osc_csrf_check();
+                    osc_set_preference('marketAPIConnect', '');
+                    osc_add_flash_ok_message( _m('Disconnected from the market') , 'admin');
+                    $this->redirectTo(osc_admin_base_url(true) . '?page=settings');
+                    break;
                 case('update'):
                     // update index view
                     osc_csrf_check();

@@ -666,6 +666,15 @@
     }
 
     /**
+     * Gets market connect api key
+     *
+     * @return string
+     */
+    function osc_market_api_connect() {
+        return(getPreference('marketAPIConnect'));
+    }
+
+    /**
      * Get Osclass' market url for count items in categories
      *
      * @return string

@@ -90,7 +90,7 @@
                     }
 
                     // pageSize or length attribute is hardcoded
-                    $out    = osc_file_get_contents($url);
+                    $out    = osc_file_get_contents($url, array('api_key' => osc_market_api_connect()));
                     $array  = json_decode($out, true);
 
                     $output_pagination = '';
