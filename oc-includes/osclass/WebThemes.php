@@ -100,9 +100,9 @@
         public function setCurrentThemeUrl()
         {
             if ( $this->theme_exists ) {
-                $this->theme_url = osc_base_url() . str_replace(osc_base_path(), '', $this->theme_path);
+                $this->theme_url = osc_apply_filter('theme_url', osc_base_url() . str_replace(osc_base_path(), '', $this->theme_path));
             } else {
-                $this->theme_url = osc_base_url() . 'oc-includes/osclass/gui/';
+                $this->theme_url = osc_apply_filter('theme_url', osc_base_url() . 'oc-includes/osclass/gui/');
             }
         }
 
