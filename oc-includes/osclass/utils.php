@@ -838,7 +838,7 @@ function download_fsockopen($sourceFile, $fileout = null, $post_data = null)
     }
 }
 
-function osc_downloadFile($sourceFile, $downloadedFile)
+function osc_downloadFile($sourceFile, $downloadedFile, $post_data = null)
 {
     if(strpos($downloadedFile, "../")!==false || strpos($downloadedFile, "..\\")!==false) {
         return false;
@@ -854,6 +854,16 @@ function osc_downloadFile($sourceFile, $downloadedFile)
             curl_setopt($ch, CURLOPT_FILE, $fp);
             @curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
             curl_setopt($ch, CURLOPT_REFERER, osc_base_url());
+
+            if(stripos($sourceFile, 'https')!==false) {
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+            }
+            if($post_data!=null) {
+                curl_setopt($ch, CURLOPT_POST, 1);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($post_data));
+            }
+
             curl_exec($ch);
             curl_close($ch);
             fclose($fp);
@@ -871,6 +881,7 @@ function osc_downloadFile($sourceFile, $downloadedFile)
 
 function osc_file_get_contents($url, $post_data = null)
 {
+    $data = null;
     if( testCurl() ) {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -2042,6 +2053,7 @@ function osc_market($section, $code) {
     $re_enable = false;
     $message = "";
     $data = array();
+    $download_post_data = array('api_key' => osc_market_api_connect());
     /************************
      *** CHECK VALID CODE ***
      ************************/
@@ -2049,10 +2061,15 @@ function osc_market($section, $code) {
         if(stripos($code, "http://")===FALSE) {
             // OSCLASS OFFICIAL REPOSITORY
             $url = osc_market_url($section, $code);
+            print_r($url);
+            $data = osc_file_get_contents($url, array('api_key' => osc_market_api_connect()));
+            print_r($data);
             $data = json_decode(osc_file_get_contents($url, array('api_key' => osc_market_api_connect())), true);
+            print_r($data);die;
         } else {
             // THIRD PARTY REPOSITORY
             if(osc_market_external_sources()) {
+                $download_post_data = array();
                 $data = json_decode(osc_file_get_contents($code), true);
             } else {
                 return array('error' => 9, 'message' => __('No external sources are allowed'), 'data' => $data);
@@ -2083,7 +2100,7 @@ function osc_market($section, $code) {
             $filename = date('YmdHis')."_".osc_sanitize_string($data['s_title'])."_".$data['s_version'].".zip";
             $url_source_file = $data['s_source_file'];
 
-            $result   = osc_downloadFile($url_source_file, $filename);
+            $result   = osc_downloadFile($url_source_file, $filename, $download_post_data);
 
             if ($result) { // Everything is OK, continue
                 /**********************
@@ -2195,8 +2212,13 @@ function osc_market($section, $code) {
                 $error = 2; // Download failed
             }
         } else {
-            $message = __('Input code not valid');
-            $error = 7; // Input code not valid
+            if(isset($data['s_buy_url']) && isset($data['b_paid']) && $data['s_buy_url']!='' && $data['b_paid']==0) {
+                $message = __('This is a paid item, you need to buy it before you are able to download it');
+                $error = 8; // Item not paid
+            } else {
+                $message = __('Input code not valid');
+                $error = 7; // Input code not valid
+            }
         }
     } else {
         $message = __('Missing download URL');

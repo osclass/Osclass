@@ -60,6 +60,7 @@
             theme.marketAjaxUrl = "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=market&<?php echo osc_csrf_token_url(); ?>";
             theme.themUrl       = "<?php echo osc_current_admin_theme_url(); ?>";
             theme.langs         = <?php echo json_encode($js_lang); ?>;
+            theme.CSRFToken     = "<?php echo osc_csrf_token_url(); ?>";
 
             var osc_market = {};
             osc_market.main_version = <?php echo $main_version; ?>;

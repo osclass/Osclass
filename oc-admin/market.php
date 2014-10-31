@@ -29,6 +29,17 @@
             parent::doModel();
             //specific things for this class
             switch ($this->action) {
+                case('buy'):
+                    osc_csrf_check();
+                    $json = osc_file_get_contents(
+                        osc_market_url() . 'token/',
+                        array(
+                            'api_key' => osc_market_api_connect()
+                        )
+                    );
+                    $data = json_decode($json, true);
+                    osc_redirect_to(Params::getParam('url') . '?token=' . @$data['token']);
+                    break;
                 case('plugins'):
                 case('themes'):
                 case('languages'):

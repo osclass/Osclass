@@ -234,4 +234,8 @@ $(function(){
         e.stopPropagation();
         checkCompatibility($(this));
     });
+    $('.mk-item-parent .buy-btn').bind('click', function(e) {
+        e.stopPropagation();
+        window.location = theme.adminBaseUrl+'?page=market&action=buy&'+theme.CSRFToken+'&url='+$(this).attr("data-code");
+    });
 });
