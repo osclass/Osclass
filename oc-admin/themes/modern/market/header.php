@@ -125,7 +125,7 @@
                                 flash.html(message);
                                 $("#flashmessage").slideDown('slow').delay(3000).slideUp('slow');
                             } else {
-                                $('#content-head div.banner-market').html(data.html);
+                                window.location.reload(true);
                             }
                         }
                     );

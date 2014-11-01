@@ -2061,11 +2061,8 @@ function osc_market($section, $code) {
         if(stripos($code, "http://")===FALSE) {
             // OSCLASS OFFICIAL REPOSITORY
             $url = osc_market_url($section, $code);
-            print_r($url);
             $data = osc_file_get_contents($url, array('api_key' => osc_market_api_connect()));
-            print_r($data);
             $data = json_decode(osc_file_get_contents($url, array('api_key' => osc_market_api_connect())), true);
-            print_r($data);die;
         } else {
             // THIRD PARTY REPOSITORY
             if(osc_market_external_sources()) {
