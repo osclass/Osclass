@@ -256,7 +256,7 @@ function drawMarketItem($item,$color = false){
     }
 
     $buyClass = '';
-    if($item['i_price'] != '' && (float)$item['i_price'] > 0) {
+    if($item['i_price'] != '' && (float)$item['i_price'] > 0  && $item['b_paid'] == 1) {
         $buyClass = ' is-buy ';
     }
 
