@@ -255,8 +255,13 @@ function drawMarketItem($item,$color = false){
         $featuredClass .= 'is-downloaded';
     }
 
-    $style = 'background-image:url('.$thumbnail.');';
-    echo '<a href="#'.$item['s_update_url'].'" class="mk-item-parent '.$featuredClass.$updateClass.$compatible.'" data-type="'.$type.'"'.$updateData.' data-gr="'.$color.'" data-letter="'.$item['s_update_url'][0].'">';
+    $buyClass = '';
+    if($item['i_price'] != '' && (float)$item['i_price'] > 0) {
+        $buyClass = ' is-buy ';
+    }
+
+        $style = 'background-image:url('.$thumbnail.');';
+    echo '<a href="#'.$item['s_update_url'].'" class="mk-item-parent '.$featuredClass.$updateClass.$compatible.$buyClass.'" data-type="'.$type.'"'.$updateData.' data-gr="'.$color.'" data-letter="'.$item['s_update_url'][0].'">';
     echo '<div class="mk-item mk-item-'.$type.'">';
     echo '    <div class="banner" style="'.$style.'">'.$letterDraw.'</div>';
     echo '    <div class="mk-info"><i class="flag"></i>';
