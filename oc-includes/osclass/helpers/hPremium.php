@@ -158,7 +158,7 @@
     function osc_premium_category($locale = "") {
         if ($locale == "") $locale = osc_current_user_locale();
         if ( !View::newInstance()->_exists('premium_category') ) {
-            View::newInstance()->_exportVariableToView('premium_category', Category::newInstance()->findByPrimaryKey( osc_premium_category_id() ) );
+            View::newInstance()->_exportVariableToView('premium_category', Category::newInstance()->findByPrimaryKey( osc_premium_category_id(), $locale ) );
         }
         $category = View::newInstance()->_get('premium_category');
         return (string) osc_field($category, "s_name", $locale);
