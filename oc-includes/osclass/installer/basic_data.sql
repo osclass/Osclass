@@ -122,6 +122,8 @@ INSERT INTO /*TABLE_PREFIX*/t_preference VALUES
     ,('osclass', 'marketAllowExternalSources', '0', 'BOOLEAN')
     ,('osclass', 'marketURL', 'http://market.osclass.org/api/v2/', 'STRING')
     ,('osclass', 'marketAPIConnect', '', 'STRING')
+    ,('osclass', 'marketCategories', '', 'STRING')
+    ,('osclass', 'marketDataUpdate', '0', 'INTEGER')
     ,('osclass', 'watermark_text', '', 'STRING')
     ,('osclass', 'watermark_text_color', '', 'STRING')
     ,('osclass', 'watermark_place', 'centre', 'STRING')

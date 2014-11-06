@@ -271,7 +271,7 @@ function drawMarketItem($item,$color = false){
     echo '        <div class="market-actions">';
     echo '            <span class="more">'.__('View more').'</span>';
     if($item['i_price'] != '' && (float)$item['i_price'] > 0 && $item['b_paid'] == 0) {
-        echo '            <span class="buy-btn' . $compatible . '" data-code="' . $item['s_buy_url'] . '" data-type="' . $type . '"' . '>' . sprintf(__('Buy $%s'), number_format($item['i_price']/1000000, 2, '.', ',')) . '</span>';
+        echo '            <span class="buy-btn' . $compatible . '" data-code="' . $item['s_buy_url'] . '" data-type="' . $type . '"' . '>' . sprintf(__('Buy $%s'), number_format($item['i_price']/1000000, 0, '.', ',')) . '</span>';
     } else {
         echo '            <span class="download-btn' . $compatible . '" data-code="' . $item['s_update_url'] . '" data-type="' . $type . '"' . '>' . __('Download') . '</span>';
     }

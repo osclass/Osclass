@@ -32,20 +32,36 @@
 
     $sort_download  = __get('sort_download');
     $sort_updated   = __get('sort_updated');
+    $categories     = __get('market_categories');
+    $categories     = $categories[$section];
 
 ?>
 <div class="grid-market">
     <h2 class="section-title"><?php echo $title[$section]; ?>, <?php echo $array['total'].' '.$section; ?> <?php _e('and counting'); ?>
+    <span>
+        <select id="market_categories">
+            <option value="<?php echo $categories['value'] ?>" <?php if(Params::getParam('sCategory')==$categories['value']) {echo 'selected="selected"'; }; ?>><?php echo $categories['label']; ?></option>
+            <?php foreach($categories['categories'] as $c) { ?>
+                <option value="<?php echo $c['value'] ?>" <?php if(Params::getParam('sCategory')==$c['value']) {echo 'selected="selected"'; }; ?>>&nbsp;&nbsp;<?php echo $c['label']; ?></option>
+            <?php }; ?>
+        </select>
+    </span>
     <span style="<?php if($sort=='downloads'){ echo "font-weight: bold;";}?>" class="<?php echo ($order_download=='desc'?'sorting_desc':'sorting_asc') ?>"><a id="sort_download" href="<?php echo $sort_download; ?>"><?php _e('Downloads'); ?> </a></span>  <span style="<?php if($sort=='updated'){ echo "font-weight: bold;";}?>" class="<?php echo ($order_updated=='desc'?'sorting_desc':'sorting_asc') ?>"><a id="sort_updated" href="<?php echo $sort_updated; ?>"><?php _e('Last updates'); ?> </a></span>
     </h2>
     <?php
     // if there are data to be shown
     if(isset($array[$section]) ) {
-        $colors = gradienColors();
-        foreach($array[$section] as $item) {
-            drawMarketItem($item,$colors[array_rand($colors)]);
-        }
-        echo '<div class="clear"></div><div class="has-pagination">'.$pagination.'</div>';
+        if(isset($array['total']) && (int)$array['total']>0) {
+            $colors = gradienColors();
+            foreach ($array[$section] as $item) {
+                drawMarketItem($item, $colors[array_rand($colors)]);
+            }
+            echo '<div class="clear"></div><div class="has-pagination">' . $pagination . '</div>';
+        } else { ?>
+            <div>
+                <p class="flashmessage flashmessage-inline flashmessage-error"><?php printf(__('There are no %s that matches your search'), $section); ?></p>
+            </div>
+        <?php }
     } else {
     ?>
     <div>

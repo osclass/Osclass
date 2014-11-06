@@ -27,7 +27,22 @@
         function doModel()
         {
             parent::doModel();
-            //specific things for this class
+
+            if((time()-(int)(osc_market_data_update()))>(86400)) { //84600 = 24*60*60
+                $json = osc_file_get_contents(
+                    osc_market_url() . 'categories/',
+                    array(
+                        'api_key' => osc_market_api_connect()
+                    )
+                );
+                $data = @json_decode($json, true);
+                if(is_array($data)) {
+                    osc_set_preference('marketCategories', $json);
+                    osc_set_preference('marketDataUpdate', time());
+                    osc_reset_preferences();
+                }
+            }
+
             switch ($this->action) {
                 case('buy'):
                     osc_csrf_check();
@@ -56,7 +71,7 @@
                     if($marketPage>=1) $marketPage--;
 
                     // api
-                    $url            = osc_market_url($section)."page/".$marketPage.'/length/9/';
+                    $url            = osc_market_url($section).(Params::getParam('sCategory')!=''?'category/'.Params::getParam('sCategory').'/':'')."page/".$marketPage.'/length/9/';
                     // default sort
                     $sort_actual    = '';
                     $sort_download  = $url_actual.'&sort=downloads&order=desc';
@@ -133,6 +148,7 @@
                     $this->_exportVariableToView("order_download"     , $order_download);
                     $this->_exportVariableToView("order_updated"      , $order_updated);
 
+                    $this->_exportVariableToView("market_categories"  , json_decode(osc_market_categories(), true));
 
                     $this->_exportVariableToView('pagination', $output_pagination);
 
@@ -182,7 +198,10 @@
             }
         }
 
-        //hopefully generic...
+        function __call($name, $arguments)
+        {
+            // TODO: Implement __call() method.
+        }//hopefully generic...
         function doView($file)
         {
             osc_run_hook("before_admin_html");

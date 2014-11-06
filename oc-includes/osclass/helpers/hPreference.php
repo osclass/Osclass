@@ -721,6 +721,24 @@
     }
 
     /**
+     * Market filters
+     *
+     * @return int
+     */
+    function osc_market_categories() {
+        return(getPreference('marketCategories'));
+    }
+
+    /**
+     * Market data update
+     *
+     * @return int
+     */
+    function osc_market_data_update() {
+        return(getPreference('marketDataUpdate'));
+    }
+
+    /**
      * Gets recaptcha public key
      *
      * @return string
