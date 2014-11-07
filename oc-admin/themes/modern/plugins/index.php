@@ -255,7 +255,7 @@
     <input type="hidden" name="plugin" value="" />
     <div class="form-horizontal">
         <div class="form-row">
-            <?php _e('This action can not be undone. Uninstalling plugins may result in a permanent lost of data. Are you sure you want to continue?'); ?>
+            <?php _e('This action can not be undone. Uninstalling plugins may result in a permanent loss of data. Are you sure you want to continue?'); ?>
         </div>
         <div class="form-actions">
             <div class="wrapper">
