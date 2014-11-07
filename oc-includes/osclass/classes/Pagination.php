@@ -35,6 +35,7 @@
         protected $url;
         protected $firstUrl;
         protected $nofollow;
+        protected $listClass;
 
         public function __construct($params = null)
         {
@@ -56,6 +57,7 @@
             $this->url                = isset($params['url']) ? $params['url'] : osc_update_search_url(array('iPage' => '{PAGE}'));
             $this->firstUrl           = isset($params['first_url']) ? $params['first_url'] : $this->url;
             $this->nofollow           = isset($params['nofollow']) ? $params['nofollow'] : false;
+            $this->listClass          = isset($params['list_class']) ? $params['list_class'] : false;
         }
 
         public function get_raw_pages($params = null)
@@ -112,8 +114,8 @@
             $links = array();
             $isFirst = 0;
             $isLast = 0;
-            
-            
+
+
             $attrs = array();
             if( $this->nofollow ) {
                 $attrs['rel'] = 'nofollow';
@@ -133,7 +135,7 @@
                     $this->class_prev .= ' list-first';
                     $isFirst++;
                 }
-                $attrs['class'] = $this->class_prev;                
+                $attrs['class'] = $this->class_prev;
                 if( $pages['prev'] == 1 ) {
                     $attrs['href'] = str_replace('{PAGE}', '', str_replace(urlencode('{PAGE}'), '', $this->firstUrl));
                 } else {
@@ -189,7 +191,11 @@
         {
             if( $this->total > 1 ) {
                 $links = $this->get_links();
-                return '<ul>' . implode($this->delimiter, $links) . '</ul>';
+                if($this->listClass !== false) {
+                    return '<ul class="' . $this->listClass . '">' . implode($this->delimiter, $links) . '</ul>';
+                } else {
+                    return '<ul>' . implode($this->delimiter, $links) . '</ul>';
+                }
             } else {
                 return '';
             }
