@@ -85,7 +85,7 @@ class Scripts extends Dependencies {
     public function printScripts()
     {
         foreach($this->getScripts() as $script) {
-            echo '<script type="text/javascript" src="' . $script . '"></script>' . PHP_EOL;
+            echo '<script type="text/javascript" src="' . osc_apply_filter('theme_url', $script) . '"></script>' . PHP_EOL;
         }
     }
 }
