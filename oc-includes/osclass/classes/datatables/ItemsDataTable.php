@@ -527,8 +527,9 @@
          *     - inactive
          *     - premium
          *     - active
+         *     - expired
          *
-         * @since 3.2
+         * @since 3.2 -> 3.4.x
          *
          * @return array Array with the class and text of the status of the listing in this row. Example:
          *     array(
@@ -563,6 +564,13 @@
                 return array(
                     'class' => 'status-premium',
                     'text'  => __('Premium')
+                );
+            }
+
+            if( osc_item_is_expired() ) {
+                return array(
+                    'class' => 'status-expired',
+                    'text'  => __('Expired')
                 );
             }
 
