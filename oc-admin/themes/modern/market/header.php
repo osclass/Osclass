@@ -65,6 +65,17 @@
 
             var osc_market = {};
             osc_market.main_version = <?php echo $main_version; ?>;
+
+            $(document).ready(function() {
+                $("#market_disconnect").on('click', function () {
+                    var x = confirm('<?php _e('You are going to be disconnected from the Market, all your plugins and themes downloaded will remain installed and configured but you will not be able to update or download new plugins and themes. Are you sure?'); ?>');
+                    if (x) {
+                        window.location = '<?php echo osc_admin_base_url(true); ?>?page=settings&action=market_disconnect&<?php echo osc_csrf_token_url(); ?>';
+                    }
+                });
+            });
+
+
         </script>
         <?php
     }
@@ -97,7 +108,10 @@
             <li <?php if($action == 'themes'){ echo 'class="active"';} ?>><a href="<?php echo osc_admin_base_url(true).'?page=market&action=themes'; ?>"><?php _e('Themes'); ?></a></li>
             <li <?php if($action == 'languages'){ echo 'class="active"';} ?>><a href="<?php echo osc_admin_base_url(true).'?page=market&action=languages'; ?>"><?php _e('Languages'); ?></a></li>
             <?php if(osc_market_api_connect()=='') { ?>
-                <li><a id="market_connect" href="#"><?php _e('Connect'); ?></a></li>
+                <li class="connect"><a id="market_connect" href="#"><?php _e('Connect'); ?></a></li>
+            <?php } else { ?>
+                <li <?php if($action == 'purchases'){ echo 'class="active"';} ?>><a href="<?php echo osc_admin_base_url(true).'?page=market&action=purchases'; ?>"><?php _e('My purchases'); ?></a></li>
+                <li class="disconnect"><a id="market_disconnect" href="#"><?php _e('Disconnect from Market'); ?></a></li>
             <?php }; ?>
         </ul>
 

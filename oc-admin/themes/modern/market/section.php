@@ -33,19 +33,21 @@
     $sort_download  = __get('sort_download');
     $sort_updated   = __get('sort_updated');
     $categories     = __get('market_categories');
-    $categories     = $categories[$section];
+    $categories     = isset($categories[$section])?$categories[$section]:array();
 
 ?>
 <div class="grid-market">
     <h2 class="section-title"><?php echo $title[$section]; ?>, <?php echo $array['total'].' '.$section; ?> <?php _e('and counting'); ?>
-    <span>
-        <select id="market_categories">
-            <option value="<?php echo $categories['value'] ?>" <?php if(Params::getParam('sCategory')==$categories['value']) {echo 'selected="selected"'; }; ?>><?php echo $categories['label']; ?></option>
-            <?php foreach($categories['categories'] as $c) { ?>
-                <option value="<?php echo $c['value'] ?>" <?php if(Params::getParam('sCategory')==$c['value']) {echo 'selected="selected"'; }; ?>>&nbsp;&nbsp;<?php echo $c['label']; ?></option>
-            <?php }; ?>
-        </select>
-    </span>
+    <?php if($section=='plugins' || $section=='themes') { ?>
+        <span>
+            <select id="market_categories">
+                <option value="<?php echo $categories['value'] ?>" <?php if(Params::getParam('sCategory')==$categories['value']) {echo 'selected="selected"'; }; ?>><?php echo $categories['label']; ?></option>
+                <?php foreach($categories['categories'] as $c) { ?>
+                    <option value="<?php echo $c['value'] ?>" <?php if(Params::getParam('sCategory')==$c['value']) {echo 'selected="selected"'; }; ?>>&nbsp;&nbsp;<?php echo $c['label']; ?></option>
+                <?php }; ?>
+            </select>
+        </span>
+    <?php }; ?>
     <span style="<?php if($sort=='downloads'){ echo "font-weight: bold;";}?>" class="<?php echo ($order_download=='desc'?'sorting_desc':'sorting_asc') ?>"><a id="sort_download" href="<?php echo $sort_download; ?>"><?php _e('Downloads'); ?> </a></span>  <span style="<?php if($sort=='updated'){ echo "font-weight: bold;";}?>" class="<?php echo ($order_updated=='desc'?'sorting_desc':'sorting_asc') ?>"><a id="sort_updated" href="<?php echo $sort_updated; ?>"><?php _e('Last updates'); ?> </a></span>
     </h2>
     <?php

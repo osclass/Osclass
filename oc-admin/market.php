@@ -55,6 +55,7 @@
                     $data = json_decode($json, true);
                     osc_redirect_to(Params::getParam('url') . '?token=' . @$data['token']);
                     break;
+                case('purchases');
                 case('plugins'):
                 case('themes'):
                 case('languages'):
@@ -62,8 +63,10 @@
                     $title = array(
                         'plugins'    => __('Recommended plugins for You'),
                         'themes'     => __('Recommended themes for You'),
-                        'languages'  => __('Languages for this version')
+                        'languages'  => __('Languages for this version'),
+                        'purchases'  => __('My purchases')
                         );
+
 
                     // page number
                     $marketPage     = Params::getParam("mPage");
@@ -153,7 +156,7 @@
                     $this->_exportVariableToView('pagination', $output_pagination);
 
                     $this->doView("market/section.php");
-                break;
+                    break;
                 default:
                     $aPlugins       = array();
                     $aThemes        = array();
@@ -192,6 +195,8 @@
                     $this->_exportVariableToView("aPlugins"     , $aPlugins);
                     $this->_exportVariableToView("aThemes"      , $aThemes);
                     $this->_exportVariableToView("aLanguages"   , $aLanguages);
+
+                    $this->_exportVariableToView("market_categories"  , json_decode(osc_market_categories(), true));
 
                     $this->doView("market/index.php");
                 break;

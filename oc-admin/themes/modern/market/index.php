@@ -26,7 +26,13 @@
     $aLanguages = __get('aLanguages');
 
     $colors = array_merge(gradienColors(),array_merge(gradienColors(),gradienColors()));
+
+    $categories     = __get('market_categories');
+    $categories     = isset($categories[$section])?$categories[$section]:array();
 ?>
+<div class="grid-market">
+
+</div>
 <div class="grid-market">
     <h2 class="section-title"><?php _e('Recommended plugins for You'); ?><a href="<?php echo osc_admin_base_url(true).'?page=market&action=plugins'; ?>"><?php echo sprintf(__('View all (%s)'), $count['pluginsTotal']); ?></a></h2>
     <?php

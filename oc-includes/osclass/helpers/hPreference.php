@@ -659,6 +659,10 @@
                     $url .= 'code/'. $code;
                 }
                 break;
+            case 'purchases':
+            case 'purchase':
+                $url .= 'section/purchases/';
+                break;
             default:
                 break;
         }
