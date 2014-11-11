@@ -110,7 +110,7 @@
             <?php if(osc_market_api_connect()=='') { ?>
                 <li class="connect"><a id="market_connect" href="#"><?php _e('Connect'); ?></a></li>
             <?php } else { ?>
-                <li <?php if($action == 'purchases'){ echo 'class="active"';} ?>><a href="<?php echo osc_admin_base_url(true).'?page=market&action=purchases'; ?>"><?php _e('My purchases'); ?></a></li>
+                <li class="purchases <?php if($action == 'purchases'){ echo 'active';} ?>"><a href="<?php echo osc_admin_base_url(true).'?page=market&action=purchases'; ?>"><?php _e('My purchases'); ?></a></li>
                 <li class="disconnect"><a id="market_disconnect" href="#"><?php _e('Disconnect from Market'); ?></a></li>
             <?php }; ?>
         </ul>
@@ -123,17 +123,22 @@
                     modal: true
                 });
                 $("#connect-submit").on('click', function() {
+                    $('#connect_form').hide();
+                    $('#connect_wait').show();
                     $.getJSON(
                         '<?php echo osc_admin_base_url(true); ?>?page=ajax&action=market_connect',
                         {'s_email' : $('#connect_user').attr('value'), 's_password' : $('#connect_password').attr('value')},
                         function(data){
-                            console.log(data);
                             if(data==null) {
+                                $('#connect_form').show();
+                                $('#connect_wait').hide();
                                 var data = new Object();
                                 data.error = 1;
                                 data.msg = '<?php _e('Sorry, the market is currently unavailable. Please try again in a few moments.'); ?>';
                             }
                             if(data.error==1) {
+                                $('#connect_form').show();
+                                $('#connect_wait').hide();
                                 alert(data.msg);
                                 var flash = $("#flash_js");
                                 var message = $('<div>').addClass('pubMessages').addClass(class_type).attr('id', 'flashmessage').html(data.msg);
@@ -156,9 +161,20 @@
 
                 <?php }; ?>
 
-                $('body').bind("change", '[id="market_categories"]', function() {
-                    window.location = theme.marketCurrentURL + '&sCategory=' + $("#market_categories option:selected").prop('value');
+                $('#market_categories').bind("change", function() {
+                    <?php if(Params::getParam('action')!='') { ?>
+                        window.location = theme.marketCurrentURL + '&sCategory=' + $("#market_categories option:selected").prop('value');
+                    <?php } else { ?>
+                        window.location = theme.marketCurrentURL + $("#market_categories option:selected").attr('section-data') + '&sCategory=' + $("#market_categories option:selected").prop('value');
+                    <?php };?>
                 });
+
+                $("#market_disconnect").on('click', function() {
+                    var x = confirm('<?php _e('You are going to be disconnected from the Market, all your plugins and themes downloaded will remain installed and configured but you will not be able to update or download new plugins and themes. Are you sure?'); ?>');
+                    if(x) {
+                        window.location = '<?php echo osc_admin_base_url(true); ?>?page=settings&action=market_disconnect&<?php echo osc_csrf_token_url(); ?>&redirect=<?php echo base64_encode(osc_admin_base_url(true) . '?page=market&action=' . Params::getParam('action')); ?>';
+                    }
+                })
 
                 $.getJSON(
                     '<?php echo osc_admin_base_url(true); ?>?page=ajax&action=market_header',
@@ -182,7 +198,14 @@
 ?>
 <?php if(osc_market_api_connect()=='') { ?>
 <div id="dialog-connect" title="<?php _e('Connect'); ?>" class="has-form-actions hide">
-    <div class="form-horizontal">
+    <div class="form-horizontal hide" id="connect_wait">
+        <div class="form-row">
+            <p>
+                <?php _e('Connecting... please wait'); ?>
+            </p>
+        </div>
+    </div>
+    <div class="form-horizontal" id="connect_form">
         <div class="form-row">
             <p>
                 <input type="text" name="connect_user" id="connect_user" value="" placeholder="<?php _e('Your market email'); ?>"/>
