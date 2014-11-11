@@ -400,7 +400,7 @@
                                         <div class="form-controls">
                                             <input type="text" class="input-large" name="rewrite_item_url" value="<?php echo osc_esc_html(osc_get_preference('rewrite_item_url')); ?>" />
                                             <div class="help-box">
-                                                <?php echo sprintf(__('Accepted keywords: %s'), '{ITEM_ID},{ITEM_TITLE},{CATEGORIES}'); ?>
+                                                <?php echo sprintf(__('Accepted keywords: %s'), '{ITEM_ID},{ITEM_TITLE},{ITEM_CITY},{CATEGORIES}'); ?>
                                             </div>
                                         </div>
                                     </div>
@@ -647,7 +647,7 @@
                                 ?></pre>
                             </div>
                             <div class="form-row">
-                                <h3 class="separate-top"><?php _e('What your .htaccess file should look like') ?></h3>
+                                <h3 class="separate-top"><?php _e('What your .htaccess file should look like'); ?></h3>
                                 <pre><?php
                                     $rewrite_base = REL_WEB_URL;
                                     $htaccess     = <<<HTACCESS

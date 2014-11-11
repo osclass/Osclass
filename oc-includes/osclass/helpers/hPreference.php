@@ -659,10 +659,23 @@
                     $url .= 'code/'. $code;
                 }
                 break;
+            case 'purchases':
+            case 'purchase':
+                $url .= 'section/purchases/';
+                break;
             default:
                 break;
         }
         return $url;
+    }
+
+    /**
+     * Gets market connect api key
+     *
+     * @return string
+     */
+    function osc_market_api_connect() {
+        return(getPreference('marketAPIConnect'));
     }
 
     /**
@@ -709,6 +722,24 @@
      */
     function osc_market_external_sources() {
         return(getBoolPreference('marketAllowExternalSources'));
+    }
+
+    /**
+     * Market filters
+     *
+     * @return int
+     */
+    function osc_market_categories() {
+        return(getPreference('marketCategories'));
+    }
+
+    /**
+     * Market data update
+     *
+     * @return int
+     */
+    function osc_market_data_update() {
+        return(getPreference('marketDataUpdate'));
     }
 
     /**

@@ -80,17 +80,23 @@ a.has-update:hover .mk-item{
     float:left;
 }
 .mk-item .mk-info .more,
-.mk-item .mk-info .download-btn{
-    background-color: @color-gray-dim;
-    .border-radius(3px);
-    padding:5px 8px;
-    color:#fff;
-    float:left;
-    font-size:13px;
+.mk-item .mk-info .download-btn,
+.mk-item .mk-info .buy-btn,
+.mk-item .mk-info .diag-buy{
+  background-color: @color-gray-dim;
+  .border-radius(3px);
+  padding:5px 8px;
+  color:#fff;
+  float:left;
+  font-size:13px;
 }
 .mk-item .mk-info .download-btn{
-    background-color: #2fbfd1;
-    margin-left: 5px;
+  background-color: #2fbfd1;
+  margin-left: 5px;
+}
+.mk-item .mk-info .buy-btn{
+  background-color: #35d189;
+  margin-left: 5px;
 }
 .mk-item .mk-info .downloads{
     display:block;
@@ -140,6 +146,11 @@ a.has-update:hover .mk-item{
 .has-update .flag{
     display: block;
     background-position: 0 0px;
+}
+.is-buy .flag{
+  display: block;
+  background-image: url(../images/market-buy.png);
+  background-position: 0 0px;
 }
 .is-featured .flag{
     display: block;
@@ -274,7 +285,9 @@ z-index: 88888;
 .market-dialog .mk-item-theme .banner{
     height: 160px
 }
-.market-dialog .mk-info .more{
+.market-dialog .mk-info .more,
+.market-dialog .mk-info .diag-buy,
+{
     display: block;
     font-size: 15px;
     text-align: center;
@@ -288,7 +301,9 @@ z-index: 88888;
     color:@title-color;
 }
 
-.market-dialog .mk-info .manual{
+.market-dialog .mk-info .manual,
+.market-dialog .mk-info .manual-buy,
+{
     display: block;
     font-size: 11px;
     margin-bottom: 8px;

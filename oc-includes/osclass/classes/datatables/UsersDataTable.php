@@ -169,12 +169,21 @@
                 $this->conditions['pk_i_id'] = str_replace('*','%', $_get['userId']);
             }
             if(@$_get['s_email']!='') {
-                $this->conditions['s_email'] = str_replace('*','%', $_get['s_email']);
+                // escape value
+                $esc_email = User::newInstance()->dao->escapeStr(str_replace('*','%', $_get['s_email']));
+                $this->conditions["s_email LIKE '". $esc_email . "'"] = null;
             }
             if(@$_get['s_name']!='') {
                 $this->conditions['s_name'] = str_replace('*','%', $_get['s_name']);
             } else if(@$_get['user']!='') {
-                $this->conditions['s_name'] = str_replace('*','%', $_get['user']);
+
+                if(@$_get['userId']=='') {
+                    // escape value
+                    $esc_user = User::newInstance()->dao->escapeStr(str_replace('*','%', $_get['user']));
+                    $this->conditions["s_email LIKE '". $esc_user . "' OR s_name LIKE '". $esc_user ."'"] = null;
+                } else {
+                    $this->conditions['s_name'] = str_replace('*','%', $_get['user']);
+                }
             }
             if(@$_get['s_username']!='') {
                 $this->conditions['s_username'] = str_replace('*','%', $_get['s_username']);
@@ -212,8 +221,6 @@
 
             $this->start = intval( $start );
             $this->limit = intval( $_get['iDisplayLength'] );
-
-
         }
 
         public function row_class($class, $rawRow, $row)
