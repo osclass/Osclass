@@ -543,7 +543,7 @@
                             }
                         }
                         if( !isset($data['s_source_file']) || !isset($data['s_update_url'])) {
-                            $data = array('error' => 2, 'error_msg' => __('Invalid code'));
+                            //$data = array('error' => 2, 'error_msg' => __('Invalid code'));
                         }
                     } else {
                         $data = array('error' => 1, 'error_msg' => __('No code was submitted'));

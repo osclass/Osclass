@@ -66,6 +66,11 @@ $(function(){
         return false;
     });
 
+    $("body").on("click", '.ui-dialog-content a.diag-buy-btn', function(e) {
+        e.stopPropagation();
+        window.location = theme.adminBaseUrl + '?page=market&action=buy&' + theme.CSRFToken + '&url=' + $(this).attr("data-code");
+    });
+
 
     $('.mk-item-parent').click(function(event){
         event.preventDefault();
@@ -164,6 +169,22 @@ $(function(){
                         date_mod += _day;
                     }
 
+                    if(item.b_paid==0 && item.s_buy_url!=undefined) {
+                        var actions_text = '<a class="diag-buy diag-buy-btn" data-code="'+item.s_buy_url+'" data-type="'+section+'">'+theme.langs.buy+' v.'+item.s_version+'</a>'
+                            +'<span class="block"><strong>'+theme.langs.requieres_version+'</strong> '+versions[0]+'</span>'
+                            +'<span class="block"><strong>'+theme.langs.compatible_with+'</strong> '+versions[(versions.length-1)]+'</span>'
+                            +'<span class="block"><strong>'+theme.langs.downloads+'</strong> '+item.i_total_downloads+'</span>'
+                            +'<span class="block"><strong>'+theme.langs.last_update+'</strong> '+date_mod+'</span>'
+                            +'<a href="#" data-code="'+item.s_buy_url+'" class="diag-buy-btn manual-buy">'+theme.langs.buy+'</a>';
+                    } else {
+                        var actions_text = '<a class="more" data-code="'+item.s_update_url+'" data-type="'+section+'">'+theme.langs.download+' v.'+item.s_version+'</a>'
+                            +'<span class="block"><strong>'+theme.langs.requieres_version+'</strong> '+versions[0]+'</span>'
+                            +'<span class="block"><strong>'+theme.langs.compatible_with+'</strong> '+versions[(versions.length-1)]+'</span>'
+                            +'<span class="block"><strong>'+theme.langs.downloads+'</strong> '+item.i_total_downloads+'</span>'
+                            +'<span class="block"><strong>'+theme.langs.last_update+'</strong> '+date_mod+'</span>'
+                            +'<a href="'+item.s_source_file+'" class="manual">'+theme.langs.download_manually+'</a>';
+                    }
+
                     print = '<div class="mk-item mk-item-'+section+'">'
                             +'<div class="banner" style="background-image:url('+banner+');">'+str_letter+'</div>'
                             +'<div class="mk-info">'
@@ -178,12 +199,7 @@ $(function(){
                                     +'<td class="spacer">'
                                     +'</td>'
                                     +'<td class="actions">'
-                                        +'<a class="more" data-code="'+item.s_update_url+'" data-type="'+section+'">'+theme.langs.download+' v.'+item.s_version+'</a>'
-                                        +'<span class="block"><strong>'+theme.langs.requieres_version+'</strong> '+versions[0]+'</span>'
-                                        +'<span class="block"><strong>'+theme.langs.compatible_with+'</strong> '+versions[(versions.length-1)]+'</span>'
-                                        +'<span class="block"><strong>'+theme.langs.downloads+'</strong> '+item.i_total_downloads+'</span>'
-                                        +'<span class="block"><strong>'+theme.langs.last_update+'</strong> '+date_mod+'</span>'
-                                        +'<a href="'+item.s_source_file+'" class="manual">'+theme.langs.download_manually+'</a>'
+                                        + actions_text
                                     +'</td>'
                                 +'</tr>'
                                 +screenshots

@@ -38,6 +38,7 @@
                 'screenshots'        => __('Screenshots'),
                 'preview_theme'      => __('Preview theme'),
                 'download_manually'  => __('Download manually'),
+                'buy'                => __('Buy'),
                 'proceed_anyway'     => sprintf(__('Warning! This package is not compatible with your current version of Osclass (%s)'), $main_version),
                 'sure'               => __('Are you sure?'),
                 'proceed_anyway_btn' => __('Ok, proceed anyway'),
@@ -65,16 +66,6 @@
 
             var osc_market = {};
             osc_market.main_version = <?php echo $main_version; ?>;
-
-            $(document).ready(function() {
-                $("#market_disconnect").on('click', function () {
-                    var x = confirm('<?php _e('You are going to be disconnected from the Market, all your plugins and themes downloaded will remain installed and configured but you will not be able to update or download new plugins and themes. Are you sure?'); ?>');
-                    if (x) {
-                        window.location = '<?php echo osc_admin_base_url(true); ?>?page=settings&action=market_disconnect&<?php echo osc_csrf_token_url(); ?>';
-                    }
-                });
-            });
-
 
         </script>
         <?php
@@ -184,7 +175,15 @@
                             $('#content-head div.banner-market').html(data.html);
                         }
                     });
+
+                $("#market_disconnect").on('click', function () {
+                    var x = confirm('<?php _e('You are going to be disconnected from the Market, all your plugins and themes downloaded will remain installed and configured but you will not be able to update or download new plugins and themes. Are you sure?'); ?>');
+                    if (x) {
+                        window.location = '<?php echo osc_admin_base_url(true); ?>?page=settings&action=market_disconnect&<?php echo osc_csrf_token_url(); ?>';
+                    }
                 });
+
+            });
         </script>
 <?php
     }
