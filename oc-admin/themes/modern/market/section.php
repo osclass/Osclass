@@ -38,8 +38,10 @@
 ?>
 <div class="grid-market">
     <h2 class="section-title"><?php echo $title[$section]; ?>, <?php echo $array['total'].' '.$section; ?> <?php _e('and counting'); ?>
+
+    <span style="<?php if($sort=='downloads'){ echo "font-weight: bold;";}?>" class="<?php echo ($order_download=='desc'?'sorting_desc':'sorting_asc') ?>"><a id="sort_download" href="<?php echo $sort_download; ?>"><?php _e('Downloads'); ?> </a></span>  <span style="<?php if($sort=='updated'){ echo "font-weight: bold;";}?>" class="<?php echo ($order_updated=='desc'?'sorting_desc':'sorting_asc') ?>"><a id="sort_updated" href="<?php echo $sort_updated; ?>"><?php _e('Last updates'); ?> </a></span>
     <?php if($section=='plugins' || $section=='themes') { ?>
-        <span>
+        <span class="wrapper_market_categories">
             <select id="market_categories">
                 <option value="<?php echo $categories['value'] ?>" <?php if(Params::getParam('sCategory')==$categories['value']) {echo 'selected="selected"'; }; ?>><?php echo $categories['label']; ?></option>
                 <?php foreach($categories['categories'] as $c) { ?>
@@ -48,7 +50,6 @@
             </select>
         </span>
     <?php }; ?>
-    <span style="<?php if($sort=='downloads'){ echo "font-weight: bold;";}?>" class="<?php echo ($order_download=='desc'?'sorting_desc':'sorting_asc') ?>"><a id="sort_download" href="<?php echo $sort_download; ?>"><?php _e('Downloads'); ?> </a></span>  <span style="<?php if($sort=='updated'){ echo "font-weight: bold;";}?>" class="<?php echo ($order_updated=='desc'?'sorting_desc':'sorting_asc') ?>"><a id="sort_updated" href="<?php echo $sort_updated; ?>"><?php _e('Last updates'); ?> </a></span>
     </h2>
     <?php
     // if there are data to be shown
