@@ -63,7 +63,9 @@
                                                 }
                                             }
                                         }
-                                        osc_calculate_location_slug(osc_subdomain_type());
+                                        osc_calculate_location_slug('country');
+                                        osc_calculate_location_slug('region');
+                                        osc_calculate_location_slug('city');
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
                 break;
                 case('edit_country'):   // edit country
@@ -183,7 +185,8 @@
                                                 }
                                             }
                                         }
-                                        osc_calculate_location_slug(osc_subdomain_type());
+                                        osc_calculate_location_slug('region');
+                                        osc_calculate_location_slug('city');
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations&country_code='.@$countryCode."&country=".@$country['s_name']);
                 break;
                 case('edit_region'):    // edit region
