@@ -175,14 +175,6 @@
                             $('#content-head div.banner-market').html(data.html);
                         }
                     });
-
-                $("#market_disconnect").on('click', function () {
-                    var x = confirm('<?php _e('You are going to be disconnected from the Market, all your plugins and themes downloaded will remain installed and configured but you will not be able to update or download new plugins and themes. Are you sure?'); ?>');
-                    if (x) {
-                        window.location = '<?php echo osc_admin_base_url(true); ?>?page=settings&action=market_disconnect&<?php echo osc_csrf_token_url(); ?>';
-                    }
-                });
-
             });
         </script>
 <?php
