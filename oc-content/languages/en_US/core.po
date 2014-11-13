@@ -2437,7 +2437,7 @@ msgid "%d plugins"
 msgstr ""
 
 #: oc-admin/themes/modern/plugins/index.php:258
-msgid "This action can not be undone. Uninstalling plugins may result in a permanent lost of data. Are you sure you want to continue?"
+msgid "This action can not be undone. Uninstalling plugins may result in a permanent loss of data. Are you sure you want to continue?"
 msgstr ""
 
 #: oc-admin/themes/modern/settings/advanced.php:36

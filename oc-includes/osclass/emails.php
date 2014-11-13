@@ -409,7 +409,7 @@
                 $user['s_email']
             );
             $title = osc_apply_filter('email_user_registration_title_after', osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_user_registration_title', $content['s_title'], $user)), $words), $user);
-            $body = osc_apply_filter('email_user_regsitration_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_user_regsitration_description', $content['s_text'], $user)), $words), $user);
+            $body  = osc_apply_filter('email_user_registration_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_user_registration_description', $content['s_text'], $user)), $words), $user);
 
             $emailParams = array(
                 'subject'  => $title,
@@ -1294,7 +1294,7 @@
     function _osc_from_email_aux() {
         $tmp = osc_mailserver_mail_from();
         return !empty($tmp)?$tmp:osc_contact_email();
-    } 
+    }
 
 
 /* file end: ./oc-includes/osclass/emails.php */
