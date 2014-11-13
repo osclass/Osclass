@@ -81,15 +81,16 @@
                     <div style="font-size:25px;line-height:25px;border-bottom:solid 1px #dbdbdb;padding-bottom:5px;padding-top:5px"><a href="http://osclass.org/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=version_340_RC&amp;utm_content=sub-title" style="color:#555555;text-decoration:none;">Osclass 3.5 highlights</a></div><img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="420" height="25" alt="">
                     <div style="font-size:13px; line-height:15px;color:#555555;">
                         <ul style="color:#555555;margin: 0;padding: 0;padding-left: 16px; list-style-type: disc !important;">
-                                <li>Enjoy paid plugins and themes from the new Market area</li>
-                                <li>"My purchases" section, to quickly find your plugins and themes bought at <a href="http://market.osclass.org/">Osclass' Market</a></li>
-                                <li>Added search filters to market area</li>
-                                <li>Improved styles and UI at Manage listings page</li>
-                                <li>Date format improvements at Manage users/listings pages</li>
-                                <li>Several helpers functions fixed, now work properly</li>
-                                <li>Bender theme now support ad management (<a href="http://www.google.com/adsense/start/" target="_blank">Google Adsense</a>, <a href="http://www.tradedoubler.com/" target="_blank">Tradedoubler</a>, <a href="http://www.cj.com/" target="_blank">Commission Junction</a>, among others)</li>
-                                <li>Minor bug fixes and improvements</li>
-                            </ul>
+                            <li>Connect your website with <a href="http://market.osclass.org/">Osclass' Market</a></li>
+                            <li>Added search filters to market area</li>
+                            <li>Enjoy paid plugins and themes from the new Market area</li>
+                            <li>"My purchases" section, to quickly find your plugins and themes bought at <a href="http://market.osclass.org/">Osclass' Market</a></li>
+                            <li>Improved styles and UI at Manage listings page</li>
+                            <li>Date format improvements at Manage users/listings pages</li>
+                            <li>Several helpers functions fixed, now work properly</li>
+                            <li>Bender theme now support ad management (<a href="http://www.google.com/adsense/start/" target="_blank">Google Adsense</a>, <a href="http://www.tradedoubler.com/" target="_blank">Tradedoubler</a>, <a href="http://www.cj.com/" target="_blank">Commission Junction</a>, among others)</li>
+                            <li>Minor bug fixes and improvements</li>
+                        </ul>
                     </div>
                 </td>
                 <td width="35" style="width: 35px;"><img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="35" height="1" alt=""></td>
