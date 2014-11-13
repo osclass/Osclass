@@ -521,7 +521,7 @@
                     if ($_auxSlug != '') { $url .= $_auxSlug . '_'; }
                 }
                 if(isset($params['sCity'])) {
-                    if(osc_list_region_id()==$params['sCity']) {
+                    if(osc_list_city_id()==$params['sCity']) {
                         $url .= osc_sanitizeString(osc_list_city_slug()) . '-c' . osc_list_city_id();
                     } else {
                         if(is_numeric($params['sCity'])) {

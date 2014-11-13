@@ -108,6 +108,7 @@
                     <?php UserForm::info_textarea('s_info', osc_locale_code(), @$osc_user['locale'][osc_locale_code()]['s_info']); ?>
                 </div>
             </div>
+            <?php osc_run_hook('user_profile_form', osc_user()); ?>
             <div class="control-group">
                 <div class="controls">
                     <button type="submit" class="ui-button ui-button-middle ui-button-main"><?php _e("Update", 'bender');?></button>

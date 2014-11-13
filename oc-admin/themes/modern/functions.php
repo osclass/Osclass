@@ -255,8 +255,13 @@ function drawMarketItem($item,$color = false){
         $featuredClass .= 'is-downloaded';
     }
 
-    $style = 'background-image:url('.$thumbnail.');';
-    echo '<a href="#'.$item['s_update_url'].'" class="mk-item-parent '.$featuredClass.$updateClass.$compatible.'" data-type="'.$type.'"'.$updateData.' data-gr="'.$color.'" data-letter="'.$item['s_update_url'][0].'">';
+    $buyClass = '';
+    if($item['i_price'] != '' && (float)$item['i_price'] > 0  && $item['b_paid'] == 1) {
+        $buyClass = ' is-buy ';
+    }
+
+        $style = 'background-image:url('.$thumbnail.');';
+    echo '<a href="#'.$item['s_update_url'].'" class="mk-item-parent '.$featuredClass.$updateClass.$compatible.$buyClass.'" data-type="'.$type.'"'.$updateData.' data-gr="'.$color.'" data-letter="'.$item['s_update_url'][0].'">';
     echo '<div class="mk-item mk-item-'.$type.'">';
     echo '    <div class="banner" style="'.$style.'">'.$letterDraw.'</div>';
     echo '    <div class="mk-info"><i class="flag"></i>';
@@ -265,7 +270,11 @@ function drawMarketItem($item,$color = false){
     echo '        <i>by '.$item['s_contact_name'].'</i>';
     echo '        <div class="market-actions">';
     echo '            <span class="more">'.__('View more').'</span>';
-    echo '            <span class="download-btn'.$compatible.'" data-code="'.$item['s_update_url'].'" data-type="'.$type.'"'.'>'.__('Download').'</span>';
+    if($item['i_price'] != '' && (float)$item['i_price'] > 0 && $item['b_paid'] == 0) {
+        echo '            <span class="buy-btn' . $compatible . '" data-code="' . $item['s_buy_url'] . '" data-type="' . $type . '"' . '>' . sprintf(__('Buy $%s'), number_format($item['i_price']/1000000, 0, '.', ',')) . '</span>';
+    } else {
+        echo '            <span class="download-btn' . $compatible . '" data-code="' . $item['s_update_url'] . '" data-type="' . $type . '"' . '>' . __('Download') . '</span>';
+    }
     echo '        </div>';
     echo '    </div>';
     echo '</div>';

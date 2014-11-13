@@ -26,9 +26,30 @@
     $aLanguages = __get('aLanguages');
 
     $colors = array_merge(gradienColors(),array_merge(gradienColors(),gradienColors()));
+
+    $categories     = __get('market_categories');
 ?>
 <div class="grid-market">
-    <h2 class="section-title"><?php _e('Recommended plugins for You'); ?><a href="<?php echo osc_admin_base_url(true).'?page=market&action=plugins'; ?>"><?php echo sprintf(__('View all (%s)'), $count['pluginsTotal']); ?></a></h2>
+
+</div>
+<div class="grid-market">
+    <h2 class="section-title"><?php _e('Recommended plugins for You'); ?><a href="<?php echo osc_admin_base_url(true).'?page=market&action=plugins'; ?>"><?php echo sprintf(__('View all (%s)'), $count['pluginsTotal']); ?></a>
+
+
+        <span class="wrapper_market_categories">
+            <select id="market_categories">
+                    <option section-data="" value="" ><?php _e('Select a category'); ?></option>
+                <?php foreach($categories as $k => $section) { ?>
+                    <option section-data="<?php echo $k; ?>" value="<?php echo $section['value'] ?>" ><?php echo $section['label']; ?></option>
+                    <?php foreach($section['categories'] as $c) { ?>
+                        <option section-data="<?php echo $k; ?>" value="<?php echo $c['value'] ?>" >&nbsp;&nbsp;<?php echo $c['label']; ?></option>
+                    <?php }; ?>
+                <?php }; ?>
+            </select>
+        </span>
+
+
+    </h2>
     <?php
     foreach($aPlugins as $item){
         drawMarketItem($item,$colors[array_rand($colors)]);

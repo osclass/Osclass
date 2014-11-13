@@ -63,7 +63,9 @@
                                                 }
                                             }
                                         }
-                                        osc_calculate_location_slug(osc_subdomain_type());
+                                        osc_calculate_location_slug('country');
+                                        osc_calculate_location_slug('region');
+                                        osc_calculate_location_slug('city');
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
                 break;
                 case('edit_country'):   // edit country
@@ -183,7 +185,8 @@
                                                 }
                                             }
                                         }
-                                        osc_calculate_location_slug(osc_subdomain_type());
+                                        osc_calculate_location_slug('region');
+                                        osc_calculate_location_slug('city');
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations&country_code='.@$countryCode."&country=".@$country['s_name']);
                 break;
                 case('edit_region'):    // edit region
@@ -199,10 +202,10 @@
                                         if(!osc_validate_min($newRegion, 1)) {
                                             osc_add_flash_error_message(_m('Region name cannot be blank'), 'admin');
                                         } else {
-                                            $exists = $mRegions->findByName($newRegion);
+                                            $aRegion = $mRegions->findByPrimaryKey($regionId);
+                                            $exists = $mRegions->findByName($newRegion, $aRegion['fk_c_country_code']);
                                             if(!isset($exists['pk_i_id']) || $exists['pk_i_id']==$regionId) {
                                                 if($regionId != '') {
-                                                    $aRegion = $mRegions->findByPrimaryKey($regionId);
                                                     $country = Country::newInstance()->findByCode($aRegion['fk_c_country_code']);
 
                                                     $name = $newRegion;
@@ -344,9 +347,9 @@
                                         if(!osc_validate_min($newCity, 1)) {
                                             osc_add_flash_error_message(_m('City name cannot be blank'), 'admin');
                                         } else {
-                                            $exists = $mCities->findByName($newCity);
+                                            $city = $mCities->findByPrimaryKey($cityId);
+                                            $exists = $mCities->findByName($newCity, $city['fk_i_region_id']);
                                             if(!isset($exists['pk_i_id']) || $exists['pk_i_id']==$cityId) {
-                                                $city = $mCities->findByPrimaryKey($cityId);
                                                 $region = $mRegion->findByPrimaryKey($city['fk_i_region_id']);
                                                 $country = Country::newInstance()->findByCode($region['fk_c_country_code']);
 

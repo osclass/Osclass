@@ -100,9 +100,9 @@
         public function setCurrentThemeUrl()
         {
             if ( $this->theme_exists ) {
-                $this->theme_url = osc_base_url() . str_replace(osc_base_path(), '', $this->theme_path);
+                $this->theme_url = osc_apply_filter('theme_url', osc_base_url() . str_replace(osc_base_path(), '', $this->theme_path));
             } else {
-                $this->theme_url = osc_base_url() . 'oc-includes/osclass/gui/';
+                $this->theme_url = osc_apply_filter('theme_url', osc_base_url() . 'oc-includes/osclass/gui/');
             }
         }
 
@@ -174,7 +174,7 @@
         /**
          *
          * @param <type> $theme
-         * @return <type> 
+         * @return <type>
          */
         function loadThemeInfo($theme)
         {
@@ -262,11 +262,11 @@
         {
             return !in_array($internal_name, $this->pages);
         }
-        
+
         function getAvailableTemplates($theme = null)
         {
             if($theme==null) { $theme = $this->theme; };
-            
+
             $templates = array();
             $dir = opendir( $this->path . $theme . "/" );
             while ($file = readdir($dir)) {
@@ -276,9 +276,9 @@
             }
             closedir($dir);
             return $templates;
-            
+
         }
-        
+
     }
 
     /* file end: ./oc-includes/osclass/WebThemes.php */
