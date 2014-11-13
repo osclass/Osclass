@@ -110,6 +110,7 @@
             $(document).ready(function() {
                 <?php if(osc_market_api_connect()=='') { ?>
                 $("#dialog-connect").dialog({
+                    width: '480',
                     autoOpen: false,
                     modal: true
                 });
@@ -198,10 +199,12 @@
     </div>
     <div class="form-horizontal" id="connect_form">
         <div class="form-row">
+            <?php echo sprintf(__('Connect your oc-admin to your <a target="_blank" href="%s">Market account!</a>'), 'http://market.osclass.org/'); ?>
             <p>
-                <input type="text" name="connect_user" id="connect_user" value="" placeholder="<?php _e('Your market email'); ?>"/>
+                <?php _e('Your purchased items on Osclass Market will automatically appear on My Purchases tab.'); ?>
             </p>
             <p>
+                <input type="text" name="connect_user" id="connect_user" value="" placeholder="<?php _e('Your market email'); ?>"/>
                 <input type="password" name="connect_password" id="connect_password" value="" placeholder="<?php _e('Your market password'); ?>"/>
             </p>
         </div>
