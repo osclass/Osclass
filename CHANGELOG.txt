@@ -1,3 +1,20 @@
+Osclass 3.5.0 2014-11-13
+------------------------
+- Higher limit for custom fields values.
+- Bug fixed, Manage locations, slugs not being generated
+- Added filter theme_url, change theme urls as you want
+- Add customizable class for pagination. 
+- Added styles to Expired ads at Manage listings page.
+- Date format improvements at Manage users/listings page.
+- Fixed issues with Premium.php helper.
+- Ad management as a settings of Bender theme.
+- Connect / Disconnect from market.osclass.org
+- Market section, now show paid plugins and themes
+- My purchases (market page) download your paid plugins or themes
+- Market section, added search filters.
+- Several minor bugs fixed.
+- Several issues with Bender theme fixed.
+
 Osclass 3.4.3 2014-09-30
 ------------------------
 - Fixed four critical vulnerabilities thanks to Egidio Romano ( http://karmainsecurity.com/ )
