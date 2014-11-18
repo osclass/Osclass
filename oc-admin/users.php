@@ -102,7 +102,7 @@
                                             } else {
                                             $actions[] = '<a class="btn btn-red float-left" href="'.osc_admin_base_url(true).'?page=users&action=enable&id[]='.$aUser['pk_i_id'].'&'.$csrf_token.'&value=ENABLE">'.__('Unblock') .'</a>';
                                         }
-                                       
+
                                         $this->_exportVariableToView("actions", $actions);
 
                                         $this->_exportVariableToView("user", $aUser);
@@ -631,6 +631,7 @@
 
 
                                         $this->_exportVariableToView('aData', $aData);
+                                        $this->_exportVariableToView('withFilters', $usersDataTable->withFilters());
                                         $this->_exportVariableToView('aRawRows', $usersDataTable->rawRows());
 
                                         $bulk_options = array(
