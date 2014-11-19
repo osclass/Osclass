@@ -242,6 +242,7 @@
                                     $array['s_email']    = $sEmail;
 
                                     $iUpdated = $this->adminManager->update($array, $conditions);
+                                    osc_run_hook('admin_edit_completed', $adminId, $iUpdated);
 
                                     if( $iUpdated > 0 ) {
                                         osc_add_flash_ok_message( _m('The admin has been updated'), 'admin');
