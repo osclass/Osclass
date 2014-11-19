@@ -509,7 +509,7 @@ CREATE TABLE %st_item_description_tmp (
         osc_set_preference('marketDataUpdate', 0);
     }
 
-    osc_changeVersionTo(350);
+    osc_changeVersionTo(351);
 
     if(!defined('IS_AJAX') || !IS_AJAX) {
         if(empty($aMessages)) {
