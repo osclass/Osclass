@@ -503,13 +503,17 @@ CREATE TABLE %st_item_description_tmp (
     }
 
     if(osc_version() < 350) {
-        osc_set_preference('marketURL', 'http://market.osclass.org.local/api/v2/');
+        osc_set_preference('marketURL', 'http://market.osclass.org/api/v2/');
         osc_set_preference('marketAPIConnect', '');
         osc_set_preference('marketCategories', '');
         osc_set_preference('marketDataUpdate', 0);
     }
 
-    osc_changeVersionTo(351);
+    if(osc_version() < 352) {
+        osc_set_preference('marketURL', 'http://market.osclass.org/api/v2/');
+    }
+
+    osc_changeVersionTo(352);
 
     if(!defined('IS_AJAX') || !IS_AJAX) {
         if(empty($aMessages)) {
