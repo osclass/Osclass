@@ -108,9 +108,8 @@
                     <div class="form-label"><?php _e('If you see the reCAPTCHA form it means that you have correctly entered the public key'); ?></div>
                     <div class="form-controls">
                         <?php
-                        require_once( osc_lib_path() . 'recaptchalib.php' );
                         $publickey = osc_recaptcha_public_key();
-                        echo recaptcha_get_html($publickey, false);
+                        echo recaptcha_get_html($publickey);
                         ?>
                     </div>
                 </div>
