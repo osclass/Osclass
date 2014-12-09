@@ -39,11 +39,13 @@ class ReCaptchaResponse
     public $errorCodes;
 }
 
+// if openssl is not enabled, it can not made calls to https urls
+define('RECAPTCHA_URL', extension_loaded('openssl')?'https://www.google.com/recaptcha/api/siteverify?':'http://www.google.com/recaptcha/api/siteverify?');
+
 class ReCaptcha
 {
     private static $_signupUrl = "https://www.google.com/recaptcha/admin";
-    private static $_siteVerifyUrl =
-        "https://www.google.com/recaptcha/api/siteverify?";
+    private static $_siteVerifyUrl = RECAPTCHA_URL;
     private $_secret;
     private static $_version = "php_1.0";
 
@@ -91,7 +93,7 @@ class ReCaptcha
     private function _submitHTTPGet($path, $data)
     {
         $req = $this->_encodeQS($data);
-        $response = file_get_contents($path . $req);
+        $response = osc_file_get_contents($path . $req);
         return $response;
     }
 
