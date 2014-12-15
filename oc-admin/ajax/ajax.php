@@ -515,6 +515,18 @@
                         echo json_encode(array('error' => 1, 'msg' => __('Version could not be checked')));
                     }
                     break;
+                case 'check_languages':
+                    $total = _osc_check_languages_update();
+                    echo json_encode(array('msg' => __('Checked updates'), 'total' => $total));
+                    break;
+                case 'check_themes':
+                    $total = _osc_check_themes_update();
+                    echo json_encode(array('msg' => __('Checked updates'), 'total' => $total));
+                    break;
+                case 'check_plugins':
+                    $total = _osc_check_plugins_update();
+                    echo json_encode(array('msg' => __('Checked updates'), 'total' => $total));
+                    break;
 
                 /******************************
                  ** COMPLETE UPGRADE PROCESS **

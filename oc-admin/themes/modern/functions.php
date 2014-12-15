@@ -316,5 +316,43 @@ function check_version_admin_footer() {
 }
 osc_add_hook('admin_footer', 'check_version_admin_footer');
 
-
+function check_languages_admin_footer() {
+    ?>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $.getJSON(
+                '<?php echo osc_admin_base_url(true); ?>?page=ajax&action=check_languages',
+                {},
+                function(data){}
+            );
+        });
+    </script>
+<?php
+}
+function check_themes_admin_footer() {
+    ?>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $.getJSON(
+                '<?php echo osc_admin_base_url(true); ?>?page=ajax&action=check_themes',
+                {},
+                function(data){}
+            );
+        });
+    </script>
+<?php
+}
+function check_plugins_admin_footer() {
+    ?>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $.getJSON(
+                '<?php echo osc_admin_base_url(true); ?>?page=ajax&action=check_plugins',
+                {},
+                function(data){}
+            );
+        });
+    </script>
+<?php
+}
 /* end of file */
