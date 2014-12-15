@@ -1,3 +1,8 @@
+Osclass 3.5.3 2014-12-15
+------------------------
+- Checking for updates is now down in background
+- Typo fix
+
 Osclass 3.5.2 2014-11-23
 ------------------------
 - Fixed wrong market endpoint in upgrade-funcs
