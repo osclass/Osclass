@@ -298,4 +298,23 @@ function check_market_compatibility($versions) {
     }
     return false;
 }
+
+function check_version_admin_footer() {
+    if( (time() - osc_last_version_check()) > (24 * 3600) ) {
+        ?>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $.getJSON(
+                    '<?php echo osc_admin_base_url(true); ?>?page=ajax&action=check_version',
+                    {},
+                    function(data){}
+                );
+            });
+        </script>
+        <?php
+    }
+}
+osc_add_hook('admin_footer', 'check_version_admin_footer');
+
+
 /* end of file */
