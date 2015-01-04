@@ -89,17 +89,25 @@
                 $this->dao->where( $where );
             }
 
-            $this->dao->select( sprintf("a.*, b.*, c.i_num_items, FIELD(fk_c_locale_code, '%s') as locale_order", $this->dao->connId->real_escape_string($this->_language) ) );
-            $this->dao->from( $this->getTableName().' as a' );
-            $this->dao->join(DB_TABLE_PREFIX.'t_category_description as b', 'a.pk_i_id = b.fk_i_category_id', 'INNER');
-            $this->dao->join(DB_TABLE_PREFIX.'t_category_stats  as c ', 'a.pk_i_id = c.fk_i_category_id', 'LEFT');
-            $this->dao->where("b.s_name != ''");
-            $this->dao->orderBy('locale_order', 'DESC');
+            foreach (osc_get_locales() as $locale) {
+                $locales[] = $locale['pk_c_code'];
+            }
+            array_unshift($locales, osc_current_user_locale(), osc_language());
+
+            $this->dao->select('fk_c_locale_code');
+            $this->dao->from(DB_TABLE_PREFIX.'t_category_description');
+            $this->dao->where('fk_i_category_id = a.pk_i_id');
+            $this->dao->where("s_name <> ''");
+            $this->dao->orderBy( sprintf("FIELD(fk_c_locale_code, '%s')", implode("','", array_unique($locales)) ), "");
+            $this->dao->limit(1);
             $subquery = $this->dao->_getSelect();
             $this->dao->_resetSelect();
 
-            $this->dao->select();
-            $this->dao->from( sprintf( '(%s) dummytable', $subquery ) ); // $subselect.'  dummytable');
+            $this->dao->select("a.*, b.*, c.i_num_items");
+            $this->dao->from( $this->getTableName().' as a' );
+            $this->dao->join(DB_TABLE_PREFIX.'t_category_description as b', 'a.pk_i_id = b.fk_i_category_id', 'INNER');
+            $this->dao->join(DB_TABLE_PREFIX.'t_category_stats  as c ', 'a.pk_i_id = c.fk_i_category_id', 'LEFT');
+            $this->dao->where( sprintf('b.fk_c_locale_code = (%s)', $subquery) );
             $this->dao->groupBy('pk_i_id');
             $this->dao->orderBy('i_position', 'ASC');
             $rs = $this->dao->get();
@@ -114,6 +122,7 @@
 
             return $rs->result();
         }
+
 
         /**
          * List all enabled categories
@@ -124,18 +133,26 @@
          */
         public function listEnabled()
         {
-            $this->dao->select( sprintf("a.*, b.*, c.i_num_items, FIELD(fk_c_locale_code, '%s') as locale_order", $this->dao->connId->real_escape_string($this->_language) ) );
+            foreach (osc_get_locales() as $locale) {
+                $locales[] = $locale['pk_c_code'];
+            }
+            array_unshift($locales, osc_current_user_locale(), osc_language());
+
+            $this->dao->select('fk_c_locale_code');
+            $this->dao->from(DB_TABLE_PREFIX.'t_category_description');
+            $this->dao->where('fk_i_category_id = a.pk_i_id');
+            $this->dao->where("s_name <> ''");
+            $this->dao->orderBy( sprintf("FIELD(fk_c_locale_code, '%s')", implode("','", array_unique($locales)) ), "");
+            $this->dao->limit(1);            
+            $subquery = $this->dao->_getSelect();
+            $this->dao->_resetSelect();
+            
+            $this->dao->select("a.*, b.*, c.i_num_items");
             $this->dao->from( $this->getTableName().' as a' );
             $this->dao->join(DB_TABLE_PREFIX.'t_category_description as b', 'a.pk_i_id = b.fk_i_category_id', 'INNER');
             $this->dao->join(DB_TABLE_PREFIX.'t_category_stats  as c ', 'a.pk_i_id = c.fk_i_category_id', 'LEFT');
-            $this->dao->where("b.s_name != ''");
-            $this->dao->where("a.b_enabled = 1");
-            $this->dao->orderBy('locale_order', 'DESC');
-            $subquery = $this->dao->_getSelect();
-            $this->dao->_resetSelect();
-
-            $this->dao->select();
-            $this->dao->from( sprintf( '(%s) dummytable', $subquery ) ); // $subselect.'  dummytable');
+            $this->dao->where('a.b_enabled = 1');
+            $this->dao->where( sprintf('b.fk_c_locale_code = (%s)', $subquery) );
             $this->dao->groupBy('pk_i_id');
             $this->dao->orderBy('i_position', 'ASC');
             $rs = $this->dao->get();
@@ -150,6 +167,7 @@
 
             return $rs->result();
         }
+
 
         /**
          * Return categories in a tree
