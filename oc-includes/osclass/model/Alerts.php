@@ -218,7 +218,7 @@
             if($active){
                 $this->dao->where('b_active', 1);
             }
-            $this->dao->groupBy('s_search');
+            
             $result = $this->dao->get();
 
             if($result == false) {
