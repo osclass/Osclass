@@ -265,7 +265,7 @@
 
         /**
          * Count all items, or all items belong to a category id, can be filtered
-         * by $active  ['ACTIVE'|'INACTIVE'|'SPAM']
+         * by $options  ['ACTIVE|INACTIVE|ENABLED|DISABLED|SPAM|NOTSPAM|EXPIRED|NOTEXPIRED|PREMIUM|TODAY']
          *
          * @access public
          * @since unknown
@@ -293,7 +293,7 @@
                     case 'INACTIVE':
                         $this->dao->where('i.b_active', 0);
                         break;
-                    case 'ENABLE':
+                    case 'ENABLED':
                         $this->dao->where('i.b_enabled', 1);
                         break;
                     case 'DISABLED':
@@ -302,11 +302,17 @@
                     case 'SPAM':
                         $this->dao->where('i.b_spam', 1);
                         break;
+                    case 'NOTSPAM':
+                        $this->dao->where('i.b_spam', 0);
+                        break;
                     case 'EXPIRED':
                         $this->dao->where( '( i.b_premium = 0 && i.dt_expiration < \'' . date('Y-m-d H:i:s') .'\' )' );
                         break;
                     case 'NOTEXPIRED':
                         $this->dao->where( '( i.b_premium = 1 || i.dt_expiration >= \'' . date('Y-m-d H:i:s') .'\' )' );
+                        break;
+                    case 'PREMIUM':
+                        $this->dao->where('i.b_premium', 1);
                         break;
                     case 'TODAY':
                         $this->dao->where('DATEDIFF(\''.date('Y-m-d H:i:s').'\', i.dt_pub_date) < 1');
