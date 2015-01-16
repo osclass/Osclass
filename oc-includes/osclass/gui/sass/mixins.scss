@@ -1,0 +1,171 @@
+@function listToSelector($prefix:'', $suffix:'', $list:()){
+  $prefix: unquote($prefix);
+  $suffix: unquote($suffix);
+  $new-list: ();
+  @for $i from 1 to length($list) {
+    $new-list: append($new-list, $prefix + nth($list, $i)+$suffix, comma);
+  }
+  $new-list: append($new-list, $prefix + nth($list, length($list))+$suffix, comma);
+  @return $new-list;
+}
+/*#{fertest(prefijo,sufijo,(--a--,--b--,--cc--))}*/
+@mixin underlinke-hover($class){
+  #{$class}{
+    text-decoration: none;
+  }
+  #{$class}:hover{
+    text-decoration: underline;
+  }
+}
+// Border Radius
+@mixin input-style($background: #f6f6f6,$line:43px,$padding:0 15px) {
+    $color: $background;
+    background-color: $background;
+    border: solid 1px #bfbfbf;
+    @include border-radius(3px);
+    box-shadow:inset 0 1px 0 0 #E0E0E0;
+    display:inline-block;
+    vertical-align: middle;
+    color:#646464;
+    line-height: $line;
+    text-decoration: none;
+    padding:$padding;
+    @if $background == transparent {
+        $color:#f6f6f6;
+    }
+    box-shadow: inset 0 1px 0 0 adjust-color($color, $saturation:  9%,  $lightness: -14%);
+}
+
+@mixin button-style($base-color: false) {
+    $bg-color: #f0f0f0;
+    $stop-gradient: #c9c9c9;
+    @if $base-color != false {
+        $bg-color: $base-color;
+        $stop-gradient: adjust-color($base-color, $saturation:  9%,  $lightness: -11%);
+    }
+
+    background-color: $base-color;
+    @include linear-gradient ($bg-color, $stop-gradient);
+    border: solid 1px darken($bg-color,15%);
+    @include border-radius(3px);
+    display:inline-block;
+    vertical-align: middle;
+    //color:#646464;
+    $color:#646464;
+    $textShadow:#fff;
+    //@debug "lightness " lightness($bg-color);
+    @if lightness($bg-color) > 50{
+        $color:white;
+        $textShadow:black;
+
+    }
+    @if $base-color == false {
+        $color: $textcolor;
+        $textShadow:white;
+    }
+    @if $text-color-contrasted != false {
+        $color: $text-color-contrasted;
+    }
+    @if $bg-color == #f0f0f0 {
+        $color: #5f5f5f;
+    }
+    @if $base-color == #000000 {
+        $color: #ffffff;
+    }
+    @if $base-color == #ffffff {
+        $color: #000000;
+    }
+
+    color:$color !important;
+    line-height: 43px;
+    text-decoration: none;
+    padding:0 15px;
+
+    box-shadow: inset 0 1px 0 0 lighten($bg-color,25%);
+    text-shadow: 0 1px 0 transparentize($textShadow,0.7);
+}
+@mixin tab-focus() {
+  outline: thin dotted #333;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+// Border Radius
+@mixin border-radius($radius) {
+  @include border-top-radius($radius);
+  @include border-bottom-radius($radius);
+  @include border-left-radius($radius);
+  @include border-right-radius($radius);
+
+}
+// Drop shadows
+@mixin box-shadow($shadow) {
+  -webkit-box-shadow: $shadow;
+  -moz-box-shadow: $shadow;
+  box-shadow: $shadow;
+}
+
+@mixin r-list-style($action:false) {
+    $percent:40%;
+    $shadow:white;
+    @if $action == true{
+        $percent:42%;
+    }
+    @if $action == reset{
+      border: none;
+      background-color: transparent;
+      text-shadow: none;
+    } @else {
+      border-color: $widgetbordercolor;
+      color:$linkcolor;
+      background-color: $widgetbackground;
+      text-shadow: 0 1px 1px $shadow;
+    }
+}
+@mixin constrasted-text($base-color) {
+  color:constrasted-color($base-color);
+}
+@mixin constrasted-bg($base-color){
+  background-color:constrasted-color($base-color);
+}
+@function constrasted-color($base-color) {
+  $brightness:lightness($base-color);
+  $color:$contrasted-default-light;
+  @if $brightness > 70%{
+    $color:$contrasted-default-dark;
+  }
+  @if $brightness == 100% {
+    $color: $contrasted-default-extremelight;
+  }
+  @return $color;
+}
+@mixin arrow($direction:"up") {
+    $b1: "left";
+    $b2: "right";
+    $b3: "bottom";
+    $borderWidth:5px;
+    $borderStyle: solid;
+
+    @if $direction == "left" or $direction == "right" {
+        $b1: "top";
+        $b2: "bottom";
+    }
+    @if $direction == "down" {
+        $b3: "top";
+    }
+    @if $direction == "left" {
+        $b3: "right";
+    }
+    @if $direction == "right" {
+        $b3: "left";
+    }
+    .arrow-#{$direction}{
+        width: 0;
+        height: 0;
+        border-#{$b1}: $borderWidth $borderStyle transparent;
+        border-#{$b2}: $borderWidth $borderStyle  transparent;
+        border-#{$b3}: $borderWidth $borderStyle $maincolor;
+    }
+    .hover .arrow-#{$direction}{
+        border-#{$b3}-color: white;
+    }
+}

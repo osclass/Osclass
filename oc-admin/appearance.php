@@ -1,21 +1,20 @@
 <?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
-    /**
-     * OSClass – software for creating and publishing online classified advertising platforms
-     *
-     * Copyright (C) 2010 OSCLASS
-     *
-     * This program is free software: you can redistribute it and/or modify it under the terms
-     * of the GNU Affero General Public License as published by the Free Software Foundation,
-     * either version 3 of the License, or (at your option) any later version.
-     *
-     * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-     * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-     * See the GNU Affero General Public License for more details.
-     *
-     * You should have received a copy of the GNU Affero General Public
-     * License along with this program. If not, see <http://www.gnu.org/licenses/>.
-     */
+/*
+ * Copyright 2014 Osclass
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
     class CAdminAppearance extends AdminSecBaseModel
     {
@@ -27,7 +26,7 @@
         //Business Layer...
         function doModel()
         {
-            parent::doModel() ;
+            parent::doModel();
             //specific things for this class
             switch ($this->action) {
                 case('add'):
@@ -41,8 +40,9 @@
                     osc_csrf_check();
                     $filePackage = Params::getFiles('package');
                     if(isset($filePackage['size']) && $filePackage['size']!=0) {
-                        $path = osc_themes_path() ;
+                        $path = osc_themes_path();
                         (int) $status = osc_unzip_file($filePackage['tmp_name'], $path);
+                        @unlink($filePackage['tmp_name']);
                     } else {
                         $status = 3;
                     }
@@ -78,6 +78,10 @@
                     $theme = Params::getParam('webtheme');
                     if($theme!='') {
                         if($theme!=  osc_current_web_theme()) {
+                            if(file_exists(osc_content_path() . "themes/" . $theme . "/functions.php")) {
+                                include osc_content_path() . "themes/" . $theme . "/functions.php";
+                            }
+                            osc_run_hook("theme_delete_".$theme);
                             if(osc_deleteDir(osc_content_path()."themes/".$theme."/")) {
                                 osc_add_flash_ok_message(_m("Theme removed successfully"), "admin");
                             } else {
@@ -137,7 +141,7 @@
                     if( $res ) {
                         osc_add_flash_ok_message( _m('Widget updated correctly'), 'admin');
                     } else {
-                        osc_add_flash_ok_message( _m('Widget cannot be updated correctly'), 'admin');
+                        osc_add_flash_error_message( _m('Widget cannot be updated correctly'), 'admin');
                     }
                     $this->redirectTo( osc_admin_base_url(true) . "?page=appearance&action=widgets" );
                     break;
@@ -162,31 +166,43 @@
                 /* /widget */
                 case('activate'):
                     osc_csrf_check();
-                    Preference::newInstance()->update(
-                            array('s_value' => Params::getParam('theme')),
-                            array('s_section' => 'osclass', 's_name' => 'theme')
-                    );
+                    osc_set_preference('theme', Params::getParam('theme'));
                     osc_add_flash_ok_message( _m('Theme activated correctly'), 'admin');
                     osc_run_hook("theme_activate", Params::getParam('theme'));
                     $this->redirectTo( osc_admin_base_url(true) . "?page=appearance" );
                 break;
                 case('render'):
-                    $this->_exportVariableToView('file', osc_base_path() . Params::getParam("file"));
+                    if(Params::existParam('route')) {
+                        $routes = Rewrite::newInstance()->getRoutes();
+                        $rid = Params::getParam('route');
+                        $file = '../';
+                        if(isset($routes[$rid]) && isset($routes[$rid]['file'])) {
+                            $file = $routes[$rid]['file'];
+                        }
+                    } else {
+                        // DEPRECATED: Disclosed path in URL is deprecated, use routes instead
+                        // This will be REMOVED in 3.6
+                        $file = Params::getParam('file');
+                        // We pass the GET variables (in case we have somes)
+                        if(preg_match('|(.+?)\?(.*)|', $file, $match)) {
+                            $file = $match[1];
+                            if(preg_match_all('|&([^=]+)=([^&]*)|', urldecode('&'.$match[2].'&'), $get_vars)) {
+                                for($var_k=0;$var_k<count($get_vars[1]);$var_k++) {
+                                    Params::setParam($get_vars[1][$var_k], $get_vars[2][$var_k]);
+                                }
+                            }
+                        } else {
+                            $file = Params::getParam('file');
+                        };
+                    }
+
+                    if(strpos($file, '../')!==false || strpos($file, '..\\')!==false || !file_exists(osc_base_path() . $file)) {
+                        osc_add_flash_warning_message(__('Error loading theme custom file'), 'admin');
+                    };
+                    $this->_exportVariableToView('file', osc_base_path() . $file);
                     $this->doView('appearance/view.php');
                 break;
                 default:
-//                    $marketError = Params::getParam('marketError');
-//                    $slug = Params::getParam('slug');
-//                    if($marketError!='') {
-//                        if($marketError == '0') { // no error installed ok
-//                            $help = '<br/><br/><b>' . __('You only need to activate or preview the theme').'</b>';
-//                            osc_add_flash_ok_message( __('Everything was OK!') . ' ( ' . $slug .' ) ' . $help, 'admin');
-//                        } else {
-//                            osc_add_flash_error_message( __('Error occurred') . ' ( ' . $slug .' ) ', 'admin');
-//                        }
-//                    }
-
-                    // force the recount of themes that need to be updated
                     if(Params::getParam('checkUpdated') != '') {
                         osc_admin_toolbar_update_themes(true);
                     }
@@ -204,8 +220,10 @@
         //hopefully generic...
         function doView($file)
         {
+            osc_run_hook("before_admin_html");
             osc_current_admin_theme_path($file);
             Session::newInstance()->_clearVariables();
+            osc_run_hook("after_admin_html");
         }
     }
 

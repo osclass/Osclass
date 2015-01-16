@@ -1,0 +1,43 @@
+#footer{
+    clear:both;
+    margin-top:50px;
+    padding-bottom:30px;
+    border-top:solid 1px $widgetbordercolor;
+    padding-top:15px;
+    font-size:0.725em;
+}
+#footer ul{
+    float:right;
+}
+@include underlinke-hover('#footer a');
+#footer li{
+    display:inline;
+    margin-left:10px;
+}
+.footer-links,
+#footer ul{
+    list-style:none;
+    padding:0;
+    margin:0;
+    clear:both;
+}
+.footer-links li {
+    float: left;
+    width: 31%;
+    padding-right:2%;
+    margin-bottom:5px;
+    font-size: 0.725em;
+}
+#footer .resp-toogle .publish{
+    padding:0;
+    margin:15px 0;
+    display: block;
+}
+#footer .resp-toogle .publish a{
+    @include button-style(complement($maincolor));
+    width:100%;
+    @include prefixer(box-sizing, border-box, webkit moz ms o spec);
+    margin:0;
+    font-size:1.2em;
+    padding:0;
+}

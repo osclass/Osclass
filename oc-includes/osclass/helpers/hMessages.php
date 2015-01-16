@@ -1,31 +1,27 @@
 <?php
 
-    /*
-     *      OSCLass – software for creating and publishing online classified
-     *                           advertising platforms
-     *
-     *                        Copyright (C) 2010 OSCLASS
-     *
-     *       This program is free software: you can redistribute it and/or
-     *     modify it under the terms of the GNU Affero General Public License
-     *     as published by the Free Software Foundation, either version 3 of
-     *            the License, or (at your option) any later version.
-     *
-     *     This program is distributed in the hope that it will be useful, but
-     *         WITHOUT ANY WARRANTY; without even the implied warranty of
-     *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-     *             GNU Affero General Public License for more details.
-     *
-     *      You should have received a copy of the GNU Affero General Public
-     * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
-     */
+/*
+ * Copyright 2014 Osclass
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 
     /**
     * Helper Flash Messages
-    * @package OSClass
+    * @package Osclass
     * @subpackage Helpers
-    * @author OSClass
+    * @author Osclass
     */
 
     /**
@@ -36,7 +32,7 @@
      * @return string
      */
     function osc_add_flash_message($msg, $section = 'pubMessages') {
-        Session::newInstance()->_setMessage($section, $msg, 'error') ;
+        Session::newInstance()->_setMessage($section, $msg, 'error');
     }
 
     /**
@@ -47,7 +43,7 @@
      * @return string
      */
     function osc_add_flash_ok_message($msg, $section = 'pubMessages') {
-        Session::newInstance()->_setMessage($section, $msg, 'ok') ;
+        Session::newInstance()->_setMessage($section, $msg, 'ok');
     }
 
     /**
@@ -58,7 +54,7 @@
      * @return string
      */
     function osc_add_flash_error_message($msg, $section = 'pubMessages') {
-        Session::newInstance()->_setMessage($section, $msg, 'error') ;
+        Session::newInstance()->_setMessage($section, $msg, 'error');
     }
 
     /**
@@ -69,7 +65,7 @@
      * @return string
      */
     function osc_add_flash_info_message($msg, $section = 'pubMessages') {
-        Session::newInstance()->_setMessage($section, $msg, 'info') ;
+        Session::newInstance()->_setMessage($section, $msg, 'info');
     }
 
     /**
@@ -80,7 +76,7 @@
      * @return string
      */
     function osc_add_flash_warning_message($msg, $section = 'pubMessages') {
-        Session::newInstance()->_setMessage($section, $msg, 'warning') ;
+        Session::newInstance()->_setMessage($section, $msg, 'warning');
     }
 
     /**
@@ -92,34 +88,42 @@
      * @return void
      */
     function osc_show_flash_message($section = 'pubMessages', $class = "flashmessage", $id = "flashmessage") {
-        $message = Session::newInstance()->_getMessage($section) ;
+        $messages = Session::newInstance()->_getMessage($section);
+        if (is_array($messages)) {
 
-        echo '<div id="flash_js"></div>';
+            foreach ($messages as $message) {
+
+                echo '<div id="flash_js"></div>';
         
-        if (isset($message['msg']) && $message['msg'] != '') {
-            echo '<div id="' . $id . '" class="' . strtolower($class) . ' ' . strtolower($class) . '-' .$message['type'] . '"><a class="btn ico btn-mini ico-close">x</a>' ;
-            echo osc_apply_filter('flash_message_text', $message['msg']) ;
-            echo '</div>' ;
-        } else if($message!='') {
-            echo '<div id="' . $id . '" class="' . $class . '">' ;
-            echo osc_apply_filter('flash_message_text', $message) ;
-            echo '</div>' ;
-        }
-
-        Session::newInstance()->_dropMessage($section) ;
+                if (isset($message['msg']) && $message['msg'] != '') {
+                    echo '<div id="' . $id . '" class="' . strtolower($class) . ' ' . strtolower($class) . '-' .$message['type'] . '"><a class="btn ico btn-mini ico-close">x</a>';
+                    echo osc_apply_filter('flash_message_text', $message['msg']);
+                    echo '</div>';
+                } else if($message!='') {
+                    echo '<div id="' . $id . '" class="' . $class . '">';
+                    echo osc_apply_filter('flash_message_text', $message);
+                    echo '</div>';
+                } else {
+                    echo '<div id="' . $id . '" class="' . $class . '" style="display:none;">';
+                    echo osc_apply_filter('flash_message_text', '');
+                    echo '</div>';
+                }
+            }
+        }  
+        Session::newInstance()->_dropMessage($section);
     }
 
     /**
-     * 
+     *
      *
      * @param string $section
      * @return string Message
      */
-    function osc_get_flash_message($section = 'pubMessages') {
-        $message = Session::newInstance()->_getMessage($section) ;
-        Session::newInstance()->_dropMessage($section) ;
+    function osc_get_flash_message($section = 'pubMessages', $dropMessages = true) {
+        $message = Session::newInstance()->_getMessage($section);
+        if ($dropMessages) Session::newInstance()->_dropMessage($section);
 
-        return $message ;
+        return $message;
     }
 
 ?>

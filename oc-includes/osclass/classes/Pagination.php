@@ -1,23 +1,19 @@
 <?php
-    /*
-     *      OSCLass – software for creating and publishing online classified
-     *                           advertising platforms
-     *
-     *                        Copyright (C) 2010 OSCLASS
-     *
-     *       This program is free software: you can redistribute it and/or
-     *     modify it under the terms of the GNU Affero General Public License
-     *     as published by the Free Software Foundation, either version 3 of
-     *            the License, or (at your option) any later version.
-     *
-     *     This program is distributed in the hope that it will be useful, but
-     *         WITHOUT ANY WARRANTY; without even the implied warranty of
-     *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-     *             GNU Affero General Public License for more details.
-     *
-     *      You should have received a copy of the GNU Affero General Public
-     * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
-     */
+/*
+ * Copyright 2014 Osclass
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
     class Pagination
     {
@@ -37,7 +33,9 @@
         protected $force_limits;
         protected $sides;
         protected $url;
+        protected $firstUrl;
         protected $nofollow;
+        protected $listClass;
 
         public function __construct($params = null)
         {
@@ -48,16 +46,18 @@
             $this->class_prev         = isset($params['class_prev']) ? $params['class_prev'] : 'searchPaginationPrev';
             $this->class_next         = isset($params['class_next']) ? $params['class_next'] : 'searchPaginationNext';
             $this->text_first         = isset($params['text_first']) ? $params['text_first'] : '&laquo;';
-            $this->text_last          = isset($params['text_last']) ? $params['text_last'] : '&raquo';
+            $this->text_last          = isset($params['text_last']) ? $params['text_last'] : '&raquo;';
             $this->text_prev          = isset($params['text_prev']) ? $params['text_prev'] : '&lt;';
             $this->text_next          = isset($params['text_next']) ? $params['text_next'] : '&gt;';
             $this->class_selected     = isset($params['class_selected']) ? $params['class_selected'] : 'searchPaginationSelected';
             $this->class_non_selected = isset($params['class_non_selected']) ? $params['class_non_selected'] : 'searchPaginationNonSelected';
             $this->delimiter          = isset($params['delimiter']) ? $params['delimiter'] : " ";
-            $this->force_limits       = isset($params['force_limits']) ? (bool) $params['delimiter'] : false;
+            $this->force_limits       = isset($params['force_limits']) ? (bool) $params['force_limits'] : false;
             $this->sides              = isset($params['sides']) ? $params['sides'] : 2;
             $this->url                = isset($params['url']) ? $params['url'] : osc_update_search_url(array('iPage' => '{PAGE}'));
-            $this->nofollow           = isset($params['nofollow']) ? $params['nofollow'] : true;
+            $this->firstUrl           = isset($params['first_url']) ? $params['first_url'] : $this->url;
+            $this->nofollow           = isset($params['nofollow']) ? $params['nofollow'] : false;
+            $this->listClass          = isset($params['list_class']) ? $params['list_class'] : false;
         }
 
         public function get_raw_pages($params = null)
@@ -114,8 +114,8 @@
             $links = array();
             $isFirst = 0;
             $isLast = 0;
-            
-            
+
+
             $attrs = array();
             if( $this->nofollow ) {
                 $attrs['rel'] = 'nofollow';
@@ -127,8 +127,7 @@
                     $isFirst++;
                 }
                 $attrs['class'] = $this->class_first;
-                $attrs['href'] = str_replace('{PAGE}', '', str_replace(urlencode('{PAGE}'), '', $this->url));
-                $attrs['href'] = rtrim($attrs['href'], "/");
+                $attrs['href'] = str_replace('{PAGE}', '', str_replace(urlencode('{PAGE}'), '', $this->firstUrl));
                 $links[] = $this->createATag($this->text_first, $attrs);
             }
             if( isset($pages['prev']) ) {
@@ -136,16 +135,14 @@
                     $this->class_prev .= ' list-first';
                     $isFirst++;
                 }
-                $attrs['class'] = $this->class_prev;                
+                $attrs['class'] = $this->class_prev;
                 if( $pages['prev'] == 1 ) {
-                    $attrs['href'] = str_replace('{PAGE}', '', str_replace(urlencode('{PAGE}'), '', $this->url));
-                    $attrs['href'] = rtrim($attrs['href'], "/");
+                    $attrs['href'] = str_replace('{PAGE}', '', str_replace(urlencode('{PAGE}'), '', $this->firstUrl));
                 } else {
                     $attrs['href']  = str_replace('{PAGE}', $pages['prev'], str_replace(urlencode('{PAGE}'), $pages['prev'], $this->url));
                 }
                 $links[] = $this->createATag($this->text_prev, $attrs);
             }
-            
             foreach($pages['pages'] as $p) {
                 $isLast++;
                 if((!isset($pages['next']) && !isset($pages['last']) && ( $isLast == count($pages['pages']))) ){
@@ -161,8 +158,7 @@
                     $classfirst_non_selected = $this->class_non_selected;
                 }
                 if( $p == 1 ) {
-                    $attrs['href'] = str_replace('{PAGE}', '', str_replace(urlencode('{PAGE}'), '', $this->url));
-                    $attrs['href'] = rtrim($attrs['href'], "/");
+                    $attrs['href'] = str_replace('{PAGE}', '', str_replace(urlencode('{PAGE}'), '', $this->firstUrl));
                 } else {
                     $attrs['href'] = str_replace('{PAGE}', $p, str_replace(urlencode('{PAGE}'), $p, $this->url));
                 }
@@ -195,7 +191,11 @@
         {
             if( $this->total > 1 ) {
                 $links = $this->get_links();
-                return '<ul>' . implode($this->delimiter, $links) . '</ul>';
+                if($this->listClass !== false) {
+                    return '<ul class="' . $this->listClass . '">' . implode($this->delimiter, $links) . '</ul>';
+                } else {
+                    return '<ul>' . implode($this->delimiter, $links) . '</ul>';
+                }
             } else {
                 return '';
             }
@@ -205,7 +205,7 @@
         {
             $att = array();
             foreach($attrs as $k => $v) {
-                $att[] = $k . '="' . $v . '"';
+                $att[] = $k . '="' . osc_esc_html($v) . '"';
             }
             return '<li><a ' . implode(' ', $att) . '>' . $text . '</a></li>';
         }
@@ -214,7 +214,7 @@
         {
             $att = array();
             foreach($attrs as $k => $v) {
-                $att[] = $k . '="' . $v . '"';
+                $att[] = $k . '="' . osc_esc_html($v) . '"';
             }
             return '<li><span ' . implode(' ', $att) . '>' . $text . '</span></li>';
         }

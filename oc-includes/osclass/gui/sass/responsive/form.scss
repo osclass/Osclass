@@ -1,0 +1,34 @@
+  .form-container-box{
+    width:auto;
+  }
+  .form-container .checkbox{
+      margin-bottom:15px;
+  }
+  .form-container .checkbox input{
+      width:auto;
+  }
+
+  .form-horizontal .actions{
+      margin:0;
+      padding-left:0px;
+      padding-right:0px;
+  }
+  .form-horizontal label{
+      float: none;
+      width: 100%;
+      font-size:0.85em;
+  }
+  .form-horizontal .controls {
+      width:auto;
+      margin-left:0;
+  }
+
+body.item-post .select-box{
+    margin-bottom:10px;
+}
+#item-post select{
+    width:100%;
+}
+.form-horizontal .select-box{
+    width:100%;
+}

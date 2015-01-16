@@ -1,0 +1,158 @@
+#sidebar{
+    width:300px;
+    float:right;
+
+    fieldset{
+        margin:0;
+        padding:0;
+        border:none;
+    }
+    h3{
+        margin: 0;
+        margin-bottom: 10px;
+        line-height: 1em;
+        font-size: 1em;
+
+    }
+    fieldset{
+        padding:14px 0 16px;
+        border-bottom:solid 1px $widgetbordercolor;
+        font-size: 0.8125em;
+        line-height: 0.8125em;
+
+    }
+    input{
+        vertical-align: bottom;
+    }
+    .input-text,
+    input[type="text"]{
+        @include input-style(#fff);
+
+        width: 100%;
+        padding: 0 10px;
+        height: 24px;
+        line-height: 24px;
+        @include prefixer(box-sizing, border-box, webkit moz ms o spec);
+    }
+    ul.category,
+    ul.category ul{
+        padding:0;
+        margin:0;
+        list-style:none;
+    }
+}
+ul.sidebar-list,
+ul.user_menu{
+    padding:0;
+    margin:0;
+    list-style:none;
+}
+
+body.user #sidebar{
+    border-right:solid 1px $widgetbordercolor;
+}
+#sidebar ul.category li,
+ul.sidebar-list li,
+ul.user_menu li{
+    padding:3px 0;
+    line-height: 1.15em
+}
+ul.user_menu li{
+    padding:0 0 12px;
+    font-size: 0.8125em;
+    line-height: 0.8125em;
+}
+#sidebar{
+    ul.category ul{
+        padding-left:15px;
+    }
+    .show-sub a{
+        font-weight:bold;
+    }
+    .show-sub li a{
+        font-weight:normal;
+    }
+    .price-slice input,
+    .two_input input{
+	width: 65px;
+        padding: 0 5px;
+	margin-right:2px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+    }
+    .two_input input{
+	width: 70px;
+    }
+   .price-slice span{
+        margin-right:0px;
+    }
+    button{
+        @include button-style($maincolor);
+        line-height: 30px;
+        font-size:0.85em;
+    }
+    .actions{
+        padding: 20px 0;
+    }
+    .plugin-hooks h6{
+        margin: 0;
+        margin-bottom: 10px;
+        line-height: 1em;
+        font-size: 1em;
+
+        font-weight: normal;
+        font-family: "Osclass";
+        color: #666;
+    }
+    .plugin-hooks .row{
+        margin-bottom:10px
+    }
+    .select-box{
+         width: 100%;
+    }
+    @include underlinke-hover("a");
+}
+
+.widget-box{
+    background-color: $widgetbackground;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    h3{
+        margin:0;
+    }
+    ul{
+        margin:0;
+        padding:0;
+        list-style:none;
+    }
+    li{
+        a{
+            text-decoration: none;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            @include prefixer(box-sizing, border-box, webkit moz ms o spec);
+            width: 100%;
+            font-weight: normal;
+            font-size:0.8125em;
+            display: block;
+            padding:4px 5px;
+            border-radius: 0px;
+            margin:-1px 0;
+            position: relative;
+            border-bottom: solid 1px $widgetbordercolor;
+            border-top:solid 1px $widgetbordercolor;
+        }
+        li a:hover{
+            background-color:lighten($maincolor,20%);
+            border-color:$widgetbackground;
+            @include constrasted-text($maincolor);
+            z-index: 2;
+            border-radius: 3px;
+        }
+    }
+}

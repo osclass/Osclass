@@ -1,71 +1,67 @@
 <?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
-    /*
-     *      OSCLass – software for creating and publishing online classified
-     *                           advertising platforms
-     *
-     *                        Copyright (C) 2010 OSCLASS
-     *
-     *       This program is free software: you can redistribute it and/or
-     *     modify it under the terms of the GNU Affero General Public License
-     *     as published by the Free Software Foundation, either version 3 of
-     *            the License, or (at your option) any later version.
-     *
-     *     This program is distributed in the hope that it will be useful, but
-     *         WITHOUT ANY WARRANTY; without even the implied warranty of
-     *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-     *             GNU Affero General Public License for more details.
-     *
-     *      You should have received a copy of the GNU Affero General Public
-     * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
-     */
+/*
+ * Copyright 2014 Osclass
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
     class DB
     {
-        private $db = null ;
+        private $db = null;
         private $db_errno = 0;
         private $db_error = 0;
-        private $dbHost = null ;
-        private $dbUser = null ;
-        private $dbPassword = null ;
-        private $dbName = null ;
-        private $msg = "" ;
+        private $dbHost = null;
+        private $dbUser = null;
+        private $dbPassword = null;
+        private $dbName = null;
+        private $msg = "";
 
         function __construct($dbHost, $dbUser, $dbPassword, $dbName) {
-            $this->dbHost = $dbHost ;
-            $this->dbUser = $dbUser ;
-            $this->dbPassword = $dbPassword ;
-            $this->dbName = $dbName ;
+            $this->dbHost = $dbHost;
+            $this->dbUser = $dbUser;
+            $this->dbPassword = $dbPassword;
+            $this->dbName = $dbName;
             $this->db_errno = 0;
 
-            $this->osc_dbConnect() ;
+            $this->osc_dbConnect();
         }
 
         function __destruct() {
-            $this->osc_dbClose() ;
+            $this->osc_dbClose();
         }
 
         function debug($msg, $ok = true)
         {
             if( OSC_DEBUG_DB ) {
-                $this->msg .= date("d/m/Y - H:i:s") . " " ;
+                $this->msg .= date("d/m/Y - H:i:s") . " ";
 
                 if( $ok ) {
-                    $this->msg .= "<span style='background-color: #D0F5A9;' >[ OPERATION OK ] " ;
+                    $this->msg .= "<span style='background-color: #D0F5A9;' >[ OPERATION OK ] ";
                 } else {
-                    $this->msg .= "<span style='background-color: #F5A9A9;' >[ OPERATION FAILED ] " ;
+                    $this->msg .= "<span style='background-color: #F5A9A9;' >[ OPERATION FAILED ] ";
                 }
 
-                $this->msg .= str_replace("\n", " ", $msg) ;
-                $this->msg .= '</span><br />' ;
-                $this->msg .= "\n" ;
+                $this->msg .= str_replace("\n", " ", $msg);
+                $this->msg .= '</span><br />';
+                $this->msg .= "\n";
             }
         }
 
         function print_debug()
         {
             if( OSC_DEBUG_DB && !defined('IS_AJAX') ) {
-                echo $this->msg ;
+                echo $this->msg;
             }
         }
 
@@ -81,17 +77,17 @@
             $this->db = @new mysqli($this->dbHost, $this->dbUser, $this->dbPassword, $this->dbName);
             if ($this->db->connect_error) {
                 if( !defined('OSC_INSTALLING') ) {
-                    require_once LIB_PATH . 'osclass/helpers/hErrors.php' ;
-                    $title   = 'OSClass &raquo; Error connecting to database';
+                    require_once LIB_PATH . 'osclass/helpers/hErrors.php';
+                    $title   = 'Osclass &raquo; Error connecting to database';
                     $message = 'Cannot connect to database. Check your configuration in <code>config.php</code> file.';
                     osc_die($title, $message);
                 }
-                $this->debug('Error connecting to \'' . $this->dbName . '\' (' . $this->db->connect_errno . ': ' . $this->db->connect_error . ')', false) ;
+                $this->debug('Error connecting to \'' . $this->dbName . '\' (' . $this->db->connect_errno . ': ' . $this->db->connect_error . ')', false);
             }
 
             $this->db_errno = $this->db->connect_errno;
-            $this->debug('Connected to \'' . $this->dbName . '\': [DBHOST] = ' . $this->dbHost . ' | [DBUSER] = ' . $this->dbUser) ;
-            $this->db->set_charset('utf8') ;
+            $this->debug('Connected to \'' . $this->dbName . '\': [DBHOST] = ' . $this->dbHost . ' | [DBUSER] = ' . $this->dbUser);
+            $this->db->set_charset('utf8');
         }
 
         /**
@@ -99,11 +95,11 @@
          */
         function osc_dbClose() {
             if (!@$this->db->close()) {
-                $this->debug('Error releasing the connection to \'' . $this->dbName . '\'', false) ;
+                $this->debug('Error releasing the connection to \'' . $this->dbName . '\'', false);
             }
 
-            $this->debug('Connection with \'' . $this->dbName . '\' released properly') ;
-            $this->print_debug() ;
+            $this->debug('Connection with \'' . $this->dbName . '\' released properly');
+            $this->print_debug();
         }
 
         /**
@@ -128,9 +124,9 @@
 
             $result = $this->db->query($sql);
             if(!$result) {
-                $this->debug($sql . ' | ' . $this->db->error . ' (' . $this->db->errno . ')', false) ;
+                $this->debug($sql . ' | ' . $this->db->error . ' (' . $this->db->errno . ')', false);
             } else {
-                $this->debug($sql) ;
+                $this->debug($sql);
             }
 
             $this->db_errno = $this->db->errno;
@@ -152,12 +148,12 @@
             }
 
             if($qry = $this->db->query($sql)) {
-                $this->debug($sql) ;
+                $this->debug($sql);
                 $row = $qry->fetch_array();
                 $result = $row[0];
                 $qry->free();
             } else {
-                $this->debug($sql . ' | ' . $this->db->error . ' (' . $this->db->errno . ')', false) ;
+                $this->debug($sql . ' | ' . $this->db->error . ' (' . $this->db->errno . ')', false);
             }
             $this->db_errno = $this->db->errno;
             return $result;
@@ -181,12 +177,12 @@
             }
 
             if($qry = $this->db->query($sql)) {
-                $this->debug($sql) ;
+                $this->debug($sql);
                 while($result = $qry->fetch_array())
                     $results[] = $result[0];
                 $qry->free();
             } else {
-                $this->debug($sql . ' | ' . $this->db->error . ' (' . $this->db->errno . ')', false) ;
+                $this->debug($sql . ' | ' . $this->db->error . ' (' . $this->db->errno . ')', false);
             }
             $this->db_errno = $this->db->errno;
             return $results;
@@ -208,11 +204,11 @@
 
             $qry = $this->db->query($sql);
             if($qry) {
-                $this->debug($sql) ;
+                $this->debug($sql);
                 $result = $qry->fetch_assoc();
                 $qry->free();
             } else {
-                $this->debug($sql . ' | ' . $this->db->error . ' (' . $this->db->errno . ')', false) ;
+                $this->debug($sql . ' | ' . $this->db->error . ' (' . $this->db->errno . ')', false);
             }
             $this->db_errno = $this->db->errno;
             return $result;
@@ -233,12 +229,12 @@
             }
 
             if($qry = $this->db->query($sql)) {
-                $this->debug($sql) ;
+                $this->debug($sql);
                 while($result = $qry->fetch_assoc())
                     $results[] = $result;
                 $qry->free();
             } else {
-                $this->debug($sql . ' | ' . $this->db->error . ' (' . $this->db->errno . ')', false) ;
+                $this->debug($sql . ' | ' . $this->db->error . ' (' . $this->db->errno . ')', false);
             }
             $this->db_errno = $this->db->errno;
             return $results;
@@ -277,38 +273,38 @@
             foreach($sentences as $s) {
                 $s = trim($s);
                 if( !empty($s) ) {
-                    $s = trim($s) ;// . $needle;
+                    $s = trim($s);// . $needle;
                     if( $this->db->query($s) ) {
-                        $this->debug($s) ;
+                        $this->debug($s);
                     } else {
-                        $this->debug($s . ' | ' . $this->db->error . ' (' . $this->db->errno . ')', false) ;
+                        $this->debug($s . ' | ' . $this->db->error . ' (' . $this->db->errno . ')', false);
                     }
                 }
             }
-            $this->db_errno = $this->db->errno ;
+            $this->db_errno = $this->db->errno;
 
-            if ($this->db_errno != 0) return false ;
-            return true ;
+            if ($this->db_errno != 0) return false;
+            return true;
         }
 
         function autocommit($b_value) {
-            $this->db->autocommit($b_value) ;
+            $this->db->autocommit($b_value);
         }
 
         function commit() {
-            $this->db->commit() ;
+            $this->db->commit();
         }
 
         function rollback() {
-            $this->db->rollback() ;
+            $this->db->rollback();
         }
 
         function get_last_id() {
-            return($this->db->insert_id) ;
+            return($this->db->insert_id);
         }
 
         function get_affected_rows() {
-            return($this->db->affected_rows) ;
+            return($this->db->affected_rows);
         }
 
         function get_errno() {
@@ -474,12 +470,12 @@
 
     function getConnection($dbHost = null, $dbUser = null, $dbPassword = null, $dbName = null, $dbLogLevel = null)
     {
-        static $instance ;
+        static $instance;
 
-        if(defined('DB_HOST') && $dbHost == null)                 $dbHost     = osc_db_host() ;
-        if(defined('DB_USER') && $dbUser == null)                 $dbUser     = osc_db_user() ;
-        if(defined('DB_PASSWORD') && $dbPassword == null)         $dbPassword = osc_db_password() ;
-        if(defined('DB_NAME') && $dbName == null)                 $dbName     = osc_db_name() ;
+        if(defined('DB_HOST') && $dbHost == null)                 $dbHost     = osc_db_host();
+        if(defined('DB_USER') && $dbUser == null)                 $dbUser     = osc_db_user();
+        if(defined('DB_PASSWORD') && $dbPassword == null)         $dbPassword = osc_db_password();
+        if(defined('DB_NAME') && $dbName == null)                 $dbName     = osc_db_name();
 
         if(!isset($instance[$dbName . "_" . $dbHost])) {
             if(!isset($instance)) {

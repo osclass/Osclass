@@ -1,19 +1,18 @@
 <?php
-/**
- * OSClass – software for creating and publishing online classified advertising platforms
+/*
+ * Copyright 2014 Osclass
  *
- * Copyright (C) 2010 OSCLASS
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * This program is free software: you can redistribute it and/or modify it under the terms
- * of the GNU Affero General Public License as published by the Free Software Foundation,
- * either version 3 of the License, or (at your option) any later version.
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public
- * License along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 function osc_listLocales() {
@@ -36,10 +35,10 @@ function osc_listLocales() {
 }
 
 function osc_checkLocales() {
-    $locales = osc_listLocales() ;
+    $locales = osc_listLocales();
 
     foreach($locales as $locale) {
-        $data = OSCLocale::newInstance()->findByPrimaryKey($locale['code']) ;
+        $data = OSCLocale::newInstance()->findByPrimaryKey($locale['code']);
         if( !is_array($data) ) {
             $values = array(
                 'pk_c_code'         => $locale['code'],
@@ -54,34 +53,40 @@ function osc_checkLocales() {
                 's_stop_words'      => $locale['stop_words'],
                 'b_enabled'         => 0,
                 'b_enabled_bo'      => 1
-            ) ;
-            $result = OSCLocale::newInstance()->insert($values) ;
+            );
+            $result = OSCLocale::newInstance()->insert($values);
 
             if( !$result ) {
-                return false ;
+                return false;
             }
 
             // if it's a demo, we don't import any sql
             if( defined('DEMO') ) {
-                return true ;
+                return true;
             }
 
             // inserting e-mail translations
-            $path = sprintf( '%s%s/mail.sql', osc_translations_path(), $locale['code'] ) ;
+            $path = sprintf( '%s%s/mail.sql', osc_translations_path(), $locale['code'] );
             if( file_exists($path) ) {
-                $sql  = file_get_contents($path) ;
-                $conn = DBConnectionClass::newInstance() ;
-                $c_db = $conn->getOsclassDb() ;
-                $comm = new DBCommandClass( $c_db ) ;
-                $result = $comm->importSQL( $sql ) ;
+                $sql  = file_get_contents($path);
+                $conn = DBConnectionClass::newInstance();
+                $c_db = $conn->getOsclassDb();
+                $comm = new DBCommandClass( $c_db );
+                $result = $comm->importSQL( $sql );
                 if( !$result ) {
-                    return false ;
+                    return false;
                 }
             }
+        } else {
+            // update language version
+            OSCLocale::newInstance()->update(
+                    array('s_version' => $locale['version']),
+                    array('pk_c_code' => $locale['code'])
+                    );
         }
     }
 
-    return true ;
+    return true;
 }
 
 function osc_listLanguageCodes() {

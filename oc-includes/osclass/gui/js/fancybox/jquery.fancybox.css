@@ -18,9 +18,7 @@
 	background: #f9f9f9;
 	color: #444;
 	text-shadow: none;
-	-webkit-border-radius: 4px;
-	   -moz-border-radius: 4px;
-			border-radius: 4px;
+	.rounded-corners
 }
 
 .fancybox-opened {
@@ -193,9 +191,7 @@
 	padding: 2px 20px;
 	background: transparent; /* Fallback for web browsers that doesn't support RGBa */
 	background: rgba(0, 0, 0, 0.8);
-	-webkit-border-radius: 15px;
-	   -moz-border-radius: 15px;
-			border-radius: 15px;
+	.rounded-corners(15px);
 	text-shadow: 0 1px 2px #222;
 	color: #FFF;
 	font-weight: bold;

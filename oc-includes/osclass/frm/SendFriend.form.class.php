@@ -1,51 +1,47 @@
 <?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
-    /*
-     *      OSCLass – software for creating and publishing online classified
-     *                           advertising platforms
-     *
-     *                        Copyright (C) 2010 OSCLASS
-     *
-     *       This program is free software: you can redistribute it and/or
-     *     modify it under the terms of the GNU Affero General Public License
-     *     as published by the Free Software Foundation, either version 3 of
-     *            the License, or (at your option) any later version.
-     *
-     *     This program is distributed in the hope that it will be useful, but
-     *         WITHOUT ANY WARRANTY; without even the implied warranty of
-     *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-     *             GNU Affero General Public License for more details.
-     *
-     *      You should have received a copy of the GNU Affero General Public
-     * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
-     */
+/*
+ * Copyright 2014 Osclass
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
     class SendFriendForm extends Form {
 
         /*static public function primary_input_hidden($page) {
-            parent::generic_input_hidden("id", $page["pk_i_id"]) ;
+            parent::generic_input_hidden("id", $page["pk_i_id"]);
         }*/
 
         static public function your_name() {
-            
+
             if( Session::newInstance()->_getForm("yourName") != "" ){
                 $yourName = Session::newInstance()->_getForm("yourName");
                 parent::generic_input_text("yourName", $yourName, null, false);
             } else {
                 parent::generic_input_text("yourName", "", null, false);
             }
-            return true ;
+            return true;
         }
 
         static public function your_email() {
-            
+
             if( Session::newInstance()->_getForm("yourEmail") != "" ){
                 $yourEmail = Session::newInstance()->_getForm("yourEmail");
                 parent::generic_input_text("yourEmail", $yourEmail, null, false);
             } else {
                 parent::generic_input_text("yourEmail", "", null, false);
             }
-            return true ;
+            return true;
         }
 
         static public function friend_name() {
@@ -55,7 +51,7 @@
             } else {
                 parent::generic_input_text("friendName", "", null, false);
             }
-            return true ;
+            return true;
         }
 
         static public function friend_email() {
@@ -65,7 +61,7 @@
             } else {
                 parent::generic_input_text("friendEmail", "", null, false);
             }
-            return true ;
+            return true;
         }
 
         static public function your_message() {
@@ -75,7 +71,7 @@
             } else {
                 parent::generic_textarea("message", "");
             }
-            return true ;
+            return true;
         }
 
         static public function js_validation() {
@@ -119,20 +115,24 @@
                     email: "<?php _e("Invalid friend's email address"); ?>."
                 },
                 message: "<?php _e("Message: this field is required"); ?>."
-                
+
             },
             //onfocusout: function(element) { $(element).valid(); },
             errorLabelContainer: "#error_list",
             wrapper: "li",
             invalidHandler: function(form, validator) {
                 $('html,body').animate({ scrollTop: $('h1').offset().top }, { duration: 250, easing: 'swing'});
+            },
+            submitHandler: function(form){
+                $('button[type=submit], input[type=submit]').attr('disabled', 'disabled');
+                form.submit();
             }
         });
     });
 </script>
-<?php 
+<?php
         }
-        
+
     }
 
 ?>

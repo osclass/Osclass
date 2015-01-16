@@ -1,39 +1,38 @@
 <?php
 
-    /**
-     * OSClass – software for creating and publishing online classified advertising platforms
-     *
-     * Copyright (C) 2010 OSCLASS
-     *
-     * This program is free software: you can redistribute it and/or modify it under the terms
-     * of the GNU Affero General Public License as published by the Free Software Foundation,
-     * either version 3 of the License, or (at your option) any later version.
-     *
-     * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-     * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-     * See the GNU Affero General Public License for more details.
-     *
-     * You should have received a copy of the GNU Affero General Public
-     * License along with this program. If not, see <http://www.gnu.org/licenses/>.
-     */
+/*
+ * Copyright 2014 Osclass
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
     /**
      * Database recordset object
      * 
-     * @package OSClass
+     * @package Osclass
      * @subpackage Database
      * @since 2.3
      */
     class DBRecordsetClass
     {
         /**
-         * Database connection object to OSClass database
+         * Database connection object to Osclass database
          * 
          * @access public
          * @since 2.3
          * @var mysqli 
          */
-        public $connId ;
+        public $connId;
         /**
          * Database result object
          * 
@@ -41,7 +40,7 @@
          * @since 2.3
          * @var MySQLi_Result 
          */
-        public $resultId ;
+        public $resultId;
         /**
          * Result array
          * 
@@ -49,7 +48,7 @@
          * @since 2.3
          * @var array
          */
-        public $resultArray ;
+        public $resultArray;
         /**
          * Result object
          * 
@@ -57,7 +56,7 @@
          * @since 2.3
          * @var object
          */
-        public $resultObject ;
+        public $resultObject;
         /**
          * Current row
          * 
@@ -65,7 +64,7 @@
          * @since 2.3
          * @var int
          */
-        protected $currentRow ;
+        protected $currentRow;
         /**
          * Number of rows
          * 
@@ -73,7 +72,7 @@
          * @since 2.3
          * @var int
          */
-        public $numRows ;
+        public $numRows;
 
         /**
          * Initializate Recordset Class
@@ -83,12 +82,12 @@
          */
         function __construct($connId = null, $resultId = null)
         {
-            $this->connId       = $connId ;
-            $this->resultId     = $resultId ;
-            $this->resultArray  = array() ;
-            $this->resultObject = array() ;
-            $this->currentRow   = 0 ;
-            $this->numRows      = 0 ;
+            $this->connId       = $connId;
+            $this->resultId     = $resultId;
+            $this->resultArray  = array();
+            $this->resultObject = array();
+            $this->currentRow   = 0;
+            $this->numRows      = 0;
         }
 
         /**
@@ -102,10 +101,10 @@
         function result($type = 'array')
         {
             if($type == 'array') {
-                return $this->resultArray() ;
+                return $this->resultArray();
             }
 
-            return $this->resultObject() ;
+            return $this->resultObject();
         }
 
         /**
@@ -118,15 +117,15 @@
         function resultArray()
         {
             if( count($this->resultArray) > 0 ) {
-                return $this->resultArray ;
+                return $this->resultArray;
             }
 
-            $this->_dataSeek(0) ;
+            $this->_dataSeek(0);
             while($row = $this->_fetchArray()) {
-                $this->resultArray[] = $row ;
+                $this->resultArray[] = $row;
             }
 
-            return $this->resultArray ;
+            return $this->resultArray;
         }
 
         /**
@@ -139,15 +138,15 @@
         function resultObject()
         {
             if( count($this->resultObject) > 0 ) {
-                return $this->resultObject ;
+                return $this->resultObject;
             }
 
-            $this->_dataSeek(0) ;
+            $this->_dataSeek(0);
             while( $row = $this->_fetchObject() ) {
-                $this->resultObject[] = $row ;
+                $this->resultObject[] = $row;
             }
 
-            return $this->resultObject ;
+            return $this->resultObject;
         }
 
         /**
@@ -160,7 +159,7 @@
          */
         function _dataSeek($offset = 0)
         {
-            return $this->resultId->data_seek($offset) ;
+            return $this->resultId->data_seek($offset);
         }
 
         /**
@@ -172,7 +171,7 @@
          */
         function _fetchObject()
         {
-            return $this->resultId->fetch_object() ;
+            return $this->resultId->fetch_object();
         }
 
         /**
@@ -184,7 +183,7 @@
          */
         function _fetchArray()
         {
-            return $this->resultId->fetch_assoc() ;
+            return $this->resultId->fetch_assoc();
         }
 
         /**
@@ -197,14 +196,14 @@
         function row($n = 0, $type = 'array')
         {
             if( !is_numeric($n) ) {
-                $n = 0 ;
+                $n = 0;
             }
 
             if( $type == 'array' ) {
-                return $this->rowArray($n) ;
+                return $this->rowArray($n);
             }
 
-            return $this->rowObject($n) ;
+            return $this->rowObject($n);
         }
 
         /**
@@ -217,17 +216,17 @@
          */
         function rowObject($n = 0)
         {
-            $result = $this->resultObject() ;
+            $result = $this->resultObject();
 
             if( count($result) == 0) {
-                return $result ;
+                return $result;
             }
 
             if( $n != $this->currentRow && isset($result[$n]) ) {
                 $this->currentRow = $n;
             }
 
-            return $result[$this->currentRow] ;
+            return $result[$this->currentRow];
         }
 
         /**
@@ -240,17 +239,17 @@
          */
         function rowArray($n = 0)
         {
-            $result = $this->resultArray() ;
+            $result = $this->resultArray();
 
             if( count($result) == 0) {
-                return $result ;
+                return $result;
             }
 
             if( $n != $this->currentRow && isset($result[$n]) ) {
                 $this->currentRow = $n;
             }
 
-            return $result[$this->currentRow] ;
+            return $result[$this->currentRow];
         }
 
         /**
@@ -263,13 +262,13 @@
          */
         function firstRow($type = 'array')
         {
-            $result = $this->result($type) ;
+            $result = $this->result($type);
 
             if( count($result) == 0 ) {
-                return $result ;
+                return $result;
             }
 
-            return $result[0] ;
+            return $result[0];
         }
 
         /**
@@ -282,13 +281,13 @@
          */
         function lastRow($type = 'array')
         {
-            $result = $this->result($type) ;
+            $result = $this->result($type);
 
             if( count($result) == 0 ) {
-                return $result ;
+                return $result;
             }
 
-            return $result[count($result) - 1] ;
+            return $result[count($result) - 1];
         }
 
         /**
@@ -301,17 +300,17 @@
          */
         function nextRow($type = 'array')
         {
-            $result = $this->result($type) ;
+            $result = $this->result($type);
 
             if( count($result) == 0 ) {
-                return $result ;
+                return $result;
             }
 
             if( isset($result[$this->currentRow + 1]) ) {
-                $this->currentRow++ ;
+                $this->currentRow++;
             }
 
-            return $result[$this->currentRow] ;
+            return $result[$this->currentRow];
         }
 
         /**
@@ -324,17 +323,17 @@
          */
         function previousRow($type = 'array')
         {
-            $result = $this->result($type) ;
+            $result = $this->result($type);
 
             if( count($result) == 0 ) {
-                return $result ;
+                return $result;
             }
 
             if( isset($result[$this->currentRow - 1]) ) {
-                $this->currentRow-- ;
+                $this->currentRow--;
             }
 
-            return $result[$this->currentRow] ;
+            return $result[$this->currentRow];
         }
 
         /**
@@ -346,7 +345,7 @@
          */
         function numRows()
         {
-            return $this->resultId->num_rows ;
+            return $this->resultId->num_rows;
         }
 
         /**
@@ -358,7 +357,7 @@
          */
         function numFields()
         {
-            return $this->resultId->field_count ;
+            return $this->resultId->field_count;
         }
 
         /**
@@ -370,12 +369,12 @@
          */
         function listFields()
         {
-            $fieldNames = array() ;
+            $fieldNames = array();
             while( $field = $this->resultId->fetch_field() ) {
-                $fieldNames[] = $field->name ;
+                $fieldNames[] = $field->name;
             }
 
-            return $fieldNames ;
+            return $fieldNames;
         }
 	}
 

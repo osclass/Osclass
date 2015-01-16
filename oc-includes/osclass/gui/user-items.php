@@ -1,9 +1,9 @@
 <?php
     /*
-     *      OSCLass – software for creating and publishing online classified
+     *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2014 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -18,62 +18,56 @@
      *      You should have received a copy of the GNU Affero General Public
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
+
+    // meta tag robots
+    osc_add_hook('header','bender_nofollow_construct');
+
+    bender_add_body_class('user user-items');
+    osc_add_hook('before-main','sidebar');
+    function sidebar(){
+        osc_current_web_theme_path('user-sidebar.php');
+    }
+    osc_current_web_theme_path('header.php') ;
+
+    $listClass = '';
+    $buttonClass = '';
+    if(Params::getParam('ShowAs') == 'gallery'){
+        $listClass = 'listing-grid';
+        $buttonClass = 'active';
+    }
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()); ?>">
-    <head>
-        <?php osc_current_web_theme_path('head.php') ; ?>
-        <meta name="robots" content="noindex, nofollow" />
-        <meta name="googlebot" content="noindex, nofollow" />
-    </head>
-    <body>
-        <?php osc_current_web_theme_path('header.php') ; ?>
-        <div class="content user_account">
-            <h1>
-                <strong><?php _e('User account manager', 'modern') ; ?></strong>
-            </h1>
-            <div id="sidebar">
-                <?php echo osc_private_user_menu() ; ?>
-            </div>
-            <div id="main">
-                <h2><?php _e('Your listings', 'modern'); ?> <a href="<?php echo osc_item_post_url() ; ?>">+ <?php _e('Post a new listing', 'modern'); ?></a></h2>
-                <?php if(osc_count_items() == 0) { ?>
-                    <h3><?php _e("You don't have any listings yet", 'modern'); ?></h3>
-                <?php } else { ?>
-                    <?php while(osc_has_items()) { ?>
-                            <div class="item" >
-                                    <h3>
-                                        <a href="<?php echo osc_item_url(); ?>"><?php echo osc_item_title(); ?></a>
-                                    </h3>
-                                    <p>
-                                    <?php _e('Publication date', 'modern') ; ?>: <?php echo osc_format_date(osc_item_pub_date()) ; ?><br />
-                                    <?php if( osc_price_enabled_at_items() ) { _e('Price', 'modern') ; ?>: <?php echo osc_format_price(osc_item_price()); } ?>
-                                    </p>
-                                    <p class="options">
-                                        <strong><a href="<?php echo osc_item_edit_url(); ?>"><?php _e('Edit', 'modern'); ?></a></strong>
-                                        <span>|</span>
-                                        <a class="delete" onclick="javascript:return confirm('<?php echo osc_esc_js(__('This action can not be undone. Are you sure you want to continue?', 'modern')); ?>')" href="<?php echo osc_item_delete_url();?>" ><?php _e('Delete', 'modern'); ?></a>
-                                        <?php if(osc_item_is_inactive()) {?>
-                                        <span>|</span>
-                                        <a href="<?php echo osc_item_activate_url();?>" ><?php _e('Activate', 'modern'); ?></a>
-                                        <?php } ?>
-                                    </p>
-                                    <br />
-                            </div>
-                    <?php } ?>
-                    <br />
-                    <div class="paginate" >
-                    <?php for($i = 0 ; $i < osc_list_total_pages() ; $i++) {
-                        if($i == osc_list_page()) {
-                            printf('<a class="searchPaginationSelected" href="%s">%d</a>', osc_user_list_items_url($i), ($i + 1));
-                        } else {
-                            printf('<a class="searchPaginationNonSelected" href="%s">%d</a>', osc_user_list_items_url($i), ($i + 1));
-                        }
-                    } ?>
-                    </div>
-                <?php } ?>
-            </div>
+<div class="list-header">
+    <?php osc_run_hook('search_ads_listing_top'); ?>
+    <h1><?php _e('My listings', 'bender'); ?></h1>
+    <?php if(osc_count_items() == 0) { ?>
+        <p class="empty" ><?php _e('No listings have been added yet', 'bender'); ?></p>
+    <?php } else { ?>
+        <div class="actions">
+            <span class="doublebutton <?php echo $buttonClass; ?>">
+                <a href="<?php echo osc_user_list_items_url(); ?>?ShowAs=list" class="list-button" data-class-toggle="listing-grid" data-destination="#listing-card-list"><span>Lista</span></a>
+                <a href="<?php echo osc_user_list_items_url(); ?>?ShowAs=gallery" class="grid-button" data-class-toggle="listing-grid" data-destination="#listing-card-list"><span>Grid</span></a>
+            </span>
         </div>
-        <?php osc_current_web_theme_path('footer.php') ; ?>
-    </body>
-</html>
+    </div>
+    <?php
+        View::newInstance()->_exportVariableToView("listClass",$listClass);
+        View::newInstance()->_exportVariableToView("listAdmin", true);
+        osc_current_web_theme_path('loop.php');
+    ?>
+    <div class="clear"></div>
+    <?php
+    if(osc_rewrite_enabled()){
+        $footerLinks = osc_search_footer_links();
+    ?>
+        <ul class="footer-links">
+            <?php foreach($footerLinks as $f) { View::newInstance()->_exportVariableToView('footer_link', $f); ?>
+                <?php if($f['total'] < 3) continue; ?>
+                <li><a href="<?php echo osc_footer_link_url(); ?>"><?php echo osc_footer_link_title(); ?></a></li>
+            <?php } ?>
+        </ul>
+    <?php } ?>
+    <div class="paginate" >
+        <?php echo osc_pagination_items(); ?>
+    </div>
+<?php } ?>
+<?php osc_current_web_theme_path('footer.php') ; ?>

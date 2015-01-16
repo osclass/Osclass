@@ -1,0 +1,17 @@
+body.item #sidebar,
+body.user-public-profile #sidebar{
+    margin-top:20px;
+}
+.item-photos .thumbs{
+    float:none;
+    margin-top:10px;
+    width:100%;
+    clear:both;
+}
+.item-photos .main-photo {
+    width: 100%;
+    float: none;
+}
+.item-photos .main-photo img{
+    width: 100%;
+}

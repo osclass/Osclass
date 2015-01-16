@@ -1,9 +1,9 @@
 <?php
     /*
-     *      OSCLass – software for creating and publishing online classified
+     *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2014 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -18,38 +18,41 @@
      *      You should have received a copy of the GNU Affero General Public
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
+
+    // meta tag robots
+    osc_add_hook('header','bender_nofollow_construct');
+
+    bender_add_body_class('forgot');
+    osc_current_web_theme_path('header.php');
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()); ?>">
-    <head>
-        <?php osc_current_web_theme_path('head.php') ; ?>
-        <meta name="robots" content="noindex, nofollow" />
-        <meta name="googlebot" content="noindex, nofollow" />
-    </head>
-    <body>
-        <?php osc_current_web_theme_path('header.php') ; ?>
-        <div class="content user_forms">
-            <div class="inner">
-                <h1><?php _e('Recover your password', 'modern') ; ?></h1>
-                <form action="<?php echo osc_base_url(true) ; ?>" method="post" >
-                    <input type="hidden" name="page" value="login" />
-                    <input type="hidden" name="action" value="forgot_post" />
-                    <input type="hidden" name="userId" value="<?php echo osc_esc_html(Params::getParam('userId')); ?>" />
-                    <input type="hidden" name="code" value="<?php echo osc_esc_html(Params::getParam('code')); ?>" />
-                    <fieldset>
-                        <p>
-                            <label for="new_email"><?php _e('New pasword', 'modern') ; ?></label><br />
-                            <input type="password" name="new_password" value="" />
-                        </p>
-                        <p>
-                            <label for="new_email"><?php _e('Repeat new pasword', 'modern') ; ?></label><br />
-                            <input type="password" name="new_password2" value="" />
-                        </p>
-                        <button type="submit"><?php _e('Change password', 'modern') ; ?></button>
-                    </fieldset>
-                </form>
+<div class="form-container form-horizontal form-container-box">
+    <div class="header">
+        <h1><?php _e('Recover your password', 'bender'); ?></h1>
+    </div>
+    <div class="resp-wrapper">
+        <form action="<?php echo osc_base_url(true); ?>" method="post" >
+            <input type="hidden" name="page" value="login" />
+            <input type="hidden" name="action" value="forgot_post" />
+            <input type="hidden" name="userId" value="<?php echo osc_esc_html(Params::getParam('userId')); ?>" />
+            <input type="hidden" name="code" value="<?php echo osc_esc_html(Params::getParam('code')); ?>" />
+            <div class="control-group">
+                <label class="control-label" for="new_password"><?php _e('New password', 'bender'); ?></label>
+                <div class="controls">
+                    <input type="password" name="new_password" value="" />
+                </div>
             </div>
-        </div>
-        <?php osc_current_web_theme_path('footer.php') ; ?>
-    </body>
-</html>
+            <div class="control-group">
+                <label class="control-label" for="new_password2"><?php _e('Repeat new password', 'bender'); ?></label>
+                <div class="controls">
+                    <input type="password" name="new_password2" value="" />
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="controls">
+                    <button type="submit" class="ui-button ui-button-middle ui-button-main"><?php _e("Change password", 'bender');?></button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<?php osc_current_web_theme_path('footer.php') ; ?>

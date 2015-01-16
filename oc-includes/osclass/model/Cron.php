@@ -1,52 +1,48 @@
-<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.') ;
+<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
-    /*
-     *      OSCLass – software for creating and publishing online classified
-     *                           advertising platforms
-     *
-     *                        Copyright (C) 2010 OSCLASS
-     *
-     *       This program is free software: you can redistribute it and/or
-     *     modify it under the terms of the GNU Affero General Public License
-     *     as published by the Free Software Foundation, either version 3 of
-     *            the License, or (at your option) any later version.
-     *
-     *     This program is distributed in the hope that it will be useful, but
-     *         WITHOUT ANY WARRANTY; without even the implied warranty of
-     *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-     *             GNU Affero General Public License for more details.
-     *
-     *      You should have received a copy of the GNU Affero General Public
-     * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
-     */
+/*
+ * Copyright 2014 Osclass
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
     /**
-     * 
+     *
      */
     class Cron extends DAO
     {
         /**
          *
-         * @var type 
+         * @var type
          */
-        private static $instance ;
+        private static $instance;
 
         public static function newInstance()
         {
             if( !self::$instance instanceof self ) {
-                self::$instance = new self ;
+                self::$instance = new self;
             }
-            return self::$instance ;
+            return self::$instance;
         }
 
         /**
-         * 
+         *
          */
         function __construct()
         {
-            parent::__construct() ;
-            $this->setTableName('t_cron') ;
-            $this->setFields( array('e_type', 'd_last_exec', 'd_next_exec') ) ;
+            parent::__construct();
+            $this->setTableName('t_cron');
+            $this->setFields( array('e_type', 'd_last_exec', 'd_next_exec') );
         }
 
         /**
@@ -59,16 +55,16 @@
          */
         function getCronByType($type)
         {
-            $this->dao->select('*') ;
-            $this->dao->from($this->getTableName()) ;
-            $this->dao->where('e_type', $type) ;
-            $result = $this->dao->get() ;
+            $this->dao->select('*');
+            $this->dao->from($this->getTableName());
+            $this->dao->where('e_type', $type);
+            $result = $this->dao->get();
 
             if( $result->numRows == 0 ) {
-                return false ;
+                return false;
             }
 
-            return $result->row() ;
+            return $result->row();
         }
     }
 

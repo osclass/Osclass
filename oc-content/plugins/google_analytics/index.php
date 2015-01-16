@@ -3,8 +3,8 @@
 Plugin Name: Google Analytics
 Plugin URI: http://www.osclass.org/
 Description: This plugin adds the Google Analytics script at the footer of every page.
-Version: 2.2
-Author: OSClass
+Version: 2.2.1
+Author: Osclass
 Author URI: http://www.osclass.org/
 Plugin update URI: http://www.osclass.org/files/plugins/google_analytics/update.php
 */
@@ -22,7 +22,7 @@ Plugin update URI: http://www.osclass.org/files/plugins/google_analytics/update.
     }
 
     function google_analytics_actions() {
-        $dao_preference = new Preference() ;
+        $dao_preference = new Preference();
         $option         = Params::getParam('option');
 
         if( Params::getParam('file') != 'google_analytics/admin.php' ) {
@@ -37,7 +37,7 @@ Plugin update URI: http://www.osclass.org/files/plugins/google_analytics/update.
             );
 
             osc_add_flash_ok_message(__('The tracking ID has been updated', 'google_analytics'), 'admin');
-            header('Location: ' . osc_admin_render_plugin_url('google_analytics/admin.php')); exit;
+            osc_redirect_to(osc_admin_render_plugin_url('google_analytics/admin.php'));
         }
     }
     osc_add_hook('init_admin', 'google_analytics_actions');
@@ -61,12 +61,16 @@ Plugin update URI: http://www.osclass.org/files/plugins/google_analytics/update.
         }
     }
 
-    osc_admin_menu_plugins('Google Analytics', osc_admin_render_plugin_url('google_analytics/admin.php'), 'google_analytics_submenu');
+    function google_admin_menu() {
+        osc_admin_menu_plugins('Google Analytics', osc_admin_render_plugin_url('google_analytics/admin.php'), 'google_analytics_submenu');
+    }
+
     // This is needed in order to be able to activate the plugin
     osc_register_plugin(osc_plugin_path(__FILE__), 'google_analytics_call_after_install');
     // This is a hack to show a Uninstall link at plugins table (you could also use some other hook to show a custom option panel)
     osc_add_hook(osc_plugin_path(__FILE__)."_uninstall", 'google_analytics_call_after_uninstall');
     osc_add_hook(osc_plugin_path(__FILE__)."_configure", 'google_analytics_admin');
     osc_add_hook('footer', 'google_analytics_footer');
+    osc_add_hook('admin_menu_init', 'google_admin_menu');
 
 ?>

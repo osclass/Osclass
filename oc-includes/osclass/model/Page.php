@@ -1,24 +1,20 @@
-<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.') ;
+<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
-    /*
-     *      OSCLass – software for creating and publishing online classified
-     *                           advertising platforms
-     *
-     *                        Copyright (C) 2010 OSCLASS
-     *
-     *       This program is free software: you can redistribute it and/or
-     *     modify it under the terms of the GNU Affero General Public License
-     *     as published by the Free Software Foundation, either version 3 of
-     *            the License, or (at your option) any later version.
-     *
-     *     This program is distributed in the hope that it will be useful, but
-     *         WITHOUT ANY WARRANTY; without even the implied warranty of
-     *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-     *             GNU Affero General Public License for more details.
-     *
-     *      You should have received a copy of the GNU Affero General Public
-     * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
-     */
+/*
+ * Copyright 2014 Osclass
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
     /**
      * Page DAO
@@ -27,36 +23,38 @@
     {
         /**
          *
-         * @var type 
+         * @var type
          */
-        private static $instance ;
+        private static $instance;
 
         public static function newInstance()
         {
             if( !self::$instance instanceof self ) {
-                self::$instance = new self ;
+                self::$instance = new self;
             }
-            return self::$instance ;
+            return self::$instance;
         }
 
         /**
-         * 
+         *
          */
         function __construct()
         {
-            parent::__construct() ;
-            $this->setTableName('t_pages') ;
-            $this->setPrimaryKey('pk_i_id') ;
+            parent::__construct();
+            $this->setTableName('t_pages');
+            $this->setPrimaryKey('pk_i_id');
             $array_fields = array(
                 'pk_i_id',
                 's_internal_name',
                 'b_indelible',
-                'dt_pub_date', 
-                'dt_mod_date', 
-                'i_order') ;
-            $this->setFields($array_fields) ;
+                'b_link',
+                'dt_pub_date',
+                'dt_mod_date',
+                'i_order',
+                's_meta');
+            $this->setFields($array_fields);
         }
-        
+
         /**
          * Find a page by page id.
          *
@@ -68,41 +66,39 @@
          */
         function findByPrimaryKey($id, $locale = null)
         {
-            $this->dao->select() ;
-            $this->dao->from($this->getTableName()) ;
-            $this->dao->where('pk_i_id', $id) ;
-            $result = $this->dao->get() ;
-            
-            $row = $result->row() ;
+            $this->dao->select();
+            $this->dao->from($this->getTableName());
+            $this->dao->where('pk_i_id', $id);
+            $result = $this->dao->get();
 
             if( $result == false ) {
-                return false ;
+                return array();
             }
 
             if( $result->numRows() == 0 ) {
-                return false ;
+                return array();
             }
-            
-            $row = $result->row() ;
+
+            $row = $result->row();
 
             // page_description
-            $this->dao->select() ;
-            $this->dao->from($this->getDescriptionTableName()) ;
-            $this->dao->where('fk_i_pages_id', $id) ;
+            $this->dao->select();
+            $this->dao->from($this->getDescriptionTableName());
+            $this->dao->where('fk_i_pages_id', $id);
             if( !is_null($locale) ) {
-                $this->dao->where('fk_c_locale_code', $locale) ;
+                $this->dao->where('fk_c_locale_code', $locale);
             }
-            $result   = $this->dao->get() ;
-            $aRows = $result->result() ;
+            $result   = $this->dao->get();
+            $aRows = $result->result();
 
-            $row['locale'] = array() ;
+            $row['locale'] = array();
             foreach($aRows as $r) {
-                $row['locale'][$r['fk_c_locale_code']] = $r ;
+                $row['locale'][$r['fk_c_locale_code']] = $r;
             }
 
-            return $row ;
+            return $row;
         }
-        
+
         /**
          * Find a page by internal name.
          *
@@ -114,24 +110,24 @@
          */
         function findByInternalName($intName, $locale = null)
         {
-            $this->dao->select() ;
-            $this->dao->from($this->getTableName()) ;
-            $this->dao->where('s_internal_name', $intName) ;
-            $result = $this->dao->get() ;
-            
-            
+            $this->dao->select();
+            $this->dao->from($this->getTableName());
+            $this->dao->where('s_internal_name', $intName);
+            $result = $this->dao->get();
+
+
             if( $result == false ) {
-                return array() ;
+                return array();
             }
 
             if( $result->numRows() == 0 ){
-                return array() ;
+                return array();
             }
-            
-            $row = $result->row() ;
-            return $this->extendDescription($row, $locale) ;
+
+            $row = $result->row();
+            return $this->extendDescription($row, $locale);
         }
-        
+
         /**
          * Find a page by order.
          *
@@ -142,26 +138,26 @@
          */
         function findByOrder($order, $locale = null)
         {
-            $this->dao->select() ;
-            $this->dao->from($this->getTableName()) ;
+            $this->dao->select();
+            $this->dao->from($this->getTableName());
             $array_where = array(
                 'i_order'     => $order,
                 'b_indelible' => 0
             );
-            $this->dao->where($array_where) ;
-            $result = $this->dao->get() ;
+            $this->dao->where($array_where);
+            $result = $this->dao->get();
 
             if( $result == false ) {
-                return array() ;
+                return array();
             }
 
             if( $result->numRows() == 0 ) {
-                return array() ;
+                return array();
             }
 
-            $row    = $result->row() ;
-            $result = $this->extendDescription($row, $locale) ;
-            return $result ;
+            $row    = $result->row();
+            $result = $this->extendDescription($row, $locale);
+            return $result;
         }
 
         /**
@@ -169,71 +165,74 @@
          *
          * @access public
          * @since unknown
-         * @param bool $indelible It's true if the page is indelible and false if not.
-         * @param string $locale It's
+        *  @param bool $indelible true if the page is indelible
+         * @param string $locale
          * @param int $start
          * @param int $limit
          * @return array Return all the pages that have been found with the criteria selected. If there's no pages, the
          * result is an empty array.
          */
-        public function listAll($indelible = null, $locale = null, $start = null, $limit = null)
+        public function listAll($indelible = null, $b_link = null, $locale = null, $start = null, $limit = null)
         {
-            $this->dao->select() ;
-            $this->dao->from($this->getTableName()) ;
+            $this->dao->select();
+            $this->dao->from($this->getTableName());
             if( !is_null($indelible) ) {
-                $this->dao->where('b_indelible', $indelible) ;
+                $this->dao->where('b_indelible', $indelible);
             }
-            $this->dao->orderBy('i_order', 'ASC') ;
+            if( $b_link!=null) {
+                $this->dao->where('b_link', $b_link);
+            }
+            $this->dao->orderBy('i_order', 'ASC');
             if( !is_null($limit) ) {
-                $this->dao->limit($limit, $start) ;
+                $this->dao->limit($limit, $start);
             }
-            $result = $this->dao->get() ;
+            $result = $this->dao->get();
             if($result) {
-                $aPages = $result->result() ;
+                $aPages = $result->result();
 
                 if( count($aPages) == 0 ) {
-                    return array() ;
+                    return array();
                 }
 
-                $resultPages = array() ;
+                $resultPages = array();
                 foreach($aPages as $aPage) {
-                    $data = $this->extendDescription($aPage, $locale) ;
+                    $data = $this->extendDescription($aPage, $locale);
                     if(count($data) > 0) {
-                        $resultPages[] = $data ;
+                        $resultPages[] = $data;
                     }
-                    unset($data) ;
+                    unset($data);
                 }
 
-                return $resultPages ;
+                return $resultPages;
             } else {
                 return array();
             }
         }
-        
+
         /**
          * Return number of all pages, or only number of indelible pages
-         * 
+         *
          * @access public
          * @since 3.0
          * @param int $indelible
-         * @return int 
+         * @return int
          */
         public function count($indelible = null)
         {
-            $this->dao->select('count(*) as total') ;
-            $this->dao->from($this->getTableName()) ;
+            $this->dao->select('count(*) as total');
+            $this->dao->from($this->getTableName());
             if( !is_null($indelible) ) {
-                $this->dao->where('b_indelible', $indelible) ;
+                $this->dao->where('b_indelible', $indelible);
             }
-            
-            $result = $this->dao->get() ;
+
+            $result = $this->dao->get();
             if($result) {
-                $aPages = $result->result() ;
+                $aPages = $result->result();
                 return $aPages[0]['total'];
             } else {
                 return 0;
             }
-            
+
         }
 
         /**
@@ -246,27 +245,28 @@
          */
         public function extendDescription($aPage, $locale = null)
         {
-            $this->dao->select() ;
-            $this->dao->from($this->getDescriptionTableName()) ;
-            $this->dao->where("fk_i_pages_id", $aPage['pk_i_id']) ;
+            $this->dao->select();
+            $this->dao->from($this->getDescriptionTableName());
+            $this->dao->where("fk_i_pages_id", $aPage['pk_i_id']);
             if( !is_null($locale) ) {
-                $this->dao->where('fk_c_locale_code', $locale) ;
+                $this->dao->where('fk_c_locale_code', $locale);
             }
-            $results       = $this->dao->get() ;
-            $aDescriptions = $results->result() ;
+            $results       = $this->dao->get();
+            if($results===false) { return array(); }
+            $aDescriptions = $results->result();
 
             if( count($aDescriptions) == 0 ) {
-                return array() ;
+                return array();
             }
 
-            $aPage['locale'] = array() ;
+            $aPage['locale'] = array();
             foreach($aDescriptions as $description) {
                 if( !empty($description['s_title']) || !empty($description['s_text']) ) {
-                    $aPage['locale'][$description['fk_c_locale_code']] = $description ;
+                    $aPage['locale'][$description['fk_c_locale_code']] = $description;
                 }
             }
 
-            return $aPage ;
+            return $aPage;
         }
 
         /**
@@ -275,14 +275,14 @@
          * @access public
          * @since unknown
          * @param int $id Page id which is going to be deleted
-         * @return@return mixed It return the number of affected rows if the delete has been 
+         * @return@return mixed It return the number of affected rows if the delete has been
          * correct or false if nothing has been modified
          */
         public function deleteByPrimaryKey($id)
         {
             $row = $this->findByPrimaryKey($id);
             $order = $row['i_order'];
-            
+
             $this->reOrderPages($order);
 
             $this->dao->delete($this->getDescriptionTableName(), array('fk_i_pages_id' => $id));
@@ -338,16 +338,16 @@
             $this->dao->where('i_order < '.$order);
             $this->dao->orderBy('i_order', 'DESC');
             $this->dao->limit(1);
-            $result = $this->dao->get() ;
+            $result = $this->dao->get();
 
             if( $result == false ) {
-                return array() ;
+                return array();
             }
 
             if( $result->numRows() == 0 ) {
-                return array() ;
+                return array();
             }
-            return $result->row() ;
+            return $result->row();
         }
 
         /**
@@ -365,16 +365,16 @@
             $this->dao->where('i_order > '.$order);
             $this->dao->orderBy('i_order', 'ASC');
             $this->dao->limit(1);
-            $result = $this->dao->get() ;
+            $result = $this->dao->get();
 
             if( $result == false ) {
-                return array() ;
+                return array();
             }
 
             if( $result->numRows() == 0 ) {
-                return array() ;
+                return array();
             }
-            return $result->row() ;
+            return $result->row();
         }
 
         /**
@@ -397,13 +397,25 @@
             if( is_null($order) ){
                 $order = -1;
             }
-            
+
+            if(!isset($aFields['b_link'])) {
+                $aFields['b_link'] = 0;
+            }
+
+            if($aFields['b_link'] == '') {
+				if($aFields['b_indelible'] == 1) {
+					$aFields['b_link'] = 0;
+				}
+			}
+
             $this->dao->insert($this->tableName, array(
                 's_internal_name' => $aFields['s_internal_name']
                 ,'b_indelible' => $aFields['b_indelible']
                 ,'dt_pub_date' => date('Y-m-d H:i:s')
                 ,'dt_mod_date' => date('Y-m-d H:i:s')
                 ,'i_order' => ($order+1)
+                ,'s_meta' => @$aFields['s_meta']
+                ,'b_link' => $aFields['b_link']
             ));
 
 
@@ -499,7 +511,7 @@
 
             $result = $this->dao->get();
             $count = $result->row();
-            
+
             return ($count['total']>0)?true:false;
         }
 
@@ -515,6 +527,42 @@
         public function updateInternalName($id, $intName)
         {
             $fields = array('s_internal_name' => $intName,
+                             'dt_mod_date'    => date('Y-m-d H:i:s'));
+            $where  = array('pk_i_id' => $id);
+
+            return $this->dao->update($this->tableName, $fields, $where);
+        }
+
+        /**
+         * It changes the b_link of a page. Here you don't check if in indelible or not the page.
+         *
+         * @access public
+         * @since unknown
+         * @param int $id The id of the page to be changed.
+         * @param string $bLink The show link status.
+         * @return int Number of affected rows.
+         */
+        public function updateLink($id, $bLink)
+        {
+            $fields = array('b_link' => $bLink,
+                             'dt_mod_date'    => date('Y-m-d H:i:s'));
+            $where  = array('pk_i_id' => $id);
+
+            return $this->dao->update($this->tableName, $fields, $where);
+        }
+
+        /**
+         * It change the meta field of a page.
+         *
+         * @access public
+         * @since 3.1
+         * @param int $id The id of the page to be changed.
+         * @param string $meta The meta field
+         * @return int Number of affected rows.
+         */
+        public function updateMeta($id, $meta)
+        {
+            $fields = array('s_meta' => $meta,
                              'dt_mod_date'    => date('Y-m-d H:i:s'));
             $where  = array('pk_i_id' => $id);
 
@@ -554,7 +602,7 @@
             $this->dao->where('s_internal_name', $internalName);
             $this->dao->where('pk_i_id <> '.$id);
             $result = $this->dao->get();
-            
+
             if($result->numRows() > 0) {
                 return true;
             }
@@ -563,7 +611,7 @@
 
         function getDescriptionTableName()
         {
-            return $this->getTablePrefix() . 't_pages_description' ;
+            return $this->getTablePrefix() . 't_pages_description';
         }
     }
 

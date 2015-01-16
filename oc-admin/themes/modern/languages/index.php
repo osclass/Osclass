@@ -1,30 +1,29 @@
-<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ;
-    /**
-     * OSClass – software for creating and publishing online classified advertising platforms
-     *
-     * Copyright (C) 2010 OSCLASS
-     *
-     * This program is free software: you can redistribute it and/or modify it under the terms
-     * of the GNU Affero General Public License as published by the Free Software Foundation,
-     * either version 3 of the License, or (at your option) any later version.
-     *
-     * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-     * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-     * See the GNU Affero General Public License for more details.
-     *
-     * You should have received a copy of the GNU Affero General Public
-     * License along with this program. If not, see <http://www.gnu.org/licenses/>.
-     */
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.');
+/*
+ * Copyright 2014 Osclass
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
     function addHelp() {
-        echo '<p>' . __("Add, edit or delete the language in which your OSClass is displayed, both the part that's viewable by users and the admin panel.") . '</p>';
+        echo '<p>' . __("Add, edit or delete the language in which your Osclass is displayed, both the part that's viewable by users and the admin panel.") . '</p>';
     }
     osc_add_hook('help_box','addHelp');
 
     function customPageHeader(){ ?>
-        <h1><?php _e('Settings') ; ?>
+        <h1><?php _e('Settings'); ?>
             <a href="#" class="btn ico ico-32 ico-help float-right"></a>
-            <a href="<?php echo osc_admin_base_url(true) ; ?>?page=languages&amp;action=add" class="btn btn-green ico ico-32 ico-add-white float-right" ><?php _e('Add language') ; ?></a>
+            <a href="<?php echo osc_admin_base_url(true); ?>?page=languages&amp;action=add" class="btn btn-green ico ico-32 ico-add-white float-right" ><?php _e('Add language'); ?></a>
         </h1>
 <?php
     }
@@ -41,7 +40,7 @@
             $(document).ready(function(){
                 // check_all bulkactions
                 $("#check_all").change(function(){
-                    var isChecked = $(this+':checked').length;
+                    var isChecked = $(this).prop("checked");
                     $('.col-bulkactions input').each( function() {
                         if( isChecked == 1 ) {
                             this.checked = true;
@@ -97,32 +96,26 @@
         </script>
         <?php
     }
-    osc_add_hook('admin_header','customHead');
+    osc_add_hook('admin_header','customHead', 10);
 
     $iDisplayLength = __get('iDisplayLength');
     $aData          = __get('aLanguages');
 
     osc_current_admin_theme_path( 'parts/header.php' );
 ?>
-<h2 class="render-title"><?php _e('Manage Languages'); ?> <a href="<?php echo osc_admin_base_url(true) ; ?>?page=languages&amp;action=add" class="btn btn-mini"><?php _e('Add new'); ?></a></h2>
+<h2 class="render-title"><?php _e('Manage Languages'); ?> <a href="<?php echo osc_admin_base_url(true); ?>?page=languages&amp;action=add" class="btn btn-mini"><?php _e('Add new'); ?></a></h2>
 <div class="relative">
     <div id="language-toolbar" class="table-toolbar">
         <div class="float-right">
 
         </div>
     </div>
-    <form class="" id="datatablesForm" action="<?php echo osc_admin_base_url(true) ; ?>" method="post" data-dialog-open="false">
+    <form class="" id="datatablesForm" action="<?php echo osc_admin_base_url(true); ?>" method="post" data-dialog-open="false">
         <input type="hidden" name="page" value="languages" />
         <div id="bulk-actions">
             <label>
-                <select id="bulk_actions" name="action" class="select-box-extra">
-                    <option value=""><?php _e('Bulk Actions') ; ?></option>
-                    <option value="enable_selected" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected languages?'), strtolower(__('Enable (Website)'))); ?>"><?php _e('Enable (Website)') ; ?></option>
-                    <option value="disable_selected" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected languages?'), strtolower(__('Disable (Website)'))); ?>"><?php _e('Disable (Website)') ; ?></option>
-                    <option value="enable_bo_selected" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected languages?'), strtolower(__('Enable (oc-admin)'))); ?>"><?php _e('Enable (oc-admin)') ; ?></option>
-                    <option value="disable_bo_selected" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected languages?'), strtolower(__('Disable (oc-admin)'))); ?>"><?php _e('Disable (oc-admin)') ; ?></option>
-                    <option value="delete" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected languages?'), strtolower(__('Delete'))); ?>"><?php _e('Delete') ?></option>
-                </select> <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>" />
+                <?php osc_print_bulk_actions('bulk_actions', 'action', __get('bulk_options'), 'select-box-extra'); ?>
+                <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ); ?>" />
             </label>
         </div>
         <div class="table-contains-actions">
@@ -130,11 +123,11 @@
                 <thead>
                     <tr>
                         <th class="col-bulkactions"><input id="check_all" type="checkbox" /></th>
-                        <th><?php _e('Name') ; ?></th>
-                        <th><?php _e('Short name') ; ?></th>
-                        <th><?php _e('Description') ; ?></th>
-                        <th><?php _e('Enabled (website)') ; ?></th>
-                        <th><?php _e('Enabled (oc-admin)') ; ?></th>
+                        <th><?php _e('Name'); ?></th>
+                        <th><?php _e('Short name'); ?></th>
+                        <th><?php _e('Description'); ?></th>
+                        <th><?php _e('Enabled (website)'); ?></th>
+                        <th><?php _e('Enabled (oc-admin)'); ?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -155,7 +148,7 @@
                 <?php } else { ?>
                 <tr>
                     <td colspan="6" class="text-center">
-                    <p><?php _e('No data available in table') ; ?></p>
+                    <p><?php _e('No data available in table'); ?></p>
                     </td>
                 </tr>
                 <?php } ?>
@@ -168,7 +161,7 @@
 <?php
     osc_show_pagination_admin($aData);
 ?>
-<form id="dialog-language-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" class="has-form-actions hide">
+<form id="dialog-language-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" class="has-form-actions hide">
     <input type="hidden" name="page" value="languages" />
     <input type="hidden" name="action" value="delete" />
     <input type="hidden" name="id[]" value="" />
@@ -184,6 +177,7 @@
         </div>
     </div>
 </form>
+
 <div id="dialog-bulk-actions" title="<?php _e('Bulk actions'); ?>" class="has-form-actions hide">
     <div class="form-horizontal">
         <div class="form-row"></div>
@@ -196,4 +190,97 @@
         </div>
     </div>
 </div>
-<?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>
+
+<div id="market_installer" class="has-form-actions hide">
+    <form action="" method="post">
+        <input type="hidden" name="market_code" id="market_code" value="" />
+        <div class="osc-modal-content-market">
+            <img src="" id="market_thumb" class="float-left"/>
+            <table class="table" cellpadding="0" cellspacing="0">
+                <tbody>
+                    <tr class="table-first-row">
+                        <td><?php _e('Name'); ?></td>
+                        <td><span id="market_name"><?php _e("Loading data"); ?></span></td>
+                    </tr>
+                    <tr class="even">
+                        <td><?php _e('Version'); ?></td>
+                        <td><span id="market_version"><?php _e("Loading data"); ?></span></td>
+                    </tr>
+                    <tr>
+                        <td><?php _e('Author'); ?></td>
+                        <td><span id="market_author"><?php _e("Loading data"); ?></span></td>
+                    </tr>
+                    <tr class="even">
+                        <td><?php _e('URL'); ?></td>
+                        <td><span id="market_url_span"><a id="market_url" href="#"><?php _e("Download manually"); ?></a></span></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="clear"></div>
+        </div>
+        <div class="form-actions">
+            <div class="wrapper">
+                <button id="market_cancel" class="btn btn-red" ><?php _e('Cancel'); ?></button>
+                <button id="market_install" class="btn btn-submit" ><?php _e('Continue install'); ?></button>
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+    $(function() {
+        $("#market_cancel").on("click", function(){
+            $(".ui-dialog-content").dialog("close");
+            return false;
+        });
+
+        $("#market_install").on("click", function(){
+            $(".ui-dialog-content").dialog("close");
+            $('<div id="downloading"><div class="osc-modal-content"><?php echo osc_esc_js(__('Please wait until the download is completed')); ?></div></div>').dialog({title:'<?php echo osc_esc_js(__('Downloading')); ?>...',modal:true});
+            $.getJSON(
+            "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=market&<?php echo osc_csrf_token_url(); ?>",
+            {"code" : $("#market_code").attr("value"), "section" : 'languages'},
+            function(data){
+                var content = data.message;
+                if(data.error == 0) { // no errors
+                    content += '<h3><?php echo osc_esc_js(__('The theme has been downloaded correctly, proceed to activate or preview it.')); ?></h3>';
+                    content += "<p>";
+                    content += '<a class="btn btn-mini btn-green" href="<?php echo osc_admin_base_url(true); ?>?page=languages&marketError='+data.error+'&slug='+data.data['s_update_url']+'"><?php echo osc_esc_js(__('Ok')); ?></a>';
+                    content += '<a class="btn btn-mini" href="javascript:location.reload(true)"><?php echo osc_esc_js(__('Close')); ?></a>';
+                    content += "</p>";
+                } else {
+                    content += '<a class="btn btn-mini" href="javascript:location.reload(true)"><?php echo osc_esc_js(__('Close')); ?></a>';
+                }
+                $("#downloading .osc-modal-content").html(content);
+            });
+            return false;
+        });
+    });
+
+    $('.btn-market-popup').on('click',function(){
+        $.getJSON(
+            "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=check_market",
+            {"code" : $(this).attr('href').replace('#',''), 'section' : 'languages'},
+            function(data){
+                if(data!=null) {
+                    $("#market_thumb").attr('src',data.s_thumbnail);
+                    $("#market_code").attr("value", data.s_update_url);
+                    $("#market_name").html(data.s_title);
+                    $("#market_version").html(data.s_version);
+                    $("#market_author").html(data.s_contact_name);
+                    $("#market_url").attr('href',data.s_source_file);
+                    $('#market_install').html("<?php echo osc_esc_js( __('Update') ); ?>");
+
+                    $('#market_installer').dialog({
+                        modal:true,
+                        title: '<?php echo osc_esc_js( __('Osclass Market') ); ?>',
+                        width:485
+                    });
+                }
+            }
+        );
+
+        return false;
+    });
+</script>
+
+<?php osc_current_admin_theme_path( 'parts/footer.php' ); ?>

@@ -1,29 +1,25 @@
-<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.') ;
+<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
-    /*
-     *      OSCLass – software for creating and publishing online classified
-     *                           advertising platforms
-     *
-     *                        Copyright (C) 2010 OSCLASS
-     *
-     *       This program is free software: you can redistribute it and/or
-     *     modify it under the terms of the GNU Affero General Public License
-     *     as published by the Free Software Foundation, either version 3 of
-     *            the License, or (at your option) any later version.
-     *
-     *     This program is distributed in the hope that it will be useful, but
-     *         WITHOUT ANY WARRANTY; without even the implied warranty of
-     *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-     *             GNU Affero General Public License for more details.
-     *
-     *      You should have received a copy of the GNU Affero General Public
-     * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
-     */
-    
+/*
+ * Copyright 2014 Osclass
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
     /**
      * Model database for CountryStats table
      *
-     * @package OSClass
+     * @package Osclass
      * @subpackage Model
      * @since 2.4
      */
@@ -37,7 +33,7 @@
          * @since 2.4
          * @var CountryStats
          */
-        private static $instance ;
+        private static $instance;
 
         /**
         * It creates a new CountryStats object class if it has been created
@@ -50,34 +46,34 @@
         public static function newInstance()
         {
             if( !self::$instance instanceof self ) {
-                self::$instance = new self ;
+                self::$instance = new self;
             }
-            return self::$instance ;
+            return self::$instance;
         }
 
         /**
          * Set data related to t_country_stats table
-         * 
+         *
          * @access public
          * @since 2.4
          */
         function __construct()
         {
             parent::__construct();
-            $this->setTableName('t_country_stats') ;
-            $this->setPrimaryKey('fk_c_country_code') ;
-            $this->setFields( array('fk_c_country_code', 'i_num_items') ) ;
+            $this->setTableName('t_country_stats');
+            $this->setPrimaryKey('fk_c_country_code');
+            $this->setFields( array('fk_c_country_code', 'i_num_items') );
         }
-        
+
         /**
          * Increase number of country items, given a country id
          *
          * @access public
          * @since 2.4
-         * @param int $countryCode Country code 
+         * @param int $countryCode Country code
          * @return int number of affected rows, id error occurred return false
          */
-        public function increaseNumItems($countryCode) 
+        public function increaseNumItems($countryCode)
         {
             $lenght = strlen($countryCode);
             if($lenght > 2 || $lenght=='' ) {
@@ -86,37 +82,37 @@
             $sql = sprintf('INSERT INTO %s (fk_c_country_code, i_num_items) VALUES (\'%s\', 1) ON DUPLICATE KEY UPDATE i_num_items = i_num_items + 1', $this->getTableName(), $countryCode);
             return $this->dao->query($sql);
         }
-        
+
         /**
          * Increase number of country items, given a Country code
-         * 
+         *
          * @access public
          * @since 2.4
-         * @param int $countrycode Country code 
+         * @param int $countrycode Country code
          * @return int number of affected rows, id error occurred return false
          */
-        public function decreaseNumItems($countryCode) 
+        public function decreaseNumItems($countryCode)
         {
             $lenght = strlen($countryCode);
             if($lenght > 2 || $lenght=='' ) {
                 return false;
             }
-            $this->dao->select( 'i_num_items' ) ;
-            $this->dao->from( $this->getTableName() ) ;
-            $this->dao->where( $this->getPrimaryKey(), $countryCode ) ;
-            $result       = $this->dao->get() ;
-            $countryStat  = $result->row() ; 
-            $return       = 0 ;
+            $this->dao->select( 'i_num_items' );
+            $this->dao->from( $this->getTableName() );
+            $this->dao->where( $this->getPrimaryKey(), $countryCode );
+            $result       = $this->dao->get();
+            $countryStat  = $result->row();
+            $return       = 0;
 
             if( isset( $countryStat['i_num_items'] ) ) {
-                $this->dao->from( $this->getTableName() ) ;
-                $this->dao->set( 'i_num_items', 'i_num_items - 1', false ) ;
-                $this->dao->where( 'i_num_items > 0' ) ;
-                $this->dao->where( 'fk_c_country_code', $countryCode ) ;
+                $this->dao->from( $this->getTableName() );
+                $this->dao->set( 'i_num_items', 'i_num_items - 1', false );
+                $this->dao->where( 'i_num_items > 0' );
+                $this->dao->where( 'fk_c_country_code', $countryCode );
 
-                return $this->dao->update() ;
-            } 
-            
+                return $this->dao->update();
+            }
+
             return false;
         }
 
@@ -127,7 +123,7 @@
          * @since 2.4
          * @param type $countryCode
          * @param type $numItems
-         * @return type 
+         * @return type
          */
         public function setNumItems($countryCode, $numItems)
         {
@@ -136,18 +132,18 @@
 
         /**
          * Find stats by country code
-         * 
+         *
          * @access public
          * @since 2.4
-         * @param int $countryCode country id 
-         * @return array 
+         * @param int $countryCode country id
+         * @return array
          */
-        public function findByCountryCode($countryCode) 
+        public function findByCountryCode($countryCode)
         {
             return $this->findByPrimaryKey($countryCode);
         }
-        
-        
+
+
         /**
          * Return a list of countries and counter items.
          * Can be filtered by num_items,
@@ -158,26 +154,26 @@
          * @since 2.4
          * @param string $zero
          * @param string $order
-         * @return array 
+         * @return array
          */
         public function listCountries($zero = ">", $order = "country_name ASC")
         {
-            $this->dao->select($this->getTableName().'.fk_c_country_code as country_code, '.$this->getTableName().'.i_num_items as items, '.DB_TABLE_PREFIX.'t_country.s_name as country_name') ;
-            $this->dao->from($this->getTableName() ) ;
-            $this->dao->join(DB_TABLE_PREFIX.'t_country', $this->getTableName().'.fk_c_country_code = '.DB_TABLE_PREFIX.'t_country.pk_c_code') ;
-            $this->dao->where('i_num_items '.$zero.' 0' ) ;
-            $this->dao->orderBy($order) ;
-            
-            $rs = $this->dao->get() ;
-            
+            $this->dao->select($this->getTableName().'.fk_c_country_code as country_code, '.$this->getTableName().'.i_num_items as items, '.DB_TABLE_PREFIX.'t_country.s_name as country_name, '.DB_TABLE_PREFIX.'t_country.s_slug as country_slug');
+            $this->dao->from($this->getTableName() );
+            $this->dao->join(DB_TABLE_PREFIX.'t_country', $this->getTableName().'.fk_c_country_code = '.DB_TABLE_PREFIX.'t_country.pk_c_code');
+            $this->dao->where('i_num_items '.$zero.' 0' );
+            $this->dao->orderBy($order);
+
+            $rs = $this->dao->get();
+
             if($rs === false) {
-                return array() ;
+                return array();
             }
-            return $rs->result() ;
+            return $rs->result();
         }
-        
+
         /**
-         * Calculate the total items that belong to countryCode 
+         * Calculate the total items that belong to countryCode
          * @access public
          * @since 2.4
          * @param type $countryCode
@@ -185,24 +181,24 @@
          */
         function calculateNumItems($countryCode)
         {
-            $sql  = 'SELECT count(*) as total FROM '.DB_TABLE_PREFIX.'t_item_location, '.DB_TABLE_PREFIX.'t_item, '.DB_TABLE_PREFIX.'t_category ' ;
-            $sql .= 'WHERE '.DB_TABLE_PREFIX.'t_item_location.fk_c_country_code = \''.$countryCode.'\' AND ' ;
-            $sql .= DB_TABLE_PREFIX.'t_item.pk_i_id = '.DB_TABLE_PREFIX.'t_item_location.fk_i_item_id AND ' ;
-            $sql .= DB_TABLE_PREFIX.'t_category.pk_i_id = '.DB_TABLE_PREFIX.'t_item.fk_i_category_id AND ' ;
-            $sql .= DB_TABLE_PREFIX.'t_item.b_active = 1 AND '.DB_TABLE_PREFIX.'t_item.b_enabled = 1 AND '.DB_TABLE_PREFIX.'t_item.b_spam = 0 AND ' ;
-            $sql .= '('.DB_TABLE_PREFIX.'t_item.b_premium = 1 || '.DB_TABLE_PREFIX.'t_item.dt_expiration >= \''.date('Y-m-d H:i:s').'\' ) AND ' ;
-            $sql .= DB_TABLE_PREFIX.'t_category.b_enabled = 1 ' ;
+            $sql  = 'SELECT count(*) as total FROM '.DB_TABLE_PREFIX.'t_item_location, '.DB_TABLE_PREFIX.'t_item, '.DB_TABLE_PREFIX.'t_category ';
+            $sql .= 'WHERE '.DB_TABLE_PREFIX.'t_item_location.fk_c_country_code = \''.$countryCode.'\' AND ';
+            $sql .= DB_TABLE_PREFIX.'t_item.pk_i_id = '.DB_TABLE_PREFIX.'t_item_location.fk_i_item_id AND ';
+            $sql .= DB_TABLE_PREFIX.'t_category.pk_i_id = '.DB_TABLE_PREFIX.'t_item.fk_i_category_id AND ';
+            $sql .= DB_TABLE_PREFIX.'t_item.b_active = 1 AND '.DB_TABLE_PREFIX.'t_item.b_enabled = 1 AND '.DB_TABLE_PREFIX.'t_item.b_spam = 0 AND ';
+            $sql .= '('.DB_TABLE_PREFIX.'t_item.b_premium = 1 || '.DB_TABLE_PREFIX.'t_item.dt_expiration >= \''.date('Y-m-d H:i:s').'\' ) AND ';
+            $sql .= DB_TABLE_PREFIX.'t_category.b_enabled = 1 ';
 
             $return = $this->dao->query($sql);
             if($return === false) {
                 return 0;
             }
-            
+
             if($return->numRows() > 0) {
-                $aux = $return->result() ;
-                return $aux[0]['total'] ;
+                $aux = $return->result();
+                return $aux[0]['total'];
             }
-            
+
             return 0;
         }
     }

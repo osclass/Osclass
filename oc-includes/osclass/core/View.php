@@ -1,57 +1,53 @@
 <?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
-    /*
-     *      OSCLass – software for creating and publishing online classified
-     *                           advertising platforms
-     *
-     *                        Copyright (C) 2010 OSCLASS
-     *
-     *       This program is free software: you can redistribute it and/or
-     *     modify it under the terms of the GNU Affero General Public License
-     *     as published by the Free Software Foundation, either version 3 of
-     *            the License, or (at your option) any later version.
-     *
-     *     This program is distributed in the hope that it will be useful, but
-     *         WITHOUT ANY WARRANTY; without even the implied warranty of
-     *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-     *             GNU Affero General Public License for more details.
-     *
-     *      You should have received a copy of the GNU Affero General Public
-     * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
-     */
+/*
+ * Copyright 2014 Osclass
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
     class View
     {
-        private $aExported ;
-        private $aCurrent ;
-        private static $instance ;
+        private $aExported;
+        private $aCurrent;
+        private static $instance;
 
         public static function newInstance()
         {
             if(!self::$instance instanceof self) {
-                self::$instance = new self ;
+                self::$instance = new self;
             }
-            return self::$instance ;
+            return self::$instance;
         }
 
         function __construct()
         {
-            $this->aExported = array() ;
+            $this->aExported = array();
         }
 
         //to export variables at the business layer
         function _exportVariableToView($key, $value)
         {
-            $this->aExported[$key] = $value ;
+            $this->aExported[$key] = $value;
         }
 
         //to get the exported variables for the view
         function _get($key)
         {
             if ($this->_exists($key)) {
-                return($this->aExported[$key]) ;
+                return($this->aExported[$key]);
             } else {
-                return '' ;
+                return '';
             }
         }
 
@@ -59,33 +55,60 @@
         function _view($key = null)
         {
             if ($key) {
-                print_r($this->aExported[$key]) ;
+                print_r($this->aExported[$key]);
             } else {
-                print_r($this->aExported) ;
+                print_r($this->aExported);
             }
         }
 
         function _next($key)
         {
             if (is_array($this->aExported[$key])) {
-                $this->aCurrent[$key] = current( $this->aExported[$key] ) ;
+                $this->aCurrent[$key] = current( $this->aExported[$key] );
                 if ( $this->aCurrent[$key] ) {
-                    next( $this->aExported[$key] ) ;
-                    return true ;
+                    next( $this->aExported[$key] );
+                    return true;
                 }
             }
-            return false ;
+            return false;
         }
 
         function _current($key)
         {
             if ( isset($this->aCurrent[$key]) && is_array($this->aCurrent[$key]) ) {
-                return $this->aCurrent[$key] ;
+                return $this->aCurrent[$key];
             } elseif ( is_array($this->aExported[$key]) ) {
-                $this->aCurrent[$key] = current( $this->aExported[$key] ) ;
-                return $this->aCurrent[$key] ;
+                $this->aCurrent[$key] = current( $this->aExported[$key] );
+                return $this->aCurrent[$key];
             }
-            return '' ;
+            return '';
+        }
+
+        function _key($key)
+        {
+            if ( is_array($this->aExported[$key]) ) {
+                $_key = key( $this->aExported[$key] ) -1;
+                if($_key==-1) {
+                    $_key = count($this->aExported[$key]) -1;
+                }
+                return $_key;
+            }
+            return false;
+        }
+
+        function _seek($key, $position)
+        {
+            if ( is_array($this->aExported[$key]) ) {
+                $this->_reset($key);
+                for($k = 0;$k<=$position;$k++) {
+                    $res = $this->_next($key);
+                    if(!$res) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+            return false;
         }
 
         function _reset($key)
@@ -96,26 +119,26 @@
             if ( !is_array( $this->aExported[$key] ) ) {
                 return array();
             }
-            return reset($this->aExported[$key]) ;
+            return reset($this->aExported[$key]);
         }
 
         function _exists($key)
         {
-            return ( isset($this->aExported[$key]) ? true : false ) ;
+            return ( isset($this->aExported[$key]) ? true : false );
         }
 
         function _count($key)
         {
             if (is_array($this->aExported[$key])) {
-                return count($this->aExported[$key]) ;
+                return count($this->aExported[$key]);
             }
-            return -1 ;
+            return -1; // @TOFIX @FIXME ?? why ? why not 0 ?
         }
 
         function _erase($key)
         {
-            unset($this->aExported[$key]) ;
-            unset($this->aCurrent[$key]) ;
+            unset($this->aExported[$key]);
+            unset($this->aCurrent[$key]);
         }
     }
 

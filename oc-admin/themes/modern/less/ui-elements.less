@@ -177,8 +177,9 @@ input.ico-32{
         overflow: hidden;
         display: block;
         line-height: 16px;
+        float: left;
     }
-    .select-box-big .select-box-icon{   
+    .select-box-big .select-box-icon{
         height:29px;
         border-left:solid 1px @color-gray-soft;
     }
@@ -187,7 +188,7 @@ input.ico-32{
         padding:9px 45px 7px 12px;
         font-size: 13px;
     }
-    .select-box-extra .select-box-icon{   
+    .select-box-extra .select-box-icon{
         height:32px;
         border-left:solid 1px @color-gray-soft;
     }
@@ -260,7 +261,7 @@ div.select-box-input select{
     right:13px;
     top:1px;
     right:0px;
-    
+
     height:27px;
     width:32px;
     text-decoration:none;
@@ -327,6 +328,9 @@ input.input-has-select{
     font-size:11px;
     font-weight:bold;
     line-height: 14px;
+    height: 24px;
+    padding-top: 4px;
+    padding-bottom: 5px;
 }
 input.btn-mini,
 button.btn-mini{
@@ -500,12 +504,15 @@ ul.showing-results{
     font-size:13px;
     .rounded-corners(0 3px 3px 0);
 }
+.display-select-bottom{
+  float:left;
+  padding:0;
+  margin: 25px 0 0 10px;
+}
 .inline{
     display:inline;
 }
-.select-items-per-page{
-    margin-left:5px;
-}
+
 #content-head .btn{
     *margin-top:-27px;
 }
@@ -516,4 +523,20 @@ ul.showing-results{
 .btn-disabled{
     opacity:0.7;
     filter:alpha(opacity=70);
+}
+.btn-market-update,
+.btn-market-preview{
+    background-color: #2fbfd1;
+    .rounded-corners(3px);
+    padding:3px 10px;
+    color:#fff;
+    margin-top:5px; margin-left:5px;
+}
+.btn-market-preview{
+    background-color: @color-gray-ash;
+    margin-left:0px;
+}
+.spinner{
+   width:16px;height: 16px;display:block; margin-right:10px; float:left;
+   background:url('../images/loading.gif');
 }

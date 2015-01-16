@@ -1,67 +1,65 @@
 <?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
-    /*
-     *      OSCLass – software for creating and publishing online classified
-     *                           advertising platforms
-     *
-     *                        Copyright (C) 2010 OSCLASS
-     *
-     *       This program is free software: you can redistribute it and/or
-     *     modify it under the terms of the GNU Affero General Public License
-     *     as published by the Free Software Foundation, either version 3 of
-     *            the License, or (at your option) any later version.
-     *
-     *     This program is distributed in the hope that it will be useful, but
-     *         WITHOUT ANY WARRANTY; without even the implied warranty of
-     *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-     *             GNU Affero General Public License for more details.
-     *
-     *      You should have received a copy of the GNU Affero General Public
-     * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
-     */
+/*
+ * Copyright 2014 Osclass
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
     class Rewrite
     {
-        private static $instance ;
+        private static $instance;
         private $rules;
+        private $routes;
         private $request_uri;
+        private $raw_request_uri;
         private $uri;
         private $location;
         private $section;
+        private $title;
         private $http_referer;
 
         public function __construct()
         {
-            $this->rules = $this->getRules();
             $this->request_uri = '';
+            $this->raw_request_uri = '';
             $this->uri = '';
             $this->location = '';
             $this->section = '';
+            $this->title = '';
             $this->http_referer = '';
-            //parent::__construct() ;
+            $this->routes = array();
+            $this->rules = $this->getRules();
         }
 
         public static function newInstance()
         {
             if(!self::$instance instanceof self) {
-                self::$instance = new self ;
+                self::$instance = new self;
             }
-            return self::$instance ;
+            return self::$instance;
         }
 
         public function getTableName() {}
 
         public function getRules()
         {
-            return unserialize(osc_rewrite_rules()) ;
+            return osc_unserialize(osc_rewrite_rules());
         }
 
         public function setRules()
         {
-            Preference::newInstance()->update(
-                    array('s_value' => serialize($this->rules))
-                    ,array('s_name' => 'rewrite_rules')
-            );
+            osc_set_preference('rewrite_rules', osc_serialize($this->rules));
         }
 
         public function listRules()
@@ -91,6 +89,20 @@
             }
         }
 
+        public function addRoute($id, $regexp, $url, $file, $user_menu = false, $location = "custom", $section = "custom", $title = "Custom")
+        {
+            $regexp = trim($regexp);
+            $file = trim($file);
+            if($regexp!='' && $file!='') {
+                $this->routes[$id] = array('regexp' => $regexp, 'url' => $url, 'file' => $file, 'user_menu' => $user_menu, 'location' => $location, 'section' => $section, 'title' => $title);
+            }
+        }
+
+        public function getRoutes()
+        {
+            return $this->routes;
+        }
+
         public function init()
         {
             // $_SERVER is not supported by Params Class... we should fix that
@@ -100,24 +112,51 @@
                     $_SERVER['REQUEST_URI'] = preg_replace('|[\?&]{1}http_referer=(.*)$|', "", urldecode($_SERVER['REQUEST_URI']));
                 }
                 $request_uri = preg_replace('@^' . REL_WEB_URL . '@', "", urldecode($_SERVER['REQUEST_URI']));
-                if(osc_rewrite_enabled()) {
-                    $this->extractParams($request_uri);
-                    $tmp_ar = explode("?", $request_uri);
-                    $request_uri = $tmp_ar[0];
-                    foreach($this->rules as $match => $uri) {
-                        // UNCOMMENT TO DEBUG
-                        //echo 'Request URI: '.$request_uri." # Match : ".$match." # URI to go : ".$uri." <br />";
-                        if(preg_match('#'.$match.'#', $request_uri, $m)) {
-                            $request_uri = preg_replace('#'.$match.'#', $uri, $request_uri);
-                            break;
+                $this->raw_request_uri = $request_uri;
+                $route_used = false;
+                foreach($this->routes as $id => $route) {
+                    // UNCOMMENT TO DEBUG
+                    //echo 'Request URI: '.$request_uri." # Match : ".$route['regexp']." # URI to go : ".$route['url']." <br />";
+                    if(preg_match('#^'.$route['regexp'].'#', $request_uri, $m)) {
+                        if(!preg_match_all('#\{([^\}]+)\}#', $route['url'], $args)) {
+                            $args[1] = array();
                         }
+                        $l = count($m);
+                        for($p=1;$p<$l;$p++) {
+                            if(isset($args[1][$p-1])) {
+                                Params::setParam($args[1][$p-1], $m[$p]);
+                            } else {
+                                Params::setParam('route_param_'.$p, $m[$p]);
+                            }
+                        }
+                        Params::setParam('page', 'custom');
+                        Params::setParam('route', $id);
+                        $route_used = true;
+                        $this->location = $route['location'];
+                        $this->section = $route['section'];
+                        $this->title = $route['title'];
+                        break;
                     }
                 }
-                $this->extractParams($request_uri);
-                $this->request_uri = $request_uri;
+                if(!$route_used) {
+                    if(osc_rewrite_enabled()) {
+                        $tmp_ar = explode("?", $request_uri);
+                        $request_uri = $tmp_ar[0];
+                        foreach($this->rules as $match => $uri) {
+                            // UNCOMMENT TO DEBUG
+                            //echo 'Request URI: '.$request_uri." # Match : ".$match." # URI to go : ".$uri." <br />";
+                            if(preg_match('#^'.$match.'#', $request_uri, $m)) {
+                                $request_uri = preg_replace('#'.$match.'#', $uri, $request_uri);
+                                break;
+                            }
+                        }
+                    }
+                    $this->extractParams($request_uri);
+                    $this->request_uri = $request_uri;
 
-                if(Params::getParam('page')!='') { $this->location = Params::getParam('page'); };
-                if(Params::getParam('action')!='') { $this->section = Params::getParam('action'); };
+                    if(Params::getParam('page')!='') { $this->location = Params::getParam('page'); };
+                    if(Params::getParam('action')!='') { $this->section = Params::getParam('action'); };
+                }
             }
         }
 
@@ -134,7 +173,6 @@
         public function extractParams($uri = '')
         {
             $uri_array = explode('?', $uri);
-            $url = substr($uri_array[0], 1);
             $length_i = count($uri_array);
             for($var_i = 1;$var_i<$length_i;$var_i++) {
                 if(preg_match_all('|&([^=]+)=([^&]*)|', '&'.$uri_array[$var_i].'&', $matches)) {
@@ -162,6 +200,11 @@
             return $this->request_uri;
         }
 
+        public function get_raw_request_uri()
+        {
+            return $this->raw_request_uri;
+        }
+
         public function set_location($location)
         {
             $this->location = $location;
@@ -175,6 +218,11 @@
         public function get_section()
         {
             return $this->section;
+        }
+        
+        public function get_title()
+        {
+            return $this->title;
         }
         
         public function get_http_referer()

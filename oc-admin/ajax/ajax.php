@@ -1,32 +1,31 @@
 <?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
-    /**
-     * OSClass – software for creating and publishing online classified advertising platforms
-     *
-     * Copyright (C) 2010 OSCLASS
-     *
-     * This program is free software: you can redistribute it and/or modify it under the terms
-     * of the GNU Affero General Public License as published by the Free Software Foundation,
-     * either version 3 of the License, or (at your option) any later version.
-     *
-     * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-     * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-     * See the GNU Affero General Public License for more details.
-     *
-     * You should have received a copy of the GNU Affero General Public
-     * License along with this program. If not, see <http://www.gnu.org/licenses/>.
-     */
+/*
+ * Copyright 2014 Osclass
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
-    define('IS_AJAX', true) ;
+    define('IS_AJAX', true);
 
     class CAdminAjax extends AdminSecBaseModel {
 
         function __construct()
         {
             parent::__construct();
-            $this->ajax = true ;
+            $this->ajax = true;
             if( $this->isModerator() ) {
-                if( !in_array($this->action, array('items', 'media', 'comments', 'custom')) ) {
+                if( !in_array($this->action, array('items', 'media', 'comments', 'custom', 'runhook')) ) {
                     $this->action = 'error_permissions';
                 }
             }
@@ -66,7 +65,7 @@
                     $hook = Params::getParam('hook');
 
                     if($hook == '') {
-                        echo json_encode(array('error' => 'hook parameter not defined')) ;
+                        echo json_encode(array('error' => 'hook parameter not defined'));
                         break;
                     }
 
@@ -84,97 +83,33 @@
                         break;
                     }
                 break;
-                case 'items': // Return items (use external file oc-admin/ajax/item_processing.php)
-                    require_once osc_admin_base_path() . 'ajax/items_processing.php';
-                    $items_processing = new ItemsProcessingAjax(Params::getParamsAsArray("get"));
-                    // HACK DELETE ON 3.0
-                    $items_processing->dumpToDatatables();
-                    break;
-                case 'users': // Return users (use external file oc-admin/ajax/users_processing.php)
-                    require_once osc_admin_base_path() . 'ajax/users_processing.php';
-                    $users_processing = new UsersProcessingAjax(Params::getParamsAsArray("get"));
-                    // HACK DELETE ON 3.0
-                    $users_processing->dumpToDatatables();
-                    break;
-                case 'media': // Return media (use external file oc-admin/ajax/media_processing.php)
-                    require_once osc_admin_base_path() . 'ajax/media_processing.php';
-                    $media_processing = new MediaProcessingAjax(Params::getParamsAsArray("get"));
-                    // HACK DELETE ON 3.0
-                    $media_processing->dumpToDatatables();
-                    break;
-                case 'comments': // Return comments (use external file oc-admin/ajax/comments_processing.php)
-                    require_once osc_admin_base_path() . 'ajax/comments_processing.php';
-                    $comments_processing = new CommentsProcessingAjax(Params::getParamsAsArray("get"));
-                    // HACK DELETE ON 3.0
-                    $comments_processing->dumpToDatatables() ;
-                    break;
                 case 'categories_order': // Save the order of the categories
                     osc_csrf_check(false);
-                    $aIds        = Params::getParam('list') ;
-                    $orderParent = 0 ;
-                    $orderSub    = 0 ;
-                    $catParent   = 0 ;
-                    $error       = 0 ;
+                    $aIds        = Params::getParam('list');
+                    $order = array();
+                    $error       = 0;
 
-                    $catManager = Category::newInstance() ;
+                    $catManager = Category::newInstance();
                     $aRecountCat = array();
 
-                    foreach($aIds as $id => $parent) {
-                        if( $parent == 'root' ) {
-                            $res = $catManager->updateOrder($id, $orderParent) ;
-                            if( is_bool($res) && !$res ) {
-                                $error = 1 ;
-                            }
-
-                            // find category
-                            $auxCategory = Category::newInstance()->findByPrimaryKey($id);
-
-                            // set parent category
-                            $conditions = array('pk_i_id' => $id) ;
-                            $array['fk_i_parent_id'] = NULL ;
-                            $res = $catManager->update($array, $conditions) ;
-                            if( is_bool($res) && !$res ) {
-                                $error = 1 ;
-                            } else if($res==1) { // updated ok
-                                $parentId = $auxCategory['fk_i_parent_id'];
-                                if($parentId) {
-                                    // update parent category stats
-                                    array_push($aRecountCat, $id);
-                                    array_push($aRecountCat, $parentId);
-                                }
-
-                            }
-                            $orderParent++ ;
-                        } else {
-                            if( $parent != $catParent ) {
-                                $catParent = $parent ;
-                                $orderSub  = 0 ;
-                            }
-
-                            $res = $catManager->updateOrder($id, $orderSub) ;
-                            if( is_bool($res) && !$res ) {
-                                $error = 1 ;
-                            }
-
-                            // set parent category
-                            $auxCategory = Category::newInstance()->findByPrimaryKey($id);
-                            $auxCategoryP = Category::newInstance()->findByPrimaryKey($catParent);
-
-                            $conditions = array('pk_i_id' => $id) ;
-                            $array['fk_i_parent_id'] = $catParent ;
-
-                            $res = $catManager->update($array, $conditions) ;
-                            if( is_bool($res) && !$res ) {
-                                $error = 1 ;
-                            } else if($res==1) { // updated ok
-                                // update category parent
-                                $prevParentId = $auxCategory['fk_i_parent_id'];
-                                $parentId = $auxCategoryP['pk_i_id'];
-                                array_push($aRecountCat, $prevParentId);
-                                array_push($aRecountCat, $parentId);
-                            }
-                            $orderSub++ ;
+                    foreach($aIds as $cat) {
+                        if(!isset($order[$cat['p']])) {
+                            $order[$cat['p']] = 0;
                         }
+
+                        $res = $catManager->update(
+                            array(
+                                'fk_i_parent_id' => ($cat['p']=='root'?NULL:$cat['p']),
+                                'i_position' => $order[$cat['p']]
+                            ),
+                            array('pk_i_id' => $cat['c'])
+                        );
+                        if( is_bool($res) && !$res ) {
+                            $error = 1;
+                        } else if($res==1) {
+                            $aRecountCat[] = $cat['c'];
+                        }
+                        $order[$cat['p']] = $order[$cat['p']]+1;
                     }
 
                     // update category stats
@@ -183,17 +118,22 @@
                     }
 
                     if( $error ) {
-                        $result = array( 'error' => __("An error occurred") ) ;
+                        $result = array( 'error' => __("An error occurred") );
                     } else {
-                        $result = array( 'ok' => __("Order saved")) ;
+                        $result = array( 'ok' => __("Order saved"));
                     }
 
-                    echo json_encode($result) ;
-                break ;
+                    echo json_encode($result);
+                break;
                 case 'category_edit_iframe':
-                    $this->_exportVariableToView( 'category', Category::newInstance()->findByPrimaryKey( Params::getParam("id") ) ) ;
-                    $this->_exportVariableToView( 'languages', OSCLocale::newInstance()->listAllEnabled() ) ;
-                    $this->doView("categories/iframe.php") ;
+                    $this->_exportVariableToView('category', Category::newInstance()->findByPrimaryKey(Params::getParam("id"), 'all'));
+                    if(count(Category::newInstance()->findSubcategories( Params::getParam("id") ) )>0) {
+                        $this->_exportVariableToView( 'has_subcategories', true);
+                    } else {
+                        $this->_exportVariableToView( 'has_subcategories', false);
+                    };
+                    $this->_exportVariableToView( 'languages', OSCLocale::newInstance()->listAllEnabled() );
+                    $this->doView("categories/iframe.php");
                     break;
                 case 'field_categories_iframe':
                     $selected = Field::newInstance()->categories(Params::getParam("id"));
@@ -227,7 +167,29 @@
                                     $slug = $slug_tmp."_".$slug_k;
                                 }
                             }
-                            $res = Field::newInstance()->update(array('s_name' => Params::getParam("s_name"), 'e_type' => Params::getParam("field_type"), 's_slug' => $slug, 'b_required' => Params::getParam("field_required") == "1" ? 1 : 0, 's_options' => Params::getParam('s_options')), array('pk_i_id' => Params::getParam("id")));
+
+                            // trim options
+                            $s_options = '';
+                            $aux  = Params::getParam('s_options');
+                            $aAux = explode(',', $aux);
+
+                            foreach($aAux as &$option) {
+                                $option = trim($option);
+                            }
+
+                            $s_options = implode(',', $aAux);
+
+                            $res = Field::newInstance()->update(
+                                    array(
+                                        's_name'        => Params::getParam("s_name"),
+                                        'e_type'        => Params::getParam("field_type"),
+                                        's_slug'        => $slug,
+                                        'b_required'    => Params::getParam("field_required") == "1" ? 1 : 0,
+                                        'b_searchable'  => Params::getParam("field_searchable") == "1" ? 1 : 0,
+                                        's_options'     => $s_options),
+                                    array('pk_i_id' => Params::getParam("id"))
+                                    );
+
                             if(is_bool($res) && !$res) {
                                 $error = 1;
                             }
@@ -252,12 +214,12 @@
                     }
 
                     if($error) {
-                        $result = array( 'error' => $message) ;
+                        $result = array( 'error' => $message);
                     } else {
-                        $result = array( 'ok' => __("Saved") , 'text' => Params::getParam("s_name"), 'field_id' => $field['pk_i_id']) ;
+                        $result = array( 'ok' => __("Saved") , 'text' => Params::getParam("s_name"), 'field_id' => Params::getParam("id") );
                     }
 
-                    echo json_encode($result) ;
+                    echo json_encode($result);
 
                     break;
                 case 'delete_field':
@@ -287,7 +249,7 @@
                         }
                     }
                     $fieldManager = Field::newInstance();
-                    $result = $fieldManager->insertField($s_name, 'TEXT', $slug, 0, '', array()) ;
+                    $result = $fieldManager->insertField($s_name, 'TEXT', $slug, 0, '', array());
                     if($result) {
                         echo json_encode(array('error' => 0, 'field_id' => $fieldManager->dao->insertedId(), 'field_name' => $s_name));
                     } else {
@@ -296,33 +258,33 @@
                     break;
                 case 'enable_category':
                     osc_csrf_check(false);
-                    $id       = strip_tags( Params::getParam('id') ) ;
-                    $enabled  = (Params::getParam('enabled') != '') ? Params::getParam('enabled') : 0 ;
-                    $error    = 0 ;
-                    $result   = array() ;
-                    $aUpdated = array() ;
+                    $id       = strip_tags( Params::getParam('id') );
+                    $enabled  = (Params::getParam('enabled') != '') ? Params::getParam('enabled') : 0;
+                    $error    = 0;
+                    $result   = array();
+                    $aUpdated = array();
 
-                    $mCategory = Category::newInstance() ;
-                    $aCategory = $mCategory->findByPrimaryKey( $id ) ;
+                    $mCategory = Category::newInstance();
+                    $aCategory = $mCategory->findByPrimaryKey( $id );
 
                     if( $aCategory == false ) {
-                        $result = array( 'error' => sprintf( __("No category with id %d exists"), $id) ) ;
-                        echo json_encode($result) ;
-                        break ;
+                        $result = array( 'error' => sprintf( __("No category with id %d exists"), $id) );
+                        echo json_encode($result);
+                        break;
                     }
 
                     // root category
                     if( $aCategory['fk_i_parent_id'] == '' ) {
-                        $mCategory->update( array('b_enabled' => $enabled), array('pk_i_id'        => $id) ) ;
-                        $mCategory->update( array('b_enabled' => $enabled), array('fk_i_parent_id' => $id) ) ;
+                        $mCategory->update( array('b_enabled' => $enabled), array('pk_i_id'        => $id) );
+                        $mCategory->update( array('b_enabled' => $enabled), array('fk_i_parent_id' => $id) );
 
-                        $subCategories = $mCategory->findSubcategories( $id ) ;
+                        $subCategories = $mCategory->findSubcategories( $id );
 
                         $aIds = array($id);
-                        $aUpdated[] = array('id' => $id) ;
+                        $aUpdated[] = array('id' => $id);
                         foreach( $subCategories as $subcategory ) {
                             $aIds[]     = $subcategory['pk_i_id'];
-                            $aUpdated[] = array( 'id' => $subcategory['pk_i_id'] ) ;
+                            $aUpdated[] = array( 'id' => $subcategory['pk_i_id'] );
                         }
 
                         Item::newInstance()->enableByCategory($enabled, $aIds);
@@ -330,39 +292,39 @@
                         if( $enabled ) {
                             $result = array(
                                 'ok' => __('The category as well as its subcategories have been enabled')
-                            ) ;
+                            );
                         } else {
                             $result = array(
                                 'ok' => __('The category as well as its subcategories have been disabled')
-                            ) ;
+                            );
                         }
-                        $result['affectedIds'] = $aUpdated ;
-                        echo json_encode($result) ;
-                        break ;
+                        $result['affectedIds'] = $aUpdated;
+                        echo json_encode($result);
+                        break;
                     }
 
                     // subcategory
-                    $parentCategory = $mCategory->findRootCategory( $id ) ;
+                    $parentCategory = $mCategory->findRootCategory( $id );
                     if( !$parentCategory['b_enabled'] ) {
-                        $result = array( 'error' => __('Parent category is disabled, you can not enable that category') ) ;
-                        echo json_encode( $result ) ;
-                        break ;
+                        $result = array( 'error' => __('Parent category is disabled, you can not enable that category') );
+                        echo json_encode( $result );
+                        break;
                     }
 
-                    $mCategory->update( array('b_enabled' => $enabled), array('pk_i_id' => $id) ) ;
+                    $mCategory->update( array('b_enabled' => $enabled), array('pk_i_id' => $id) );
                     if( $enabled ) {
                         $result = array(
                             'ok' => __('The subcategory has been enabled')
-                        ) ;
+                        );
                     } else {
                         $result = array(
                             'ok' => __('The subcategory has been disabled')
-                        ) ;
+                        );
                     }
-                    $result['affectedIds'] = array( array('id' => $id) ) ;
-                    echo json_encode($result) ;
+                    $result['affectedIds'] = array( array('id' => $id) );
+                    echo json_encode($result);
 
-                    break ;
+                    break;
                 case 'delete_category':
                     osc_csrf_check(false);
                     $id = Params::getParam("id");
@@ -379,17 +341,19 @@
                     }
 
                     if($error) {
-                        $result = array( 'error' => $message) ;
+                        $result = array( 'error' => $message);
                     } else {
-                        $result = array( 'ok' => __("Saved") ) ;
+                        $result = array( 'ok' => __("Saved") );
                     }
-                    echo json_encode($result) ;
+                    echo json_encode($result);
 
                     break;
                 case 'edit_category_post':
                     osc_csrf_check(false);
                     $id = Params::getParam("id");
                     $fields['i_expiration_days'] = (Params::getParam("i_expiration_days") != '') ? Params::getParam("i_expiration_days") : 0;
+                    $fields['b_price_enabled'] = (Params::getParam('b_price_enabled') != '') ? 1 : 0;
+                    $apply_changes_to_subcategories = Params::getParam('apply_changes_to_subcategories')==1?true:false;
 
                     $error = 0;
                     $has_one_title = 0;
@@ -415,7 +379,8 @@
                     if ($error==0 || ($error==1 && $has_one_title==1)) {
                         $categoryManager = Category::newInstance();
                         $res = $categoryManager->updateByPrimaryKey(array('fields' => $fields, 'aFieldsDescription' => $aFieldsDescription), $id);
-
+                        $categoryManager->updateExpiration($id, $fields['i_expiration_days'], $apply_changes_to_subcategories);
+                        $categoryManager->updatePriceEnabled($id, $fields['b_price_enabled'], $apply_changes_to_subcategories);
                         if( is_bool($res) ) {
                             $error = 2;
                         }
@@ -437,29 +402,38 @@
 
                     break;
                 case 'custom': // Execute via AJAX custom file
-                    $ajaxFile = Params::getParam("ajaxfile");
+                    if(Params::existParam('route')) {
+                        $routes = Rewrite::newInstance()->getRoutes();
+                        $rid = Params::getParam('route');
+                        $file = '../';
+                        if(isset($routes[$rid]) && isset($routes[$rid]['file'])) {
+                            $file = $routes[$rid]['file'];
+                        }
+                    } else {
+                        $file = Params::getParam("ajaxfile");
+                    }
 
-                    if($ajaxFile == '') {
+                    if($file == '') {
                         echo json_encode(array('error' => 'no action defined'));
-                        break ;
-                    }
-
-                    // valid file?
-                    if( stripos($ajaxFile, '../') !== false ) {
-                        echo json_encode(array('error' => 'no valid ajaxFile'));
-                        break ;
-                    }
-
-                    if( !file_exists(osc_plugins_path() . $ajaxFile) ) {
-                        echo json_encode(array('error' => "ajaxFile doesn't exist"));
                         break;
                     }
 
-                    require_once osc_plugins_path() . $ajaxFile ;
+                    // valid file?
+                    if( stripos($file, '../') !== false || stripos($file, '..\\') !== false ) {
+                        echo json_encode(array('error' => 'no valid file'));
+                        break;
+                    }
+
+                    if( !file_exists(osc_plugins_path() . $file) ) {
+                        echo json_encode(array('error' => "file doesn't exist"));
+                        break;
+                    }
+
+                    require_once osc_plugins_path() . $file;
                 break;
                 case 'test_mail':
-                    $title = sprintf( __('Test email, %s'), osc_page_title() ) ;
-                    $body  = __("Test email") . "<br><br>" . osc_page_title() ;
+                    $title = sprintf( __('Test email, %s'), osc_page_title() );
+                    $body  = __("Test email") . "<br><br>" . osc_page_title();
 
                     $emailParams = array(
                         'subject'  => $title,
@@ -467,15 +441,37 @@
                         'to_name'  => 'admin',
                         'body'     => $body,
                         'alt_body' => $body
-                    ) ;
+                    );
 
-                    $array = array() ;
+                    $array = array();
                     if( osc_sendMail($emailParams) ) {
-                        $array = array('status' => '1', 'html' => __('Email sent successfully') ) ;
+                        $array = array('status' => '1', 'html' => __('Email sent successfully') );
                     } else {
-                        $array = array('status' => '0', 'html' => __('An error occurred while sending email') ) ;
+                        $array = array('status' => '0', 'html' => __('An error occurred while sending email') );
                     }
-                    echo json_encode($array) ;
+                    echo json_encode($array);
+                    break;
+                case 'test_mail_template':
+                    // replace por valores por defecto
+                    $email = Params::getParam("email");
+                    $title = Params::getParam("title");
+                    $body  = Params::getParam("body", false, false);
+
+                    $emailParams = array(
+                        'subject'  => $title,
+                        'to'       => $email,
+                        'to_name'  => 'admin',
+                        'body'     => $body,
+                        'alt_body' => $body
+                    );
+
+                    $array = array();
+                    if( osc_sendMail($emailParams) ) {
+                        $array = array('status' => '1', 'html' => __('Email sent successfully') );
+                    } else {
+                        $array = array('status' => '0', 'html' => __('An error occurred while sending email') );
+                    }
+                    echo json_encode($array);
                     break;
                 case 'order_pages':
                     osc_csrf_check(false);
@@ -500,146 +496,52 @@
                             $mPages->update(array('i_order' => $actual_order), array('pk_i_id' => $page['pk_i_id']));
                         }
                     }
-                break;
+                    break;
+                case 'check_version':
+                    $data = osc_file_get_contents('http://osclass.org/latest_version_v1.php?callback=?');
+                    $data = preg_replace('|^\?\((.*?)\);$|', '$01', $data);
+                    $json = json_decode($data);
+                    if(isset($json->version)) {
+                        if ($json->version > osc_version()) {
+                            osc_set_preference('update_core_json', $data);
+                            echo json_encode(array('error' => 0, 'msg' => __('Update available')));
+                        } else {
+                            osc_set_preference('update_core_json', '');
+                            echo json_encode(array('error' => 0, 'msg' => __('No update available')));
+                        }
+                        osc_set_preference( 'last_version_check', time() );
+                    } else { // Latest version couldn't be checked (site down?)
+                        osc_set_preference( 'last_version_check', time()-82800 ); // 82800 = 23 hours, so repeat check in one hour
+                        echo json_encode(array('error' => 1, 'msg' => __('Version could not be checked')));
+                    }
+                    break;
+                case 'check_languages':
+                    $total = _osc_check_languages_update();
+                    echo json_encode(array('msg' => __('Checked updates'), 'total' => $total));
+                    break;
+                case 'check_themes':
+                    $total = _osc_check_themes_update();
+                    echo json_encode(array('msg' => __('Checked updates'), 'total' => $total));
+                    break;
+                case 'check_plugins':
+                    $total = _osc_check_plugins_update();
+                    echo json_encode(array('msg' => __('Checked updates'), 'total' => $total));
+                    break;
+
                 /******************************
                  ** COMPLETE UPGRADE PROCESS **
                  ******************************/
                 case 'upgrade': // AT THIS POINT WE KNOW IF THERE'S AN UPDATE OR NOT
-                    osc_csrf_check(false);
-                    $message = "";
-                    $error = 0;
-                    $sql_error_msg = "";
-                    $rm_errors = 0;
-                    $perms = osc_save_permissions();
-                    osc_change_permissions();
-
-                    $maintenance_file = ABS_PATH . '.maintenance';
-                    $fileHandler = @fopen($maintenance_file, 'w');
-                    fclose($fileHandler);
-
-                    /***********************
-                     **** DOWNLOAD FILE ****
-                     ***********************/
-                    $data = osc_file_get_contents("http://osclass.org/latest_version.php");
-                    $data = json_decode(substr($data, 1, strlen($data)-3), true);
-                    $source_file = $data['url'];
-                    if ($source_file != '') {
-
-                        $tmp = explode("/", $source_file);
-                        $filename = end($tmp);
-                        $result = osc_downloadFile($source_file, $filename);
-
-                        if ($result) { // Everything is OK, continue
-                            /**********************
-                             ***** UNZIP FILE *****
-                             **********************/
-                            @mkdir(ABS_PATH . 'oc-temp', 0777);
-                            $res = osc_unzip_file(osc_content_path() . 'downloads/' . $filename, ABS_PATH . 'oc-temp/');
-                            if ($res == 1) { // Everything is OK, continue
-                                /**********************
-                                 ***** COPY FILES *****
-                                 **********************/
-                                $fail = -1;
-                                if ($handle = opendir(ABS_PATH . 'oc-temp')) {
-                                    $fail = 0;
-                                    while (false !== ($_file = readdir($handle))) {
-                                        if ($_file != '.' && $_file != '..' && $_file != 'remove.list' && $_file != 'upgrade.sql' && $_file != 'customs.actions') {
-                                            $data = osc_copy(ABS_PATH . "oc-temp/" . $_file, ABS_PATH . $_file);
-                                            if ($data == false) {
-                                                $fail = 1;
-                                            };
-                                        }
-                                    }
-                                    closedir($handle);
-
-                                    if ($fail == 0) { // Everything is OK, continue
-                                        /************************
-                                         *** UPGRADE DATABASE ***
-                                         ************************/
-                                        $error_queries = array();
-                                        if (file_exists(osc_lib_path() . 'osclass/installer/struct.sql')) {
-                                            $sql = file_get_contents(osc_lib_path() . 'osclass/installer/struct.sql');
-
-                                            $conn = DBConnectionClass::newInstance();
-                                            $c_db = $conn->getOsclassDb() ;
-                                            $comm = new DBCommandClass( $c_db ) ;
-                                            $error_queries = $comm->updateDB( str_replace('/*TABLE_PREFIX*/', DB_TABLE_PREFIX, $sql) ) ;
-
-                                        }
-                                        if ($error_queries[0]) { // Everything is OK, continue
-                                            /**********************************
-                                             ** EXECUTING ADDITIONAL ACTIONS **
-                                             **********************************/
-                                            if (file_exists(osc_lib_path() . 'osclass/upgrade-funcs.php')) {
-                                                // There should be no errors here
-                                                define('AUTO_UPGRADE', true);
-                                                require_once osc_lib_path() . 'osclass/upgrade-funcs.php';
-                                            }
-                                            // Additional actions is not important for the rest of the proccess
-                                            // We will inform the user of the problems but the upgrade could continue
-                                            /****************************
-                                             ** REMOVE TEMPORARY FILES **
-                                             ****************************/
-                                            $path = ABS_PATH . 'oc-temp';
-                                            $rm_errors = 0;
-                                            $dir = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path), RecursiveIteratorIterator::CHILD_FIRST);
-                                            for ($dir->rewind(); $dir->valid(); $dir->next()) {
-                                                if ($dir->isDir()) {
-                                                    if ($dir->getFilename() != '.' && $dir->getFilename() != '..') {
-                                                        if (!rmdir($dir->getPathname())) {
-                                                            $rm_errors++;
-                                                        }
-                                                    }
-                                                } else {
-                                                    if (!unlink($dir->getPathname())) {
-                                                        $rm_errors++;
-                                                    }
-                                                }
-                                            }
-                                            if (!rmdir($path)) {
-                                                $rm_errors++;
-                                            }
-                                            $deleted = @unlink(ABS_PATH . '.maintenance');
-                                            if ($rm_errors == 0) {
-                                                $message = __('Everything looks good! Your OSClass installation is up-to-date');
-                                            } else {
-                                                $message = __('Nearly everything looks good! Your OSClass installation is up-to-date, but there were some errors removing temporary files. Please manually remove the "oc-temp" folder');
-                                                $error = 6; // Some errors removing files
-                                            }
-                                        } else {
-                                            $sql_error_msg = $error_queries[2];
-                                            $message = __('Problems when upgrading the database');
-                                            $error = 5; // Problems upgrading the database
-                                        }
-                                    } else {
-                                        $message = __('Problems when copying files. Please check your permissions. ');
-                                        $error = 4; // Problems copying files. Maybe permissions are not correct
-                                    }
-                                } else {
-                                    $message = __('Nothing to copy');
-                                    $error = 99; // Nothing to copy. THIS SHOULD NEVER HAPPEN, means we don't update any file!
-                                }
-                            } else {
-                                $message = __('Unzip failed');
-                                $error = 3; // Unzip failed
-                            }
-                        } else {
-                            $message = __('Download failed');
-                            $error = 2; // Download failed
+                    osc_csrf_check();
+                    $result = osc_do_upgrade();
+                    if(!defined(__FROM_CRON__) || !__FROM_CRON__) {
+                        if($result['error']==0) {
+                            osc_add_flash_ok_message($result['message'], 'admin');
+                        } else if($result['error']==6) {
+                            osc_add_flash_warning_message($result['message'], 'admin');
                         }
-                    } else {
-                        $message = __('Missing download URL');
-                        $error = 1; // Missing download URL
                     }
-
-                    if ($error == 5) {
-                        $message .= "<br /><br />" . __('We had some errors upgrading your database. The follwing queries failed:') . implode("<br />", $sql_error_msg);
-                    }
-                    echo $message;
-
-                    foreach ($perms as $k => $v) {
-                        @chmod($k, $v);
-                    }
+                    echo json_encode($result);
                     break;
 
                 /*******************************
@@ -647,162 +549,8 @@
                  *******************************/
                 case 'market': // AT THIS POINT WE KNOW IF THERE'S AN UPDATE OR NOT
                     osc_csrf_check(false);
-                    $section = Params::getParam('section');
-                    $code    = Params::getParam('code');
-                    $plugin  = false;
-                    $re_enable = false;
-                    $message = "";
-                    $error = 0;
-                    $data = array();
-                    /************************
-                     *** CHECK VALID CODE ***
-                     ************************/
-                    if ($code != '' && $section != '') {
-
-                        if(stripos("http://", $code)===FALSE) {
-                            // OSCLASS OFFICIAL REPOSITORY
-                            $url = osc_market_url($section, $code);
-                            $data = json_decode(osc_file_get_contents($url), true);
-                        } else {
-                            // THIRD PARTY REPOSITORY
-                            if(osc_market_external_sources()) {
-                                $data = json_decode(osc_file_get_contents($code), true);
-                            } else {
-                                echo json_encode(array('error' => 8, 'error_msg' => __('No external sources are allowed')));
-                                break;
-                            }
-                        }
-
-                        /***********************
-                         **** DOWNLOAD FILE ****
-                         ***********************/
-                        if( isset($data['s_update_url']) && isset($data['s_source_file']) && isset($data['e_type'])) {
-
-                            if($data['e_type']=='THEME') {
-                                $folder = 'themes/';
-                            } else if($data['e_type']=='LANGUAGE') {
-                                $folder = 'languages/';
-                            } else { // PLUGINS
-                                $folder = 'plugins/';
-                                $plugin = Plugins::findByUpdateURI($data['s_update_url']);
-                                if($plugin!=false) {
-                                    if(Plugins::isEnabled($plugin)) {
-                                        Plugins::runHook($plugin.'_disable') ;
-                                        Plugins::deactivate($plugin);
-                                        $re_enable = true;
-                                    }
-                                }
-                            }
-                            if($data['s_download']!='') {
-                                $filename = basename(str_replace("/download", "", $data['s_download']));
-                            } else {
-                                $filename = $data['s_update_url']."_".$data['s_version'].".zip";
-                            }
-//                            error_log('Source file: ' . $data['s_source_file']) ;
-//                            error_log('Filename: ' . $filename) ;
-                            $result   = osc_downloadFile($data['s_source_file'], $filename);
-
-                            if ($result) { // Everything is OK, continue
-                                /**********************
-                                 ***** UNZIP FILE *****
-                                 **********************/
-                                @mkdir(ABS_PATH . 'oc-temp', 0777);
-                                $res = osc_unzip_file(osc_content_path() . 'downloads/' . $filename, osc_content_path() . 'downloads/oc-temp/');
-                                if ($res == 1) { // Everything is OK, continue
-                                    /**********************
-                                     ***** COPY FILES *****
-                                     **********************/
-                                    $fail = -1;
-                                    if ($handle = opendir(osc_content_path() . 'downloads/oc-temp')) {
-                                        $fail = 0;
-                                        while (false !== ($_file = readdir($handle))) {
-                                            if ($_file != '.' && $_file != '..') {
-                                                $copyprocess = osc_copy(osc_content_path() . "downloads/oc-temp/" . $_file, ABS_PATH . "oc-content/" . $folder . $_file);
-                                                if ($copyprocess == false) {
-                                                    $fail = 1;
-                                                };
-                                            }
-                                        }
-                                        closedir($handle);
-
-                                        // Additional actions is not important for the rest of the proccess
-                                        // We will inform the user of the problems but the upgrade could continue
-                                        /****************************
-                                         ** REMOVE TEMPORARY FILES **
-                                         ****************************/
-                                        $path = osc_content_path() . 'downloads/oc-temp';
-                                        $rm_errors = 0;
-                                        $dir = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path), RecursiveIteratorIterator::CHILD_FIRST);
-                                        for ($dir->rewind(); $dir->valid(); $dir->next()) {
-                                            if ($dir->isDir()) {
-                                                if ($dir->getFilename() != '.' && $dir->getFilename() != '..') {
-                                                    if (!rmdir($dir->getPathname())) {
-                                                        $rm_errors++;
-                                                    }
-                                                }
-                                            } else {
-                                                if (!unlink($dir->getPathname())) {
-                                                    $rm_errors++;
-                                                }
-                                            }
-                                        }
-
-                                        if (!rmdir($path)) {
-                                            $rm_errors++;
-                                        }
-
-                                        if ($fail == 0) { // Everything is OK, continue
-                                            if($data['e_type']!='THEME' && $data['e_type']!='LANGUAGE') {
-                                                if($plugin!=false && $re_enable) {
-                                                    $enabled = Plugins::activate($plugin);
-                                                    if($enabled) {
-                                                        Plugins::runHook($plugin.'_enable') ;
-                                                    }
-                                                }
-
-                                            }
-                                            // recount plugins&themes for update
-                                            if($section == 'plugins') {
-                                                osc_check_plugins_update(true);
-                                            } else if($section == 'themes') {
-                                                osc_check_themes_update(true);
-                                            }
-
-                                            if ($rm_errors == 0) {
-                                                $message = __('Everything looks good!');
-                                                $error = 0;
-                                            } else {
-                                                $message = __('Nearly everything looks good! but there were some errors removing temporary files. Please manually remove the \"oc-temp\" folder');
-                                                $error = 6; // Some errors removing files
-                                            }
-                                        } else {
-                                            $message = __('Problems when copying files. Please check your permissions. ');
-                                            $error = 4; // Problems copying files. Maybe permissions are not correct
-                                        }
-                                    } else {
-                                        $message = __('Nothing to copy');
-                                        $error = 99; // Nothing to copy. THIS SHOULD NEVER HAPPEN, means we don't update any file!
-                                    }
-                                } else {
-                                    $message = __('Unzip failed');
-                                    $error = 3; // Unzip failed
-                                }
-                            } else {
-                                $message = __('Download failed');
-                                $error = 2; // Download failed
-                            }
-                        } else {
-                            $message = __('Input code not valid');
-                            $error = 7; // Input code not valid
-                        }
-                    } else {
-                        $message = __('Missing download URL');
-                        $error = 1; // Missing download URL
-                    }
-
-
-                    echo json_encode(array('error' => $error, 'message' => $message, 'data' => $data));
-
+                    $result = osc_market(Params::getParam('section'), Params::getParam('code'));
+                    echo json_encode($result);
                     break;
                 case 'check_market': // AT THIS POINT WE KNOW IF THERE'S AN UPDATE OR NOT
                     $section = Params::getParam('section');
@@ -812,9 +560,9 @@
                      *** CHECK VALID CODE ***
                      ************************/
                     if ($code != '' && $section != '') {
-                        if(stripos("http://", $code)===FALSE) {
+                        if(stripos($code, "http://")===FALSE) {
                             // OSCLASS OFFICIAL REPOSITORY
-                            $data = json_decode(osc_file_get_contents(osc_market_url($section, $code)), true);
+                            $data = json_decode(osc_file_get_contents(osc_market_url($section, $code), array('api_key' => osc_market_api_connect())), true);
                         } else {
                             // THIRD PARTY REPOSITORY
                             if(osc_market_external_sources()) {
@@ -825,18 +573,58 @@
                             }
                         }
                         if( !isset($data['s_source_file']) || !isset($data['s_update_url'])) {
-                            $data = array('error' => 2, 'error_msg' => __('Invalid code'));
+                            //$data = array('error' => 2, 'error_msg' => __('Invalid code'));
                         }
                     } else {
                         $data = array('error' => 1, 'error_msg' => __('No code was submitted'));
                     }
                     echo json_encode($data);
                     break;
+                case 'market_data':
+                    $section  = Params::getParam('section');
+                    $page     = Params::getParam("mPage");
+                    $featured = Params::getParam("featured");
+
+                    $sort     = Params::getParam("sort");
+                    $order    = Params::getParam("order");
+
+                    // for the moment this value is static
+                    $length   = 9;
+
+                    if($page>=1) $page--;
+
+                    $url  = osc_market_url($section)."page/".$page.'/';
+
+                    if($length!='' && is_numeric($length)) {
+                        $url .= 'length/'.$length.'/';
+                    }
+
+                    if($sort!='') {
+                        $url .= 'order/'.$sort;
+                        if($order!='') {
+                            $url .= '/'.$order;
+                        }
+                    }
+
+                    if($featured != ''){
+                        $url = osc_market_featured_url($section);
+                    }
+
+                    $data = array();
+
+                    $data = json_decode(osc_file_get_contents($url, array('api_key' => osc_market_api_connect())), true);
+
+                    if( !isset($data[$section])) {
+                        $data = array('error' => 1, 'error_msg' => __('No market data'));
+                    }
+                    echo 'var market_data = window.market_data || {}; market_data.'.$section.' = '.json_encode($data).';';
+
+                    break;
                 case 'local_market': // AVOID CROSS DOMAIN PROBLEMS OF AJAX REQUEST
                     $marketPage = Params::getParam("mPage");
-                    if($marketPage>=1) $marketPage-- ;
+                    if($marketPage>=1) $marketPage--;
 
-                    $out    = osc_file_get_contents(osc_market_url(Params::getParam("section"))."page/".$marketPage);
+                    $out    = osc_file_get_contents(osc_market_url(Params::getParam("section"))."page/".$marketPage, array('api_key' => osc_market_api_connect()));
                     $array  = json_decode($out, true);
                     // do pagination
                     $pageActual = $array['page'];
@@ -854,46 +642,89 @@
                     // encode to json
                     echo json_encode($array);
                     break;
+                case 'market_connect':
+                    $json = osc_file_get_contents(osc_market_url() . 'connect/', array('s_email' => Params::getParam('s_email'), 's_password' => Params::getParam('s_password')));
+                    $data = json_decode($json, true);
+                    if($data['error']==0) {
+                        osc_set_preference('marketAPIConnect', $data['api_key']);
+                        unset($data['api_key']);
+                        $json = json_encode($data);
+                    }
+                    echo $json;
+                    break;
+                case 'dashboardbox_market':
+                    $error = 0;
+                    // make market call
+                    $url = osc_get_preference('marketURL') . 'dashboardbox/';
+
+                    $content = '';
+                    if(false===($json=@osc_file_get_contents($url))) {
+                        $error = 1;
+                    } else {
+                        $content = $json;
+                    }
+
+                    if($error==1) {
+                        echo json_encode(array('error' => 1));
+                    } else {
+                        // replace content with correct urls
+                        $content = str_replace('{URL_MARKET_THEMES}'    , osc_admin_base_url(true).'?page=market&action=themes' , $content);
+                        $content = str_replace('{URL_MARKET_PLUGINS}'   , osc_admin_base_url(true).'?page=market&action=plugins', $content);
+                        echo json_encode(array('html' => $content) );
+                    }
+                    break;
+                case 'market_header':
+                    $error = 0;
+                    // make market call
+                    $url = osc_get_preference('marketURL') . 'market_header/';
+
+                    $content = '';
+                    if(false===($json=@osc_file_get_contents($url))) {
+                        $error = 1;
+                    } else {
+                        $content = $json;
+                    }
+
+                    if($error==1) {
+                        echo json_encode(array('error' => 1));
+                    } else {
+                        echo json_encode(array('html' => $content) );
+                    }
+                    break;
                 case 'location_stats':
                     osc_csrf_check(false);
-                    $workToDo = LocationsTmp::newInstance()->count() ;
+                    $workToDo = osc_update_location_stats();
                     if( $workToDo > 0 ) {
-                        // there are wotk to do
-                        $aLocations = LocationsTmp::newInstance()->getLocations(1000) ;
-                        foreach($aLocations as $location) {
-                            $id     = $location['id_location'];
-                            $type   = $location['e_type'];
-                            $data   = 0;
-                            // update locations stats
-                            switch ( $type ) {
-                                case 'COUNTRY':
-                                    $numItems = CountryStats::newInstance()->calculateNumItems( $id ) ;
-                                    $data = CountryStats::newInstance()->setNumItems($id, $numItems) ;
-                                    unset($numItems) ;
-                                break;
-                                case 'REGION' :
-                                    $numItems = RegionStats::newInstance()->calculateNumItems( $id ) ;
-                                    $data = RegionStats::newInstance()->setNumItems($id, $numItems) ;
-                                    unset($numItems) ;
-                                break;
-                                case 'CITY' :
-                                    $numItems = CityStats::newInstance()->calculateNumItems( $id ) ;
-                                    $data = CityStats::newInstance()->setNumItems($id, $numItems) ;
-                                    unset($numItems) ;
-                                break;
-                                default:
-                                break;
-                            }
-                            if($data >= 0) {
-                                LocationsTmp::newInstance()->delete(array('e_type' => $location['e_type'], 'id_location' => $location['id_location']) ) ;
-                            }
-                        }
                         $array['status']  = 'more';
-                        $array['pending'] = $workToDo = LocationsTmp::newInstance()->count() ;
+                        $array['pending'] = $workToDo;
                         echo json_encode($array);
                     } else {
                         $array['status']  = 'done';
                         echo json_encode($array);
+                    }
+                    break;
+                case 'country_slug':
+                    $exists = Country::newInstance()->findBySlug(Params::getParam('slug'));
+                    if(isset($exists['s_slug'])) {
+                        echo json_encode(array('error' => 1, 'country' => $exists));
+                    } else {
+                        echo json_encode(array('error' => 0));
+                    }
+                    break;
+                case 'region_slug':
+                    $exists = Region::newInstance()->findBySlug(Params::getParam('slug'));
+                    if(isset($exists['s_slug'])) {
+                        echo json_encode(array('error' => 1, 'region' => $exists));
+                    } else {
+                        echo json_encode(array('error' => 0));
+                    }
+                    break;
+                case 'city_slug':
+                    $exists = City::newInstance()->findBySlug(Params::getParam('slug'));
+                    if(isset($exists['s_slug'])) {
+                        echo json_encode(array('error' => 1, 'city' => $exists));
+                    } else {
+                        echo json_encode(array('error' => 0));
                     }
                     break;
                 case 'error_permissions':

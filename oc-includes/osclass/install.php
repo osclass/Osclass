@@ -1,47 +1,49 @@
 <?php
 /*
- *      OSCLass – software for creating and publishing online classified
- *                           advertising platforms
+ * Copyright 2014 Osclass
  *
- *                        Copyright (C) 2010 OSCLASS
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- *       This program is free software: you can redistribute it and/or
- *     modify it under the terms of the GNU Affero General Public License
- *     as published by the Free Software Foundation, either version 3 of
- *            the License, or (at your option) any later version.
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
- *     This program is distributed in the hope that it will be useful, but
- *         WITHOUT ANY WARRANTY; without even the implied warranty of
- *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *             GNU Affero General Public License for more details.
- *
- *      You should have received a copy of the GNU Affero General Public
- * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 error_reporting(E_ERROR | E_CORE_ERROR | E_COMPILE_ERROR | E_PARSE);
 
 define( 'ABS_PATH', dirname(dirname(dirname(__FILE__))) . '/' );
-define( 'LIB_PATH', ABS_PATH . 'oc-includes/' ) ;
-define( 'CONTENT_PATH', ABS_PATH . 'oc-content/' ) ;
-define( 'TRANSLATIONS_PATH', CONTENT_PATH . 'languages/' ) ;
+define( 'LIB_PATH', ABS_PATH . 'oc-includes/' );
+define( 'CONTENT_PATH', ABS_PATH . 'oc-content/' );
+define( 'TRANSLATIONS_PATH', CONTENT_PATH . 'languages/' );
 define( 'OSC_INSTALLING', 1 );
 
-require_once LIB_PATH . 'osclass/Logger/Logger.php' ;
-require_once LIB_PATH . 'osclass/Logger/LogDatabase.php' ;
-require_once LIB_PATH . 'osclass/Logger/LogOsclass.php' ;
-require_once LIB_PATH . 'osclass/classes/database/DBConnectionClass.php';
-require_once LIB_PATH . 'osclass/classes/database/DBCommandClass.php';
-require_once LIB_PATH . 'osclass/classes/database/DBRecordsetClass.php';
-require_once LIB_PATH . 'osclass/classes/database/DAO.php';
+if(extension_loaded('mysqli')) {
+    require_once LIB_PATH . 'osclass/Logger/Logger.php';
+    require_once LIB_PATH . 'osclass/Logger/LogDatabase.php';
+    require_once LIB_PATH . 'osclass/Logger/LogOsclass.php';
+    require_once LIB_PATH . 'osclass/classes/database/DBConnectionClass.php';
+    require_once LIB_PATH . 'osclass/classes/database/DBCommandClass.php';
+    require_once LIB_PATH . 'osclass/classes/database/DBRecordsetClass.php';
+    require_once LIB_PATH . 'osclass/classes/database/DAO.php';
+    require_once LIB_PATH . 'osclass/model/Preference.php';
+    require_once LIB_PATH . 'osclass/helpers/hPreference.php';
+}
+require_once LIB_PATH . 'osclass/core/iObject_Cache.php';
+require_once LIB_PATH . 'osclass/core/Object_Cache_Factory.php';
+require_once LIB_PATH . 'osclass/helpers/hCache.php';
+
 require_once LIB_PATH . 'osclass/core/Session.php';
 require_once LIB_PATH . 'osclass/core/Params.php';
-require_once LIB_PATH . 'osclass/model/Preference.php';
 require_once LIB_PATH . 'osclass/helpers/hDatabaseInfo.php';
 require_once LIB_PATH . 'osclass/helpers/hDefines.php';
 require_once LIB_PATH . 'osclass/helpers/hErrors.php';
 require_once LIB_PATH . 'osclass/helpers/hLocale.php';
-require_once LIB_PATH . 'osclass/helpers/hPreference.php';
 require_once LIB_PATH . 'osclass/helpers/hSearch.php';
 require_once LIB_PATH . 'osclass/helpers/hPlugins.php';
 require_once LIB_PATH . 'osclass/helpers/hTranslations.php';
@@ -50,17 +52,18 @@ require_once LIB_PATH . 'osclass/default-constants.php';
 require_once LIB_PATH . 'osclass/install-functions.php';
 require_once LIB_PATH . 'osclass/utils.php';
 require_once LIB_PATH . 'osclass/core/Translation.php';
-require_once LIB_PATH . 'osclass/plugins.php';
+require_once LIB_PATH . 'osclass/classes/Plugins.php';
 require_once LIB_PATH . 'osclass/locales.php';
 
 
-Session::newInstance()->session_start() ;
+Params::init();
+Session::newInstance()->session_start();
 
 $locales = osc_listLocales();
 
 if(Params::getParam('install_locale')!='') {
-    Session::newInstance()->_set('userLocale', Params::getParam('install_locale')) ;
-    Session::newInstance()->_set('adminLocale', Params::getParam('install_locale')) ;
+    Session::newInstance()->_set('userLocale', Params::getParam('install_locale'));
+    Session::newInstance()->_set('adminLocale', Params::getParam('install_locale'));
 }
 
 if(Session::newInstance()->_get('adminLocale')!='' && key_exists(Session::newInstance()->_get('adminLocale'), $locales)) {
@@ -75,7 +78,7 @@ Session::newInstance()->_set('userLocale', $current_locale);
 Session::newInstance()->_set('adminLocale', $current_locale);
 
 
-$translation = new Translation(true);
+$translation = Translation::newInstance(true);
 
 $step = Params::getParam('step');
 if( !is_numeric($step) ) {
@@ -83,14 +86,14 @@ if( !is_numeric($step) ) {
 }
 
 if( is_osclass_installed( ) ) {
-    $message = __("Looks like you've already installed OSClass. To reinstall please clear your old database tables first.");
-    osc_die('OSClass &raquo; Error', $message) ;
+    $message = __("Looks like you've already installed Osclass. To reinstall please clear your old database tables first.");
+    osc_die('Osclass &raquo; Error', $message);
 }
 
 switch( $step ) {
     case 1:
-        $requirements = get_requirements() ;
-        $error        = check_requirements($requirements) ;
+        $requirements = get_requirements();
+        $error        = check_requirements($requirements);
         break;
     case 2:
         if( Params::getParam('save_stats') == '1'  || isset($_COOKIE['osclass_save_stats'])) {
@@ -129,11 +132,11 @@ switch( $step ) {
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US" xml:lang="en-US">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title><?php _e('OSClass Installation'); ?></title>
-        <script src="<?php echo get_absolute_url(); ?>oc-includes/osclass/installer/jquery.js" type="text/javascript"></script>
-        <script src="<?php echo get_absolute_url(); ?>oc-includes/osclass/installer/jquery-ui.js" type="text/javascript"></script>
+        <title><?php _e('Osclass Installation'); ?></title>
+        <script src="<?php echo get_absolute_url(); ?>oc-includes/osclass/assets/js/jquery.min.js" type="text/javascript"></script>
+        <script src="<?php echo get_absolute_url(); ?>oc-includes/osclass/assets/js/jquery-ui.min.js" type="text/javascript"></script>
         <script src="<?php echo get_absolute_url(); ?>oc-includes/osclass/installer/vtip/vtip.js" type="text/javascript"></script>
-        <script src="<?php echo get_absolute_url(); ?>oc-includes/osclass/installer/jquery.jsonp.js" type="text/javascript"></script>
+        <script src="<?php echo get_absolute_url(); ?>oc-includes/osclass/assets/js/jquery.json.js" type="text/javascript"></script>
         <script src="<?php echo get_absolute_url(); ?>oc-includes/osclass/installer/install.js" type="text/javascript"></script>
         <script src="<?php echo get_absolute_url(); ?>oc-admin/themes/modern/js/location.js" type="text/javascript"></script>
         <link rel="stylesheet" type="text/css" media="all" href="<?php echo get_absolute_url(); ?>oc-includes/osclass/installer/install.css" />
@@ -144,13 +147,12 @@ switch( $step ) {
             <div id="container">
                 <div id="header" class="installation">
                     <h1 id="logo">
-                        <img src="<?php echo get_absolute_url(); ?>oc-includes/images/osclass-logo.png" alt="OSClass" title="OSClass" />
+                        <img src="<?php echo get_absolute_url(); ?>oc-includes/images/osclass-logo.png" alt="Osclass" title="Osclass" />
                     </h1>
-                    <?php if(in_array($step, array(2,3,4))) { ?>
+                    <?php if(in_array($step, array(2,3))) { ?>
                     <ul id="nav">
                         <li class="<?php if($step == 2) { ?>actual<?php } elseif($step < 2) { ?>next<?php } else { ?>past<?php }?>">1 - Database</li>
                         <li class="<?php if($step == 3) { ?>actual<?php } elseif($step < 3) { ?>next<?php } else { ?>past<?php }?>">2 - Target</li>
-                        <li class="<?php if($step == 4) { ?>actual<?php } elseif($step < 4) { ?>next<?php } else { ?>past<?php }?>">3 - Categories</li>
                     </ul>
                     <div class="clear"></div>
                     <?php } ?>
@@ -162,10 +164,10 @@ switch( $step ) {
                         <div class="form-table">
                             <?php if( count($locales) > 1 ) { ?>
                                 <div>
-                                    <label><?php _e('Choose language') ; ?></label>
+                                    <label for="install_locale"><?php _e('Choose language'); ?></label>
                                     <select name="install_locale" id="install_locale" onchange="window.location.href='?install_locale='+document.getElementById(this.id).value">
                                         <?php foreach($locales as $k => $locale) {?>
-                                        <option value="<?php echo osc_esc_html($k) ; ?>" <?php if( $k == $current_locale ) { echo 'selected="selected"' ; } ?>><?php echo $locale['name'] ; ?></option>
+                                        <option value="<?php echo osc_esc_html($k); ?>" <?php if( $k == $current_locale ) { echo 'selected="selected"'; } ?>><?php echo $locale['name']; ?></option>
                                         <?php } ?>
                                     </select>
                                 </div>
@@ -180,7 +182,7 @@ switch( $step ) {
                                     <li><?php echo $v['solution']; ?></li>
                                     <?php } ?>
                                 <?php } ?>
-                                    <li><a href="http://forums.osclass.org/"><?php _e('Need more help?');?></a></li>
+                                    <li><a href="http://forums.osclass.org/" hreflang="en"><?php _e('Need more help?');?></a></li>
                                 </ul>
                             </div>
                             <?php } else { ?>
@@ -200,7 +202,7 @@ switch( $step ) {
                                 <input type="checkbox" name="save_stats" id="save_stats" checked="checked" value="1" />
                                 <input type="hidden" name="step" value="2" />
                                 <label for="save_stats">
-                                    <?php _e('Help make OSClass better by automatically sending usage statistics and crash reports to OSClass.');?>
+                                    <?php _e('Help make Osclass better by automatically sending usage statistics and crash reports to Osclass.');?>
                                 </label>
                             </div>
                         </div>
@@ -223,10 +225,8 @@ switch( $step ) {
                             display_database_error($error, ($step - 1));
                         }
                     } elseif($step == 4) {
-                        display_categories($error, $password);
-                    } elseif($step == 5) {
                         // ping engines
-                        ping_search_engines( $_COOKIE['osclass_ping_engines'] ) ;
+                        ping_search_engines( $_COOKIE['osclass_ping_engines'] );
                         setcookie('osclass_save_stats', '', time() - 3600);
                         setcookie('osclass_ping_engines', '', time() - 3600);
                         display_finish($password);
@@ -236,13 +236,13 @@ switch( $step ) {
                 <div id="footer">
                     <ul>
                         <li>
-                            <a href="<?php echo get_absolute_url(); ?>readme.php" target="_blank"><?php _e('Readme'); ?></a>
+                            <a href="<?php echo get_absolute_url(); ?>/oc-includes/osclass/installer/readme.php" target="_blank" hreflang="en"><?php _e('Readme'); ?></a>
                         </li>
                         <li>
-                            <a href="http://admin.osclass.org/feedback.php" target="_blank"><?php _e('Feedback'); ?></a>
+                            <a href="http://admin.osclass.org/feedback.php" target="_blank" hreflang="en"><?php _e('Feedback'); ?></a>
                         </li>
                         <li>
-                            <a href="http://forums.osclass.org/index.php" target="_blank"><?php _e('Forums');?></a>
+                            <a href="http://forums.osclass.org/index.php" target="_blank" hreflang="en"><?php _e('Forums');?></a>
                         </li>
                     </ul>
                 </div>

@@ -1,20 +1,19 @@
 <?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
-    /**
-     * OSClass – software for creating and publishing online classified advertising platforms
-     *
-     * Copyright (C) 2010 OSCLASS
-     *
-     * This program is free software: you can redistribute it and/or modify it under the terms
-     * of the GNU Affero General Public License as published by the Free Software Foundation,
-     * either version 3 of the License, or (at your option) any later version.
-     *
-     * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-     * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-     * See the GNU Affero General Public License for more details.
-     *
-     * You should have received a copy of the GNU Affero General Public
-     * License along with this program. If not, see <http://www.gnu.org/licenses/>.
-     */
+/*
+ * Copyright 2014 Osclass
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
     set_time_limit(0);
 
@@ -25,36 +24,37 @@
     }
 
     require_once ABS_PATH . 'oc-load.php';
-    require_once LIB_PATH . 'osclass/helpers/hErrors.php' ;
+    require_once LIB_PATH . 'osclass/helpers/hErrors.php';
 
     if( !defined('AUTO_UPGRADE') ) {
         if(file_exists(osc_lib_path() . 'osclass/installer/struct.sql')) {
             $sql  = file_get_contents(osc_lib_path() . 'osclass/installer/struct.sql');
 
             $conn = DBConnectionClass::newInstance();
-            $c_db = $conn->getOsclassDb() ;
-            $comm = new DBCommandClass( $c_db ) ;
+            $c_db = $conn->getOsclassDb();
+            $comm = new DBCommandClass( $c_db );
 
-            $error_queries = $comm->updateDB( str_replace('/*TABLE_PREFIX*/', DB_TABLE_PREFIX, $sql) ) ;
+            $error_queries = $comm->updateDB( str_replace('/*TABLE_PREFIX*/', DB_TABLE_PREFIX, $sql) );
         }
 
         if( Params::getParam('skipdb') == '' ){
             if(!$error_queries[0]) {
                 $skip_db_link = osc_admin_base_url(true) . "?page=upgrade&action=upgrade-funcs&skipdb=true";
-                $title    = __('OSClass &raquo; Has some errors') ;
+                $title    = __('Osclass &raquo; Has some errors');
                 $message  = __("We've encountered some problems while updating the database structure. The following queries failed:");
                 $message .= "<br/><br/>" . implode("<br>", $error_queries[2]);
                 $message .= "<br/><br/>" . sprintf(__("These errors could be false-positive errors. If you're sure that is the case, you can <a href=\"%s\">continue with the upgrade</a>, or <a href=\"http://forums.osclass.org/\">ask in our forums</a>."), $skip_db_link);
-                osc_die($title, $message) ;
+                osc_die($title, $message);
             }
         }
     }
+
     $aMessages = array();
-    Preference::newInstance()->update(array('s_value' => time()), array( 's_section' => 'osclass', 's_name' => 'last_version_check'));
+    osc_set_preference('last_version_check', time());
 
     $conn = DBConnectionClass::newInstance();
-    $c_db = $conn->getOsclassDb() ;
-    $comm = new DBCommandClass( $c_db ) ;
+    $c_db = $conn->getOsclassDb();
+    $comm = new DBCommandClass( $c_db );
 
     if(osc_version() < 210) {
         $comm->query(sprintf("INSERT INTO %st_preference VALUES ('osclass', 'save_latest_searches', '0', 'BOOLEAN')", DB_TABLE_PREFIX));
@@ -94,10 +94,10 @@
             $comments  = count(ItemComment::newInstance()->findByAuthorID($user['pk_i_id']) );
             $items    = count(Item::newInstance()->findByUserIDEnabled($user['pk_i_id']));
             User::newInstance()->update(array( 'i_items' => $items, 'i_comments' => $comments )
-                                       ,array( 'pk_i_id' => $user['pk_i_id'] ) ) ;
+                                       ,array( 'pk_i_id' => $user['pk_i_id'] ) );
             // CHANGE FROM b_enabled to b_active
             User::newInstance()->update(array( 'b_active' => $user['b_enabled'], 'b_enabled' => 1 )
-                                       ,array( 'pk_i_id'  => $user['pk_i_id'] ) ) ;
+                                       ,array( 'pk_i_id'  => $user['pk_i_id'] ) );
         }
         unset($users);
 
@@ -169,12 +169,12 @@ CREATE TABLE %st_item_description_tmp (
         $comm->query(sprintf("INSERT INTO %st_preference VALUES ('osclass', 'timezone', '%s', 'STRING')", DB_TABLE_PREFIX, $timezone));
 
         // alert table pages order improvement
-        $comm->query(sprintf("ALTER TABLE %st_pages ADD COLUMN i_order INT(3) NOT NULL DEFAULT 0  AFTER dt_mod_date ;", DB_TABLE_PREFIX));
+        $comm->query(sprintf("ALTER TABLE %st_pages ADD COLUMN i_order INT(3) NOT NULL DEFAULT 0  AFTER dt_mod_date;", DB_TABLE_PREFIX));
         // order pages
         $result = $comm->query(sprintf("SELECT pk_i_id FROM %st_pages WHERE b_indelible = 0", DB_TABLE_PREFIX) );
         $aPages = $result->result();
         foreach($aPages as $key => $page) {
-            $comm->query(sprintf("UPDATE %st_pages SET i_order = %d WHERE pk_i_id = %d ;", DB_TABLE_PREFIX, $key, $page['pk_i_id']) );
+            $comm->query(sprintf("UPDATE %st_pages SET i_order = %d WHERE pk_i_id = %d;", DB_TABLE_PREFIX, $key, $page['pk_i_id']) );
         }
 
         $comm->query(sprintf("INSERT INTO %st_pages (s_internal_name, b_indelible, dt_pub_date) VALUES ('email_item_validation_non_register_user', 1, '%s' )", DB_TABLE_PREFIX, date('Y-m-d H:i:s')));
@@ -194,9 +194,9 @@ CREATE TABLE %st_item_description_tmp (
         $items  = $result->result();
         foreach($items as $item) {
             if( $item['f_price'] == null ) {
-                $sql = sprintf( "UPDATE %st_item SET i_price = NULL WHERE pk_i_id = %d", DB_TABLE_PREFIX, $item['pk_i_id']) ;
+                $sql = sprintf( "UPDATE %st_item SET i_price = NULL WHERE pk_i_id = %d", DB_TABLE_PREFIX, $item['pk_i_id']);
             } else {
-                $sql = sprintf( "UPDATE %st_item SET i_price = %f WHERE pk_i_id = %d", DB_TABLE_PREFIX, (1000000 * $item['f_price']), $item['pk_i_id'] )  ;
+                $sql = sprintf( "UPDATE %st_item SET i_price = %f WHERE pk_i_id = %d", DB_TABLE_PREFIX, (1000000 * $item['f_price']), $item['pk_i_id'] );
             }
             $comm->query( $sql );
         }
@@ -210,7 +210,7 @@ CREATE TABLE %st_item_description_tmp (
 
     if( osc_version() < 240 ) {
         // We no longer use s_what column in /*TABLE_PREFIX*/t_item_description
-        $comm->query( sprintf('ALTER TABLE %st_item_description DROP COLUMN s_what', DB_TABLE_PREFIX) ) ;
+        $comm->query( sprintf('ALTER TABLE %st_item_description DROP COLUMN s_what', DB_TABLE_PREFIX) );
 
         @unlink(osc_admin_base_path()."/themes/modern/tools/images.php");
 
@@ -261,24 +261,24 @@ CREATE TABLE %st_item_description_tmp (
                     left join %st_category  as b on b.pk_i_id = a.fk_i_category_id
                     set a.dt_expiration = date_add(a.dt_pub_date, INTERVAL b.i_expiration_days DAY)
                     where b.i_expiration_days > 0', DB_TABLE_PREFIX, DB_TABLE_PREFIX );
-        $comm->query( $update_dt_expiration ) ;
+        $comm->query( $update_dt_expiration );
 
         // we need populate location table stats
         $rs = $comm->query( sprintf('SELECT pk_c_code FROM %st_country', DB_TABLE_PREFIX) );
         $aCountry = $rs->result();
         foreach($aCountry as $country) {
             // insert into country_stats with i_num_items = 0
-            $comm->query( sprintf('INSERT INTO %st_country_stats (fk_c_country_code, i_num_items) VALUES (\'%s\', 0)', DB_TABLE_PREFIX, $country['pk_c_code']) ) ;
+            $comm->query( sprintf('INSERT INTO %st_country_stats (fk_c_country_code, i_num_items) VALUES (\'%s\', 0)', DB_TABLE_PREFIX, $country['pk_c_code']) );
             $rs = $comm->query( sprintf('SELECT pk_i_id FROM %st_region WHERE fk_c_country_code = \'%s\'', DB_TABLE_PREFIX, $country['pk_c_code']) );
             $aRegion = $rs->result();
             foreach($aRegion as $region) {
                 // insert into region_stats with i_num_items = 0
-                $comm->query( sprintf('INSERT INTO %st_region_stats (fk_i_region_id, i_num_items) VALUES (%s, 0)', DB_TABLE_PREFIX, $region['pk_i_id']) ) ;
+                $comm->query( sprintf('INSERT INTO %st_region_stats (fk_i_region_id, i_num_items) VALUES (%s, 0)', DB_TABLE_PREFIX, $region['pk_i_id']) );
                 $rs = $comm->query( sprintf('SELECT pk_i_id FROM %st_city WHERE fk_i_region_id = %s', DB_TABLE_PREFIX, $region['pk_i_id']) );
                 $aCity = $rs->result();
                 foreach($aCity as $city) {
                     // insert into city_stats with i_num_items = 0
-                    $comm->query( sprintf('INSERT INTO %st_city_stats (fk_i_city_id, i_num_items) VALUES (%s, 0)', DB_TABLE_PREFIX, $city['pk_i_id']) ) ;
+                    $comm->query( sprintf('INSERT INTO %st_city_stats (fk_i_city_id, i_num_items) VALUES (%s, 0)', DB_TABLE_PREFIX, $city['pk_i_id']) );
                 }
             }
         }
@@ -383,21 +383,152 @@ CREATE TABLE %st_item_description_tmp (
         $comm->query(sprintf("ALTER TABLE %st_user DROP s_pass_answer", DB_TABLE_PREFIX));
         $comm->query(sprintf("ALTER TABLE %st_user DROP s_pass_question", DB_TABLE_PREFIX));
         osc_set_preference('marketURL', 'http://market.osclass.org/api/');
+        osc_set_preference('marketAllowExternalSources', '0', 'BOOLEAN');
     }
 
-    if(osc_version() < 302) {
+    if(osc_version() < 310) {
+        $comm->query(sprintf("ALTER TABLE  %st_pages ADD  `s_meta` TEXT NULL", DB_TABLE_PREFIX));
+        $comm->query(sprintf("ALTER TABLE  %st_pages ADD  `b_link` TINYINT(1) NOT NULL DEFAULT 1", DB_TABLE_PREFIX));
+        $comm->query(sprintf("UPDATE %st_alerts SET dt_date = '%s' ", DB_TABLE_PREFIX, date("Y-m-d H:i:s")));
+
+        // remove files moved to controller folder
+        @unlink(osc_base_path() . 'ajax.php');
+        @unlink(osc_base_path() . 'contact.php');
+        @unlink(osc_base_path() . 'custom.php');
+        @unlink(osc_base_path() . 'item.php');
+        @unlink(osc_base_path() . 'language.php');
+        @unlink(osc_base_path() . 'login.php');
+        @unlink(osc_base_path() . 'main.php');
+        @unlink(osc_base_path() . 'page.php');
+        @unlink(osc_base_path() . 'register.php');
+        @unlink(osc_base_path() . 'search.php');
+        @unlink(osc_base_path() . 'user-non-secure.php');
+        @unlink(osc_base_path() . 'user.php');
+        @unlink(osc_base_path() . 'readme.php');
+
+        @unlink(osc_lib_path() . 'osclass/plugins.php');
+        @unlink(osc_lib_path() . 'osclass/feeds.php');
+
+        $comm->query(sprintf('UPDATE %st_user t, (SELECT pk_i_id FROM %st_user) t1 SET t.s_username = t1.pk_i_id WHERE t.pk_i_id = t1.pk_i_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX));
+        osc_set_preference('username_blacklist', 'admin,user', 'osclass', 'STRING');
+        osc_set_preference('rewrite_user_change_username', 'username/change');
         osc_set_preference('csrf_name', 'CSRF'.mt_rand(0,mt_getrandmax()));
+
+        @mkdir(osc_uploads_path() . 'page-images');
+
     }
 
-    osc_changeVersionTo(302);
+    if(osc_version() < 320) {
+        osc_set_preference('mailserver_mail_from', '');
+        osc_set_preference('mailserver_name_from', '');
+        osc_set_preference('seo_url_search_prefix', '');
 
-    echo '<div class="well ui-rounded-corners separate-top-medium">';
-    echo '<p>'.__('OSClass &raquo; Updated correctly').'</p>' ;
-    echo '<p>'.__('OSClass has been updated successfully. <a href="http://forums.osclass.org/">Need more help?</a>').'</p>';
-    foreach($aMessages as $msg) {
-        echo "<p>".$msg."</p>";
+        $comm->query(sprintf("ALTER TABLE  %st_category ADD  `b_price_enabled` TINYINT(1) NOT NULL DEFAULT 1", DB_TABLE_PREFIX));
+
+        osc_set_preference('subdomain_type', '');
+        osc_set_preference('subdomain_host', '');
+        // email_new_admin
+        $comm->query(sprintf("INSERT INTO %st_pages (s_internal_name, b_indelible, dt_pub_date) VALUES ('email_new_admin', 1, '%s' )", DB_TABLE_PREFIX, date('Y-m-d H:i:s')));
+        $comm->query(sprintf("INSERT INTO %st_pages_description (fk_i_pages_id, fk_c_locale_code, s_title, s_text) VALUES (%d, 'en_US', '{WEB_TITLE} - Success creating admin account!', '<p>Hi {ADMIN_NAME},</p><p>The admin of {WEB_LINK} has created an account for you,</p><ul><li>Username: {USERNAME}</li><li>Password: {PASSWORD}</li></ul><p>You can access the admin panel here {WEB_ADMIN_LINK}.</p><p>Thank you!</p><p>Regards,</p>')", DB_TABLE_PREFIX, $comm->insertedId()));
+
+        osc_set_preference('warn_expiration', '0', 'osclass', 'INTEGER');
+
+        $comm->query(sprintf("INSERT INTO %st_pages (s_internal_name, b_indelible, dt_pub_date) VALUES ('email_warn_expiration', 1, '%s' )", DB_TABLE_PREFIX, date('Y-m-d H:i:s')));
+        $comm->query(sprintf("INSERT INTO %st_pages_description (fk_i_pages_id, fk_c_locale_code, s_title, s_text) VALUES (%d, 'en_US', '{WEB_TITLE} - Your ad is about to expire', '<p>Hi {USER_NAME},</p><p>Your listing <a href=\"{ITEM_URL}\">{ITEM_TITLE}</a> is about to expire at {WEB_LINK}.')", DB_TABLE_PREFIX, $comm->insertedId()));
+
+        osc_set_preference('force_aspect_image', '0', 'osclass', 'BOOLEAN');
     }
-    echo "</div>";
+
+    if(osc_version() < 321) {
+        if(function_exists('osc_calculate_location_slug')) {
+            osc_calculate_location_slug(osc_subdomain_type());
+        }
+    }
+
+    if(osc_version() < 330) {
+        @mkdir(osc_content_path().'uploads/temp/');
+        @mkdir(osc_content_path().'downloads/oc-temp/', 0777);
+        @unlink(osc_lib_path() . 'osclass/classes/Watermark.php');
+        osc_set_preference('title_character_length', '100', 'osclass', 'INTEGER');
+        osc_set_preference('description_character_length', '5000', 'osclass', 'INTEGER');
+    }
+
+	if(osc_version() < 340) {
+		$comm->query(sprintf("ALTER TABLE `%st_widget` ADD INDEX `idx_s_description` (`s_description`);", DB_TABLE_PREFIX));
+        osc_set_preference('force_jpeg', '0', 'osclass', 'BOOLEAN');
+
+        @unlink(ABS_PATH . '.maintenance');
+
+        // THESE LINES PROBABLY HIT LOW TIMEOUT SCRIPTS, RUN THE LAST OF THE UPGRADE PROCESS
+        //osc_calculate_location_slug('country');
+        //osc_calculate_location_slug('region');
+        //osc_calculate_location_slug('city');
+	}
+
+    if(osc_version() < 343) {
+        // update t_alerts - Save them in plain json instead of base64
+        $mAlerts = Alerts::newInstance();
+        $aAlerts = $mAlerts->findByType('HOURLY');
+        foreach($aAlerts as $alert) {
+            $s_search = base64_decode($alert['s_search']);
+            if(stripos(strtolower($s_search), 'union select')!==false || stripos(strtolower($s_search), 't_admin')!==false) {
+                $mAlerts->delete(array('pk_i_id' => $alert['pk_i_id']));
+            } else {
+                $mAlerts->update(array('s_search' => $s_search), array('pk_i_id' => $alert['pk_i_id']));
+            }
+        }
+        unset($aAlerts);
+
+        $aAlerts = $mAlerts->findByType('DAILY');
+        foreach($aAlerts as $alert) {
+            $s_search = base64_decode($alert['s_search']);
+            if(stripos(strtolower($s_search), 'union select')!==false || stripos(strtolower($s_search), 't_admin')!==false) {
+                $mAlerts->delete(array('pk_i_id' => $alert['pk_i_id']));
+            } else {
+                $mAlerts->update(array('s_search' => $s_search), array('pk_i_id' => $alert['pk_i_id']));
+            }
+        }
+        unset($aAlerts);
+
+        $aAlerts = $mAlerts->findByType('WEEKLY');
+        foreach($aAlerts as $alert) {
+            $s_search = base64_decode($alert['s_search']);
+            if(stripos(strtolower($s_search), 'union select')!==false || stripos(strtolower($s_search), 't_admin')!==false) {
+                $mAlerts->delete(array('pk_i_id' => $alert['pk_i_id']));
+            } else {
+                $mAlerts->update(array('s_search' => $s_search), array('pk_i_id' => $alert['pk_i_id']));
+            }
+        }
+        unset($aAlerts);
+    }
+
+    if(osc_version() < 350) {
+        osc_set_preference('marketURL', 'http://market.osclass.org/api/v2/');
+        osc_set_preference('marketAPIConnect', '');
+        osc_set_preference('marketCategories', '');
+        osc_set_preference('marketDataUpdate', 0);
+    }
+
+    if(osc_version() < 352) {
+        osc_set_preference('marketURL', 'http://market.osclass.org/api/v2/');
+    }
+
+    osc_changeVersionTo(353);
+
+    if(!defined('IS_AJAX') || !IS_AJAX) {
+        if(empty($aMessages)) {
+            osc_add_flash_ok_message(_m('Osclass has been updated successfully. <a href="http://forums.osclass.org/">Need more help?</a>'), 'admin');
+            echo '<script type="text/javascript"> window.location = "'.osc_admin_base_url(true).'?page=tools&action=version"; </script>';
+        } else {
+            echo '<div class="well ui-rounded-corners separate-top-medium">';
+            echo '<p>'.__('Osclass &raquo; Updated correctly').'</p>';
+            echo '<p>'.__('Osclass has been updated successfully. <a href="http://forums.osclass.org/">Need more help?</a>').'</p>';
+            foreach($aMessages as $msg) {
+                echo "<p>".$msg."</p>";
+            }
+            echo "</div>";
+        }
+    }
 
     /**
      * Convert alerts < 2.4, updating s_search with json encoded to based64.

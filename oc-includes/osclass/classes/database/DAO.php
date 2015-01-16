@@ -1,21 +1,20 @@
 <?php
 
-    /**
-     * OSClass – software for creating and publishing online classified advertising platforms
-     *
-     * Copyright (C) 2010 OSCLASS
-     *
-     * This program is free software: you can redistribute it and/or modify it under the terms
-     * of the GNU Affero General Public License as published by the Free Software Foundation,
-     * either version 3 of the License, or (at your option) any later version.
-     *
-     * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-     * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-     * See the GNU Affero General Public License for more details.
-     *
-     * You should have received a copy of the GNU Affero General Public
-     * License along with this program. If not, see <http://www.gnu.org/licenses/>.
-     */
+/*
+ * Copyright 2014 Osclass
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
     define('DB_FUNC_NOW', 'NOW()');
     define('DB_CONST_TRUE', 'TRUE');
@@ -25,12 +24,12 @@
     /**
      * DAO base model
      * 
-     * @package OSClass
+     * @package Osclass
      * @subpackage Model
      * @since 2.3
      */
-	class DAO
-        {
+    class DAO
+    {
         /**
          * DBCommandClass object
          * 
@@ -38,7 +37,7 @@
          * @since 2.3
          * @var DBCommandClass 
          */
-        var $dao ;
+        var $dao;
         /**
          * Table name
          * 
@@ -46,7 +45,7 @@
          * @since unknown
          * @var string 
          */
-        var $tableName ;
+        var $tableName;
         /**
          * Table prefix
          * 
@@ -54,7 +53,7 @@
          * @since unknown
          * @var string 
          */
-        var $tablePrefix ;
+        var $tablePrefix;
         /**
          * Primary key of the table
          *
@@ -62,7 +61,7 @@
          * @since 2.3
          * @var string 
          */
-        var $primaryKey ;
+        var $primaryKey;
         /**
          * Fields of the table
          * 
@@ -70,17 +69,17 @@
          * @since 2.3
          * @var array 
          */
-        var $fields ;
+        var $fields;
 
         /**
          * Init connection of the database and create DBCommandClass object
          */
         function __construct()
         {
-            $conn              = DBConnectionClass::newInstance() ;
+            $conn              = DBConnectionClass::newInstance();
             $data              = $conn->getOsclassDb();
-            $this->dao         = new DBCommandClass($data) ;
-            $this->tablePrefix = DB_TABLE_PREFIX ;
+            $this->dao         = new DBCommandClass($data);
+            $this->tablePrefix = DB_TABLE_PREFIX;
         }
         
         /**
@@ -88,9 +87,9 @@
          */
         public function __wakeup()
         {
-            $conn              = DBConnectionClass::newInstance() ;
+            $conn              = DBConnectionClass::newInstance();
             $data              = $conn->getOsclassDb();
-            $this->dao         = new DBCommandClass($data) ;
+            $this->dao         = new DBCommandClass($data);
         }
 
         /**
@@ -103,20 +102,20 @@
          */
         function findByPrimaryKey($value)
         {
-            $this->dao->select($this->fields) ;
-            $this->dao->from($this->getTableName()) ;
-            $this->dao->where($this->getPrimaryKey(), $value) ;
-            $result = $this->dao->get() ;
+            $this->dao->select($this->fields);
+            $this->dao->from($this->getTableName());
+            $this->dao->where($this->getPrimaryKey(), $value);
+            $result = $this->dao->get();
 
             if( $result === false ) {
-                return false ;
+                return false;
             }
 
             if( $result->numRows() !== 1 ) {
-                return false ;
+                return false;
             }
 
-            return $result->row() ;
+            return $result->row();
         }
 
         /**
@@ -133,9 +132,9 @@
         {
             $cond = array(
                 $this->getPrimaryKey() => $key
-            ) ;
+            );
 
-            return $this->update($values, $cond) ;
+            return $this->update($values, $cond);
         }
 
         /**
@@ -151,9 +150,9 @@
         {
             $cond = array(
                 $this->getPrimaryKey() => $value
-            ) ;
+            );
 
-            return $this->delete($cond) ;
+            return $this->delete($cond);
         }
 
         /**
@@ -165,15 +164,15 @@
          */
         function listAll()
         {
-            $this->dao->select($this->getFields()) ;
-            $this->dao->from($this->getTableName()) ;
-            $result = $this->dao->get() ;
+            $this->dao->select($this->getFields());
+            $this->dao->from($this->getTableName());
+            $result = $this->dao->get();
 
             if($result == false) {
-                return array() ;
+                return array();
             }
 
-            return $result->result() ;
+            return $result->result();
         }
 
         /**
@@ -187,12 +186,12 @@
         function insert($values)
         {
             if( !$this->checkFieldKeys(array_keys($values)) ) {
-                return false ;
+                return false;
             }
 
-            $this->dao->from($this->getTableName()) ;
-            $this->dao->set($values) ;
-            return $this->dao->insert() ;
+            $this->dao->from($this->getTableName());
+            $this->dao->set($values);
+            return $this->dao->insert();
         }
 
         /**
@@ -209,17 +208,17 @@
         function update($values, $where)
         {
             if( !$this->checkFieldKeys(array_keys($values)) ) {
-                return false ;
+                return false;
             }
 
             if( !$this->checkFieldKeys(array_keys($where)) ) {
-                return false ;
+                return false;
             }
 
-            $this->dao->from($this->getTableName()) ;
-            $this->dao->set($values) ;
-            $this->dao->where($where) ;
-            return $this->dao->update() ;
+            $this->dao->from($this->getTableName());
+            $this->dao->set($values);
+            $this->dao->where($where);
+            return $this->dao->update();
         }
 
         /**
@@ -235,12 +234,12 @@
         function delete($where)
         {
             if( !$this->checkFieldKeys(array_keys($where)) ) {
-                return false ;
+                return false;
             }
 
-            $this->dao->from($this->getTableName()) ;
-            $this->dao->where($where) ;
-            return $this->dao->delete() ;
+            $this->dao->from($this->getTableName());
+            $this->dao->where($where);
+            return $this->dao->delete();
         }
 
         /**
@@ -252,7 +251,7 @@
          */
         function setTableName($table)
         {
-            $this->tableName = $this->tablePrefix . $table ;
+            $this->tableName = $this->tablePrefix . $table;
         }
 
         /**
@@ -264,7 +263,7 @@
          */
         function getTableName()
         {
-            return $this->tableName ;
+            return $this->tableName;
         }
 
         /**
@@ -276,7 +275,7 @@
          */
         function setPrimaryKey($key)
         {
-            $this->primaryKey = $key ;
+            $this->primaryKey = $key;
         }
 
         /**
@@ -288,7 +287,7 @@
          */
         function getPrimaryKey()
         {
-            return $this->primaryKey ;
+            return $this->primaryKey;
         }
 
         /**
@@ -300,7 +299,7 @@
          */
         function setFields($fields)
         {
-            $this->fields = $fields ;
+            $this->fields = $fields;
         }
 
         /**
@@ -312,7 +311,7 @@
          */
         function getFields()
         {
-            return $this->fields ;
+            return $this->fields;
         }
 
         /**
@@ -327,11 +326,11 @@
         {
             foreach($aKey as $key) {
                 if( !in_array($key, $this->getFields()) ) {
-                    return false ;
+                    return false;
                 }
             }
 
-            return true ;
+            return true;
         }
 
         /**
@@ -343,7 +342,7 @@
          */
         function getTablePrefix()
         {
-            return $this->tablePrefix ;
+            return $this->tablePrefix;
         }
 
         /**
@@ -355,7 +354,7 @@
          */
         function getErrorLevel()
         {
-            return $this->dao->getErrorLevel() ;
+            return $this->dao->getErrorLevel();
         }
 
         /**
@@ -367,7 +366,7 @@
          */
         function getErrorDesc()
         {
-            return $this->dao->getErrorDesc() ;
+            return $this->dao->getErrorDesc();
         }
 
         /**
@@ -379,20 +378,20 @@
          */
         public function count()
         {
-            $this->dao->select('COUNT(*) AS count') ;
-            $this->dao->from($this->getTableName()) ;
-            $result = $this->dao->get() ;
+            $this->dao->select('COUNT(*) AS count');
+            $this->dao->from($this->getTableName());
+            $result = $this->dao->get();
 
             if( $result == false ) {
-                return 0 ;
+                return 0;
             }
 
             if( $result->numRows() == 0 ) {
-                return 0 ;
+                return 0;
             }
 
-            $row = $result->row() ;
-            return $row['count'] ;
+            $row = $result->row();
+            return $row['count'];
         }
     }
 

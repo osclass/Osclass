@@ -1,0 +1,166 @@
+.alert_form{
+    background-color:#f2f2f2;
+    padding:15px 10px;
+}
+.alert_form button{
+    width:100%;
+}
+.alert_form input{
+    width: 184px;
+    margin-bottom: 12px;
+}
+.form-vertical .control-group{
+    clear:both;
+    margin-bottom: 10px;
+}
+.form-container{
+
+}
+.form-container .controls input,
+.form-container .meta input{
+    @include input-style(#fff);
+    width: 280px;
+    padding: 0 10px;
+    height: 30px;
+    line-height: 30px;
+    font-size:1em;
+}
+.form-container .ui-drop-files{
+    width: 280px;
+    padding: 0 10px;
+    height: 70px;
+    text-align: center;
+    font-size: 18px;
+    line-height: 70px;
+    color: rgba(0, 0, 0, 0.5);
+    @include border-radius(8px);
+}
+.form-container .controls{
+    font-size:1em;
+}
+.form-container .main-button{
+    @include button-style($maincolor);
+}
+.form-container .checkbox input,
+input[type="checkbox"],
+.form-container .meta input[type="checkbox"],
+.form-container .controls input[type="checkbox"],
+input[type="radio"],
+.form-container .meta input[type="radio"],
+.form-container .controls input[type="radio"]{
+    width:auto;
+    height: auto;
+    vertical-align: middle;
+    margin-top:-2px;
+    padding:0;
+    border:none;
+    box-shadow:none;
+}
+.meta_list{
+    .meta{
+        ul{
+            margin:5px 0 0 0;
+            padding:0;
+            list-style:none;
+            float: left;
+            li{
+                clear:both;
+                list-style:none;
+                label{
+                    width: auto;
+                    margin-left:5px;
+                    float:none;
+                }
+            }
+        }
+        input[type="checkbox"]{
+            margin-top:10px;
+        }
+        .cf_date_interval{
+            width: 100px;
+        }
+    }
+    .meta:after{
+        content:"";
+        clear:both;
+    }
+}
+.form-container .checkbox{
+    margin-bottom:5px;
+    label{
+        font-size:0.85em;
+    }
+}
+.form-horizontal{
+    .actions{
+        border-top:solid 1px $widgetbordercolor;
+        padding:10px 10px 15px 155px;
+        margin:0 25px;
+        a{
+            font-size:0.725em;
+        }
+    }
+    label{
+        float: left;
+        width: 160px;
+        padding-top: 7px;
+        text-align: right;
+        font-size:0.85em;
+    }
+    .select-box{
+        width:300px;
+    }
+    .controls {
+        margin-left: 180px;
+        line-height: 32px;
+        label{
+            float: none;
+            width: auto;
+            padding-top: 0;
+            text-align: left;
+        }
+    }
+    .control-group,
+    .meta_list .meta{
+        clear:both;
+        margin-bottom: 10px;
+    }
+
+}
+.form-container-box{
+    border:solid 1px $widgetbordercolor;
+    margin:0 auto;
+    width:700px;
+    @include border-radius(4px);
+    .header{
+        background-color:$widgetbackground;
+        padding:10px 15px;
+        margin-bottom:30px;
+        h1{
+            margin:0;
+            line-height: 1.2em;
+        }
+    }
+}
+
+
+
+body.item-post .select-box{
+    margin-bottom:10px;
+}
+#item-post select{
+    width:300px;
+}
+.form-container .photos input{
+    width:100%;
+    border:0;
+    margin:0;
+    padding:0;
+    box-shadow:none;
+}
+.photos_div{
+    margin-bottom:20px;
+}
+.form-container .controls #photos a{
+    font-size:12px !important;
+}

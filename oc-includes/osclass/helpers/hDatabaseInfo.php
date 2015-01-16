@@ -1,30 +1,26 @@
 <?php
 
-    /*
-     *      OSCLass – software for creating and publishing online classified
-     *                           advertising platforms
-     *
-     *                        Copyright (C) 2010 OSCLASS
-     *
-     *       This program is free software: you can redistribute it and/or
-     *     modify it under the terms of the GNU Affero General Public License
-     *     as published by the Free Software Foundation, either version 3 of
-     *            the License, or (at your option) any later version.
-     *
-     *     This program is distributed in the hope that it will be useful, but
-     *         WITHOUT ANY WARRANTY; without even the implied warranty of
-     *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-     *             GNU Affero General Public License for more details.
-     *
-     *      You should have received a copy of the GNU Affero General Public
-     * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
-     */
+/*
+ * Copyright 2014 Osclass
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
     /**
     * Helper Database Info
-    * @package OSClass
+    * @package Osclass
     * @subpackage Helpers
-    * @author OSClass
+    * @author Osclass
     */
 
     /**
@@ -33,7 +29,7 @@
      * @return string
      */
     function osc_db_name() {
-        return getSiteInfo('s_db_name', DB_NAME) ;
+        return getSiteInfo('s_db_name', DB_NAME);
     }
 
     /**
@@ -42,7 +38,7 @@
      * @return string
      */
     function osc_db_host() {
-        return getSiteInfo('s_db_host', DB_HOST) ;
+        return getSiteInfo('s_db_host', DB_HOST);
     }
 
     /**
@@ -51,7 +47,7 @@
      * @return string
      */
     function osc_db_user() {
-        return getSiteInfo('s_db_user', DB_USER) ;
+        return getSiteInfo('s_db_user', DB_USER);
     }
 
     /**
@@ -60,7 +56,7 @@
      * @return string
      */
     function osc_db_password() {
-        return getSiteInfo('s_db_password', DB_PASSWORD) ;
+        return getSiteInfo('s_db_password', DB_PASSWORD);
     }
 
     /**
@@ -69,7 +65,16 @@
      * @return string
      */
     function osc_multisite_url() {
-        return getSiteInfo('s_site', '') ;
+        return getSiteInfo('s_site', '');
+    }
+
+    /**
+     * Gets multisite url
+     *
+     * @return string
+     */
+    function osc_multisite_upload_path() {
+        return getSiteInfo('s_upload_path', '');
     }
 
     //PRIVATE FUNCTION FOR GETTING NO BOOLEAN INFORMATION (if there was a class :P)
@@ -82,10 +87,10 @@
      */
     function getSiteInfo($key, $default_value) {
         if (MULTISITE) {
-            $_P = SiteInfo::newInstance() ;
-            return($_P->get($key)) ;
+            $_P = SiteInfo::newInstance();
+            return($_P->get($key));
         }
-        
-        return $default_value ;
+
+        return $default_value;
     }
 ?>

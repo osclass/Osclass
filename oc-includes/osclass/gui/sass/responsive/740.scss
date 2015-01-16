@@ -1,0 +1,55 @@
+.wrapper,
+#footer{
+    padding-left:10px;
+    padding-right:10px;
+    width:auto;
+}
+.has-placeholder{
+    float: none;
+}
+div#main,
+body.home #main,
+body.search #main,
+body.user #main,
+body.item #main,
+body.user-public-profile #main{
+    width: auto;
+    float:none;
+    clear:both;
+}
+#responsive-trigger{
+    display:block;
+}
+#sidebar{
+    width:100%;
+}
+#header{
+    padding-bottom:0px;
+}
+#footer{
+    text-align:center;
+}
+#footer ul{
+    float:none;
+    font-size:1.15em;
+    margin-bottom:15px;
+}
+.flashmessage{
+    padding:15px 40px 15px 15px;
+    width:auto;
+}
+.contact_button a{
+    margin-bottom:10px;
+}
+
+div#recaptcha_widget{width:100% !important;}
+div#recaptcha_image{width:100% !important;height:auto !important;}
+div#recaptcha_image > img{width:100% !important;}
+
+@import "responsive/header.scss";
+@import "responsive/ui.scss";
+@import "responsive/show-hide.scss";
+@import "responsive/form.scss";
+@import "responsive/list.scss";
+@import "responsive/item.scss";
+@import "responsive/structure.scss";

@@ -1,0 +1,170 @@
+body.item #sidebar .widget-box{
+    padding:20px;
+}
+body.item #sidebar .form-container .controls input,
+body.item #sidebar .form-container .controls textarea{
+    width:238px;
+}
+body.item #sidebar .form-container label{
+    font-size:0.75em
+}
+body.item #contact h2{
+    margin-top:0px;
+}
+
+
+.alert_form{
+    background-color:transparent;
+}
+#alert_email{
+    width:100%;
+    @include prefixer(box-sizing, border-box, webkit moz ms o spec);
+}
+
+.form-container .controls input,
+#sidebar .input-text{
+    height:32px;
+}
+input[type="checkbox"]{
+    width:auto;
+    height:auto;
+}
+textarea,
+body.item #sidebar .form-container .controls input,
+body.item #sidebar .form-container .controls textarea,
+.form-container .controls input,
+#sidebar .input-text,
+button,
+.ui-button{
+    width:100%;
+    @include prefixer(box-sizing, border-box, webkit moz ms o spec);
+}
+ul.r-list{
+    width: 100%;
+    float: none;
+    margin:0;
+    //margin-bottom:20px;
+    padding:0;
+    list-style: none;
+    @include r-list-style(reset);
+}
+ul.r-list:after {
+    content: ".";
+    display: block;
+    clear: both;
+    visibility: hidden;
+    line-height: 0;
+    height: 0;
+}
+ul.r-list li {
+    //float: left;
+    //width: 50%;
+    position: relative;
+    margin-bottom: 5px;
+    margin-right:0;
+    padding: 0;
+    @include prefixer(box-sizing, border-box, webkit moz ms o spec);
+}
+ul.r-list>li:nth-child(2n){
+    padding-left:5px;
+}
+ul.r-list>li:nth-child(odd){
+    clear:both;
+}
+.r-list > li.clear,
+.r-list>li:nth-child(4n){
+    clear:none;
+}
+
+ul.r-list li a.sub-category{
+    text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    @include prefixer(box-sizing, border-box, webkit moz ms o spec);
+    width: 100%;
+    font-weight: bold;
+    display: inline-block;
+    padding: 10px;
+    border-radius: 3px;
+    border-style:solid;
+    border-width:1px;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, .75);
+    font-size:0.8em;
+    @include r-list-style(true);
+}
+
+ul.r-list li h1{
+    text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    @include prefixer(box-sizing, border-box, webkit moz ms o spec);
+    width: 100%;
+    font-weight: bold;
+    display: inline-block;
+    padding: 10px;
+    border-radius: 3px;
+    border-style:solid;
+    border-width:1px;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, .75);
+    @include r-list-style(true);
+}
+
+ul.r-list li h1{
+    margin:0;
+}
+ul.r-list li span{
+    display:none;
+}
+ul.r-list li ul{
+    -webkit-transition: opacity 1s ease-out;
+    opacity: 0;
+    height: 0;
+    overflow: hidden;
+}
+ul.r-list li.active h1,
+ul.r-list li.active a{
+    $darkenColor:darken($maincolor, 10% );
+    @include contrasted($maincolor);
+    border-color:$darkenColor;
+    $color: $text-color-contrasted;
+    text-shadow:0 1px 1px $darkenColor;
+}
+ul.r-list li span.collapse{
+    width:16px;
+    height:16px;
+
+    margin-right: 10px;
+    display:inline-block;
+}
+ul.r-list li.active ul{
+    opacity: 1;
+    height: auto;
+    margin:0;
+    padding:5px 0 0 0;
+    margin-bottom:5px;
+}
+ul.r-list li.active ul li{
+    padding:0;
+}
+ul.r-list li.active ul li a{
+    @include r-list-style;
+    font-size: 0.82em;
+}
+ul.r-list li ul li{
+    float: none;
+    width: 100%;
+}
+div.cell_3:nth-child(2n){
+    margin:0 1%;
+    width: 31%;
+}
+
+.select-box{
+    width:100%;
+    @include prefixer(box-sizing, border-box, webkit moz ms o spec);
+}
+.select-box select{
+    width:100%;
+}

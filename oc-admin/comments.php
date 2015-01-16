@@ -1,24 +1,20 @@
 <?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
-    /*
-     *      OSCLass – software for creating and publishing online classified
-     *                           advertising platforms
-     *
-     *                        Copyright (C) 2010 OSCLASS
-     *
-     *       This program is free software: you can redistribute it and/or
-     *     modify it under the terms of the GNU Affero General Public License
-     *     as published by the Free Software Foundation, either version 3 of
-     *            the License, or (at your option) any later version.
-     *
-     *     This program is distributed in the hope that it will be useful, but
-     *         WITHOUT ANY WARRANTY; without even the implied warranty of
-     *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-     *             GNU Affero General Public License for more details.
-     *
-     *      You should have received a copy of the GNU Affero General Public
-     * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
-     */
+/*
+ * Copyright 2014 Osclass
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
     class CAdminItemComments extends AdminSecBaseModel
     {
@@ -100,6 +96,11 @@
                                                                                 osc_add_hook("disable_comment", $_id);
                                                                             }
                                                                             osc_add_flash_ok_message( _m('The comments have been blocked'), 'admin');
+                                                    break;
+                                                    default:
+                                                        if(Params::getParam("bulk_actions")!="") {
+                                                            osc_run_hook("item_bulk_".Params::getParam("bulk_actions"), Params::getParam('id'));
+                                                        }
                                                     break;
                                                 }
                                             }
@@ -195,29 +196,42 @@
                                             osc_run_hook( 'delete_comment', Params::getParam('id') );
                                             $this->redirectTo( osc_admin_base_url(true) . "?page=comments" );
                 break;
-                default:                    if( Params::getParam('iDisplayLength') == '' ) {
-                                                Params::setParam('iDisplayLength', 10 );
-                                            }
-                                            // showAll == ''
-                                            //      -> show all comments filtered
-                                            // showAll != ''
-                                            //      -> show comments which are not
-                                            //      -> diplayed at frontend
-                                            if( Params::getParam('showAll') == '' || Params::getParam('showAll') == '1' ) {
-                                                Params::setParam('showAll', true );
-                                            } else {
-                                                Params::setParam('showAll', false );
-                                            }
+                default:
+                                            require_once osc_lib_path()."osclass/classes/datatables/CommentsDataTable.php";
 
+                                            // set default iDisplayLength
+                                            if( Params::getParam('iDisplayLength') != '' ) {
+                                                Cookie::newInstance()->push('listing_iDisplayLength', Params::getParam('iDisplayLength'));
+                                                Cookie::newInstance()->set();
+                                            } else {
+                                                // set a default value if it's set in the cookie
+                                                if( Cookie::newInstance()->get_value('listing_iDisplayLength') != '' ) {
+                                                    Params::setParam('iDisplayLength', Cookie::newInstance()->get_value('listing_iDisplayLength'));
+                                                } else {
+                                                    Params::setParam('iDisplayLength', 10 );
+                                                }
+                                            }
                                             $this->_exportVariableToView('iDisplayLength', Params::getParam('iDisplayLength'));
 
-                                            require_once osc_admin_base_path() . 'ajax/comments_processing.php';
-                                            $params = Params::getParamsAsArray("get");
-                                            $comments_processing = new CommentsProcessingAjax( $params );
-                                            $aData = $comments_processing->result( $params );
+                                            // Table header order by related
+                                            if( Params::getParam('sort') == '') {
+                                                Params::setParam('sort', 'date');
+                                            }
+                                            if( Params::getParam('direction') == '') {
+                                                Params::setParam('direction', 'desc');
+                                            }
 
                                             $page  = (int)Params::getParam('iPage');
-                                            if(count($aData['aaData']) == 0 && $page!=1) {
+                                            if($page==0) { $page = 1; };
+                                            Params::setParam('iPage', $page);
+
+                                            $params = Params::getParamsAsArray();
+
+                                            $commentsDataTable = new CommentsDataTable();
+                                            $commentsDataTable->table($params);
+                                            $aData = $commentsDataTable->getData();
+
+                                            if(count($aData['aRows']) == 0 && $page!=1) {
                                                 $total = (int)$aData['iTotalDisplayRecords'];
                                                 $maxPage = ceil( $total / (int)$aData['iDisplayLength'] );
 
@@ -234,7 +248,20 @@
                                                 }
                                             }
 
-                                            $this->_exportVariableToView('aComments', $aData);
+
+                                            $this->_exportVariableToView('aData', $aData);
+                                            $this->_exportVariableToView('aRawRows', $commentsDataTable->rawRows());
+
+                                            $bulk_options = array(
+                                                array('value' => '', 'data-dialog-content' => '', 'label' => __('Bulk actions')),
+                                                array('value' => 'delete_all', 'data-dialog-content' => sprintf(__('Are you sure you want to %s the selected comments?'), strtolower(__('Delete'))), 'label' => __('Delete')),
+                                                array('value' => 'activate_all', 'data-dialog-content' => sprintf(__('Are you sure you want to %s the selected comments?'), strtolower(__('Activate'))), 'label' => __('Activate')),
+                                                array('value' => 'deactivate_all', 'data-dialog-content' => sprintf(__('Are you sure you want to %s the selected comments?'), strtolower(__('Deactivate'))), 'label' => __('Deactivate')),
+                                                array('value' => 'disable_all', 'data-dialog-content' => sprintf(__('Are you sure you want to %s the selected comments?'), strtolower(__('Block'))), 'label' => __('Block')),
+                                                array('value' => 'enable_all', 'data-dialog-content' => sprintf(__('Are you sure you want to %s the selected comments?'), strtolower(__('Unblock'))), 'label' => __('Unblock'))
+                                            );
+                                            $bulk_options = osc_apply_filter("comment_bulk_filter", $bulk_options);
+                                            $this->_exportVariableToView('bulk_options', $bulk_options);
 
                                             $this->doView('comments/index.php');
                 break;
@@ -244,8 +271,10 @@
         //hopefully generic...
         function doView($file)
         {
+            osc_run_hook("before_admin_html");
             osc_current_admin_theme_path($file);
             Session::newInstance()->_clearVariables();
+            osc_run_hook("after_admin_html");
         }
 
         function sendCommentActivated ($commentId)

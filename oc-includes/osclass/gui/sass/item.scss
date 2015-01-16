@@ -1,0 +1,122 @@
+body.item #sidebar .widget-box,
+body.user-public-profile #sidebar .widget-box{
+    padding:20px;
+}
+body.item #sidebar .form-container .controls input,
+body.item #sidebar .form-container .controls textarea,
+body.user-public-profile #sidebar .form-container .controls input,
+body.user-public-profile #sidebar .form-container .controls textarea{
+    width:238px;
+}
+body.item #sidebar .form-container label,
+body.user-public-profile #sidebar .form-container label{
+    font-size:0.75em
+}
+body.item #contact h2,
+body.user-public-profile #contact h2{
+    margin-top:0px;
+}
+body.item #main,
+body.user-public-profile #main{
+    width:640px;
+    float:left;
+}
+.item-photos .main-photo{
+    width:550px;
+    float:left;
+}
+.item-photos .thumbs{
+    float:right;
+    width:79px;
+}
+.item-photos .thumbs img{
+    margin-bottom:12px;
+    border:solid 2px $widgetbordercolor;
+}
+.item-header{
+    margin-top:-10px;
+    background:$widgetbackground;
+    padding:10px;
+    @include border-radius(4px);
+
+    font-size:0.875em;
+    margin-bottom:15px;
+    font-size: 0.75em;
+}
+.item-header #type_dates{
+    float:right;
+}
+.item-header #type_dates em{
+    font-style:normal;
+}
+#item_location{
+    list-style: none;
+    margin:0;
+    padding:0;
+}
+#item_location li{
+    display:inline;
+}
+#description{
+    clear:both;
+    padding-top:5px;
+}
+div.mark_as{
+    height:32px;
+    width:100%;
+    border:none;
+    background:transparent;
+    margin-bottom:15px;
+}
+.mark_as a{
+    width: 100%;
+    height: auto;
+    display: block;
+    top: 0;
+    left: 0;
+    position: absolute;
+}
+.mark_as .select-box-label{
+    border:solid 1px #f2f2f2;
+    position:relative;
+    float:none;
+    @include border-radius(4px);
+    background:$widgetbackground;
+}
+.similar_ads h2{
+    margin-top:35px;
+}
+.admin-options{
+    font-size:0.725em;
+}
+.admin-options a{
+    margin:0 5px;
+}
+
+#comments{
+    margin-top:25px;
+}
+body.item h1 .price {
+    font-weight: normal;
+    font-size: 24px;
+    float: right;
+    background-color: #FCF8E3;
+    padding: 5px 10px;
+}
+
+/* Comments */
+.item #comments h3{ font-size:1em; }
+.item #comments { clear:both; float:left; margin-bottom:35px; width:100%; }
+.item #comments .comments_list { border-bottom: 1px dotted #DDD; margin-bottom:20px;  }
+.item #comments .comment { background:url(../images/comments_quotes.gif) no-repeat 10px 0; margin-bottom:15px; padding:7px 0 0 60px; }
+.item #comments .comment h3 { color:#666; margin-bottom: 5px; }
+.item #comments .comment h3 em { color:#888; font-size:12px; font-weight:normal; }
+.item #comments .comment p { color:#878787; font-style:italic; line-height:18px; }
+.item #comments .pagination { text-align: right; margin-right: 10px; margin-bottom: 15px; }
+.item #comments .pagination a { border: 1px dotted #AAA; padding: 5px 8px; }
+.item #comments .pagination a.searchPaginationSelected { background-color: #f7f7f7; }
+.item #comments .pagination a.searchPaginationNext, .item #comments a.searchPaginationPrev,
+.item #comments .pagination a.searchPaginationFirst, .item #comments a.searchPaginationLast { border: 0px; text-decoration: none; }
+.item #comments .pagination a.searchPaginationNext:hover, .item #comments a.searchPaginationPrev:hover,
+.item #comments .pagination a.searchPaginationFirst:hover, .item #comments a.searchPaginationLast:hover { background-color: #ffffff; }
+.item #comments a:hover { background-color: #f7f7f7; }

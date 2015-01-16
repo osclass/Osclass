@@ -25,7 +25,7 @@
 	-moz-box-shadow: 0 1px 3px #000,0 0 0 1px rgba(0,0,0,.7),inset 0 0 0 1px rgba(255,255,255,.05);
 	background: #111 -webkit-gradient(linear,0% 0%,0% 100%,from(rgba(255,255,255,.2)),color-stop(.5,rgba(255,255,255,.15)),color-stop(.5,rgba(255,255,255,.1)),to(rgba(255,255,255,.15)));
 	background: #111 -moz-linear-gradient(top,rgba(255,255,255,.2) 0%,rgba(255,255,255,.15) 50%,rgba(255,255,255,.1) 50%,rgba(255,255,255,.15) 100%);
-	border-radius: 3px;
+	.rounded-corners;
 }
 
 #fancybox-buttons ul li {
@@ -50,7 +50,7 @@
 }
 
 #fancybox-buttons a.btnNext {
-	background-position: -33px 0;
+	background-position: -@input-height 0;
 	border-right: 1px solid #3e3e3e;
 }
 

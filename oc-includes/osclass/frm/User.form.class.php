@@ -1,24 +1,20 @@
 <?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
-    /*
-     *      OSCLass – software for creating and publishing online classified
-     *                           advertising platforms
-     *
-     *                        Copyright (C) 2010 OSCLASS
-     *
-     *       This program is free software: you can redistribute it and/or
-     *     modify it under the terms of the GNU Affero General Public License
-     *     as published by the Free Software Foundation, either version 3 of
-     *            the License, or (at your option) any later version.
-     *
-     *     This program is distributed in the hope that it will be useful, but
-     *         WITHOUT ANY WARRANTY; without even the implied warranty of
-     *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-     *             GNU Affero General Public License for more details.
-     *
-     *      You should have received a copy of the GNU Affero General Public
-     * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
-     */
+/*
+ * Copyright 2014 Osclass
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
     class UserForm extends Form {
 
@@ -28,6 +24,10 @@
 
         static public function name_text($user = null) {
             parent::generic_input_text("s_name", isset($user['s_name'])? $user['s_name'] : '', null, false);
+        }
+
+        static public function username_text($user = null) {
+            parent::generic_input_text("s_username", isset($user['s_username'])? $user['s_username'] : '', null, false);
         }
 
         static public function email_login_text($user = null) {
@@ -71,7 +71,7 @@
         }
 
         static public function info_textarea($name, $locale = 'en_US', $value = '') {
-            parent::generic_textarea($name . '[' . $locale . ']', $value) ;
+            parent::generic_textarea($name . '[' . $locale . ']', $value);
         }
 
         static public function multilanguage_info($locales, $user = null) {
@@ -95,67 +95,63 @@
         }
 
         static public function country_select($countries, $user = null) {
-            if( count($countries) >= 1 ) {
-                parent::generic_select('countryId', $countries, 'pk_c_code', 's_name', __('Select a country...'), (isset($user['fk_c_country_code'])) ? $user['fk_c_country_code'] : null) ;
-//            } else if ( count($countries) == 1 ) {
-//                parent::generic_input_hidden('countryId', (isset($user['fk_c_country_code'])) ? $user['fk_c_country_code'] : $countries[0]['pk_c_code']) ;
-//                echo '<span>' .$countries[0]['s_name'] . '</span>';
+            if( count($countries) > 1 ) {
+                parent::generic_select('countryId', $countries, 'pk_c_code', 's_name', __('Select a country...'), (isset($user['fk_c_country_code'])) ? $user['fk_c_country_code'] : null);
             } else {
-                parent::generic_input_text('country', (isset($user['s_country'])) ? $user['s_country'] : null) ;
+                parent::generic_input_text('country', ( ! empty($user['s_country']) ? $user['s_country'] : @$countries[0]['s_name']));
+                parent::generic_input_hidden('countryId', '');
             }
         }
 
         static public function country_text($user = null) {
-            parent::generic_input_text('country', (isset($user['s_country'])) ? $user['s_country'] : null) ;
+            parent::generic_input_text('country', (isset($user['s_country'])) ? $user['s_country'] : null);
         }
 
         static public function region_select($regions, $user = null) {
             if( count($regions) >= 1 ) {
-                parent::generic_select('regionId', $regions, 'pk_i_id', 's_name', __('Select a region...'), (isset($user['fk_i_region_id'])) ? $user['fk_i_region_id'] : null) ;
-//            } else if ( count($regions) == 1 ) {
-//                parent::generic_input_hidden('countryId', (isset($user['fk_i_region_id'])) ? $user['fk_i_region_id'] : $regions[0]['pk_i_id']) ;
-//                echo '<span>' .$regions[0]['s_name'] . '</span>';
+                parent::generic_select('regionId', $regions, 'pk_i_id', 's_name', __('Select a region...'), (isset($user['fk_i_region_id'])) ? $user['fk_i_region_id'] : null);
             } else {
-                parent::generic_input_text('region', (isset($user['s_region'])) ? $user['s_region'] : null) ;
+                parent::generic_input_text('region', (isset($user['s_region'])) ? $user['s_region'] : null);
             }
         }
 
         static public function region_text($user = null) {
-            parent::generic_input_text('region', (isset($user['s_region'])) ? $user['s_region'] : null) ;
+            parent::generic_input_text('region', (isset($user['s_region'])) ? $user['s_region'] : null);
         }
 
         static public function city_select($cities, $user = null) {
             if( count($cities) >= 1 ) {
-                parent::generic_select('cityId', $cities, 'pk_i_id', 's_name', __('Select a city...'), (isset($user['fk_i_city_id'])) ? $user['fk_i_city_id'] : null) ;
-//            } else if ( count($cities) == 1 ) {
-//                parent::generic_input_hidden('cityId', (isset($user['fk_i_city_id'])) ? $user['fk_i_city_id'] : null) ;
-//                echo '<span>' .$cities[0]['s_name'] . '</span>';
+                parent::generic_select('cityId', $cities, 'pk_i_id', 's_name', __('Select a city...'), (isset($user['fk_i_city_id'])) ? $user['fk_i_city_id'] : null);
             } else {
-                parent::generic_input_text('city', (isset($user['s_city'])) ? $user['s_city'] : null) ;
+                parent::generic_input_text('city', (isset($user['s_city'])) ? $user['s_city'] : null);
             }
         }
 
         static public function city_text($user = null) {
-            parent::generic_input_text('city', (isset($user['s_city'])) ? $user['s_city'] : null) ;
+            parent::generic_input_text('city', (isset($user['s_city'])) ? $user['s_city'] : null);
         }
 
         static public function city_area_text($user = null) {
-            parent::generic_input_text('cityArea', (isset($user['s_city_area'])) ? $user['s_city_area'] : null) ;
+            parent::generic_input_text('cityArea', (isset($user['s_city_area'])) ? $user['s_city_area'] : null);
         }
 
         static public function address_text($user = null) {
-            parent::generic_input_text('address', (isset($user['s_address'])) ? $user['s_address'] : null) ;
+            parent::generic_input_text('address', (isset($user['s_address'])) ? $user['s_address'] : null);
         }
 
-        static public function is_company_select($user = null) {
+        static public function zip_text($user = null) {
+            parent::generic_input_text('zip', (isset($user['s_zip'])) ? $user['s_zip'] : null);
+        }
+
+        static public function is_company_select($user = null, $user_label = null, $company_label = null) {
             $options = array(
-                array( 'i_value' => '0', 's_text' => __('User') )
-                ,array( 'i_value' => '1', 's_text' => __('Company') )
-            ) ;
+                array( 'i_value' => '0', 's_text' => ($user_label?$user_label:__('User')) )
+                ,array( 'i_value' => '1', 's_text' => ($company_label?$company_label:__('Company')) )
+            );
 
-            parent::generic_select( 'b_company', $options, 'i_value', 's_text', null, (isset($user['b_company'])) ? $user['b_company'] : null ) ;
+            parent::generic_select( 'b_company', $options, 'i_value', 's_text', null, (isset($user['b_company'])) ? $user['b_company'] : null );
         }
-        
+
         static public function user_select($users){
             Form::generic_select('userId', $users, 'pk_i_id', 's_name',  __('All') , NULL );
         }
@@ -167,6 +163,9 @@
         // Code for form validation
         $("form[name=register]").validate({
             rules: {
+                s_name: {
+                    required: true
+                },
                 s_email: {
                     required: true,
                     email: true
@@ -182,6 +181,9 @@
                 }
             },
             messages: {
+                s_name: {
+                    required: "<?php _e("Name: this field is required"); ?>."
+                },
                 s_email: {
                     required: "<?php _e("Email: this field is required"); ?>.",
                     email: "<?php _e("Invalid email address"); ?>."
@@ -200,13 +202,17 @@
             wrapper: "li",
             invalidHandler: function(form, validator) {
                 $('html,body').animate({ scrollTop: $('h1').offset().top }, { duration: 250, easing: 'swing'});
+            },
+            submitHandler: function(form){
+                $('button[type=submit], input[type=submit]').attr('disabled', 'disabled');
+                form.submit();
             }
         });
     });
 </script>
-<?php 
+<?php
         }
-        
+
         static public function js_validation_old() {
 ?>
 <script type="text/javascript">
@@ -269,6 +275,9 @@ function checkForm() {
         // Code for form validation
         $("form[name=register]").validate({
             rules: {
+                s_name: {
+                    required: true
+                },
                 s_email: {
                     required: true,
                     email: true
@@ -282,6 +291,9 @@ function checkForm() {
                 }
             },
             messages: {
+                s_name: {
+                    required: "<?php _e("Name: this field is required"); ?>."
+                },
                 s_email: {
                     required: "<?php _e("Email: this field is required"); ?>.",
                     email: "<?php _e("Invalid email address"); ?>."
@@ -298,18 +310,22 @@ function checkForm() {
             wrapper: "li",
             invalidHandler: function(form, validator) {
                 $('html,body').animate({ scrollTop: $('h1').offset().top }, { duration: 250, easing: 'swing'});
+            },
+            submitHandler: function(form){
+                $('button[type=submit], input[type=submit]').attr('disabled', 'disabled');
+                form.submit();
             }
         });
     });
 </script>
-<?php 
+<?php
         }
 
         static public function location_javascript($path = 'front') {
 ?>
 <script type="text/javascript">
     $(document).ready(function(){
-        $("#countryId").live("change",function(){
+        $("#countryId").on("change",function(){
             var pk_c_code = $(this).val();
             <?php if($path=="admin") { ?>
                 var url = '<?php echo osc_admin_base_url(true)."?page=ajax&action=regions&countryId="; ?>' + pk_c_code;
@@ -377,7 +393,7 @@ function checkForm() {
              }
         });
 
-        $("#regionId").live("change",function(){
+        $("#regionId").on("change",function(){
             var pk_c_code = $(this).val();
             <?php if($path=="admin") { ?>
                 var url = '<?php echo osc_admin_base_url(true)."?page=ajax&action=cities&regionId="; ?>' + pk_c_code;

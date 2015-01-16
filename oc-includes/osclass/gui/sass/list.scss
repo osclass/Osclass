@@ -1,0 +1,243 @@
+.r-list{
+    display:none;
+    margin:0px 40px 0 0;
+    padding: 0;
+    list-style: none;
+
+}
+.latest_ads{
+    padding-top:25px;
+    h1{
+        float:left;
+    }
+    .actions{
+        float:right;
+        margin-top:5px;
+    }
+}
+body.home{
+    .r-list{
+        display:block;
+    }
+    #main{
+        width: 640px;
+        float: left;
+        margin-top: -20px 40px 0 0;
+    }
+}
+.tbl{
+    display: block;
+    width: 100%;
+}
+div.first_cel ul{
+    margin:0;
+}
+.cell_3{
+    width:33%;
+    float:left;
+    ul{
+        margin:0;
+        margin-left:20px;
+    }
+}
+.r-list li{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    .r-list li li{
+        float:none;
+        width:100%;
+    }
+    > li:nth-child(4n),
+    .clear{
+        clear:both
+    }
+}
+ul.r-list{
+    li{
+        h1{
+            margin:25px 0 10px 0;
+            padding:0;
+            font-size: 1em;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            a{
+                font-size: 1em;
+            }
+            span{
+                font-weight: normal;
+            }
+        }
+        a,
+        span{
+            text-decoration:none;
+            font-size: 0.8125em;
+        }
+        ul{
+            list-style: none;
+            margin:0;
+            padding:0;
+        }
+    }
+}
+.list-header{
+    margin-bottom:15px;
+    z-index: 3;
+    position: relative;
+}
+.listing-card-list{
+    margin:0;
+    padding:0;
+    list-style:none;
+    clear:both;
+}
+.see_more_link{
+    clear:both;
+}
+.counter-search{
+    float:left;
+    line-height: 32px;
+}
+#main h5{
+    margin-bottom:10px;
+}
+#related-searches{
+    padding-top:25px;
+    h5{
+        margin-bottom:10px;
+        font-size: 1em;
+    }
+}
+.listing-card{
+    clear:both;
+    padding:10px 0;
+    margin: 0;
+    border: 0;
+    border-bottom: 1px solid #ECECEC;
+    position: relative;
+    width: 100%;
+    display: table;
+
+    .listing-basicinfo,
+    .listing-attributes{
+        display: block;//table-cell;
+        vertical-align: top;
+        width:auto;
+    }
+    .listing-attributes{
+        width:auto;
+    }
+    .currency-value{
+        white-space: nowrap;
+        font-weight: bold;
+        color:#78c042;
+    }
+    .listing-data{
+        display:table-row;
+        width:100%;
+    }
+    .listing-detail{
+        width:auto;
+        margin-left:105px;
+    }
+    .listing-cell{
+        display: table;
+        width: 100%;
+    }
+    .listing-thumb{
+        float:left;
+    }
+    .listing-thumb img{
+        height: 85px;
+        width: 95px;
+    }
+    .listing-attributes{
+        font-size: 0.78em;
+        color: #777;
+        padding: 4px 0 8px;
+        line-height: 1em;
+    }
+    .listing-attributes a{
+        color: #777;
+        font-weight: bold;
+    }
+    @include underlinke-hover(".listing-attributes a");
+}
+.premium-list li.listing-card,
+li.listing-card.premium{
+    background-color: #FCFCD7;
+}
+.listing-grid{
+    .last{
+        margin-right:0px;
+    }
+    .listing-card{
+        float: left;
+        width: 190px;
+        padding: 6px;
+        background-color: #FFF;
+        border: 1px solid #ECECEC;
+        margin: 0 9px 9px 0;
+        position: relative;
+        display: block;
+        clear:none;
+
+        .listing-attributes .location{
+            display: block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            a{
+                display: inline;
+            }
+        }
+        img{
+            width: 100%;
+            height: auto;
+            float:none;
+        }
+    }
+    .currency-value{
+        display:block;
+    }
+    .listing-detail{
+        margin-left:0;
+    }
+    .listing-basicinfo,
+    .listing-data{
+        width:100%;
+        display: block;
+    }
+    .listing-thumb{
+        width:100%;
+    }
+
+    .listing-cell {
+        display:block;
+    }
+    .listing-basicinfo{
+        p{
+            display:none
+        }
+        a{
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+            display: inline-block;
+        }
+    }
+    .g-hide{
+        display:none;
+    }
+}
+
+body.search .listing-grid .last{
+    margin-right:0px;
+}
+body.search .listing-grid .listing-card{
+    width: 161px;
+}
+body.home .listing-grid .first{
+    clear:both;
+}

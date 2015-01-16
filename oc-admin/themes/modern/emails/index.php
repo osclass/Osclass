@@ -1,20 +1,19 @@
-<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ;
-    /**
-     * OSClass – software for creating and publishing online classified advertising platforms
-     *
-     * Copyright (C) 2010 OSCLASS
-     *
-     * This program is free software: you can redistribute it and/or modify it under the terms
-     * of the GNU Affero General Public License as published by the Free Software Foundation,
-     * either version 3 of the License, or (at your option) any later version.
-     *
-     * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-     * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-     * See the GNU Affero General Public License for more details.
-     *
-     * You should have received a copy of the GNU Affero General Public
-     * License along with this program. If not, see <http://www.gnu.org/licenses/>.
-     */
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.');
+/*
+ * Copyright 2014 Osclass
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
     function addHelp() {
         echo '<p>' . __("Modify the emails your site's users receive when they join your site, when someone shows interest in their ad, to recover their password... <strong>Be careful</strong>: don't modify any of the words that appear within brackets.") . '</p>';
@@ -22,7 +21,7 @@
     osc_add_hook('help_box','addHelp');
 
     function customPageHeader(){ ?>
-        <h1><?php _e('Settings') ; ?>
+        <h1><?php _e('Settings'); ?>
             <a href="#" class="btn ico ico-32 ico-help float-right"></a>
         </h1>
 <?php
@@ -36,14 +35,14 @@
 
     $aData = __get('aEmails');
 
-    osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
+    osc_current_admin_theme_path( 'parts/header.php' ); ?>
 <h2 class="render-title"><?php _e('Emails templates'); ?></h2>
 <div class="table-contains-actions">
     <table class="table" cellpadding="0" cellspacing="0">
         <thead>
             <tr>
-                <th class="col-name"><?php _e('Name') ; ?></th>
-                <th class="col-title"><?php _e('Title') ; ?></th>
+                <th class="col-name"><?php _e('Name'); ?></th>
+                <th class="col-title"><?php _e('Title'); ?></th>
             </tr>
         </thead>
         <tbody>
@@ -60,7 +59,7 @@
         <?php } else { ?>
         <tr>
             <td colspan="6" class="text-center">
-            <p><?php _e('No data available in table') ; ?></p>
+            <p><?php _e('No data available in table'); ?></p>
             </td>
         </tr>
         <?php } ?>
@@ -71,4 +70,4 @@
 <?php
     osc_show_pagination_admin($aData);
 ?>
-<?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>
+<?php osc_current_admin_theme_path( 'parts/footer.php' ); ?>

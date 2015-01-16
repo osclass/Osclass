@@ -1,11 +1,11 @@
 <?php
 
 /**
- * The base MySQL settings of OSClass
+ * The base MySQL settings of Osclass
  */
 define('MULTISITE', 0);
 
-/** MySQL database name for OSClass */
+/** MySQL database name for Osclass */
 define('DB_NAME', 'database_name');
 
 /** MySQL database username */

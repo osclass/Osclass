@@ -16,10 +16,10 @@
         });
     </script>
 <?php } else { ?>
-    <script type="text/javascript"> 
+    <script type="text/javascript">
         var map = null;
         var geocoder = null;
-     
+
         var myOptions = {
             zoom: 13,
             center: new google.maps.LatLng(37.4419, -122.1419),
@@ -29,7 +29,7 @@
 
         map = new google.maps.Map(document.getElementById("itemMap"), myOptions);
         geocoder = new google.maps.Geocoder();
-     
+
         function showAddress(address) {
             if (geocoder) {
                 geocoder.geocode( { 'address': address}, function(results, status) {
@@ -39,7 +39,7 @@
                             map: map,
                             position: results[0].geometry.location
                         });
-                        marker.setMap(map);  
+                        marker.setMap(map);
                     } else {
                         $("#itemMap").remove();
                     }

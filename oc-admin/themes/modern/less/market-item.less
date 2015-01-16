@@ -1,0 +1,335 @@
+body.market .mk-item-parent:nth-child(3n+1) {
+    margin-right: 0;
+}
+body.market .mk-item-parent{
+    margin-right: 30px;
+    float:left;
+    display: block;
+}
+.mk-item{
+    .border-radius(5px);
+    background-color: #fff;
+
+    -webkit-box-shadow:  0px 0px 5px 0px #bababa;
+        box-shadow:  0px 0px 5px 0px #bababa;
+
+    width:300px;
+    height: 110px;
+    color:@title-color;
+    margin-right:0px;
+    margin-bottom:30px;
+    overflow: hidden;
+}
+a:hover .mk-item{
+    text-decoration: none;
+
+    -webkit-box-shadow:  0px 0px 10px 0px #2FBFD1;
+        box-shadow:  0px 0px 10px 0px #2FBFD1;
+}
+a.has-update:hover .mk-item{
+    text-decoration: none;
+    -webkit-box-shadow:  0px 0px 10px 0px #ffb400;
+        box-shadow:  0px 0px 10px 0px #ffb400;
+}
+.mk-item .banner{
+    width:110px;
+    height: 110px;
+    position: absolute;
+    background-color: #f2f2f2;
+    .border-radius(5px 0 0 5px);
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-position: center;
+
+    text-align: center;
+    line-height: 100px;
+    font-size: 50px;
+    color: white;
+    font-weight: 200;
+}
+.mk-item .mk-info{
+    text-decoration: none;
+    width:160px;
+    height: 80px;
+    padding:15px 15px 15px 125px;
+    position: relative;
+    overflow: hidden;
+}
+.mk-item .mk-info div{
+    position: absolute;
+    bottom:15px; right:15px;
+    width:160px;
+}
+.mk-item .mk-info h3{
+    font-weight: 200;
+    font-size:17px;
+    margin:0;
+}
+.mk-item .mk-info i{
+    font-weight: 200;
+    font-size:12px;
+    font-style: normal;
+    /*border-radius:0 0 0 4px;
+    -moz-border-radius:0 0 0 4px;
+    -webkit-border-radius:0 0 0 4px;*/
+}
+.mk-item .mk-info span{
+    display: block;
+    float:left;
+}
+.mk-item .mk-info .more,
+.mk-item .mk-info .download-btn,
+.mk-item .mk-info .buy-btn,
+.mk-item .mk-info .diag-buy{
+  background-color: @color-gray-dim;
+  .border-radius(3px);
+  padding:5px 8px;
+  color:#fff;
+  float:left;
+  font-size:13px;
+}
+.mk-item .mk-info .download-btn{
+  background-color: #2fbfd1;
+  margin-left: 5px;
+}
+.mk-item .mk-info .buy-btn{
+  background-color: #35d189;
+  margin-left: 5px;
+}
+.mk-item .mk-info .downloads{
+    display:block;
+    float:none;
+    font-size:12px;
+    line-height: 12px;
+    margin-bottom:-2px;
+}
+.mk-item .mk-info .downloads b,
+.mk-item .mk-info .downloads strong{
+    //font-weight: normal;
+}
+.mk-item-theme{
+    height: 225px;
+}
+.mk-item-theme .mk-info{
+    width: 270px;
+    height: 40px;
+    padding: 170px 15px 15px;
+}
+.mk-item .mk-info div.market-actions{
+    float:right;
+    bottom:10px;
+    right:8px;
+}
+.mk-item-theme .banner{
+    width: 300px;
+    height: 155px;
+    .border-radius(5px 5px 0 0);
+}
+.mk-item .flag{
+    width: 30px;
+    height: 30px;
+    right: 0;
+    top: 0;
+    position: absolute;
+    background-image: url(../images/market-split.png);
+
+    display: none;
+
+    .border-radius(0 3px 0 0);
+}
+.mk-item-theme .flag{
+    top: 155px;
+    .border-radius(0);
+}
+.has-update .flag{
+    display: block;
+    background-position: 0 0px;
+}
+.is-buy .flag{
+  display: block;
+  background-image: url(../images/market-buy.png);
+  background-position: 0 0px;
+}
+.is-featured .flag{
+    display: block;
+    background-position:-30px 0;
+}
+.is-featured-is-downloaded .flag{
+    display: block;
+    background-position:-60px 0;
+}
+.is-downloaded .flag{
+    display: block;
+    background-position:-90px 0;
+}
+.is-featured-has-update .flag{
+    display: block;
+    background-position:-120px 0;
+}
+/* DIALOGS */
+.market-dialog{
+    padding:0;
+    margin:0;
+    background-color: #fff;
+    .border-radius(~"5px/6px");
+    height: auto;
+
+    -webkit-box-shadow:  0px 0px 5px 0px  rgba(0,0,0,0.5);
+        box-shadow:  0px 0px 5px 0px rgba(0,0,0,0.5);
+}
+.market-dialog .flashmessage{
+    display: block;
+position: absolute;
+top: 100%;
+z-index: 88888;
+}
+.market-dialog .ui-dialog-titlebar{
+    background: none;
+    height: 0;
+    padding: 0;
+}
+.not-compatible .ui-dialog-titlebar{
+    background: 0;
+    height: auto;
+    padding:10px;
+    background-color: #FF4242;
+}
+.market-dialog .ui-dialog-title{
+    display: none;
+}
+.not-compatible span.ui-dialog-title{
+    display: block;
+    font-size:14px;
+    color:#fff;
+    text-align: center;
+    float:none;
+}
+.not-compatible .mk-item,
+.not-compatible .banner{
+    .border-radius(0);
+}
+.not-compatible a.ui-dialog-titlebar-close {
+    margin-top: -10px;
+}
+.market-dialog .ui-dialog-titlebar-close {
+    z-index: 10;
+    margin-top: 5px;
+}
+.market-dialog .mk-item{
+    margin:0;
+    height: auto;
+
+    -webkit-box-shadow:  none;
+        box-shadow:  none;
+}
+.market-dialog .ui-dialog-content{
+    padding:0;
+    height: auto;
+}
+.market-dialog .mk-item-theme .mk-info {
+    height: auto;
+    width:415px;
+}
+.market-dialog .mk-item-plugin .mk-info,
+.market-dialog .mk-item-language .mk-info {
+    font-size: 11px;
+    padding: 20px 20px 20px 185px;
+    height: 130px;
+    width: 440px;
+}
+.market-dialog .mk-item-plugin .banner,
+.market-dialog .mk-item-language .banner {
+    width: 170px;
+    height: 170px;
+    line-height: 160px;
+    font-size: 100px;
+}
+.mk-item-language .banner {
+  font-size: 30px;
+}
+.market-dialog .mk-item-language .banner {
+  font-size: 60px;
+}
+.market-dialog .mk-info table{
+    width:100%;
+    vertical-align: top;
+    padding:0;
+    border-collapse: collapse;
+}
+.market-dialog .mk-info table td{
+    vertical-align: top;
+    border-collapse: collapse;
+}
+.market-dialog .mk-info table td.spacer{
+    width:20px;
+}
+.market-dialog .mk-info table td.actions{
+    width:150px;
+
+}
+.market-dialog .mk-info .description{
+    padding-top:25px;
+    position: relative;
+    top:0;
+    left: 0;
+    right:auto;
+    bottom:auto;
+    width:auto;
+}
+.market-dialog .mk-item-theme,
+.market-dialog .mk-item-theme .banner{
+    width: 445px !important;
+}
+.market-dialog .mk-item-theme .banner{
+    height: 160px
+}
+.market-dialog .mk-info .more,
+.market-dialog .mk-info .diag-buy,
+{
+    display: block;
+    font-size: 15px;
+    text-align: center;
+    padding:7px 0;
+    margin-bottom:8px;
+    float:none;
+    background-color: #2fbfd1;
+}
+.market-dialog .mk-info .block{
+    display: block;
+    color:@title-color;
+}
+
+.market-dialog .mk-info .manual,
+.market-dialog .mk-info .manual-buy,
+{
+    display: block;
+    font-size: 11px;
+    margin-bottom: 8px;
+    clear:both;
+}
+.header-mkt-btn {
+    .border-radius(3px);
+    background-color:#2fbfd1!important;
+     padding: 5px 8px;
+    color: white;
+}
+.banner-market{
+    .border-radius(12px);
+    display:inline-block;
+    float: left;
+}
+.banner-market h1,
+.banner-market h2 {
+    color:#6baab6!important;
+}
+body.market #content-head .banner-market h1 {
+    font-size: 27px;
+}
+.header-title-market {
+    display:inline-block;
+    max-width: 550px;
+    margin-right: 4em;
+    float:left;
+}

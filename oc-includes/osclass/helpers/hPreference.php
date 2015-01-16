@@ -1,30 +1,26 @@
 <?php
 
-    /*
-     *      OSCLass – software for creating and publishing online classified
-     *                           advertising platforms
-     *
-     *                        Copyright (C) 2010 OSCLASS
-     *
-     *       This program is free software: you can redistribute it and/or
-     *     modify it under the terms of the GNU Affero General Public License
-     *     as published by the Free Software Foundation, either version 3 of
-     *            the License, or (at your option) any later version.
-     *
-     *     This program is distributed in the hope that it will be useful, but
-     *         WITHOUT ANY WARRANTY; without even the implied warranty of
-     *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-     *             GNU Affero General Public License for more details.
-     *
-     *      You should have received a copy of the GNU Affero General Public
-     * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
-     */
+/*
+ * Copyright 2014 Osclass
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
     /**
     * Helper Preferences
-    * @package OSClass
+    * @package Osclass
     * @subpackage Helpers
-    * @author OSClass
+    * @author Osclass
     */
 
     /**
@@ -33,7 +29,7 @@
      * @return int
      */
     function osc_time_cookie() {
-        return ( 31536000 ) ; // one year in seconds
+        return ( 31536000 ); // one year in seconds
     }
 
     /**
@@ -42,7 +38,16 @@
      * @return boolean
      */
     function osc_comments_enabled() {
-        return (getBoolPreference('enabled_comments')) ;
+        return (getBoolPreference('enabled_comments'));
+    }
+
+    /**
+     * Force uploaded images to be JPEG
+     *
+     * @return boolean
+     */
+    function osc_force_jpeg() {
+        return (getBoolPreference('force_jpeg'));
     }
 
     /**
@@ -51,7 +56,25 @@
      * @return int
      */
     function osc_comments_per_page() {
-        return (getPreference('comments_per_page')) ;
+        return (getPreference('comments_per_page'));
+    }
+
+    /**
+     * Gets auto update settings
+     *
+     * @return string
+     */
+    function osc_auto_update() {
+        return (getPreference('auto_update'));
+    }
+
+    /**
+     * Gets number of days to warn about an ad being expired
+     *
+     * @return int
+     */
+    function osc_warn_expiration() {
+        return (getPreference('warn_expiration'));
     }
 
     /**
@@ -60,7 +83,7 @@
      * @return int
      */
     function osc_timezone() {
-        return (getPreference('timezone')) ;
+        return (getPreference('timezone'));
     }
 
     /**
@@ -69,7 +92,7 @@
      * @return int
      */
     function osc_csrf_name() {
-        return (getPreference('csrf_name')) ;
+        return (getPreference('csrf_name'));
     }
 
     /**
@@ -78,7 +101,7 @@
      * @return boolean
      */
     function osc_reg_user_post_comments() {
-        return (getPreference('reg_user_post_comments')) ;
+        return (getBoolPreference('reg_user_post_comments'));
     }
 
     /**
@@ -87,7 +110,16 @@
      * @return boolean
      */
     function osc_reg_user_can_contact() {
-        return (getPreference('reg_user_can_contact')) ;
+        return (getPreference('reg_user_can_contact'));
+    }
+
+    /**
+     * Gets list of blacklsited terms for usernames
+     *
+     * @return string
+     */
+    function osc_username_blacklist() {
+        return (getPreference('username_blacklist'));
     }
 
     /**
@@ -96,7 +128,7 @@
      * @return boolean
      */
     function osc_users_enabled() {
-        return (getBoolPreference('enabled_users')) ;
+        return (getBoolPreference('enabled_users'));
     }
 
     /**
@@ -105,7 +137,7 @@
      * @return boolean
      */
     function osc_user_registration_enabled() {
-        return (getBoolPreference('enabled_user_registration')) ;
+        return (getBoolPreference('enabled_user_registration'));
     }
 
     /**
@@ -114,7 +146,7 @@
      * @return boolean
      */
     function osc_user_validation_enabled() {
-        return (getBoolPreference('enabled_user_validation')) ;
+        return (getBoolPreference('enabled_user_validation'));
     }
 
     /**
@@ -123,7 +155,7 @@
      * @return boolean
      */
     function osc_logged_user_item_validation() {
-        return (getBoolPreference('logged_user_item_validation')) ;
+        return (getBoolPreference('logged_user_item_validation'));
     }
 
     /**
@@ -132,7 +164,7 @@
      * @return int
      */
     function osc_moderate_comments() {
-        return (getPreference('moderate_comments')) ;
+        return (getPreference('moderate_comments'));
     }
 
     /**
@@ -141,7 +173,7 @@
      * @return boolean
      */
     function osc_notify_new_comment() {
-        return (getBoolPreference('notify_new_comment')) ;
+        return (getBoolPreference('notify_new_comment'));
     }
 
     /**
@@ -150,7 +182,7 @@
      * @return boolean
      */
     function osc_notify_new_comment_user() {
-        return (getBoolPreference('notify_new_comment_user')) ;
+        return (getBoolPreference('notify_new_comment_user'));
     }
 
     /**
@@ -159,7 +191,7 @@
      * @return boolean
      */
     function osc_rewrite_enabled() {
-        return (getBoolPreference('rewriteEnabled')) ;
+        return (getBoolPreference('rewriteEnabled'));
     }
 
     /**
@@ -168,7 +200,7 @@
      * @return boolean
      */
     function osc_mod_rewrite_loaded() {
-        return (getBoolPreference('mod_rewrite_loaded')) ;
+        return (getBoolPreference('mod_rewrite_loaded'));
     }
 
     /**
@@ -177,7 +209,16 @@
      * @return boolean
      */
     function osc_keep_original_image() {
-        return (getBoolPreference('keep_original_image')) ;
+        return (getBoolPreference('keep_original_image'));
+    }
+
+    /**
+     * Force image aspect
+     *
+     * @return boolean
+     */
+    function osc_force_aspect_image() {
+        return (getBoolPreference('force_aspect_image'));
     }
 
     /**
@@ -186,7 +227,7 @@
      * @return boolean
      */
     function osc_auto_cron() {
-        return (getBoolPreference('auto_cron')) ;
+        return (getBoolPreference('auto_cron'));
     }
 
     /**
@@ -195,7 +236,7 @@
      * @return boolean
      */
     function osc_recaptcha_items_enabled() {
-        return (getBoolPreference('enabled_recaptcha_items')) ;
+        return (getBoolPreference('enabled_recaptcha_items'));
     }
 
     /**
@@ -213,7 +254,7 @@
      * @return int
      */
     function osc_moderate_items() {
-        return (getPreference('moderate_items')) ;
+        return (getPreference('moderate_items'));
     }
 
     /**
@@ -222,7 +263,7 @@
      * @return boolean
      */
     function osc_reg_user_post() {
-        return (getBoolPreference('reg_user_post')) ;
+        return (getBoolPreference('reg_user_post'));
     }
 
     /**
@@ -231,7 +272,7 @@
      * @return boolean
      */
     function osc_price_enabled_at_items() {
-        return (getBoolPreference('enableField#f_price@items')) ;
+        return (getBoolPreference('enableField#f_price@items'));
     }
 
     /**
@@ -240,7 +281,7 @@
      * @return boolean
      */
     function osc_images_enabled_at_items() {
-        return (getBoolPreference('enableField#images@items')) ;
+        return (getBoolPreference('enableField#images@items'));
     }
 
     /**
@@ -249,7 +290,27 @@
      * @return int
      */
     function osc_max_images_per_item() {
-        return (getPreference('numImages@items')) ;
+        return (getPreference('numImages@items'));
+    }
+
+    /**
+     * Gets how many characters are allowed for the listings title
+     *
+     * @return int
+     */
+    function osc_max_characters_per_title() {
+        $value = getPreference('title_character_length');
+        return ( !empty($value) ? $value : 128);
+    }
+
+    /**
+     * Gets how many characters are allowed for the listings description
+     *
+     * @return int
+     */
+    function osc_max_characters_per_description() {
+        $value = getPreference('description_character_length');
+        return ( !empty($value) ? $value : 4096);
     }
 
     /**
@@ -258,7 +319,7 @@
      * @return boolean
      */
     function osc_notify_contact_friends() {
-        return(getBoolPreference('notify_contact_friends')) ;
+        return(getBoolPreference('notify_contact_friends'));
     }
 
     /**
@@ -267,7 +328,7 @@
      * @return boolean
      */
     function osc_notify_contact_item() {
-        return(getBoolPreference('notify_contact_item')) ;
+        return(getBoolPreference('notify_contact_item'));
     }
 
     /**
@@ -276,7 +337,7 @@
      * @return boolean
      */
     function osc_item_attachment() {
-        return(getBoolPreference('item_attachment')) ;
+        return(getBoolPreference('item_attachment'));
     }
 
     /**
@@ -285,7 +346,7 @@
      * @return boolean
      */
     function osc_contact_attachment() {
-        return(getBoolPreference('contact_attachment')) ;
+        return(getBoolPreference('contact_attachment'));
     }
 
     /**
@@ -294,7 +355,7 @@
      * @return boolean
      */
     function osc_notify_new_item() {
-        return(getBoolPreference('notify_new_item')) ;
+        return(getBoolPreference('notify_new_item'));
     }
 
     /**
@@ -303,7 +364,7 @@
      * @return boolean
      */
     function osc_notify_new_user() {
-        return(getBoolPreference('notify_new_user')) ;
+        return(getBoolPreference('notify_new_user'));
     }
 
     /**
@@ -312,7 +373,7 @@
      * @return boolean
      */
     function osc_mailserver_auth() {
-        return(getBoolPreference('mailserver_auth')) ;
+        return(getBoolPreference('mailserver_auth'));
     }
 
     /**
@@ -321,7 +382,7 @@
      * @return boolean
      */
     function osc_mailserver_pop() {
-        return(getBoolPreference('mailserver_pop')) ;
+        return(getBoolPreference('mailserver_pop'));
     }
 
 
@@ -332,7 +393,7 @@
      * @return string
      */
     function osc_rewrite_rules() {
-        return (getPreference('rewrite_rules')) ;
+        return (getPreference('rewrite_rules'));
     }
 
     /**
@@ -341,7 +402,7 @@
      * @return int
      */
     function osc_max_size_kb() {
-        return (getPreference('maxSizeKb')) ;
+        return (getPreference('maxSizeKb'));
     }
 
     /**
@@ -350,7 +411,7 @@
      * @return string
      */
     function osc_allowed_extension() {
-        return (getPreference('allowedExt')) ;
+        return (getPreference('allowedExt'));
     }
 
     /**
@@ -359,7 +420,7 @@
      * @return string
      */
     function osc_use_imagick() {
-        return (getBoolPreference('use_imagick')) ;
+        return (getBoolPreference('use_imagick'));
     }
 
     /**
@@ -368,7 +429,7 @@
      * @return string
      */
     function osc_thumbnail_dimensions() {
-        return (getPreference('dimThumbnail')) ;
+        return (getPreference('dimThumbnail'));
     }
 
     /**
@@ -377,7 +438,7 @@
      * @return string
      */
     function osc_preview_dimensions() {
-        return (getPreference('dimPreview')) ;
+        return (getPreference('dimPreview'));
     }
 
     /**
@@ -386,7 +447,7 @@
      * @return string
      */
     function osc_normal_dimensions() {
-        return (getPreference('dimNormal')) ;
+        return (getPreference('dimNormal'));
     }
 
     /**
@@ -395,7 +456,7 @@
      * @return string
      */
     function osc_last_version_check() {
-        return (getPreference('last_version_check')) ;
+        return (getPreference('last_version_check'));
     }
 
     /**
@@ -404,7 +465,7 @@
      * @return string
      */
     function osc_themes_last_version_check() {
-        return (getPreference('themes_last_version_check')) ;
+        return (getPreference('themes_last_version_check'));
     }
 
     /**
@@ -413,7 +474,16 @@
      * @return string
      */
     function osc_plugins_last_version_check() {
-        return (getPreference('plugins_last_version_check')) ;
+        return (getPreference('plugins_last_version_check'));
+    }
+
+    /**
+     * Gets when was the last version check
+     *
+     * @return string
+     */
+    function osc_languages_last_version_check() {
+        return (getPreference('languages_last_version_check'));
     }
 
     /**
@@ -422,7 +492,7 @@
      * @return string
      */
     function osc_update_core_json() {
-        return (getPreference('update_core_json')) ;
+        return (getPreference('update_core_json'));
     }
 
     /**
@@ -431,7 +501,7 @@
      * @return int
      */
     function osc_version() {
-        return (getPreference('version')) ;
+        return (getPreference('version'));
     }
 
     /**
@@ -440,7 +510,7 @@
      * @return string
      */
     function osc_page_title() {
-        return (getPreference('pageTitle')) ;
+        return (getPreference('pageTitle'));
     }
 
     /**
@@ -449,7 +519,7 @@
      * @return string
      */
     function osc_language() {
-        return(getPreference('language')) ;
+        return(getPreference('language'));
     }
 
     /**
@@ -458,7 +528,7 @@
      * @return string
      */
     function osc_admin_language() {
-        return(getPreference('admin_language')) ;
+        return(getPreference('admin_language'));
     }
 
     /**
@@ -467,7 +537,7 @@
      * @return string
      */
     function osc_theme() {
-        return(getPreference('theme')) ;
+        return(getPreference('theme'));
     }
 
     /**
@@ -476,7 +546,7 @@
      * @return string
      */
     function osc_admin_theme() {
-        return(getPreference('admin_theme')) ;
+        return(getPreference('admin_theme'));
     }
 
     /**
@@ -485,7 +555,7 @@
      * @return string
      */
     function osc_page_description() {
-        return(getPreference('pageDesc')) ;
+        return(getPreference('pageDesc'));
     }
 
     /**
@@ -494,7 +564,7 @@
      * @return string
      */
     function osc_contact_email() {
-        return(getPreference('contactEmail')) ;
+        return(getPreference('contactEmail'));
     }
 
     /**
@@ -503,7 +573,7 @@
      * @return string
      */
     function osc_date_format() {
-        return(getPreference('dateFormat')) ;
+        return(getPreference('dateFormat'));
     }
 
     /**
@@ -512,7 +582,7 @@
      * @return string
      */
     function osc_time_format() {
-        return(getPreference('timeFormat')) ;
+        return(getPreference('timeFormat'));
     }
 
     /**
@@ -521,7 +591,7 @@
      * @return string
      */
     function osc_week_starts_at() {
-        return(getPreference('weekStart')) ;
+        return(getPreference('weekStart'));
     }
 
     /**
@@ -530,7 +600,7 @@
      * @return int
      */
     function osc_num_rss_items() {
-        return(getPreference('num_rss_items')) ;
+        return(getPreference('num_rss_items'));
     }
 
     /**
@@ -539,7 +609,7 @@
      * @return string
      */
     function osc_currency() {
-        return(getPreference('currency')) ;
+        return(getPreference('currency'));
     }
 
     /**
@@ -548,7 +618,7 @@
      * @return string
      */
     function osc_akismet_key() {
-        return(getPreference('akismetKey')) ;
+        return(getPreference('akismetKey'));
     }
 
     /**
@@ -557,11 +627,11 @@
      * @return string
      */
     function osc_recaptcha_private_key() {
-        return(getPreference('recaptchaPrivKey')) ;
+        return(getPreference('recaptchaPrivKey'));
     }
 
     /**
-     * Gets OSClass' market URL
+     * Gets Osclass' market URL
      *
      * @return string
      */
@@ -569,25 +639,78 @@
         $url = getPreference('marketURL');
         switch ($type) {
             case 'plugins':
+            case 'plugin':
                 $url .= 'section/plugins/';
                 if($code!='') {
                     $url .= 'code/'. $code;
                 }
                 break;
             case 'themes':
+            case 'theme':
                 $url .= 'section/themes/';
                 if($code!='') {
                     $url .= 'code/'. $code;
                 }
                 break;
             case 'languages':
+            case 'language':
                 $url .= 'section/languages/';
                 if($code!='') {
                     $url .= 'code/'. $code;
                 }
                 break;
+            case 'purchases':
+            case 'purchase':
+                $url .= 'section/purchases/';
+                break;
             default:
                 break;
+        }
+        return $url;
+    }
+
+    /**
+     * Gets market connect api key
+     *
+     * @return string
+     */
+    function osc_market_api_connect() {
+        return(getPreference('marketAPIConnect'));
+    }
+
+    /**
+     * Get Osclass' market url for count items in categories
+     *
+     * @return string
+     */
+    function osc_market_count_url() {
+        $url = getPreference('marketURL');
+        return $url . 'count/';
+    }
+
+    /**
+     * Osclass' market url for get featured items in categories
+     *
+     * @return string
+     */
+    function osc_market_featured_url($type, $num = '') {
+        $url = getPreference('marketURL');
+        $url .= 'featured/';
+        switch ($type) {
+            case 'plugins':
+                $url .= 'plugins/';
+                break;
+            case 'themes':
+                $url .= 'themes/';
+                break;
+            case 'languages':
+                $url .= 'languages/';
+                break;
+            default:
+                break;
+        }
+        if($num!='') {
+            $url .= 'num/'. $num;
         }
         return $url;
     }
@@ -598,7 +721,25 @@
      * @return int
      */
     function osc_market_external_sources() {
-        return(getBoolPreference('marketAllowExternalSources')) ;
+        return(getBoolPreference('marketAllowExternalSources'));
+    }
+
+    /**
+     * Market filters
+     *
+     * @return int
+     */
+    function osc_market_categories() {
+        return(getPreference('marketCategories'));
+    }
+
+    /**
+     * Market data update
+     *
+     * @return int
+     */
+    function osc_market_data_update() {
+        return(getPreference('marketDataUpdate'));
     }
 
     /**
@@ -607,7 +748,7 @@
      * @return string
      */
     function osc_recaptcha_public_key() {
-        return(getPreference('recaptchaPubKey')) ;
+        return(getPreference('recaptchaPubKey'));
     }
 
     /**
@@ -616,7 +757,7 @@
      * @return string
      */
     function osc_mailserver_type() {
-        return(getPreference('mailserver_type')) ;
+        return(getPreference('mailserver_type'));
     }
 
     /**
@@ -625,7 +766,7 @@
      * @return string
      */
     function osc_mailserver_host() {
-        return(getPreference('mailserver_host')) ;
+        return(getPreference('mailserver_host'));
     }
 
     /**
@@ -634,7 +775,25 @@
      * @return int
      */
     function osc_mailserver_port() {
-        return(getPreference('mailserver_port')) ;
+        return(getPreference('mailserver_port'));
+    }
+
+    /**
+    * Gets mail from
+    *
+    * @return string
+    */
+    function osc_mailserver_mail_from() {
+        return(getPreference('mailserver_mail_from'));
+    }
+
+    /**
+    * Gets name from
+    *
+    * @return string
+    */
+    function osc_mailserver_name_from() {
+        return(getPreference('mailserver_name_from'));
     }
 
     /**
@@ -643,7 +802,7 @@
      * @return string
      */
     function osc_mailserver_username() {
-        return(getPreference('mailserver_username')) ;
+        return(getPreference('mailserver_username'));
     }
 
     /**
@@ -652,7 +811,7 @@
      * @return string
      */
     function osc_mailserver_password() {
-        return(getPreference('mailserver_password')) ;
+        return(getPreference('mailserver_password'));
     }
 
     /**
@@ -661,7 +820,7 @@
      * @return boolean
      */
     function osc_mailserver_ssl() {
-        return(getPreference('mailserver_ssl')) ;
+        return(getPreference('mailserver_ssl'));
     }
 
     /**
@@ -670,7 +829,7 @@
      * @return string
      */
     function osc_active_plugins() {
-        return(getPreference('active_plugins')) ;
+        return(getPreference('active_plugins'));
     }
 
     /**
@@ -679,7 +838,7 @@
      * @return string
      */
     function osc_installed_plugins() {
-        return(getPreference('installed_plugins')) ;
+        return(getPreference('installed_plugins'));
     }
 
     /**
@@ -688,7 +847,7 @@
      * @return string
      */
     function osc_default_order_field_at_search() {
-        return(getPreference('defaultOrderField@search')) ;
+        return(getPreference('defaultOrderField@search'));
     }
 
     /**
@@ -697,7 +856,7 @@
      * @return string
      */
     function osc_default_order_type_at_search() {
-        return(getPreference('defaultOrderType@search')) ;
+        return(getPreference('defaultOrderType@search'));
     }
 
     /**
@@ -706,7 +865,7 @@
      * @return string
      */
     function osc_default_show_as_at_search() {
-        return(getPreference('defaultShowAs@search')) ;
+        return(getPreference('defaultShowAs@search'));
     }
 
     /**
@@ -715,7 +874,7 @@
      * @return int
      */
     function osc_max_results_per_page_at_search() {
-        return(getPreference('maxResultsPerPage@search')) ;
+        return(getPreference('maxResultsPerPage@search'));
     }
 
     /**
@@ -724,7 +883,7 @@
      * @return int
      */
     function osc_default_results_per_page_at_search() {
-        return(getPreference('defaultResultsPerPage@search')) ;
+        return(getPreference('defaultResultsPerPage@search'));
     }
 
     /**
@@ -733,7 +892,7 @@
      * @return int
      */
     function osc_max_latest_items() {
-        return(getPreference('maxLatestItems@home')) ;
+        return(getPreference('maxLatestItems@home'));
     }
 
     /**
@@ -742,11 +901,11 @@
      * @return boolean
      */
     function osc_save_latest_searches() {
-        return(getBoolPreference('save_latest_searches')) ;
+        return(getBoolPreference('save_latest_searches'));
     }
 
     function osc_purge_latest_searches() {
-        return(getPreference('purge_latest_searches')) ;
+        return(getPreference('purge_latest_searches'));
     }
 
     /**
@@ -773,7 +932,7 @@
      * @return boolean
      */
     function osc_selectable_parent_categories() {
-        return(getPreference('selectable_parent_categories')) ;
+        return(getPreference('selectable_parent_categories'));
     }
 
     /**
@@ -782,7 +941,7 @@
      * @return int
      */
     function osc_max_latest_items_at_home() {
-        return(getPreference('maxLatestItems@home')) ;
+        return(getPreference('maxLatestItems@home'));
     }
 
     /**
@@ -884,7 +1043,25 @@
         return getPreference('watermark_place');
     }
 
-    //PRIVATE FUNCTION (if there was a class :P)
+    /**
+     * Return subdomain type
+     *
+     * @return string
+     */
+    function osc_subdomain_type() {
+        return getPreference('subdomain_type');
+    }
+
+    /**
+     * Return subdomain host
+     *
+     * @return string
+     */
+    function osc_subdomain_host() {
+        return getPreference('subdomain_host');
+    }
+
+//PRIVATE FUNCTION (if there was a class :P)
     /**
      * Gets preference
      *
@@ -892,12 +1069,12 @@
      * @return boolean
      */
     function getBoolPreference($key) {
-        $_P = Preference::newInstance() ;
+        $_P = Preference::newInstance();
 
         if($_P->get($key)) {
-            return true ;
+            return true;
         } else {
-            return false ;
+            return false;
         }
     }
 
@@ -910,7 +1087,7 @@
      * @return string
      */
     function getPreference($key, $section = 'osclass') {
-        $_P = Preference::newInstance() ;
-        return($_P->get($key, $section)) ;
+        $_P = Preference::newInstance();
+        return($_P->get($key, $section));
     }
 ?>

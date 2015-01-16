@@ -1,9 +1,9 @@
 <?php
     /*
-     *      OSCLass – software for creating and publishing online classified
+     *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2014 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -19,89 +19,107 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
-    $locales   = __get('locales') ;
+    // meta tag robots
+    osc_add_hook('header','bender_nofollow_construct');
+
+    bender_add_body_class('user user-profile');
+    osc_add_hook('before-main','sidebar');
+    function sidebar(){
+        osc_current_web_theme_path('user-sidebar.php');
+    }
+    osc_add_filter('meta_title_filter','custom_meta_title');
+    function custom_meta_title($data){
+        return __('Update account', 'bender');
+    }
+    osc_current_web_theme_path('header.php') ;
+    $osc_user = osc_user();
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()); ?>">
-    <head>
-        <?php osc_current_web_theme_path('head.php') ; ?>
-        <meta name="robots" content="noindex, nofollow" />
-        <meta name="googlebot" content="noindex, nofollow" />
-    </head>
-    <body>
-        <?php osc_current_web_theme_path('header.php') ; ?>
-        <div class="content user_account">
-            <h1>
-                <strong><?php _e('User account manager', 'modern') ; ?></strong>
-            </h1>
-            <div id="sidebar">
-                <?php echo osc_private_user_menu() ; ?>
+<h1><?php _e('Update account', 'bender'); ?></h1>
+<?php UserForm::location_javascript(); ?>
+<div class="form-container form-horizontal">
+    <div class="resp-wrapper">
+        <ul id="error_list"></ul>
+        <form action="<?php echo osc_base_url(true); ?>" method="post">
+            <input type="hidden" name="page" value="user" />
+            <input type="hidden" name="action" value="profile_post" />
+            <div class="control-group">
+                <label class="control-label" for="name"><?php _e('Name', 'bender'); ?></label>
+                <div class="controls">
+                    <?php UserForm::name_text(osc_user()); ?>
+                </div>
             </div>
-            <div id="main" class="modify_profile">
-                <h2><?php _e('Update your profile', 'modern') ; ?></h2>
-                <?php UserForm::location_javascript(); ?>
-                <form action="<?php echo osc_base_url(true) ; ?>" method="post">
-                    <input type="hidden" name="page" value="user" />
-                    <input type="hidden" name="action" value="profile_post" />
-                    <fieldset>
-                        <div class="row">
-                            <label for="name"><?php _e('Name', 'modern') ; ?></label>
-                            <?php UserForm::name_text(osc_user()) ; ?>
-                        </div>
-                        <div class="row">
-                            <label for="email"><?php _e('E-mail', 'modern') ; ?></label>
-                            <span class="update">
-                                <?php echo osc_user_email() ; ?><br />
-                                <a href="<?php echo osc_change_user_email_url() ; ?>"><?php _e('Modify e-mail', 'modern') ; ?></a> <a href="<?php echo osc_change_user_password_url() ; ?>" ><?php _e('Modify password', 'modern') ; ?></a>
-                            </span>
-                        </div>
-                        <div class="row">
-                            <label for="user_type"><?php _e('User type', 'modern') ; ?></label>
-                            <?php UserForm::is_company_select(osc_user()) ; ?>
-                        </div>
-                        <div class="row">
-                            <label for="phoneMobile"><?php _e('Cell phone', 'modern') ; ?></label>
-                            <?php UserForm::mobile_text(osc_user()) ; ?>
-                        </div>
-                        <div class="row">
-                            <label for="phoneLand"><?php _e('Phone', 'modern') ; ?></label>
-                            <?php UserForm::phone_land_text(osc_user()) ; ?>
-                        </div>
-                        <div class="row">
-                            <label for="country"><?php _e('Country', 'modern') ; ?> *</label>
-                            <?php UserForm::country_select(osc_get_countries(), osc_user()) ; ?>
-                        </div>
-                        <div class="row">
-                            <label for="region"><?php _e('Region', 'modern') ; ?> *</label>
-                            <?php UserForm::region_select(osc_get_regions(), osc_user()) ; ?>
-                        </div>
-                        <div class="row">
-                            <label for="city"><?php _e('City', 'modern') ; ?> *</label>
-                            <?php UserForm::city_select(osc_get_cities(), osc_user()) ; ?>
-                        </div>
-                        <div class="row">
-                            <label for="city_area"><?php _e('City area', 'modern') ; ?></label>
-                            <?php UserForm::city_area_text(osc_user()) ; ?>
-                        </div>
-                        <div class="row">
-                            <label for="address"><?php _e('Address', 'modern') ; ?></label>
-                            <?php UserForm::address_text(osc_user()) ; ?>
-                        </div>
-                        <div class="row">
-                            <label for="webSite"><?php _e('Website', 'modern') ; ?></label>
-                            <?php UserForm::website_text(osc_user()) ; ?>
-                        </div>
-                        <div class="row">
-                            <?php UserForm::multilanguage_info($locales, osc_user()); ?>
-                        </div>
-                        <div class="row">
-                            <button type="submit"><?php _e('Update', 'modern') ; ?></button>
-                        </div>
-                        <?php osc_run_hook('user_form') ; ?>
-                    </fieldset>
-                </form>
+            <div class="control-group">
+                <label class="control-label" for="user_type"><?php _e('User type', 'bender'); ?></label>
+                <div class="controls">
+                    <?php UserForm::is_company_select(osc_user()); ?>
+                </div>
             </div>
-        </div>
-        <?php osc_current_web_theme_path('footer.php') ; ?>
-    </body>
-</html>
+            <div class="control-group">
+                <label class="control-label" for="phoneMobile"><?php _e('Cell phone', 'bender'); ?></label>
+                <div class="controls">
+                    <?php UserForm::mobile_text(osc_user()); ?>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="phoneLand"><?php _e('Phone', 'bender'); ?></label>
+                <div class="controls">
+                    <?php UserForm::phone_land_text(osc_user()); ?>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="country"><?php _e('Country', 'bender'); ?></label>
+                <div class="controls">
+                    <?php UserForm::country_select(osc_get_countries(), osc_user()); ?>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="region"><?php _e('Region', 'bender'); ?></label>
+                <div class="controls">
+                    <?php UserForm::region_select(osc_get_regions(), osc_user()); ?>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="city"><?php _e('City', 'bender'); ?></label>
+                <div class="controls">
+                    <?php UserForm::city_select(osc_get_cities(), osc_user()); ?>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="city_area"><?php _e('City area', 'bender'); ?></label>
+                <div class="controls">
+                    <?php UserForm::city_area_text(osc_user()); ?>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"l for="address"><?php _e('Address', 'bender'); ?></label>
+                <div class="controls">
+                    <?php UserForm::address_text(osc_user()); ?>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="webSite"><?php _e('Website', 'bender'); ?></label>
+                <div class="controls">
+                    <?php UserForm::website_text(osc_user()); ?>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="s_info"><?php _e('Description', 'bender'); ?></label>
+                <div class="controls">
+                    <?php UserForm::info_textarea('s_info', osc_locale_code(), @$osc_user['locale'][osc_locale_code()]['s_info']); ?>
+                </div>
+            </div>
+            <?php osc_run_hook('user_profile_form', osc_user()); ?>
+            <div class="control-group">
+                <div class="controls">
+                    <button type="submit" class="ui-button ui-button-middle ui-button-main"><?php _e("Update", 'bender');?></button>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="controls">
+                    <?php osc_run_hook('user_form', osc_user()); ?>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<?php osc_current_web_theme_path('footer.php') ; ?>
