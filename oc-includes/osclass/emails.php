@@ -56,13 +56,13 @@
     }
     osc_add_hook('hook_email_alert_validation', 'fn_email_alert_validation');
 
-    function fn_alert_email_hourly($user, $ads, $s_search) {
+    function fn_alert_email_hourly($user, $ads, $s_search, $items, $totalItems) {
         $prefLocale = osc_language();
         $page = Page::newInstance()->findByInternalName('alert_email_hourly');
         $page_description = $page['locale'];
 
-        $_title = osc_apply_filter('email_title', osc_apply_filter('alert_email_hourly_title', $page_description[$prefLocale]['s_title'], $user, $ads, $s_search));
-        $_body  = osc_apply_filter('email_description', osc_apply_filter('alert_email_hourly_description', $page_description[$prefLocale]['s_text'], $user, $ads, $s_search));
+        $_title = osc_apply_filter('email_title', osc_apply_filter('alert_email_hourly_title', $page_description[$prefLocale]['s_title'], $user, $ads, $s_search, $items, $totalItems));
+        $_body  = osc_apply_filter('email_description', osc_apply_filter('alert_email_hourly_description', $page_description[$prefLocale]['s_text'], $user, $ads, $s_search, $items, $totalItems));
 
         if( $user['fk_i_user_id'] != 0 ) {
             $user = User::newInstance()->findByPrimaryKey($user['fk_i_user_id']);
@@ -86,8 +86,8 @@
             $ads,
             $unsub_link
         );
-        $title = osc_apply_filter('alert_email_hourly_title_after', osc_mailBeauty($_title, $words), $user, $ads, $s_search);
-        $body  = osc_apply_filter('alert_email_hourly_description_after', osc_mailBeauty($_body, $words), $user, $ads, $s_search);
+        $title = osc_apply_filter('alert_email_hourly_title_after', osc_mailBeauty($_title, $words), $user, $ads, $s_search, $items, $totalItems);
+        $body  = osc_apply_filter('alert_email_hourly_description_after', osc_mailBeauty($_body, $words), $user, $ads, $s_search, $items, $totalItems);
 
         $params = array(
             'subject'  => $title,
@@ -102,13 +102,13 @@
     }
     osc_add_hook('hook_alert_email_hourly', 'fn_alert_email_hourly');
 
-    function fn_alert_email_daily($user, $ads, $s_search) {
+    function fn_alert_email_daily($user, $ads, $s_search, $items, $totalItems) {
         $prefLocale = osc_language();
         $page = Page::newInstance()->findByInternalName('alert_email_daily');
         $page_description = $page['locale'];
 
-        $_title = osc_apply_filter('email_title', osc_apply_filter('alert_email_daily_title', $page_description[$prefLocale]['s_title'], $user, $ads, $s_search));
-        $_body  = osc_apply_filter('email_description', osc_apply_filter('alert_email_daily_description', $page_description[$prefLocale]['s_text'], $user, $ads, $s_search));
+        $_title = osc_apply_filter('email_title', osc_apply_filter('alert_email_daily_title', $page_description[$prefLocale]['s_title'], $user, $ads, $s_search, $items, $totalItems));
+        $_body  = osc_apply_filter('email_description', osc_apply_filter('alert_email_daily_description', $page_description[$prefLocale]['s_text'], $user, $ads, $s_search, $items, $totalItems));
 
         if( $user['fk_i_user_id'] != 0 ) {
             $user = User::newInstance()->findByPrimaryKey($user['fk_i_user_id']);
@@ -132,8 +132,8 @@
             $ads,
             $unsub_link
         );
-        $title = osc_apply_filter('alert_email_daily_title_after', osc_mailBeauty($_title, $words), $user, $ads, $s_search);
-        $body  = osc_apply_filter('alert_email_daily_description_after', osc_mailBeauty($_body, $words), $user, $ads, $s_search);
+        $title = osc_apply_filter('alert_email_daily_title_after', osc_mailBeauty($_title, $words), $user, $ads, $s_search, $items, $totalItems);
+        $body  = osc_apply_filter('alert_email_daily_description_after', osc_mailBeauty($_body, $words), $user, $ads, $s_search, $items, $totalItems);
 
         $params = array(
             'subject'  => $title,
@@ -148,13 +148,13 @@
     }
     osc_add_hook('hook_alert_email_daily', 'fn_alert_email_daily');
 
-    function fn_alert_email_weekly($user, $ads, $s_search) {
+    function fn_alert_email_weekly($user, $ads, $s_search, $items, $totalItems) {
         $prefLocale = osc_language();
         $page = Page::newInstance()->findByInternalName('alert_email_weekly');
         $page_description = $page['locale'];
 
-        $_title = osc_apply_filter('email_title', osc_apply_filter('alert_email_weekly_title', $page_description[$prefLocale]['s_title'], $user, $ads, $s_search));
-        $_body  = osc_apply_filter('email_description', osc_apply_filter('alert_email_weekly_description', $page_description[$prefLocale]['s_text'], $user, $ads, $s_search));
+        $_title = osc_apply_filter('email_title', osc_apply_filter('alert_email_weekly_title', $page_description[$prefLocale]['s_title'], $user, $ads, $s_search, $items, $totalItems));
+        $_body  = osc_apply_filter('email_description', osc_apply_filter('alert_email_weekly_description', $page_description[$prefLocale]['s_text'], $user, $ads, $s_search, $items, $totalItems));
 
         if( $user['fk_i_user_id'] != 0 ) {
             $user = User::newInstance()->findByPrimaryKey($user['fk_i_user_id']);
@@ -178,8 +178,8 @@
             $ads,
             $unsub_link
         );
-        $title = osc_apply_filter('alert_email_weekly_title_after', osc_mailBeauty($_title, $words), $user, $ads, $s_search);
-        $body  = osc_apply_filter('alert_email_weekly_description_after', osc_mailBeauty($_body, $words), $user, $ads, $s_search);
+        $title = osc_apply_filter('alert_email_weekly_title_after', osc_mailBeauty($_title, $words), $user, $ads, $s_search, $items, $totalItems);
+        $body  = osc_apply_filter('alert_email_weekly_description_after', osc_mailBeauty($_body, $words), $user, $ads, $s_search, $items, $totalItems);
 
         $params = array(
             'subject'  => $title,
@@ -194,13 +194,13 @@
     }
     osc_add_hook('hook_alert_email_weekly', 'fn_alert_email_weekly');
 
-    function fn_alert_email_instant($user, $ads, $s_search) {
+    function fn_alert_email_instant($user, $ads, $s_search, $items, $totalItems) {
         $prefLocale = osc_language();
         $page = Page::newInstance()->findByInternalName('alert_email_instant');
         $page_description = $page['locale'];
 
-        $_title = osc_apply_filter('email_title', osc_apply_filter('alert_email_instant_title', $page_description[$prefLocale]['s_title'], $user, $ads, $s_search));
-        $_body  = osc_apply_filter('email_description', osc_apply_filter('alert_email_instant_description', $page_description[$prefLocale]['s_text'], $user, $ads, $s_search));
+        $_title = osc_apply_filter('email_title', osc_apply_filter('alert_email_instant_title', $page_description[$prefLocale]['s_title'], $user, $ads, $s_search, $items, $totalItems, $items, $totalItems));
+        $_body  = osc_apply_filter('email_description', osc_apply_filter('alert_email_instant_description', $page_description[$prefLocale]['s_text'], $user, $ads, $s_search, $items, $totalItems, $items, $totalItems));
 
         if( $user['fk_i_user_id'] != 0 ) {
             $user = User::newInstance()->findByPrimaryKey($user['fk_i_user_id']);
@@ -224,8 +224,8 @@
             $ads,
             $unsub_link
         );
-        $title = osc_apply_filter('alert_email_instant_title_after', osc_mailBeauty($_title, $words), $user, $ads, $s_search);
-        $body  = osc_apply_filter('alert_email_instant_description_after', osc_mailBeauty($_body, $words), $user, $ads, $s_search);
+        $title = osc_apply_filter('alert_email_instant_title_after', osc_mailBeauty($_title, $words), $user, $ads, $s_search, $items, $totalItems);
+        $body  = osc_apply_filter('alert_email_instant_description_after', osc_mailBeauty($_body, $words), $user, $ads, $s_search, $items, $totalItems);
 
         $params = array(
             'subject'  => $title,
