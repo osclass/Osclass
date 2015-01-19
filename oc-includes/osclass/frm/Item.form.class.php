@@ -1512,12 +1512,16 @@
                         });
                         var json  = JSON.parse(strReturn);
                         var total = parseInt(json.count) + $("#restricted-fine-uploader input[name='ajax_photos[]']").size() + (numUpload);
-                        if(total<=<?php echo $maxImages;?>) {
+                        <?php if($maxImages>0) { ?>
+                            if(total<=<?php echo $maxImages;?>) {
+                                json.success = true;
+                            } else {
+                                json.success = false;
+                                $('#restricted-fine-uploader .qq-uploader').after($('<div class="alert alert-error"><?php echo osc_esc_js(sprintf(__('Too many items were uploaded. Item limit is %d.'), $maxImages)); ?></div>'));
+                            }
+                        <?php } else { ?>
                             json.success = true;
-                        } else {
-                            json.success = false;
-                            $('#restricted-fine-uploader .qq-uploader').after($('<div class="alert alert-error"><?php echo osc_esc_js(sprintf(__('Too many items were uploaded. Item limit is %d.'), $maxImages)); ?></div>'));
-                        }
+                        <?php }; ?>
                         return json;
                     }
 
