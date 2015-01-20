@@ -129,6 +129,7 @@
                                 Params::setParam('route_param_'.$p, $m[$p]);
                             }
                         }
+
                         Params::setParam('page', 'custom');
                         Params::setParam('route', $id);
                         $route_used = true;
@@ -142,9 +143,18 @@
                     if(osc_rewrite_enabled()) {
                         $tmp_ar = explode("?", $request_uri);
                         $request_uri = $tmp_ar[0];
+
+                        // if try to access directly to a php file
+                        if(preg_match('#^(.+?)\.php(.*)$#', $request_uri) && !preg_match('#^index\.php(\?.*)?$#', $request_uri)) {
+                            Rewrite::newInstance()->set_location('error');
+                            header('HTTP/1.1 404 Not Found');
+                            osc_current_web_theme_path('404.php');
+                            exit;
+                        }
+
                         foreach($this->rules as $match => $uri) {
                             // UNCOMMENT TO DEBUG
-                            //echo 'Request URI: '.$request_uri." # Match : ".$match." # URI to go : ".$uri." <br />";
+                            // echo 'Request URI: '.$request_uri." # Match : ".$match." # URI to go : ".$uri." <br />";
                             if(preg_match('#^'.$match.'#', $request_uri, $m)) {
                                 $request_uri = preg_replace('#'.$match.'#', $uri, $request_uri);
                                 break;
@@ -219,17 +229,17 @@
         {
             return $this->section;
         }
-        
+
         public function get_title()
         {
             return $this->title;
         }
-        
+
         public function get_http_referer()
         {
             return $this->http_referer;
         }
-        
+
     }
 
 ?>
