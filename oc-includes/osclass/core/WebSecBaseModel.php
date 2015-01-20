@@ -32,11 +32,14 @@
         function logout()
         {
             //destroying session
+            $locale = Session::newInstance()->_get('userLocale');
             Session::newInstance()->session_destroy();
             Session::newInstance()->_drop('userId');
             Session::newInstance()->_drop('userName');
             Session::newInstance()->_drop('userEmail');
             Session::newInstance()->_drop('userPhone');
+            Session::newInstance()->session_start();
+            Session::newinstance()->_set('userLocale', $locale);
 
             Cookie::newInstance()->pop('oc_userId');
             Cookie::newInstance()->pop('oc_userSecret');
