@@ -65,14 +65,14 @@
                                             if (@$admin['s_password']!='') {
                                                 if (preg_match('|\$2y\$([0-9]{2})\$|', $admin['s_password'], $cost)) {
                                                     if ($cost[1] != BCRYPT_COST) {
-                                                         User::newInstance()->update(
-                                                         array( 's_password' => osc_hash_password($password))
-                                                         ,array( 'pk_i_id' => $admin['pk_i_id'] ) );
+                                                        Admin::newInstance()->update(
+                                                        array( 's_password' => osc_hash_password($password))
+                                                       ,array( 'pk_i_id' => $admin['pk_i_id'] ) );
                                                     }
                                                 } else {
                                                     Admin::newInstance()->update(
                                                         array( 's_password' => osc_hash_password($password))
-                                                        ,array( 'pk_i_id' => $admin['pk_i_id'] ) );
+                                                       ,array( 'pk_i_id' => $admin['pk_i_id'] ) );
                                                 }
                                             }
                                         }
