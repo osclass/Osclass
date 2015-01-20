@@ -68,11 +68,15 @@
         function logout()
         {
             //destroying session
+            $locale = Session::newInstance()->_get('oc_adminLocale');
+            Session::newInstance()->session_destroy();
             Session::newInstance()->_drop('adminId');
             Session::newInstance()->_drop('adminUserName');
             Session::newInstance()->_drop('adminName');
             Session::newInstance()->_drop('adminEmail');
             Session::newInstance()->_drop('adminLocale');
+            Session::newInstance()->session_start();
+            Session::newInstance()->_set('oc_adminLocale', $locale);
 
             Cookie::newInstance()->pop('oc_adminId');
             Cookie::newInstance()->pop('oc_adminSecret');
