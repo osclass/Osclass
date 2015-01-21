@@ -145,11 +145,14 @@
                         $request_uri = $tmp_ar[0];
 
                         // if try to access directly to a php file
-                        if(preg_match('#^(.+?)\.php(.*)$#', $request_uri) && !preg_match('#^index\.php(\?.*)?$#', $request_uri)) {
-                            Rewrite::newInstance()->set_location('error');
-                            header('HTTP/1.1 404 Not Found');
-                            osc_current_web_theme_path('404.php');
-                            exit;
+                        if(preg_match('#^(.+?)\.php(.*)$#', $request_uri)) {
+                            $file = explode("?", $request_uri);
+                            if(!file_exists(ABS_PATH . $file[0])) {
+                                Rewrite::newInstance()->set_location('error');
+                                header('HTTP/1.1 404 Not Found');
+                                osc_current_web_theme_path('404.php');
+                                exit;
+                            }
                         }
 
                         foreach($this->rules as $match => $uri) {
