@@ -78,7 +78,11 @@
             $this->dao->join(Region::newInstance()->getTableName().' as aux', 'aux.pk_i_id = a.fk_i_region_id', 'LEFT');
             $this->dao->like('a.s_name', $query, 'after');
             if( $regionId != null ) {
-                $this->dao->where('a.fk_i_region_id', $regionId);
+                if (is_numeric($regionId)) {
+                    $this->dao->where('a.fk_i_region_id', $regionId);
+                } else {
+                    $this->dao->where('aux.s_name', $regionId);
+                }
             }
 
             $result = $this->dao->get();
