@@ -805,7 +805,6 @@
             'body'     => $body,
             'alt_body' => $body
         );
-        print_r($emailParams);
         osc_sendMail($emailParams);
     }
     osc_add_hook('hook_email_item_validation', 'fn_email_item_validation');
