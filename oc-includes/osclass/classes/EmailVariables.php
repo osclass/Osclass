@@ -221,6 +221,7 @@
                     '{USER_EMAIL}',
                     '{ITEM_TITLE}',
                     '{ITEM_URL}',
+                    '{ITEM_LINK}',
                     '{VALIDATION_LINK}',
                     '{VALIDATION_URL}'
                 ),'email_admin_new_item' => array(
@@ -237,6 +238,7 @@
                     '{USER_EMAIL}',
                     '{ITEM_TITLE}',
                     '{ITEM_URL}',
+                    '{ITEM_LINK}',
                     '{VALIDATION_LINK}',
                     '{VALIDATION_URL}'
                 ),'email_item_validation_non_register_user' => array(
@@ -251,6 +253,7 @@
                     '{USER_EMAIL}',
                     '{ITEM_TITLE}',
                     '{ITEM_URL}',
+                    '{ITEM_LINK}',
                     '{VALIDATION_LINK}',
                     '{VALIDATION_URL}',
                     '{EDIT_LINK}',
