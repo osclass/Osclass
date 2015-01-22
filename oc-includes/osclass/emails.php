@@ -589,7 +589,7 @@
         }
 
         $item_url = osc_item_url();
-        $item_url = '<a href="' . $item_url . '" >' . $item_url . '</a>';
+        $item_link = '<a href="' . $item_url . '" >' . $item_url . '</a>';
 
         $words   = array();
         $words[] = array(
@@ -609,8 +609,8 @@
             $yourEmail,
             $phoneNumber,
             $item['s_title'],
-            osc_item_url(),
             $item_url,
+            $item_link,
             $message
         );
 
@@ -736,7 +736,7 @@
         }
 
         $item_url = osc_item_url();
-        $item_url = '<a href="'.$item_url.'" >'.$item_url.'</a>';
+        $item_link = '<a href="'.$item_url.'" >'.$item_url.'</a>';
 
         $all = '';
 
@@ -774,6 +774,7 @@
             '{USER_EMAIL}',
             '{ITEM_TITLE}',
             '{ITEM_URL}',
+            '{ITEM_LINK}',
             '{VALIDATION_LINK}',
             '{VALIDATION_URL}'
         );
@@ -789,6 +790,7 @@
             $item['s_contact_email'],
             $item['s_title'],
             $item_url,
+            $item_link,
             '<a href="' . $validation_url . '" >' . $validation_url . '</a>',
             $validation_url
         );
@@ -803,6 +805,7 @@
             'body'     => $body,
             'alt_body' => $body
         );
+        print_r($emailParams);
         osc_sendMail($emailParams);
     }
     osc_add_hook('hook_email_item_validation', 'fn_email_item_validation');
@@ -821,7 +824,7 @@
         }
 
         $item_url = osc_item_url();
-        $item_url = '<a href="'.$item_url.'" >'.$item_url.'</a>';
+        $item_link = '<a href="'.$item_url.'" >'.$item_url.'</a>';
 
         $all = '';
 
@@ -864,6 +867,7 @@
             '{USER_EMAIL}',
             '{ITEM_TITLE}',
             '{ITEM_URL}',
+            '{ITEM_LINK}',
             '{VALIDATION_LINK}',
             '{VALIDATION_URL}'
         );
@@ -881,6 +885,7 @@
             $item['s_contact_email'],
             $item['s_title'],
             $item_url,
+            $item_link,
             '<a href="' . $validation_url . '" >' . $validation_url . '</a>',
             $validation_url
         );
@@ -913,7 +918,7 @@
         }
 
         $item_url = osc_item_url();
-        $item_url = '<a href="'.$item_url.'" >'.$item_url.'</a>';
+        $item_link = '<a href="'.$item_url.'" >'.$item_url.'</a>';
         $edit_url = osc_item_edit_url( $item['s_secret'], $item['pk_i_id'] );
         $delete_url = osc_item_delete_url( $item['s_secret'],  $item['pk_i_id'] );
 
@@ -953,6 +958,7 @@
             '{USER_EMAIL}',
             '{ITEM_TITLE}',
             '{ITEM_URL}',
+            '{ITEM_LINK}',
             '{VALIDATION_LINK}',
             '{VALIDATION_URL}',
             '{EDIT_LINK}',
@@ -972,6 +978,7 @@
             $item['s_contact_email'],
             $item['s_title'],
             $item_url,
+            $item_link,
             '<a href="' . $validation_url . '" >' . $validation_url . '</a>',
             $validation_url,
             '<a href="' . $edit_url . '">' . $edit_url . '</a>',
