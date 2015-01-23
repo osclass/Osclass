@@ -45,7 +45,7 @@ function osc_sanitizeString($string) {
 
     $string = remove_accents($string);
 
-    $string = strtolower($string);
+    //$string = strtolower($string);
     // @TODO  retrieve $arr_stop_words from Locale user custom list. as editable in /oc-admin/index.php?page=languages
     //        and do a 
     //        str_replace($arr_stop_words, '', $string);
@@ -192,6 +192,11 @@ function remove_accents($string) {
 		$double_chars['out'] = array('OE', 'oe', 'AE', 'DH', 'TH', 'ss', 'ae', 'dh', 'th');
 		$string = str_replace($double_chars['in'], $double_chars['out'], $string);
 	}
+
+	$string = strtolower(htmlentities($string));
+	$string = preg_replace('#&([a-z])(?:acute|cedil|caron|circ|grave|orn|ring|slash|th|tilde|uml);#', '$1', $string);
+	$string = preg_replace('#&([a-z]{2})(?:lig);#', '$1', $string);
+	$string = preg_replace('#&[^;]+;#', '', $string);
 
 	return $string;
 }
