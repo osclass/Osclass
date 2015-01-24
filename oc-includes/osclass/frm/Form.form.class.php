@@ -23,9 +23,7 @@
             if (isset($default_item)) echo '<option value="">' . $default_item . '</option>';
             foreach($items as $i) {
                 if(isset($fld_key) !=='' && isset($fld_name) !== '') {
-                    if(isset($fld_key) && isset($fld_name)) {
-                        echo '<option value="' . osc_esc_html($i[$fld_key]) . '"' . ( ($id == $i[$fld_key]) ? ' selected="selected"' : '' ) . '>' . $i[$fld_name] . '</option>';
-                    }
+                    echo '<option value="' . osc_esc_html($i[$fld_key]) . '"' . ( ($id == $i[$fld_key]) ? 'selected="selected"' : '' ) . '>' . $i[$fld_name] . '</option>';
                 }
             }
             echo '</select>';
