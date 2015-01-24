@@ -217,14 +217,6 @@
                             Session::newInstance()->_setForm($key,$value);
                         }
 
-                        $meta = Params::getParam('meta');
-                        if(is_array($meta)) {
-                            foreach( $meta as $key => $value ) {
-                                Session::newInstance()->_setForm('meta_'.$key, $value);
-                                Session::newInstance()->_keepForm('meta_'.$key);
-                            }
-                        }
-
                         if(osc_recaptcha_items_enabled() && osc_recaptcha_private_key() != '') {
                             if( !osc_check_recaptcha() ) {
                                 osc_add_flash_error_message( _m('The Recaptcha code is wrong') );
