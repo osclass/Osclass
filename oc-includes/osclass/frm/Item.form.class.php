@@ -796,6 +796,7 @@
             },
             submitHandler: function(form){
                 $('button[type=submit], input[type=submit]').attr('disabled', 'disabled');
+                setTimeout("$('button[type=submit], input[type=submit]').removeAttr('disabled')", 5000);
                 form.submit();
             }
         });
@@ -1087,6 +1088,7 @@
             },
             submitHandler: function(form){
                 $('button[type=submit], input[type=submit]').attr('disabled', 'disabled');
+                setTimeout("$('button[type=submit], input[type=submit]').removeAttr('disabled')", 5000);
                 form.submit();
             }
         });
