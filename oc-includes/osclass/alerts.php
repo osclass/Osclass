@@ -74,7 +74,8 @@
                     }
 
                     foreach($users as $user) {
-                        osc_run_hook('hook_'.$internal_name, $user, $ads, $s_search, $items, $totalItems);
+                        //@todo rename $users in $alerts and remove $s_search in this hook
+                        osc_run_hook('hook_'.$internal_name, $user, $ads, $user, $items, $totalItems);
                         AlertsStats::newInstance()->increase(date('Y-m-d'));
                     }
                 }
