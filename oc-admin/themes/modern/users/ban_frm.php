@@ -83,7 +83,7 @@
                     <div class="form-label"><?php _e('E-mail rule'); ?></div>
                     <div class="form-controls">
                         <?php BanRuleForm::email_text($rule); ?>
-                        <span class="help-box"><?php _e('(e.g. *@badsite.com)'); ?></span>
+                        <span class="help-box"><?php _e('(e.g. *@badsite.com, *@subdomain.badsite.com, *@*badsite.com)'); ?></span>
                     </div>
                 </div>
                 <div class="clear"></div>
