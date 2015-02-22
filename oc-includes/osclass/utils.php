@@ -1195,18 +1195,31 @@ function _zip_folder_pclzip($archive_folder, $archive_name) {
 
 }
 
-function osc_check_recaptcha() {
-
+function recaptcha_get_html($pubKey) {
     require_once osc_lib_path() . 'recaptchalib.php';
-    if ( Params::getParam("recaptcha_challenge_field") != '') {
-        $resp = recaptcha_check_answer (osc_recaptcha_private_key()
-                                        ,$_SERVER["REMOTE_ADDR"]
-                                        ,Params::getParam("recaptcha_challenge_field")
-                                        ,Params::getParam("recaptcha_response_field"));
+    $lang = substr(osc_current_user_locale()!=''?osc_current_user_locale():(osc_locale_code()!=''?osc_locale_code():'en'), 0, 2);
+    ?>
+    <form action="?" method="post">
+      <div class="g-recaptcha" data-sitekey="<?php echo $pubKey; ?>"></div>
+      <script type="text/javascript"
+          src="https://www.google.com/recaptcha/api.js?hl=<?php echo $lang;?>">
+      </script>
+      <br/>
+      <input type="submit" value="submit" />
+    </form>
+    <?php
+}
 
-        return $resp->is_valid;
+function osc_check_recaptcha() {
+    require_once osc_lib_path() . 'recaptchalib.php';
+    $reCaptcha = new ReCaptcha(osc_recaptcha_private_key());
+    if(Params::getParam("g-recaptcha-response")!='') {
+        $resp = $reCaptcha->verifyResponse(
+            $_SERVER["REMOTE_ADDR"],
+            Params::getParam("g-recaptcha-response")
+        );
+        return ($resp != null && $resp->success);
     }
-
     return false;
 }
 
