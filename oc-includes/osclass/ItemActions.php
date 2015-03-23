@@ -560,7 +560,7 @@
                 $item[0] = $this->manager->findByPrimaryKey( $id );
                 $aWhere = array('pk_i_id' => $id);
             } else {
-                $item = $this->manager->listWhere("i.s_secret = '%s' AND i.pk_i_id = '%s' ", $secret, $id);
+                $item = $this->manager->listWhere("i.s_secret = %s AND i.pk_i_id = %d ", $secret, $id);
                 $aWhere = array('s_secret' => $secret, 'pk_i_id' => $id);
             }
 

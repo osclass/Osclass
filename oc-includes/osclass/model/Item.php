@@ -263,7 +263,7 @@
          */
         public function findByEmail($email)
         {
-            return $this->listWhere("s_contact_email = '%s'", $email);
+            return $this->listWhere("s_contact_email = %s", $email);
         }
 
         /**
