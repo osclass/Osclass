@@ -119,23 +119,193 @@
         function getVariables( $email )
         {
             $array = array();
-            foreach( $email['locale'] as $a ) {
-                if(preg_match_all('/\{[A-Z|_]+\}/', $a['s_title'], $matchesarray) > 0 ) {
-                    foreach($matchesarray as $index) {
-                        foreach($index as $v) {
-                            $array[$v] = @$this->variables[$v];
-                        }
-                    }
-                }
-                if(preg_match_all('/\{[A-Z|_]+\}/', $a['s_text'], $matchesarray) > 0 ) {
-                    foreach($matchesarray as $index) {
-                        foreach($index as $v) {
-                            $array[$v] = @$this->variables[$v];
-                        }
-                    }
+            $variables = array(
+                'email_alert_validation' => array(
+                    '{USER_NAME}',
+                    '{USER_EMAIL}',
+                    '{VALIDATION_LINK}'
+                ),'alert_email_hourly' => array(
+                    '{USER_NAME}',
+                    '{USER_EMAIL}',
+                    '{ADS}',
+                    '{UNSUB_LINK}'
+                ),'alert_email_daily' => array(
+                    '{USER_NAME}',
+                    '{USER_EMAIL}',
+                    '{ADS}',
+                    '{UNSUB_LINK}'
+                ),'alert_email_weekly' => array(
+                    '{USER_NAME}',
+                    '{USER_EMAIL}',
+                    '{ADS}',
+                    '{UNSUB_LINK}'
+                ),'alert_email_instant' => array(
+                    '{USER_NAME}',
+                    '{USER_EMAIL}',
+                    '{ADS}',
+                    '{UNSUB_LINK}'
+                ),'email_comment_validated' => array(
+                    '{COMMENT_AUTHOR}',
+                    '{COMMENT_EMAIL}',
+                    '{COMMENT_TITLE}',
+                    '{COMMENT_BODY}',
+                    '{ITEM_URL}',
+                    '{ITEM_LINK}',
+                    '{ITEM_TITLE}'
+                ),'email_new_item_non_register_user' => array(
+                    '{ITEM_ID}',
+                    '{USER_NAME}',
+                    '{USER_EMAIL}',
+                    '{ITEM_TITLE}',
+                    '{ITEM_URL}',
+                    '{ITEM_LINK}',
+                    '{EDIT_LINK}',
+                    '{EDIT_URL}',
+                    '{DELETE_LINK}',
+                    '{DELETE_URL}'
+                ),'email_user_forgot_password' => array(
+                    '{USER_NAME}',
+                    '{USER_EMAIL}',
+                    '{PASSWORD_LINK}',
+                    '{PASSWORD_URL}',
+                    '{DATE_TIME}'
+                ),'email_user_registration' => array(
+                    '{USER_NAME}',
+                    '{USER_EMAIL}'
+                ),'email_new_email' => array(
+                    '{USER_NAME}',
+                    '{USER_EMAIL}',
+                    '{VALIDATION_LINK}',
+                    '{VALIDATION_URL}'
+                ),'email_user_validation' => array(
+                    '{USER_NAME}',
+                    '{USER_EMAIL}',
+                    '{VALIDATION_LINK}',
+                    '{VALIDATION_URL}'
+                ),'email_send_friend' => array(
+                    '{FRIEND_NAME}',
+                    '{USER_NAME}',
+                    '{USER_EMAIL}',
+                    '{FRIEND_EMAIL}',
+                    '{ITEM_TITLE}',
+                    '{COMMENT}',
+                    '{ITEM_URL}',
+                    '{ITEM_LINK}'
+                ),'email_item_inquiry' => array(
+                    '{CONTACT_NAME}',
+                    '{USER_NAME}',
+                    '{USER_EMAIL}',
+                    '{USER_PHONE}',
+                    '{ITEM_TITLE}',
+                    '{ITEM_URL}',
+                    '{ITEM_LINK}',
+                    '{COMMENT}'
+                ),'email_new_comment_admin' => array(
+                    '{COMMENT_AUTHOR}',
+                    '{COMMENT_EMAIL}',
+                    '{COMMENT_TITLE}',
+                    '{COMMENT_TEXT}',
+                    '{ITEM_TITLE}',
+                    '{ITEM_ID}',
+                    '{ITEM_URL}',
+                    '{ITEM_LINK}'
+                ),'email_item_validation' => array(
+                    '{ITEM_DESCRIPTION_ALL_LANGUAGES}',
+                    '{ITEM_DESCRIPTION}',
+                    '{ITEM_COUNTRY}',
+                    '{ITEM_PRICE}',
+                    '{ITEM_REGION}',
+                    '{ITEM_CITY}',
+                    '{ITEM_ID}',
+                    '{USER_NAME}',
+                    '{USER_EMAIL}',
+                    '{ITEM_TITLE}',
+                    '{ITEM_URL}',
+                    '{ITEM_LINK}',
+                    '{VALIDATION_LINK}',
+                    '{VALIDATION_URL}'
+                ),'email_admin_new_item' => array(
+                    '{EDIT_LINK}',
+                    '{EDIT_URL}',
+                    '{ITEM_DESCRIPTION_ALL_LANGUAGES}',
+                    '{ITEM_DESCRIPTION}',
+                    '{ITEM_COUNTRY}',
+                    '{ITEM_PRICE}',
+                    '{ITEM_REGION}',
+                    '{ITEM_CITY}',
+                    '{ITEM_ID}',
+                    '{USER_NAME}',
+                    '{USER_EMAIL}',
+                    '{ITEM_TITLE}',
+                    '{ITEM_URL}',
+                    '{ITEM_LINK}',
+                    '{VALIDATION_LINK}',
+                    '{VALIDATION_URL}'
+                ),'email_item_validation_non_register_user' => array(
+                    '{ITEM_DESCRIPTION_ALL_LANGUAGES}',
+                    '{ITEM_DESCRIPTION}',
+                    '{ITEM_COUNTRY}',
+                    '{ITEM_PRICE}',
+                    '{ITEM_REGION}',
+                    '{ITEM_CITY}',
+                    '{ITEM_ID}',
+                    '{USER_NAME}',
+                    '{USER_EMAIL}',
+                    '{ITEM_TITLE}',
+                    '{ITEM_URL}',
+                    '{ITEM_LINK}',
+                    '{VALIDATION_LINK}',
+                    '{VALIDATION_URL}',
+                    '{EDIT_LINK}',
+                    '{EDIT_URL}',
+                    '{DELETE_LINK}',
+                    '{DELETE_URL}'
+                ),'email_admin_new_user' => array(
+                    '{USER_NAME}',
+                    '{USER_EMAIL}'
+                ),'email_contact_user' => array(
+                    '{CONTACT_NAME}',
+                    '{USER_NAME}',
+                    '{USER_EMAIL}',
+                    '{USER_PHONE}',
+                    '{COMMENT}'
+                ),'email_new_comment_user' => array(
+                    '{COMMENT_AUTHOR}',
+                    '{COMMENT_EMAIL}',
+                    '{COMMENT_TITLE}',
+                    '{COMMENT_TEXT}',
+                    '{ITEM_TITLE}',
+                    '{ITEM_ID}',
+                    '{ITEM_URL}',
+                    '{ITEM_LINK}',
+                    '{SELLER_NAME}',
+                    '{SELLER_EMAIL}'
+                ),'email_new_admin' => array(
+                    '{ADMIN_NAME}',
+                    '{USERNAME}',
+                    '{PASSWORD}',
+                    '{WEB_ADMIN_LINK}'
+                ),'email_warn_expiration' => array(
+                    '{USER_NAME}',
+                    '{ITEM_TITLE}',
+                    '{ITEM_ID}',
+                    '{ITEM_EXPIRATION_DATE}',
+                    '{ITEM_URL}',
+                    '{ITEM_LINK}',
+                    '{SELLER_NAME}',
+                    '{SELLER_EMAIL}',
+                    '{CONTACT_NAME}',
+                    '{CONTACT_EMAIL}'
+                )
+            );
+
+            if(isset($email['s_internal_name']) && isset($variables[$email['s_internal_name']])) {
+                foreach($variables[$email['s_internal_name']] as $word) {
+                    $array[$word] = $this->variables[$word];
                 }
             }
-            return $array;
+
+            return osc_apply_filter('email_legend_words', $array, @$email['s_internal_name']);
         }
         
         /*
@@ -146,5 +316,3 @@
             $this->variables = array();
         }
     }
-
-?>
