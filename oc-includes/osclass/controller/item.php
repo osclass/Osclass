@@ -175,7 +175,7 @@
                 case 'item_edit':   // edit item
                                     $secret = Params::getParam('secret');
                                     $id     = Params::getParam('id');
-                                    $item   = $this->itemManager->listWhere("i.pk_i_id = '%d' AND ((i.s_secret = '%s' AND i.fk_i_user_id IS NULL) OR (i.fk_i_user_id = '%d'))", (int)($id), $secret, (int)($this->userId));
+                                    $item   = $this->itemManager->listWhere("i.pk_i_id = %d AND ((i.s_secret = %s AND i.fk_i_user_id IS NULL) OR (i.fk_i_user_id = %d))", (int)($id), $secret, (int)($this->userId));
                                     if (count($item) == 1) {
                                         $item     = Item::newInstance()->findByPrimaryKey($id);
 
@@ -204,7 +204,7 @@
 
                     $secret = Params::getParam('secret');
                     $id     = Params::getParam('id');
-                    $item   = $this->itemManager->listWhere("i.pk_i_id = '%d' AND ((i.s_secret = '%s' AND i.fk_i_user_id IS NULL) OR (i.fk_i_user_id = '%d'))", (int)($id), $secret, (int)($this->userId));
+                    $item   = $this->itemManager->listWhere("i.pk_i_id = %d AND ((i.s_secret = %s AND i.fk_i_user_id IS NULL) OR (i.fk_i_user_id = %d))", (int)($id), $secret, (int)($this->userId));
 
                     if (count($item) == 1) {
                         $this->_exportVariableToView('item', $item[0]);
@@ -248,7 +248,7 @@
                 case 'activate':
                     $secret = Params::getParam('secret');
                     $id     = Params::getParam('id');
-                    $item   = $this->itemManager->listWhere("i.pk_i_id = '%d' AND ((i.s_secret = '%s') OR (i.fk_i_user_id = '%d'))", (int)($id), $secret, (int)($this->userId));
+                    $item   = $this->itemManager->listWhere("i.pk_i_id = %d AND ((i.s_secret = %s) OR (i.fk_i_user_id = %d))", (int)($id), $secret, (int)($this->userId));
 
                     // item doesn't exist
                     if( count($item) == 0 ) {
@@ -276,7 +276,7 @@
                 case 'item_delete':
                     $secret = Params::getParam('secret');
                     $id     = Params::getParam('id');
-                    $item   = $this->itemManager->listWhere("i.pk_i_id = '%d' AND ((i.s_secret = '%s') OR (i.fk_i_user_id = '%d'))", (int)($id), $secret, (int)($this->userId));
+                    $item   = $this->itemManager->listWhere("i.pk_i_id = %d AND ((i.s_secret = %s) OR (i.fk_i_user_id = %d))", (int)($id), $secret, (int)($this->userId));
                     if (count($item) == 1) {
                         $mItems = new ItemActions(false);
                         $success = $mItems->delete($item[0]['s_secret'], $item[0]['pk_i_id']);
