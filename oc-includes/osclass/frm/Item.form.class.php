@@ -676,8 +676,13 @@
 
         $('#region').on('keyup.autocomplete', function(){
             $('#regionId').val('');
+            if($('#countryId').val()!='' && $('#countryId').val()!=undefined) {
+                var country = $('#countryId').val();
+            } else {
+                var country = $('#country').val();
+            }
             $( this ).autocomplete({
-                source: "<?php echo osc_base_url(true); ?>?page=ajax&action=location_regions&country="+$('#countryId').val(),
+                source: "<?php echo osc_base_url(true); ?>?page=ajax&action=location_regions&country="+country,
                 minLength: 2,
                 select: function( event, ui ) {
                     $('#cityId').val('');
@@ -689,8 +694,13 @@
 
         $('#city').on('keyup.autocomplete', function(){
             $('#cityId').val('');
+            if($('#regionId').val()!='' && $('#regionId').val()!=undefined) {
+                var region = $('#regionId').val();
+            } else {
+                var region = $('#region').val();
+            }
             $( this ).autocomplete({
-                source: "<?php echo osc_base_url(true); ?>?page=ajax&action=location_cities&region="+$('#regionId').val(),
+                source: "<?php echo osc_base_url(true); ?>?page=ajax&action=location_cities&region="+region,
                 minLength: 2,
                 select: function( event, ui ) {
                     $('#cityId').val(ui.item.id);
@@ -786,6 +796,7 @@
             },
             submitHandler: function(form){
                 $('button[type=submit], input[type=submit]').attr('disabled', 'disabled');
+                setTimeout("$('button[type=submit], input[type=submit]').removeAttr('disabled')", 5000);
                 form.submit();
             }
         });
@@ -1077,6 +1088,7 @@
             },
             submitHandler: function(form){
                 $('button[type=submit], input[type=submit]').attr('disabled', 'disabled');
+                setTimeout("$('button[type=submit], input[type=submit]').removeAttr('disabled')", 5000);
                 form.submit();
             }
         });
