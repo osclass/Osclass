@@ -77,7 +77,7 @@
         {
             $this->dao->select('*');
             $this->dao->from($this->getTableName());
-            $this->dao->where('fk_c_country_code', addslashes($countryId));
+            $this->dao->where('fk_c_country_code', $countryId);
             $this->dao->orderBy('s_name', 'ASC');
             $result = $this->dao->get();
 

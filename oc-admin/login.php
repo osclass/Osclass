@@ -32,6 +32,7 @@
                                         osc_run_hook('before_login_admin');
                                         $url_redirect  = osc_get_http_referer();
                                         $page_redirect = '';
+                                        $password = Params::getParam('password', false, false);
                                         if(preg_match('|[\?&]page=([^&]+)|', $url_redirect.'&', $match)) {
                                             $page_redirect = $match[1];
                                         }
@@ -57,9 +58,23 @@
                                             $this->redirectTo( osc_admin_base_url(true)."?page=login" );
                                         }
 
-                                        if(!osc_verify_password(Params::getParam('password', false, false), $admin['s_password'])) {
+                                        if(!osc_verify_password($password, $admin['s_password'])) {
                                             osc_add_flash_error_message( sprintf(_m('Sorry, incorrect password. <a href="%s">Have you lost your password?</a>'), osc_admin_base_url(true) . '?page=login&amp;action=recover' ), 'admin');
                                             $this->redirectTo( osc_admin_base_url(true)."?page=login" );
+										} else {
+                                            if (@$admin['s_password']!='') {
+                                                if (preg_match('|\$2y\$([0-9]{2})\$|', $admin['s_password'], $cost)) {
+                                                    if ($cost[1] != BCRYPT_COST) {
+                                                        Admin::newInstance()->update(
+                                                        array( 's_password' => osc_hash_password($password))
+                                                       ,array( 'pk_i_id' => $admin['pk_i_id'] ) );
+                                                    }
+                                                } else {
+                                                    Admin::newInstance()->update(
+                                                        array( 's_password' => osc_hash_password($password))
+                                                       ,array( 'pk_i_id' => $admin['pk_i_id'] ) );
+                                                }
+                                            }
                                         }
 
                                         if( Params::getParam('remember') ) {

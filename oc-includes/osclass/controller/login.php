@@ -68,7 +68,21 @@
 										if ( ! osc_verify_password($password, (isset($user['s_password'])?$user['s_password']:'') )) {
 											osc_add_flash_error_message( _m('The password is incorrect'));
 											$this->redirectTo( osc_user_login_url() ); // @TODO if valid user, send email parameter back to the login form
-										}
+										} else {
+                                            if (@$user['s_password']!='') {
+                                                if (preg_match('|\$2y\$([0-9]{2})\$|', $user['s_password'], $cost)) {
+                                                    if ($cost[1] != BCRYPT_COST) {
+                                                         User::newInstance()->update(
+                                                         array( 's_password' => osc_hash_password($password))
+                                                         ,array( 'pk_i_id' => $user['pk_i_id'] ) );
+                                                    }
+                                                } else {
+                                                    User::newInstance()->update(
+                                                        array( 's_password' => osc_hash_password($password))
+                                                        ,array( 'pk_i_id' => $user['pk_i_id'] ) );
+                                                }
+                                            }
+                                        }
 										// e-mail or/and IP is/are banned
 										$banned = osc_is_banned($email); // int 0: not banned or unknown, 1: email is banned, 2: IP is banned, 3: both email & IP are banned
 										if($banned & 1) {

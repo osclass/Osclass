@@ -166,8 +166,10 @@
 
             $uriParams = Params::getParamsAsArray();
             $searchUri = osc_search_url($uriParams);
-            if(str_replace("%20", '+', $searchUri)!=str_replace("%20", '+', (WEB_PATH . $this->uri))) {
-                $this->redirectTo($searchUri, 301);
+            if($this->uri!='feed') {
+                if (str_replace("%20", '+', $searchUri) != str_replace("%20", '+', (WEB_PATH . $this->uri))) {
+                    $this->redirectTo($searchUri, 301);
+                }
             }
 
             ////////////////////////////////

@@ -492,31 +492,34 @@ function osc_admin_toolbar_update_core($force = false)
 
 function osc_check_plugins_update( $force = false )
 {
+    $total = getPreference('plugins_update_count');
+    if($force) {
+        return _osc_check_plugins_update();
+    } else if((time() - osc_plugins_last_version_check()) > (24 * 3600)) {
+        osc_add_hook('admin_footer', 'check_plugins_admin_footer');
+    }
+    return $total;
+}
+function _osc_check_plugins_update() {
     $total = 0;
     $array = array();
     $array_downloaded = array();
-    // check if exist a new version each day
-    if( (time() - osc_plugins_last_version_check()) > (24 * 3600) || $force ) {
-        $plugins    = Plugins::listAll();
-        foreach($plugins as $plugin) {
-            $info = osc_plugin_get_info($plugin);
-            if(osc_check_plugin_update(@$info['plugin_update_uri'], @$info['version'])) {
-                $array[] = @$info['plugin_update_uri'];
-                $total++;
-            }else{
-            }
-            $array_downloaded[] = @$info['plugin_update_uri'];
+    $plugins    = Plugins::listAll();
+    foreach($plugins as $plugin) {
+        $info = osc_plugin_get_info($plugin);
+        if(osc_check_plugin_update(@$info['plugin_update_uri'], @$info['version'])) {
+            $array[] = @$info['plugin_update_uri'];
+            $total++;
+        }else{
         }
-
-        osc_set_preference( 'plugins_to_update' , json_encode($array) );
-        osc_set_preference( 'plugins_downloaded', json_encode($array_downloaded) );
-        osc_set_preference( 'plugins_update_count', $total );
-        osc_set_preference( 'plugins_last_version_check', time() );
-        osc_reset_preferences();
-    } else {
-        $total = getPreference('plugins_update_count');
+        $array_downloaded[] = @$info['plugin_update_uri'];
     }
 
+    osc_set_preference( 'plugins_to_update' , json_encode($array) );
+    osc_set_preference( 'plugins_downloaded', json_encode($array_downloaded) );
+    osc_set_preference( 'plugins_update_count', $total );
+    osc_set_preference( 'plugins_last_version_check', time() );
+    osc_reset_preferences();
     return $total;
 }
 
@@ -542,29 +545,32 @@ function osc_admin_toolbar_update_plugins($force = false)
 
 function osc_check_themes_update( $force = false )
 {
+    $total = getPreference('themes_update_count');
+    if($force) {
+        return _osc_check_themes_update();
+    } else if((time() - osc_themes_last_version_check()) > (24 * 3600)) {
+        osc_add_hook('admin_footer', 'check_themes_admin_footer');
+    }
+    return $total;
+}
+function _osc_check_themes_update() {
     $total = 0;
     $array = array();
     $array_downloaded = array();
-    // check if exist a new version each day
-    if( (time() - osc_themes_last_version_check()) > (24 * 3600) || $force ) {
-        $themes = WebThemes::newInstance()->getListThemes();
-        foreach($themes as $theme) {
-            $info = WebThemes::newInstance()->loadThemeInfo($theme);
-            if(osc_check_theme_update(@$info['theme_update_uri'], @$info['version'])) {
-                $array[] = $theme;
-                $total++;
-            }
-            $array_downloaded[] = @$info['theme_update_uri'];
+    $themes = WebThemes::newInstance()->getListThemes();
+    foreach($themes as $theme) {
+        $info = WebThemes::newInstance()->loadThemeInfo($theme);
+        if(osc_check_theme_update(@$info['theme_update_uri'], @$info['version'])) {
+            $array[] = $theme;
+            $total++;
         }
-        osc_set_preference( 'themes_to_update', json_encode($array) );
-        osc_set_preference( 'themes_downloaded', json_encode($array_downloaded) );
-        osc_set_preference( 'themes_update_count', $total );
-        osc_set_preference( 'themes_last_version_check', time() );
-        osc_reset_preferences();
-    } else {
-        $total = getPreference('themes_update_count');
+        $array_downloaded[] = @$info['theme_update_uri'];
     }
-
+    osc_set_preference( 'themes_to_update', json_encode($array) );
+    osc_set_preference( 'themes_downloaded', json_encode($array_downloaded) );
+    osc_set_preference( 'themes_update_count', $total );
+    osc_set_preference( 'themes_last_version_check', time() );
+    osc_reset_preferences();
     return $total;
 }
 
@@ -589,30 +595,32 @@ function osc_admin_toolbar_update_themes($force = false)
 }
 
 // languages todo
-function osc_check_languages_update( $force = false )
-{
+function osc_check_languages_update( $force = false ) {
+    $total = getPreference('languages_update_count');
+    if($force) {
+        return _osc_check_languages_update();
+    } else if((time() - osc_languages_last_version_check()) > (24 * 3600)) {
+        osc_add_hook('admin_footer', 'check_languages_admin_footer');
+    }
+    return $total;
+}
+function _osc_check_languages_update() {
     $total = 0;
     $array = array();
     $array_downloaded = array();
-    // check if exist a new version each day
-    if( (time() - osc_languages_last_version_check()) > (24 * 3600) || $force ) {
-        $languages  = OSCLocale::newInstance()->listAll();
-        foreach($languages as $lang) {
-            if(osc_check_language_update($lang['pk_c_code'], $lang['s_version'] )) {
-                $array[] = $lang['pk_c_code'];
-                $total++;
-            }
-            $array_downloaded[] = $lang['pk_c_code'];
+    $languages  = OSCLocale::newInstance()->listAll();
+    foreach($languages as $lang) {
+        if(osc_check_language_update($lang['pk_c_code'], $lang['s_version'] )) {
+            $array[] = $lang['pk_c_code'];
+            $total++;
         }
-        osc_set_preference( 'languages_to_update' , json_encode($array) );
-        osc_set_preference( 'languages_downloaded', json_encode($array_downloaded) );
-        osc_set_preference( 'languages_update_count', $total );
-        osc_set_preference( 'languages_last_version_check', time() );
-        osc_reset_preferences();
-    } else {
-        $total = getPreference('languages_update_count');
+        $array_downloaded[] = $lang['pk_c_code'];
     }
-
+    osc_set_preference( 'languages_to_update' , json_encode($array) );
+    osc_set_preference( 'languages_downloaded', json_encode($array_downloaded) );
+    osc_set_preference( 'languages_update_count', $total );
+    osc_set_preference( 'languages_last_version_check', time() );
+    osc_reset_preferences();
     return $total;
 }
 
