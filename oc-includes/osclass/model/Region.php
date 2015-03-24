@@ -77,7 +77,7 @@
         {
             $this->dao->select('*');
             $this->dao->from($this->getTableName());
-            $this->dao->where('fk_c_country_code', addslashes($countryId));
+            $this->dao->where('fk_c_country_code', $countryId);
             $this->dao->orderBy('s_name', 'ASC');
             $result = $this->dao->get();
 
@@ -125,15 +125,20 @@
          */
         public function ajax($query, $country = null)
         {
-            $this->dao->select('pk_i_id as id, s_name as label, s_name as value');
-            $this->dao->from($this->getTableName());
+            $country = trim($country);
+            $this->dao->select('a.pk_i_id as id, a.s_name as label, a.s_name as value');
+            $this->dao->from($this->getTableName() . ' as a');
             $this->dao->like('s_name', $query, 'after');
-            if($country != null) {
-                $this->dao->where('fk_c_country_code', strtolower($country));
+            if($country != null ) {
+                if(strlen($country)==2) {
+                    $this->dao->where('a.fk_c_country_code', strtolower($country));
+                } else {
+                    $this->dao->join(Country::newInstance()->getTableName().' as aux', 'aux.pk_c_code = a.fk_c_country_code', 'LEFT');
+                    $this->dao->where('aux.s_name', $country);
+                }
             }
             $this->dao->limit(5);
             $result = $this->dao->get();
-
             if($result == false) {
                 return array();
             }

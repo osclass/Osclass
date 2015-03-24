@@ -186,6 +186,9 @@
                 default:
                     $args = func_get_args();
                     $format = array_shift($args);
+                    foreach($args as $k => $v) {
+                        $args[$k] = $this->dao->escape($v);
+                    }
                     $sql = vsprintf($format, $args);
                     break;
             }
@@ -358,7 +361,7 @@
         // BUT REMEMBER TO DELETE IN ANYTHING > 2.1.x THANKS
         public function listLatest($limit = 10)
         {
-            return $this->listWhere(" b_active = 1 AND b_enabled = 1 ORDER BY dt_pub_date DESC LIMIT " . $limit);
+            return $this->listWhere(" b_active = 1 AND b_enabled = 1 ORDER BY dt_pub_date DESC LIMIT %d", (int)$limit);
         }
 
         /**

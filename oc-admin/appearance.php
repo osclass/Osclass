@@ -78,6 +78,9 @@
                     $theme = Params::getParam('webtheme');
                     if($theme!='') {
                         if($theme!=  osc_current_web_theme()) {
+                            if(file_exists(osc_content_path() . "themes/" . $theme . "/functions.php")) {
+                                include osc_content_path() . "themes/" . $theme . "/functions.php";
+                            }
                             osc_run_hook("theme_delete_".$theme);
                             if(osc_deleteDir(osc_content_path()."themes/".$theme."/")) {
                                 osc_add_flash_ok_message(_m("Theme removed successfully"), "admin");

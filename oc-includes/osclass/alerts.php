@@ -74,7 +74,7 @@
                     }
 
                     foreach($users as $user) {
-                        osc_run_hook('hook_'.$internal_name, $user, $ads, $s_search);
+                        osc_run_hook('hook_'.$internal_name, $user, $ads, $s_search, $items, $totalItems);
                         AlertsStats::newInstance()->increase(date('Y-m-d'));
                     }
                 }

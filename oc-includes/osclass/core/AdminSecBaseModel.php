@@ -32,20 +32,6 @@
 
             osc_run_hook( 'init_admin' );
 
-            // check if exist a new version each day
-            if( (time() - osc_last_version_check()) > (24 * 3600) ) {
-                $data = osc_file_get_contents('http://osclass.org/latest_version_v1.php?callback=?');
-                $data = preg_replace('|^\?\((.*?)\);$|', '$01', $data);
-                $json = json_decode($data);
-                if( $json->version > osc_version() ) {
-                    osc_set_preference( 'update_core_json', $data );
-                } else {
-                    osc_set_preference( 'update_core_json', '' );
-                }
-                osc_set_preference( 'last_version_check', time() );
-                osc_reset_preferences();
-            }
-
             $config_version = str_replace('.', '', OSCLASS_VERSION);
             $config_version = preg_replace('|-.*|', '', $config_version);
 
@@ -82,11 +68,15 @@
         function logout()
         {
             //destroying session
+            $locale = Session::newInstance()->_get('oc_adminLocale');
+            Session::newInstance()->session_destroy();
             Session::newInstance()->_drop('adminId');
             Session::newInstance()->_drop('adminUserName');
             Session::newInstance()->_drop('adminName');
             Session::newInstance()->_drop('adminEmail');
             Session::newInstance()->_drop('adminLocale');
+            Session::newInstance()->session_start();
+            Session::newInstance()->_set('oc_adminLocale', $locale);
 
             Cookie::newInstance()->pop('oc_adminId');
             Cookie::newInstance()->pop('oc_adminSecret');
@@ -98,6 +88,7 @@
         {
             if(Params::getParam('page')=='ajax') {
                 echo json_encode(array('error' => 1, 'msg' => __('Session timed out')));
+                exit;
             } else {
                 //Session::newInstance()->session_start();
                 Session::newInstance()->_setReferer(osc_base_url() . preg_replace('|^' . REL_WEB_URL . '|', '', $_SERVER['REQUEST_URI']));

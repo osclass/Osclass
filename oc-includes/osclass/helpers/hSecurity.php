@@ -1,6 +1,5 @@
 <?php
 
-
 /*
  * Copyright 2014 Osclass
  *
@@ -41,7 +40,6 @@
 
         return $pass;
     }
-
 
     /**
      * Create a CSRF token to be placed in a form
@@ -232,7 +230,6 @@
         return false;
     }
 
-
     /*
      * Verify an user's password
      *
@@ -384,8 +381,3 @@
         }
         return substr(str_replace('+', '.', base64_encode($buffer)), 0, $length);
     }
-
-
-
-
-

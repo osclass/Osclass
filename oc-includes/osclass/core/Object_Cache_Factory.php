@@ -36,7 +36,7 @@ class Object_Cache_Factory {
                     return self::$instance;
                 }
             }
-            throw new Exception('Unkwon cache');
+            throw new Exception('Unknown cache');
         } else {
             return self::$instance;
         }

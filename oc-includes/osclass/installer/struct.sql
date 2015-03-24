@@ -438,7 +438,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_item_meta (
     fk_i_item_id INT(10) UNSIGNED NOT NULL,
     fk_i_field_id INT(10) UNSIGNED NOT NULL,
     s_value TEXT NULL,
-    s_multi VARCHAR(20) NULL,
+    s_multi VARCHAR(20) NOT NULL DEFAULT '',
 
         PRIMARY KEY (fk_i_item_id, fk_i_field_id, s_multi),
         INDEX s_value (s_value(255)),

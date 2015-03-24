@@ -31,6 +31,7 @@
         private $search;
         private $order_by;
         private $conditions;
+        private $withFilters = false;
 
         public function __construct()
         {
@@ -167,16 +168,18 @@
             $this->conditions = array();
             if(@$_get['userId']!='') {
                 $this->conditions['pk_i_id'] = str_replace('*','%', $_get['userId']);
+                $this->withFilters = true;
             }
             if(@$_get['s_email']!='') {
                 // escape value
                 $esc_email = User::newInstance()->dao->escapeStr(str_replace('*','%', $_get['s_email']));
                 $this->conditions["s_email LIKE '". $esc_email . "'"] = null;
+                $this->withFilters = true;
             }
             if(@$_get['s_name']!='') {
                 $this->conditions['s_name'] = str_replace('*','%', $_get['s_name']);
+                $this->withFilters = true;
             } else if(@$_get['user']!='') {
-
                 if(@$_get['userId']=='') {
                     // escape value
                     $esc_user = User::newInstance()->dao->escapeStr(str_replace('*','%', $_get['user']));
@@ -184,35 +187,45 @@
                 } else {
                     $this->conditions['s_name'] = str_replace('*','%', $_get['user']);
                 }
+                $this->withFilters = true;
             }
             if(@$_get['s_username']!='') {
                 $this->conditions['s_username'] = str_replace('*','%', $_get['s_username']);
+                $this->withFilters = true;
             }
 
             if(@$_get['countryId']!='') {
                 $this->conditions['fk_c_country_code'] = $_get['countryId'];
+                $this->withFilters = true;
             } else if(@$_get['countryName']!='') {
                 $this->conditions['s_country'] = $_get['countryName'];
+                $this->withFilters = true;
             }
 
             if(@$_get['regionId']!='') {
                 $this->conditions['fk_i_region_id'] = $_get['regionId'];
+                $this->withFilters = true;
             } else if(@$_get['region']!='') {
                 $this->conditions['s_region'] = $_get['region'];
+                $this->withFilters = true;
             }
 
             if(@$_get['cityId']!='') {
                 $this->conditions['fk_i_city_id'] = $_get['cityId'];
+                $this->withFilters = true;
             } else if(@$_get['city']!='') {
                 $this->conditions['s_city'] = $_get['city'];
+                $this->withFilters = true;
             }
 
             if(@$_get['b_enabled']!='') {
                 $this->conditions['b_enabled'] = $_get['b_enabled'];
+                $this->withFilters = true;
             }
 
             if(@$_get['b_active']!='') {
                 $this->conditions['b_active'] = $_get['b_active'];
+                $this->withFilters = true;
             }
 
 
@@ -221,6 +234,11 @@
 
             $this->start = intval( $start );
             $this->limit = intval( $_get['iDisplayLength'] );
+        }
+
+        public function withFilters()
+        {
+            return $this->withFilters;
         }
 
         public function row_class($class, $rawRow, $row)
