@@ -560,11 +560,11 @@
                 $item[0] = $this->manager->findByPrimaryKey( $id );
                 $aWhere = array('pk_i_id' => $id);
             } else {
-                $item = $this->manager->listWhere("i.s_secret = %s AND i.pk_i_id = %d ", $secret, $id);
+                $item = $this->manager->listWhere("i.s_secret = %s AND i.pk_i_id = %d ", $secret, (int)$id);
                 $aWhere = array('s_secret' => $secret, 'pk_i_id' => $id);
             }
 
-            if($item[0]['b_enabled']==1 && $item[0]['b_active']==0) {
+            if(isset($item[0]) && isset($item[0]['b_enabled']) && isset($item[0]['b_active']) && $item[0]['b_enabled']==1 && $item[0]['b_active']==0) {
 
                 $result = $this->manager->update(
                     array('b_active' => 1),
