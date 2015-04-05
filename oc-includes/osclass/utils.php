@@ -561,8 +561,6 @@ function osc_copy($source, $dest, $options=array('folderPermission'=>0755,'fileP
     return $result;
 }
 
-
-
 function osc_copyemz($file1,$file2){
     $contentx =@file_get_contents($file1);
     $openedfile = fopen($file2, "w");
@@ -1098,7 +1096,6 @@ function _unzip_file_pclzip($zip_file, $to) {
     return 1;
 }
 
-
 /**
  * Common interface to zip a specified folder to a file using ziparchive or pclzip
  *
@@ -1331,7 +1328,6 @@ function osc_save_permissions( $dir = ABS_PATH ) {
     return $perms;
 }
 
-
 function osc_prepare_price($price) {
     return number_format($price/1000000, osc_locale_num_dec(), osc_locale_dec_point(), osc_locale_thousands_sep());
 }
@@ -1437,7 +1433,6 @@ function _need_update($uri, $version) {
 }
 // END -- Market util functions
 
-
 /**
  * Returns
  *      0  if both are equal,
@@ -1539,7 +1534,6 @@ function osc_update_cat_stats_id($id)
         osc_update_cat_stats_id($category['fk_i_parent_id']);
     }
 }
-
 
 /**
  * Update locations stats. I moved this function from cron.daily.php:update_location_stats
@@ -1650,7 +1644,6 @@ function osc_translate_categories($locale) {
 
 }
 
-
 function get_ip() {
     if( !empty($_SERVER['HTTP_CLIENT_IP']) ) {
         return $_SERVER['HTTP_CLIENT_IP'];
@@ -1665,7 +1658,6 @@ function get_ip() {
 
     return $_SERVER['REMOTE_ADDR'];
 }
-
 
 /***********************
  * CSRFGUARD functions *
@@ -1695,7 +1687,6 @@ function osc_csrfguard_generate_token() {
     return array($unique_token_name, $token);
 }
 
-
 function osc_csrfguard_validate_token($unique_form_name, $token_value) {
     $name = Session::newInstance()->_get('token_name');
     $token = Session::newInstance()->_get($unique_form_name);
@@ -1706,7 +1697,6 @@ function osc_csrfguard_validate_token($unique_form_name, $token_value) {
     }
     return $result;
 }
-
 
 function osc_csrfguard_replace_forms($form_data_html) {
     $count = preg_match_all("/<form(.*?)>/is", $form_data_html, $matches, PREG_SET_ORDER);
@@ -1719,13 +1709,11 @@ function osc_csrfguard_replace_forms($form_data_html) {
     return $form_data_html;
 }
 
-
 function osc_csrfguard_inject() {
     $data = ob_get_clean();
     $data = osc_csrfguard_replace_forms($data);
     echo $data;
 }
-
 
 function osc_csrfguard_start() {
     ob_start();
@@ -2045,8 +2033,6 @@ function osc_is_update_compatible($section, $element, $osclass_version = OSCLASS
     }
     return false;
 }
-
-
 
 function osc_market($section, $code) {
     $plugin  = false;

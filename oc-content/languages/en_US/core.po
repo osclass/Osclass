@@ -4314,7 +4314,7 @@ msgid "E-mail rule"
 msgstr ""
 
 #: oc-admin/themes/modern/users/ban_frm.php:87
-msgid "(e.g. *@badsite.com)"
+msgid "(e.g. *@badsite.com, *@subdomain.badsite.com, *@*badsite.com)"
 msgstr ""
 
 #: oc-admin/themes/modern/users/frm.php:35

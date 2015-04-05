@@ -142,6 +142,7 @@
                     $this->im = $bg;
                     $this->ext = 'jpeg';
                 }
+                $this->im->setImageDepth(8);
                 $this->im->setImageFileName($imagePath);
                 $this->im->setImageFormat($ext);
                 $this->im->writeImage($imagePath);
