@@ -978,7 +978,9 @@
                 $this->dao->orderBy( $this->order_column, $this->order_direction);
 
                 if($count) {
-                    $this->dao->limit(100*$this->results_per_page);
+                    if(SQL_COUNT_QUERY_LIMIT) {
+                        $this->dao->limit(100*$this->results_per_page);
+                    }
                 } else {
                     $this->dao->limit( $this->limit_init, $this->results_per_page);
                 }
