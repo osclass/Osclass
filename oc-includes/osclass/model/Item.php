@@ -296,7 +296,7 @@
                     case 'INACTIVE':
                         $this->dao->where('i.b_active', 0);
                         break;
-                    case 'ENABLE':
+                    case 'ENABLED':
                         $this->dao->where('i.b_enabled', 1);
                         break;
                     case 'DISABLED':
