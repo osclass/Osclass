@@ -595,15 +595,15 @@
             $url = $base_url . 'index.php?page=search';
             if($params!=null && is_array($params)) {
                 foreach($params as $k => $v) {
-                    if($k=='meta') {
+                    if($k=='meta' || substr($k, 0, 5)=='meta[') {
                         if( is_array($v) ) {
                             foreach($v as $_k => $aux) {
                                 if(is_array($aux)) {
                                     foreach( array_keys($aux) as $aux_k ) {
-                                        $url .= "&" . $k . "[$_k][$aux_k]=" . urlencode($aux[$aux_k]);
+                                        $url .= "&meta[$_k][$aux_k]=" . urlencode($aux[$aux_k]);
                                     }
                                 } else {
-                                    $url .= "&" . $_k . "[]=" . urlencode($aux);
+                                    $url .= "&meta[" . $_k . "]=" . urlencode($aux);
                                 }
                             }
                         }

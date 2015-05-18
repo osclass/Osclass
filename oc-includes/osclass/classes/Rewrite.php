@@ -188,11 +188,9 @@
             $uri_array = explode('?', $uri);
             $length_i = count($uri_array);
             for($var_i = 1;$var_i<$length_i;$var_i++) {
-                if(preg_match_all('|&([^=]+)=([^&]*)|', '&'.$uri_array[$var_i].'&', $matches)) {
-                    $length = count($matches[1]);
-                    for($var_k = 0;$var_k<$length;$var_k++) {
-                        Params::setParam($matches[1][$var_k], $matches[2][$var_k]);
-                    }
+                parse_str($uri_array[$var_i], $variables);
+                foreach($variables as $k => $v) {
+                    Params::setParam($k, $v);
                 }
             }
         }
