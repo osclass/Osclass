@@ -206,7 +206,7 @@
 
         static function install($path)
         {
-            osc_run_hook('before_plugin_install');
+            osc_run_hook("before_plugin_install");
 
             $data['s_value'] = osc_installed_plugins();
             $plugins_list    = unserialize($data['s_value']);
@@ -244,12 +244,12 @@
 
             return true;
 
-            osc_run_hook('after_plugin_install');
+            osc_run_hook("after_plugin_install");
         }
 
         static function uninstall($path)
         {
-            osc_run_hook('before_plugin_uninstall');
+            osc_run_hook("before_plugin_uninstall");
 
             $data['s_value'] = osc_installed_plugins();
             $plugins_list    = unserialize($data['s_value']);
@@ -280,12 +280,12 @@
             self::cleanCategoryFromPlugin($plugin['short_name']);
             return true;
 
-            osc_run_hook('after_plugin_uninstall');
+            osc_run_hook("after_plugin_uninstall");
         }
 
         static function activate($path)
         {
-            osc_run_hook('before_plugin_activate');
+            osc_run_hook("before_plugin_activate");
 
             $data = array();
             $data['s_value'] = osc_active_plugins();
@@ -307,12 +307,12 @@
 
             return true;
 
-            osc_run_hook('after_plugin_activate');
+            osc_run_hook("after_plugin_activate");
         }
 
         static function deactivate($path)
         {
-            osc_run_hook('before_plugin_deactivate');
+            osc_run_hook("before_plugin_deactivate");
 
             $data['s_value'] = osc_active_plugins();
             $plugins_list = unserialize($data['s_value']);
@@ -338,7 +338,7 @@
             self::reload();
             return true;
 
-            osc_run_hook('after_plugin_deactivate');
+            osc_run_hook("after_plugin_deactivate");
         }
 
         static function isThisCategory($name, $id)
