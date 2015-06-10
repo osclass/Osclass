@@ -242,9 +242,9 @@
                 return array('error_code' => 'error_output', 'output' => ob_get_clean());
             }
 
-            return true;
-
             osc_run_hook("after_plugin_install");
+
+            return true;
         }
 
         static function uninstall($path)
@@ -278,9 +278,10 @@
 
             $plugin = self::getInfo($path);
             self::cleanCategoryFromPlugin($plugin['short_name']);
-            return true;
 
             osc_run_hook("after_plugin_uninstall");
+
+            return true;
         }
 
         static function activate($path)
@@ -305,9 +306,9 @@
 
             self::runHook($path . '_enable');
 
-            return true;
-
             osc_run_hook("after_plugin_activate");
+
+            return true;
         }
 
         static function deactivate($path)
@@ -336,9 +337,10 @@
             osc_set_preference('active_plugins', serialize($plugins_list));
 
             self::reload();
-            return true;
 
             osc_run_hook("after_plugin_deactivate");
+
+            return true;
         }
 
         static function isThisCategory($name, $id)
