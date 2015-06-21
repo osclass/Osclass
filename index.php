@@ -131,7 +131,7 @@
                             $do = new CWebContact();
                             $do->doModel();
         break;
-        case ('custom'):   //contact
+        case ('custom'):   //custom
                             require_once(osc_lib_path() . 'osclass/controller/custom.php');
                             $do = new CWebCustom();
                             $do->doModel();
