@@ -270,12 +270,23 @@
     }
 
     /**
-     * Gets formated price of current item
+     * Gets formatted price of current item
+     *
+     * @return string
+     */
+    function osc_item_formatted_price() {
+        return (string) osc_format_price( osc_item_price() );
+    }
+
+    /**
+     * DEPRECATED: incorrect spelling of "formatted." Kept for legacy purposes
+     *
+     * Calls osc_item_formatted_price
      *
      * @return string
      */
     function osc_item_formated_price() {
-        return (string) osc_format_price( osc_item_price() );
+      return osc_item_formatted_price();
     }
 
     /**
