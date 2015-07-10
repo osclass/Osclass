@@ -1858,7 +1858,7 @@ msgid "<strong>Remember</strong> that you must configure reCAPTCHA first"
 msgstr ""
 
 #: oc-admin/themes/modern/items/settings.php:122
-msgid "Email Messages"
+msgid "Email messages"
 msgstr ""
 
 #: oc-admin/themes/modern/items/settings.php:124
