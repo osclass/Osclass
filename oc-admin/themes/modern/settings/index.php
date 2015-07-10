@@ -285,18 +285,6 @@
                             <?php _e('listings at most'); ?>
                         </div>
                     </div>
-                    <h2 class="render-title separate-top"><?php _e('Category settings'); ?></h2>
-                    <div class="form-row">
-                        <div class="form-label"><?php _e('Parent categories'); ?></div>
-                        <div class="form-controls">
-                            <div class="form-label-checkbox">
-                                <label>
-                                    <input type="checkbox" <?php echo ( osc_selectable_parent_categories() ? 'checked="checked"' : '' ); ?> name="selectable_parent_categories" value="1" />
-                            <?php _e('Allow users to select a parent category as a category when inserting or editing a listing '); ?>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
                     <h2 class="render-title separate-top"><?php _e('Contact Settings'); ?></h2>
                     <div class="form-row">
                         <div class="form-label"><?php _e('Attachments'); ?></div>
