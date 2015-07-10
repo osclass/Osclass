@@ -1915,6 +1915,10 @@ msgstr ""
 msgid "Allow users to select a parent category as a category when inserting or editing a listing "
 msgstr ""
 
+#: oc-admin/themes/modern/items/settings.php:183
+msgid "Title and Description"
+msgstr ""
+
 #: oc-admin/themes/modern/items/settings.php:185
 msgid "Title length"
 msgstr ""
