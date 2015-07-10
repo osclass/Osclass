@@ -546,6 +546,7 @@ msgstr ""
 #: oc-admin/themes/modern/categories/index.php:283
 #: oc-admin/themes/modern/categories/index.php:339
 #: oc-admin/themes/modern/users/frm.php:364
+#: oc-admin/themes/modern/items/settings.php:202
 msgid "Enable"
 msgstr ""
 
@@ -1522,7 +1523,7 @@ msgid "Category"
 msgstr ""
 
 #: oc-admin/themes/modern/items/frm.php:177
-#: oc-admin/themes/modern/items/settings.php:186
+#: oc-admin/themes/modern/items/settings.php:207
 msgid "Price"
 msgstr ""
 
@@ -1812,15 +1813,15 @@ msgstr ""
 msgid "Modify the general settings for your listings. Decide if users have to register in order to publish something, the number of pictures allowed for each listing, etc."
 msgstr ""
 
-#: oc-admin/themes/modern/items/settings.php:58
+#: oc-admin/themes/modern/items/settings.php:57
 msgid "Listing Settings &raquo; %s"
 msgstr ""
 
-#: oc-admin/themes/modern/items/settings.php:66
+#: oc-admin/themes/modern/items/settings.php:65
 msgid "Listing Settings"
 msgstr ""
 
-#: oc-admin/themes/modern/items/settings.php:78
+#: oc-admin/themes/modern/items/settings.php:77
 msgid "Only logged in users can post listings"
 msgstr ""
 
@@ -1848,82 +1849,98 @@ msgstr ""
 msgid "Logged in users don't need to validate their listings"
 msgstr ""
 
-#: oc-admin/themes/modern/items/settings.php:110
+#: oc-admin/themes/modern/items/settings.php:116
 msgid "Show reCAPTCHA in add/edit listing form"
 msgstr ""
 
-#: oc-admin/themes/modern/items/settings.php:112
+#: oc-admin/themes/modern/items/settings.php:118
 msgid "<strong>Remember</strong> that you must configure reCAPTCHA first"
 msgstr ""
 
-#: oc-admin/themes/modern/items/settings.php:117
+#: oc-admin/themes/modern/items/settings.php:122
+msgid "Email Messages"
+msgstr ""
+
+#: oc-admin/themes/modern/items/settings.php:124
 #: oc-includes/osclass/classes/Breadcrumb.php:325
 msgid "Contact publisher"
 msgstr ""
 
-#: oc-admin/themes/modern/items/settings.php:122
+#: oc-admin/themes/modern/items/settings.php:129
 msgid "Only allow registered users to contact publisher"
 msgstr ""
 
-#: oc-admin/themes/modern/items/settings.php:128
+#: oc-admin/themes/modern/items/settings.php:135
 msgid "Allow attached files in contact publisher form"
 msgstr ""
 
-#: oc-admin/themes/modern/items/settings.php:134
+#: oc-admin/themes/modern/items/settings.php:141
 #: oc-admin/themes/modern/settings/comments.php:139
 msgid "Notifications"
 msgstr ""
 
-#: oc-admin/themes/modern/items/settings.php:139
+#: oc-admin/themes/modern/items/settings.php:146
 msgid "Notify admin when a new listing is added"
 msgstr ""
 
-#: oc-admin/themes/modern/items/settings.php:145
+#: oc-admin/themes/modern/items/settings.php:152
 msgid "Send admin a copy of the \"contact publisher\" email"
 msgstr ""
 
-#: oc-admin/themes/modern/items/settings.php:151
+#: oc-admin/themes/modern/items/settings.php:158
 msgid "Send admin a copy to \"share listing\" email"
 msgstr ""
 
-#: oc-admin/themes/modern/items/settings.php:157
+#: oc-admin/themes/modern/items/settings.php:164
 msgid "Warn about expiration"
 msgstr ""
 
-#: oc-admin/themes/modern/items/settings.php:160
+#: oc-admin/themes/modern/items/settings.php:167
 msgid "days"
 msgstr ""
 
-#: oc-admin/themes/modern/items/settings.php:162
+#: oc-admin/themes/modern/items/settings.php:169
 msgid "This option will send an email X days before an ad expires to the author. 0 for no email."
 msgstr ""
 
-#: oc-admin/themes/modern/items/settings.php:165
-msgid "Title length"
-msgstr ""
-
-#: oc-admin/themes/modern/items/settings.php:168
-#: oc-admin/themes/modern/items/settings.php:176
-msgid "%s characters "
+#: oc-admin/themes/modern/items/settings.php:171
+msgid "Category settings"
 msgstr ""
 
 #: oc-admin/themes/modern/items/settings.php:173
+msgid "Parent categories"
+msgstr ""
+
+#: oc-admin/themes/modern/items/settings.php:178
+msgid "Allow users to select a parent category as a category when inserting or editing a listing "
+msgstr ""
+
+#: oc-admin/themes/modern/items/settings.php:185
+msgid "Title length"
+msgstr ""
+
+#: oc-admin/themes/modern/items/settings.php:188
+#: oc-admin/themes/modern/items/settings.php:196
+msgid "%s characters "
+msgstr ""
+
+#: oc-admin/themes/modern/items/settings.php:193
 msgid "Description length"
 msgstr ""
 
-#: oc-admin/themes/modern/items/settings.php:181
+#: oc-admin/themes/modern/items/settings.php:200
 msgid "Optional fields"
 msgstr ""
 
-#: oc-admin/themes/modern/items/settings.php:191
+#: oc-admin/themes/modern/items/settings.php:212
 msgid "Attach images"
 msgstr ""
 
-#: oc-admin/themes/modern/items/settings.php:195
+#: oc-admin/themes/modern/items/settings.php:216
 msgid "Attach %s images per listing"
 msgstr ""
 
-#: oc-admin/themes/modern/items/settings.php:196
+#: oc-admin/themes/modern/items/settings.php:217
 msgid "If the value is zero, it means an unlimited number of images is allowed"
 msgstr ""
 
@@ -2810,18 +2827,6 @@ msgstr ""
 
 #: oc-admin/themes/modern/settings/index.php:273
 msgid "Search page shows"
-msgstr ""
-
-#: oc-admin/themes/modern/settings/index.php:279
-msgid "Category settings"
-msgstr ""
-
-#: oc-admin/themes/modern/settings/index.php:281
-msgid "Parent categories"
-msgstr ""
-
-#: oc-admin/themes/modern/settings/index.php:286
-msgid "Allow users to select a parent category as a category when inserting or editing a listing "
 msgstr ""
 
 #: oc-admin/themes/modern/settings/index.php:291
@@ -3777,6 +3782,7 @@ msgstr ""
 
 #: oc-admin/themes/modern/settings/spamNbots.php:43
 #: oc-includes/osclass/classes/AdminMenu.php:92
+#: oc-admin/themes/modern/items/settings.php:109
 msgid "Spam and bots"
 msgstr ""
 
@@ -4555,6 +4561,7 @@ msgstr ""
 msgid "Reports"
 msgstr ""
 
+#: oc-admin/themes/modern/items/settings.php:71
 #: oc-includes/osclass/classes/AdminMenu.php:85
 msgid "General"
 msgstr ""
