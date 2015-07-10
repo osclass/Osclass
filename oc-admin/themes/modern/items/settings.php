@@ -119,7 +119,7 @@
                                 </div>
                             </div>
                         </div>
-                        <h3 class="render-title separate-top"><?php _e('Messages'); ?></h3>
+                        <h3 class="render-title separate-top"><?php _e('Email Messages'); ?></h3>
                         <div class="form-row">
                             <div class="form-label"> <?php _e('Contact publisher'); ?></div>
                             <div class="form-controls">
