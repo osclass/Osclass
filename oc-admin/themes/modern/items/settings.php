@@ -68,6 +68,7 @@
                 <input type="hidden" name="action" value="settings_post" />
                 <fieldset>
                     <div class="form-horizontal">
+                    	<h3 class="render-title"><?php _e('General'); ?></h3>
                         <div class="form-row">
                             <div class="form-label"> <?php _e('Settings'); ?></div>
                             <div class="form-controls">
@@ -103,6 +104,12 @@
                                         </label>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <h3 class="render-title"><?php _e('Spam and bots'); ?></h3>
+                        <div class="form-row">
+                            <div class="form-label"> <?php _e('reCAPTCHA'); ?></div>
+                            <div class="form-controls">
                                 <div class="separate-top-medium">
                                     <label>
                                         <input type="checkbox" <?php echo ( ( osc_recaptcha_items_enabled() == '0' ) ? '' : 'checked="checked"' ); ?> name="enabled_recaptcha_items" value="1" />
@@ -112,6 +119,7 @@
                                 </div>
                             </div>
                         </div>
+                        <h3 class="render-title separate-top"><?php _e('Messages'); ?></h3>
                         <div class="form-row">
                             <div class="form-label"> <?php _e('Contact publisher'); ?></div>
                             <div class="form-controls">
@@ -160,11 +168,24 @@
                             </div>
                             <span class="help-box"><?php _e('This option will send an email X days before an ad expires to the author. 0 for no email.'); ?></span>
                         </div>
+                        <h3 class="render-title separate-top"><?php _e('Category settings'); ?></h3>
                         <div class="form-row">
-							<div class="form-label"> <?php _e('Title length'); ?></div>
+                            <div class="form-label"><?php _e('Parent categories'); ?></div>
                             <div class="form-controls">
-								<div class="separate-top-medium">
-									<?php printf( __('%s characters '), '<input type="text" class="input-small" name="max_chars_per_title" value="' . osc_max_characters_per_title() . '" />' ); ?>
+                                <div class="form-label-checkbox">
+                                    <label>
+                                        <input type="checkbox" <?php echo ( osc_selectable_parent_categories() ? 'checked="checked"' : '' ); ?> name="selectable_parent_categories" value="1" />
+                                <?php _e('Allow users to select a parent category as a category when inserting or editing a listing '); ?>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <h3 class="render-title separate-top"><?php _e('Title and Description'); ?></h3>
+                        <div class="form-row">
+                            <div class="form-label"><?php _e('Title length'); ?></div>
+                            <div class="form-controls">
+                                <div class="separate-top-medium">
+                                    <?php printf( __('%s characters '), '<input type="text" class="input-small" name="max_chars_per_title" value="' . osc_max_characters_per_title() . '" />' ); ?>
 								</div>
 							</div>
 						</div>
@@ -176,8 +197,9 @@
 								</div>
 							</div>
 						</div>
+						<h3 class="render-title separate-top"><?php _e('Optional fields'); ?></h3>
                         <div class="form-row">
-                            <div class="form-label"> <?php _e('Optional fields'); ?></div>
+                            <div class="form-label"> <?php _e('Enable'); ?></div>
                             <div class="form-controls">
                                 <div class="form-label-checkbox">
                                     <label>
