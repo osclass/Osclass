@@ -153,7 +153,7 @@ require_once LIB_PATH . 'osclass/model/BanRule.php';
 require_once LIB_PATH . 'osclass/model/LocationsTmp.php';
 
 require_once LIB_PATH . 'osclass/classes/Cache.php';
-require_once LIB_PATH . 'osclass/classes/ImageResizer.php';
+require_once LIB_PATH . 'osclass/classes/ImageProcessing.php';
 require_once LIB_PATH . 'osclass/classes/RSSFeed.php';
 require_once LIB_PATH . 'osclass/classes/Sitemap.php';
 require_once LIB_PATH . 'osclass/classes/Pagination.php';
