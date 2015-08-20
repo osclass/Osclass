@@ -916,14 +916,6 @@
                 if ($this->withPattern ) {
                     $this->dao->join(DB_TABLE_PREFIX.'t_item_description as d','d.fk_i_item_id = '.DB_TABLE_PREFIX.'t_item.pk_i_id','LEFT');
                     $this->dao->where(sprintf("MATCH(d.s_title, d.s_description) AGAINST('%s' IN BOOLEAN MODE)", $this->sPattern) );
-                    if(empty($this->locale_code)) {
-                        if(OC_ADMIN) {
-                            $this->locale_code[osc_current_admin_locale()] = osc_current_admin_locale();
-                        } else {
-                            $this->locale_code[osc_current_user_locale()] = osc_current_user_locale();
-                        }
-                    }
-                    $this->dao->where(sprintf("( d.fk_c_locale_code LIKE '%s' )", implode("' d.fk_c_locale_code LIKE '", $this->locale_code)));
                 }
 
                 // item conditions
