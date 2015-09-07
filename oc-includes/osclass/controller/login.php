@@ -31,8 +31,8 @@
         function doModel()
         {
 
-            $l = strlen(osc_base_url(false));
-            $p = str_replace('/', '', substr(osc_admin_base_url(false),-$l));
+            $l = strlen(osc_base_url());
+            $p = str_replace('/', '', substr(osc_admin_base_url(),-$l));
 
             switch( $this->action ) {
                 case('login_post'):     //post execution for the login
