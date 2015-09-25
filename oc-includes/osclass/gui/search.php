@@ -20,7 +20,7 @@
      */
 
     // meta tag robots
-    if( osc_count_items() == 0 || stripos($_SERVER['REQUEST_URI'], 'search') ) {
+    if( osc_count_items() == 0 || stripos(Params::getServerParam('REQUEST_URI'), 'search') ) {
         osc_add_hook('header','bender_nofollow_construct');
     } else {
         osc_add_hook('header','bender_follow_construct');
