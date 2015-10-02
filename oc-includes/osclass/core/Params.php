@@ -16,8 +16,6 @@
  * limitations under the License.
  */
 
-    require_once LIB_PATH . 'htmlpurifier/HTMLPurifier.auto.php';
-
     class Params
     {
         private static $_purifier;

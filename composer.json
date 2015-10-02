@@ -1,0 +1,7 @@
+{
+    "require": {
+        "ezyang/htmlpurifier": "4.5.0",
+        "phpmailer/phpmailer": "5.2.6",
+        "chee/pclzip": "dev-master"
+    }
+}

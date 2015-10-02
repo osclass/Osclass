@@ -1172,9 +1172,6 @@ function _zip_folder_pclzip($archive_folder, $archive_name) {
         return false;
     }
 
-    // first, we load the library
-    require_once LIB_PATH . 'pclzip/pclzip.lib.php';
-
     $zip = new PclZip($archive_name);
     if($zip) {
         $dir = preg_replace('/[\/]{2,}/', '/', $archive_folder."/");
