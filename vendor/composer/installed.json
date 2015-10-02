@@ -1,0 +1,197 @@
+[
+    {
+        "name": "ezyang/htmlpurifier",
+        "version": "v4.5.0",
+        "version_normalized": "4.5.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/ezyang/htmlpurifier.git",
+            "reference": "d516e2f8de435ea78cc6152abc425d3ff2c4d289"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/ezyang/htmlpurifier/zipball/d516e2f8de435ea78cc6152abc425d3ff2c4d289",
+            "reference": "d516e2f8de435ea78cc6152abc425d3ff2c4d289",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.2"
+        },
+        "time": "2013-02-18 00:04:08",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "HTMLPurifier": "library/"
+            },
+            "files": [
+                "library/HTMLPurifier.composer.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "LGPL"
+        ],
+        "authors": [
+            {
+                "name": "Edward Z. Yang",
+                "email": "admin@htmlpurifier.org",
+                "homepage": "http://ezyang.com"
+            }
+        ],
+        "description": "Standards compliant HTML filter written in PHP",
+        "homepage": "http://htmlpurifier.org/",
+        "keywords": [
+            "html"
+        ]
+    },
+    {
+        "name": "phpmailer/phpmailer",
+        "version": "v5.2.6",
+        "version_normalized": "5.2.6.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/PHPMailer/PHPMailer.git",
+            "reference": "4d9434e394496a5bb7acd9e73046587184b413df"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/4d9434e394496a5bb7acd9e73046587184b413df",
+            "reference": "4d9434e394496a5bb7acd9e73046587184b413df",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.0.0"
+        },
+        "require-dev": {
+            "phpdocumentor/phpdocumentor": "*",
+            "phpunit/phpunit": "*"
+        },
+        "time": "2013-04-11 16:45:39",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "class.phpmailer.php",
+                "class.pop3.php",
+                "class.smtp.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "LGPL-2.1"
+        ],
+        "authors": [
+            {
+                "name": "Jim Jagielski",
+                "email": "jimjag@gmail.com"
+            },
+            {
+                "name": "Marcus Bointon",
+                "email": "phpmailer@synchromedia.co.uk"
+            },
+            {
+                "name": "Andy Prevost",
+                "email": "codeworxtech@users.sourceforge.net"
+            },
+            {
+                "name": "Brent R. Matzelle"
+            }
+        ],
+        "description": "PHPMailer is a full-featured email creation and transfer class for PHP"
+    },
+    {
+        "name": "illuminate/support",
+        "version": "v4.2.17",
+        "version_normalized": "4.2.17.0",
+        "target-dir": "Illuminate/Support",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/illuminate/support.git",
+            "reference": "db61f3f6d507ce417ca993e1f93585db7efd8b12"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/illuminate/support/zipball/db61f3f6d507ce417ca993e1f93585db7efd8b12",
+            "reference": "db61f3f6d507ce417ca993e1f93585db7efd8b12",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.4.0"
+        },
+        "require-dev": {
+            "jeremeamia/superclosure": "~1.0.1",
+            "patchwork/utf8": "~1.1"
+        },
+        "time": "2015-01-27 20:51:43",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "4.2-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Illuminate\\Support": ""
+            },
+            "files": [
+                "Illuminate/Support/helpers.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Taylor Otwell",
+                "email": "taylorotwell@gmail.com"
+            }
+        ]
+    },
+    {
+        "name": "chee/pclzip",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/magnagroup/CheePclzip.git",
+            "reference": "b3d654cd78d4a0b1414c92632116d3188c9ecc05"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/magnagroup/CheePclzip/zipball/b3d654cd78d4a0b1414c92632116d3188c9ecc05",
+            "reference": "b3d654cd78d4a0b1414c92632116d3188c9ecc05",
+            "shasum": ""
+        },
+        "require": {
+            "illuminate/support": "4.2.*",
+            "php": ">=5.3.0"
+        },
+        "time": "2014-09-21 11:52:32",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-0": {
+                "Chee\\Pclzip\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "mohsen shafiei",
+                "email": "mohsen.sh12@hotmail.com"
+            }
+        ],
+        "description": "Unofficial PclZip#2.8.2 php library in laravel package. document of PclZip => www.phpconcept.net/pclzip",
+        "keywords": [
+            "Laravel 4",
+            "laravel",
+            "pclzip"
+        ]
+    }
+]

@@ -39,6 +39,7 @@ if( !file_exists(ABS_PATH . 'config.php') ) {
 
 // load database configuration
 require_once ABS_PATH . 'config.php';
+require_once ABS_PATH . 'vendor/autoload.php';
 require_once LIB_PATH . 'osclass/default-constants.php';
 
 // Sets PHP error handling
@@ -265,13 +266,6 @@ if( OC_ADMIN ) {
     }
 } else {
     Rewrite::newInstance()->init();
-}
-
-if( !class_exists('PHPMailer') ) {
-    require_once osc_lib_path() . 'phpmailer/class.phpmailer.php';
-}
-if( !class_exists('SMTP') ) {
-    require_once osc_lib_path() . 'phpmailer/class.smtp.php';
 }
 
 /* file end: ./oc-load.php */
