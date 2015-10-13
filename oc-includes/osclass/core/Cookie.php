@@ -87,7 +87,7 @@
 					$cookie_val = implode("._.", $vars) . "&" . implode("._.", $vals);
 				}
 			}
-            setcookie($this->name, $cookie_val, $this->expires, '/');
+            setcookie($this->name, $cookie_val, $this->expires, REL_WEB_URL);
 		}
         
         function num_vals() {
