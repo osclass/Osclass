@@ -694,7 +694,7 @@ function display_database_config() {
                 </tr>
                 <tr>
                     <th align="left"><label for="password"><?php _e('Password'); ?></label></th>
-                    <td><input type="password" id="password" name="password" value="" size="25" /></td>
+                    <td><input type="password" id="password" name="password" value="" size="25" autocomplete="off" /></td>
                     <td class="small"><?php _e('Your MySQL password'); ?></td>
                 </tr>
                 <tr>
@@ -752,7 +752,7 @@ function display_database_config() {
                 </tr>
                 <tr id="admin_password_row">
                     <th align="left"><label for="admin_password"><?php _e('DB admin password'); ?></label></th>
-                    <td><input type="password" id="admin_password" name="admin_password" value="" size="25" disabled="disabled" /> <span id="password_copied"><?php _e('Password copied from above'); ?></span></td>
+                    <td><input type="password" id="admin_password" name="admin_password" value="" size="25" disabled="disabled" autocomplete="off" /> <span id="password_copied"><?php _e('Password copied from above'); ?></span></td>
                     <td></td>
                 </tr>
                 </tbody>
@@ -804,7 +804,7 @@ function display_target() {
                 <tr>
                     <th><label for="s_passwd"><?php _e('Password'); ?></label></th>
                     <td>
-                        <input size="25" class="password_test" name="s_passwd" id="s_passwd" type="password" value="" />
+                        <input size="25" class="password_test" name="s_passwd" id="s_passwd" type="password" value="" autocomplete="off" />
                     </td>
                     <td></td>
                 </tr>
