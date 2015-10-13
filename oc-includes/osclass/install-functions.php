@@ -15,6 +15,51 @@
  * limitations under the License.
  */
 
+
+require_once dirname(dirname(__FILE__)) . '/htmlpurifier/HTMLPurifier.auto.php';
+function _purify($value, $xss_check)
+{
+    if( !$xss_check ) {
+        return $value;
+    }
+
+    $_config = HTMLPurifier_Config::createDefault();
+    $_config->set('HTML.Allowed', '');
+    $_config->set('Cache.SerializerPath', dirname(dirname(dirname(dirname(__FILE__)))) . '/oc-content/uploads/');
+
+    $_purifier = new HTMLPurifier($_config);
+
+
+    if( is_array($value) ) {
+        foreach($value as $k => &$v) {
+            $v = _purify($v, $xss_check); // recursive
+        }
+    } else {
+        $value = $_purifier->purify($value);
+    }
+
+    return $value;
+}
+function getServerParam($param, $htmlencode = false, $xss_check = true, $quotes_encode = true)
+{
+    if ($param == "") return '';
+    if (!isset($_SERVER[$param])) return '';
+    $value = _purify($_SERVER[$param], $xss_check);
+    if ($htmlencode) {
+        if($quotes_encode) {
+            return htmlspecialchars(stripslashes($value), ENT_QUOTES);
+        } else {
+            return htmlspecialchars(stripslashes($value), ENT_NOQUOTES);
+        }
+    }
+
+    if(get_magic_quotes_gpc()) {
+        $value = strip_slashes_extended($value);
+    }
+
+    return ($value);
+}
+
 /*
  * The url of the site
  *
@@ -24,9 +69,9 @@
  */
 function get_absolute_url( ) {
     $protocol = ( isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on' ) ? 'https' : 'http';
-    $pos      = strpos($_SERVER['REQUEST_URI'], 'oc-includes');
-    $URI      = rtrim( substr( $_SERVER['REQUEST_URI'], 0, $pos ), '/' ) . '/';
-    return $protocol . '://' . $_SERVER['HTTP_HOST'] . $URI;
+    $pos      = strpos(getParam('REQUEST_URI'), 'oc-includes');
+    $URI      = rtrim( substr( getParam('REQUEST_URI'), 0, $pos ), '/' ) . '/';
+    return $protocol . '://' . getParam('HTTP_HOST') . $URI;
 }
 
 /*
@@ -37,7 +82,7 @@ function get_absolute_url( ) {
  * @return string The relative url on the domain url
  */
 function get_relative_url( ) {
-    $url = $_SERVER['REQUEST_URI'];
+    $url = Params::getServerParam('REQUEST_URI', false, false);
     return substr($url, 0, strpos($url, '/oc-includes')) . "/";
 }
 
@@ -729,7 +774,7 @@ function display_target() {
     $region_list = array();
 
     $country_ip = '';
-    if(preg_match('|([a-z]{2})-([A-Z]{2})|', @$_SERVER['HTTP_ACCEPT_LANGUAGE'], $match)) {
+    if(preg_match('|([a-z]{2})-([A-Z]{2})|', Params::getServerParam('HTTP_ACCEPT_LANGUAGE'), $match)) {
         $country_ip = $match[2];
         $region_list = osc_file_get_contents('http://geo.osclass.org/newgeo.services.php?action=regions&country='.$match[2]);
         $region_list = json_decode(substr($region_list, 1, strlen($region_list)-2), true);

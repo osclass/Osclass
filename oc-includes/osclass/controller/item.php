@@ -360,7 +360,7 @@
 
                     require_once(osc_lib_path() . 'osclass/user-agents.php');
                     foreach($user_agents as $ua) {
-                        if(preg_match('|'.$ua.'|', @$_SERVER['HTTP_USER_AGENT'])) {
+                        if(preg_match('|'.$ua.'|', Params::getServerParam('HTTP_USER_AGENT'))) {
                             // mark item if it's not a bot
                             $mItem = new ItemActions(false);
                             $mItem->mark($id, $as);
@@ -598,7 +598,7 @@
                     if(!osc_is_admin_user_logged_in() && !($item['fk_i_user_id']!='' && $item['fk_i_user_id']==osc_logged_user_id())) {
                         require_once(osc_lib_path() . 'osclass/user-agents.php');
                         foreach($user_agents as $ua) {
-                            if(preg_match('|'.$ua.'|', @$_SERVER['HTTP_USER_AGENT'])) {
+                            if(preg_match('|'.$ua.'|', Params::getServerParam('HTTP_USER_AGENT'))) {
                                 $mStats = new ItemStats();
                                 $mStats->increase('i_num_views', $item['pk_i_id']);
                                 break;
@@ -622,10 +622,10 @@
 
                     // redirect to the correct url just in case it has changed
                     $itemURI = str_replace(osc_base_url(), '', osc_item_url());
-                    $URI = preg_replace('|^' . REL_WEB_URL . '|', '', $_SERVER['REQUEST_URI']);
+                    $URI = preg_replace('|^' . REL_WEB_URL . '|', '', Params::getServerParam('REQUEST_URI', false, false));
                     // do not clean QUERY_STRING if permalink is not enabled
                     if( osc_rewrite_enabled () ) {
-                        $URI = str_replace('?' . $_SERVER['QUERY_STRING'], '', $URI);
+                        $URI = str_replace('?' . Params::getServerParam('QUERY_STRING'), '', $URI);
                     } else {
                         $params_keep = array('page', 'id');
                         $params      = array();
