@@ -107,11 +107,11 @@
         {
             // $_SERVER is not supported by Params Class... we should fix that
             if(Params::existServerParam('REQUEST_URI')) {
-                if(preg_match('|[\?&]{1}http_referer=(.*)$|', urldecode(Params::getServerParam('REQUEST_URI')), $ref_match)) {
+                if(preg_match('|[\?&]{1}http_referer=(.*)$|', urldecode(Params::getServerParam('REQUEST_URI', false, false)), $ref_match)) {
                     $this->http_referer = $ref_match[1];
-                    $_SERVER['REQUEST_URI'] = preg_replace('|[\?&]{1}http_referer=(.*)$|', "", urldecode(Params::getServerParam('REQUEST_URI')));
+                    $_SERVER['REQUEST_URI'] = preg_replace('|[\?&]{1}http_referer=(.*)$|', "", urldecode(Params::getServerParam('REQUEST_URI', false, false)));
                 }
-                $request_uri = preg_replace('@^' . REL_WEB_URL . '@', "", urldecode(Params::getServerParam('REQUEST_URI')));
+                $request_uri = preg_replace('@^' . REL_WEB_URL . '@', "", urldecode(Params::getServerParam('REQUEST_URI', false, false)));
                 $this->raw_request_uri = $request_uri;
                 $route_used = false;
                 foreach($this->routes as $id => $route) {

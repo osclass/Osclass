@@ -45,7 +45,7 @@
                     $url .= ':' . parse_url(Params::getServerParam('HTTP_HOST'), PHP_URL_PORT);
                 }
                 // append the request
-                $url .= Params::getServerParam('REQUEST_URI');
+                $url .= Params::getServerParam('REQUEST_URI', false, false);
                 $this->redirectTo($url);
             }
 
