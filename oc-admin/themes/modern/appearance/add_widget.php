@@ -62,14 +62,16 @@
         <script type="text/javascript">
             tinyMCE.init({
                 mode : "textareas",
-                theme : "advanced",
-                skin: "cirkuit",
                 width: "500px",
                 height: "340px",
                 theme_advanced_buttons3 : "",
                 theme_advanced_toolbar_align : "left",
                 theme_advanced_toolbar_location : "top",
-                plugins : "advimage,advlink,media,contextmenu",
+                plugins : [
+                    "advlist autolink lists link image charmap preview anchor",
+                    "searchreplace visualblocks code fullscreen",
+                    "insertdatetime media table contextmenu paste"
+                ],
                 entity_encoding : "raw",
                 theme_advanced_buttons1_add : "forecolorpicker,fontsizeselect",
                 theme_advanced_buttons2_add: "media",
@@ -79,34 +81,6 @@
                 remove_script_host : false,
                 convert_urls : false
             });
-
-            function ajaxfilemanager(field_name, url, type, win) {
-                var ajaxfilemanagerurl = "<?php echo osc_base_url(); ?>/oc-includes/osclass/assets/js/tiny_mce/plugins/ajaxfilemanager/ajaxfilemanager.php";
-                var view = 'detail';
-                switch (type) {
-                    case "image":
-                        view = 'thumbnail';
-                        break;
-                    case "media":
-                        break;
-                    case "flash":
-                        break;
-                    case "file":
-                        break;
-                    default:
-                        return false;
-                }
-                tinyMCE.activeEditor.windowManager.open({
-                    url: "<?php echo osc_base_url(); ?>/oc-includes/osclass/assets/js/tiny_mce/plugins/ajaxfilemanager/ajaxfilemanager.php?view=" + view,
-                    width: 782,
-                    height: 440,
-                    inline : "yes",
-                    close_previous : "no"
-                },{
-                    window : win,
-                    input : field_name
-                });
-            }
 
         </script>
 
