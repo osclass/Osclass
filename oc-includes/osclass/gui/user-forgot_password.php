@@ -38,13 +38,13 @@
             <div class="control-group">
                 <label class="control-label" for="new_password"><?php _e('New password', 'bender'); ?></label>
                 <div class="controls">
-                    <input type="password" name="new_password" value="" />
+                    <input type="password" name="new_password" value="" autocomplete="off" />
                 </div>
             </div>
             <div class="control-group">
                 <label class="control-label" for="new_password2"><?php _e('Repeat new password', 'bender'); ?></label>
                 <div class="controls">
-                    <input type="password" name="new_password2" value="" />
+                    <input type="password" name="new_password2" value="" autocomplete="off" />
                 </div>
             </div>
             <div class="control-group">

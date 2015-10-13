@@ -23,11 +23,13 @@
         private static $_purifier;
         private static $_config;
         private static $_request;
+        private static $_server;
 
         function __construct() { }
 
         static function init() {
             self::$_request = array_merge($_GET, $_POST);
+            self::$_server = $_SERVER;
         }
 
         static function getParam($param, $htmlencode = false, $xss_check = true, $quotes_encode = true)
@@ -57,6 +59,46 @@
             if ($param == "") return false;
             if (!isset(self::$_request[$param])) return false;
             return true;
+        }
+
+        static function getServerParam($param, $htmlencode = false, $xss_check = true, $quotes_encode = true)
+        {
+            if ($param == "") return '';
+            if (!isset(self::$_server[$param])) return '';
+
+            $value = self::_purify(self::$_server[$param], $xss_check);
+
+            if ($htmlencode) {
+                if($quotes_encode) {
+                    return htmlspecialchars(stripslashes($value), ENT_QUOTES);
+                } else {
+                    return htmlspecialchars(stripslashes($value), ENT_NOQUOTES);
+                }
+            }
+
+            if(get_magic_quotes_gpc()) {
+                $value = strip_slashes_extended($value);
+            }
+
+            return ($value);
+        }
+
+        static function existServerParam($param)
+        {
+            if ($param == "") return false;
+            if (!isset(self::$_server[$param])) return false;
+            return true;
+        }
+
+        static function getServerParamsAsArray($xss_check = true)
+        {
+            $value = self::_purify(self::$_server, $xss_check);
+
+            if(get_magic_quotes_gpc()) {
+                return strip_slashes_extended($value);
+            }
+
+            return $value;
         }
 
         static function getFiles($param)

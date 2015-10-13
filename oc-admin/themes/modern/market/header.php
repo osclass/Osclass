@@ -205,7 +205,7 @@
             </p>
             <p>
                 <input type="text" name="connect_user" id="connect_user" value="" placeholder="<?php _e('Your market email'); ?>"/>
-                <input type="password" name="connect_password" id="connect_password" value="" placeholder="<?php _e('Your market password'); ?>"/>
+                <input type="password" name="connect_password" id="connect_password" value="" placeholder="<?php _e('Your market password'); ?>" autocomplete="off" />
             </p>
         </div>
         <div class="form-actions">

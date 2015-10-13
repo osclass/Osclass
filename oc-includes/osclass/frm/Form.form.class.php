@@ -42,7 +42,7 @@
             echo '<input id="' . preg_replace('|([^_a-zA-Z0-9-]+)|', '', $name) . '" type="password" name="' . $name . '" value="' . osc_esc_html(htmlentities($value, ENT_COMPAT, "UTF-8")) . '"';
             if (isset($maxLength)) echo ' maxlength="' . osc_esc_html($maxLength) . '"';
             if ($readOnly) echo ' disabled="disabled" readonly="readonly"';
-            echo ' />';
+            echo ' autocomplete="off" />';
         }
 
         static protected function generic_input_hidden($name, $value) {
