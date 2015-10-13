@@ -91,7 +91,7 @@
                 exit;
             } else {
                 //Session::newInstance()->session_start();
-                Session::newInstance()->_setReferer(osc_base_url() . preg_replace('|^' . REL_WEB_URL . '|', '', Params::getServerParam('REQUEST_URI')));
+                Session::newInstance()->_setReferer(osc_base_url() . preg_replace('|^' . REL_WEB_URL . '|', '', Params::getServerParam('REQUEST_URI', false, false)));
                 header("Location: " . osc_admin_base_url(true)."?page=login" );
                 exit;
             }

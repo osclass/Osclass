@@ -49,7 +49,7 @@
 
     function osc_get_absolute_url() {
         $protocol = ( Params::existServerParam('HTTPS') && Params::getServerParam('HTTPS') == 'on' ) ? 'https' : 'http';
-        return $protocol . '://' . Params::getServerParam('HTTP_HOST') . preg_replace('/((oc-admin)|(oc-includes)|(oc-content)|([a-z]+\.php)|(\?.*)).*/i', '', Params::getServerParam('REQUEST_URI'));
+        return $protocol . '://' . Params::getServerParam('HTTP_HOST') . preg_replace('/((oc-admin)|(oc-includes)|(oc-content)|([a-z]+\.php)|(\?.*)).*/i', '', Params::getServerParam('REQUEST_URI', false, false));
     }
 
 ?>

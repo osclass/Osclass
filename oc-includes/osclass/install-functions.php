@@ -82,7 +82,7 @@ function get_absolute_url( ) {
  * @return string The relative url on the domain url
  */
 function get_relative_url( ) {
-    $url = Params::getServerParam('REQUEST_URI');
+    $url = Params::getServerParam('REQUEST_URI', false, false);
     return substr($url, 0, strpos($url, '/oc-includes')) . "/";
 }
 
