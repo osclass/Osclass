@@ -254,8 +254,7 @@ function osc_doRequest($url, $_data) {
         // open a socket connection on port 80
         // use localhost in case of issues with NATs (hairpinning)
         $fp = @fsockopen($host, 80);
-        stream_set_blocking($fp, false);
-
+        
         if($fp===false) { return false; };
 
         $data = http_build_query($_data);
