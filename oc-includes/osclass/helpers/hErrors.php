@@ -47,9 +47,16 @@
         <?php die(); ?>
     <?php }
 
+
     function osc_get_absolute_url() {
-        $protocol = ( Params::existServerParam('HTTPS') && Params::getServerParam('HTTPS') == 'on' ) ? 'https' : 'http';
+        if( !defined('UPLOADS_PATH') ) {
+            define('UPLOADS_PATH', CONTENT_PATH . 'uploads/');
+        }
+        if(!function_exists('osc_uploads_path')) {
+            function osc_uploads_path() { return UPLOADS_PATH; };
+        }
+        require_once dirname(dirname(__FILE__)) . '/core/Params.php';
+        Params::init();
+        $protocol = (( Params::existServerParam('HTTPS') && Params::getServerParam('HTTPS') == 'on' ) || (Params::getServerParam('HTTP_X_FORWARDED_PROTO')=='https'))? 'https' : 'http';
         return $protocol . '://' . Params::getServerParam('HTTP_HOST') . preg_replace('/((oc-admin)|(oc-includes)|(oc-content)|([a-z]+\.php)|(\?.*)).*/i', '', Params::getServerParam('REQUEST_URI', false, false));
     }
-
-?>
