@@ -164,9 +164,10 @@
          */
         public function __destruct()
         {
+            $printFrontend = osc_is_admin_user_logged_in();
             $this->releaseOsclassDb();
             $this->releaseMetadataDb();
-            $this->debug();
+            $this->debug($printFrontend);
         }
 
         /**
@@ -451,7 +452,7 @@
          * @since 2.3
          * @access private
          */
-        function debug()
+        function debug($printFrontend = true)
         {
             $log = LogDatabase::newInstance();
 
@@ -469,8 +470,10 @@
 
             if( OSC_DEBUG_DB_LOG ) {
                 $log->writeMessages();
-            } else {
+            } else if($printFrontend) {
                 $log->printMessages();
+            } else {
+                return false;
             }
 
             unset($log);
