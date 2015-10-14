@@ -105,7 +105,6 @@
 
         public function init()
         {
-            // $_SERVER is not supported by Params Class... we should fix that
             if(Params::existServerParam('REQUEST_URI')) {
                 if(preg_match('|[\?&]{1}http_referer=(.*)$|', urldecode(Params::getServerParam('REQUEST_URI', false, false)), $ref_match)) {
                     $this->http_referer = $ref_match[1];
