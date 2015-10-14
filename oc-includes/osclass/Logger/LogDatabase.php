@@ -143,7 +143,7 @@
             fwrite($fp, '==================================================' . PHP_EOL . PHP_EOL);
 
             foreach($this->messages as $msg) {
-                fwrite($fp, $msg['query_time'] . PHP_EOL);
+                fwrite($fp, 'QUERY TIME' . ' ' . $msg['query_time'] . PHP_EOL);
                 if( $msg['errno'] != 0 ) {
                     fwrite($fp, 'Error number: ' . $msg['errno'] . PHP_EOL);
                     fwrite($fp, 'Error description: ' . $msg['error'] . PHP_EOL);
