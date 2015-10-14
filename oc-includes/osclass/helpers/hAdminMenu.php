@@ -28,7 +28,7 @@
     function osc_draw_admin_menu()
     {
         // actual url
-        $actual_url  = urldecode($_SERVER['QUERY_STRING']);
+        $actual_url  = urldecode(Params::getServerParam('QUERY_STRING'));
         $actual_page = Params::getParam('page');
 
         $something_selected = false;
@@ -326,7 +326,7 @@
         $something_selected = false;
         $aMenu = AdminMenu::newInstance()->get_array_menu();
 
-        $url_actual = '?'.$_SERVER['QUERY_STRING'];
+        $url_actual = '?'.Params::getServerParam('QUERY_STRING');
         if(preg_match('/(^.*action=\w+)/', $url_actual, $matches)) {
             $url_actual = $matches[1];
         } else if(preg_match('/(^.*page=\w+)/', $url_actual, $matches)) {

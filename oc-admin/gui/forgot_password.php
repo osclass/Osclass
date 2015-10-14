@@ -44,13 +44,13 @@
                     <p>
                         <label for="new_password">
                             <span><?php _e('New password'); ?></span>
-                            <input id="new_password" type="password" name="new_password" value="" />
+                            <input id="new_password" type="password" name="new_password" value="" autocomplete="off"/>
                         </label>
                     </p>
                     <p>
                         <label for="new_password2">
                             <span><?php _e('Repeat new password'); ?></span>
-                            <input id="new_password2" type="password" name="new_password2" value="" />
+                            <input id="new_password2" type="password" name="new_password2" value="" autocomplete="off"/>
                         </label>
                     </p>
                     <p class="submit">

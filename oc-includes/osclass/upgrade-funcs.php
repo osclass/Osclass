@@ -513,7 +513,7 @@ CREATE TABLE %st_item_description_tmp (
         osc_set_preference('marketURL', 'http://market.osclass.org/api/v2/');
     }
 
-    osc_changeVersionTo(357);
+    osc_changeVersionTo(358);
 
     if(!defined('IS_AJAX') || !IS_AJAX) {
         if(empty($aMessages)) {
