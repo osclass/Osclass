@@ -1,3 +1,9 @@
+Osclass 3.5.8 2015-10-14
+------------------------
+
+- Fixed several vulnerabilities thanks to HP Fortify Open Review ( https://hpfod.com/open-source-review-project )
+- Minor bug fixes and improvements
+
 Osclass 3.5.6 2015-03-26
 ------------------------
 - Fix typo
