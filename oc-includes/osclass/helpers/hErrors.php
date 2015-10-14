@@ -47,7 +47,7 @@
         <?php die(); ?>
     <?php }
 
-    function getServerParam($param, $htmlencode = false, $quotes_encode = true)
+    function getErrorParam($param, $htmlencode = false, $quotes_encode = true)
     {
         if ($param == "") return '';
         if (!isset($_SERVER[$param])) return '';
@@ -67,6 +67,6 @@
         return ($value);
     }
     function osc_get_absolute_url() {
-        $protocol = (getServerParam('HTTPS') == 'on'  || getServerParam('HTTPS') == 1  || getServerParam('HTTP_X_FORWARDED_PROTO')=='https')? 'https' : 'http';
-        return $protocol . '://' . getServerParam('HTTP_HOST') . preg_replace('/((oc-admin)|(oc-includes)|(oc-content)|([a-z]+\.php)|(\?.*)).*/i', '', getServerParam('REQUEST_URI', false, false));
+        $protocol = (getErrorParam('HTTPS') == 'on'  || getErrorParam('HTTPS') == 1  || getErrorParam('HTTP_X_FORWARDED_PROTO')=='https')? 'https' : 'http';
+        return $protocol . '://' . getErrorParam('HTTP_HOST') . preg_replace('/((oc-admin)|(oc-includes)|(oc-content)|([a-z]+\.php)|(\?.*)).*/i', '', getErrorParam('REQUEST_URI', false, false));
     }
