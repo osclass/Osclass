@@ -20,7 +20,7 @@
 
         static public function i18n_datePicker() {
             ?>
-        <script text="text/javascript">
+        <script type="text/javascript">
 
             $.datepicker.regional['custom'] = { // Default regional settings
 		closeText: '<?php echo osc_esc_js ( __('Done') ); ?>', // Display text for close link
