@@ -47,16 +47,26 @@
         <?php die(); ?>
     <?php }
 
+    function getServerParam($param, $htmlencode = false, $quotes_encode = true)
+    {
+        if ($param == "") return '';
+        if (!isset($_SERVER[$param])) return '';
+        $value = $_SERVER[$param];
+        if ($htmlencode) {
+            if($quotes_encode) {
+                return htmlspecialchars(stripslashes($value), ENT_QUOTES);
+            } else {
+                return htmlspecialchars(stripslashes($value), ENT_NOQUOTES);
+            }
+        }
 
+        if(get_magic_quotes_gpc()) {
+            $value = strip_slashes_extended($value);
+        }
+
+        return ($value);
+    }
     function osc_get_absolute_url() {
-        if( !defined('UPLOADS_PATH') ) {
-            define('UPLOADS_PATH', CONTENT_PATH . 'uploads/');
-        }
-        if(!function_exists('osc_uploads_path')) {
-            function osc_uploads_path() { return UPLOADS_PATH; };
-        }
-        require_once dirname(dirname(__FILE__)) . '/core/Params.php';
-        Params::init();
-        $protocol = (( Params::existServerParam('HTTPS') && Params::getServerParam('HTTPS') == 'on' ) || (Params::getServerParam('HTTP_X_FORWARDED_PROTO')=='https'))? 'https' : 'http';
-        return $protocol . '://' . Params::getServerParam('HTTP_HOST') . preg_replace('/((oc-admin)|(oc-includes)|(oc-content)|([a-z]+\.php)|(\?.*)).*/i', '', Params::getServerParam('REQUEST_URI', false, false));
+        $protocol = (getServerParam('HTTPS') == 'on'  || getServerParam('HTTPS') == 1  || getServerParam('HTTP_X_FORWARDED_PROTO')=='https')? 'https' : 'http';
+        return $protocol . '://' . getServerParam('HTTP_HOST') . preg_replace('/((oc-admin)|(oc-includes)|(oc-content)|([a-z]+\.php)|(\?.*)).*/i', '', getServerParam('REQUEST_URI', false, false));
     }
