@@ -19,9 +19,9 @@ if (!defined('OC_ADMIN'))
 
 osc_enqueue_script('jquery-validate');
 
-$current_host = parse_url($_SERVER['HTTP_HOST'], PHP_URL_HOST);
+$current_host = parse_url(Params::getServerParam('HTTP_HOST'), PHP_URL_HOST);
 if ($current_host === null) {
-    $current_host = $_SERVER['HTTP_HOST'];
+    $current_host = Params::getServerParam('HTTP_HOST');
 }
 
 //customize Head

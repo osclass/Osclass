@@ -109,7 +109,7 @@
 
         function _setMessage($key, $value, $type) {
             $messages = $this->_get('messages');
-            $messages[$key][] = array('msg' => $value, 'type' => $type); 
+            $messages[$key][] = array('msg' => str_replace(PHP_EOL, "<br />", $value), 'type' => $type);
             $this->_set('messages', $messages);
         }
 

@@ -128,7 +128,7 @@
      */
     function osc_is_banned($email = '', $ip = null) {
         if($ip==null) {
-            $ip = $_SERVER['REMOTE_ADDR'];
+            $ip = Params::getServerParam('REMOTE_ADDR');
         }
         $rules = BanRule::newInstance()->listAll();
         if(!osc_is_ip_banned($ip, $rules)) {

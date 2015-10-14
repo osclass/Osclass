@@ -254,7 +254,7 @@ function osc_doRequest($url, $_data) {
         // open a socket connection on port 80
         // use localhost in case of issues with NATs (hairpinning)
         $fp = @fsockopen($host, 80);
-
+        
         if($fp===false) { return false; };
 
         $data = http_build_query($_data);
@@ -477,7 +477,7 @@ function osc_mailBeauty($text, $params) {
         '<a href="' . osc_base_url() . '">' . osc_page_title() . '</a>',
 		date(osc_date_format()?osc_date_format():'Y-m-d').' '.date(osc_time_format()?osc_time_format():'H:i:s'),
 		date(osc_time_format()?osc_time_format():'H:i'),
-        $_SERVER['REMOTE_ADDR']
+        Params::getServerParam('REMOTE_ADDR')
     );
     $text = str_ireplace($kwords, $rwords, $text);
 
@@ -779,7 +779,7 @@ function download_fsockopen($sourceFile, $fileout = null, $post_data = null)
     if (!$fp) {
         return false;
     } else {
-        $ua  = @$_SERVER['HTTP_USER_AGENT'] . ' Osclass (v.' . osc_version() . ')';
+        $ua  = Params::getServerParam('HTTP_USER_AGENT') . ' Osclass (v.' . osc_version() . ')';
         $out = ($post_data!=null && is_array($post_data)?"POST":"GET") . " $link HTTP/1.1\r\n";
         $out .= "Host: $host\r\n";
         $out .= "User-Agent: $ua\r\n";
@@ -850,7 +850,7 @@ function osc_downloadFile($sourceFile, $downloadedFile, $post_data = null)
         if($fp) {
             $ch = curl_init($sourceFile);
             @curl_setopt($ch, CURLOPT_TIMEOUT, 50);
-            curl_setopt($ch, CURLOPT_USERAGENT, @$_SERVER['HTTP_USER_AGENT'] . ' Osclass (v.' . osc_version() . ')');
+            curl_setopt($ch, CURLOPT_USERAGENT, Params::getServerParam('HTTP_USER_AGENT') . ' Osclass (v.' . osc_version() . ')');
             curl_setopt($ch, CURLOPT_FILE, $fp);
             @curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
             curl_setopt($ch, CURLOPT_REFERER, osc_base_url());
@@ -885,7 +885,7 @@ function osc_file_get_contents($url, $post_data = null)
     if( testCurl() ) {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_USERAGENT, @$_SERVER['HTTP_USER_AGENT'] . ' Osclass (v.' . osc_version() . ')');
+        curl_setopt($ch, CURLOPT_USERAGENT, Params::getServerParam('HTTP_USER_AGENT') . ' Osclass (v.' . osc_version() . ')');
         if( !defined('CURLOPT_RETURNTRANSFER') ) define('CURLOPT_RETURNTRANSFER', 1);
         @curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
         curl_setopt($ch, CURLOPT_REFERER, osc_base_url());
@@ -1203,7 +1203,7 @@ function osc_check_recaptcha() {
     require_once osc_lib_path() . 'recaptchalib.php';
     if ( Params::getParam("recaptcha_challenge_field") != '') {
         $resp = recaptcha_check_answer (osc_recaptcha_private_key()
-                                        ,$_SERVER["REMOTE_ADDR"]
+                                        ,Params::getServerParam("REMOTE_ADDR")
                                         ,Params::getParam("recaptcha_challenge_field")
                                         ,Params::getParam("recaptcha_response_field"));
 
@@ -1652,18 +1652,18 @@ function osc_translate_categories($locale) {
 
 
 function get_ip() {
-    if( !empty($_SERVER['HTTP_CLIENT_IP']) ) {
-        return $_SERVER['HTTP_CLIENT_IP'];
+    if( Params::getServerParam('HTTP_CLIENT_IP')!='' ) {
+        return Params::getServerParam('HTTP_CLIENT_IP');
     }
 
-    if( !empty($_SERVER['HTTP_X_FORWARDED_FOR']) ) {
-        $ip_array = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
+    if( Params::getServerParam('HTTP_X_FORWARDED_FOR')!='' ) {
+        $ip_array = explode(',', Params::getServerParam('HTTP_X_FORWARDED_FOR'));
         foreach($ip_array as $ip) {
             return trim($ip);
         }
     }
 
-    return $_SERVER['REMOTE_ADDR'];
+    return Params::getServerParam('REMOTE_ADDR');
 }
 
 
@@ -2225,8 +2225,9 @@ function osc_market($section, $code) {
     return array('error' => $error, 'message' => $message, 'data' => $data);
 }
 
-function osc_is_ssl() {
-    return (isset($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS'])=='on' || $_SERVER['HTTPS']=='1'));
+function osc_is_ssl()
+{
+    return ((isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && strtolower($_SERVER['HTTP_X_FORWARDED_PROTO']) == 'https') || (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 'on' || $_SERVER['HTTPS'] == 1)));
 }
 
 if(!function_exists('hex2b64')) {
