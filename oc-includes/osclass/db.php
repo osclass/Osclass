@@ -44,7 +44,6 @@
         function debug($msg, $ok = true)
         {
             if( OSC_DEBUG_DB ) {
-                if (osc_is_admin_user_logged_in()) {
                 $this->msg .= date("d/m/Y - H:i:s") . " ";
 
                 if( $ok ) {
@@ -56,7 +55,6 @@
                 $this->msg .= str_replace("\n", " ", $msg);
                 $this->msg .= '</span><br />';
                 $this->msg .= "\n";
-                }
             }
         }
 

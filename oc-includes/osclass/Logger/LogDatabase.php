@@ -95,7 +95,6 @@
          */
         public function printMessages()
         {
-            if (osc_is_admin_user_logged_in()) {
             echo '<fieldset style="border:1px solid black; padding:6px 10px 10px 10px; margin: 20px; width: 95%; background-color: #FFFFFF;" >' . PHP_EOL;
             echo '<legend style="font-size: 16px;">&nbsp;&nbsp;Database queries (Total queries: ' . $this->getTotalNumberQueries() .' - Total queries time: ' . $this->getTotalQueriesTime() . ')&nbsp;&nbsp;</legend>' . PHP_EOL;
             echo '<table style="border-collapse: separate; *border-collapse: collapse; width: 100%; font-size: 13px; padding: 15px; border-spacing: 0;">' . PHP_EOL;
@@ -121,7 +120,6 @@
             }
             echo '</table>' . PHP_EOL;
             echo '</fieldset>' . PHP_EOL;
-            }
         }
 
         function writeMessages()
