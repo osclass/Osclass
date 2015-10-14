@@ -1055,9 +1055,28 @@
      * Get if user is on login form
      *
      * @return boolean
+     * @deprecated since version 3.5.7 use osc_is_login_page()
      */
     function osc_is_login_form() {
         return osc_is_current_page('login', '');
+    }
+    
+    /**
+     * Get if user is on login page
+     *
+     * @return boolean
+     */
+    function osc_is_login_page() {
+        return osc_is_current_page('login', '');
+    }
+    
+    /**
+     * Get if user is on register page
+     *
+     * @return boolean
+     */
+    function osc_is_register_page() {
+        return osc_is_current_page("register", "register");
     }
 
     /**
