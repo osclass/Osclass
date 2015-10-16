@@ -173,7 +173,7 @@
                                         }
 
                                         osc_add_flash_ok_message($msg, 'admin');
-                                        $this->redirectTo( Params::getServerParam('HTTP_REFERER') );
+                                        $this->redirectTo( Params::getServerParam('HTTP_REFERER', false, false) );
                 break;
                 case('deactivate'):     //deactivate
                                         osc_csrf_check();
@@ -198,7 +198,7 @@
                                         }
 
                                         osc_add_flash_ok_message($msg, 'admin');
-                                        $this->redirectTo( Params::getServerParam('HTTP_REFERER') );
+                                        $this->redirectTo( Params::getServerParam('HTTP_REFERER', false, false) );
                 break;
                 case('enable'):
                                         osc_csrf_check();
@@ -222,7 +222,7 @@
                                         }
 
                                         osc_add_flash_ok_message($msg, 'admin');
-                                        $this->redirectTo( Params::getServerParam('HTTP_REFERER') );
+                                        $this->redirectTo( Params::getServerParam('HTTP_REFERER', false, false) );
                 break;
                 case('disable'):
                                         osc_csrf_check();
@@ -246,7 +246,7 @@
                                         }
 
                                         osc_add_flash_ok_message($msg, 'admin');
-                                        $this->redirectTo( Params::getServerParam('HTTP_REFERER') );
+                                        $this->redirectTo( Params::getServerParam('HTTP_REFERER', false, false) );
                 break;
                 case('delete'):         //delete
                                         osc_csrf_check();

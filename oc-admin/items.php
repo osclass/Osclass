@@ -270,7 +270,7 @@
                                                 }
                                             break;
                                         }
-                                        $this->redirectTo( Params::getServerParam('HTTP_REFERER') );
+                                        $this->redirectTo( Params::getServerParam('HTTP_REFERER', false, false) );
                 break;
                 case 'delete':          //delete
                                         osc_csrf_check();
@@ -291,7 +291,7 @@
                                             osc_add_flash_error_message( _m("The listing couldn't be deleted"), 'admin');
                                         }
 
-                                        $this->redirectTo( Params::getServerParam('HTTP_REFERER') );
+                                        $this->redirectTo( Params::getServerParam('HTTP_REFERER', false, false) );
                 break;
                 case 'status':          //status
                                         osc_csrf_check();
@@ -357,7 +357,7 @@
                                                 break;
                                         }
 
-                                        $this->redirectTo( Params::getServerParam('HTTP_REFERER') );
+                                        $this->redirectTo( Params::getServerParam('HTTP_REFERER', false, false) );
                 break;
                 case 'status_premium':  //status premium
                                         osc_csrf_check();
@@ -383,7 +383,7 @@
                                             osc_add_flash_error_message( _m('An error has occurred'), 'admin');
                                         }
 
-                                        $this->redirectTo( Params::getServerParam('HTTP_REFERER') );
+                                        $this->redirectTo( Params::getServerParam('HTTP_REFERER', false, false) );
                 break;
                 case 'status_spam':  //status spam
                                         osc_csrf_check();
@@ -409,7 +409,7 @@
                                             osc_add_flash_error_message( _m('An error has occurred'), 'admin');
                                         }
 
-                                        $this->redirectTo( Params::getServerParam('HTTP_REFERER') );
+                                        $this->redirectTo( Params::getServerParam('HTTP_REFERER', false, false) );
                 break;
                 case 'clear_stat':
                                         osc_csrf_check();
@@ -435,7 +435,7 @@
                                             osc_add_flash_error_message( _m("The listing hasn't been unmarked as")." $stat", 'admin');
                                         }
 
-                                        $this->redirectTo( Params::getServerParam('HTTP_REFERER') );
+                                        $this->redirectTo( Params::getServerParam('HTTP_REFERER', false, false) );
                 break;
                 case 'item_edit':       // edit item
                                         $id = Params::getParam('id');
@@ -479,7 +479,7 @@
                                         // save referer if belongs to manage items
                                         // redirect only if ManageItems or ReportedListngs
                                         if( Params::existServerParam('HTTP_REFERER') ) {
-                                            $referer = Params::getServerParam('HTTP_REFERER');
+                                            $referer = Params::getServerParam('HTTP_REFERER', false, false);
                                             if(preg_match('/page=items/', $referer) ) {
                                                 if(preg_match("/action=([\p{L}|_|-]+)/u", $referer, $matches)) {
                                                     if( $matches[1] == 'items_reported' ) {
