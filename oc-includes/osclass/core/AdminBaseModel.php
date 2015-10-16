@@ -21,7 +21,7 @@
         function __construct()
         {
             parent::__construct();
-            osc_run_hook( 'init_admin' );
+            osc_run_hook( 'init_admin_login' );
         }
 
         function doModel() {}
