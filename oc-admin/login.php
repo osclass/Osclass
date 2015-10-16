@@ -171,7 +171,7 @@
                                         }
                 break;
                 default:
-                                        osc_run_hook( 'init_admin' );
+                                        //osc_run_hook( 'init_admin' );
                                         Session::newInstance()->_setReferer(osc_get_http_referer());
                                         $this->doView( 'gui/login.php' );
                 break;
