@@ -625,7 +625,7 @@
                     $URI = preg_replace('|^' . REL_WEB_URL . '|', '', Params::getServerParam('REQUEST_URI', false, false));
                     // do not clean QUERY_STRING if permalink is not enabled
                     if( osc_rewrite_enabled () ) {
-                        $URI = str_replace('?' . Params::getServerParam('QUERY_STRING'), '', $URI);
+                        $URI = str_replace('?' . Params::getServerParam('QUERY_STRING', false, false), '', $URI);
                     } else {
                         $params_keep = array('page', 'id');
                         $params      = array();
