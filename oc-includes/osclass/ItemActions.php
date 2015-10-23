@@ -1156,8 +1156,8 @@
             $aItem['address']       = Params::getParam('address');
             $aItem['currency']      = Params::getParam('currency');
             $aItem['showEmail']     = (Params::getParam('showEmail') != '') ? 1 : 0;
-            $aItem['title']         = Params::getParam('title');
-            $aItem['description']   = Params::getParam('description');
+            $aItem['title']         = osc_apply_filter('item_title', Params::getParam('title'));
+            $aItem['description']   = osc_apply_filter('item_description', Params::getParam('description'));
             $aItem['photos']        = Params::getFiles('photos');
             $ajax_photos            = Params::getParam('ajax_photos');
             $aItem['s_ip']          = get_ip();
