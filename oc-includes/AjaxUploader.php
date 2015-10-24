@@ -11,7 +11,7 @@ class AjaxUploader {
         $this->_allowedExtensions = $allowedExtensions;
         $this->_sizeLimit = $sizeLimit;
 
-        if(Params::existServerParam('CONTENT_TYPE')) {
+        if(!Params::existServerParam('CONTENT_TYPE')) {
             $this->_file = false;
         } else if (strpos(strtolower(Params::getServerParam('CONTENT_TYPE')), 'multipart/') === 0) {
             $this->_file = new AjaxUploadedFileForm();

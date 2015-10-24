@@ -23,7 +23,7 @@
     osc_add_hook('help_box','addHelp');
 
     function customPageHeader() { ?>
-        <h1><?php _e('Listing'); ?>
+        <h1><?php _e('Listings'); ?>
             <a href="<?php echo osc_admin_base_url(true); ?>?page=items&amp;action=settings" class="btn ico ico-32 ico-engine float-right"></a>
             <a href="#" class="btn ico ico-32 ico-help float-right"></a>
             <a href="<?php echo osc_admin_base_url(true) . '?page=items&action=post'; ?>" class="btn btn-green ico ico-32 ico-add-white float-right"><?php _e('Add listing'); ?></a>

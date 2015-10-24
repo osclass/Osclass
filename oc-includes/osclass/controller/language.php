@@ -33,8 +33,8 @@
             }
 
             $redirect_url = '';
-            if(Params::getServerParam('HTTP_REFERER') != '') {
-                $redirect_url = Params::getServerParam('HTTP_REFERER');
+            if(Params::getServerParam('HTTP_REFERER', false, false) != '') {
+                $redirect_url = Params::getServerParam('HTTP_REFERER', false, false);
             } else {
                 $redirect_url = osc_base_url(true);
             }

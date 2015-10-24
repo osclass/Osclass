@@ -103,7 +103,7 @@ class Akismet
 		$this->comment['user_agent'] = Params::getServerParam('HTTP_USER_AGENT');
 		
 		if(Params::existServerParam('HTTP_REFERER')) {
-			$this->comment['referrer'] = Params::getServerParam('HTTP_REFERER');
+			$this->comment['referrer'] = Params::getServerParam('HTTP_REFERER', false, false);
 		}
 		
 		/* 
