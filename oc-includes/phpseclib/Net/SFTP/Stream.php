@@ -28,7 +28,7 @@
  * @category  Net
  * @package   Net_SFTP_Stream
  * @author    Jim Wigginton <terrafrost@php.net>
- * @copyright MMXIII Jim Wigginton
+ * @copyright 2013 Jim Wigginton
  * @license   http://www.opensource.org/licenses/mit-license.html  MIT License
  * @link      http://phpseclib.sourceforge.net
  */
@@ -48,7 +48,6 @@ class Net_SFTP_Stream
      * Rather than re-create the connection we re-use instances if possible
      *
      * @var Array
-     * @access static
      */
     static $instances;
 
@@ -281,14 +280,17 @@ class Net_SFTP_Stream
         if ($this->size === false) {
             if ($this->mode[0] == 'r') {
                 return false;
+            } else {
+                $this->sftp->touch($path);
+                $this->size = 0;
             }
         } else {
             switch ($this->mode[0]) {
                 case 'x':
                     return false;
                 case 'w':
-                case 'c':
                     $this->sftp->truncate($path, 0);
+                    $this->size = 0;
             }
         }
 
@@ -512,7 +514,7 @@ class Net_SFTP_Stream
 
         $path_from = $this->_parse_path($path_from);
         $path_to = parse_url($path_to);
-        if ($path_from == false) {
+        if ($path_from === false) {
             return false;
         }
 

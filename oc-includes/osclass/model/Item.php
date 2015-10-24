@@ -250,7 +250,7 @@
          */
         public function findByCategoryID($catId)
         {
-            return $this->listWhere('fk_i_category_id = %d', $catId);
+            return $this->listWhere('fk_i_category_id = %d', (int)($catId));
         }
 
         /**

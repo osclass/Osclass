@@ -57,7 +57,7 @@
             $this->addColumn('order', __('Order'));
 
             $dummy = &$this;
-            osc_run_hook("admin_users_table", $dummy);
+            osc_run_hook("admin_pages_table", $dummy);
         }
         
         private function processData($pages)

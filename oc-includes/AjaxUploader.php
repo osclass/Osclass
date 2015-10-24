@@ -11,9 +11,9 @@ class AjaxUploader {
         $this->_allowedExtensions = $allowedExtensions;
         $this->_sizeLimit = $sizeLimit;
 
-        if(!isset($_SERVER['CONTENT_TYPE'])) {
+        if(!Params::existServerParam('CONTENT_TYPE')) {
             $this->_file = false;
-        } else if (strpos(strtolower($_SERVER['CONTENT_TYPE']), 'multipart/') === 0) {
+        } else if (strpos(strtolower(Params::getServerParam('CONTENT_TYPE')), 'multipart/') === 0) {
             $this->_file = new AjaxUploadedFileForm();
         } else {
             $this->_file = new AjaxUploadedFileXhr();
@@ -131,8 +131,8 @@ class AjaxUploadedFileXhr {
 
     public function getOriginalName() { return Params::getParam('qqfile'); }
     public function getSize() {
-        if(isset($_SERVER["CONTENT_LENGTH"])){
-            return (int)$_SERVER["CONTENT_LENGTH"];
+        if(Params::existServerParam("CONTENT_LENGTH")){
+            return (int)Params::getServerParam("CONTENT_LENGTH");
         } else {
             throw new Exception(__('Getting content length is not supported.'));
         }

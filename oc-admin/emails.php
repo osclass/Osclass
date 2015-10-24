@@ -149,7 +149,7 @@
                         $total = (int)$array['iTotalDisplayRecords'];
                         $maxPage = ceil( $total / (int)$array['iDisplayLength'] );
 
-                        $url = osc_admin_base_url(true).'?'.$_SERVER['QUERY_STRING'];
+                        $url = osc_admin_base_url(true).'?'.Params::getServerParam('QUERY_STRING', false, false);
 
                         if($maxPage==0) {
                             $url = preg_replace('/&iPage=(\d)+/', '&iPage=1', $url);

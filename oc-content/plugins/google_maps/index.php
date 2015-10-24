@@ -17,7 +17,7 @@ function google_maps_location() {
 
 // HELPER
 function osc_google_maps_header() {
-    echo '<script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>';
+    echo '<script src="https://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>';
     echo '<style>#itemMap img { max-width: 140em; } </style>';
 }
 
@@ -29,7 +29,7 @@ function insert_geo_location($item) {
     $sRegion = (isset($aItem['s_region']) ? $aItem['s_region'] : '');
     $sCountry = (isset($aItem['s_country']) ? $aItem['s_country'] : '');
     $address = sprintf('%s, %s, %s, %s', $sAddress, $sCity, $sRegion, $sCountry);
-    $response = osc_file_get_contents(sprintf('http://maps.googleapis.com/maps/api/geocode/json?address=%s&sensor=false', urlencode($address)));
+    $response = osc_file_get_contents(sprintf('https://maps.googleapis.com/maps/api/geocode/json?address=%s&sensor=false', urlencode($address)));
     $jsonResponse = json_decode($response);
 
     if (isset($jsonResponse->results[0]->geometry->location) && count($jsonResponse->results[0]->geometry->location) > 0) 		{

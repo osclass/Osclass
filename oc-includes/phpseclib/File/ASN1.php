@@ -34,7 +34,7 @@
  * @category  File
  * @package   File_ASN1
  * @author    Jim Wigginton <terrafrost@php.net>
- * @copyright MMXII Jim Wigginton
+ * @copyright 2012 Jim Wigginton
  * @license   http://www.opensource.org/licenses/mit-license.html  MIT License
  * @link      http://phpseclib.sourceforge.net
  */
@@ -306,17 +306,17 @@ class File_ASN1
                 $tag <<= 7;
                 $tag |= ord($this->_string_shift($encoded)) & 0x7F;
                 $start++;
-            } while ( $loop );
+            } while ($loop);
         }
 
         // Length, as discussed in paragraph 8.1.3 of X.690-0207.pdf#page=13
         $length = ord($this->_string_shift($encoded));
         $start++;
-        if ( $length == 0x80 ) { // indefinite length
+        if ($length == 0x80) { // indefinite length
             // "[A sender shall] use the indefinite form (see 8.1.3.6) if the encoding is constructed and is not all
             //  immediately available." -- paragraph 8.1.3.2.c
             $length = strlen($encoded);
-        } elseif ( $length & 0x80 ) { // definite length, long form
+        } elseif ($length & 0x80) { // definite length, long form
             // technically, the long form of the length can be represented by up to 126 octets (bytes), but we'll only
             // support it up to four.
             $length&= 0x7F;
@@ -327,6 +327,10 @@ class File_ASN1
             extract(unpack('Nlength', substr(str_pad($temp, 4, chr(0), STR_PAD_LEFT), -4)));
         } else {
             $current+= array('headerlength' => 2);
+        }
+
+        if ($length > strlen($encoded)) {
+            return false;
         }
 
         $content = $this->_string_shift($encoded, $length);
@@ -347,19 +351,38 @@ class File_ASN1
             case FILE_ASN1_CLASS_APPLICATION:
             case FILE_ASN1_CLASS_PRIVATE:
             case FILE_ASN1_CLASS_CONTEXT_SPECIFIC:
-                $newcontent = $this->_decode_ber($content, $start);
-                $length = $newcontent['length'];
-                if (substr($content, $length, 2) == "\0\0") {
-                    $length+= 2;
+                if (!$constructed) {
+                    return array(
+                        'type'     => $class,
+                        'constant' => $tag,
+                        'content'  => $content,
+                        'length'   => $length + $start - $current['start']
+                    );
                 }
 
-                $start+= $length;
+                $newcontent = array();
+                $remainingLength = $length;
+                while ($remainingLength > 0) {
+                    $temp = $this->_decode_ber($content, $start);
+                    $length = $temp['length'];
+                    // end-of-content octets - see paragraph 8.1.5
+                    if (substr($content, $length, 2) == "\0\0") {
+                        $length+= 2;
+                        $start+= $length;
+                        $newcontent[] = $temp;
+                        break;
+                    }
+                    $start+= $length;
+                    $remainingLength-= $length;
+                    $newcontent[] = $temp;
+                    $this->_string_shift($content, $length);
+                }
 
                 return array(
                     'type'     => $class,
                     'constant' => $tag,
                     // the array encapsulation is for BC with the old format
-                    'content'  => array($newcontent),
+                    'content'  => $newcontent,
                     // the only time when $content['headerlength'] isn't defined is when the length is indefinite.
                     // the absence of $content['headerlength'] is how we know if something is indefinite or not.
                     // technically, it could be defined to be 2 and then another indicator could be used but whatever.
@@ -874,7 +897,7 @@ class File_ASN1
                 }
 
                 foreach ($mapping['children'] as $key => $child) {
-                    if (!isset($source[$key])) {
+                    if (!array_key_exists($key, $source)) {
                         if (!isset($child['optional'])) {
                             return false;
                         }
@@ -1065,7 +1088,7 @@ class File_ASN1
                         if ($outtype !== false) {
                             return $this->_encode_der($source[$typename], array('type' => $outtype) + $mapping, null, $special);
                         }
-                    }
+                }
 
                 $filters = $this->filters;
                 foreach ($loc as $part) {

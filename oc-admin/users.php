@@ -173,7 +173,7 @@
                                         }
 
                                         osc_add_flash_ok_message($msg, 'admin');
-                                        $this->redirectTo( $_SERVER['HTTP_REFERER'] );
+                                        $this->redirectTo( Params::getServerParam('HTTP_REFERER', false, false) );
                 break;
                 case('deactivate'):     //deactivate
                                         osc_csrf_check();
@@ -198,7 +198,7 @@
                                         }
 
                                         osc_add_flash_ok_message($msg, 'admin');
-                                        $this->redirectTo( $_SERVER['HTTP_REFERER'] );
+                                        $this->redirectTo( Params::getServerParam('HTTP_REFERER', false, false) );
                 break;
                 case('enable'):
                                         osc_csrf_check();
@@ -222,7 +222,7 @@
                                         }
 
                                         osc_add_flash_ok_message($msg, 'admin');
-                                        $this->redirectTo( $_SERVER['HTTP_REFERER'] );
+                                        $this->redirectTo( Params::getServerParam('HTTP_REFERER', false, false) );
                 break;
                 case('disable'):
                                         osc_csrf_check();
@@ -246,7 +246,7 @@
                                         }
 
                                         osc_add_flash_ok_message($msg, 'admin');
-                                        $this->redirectTo( $_SERVER['HTTP_REFERER'] );
+                                        $this->redirectTo( Params::getServerParam('HTTP_REFERER', false, false) );
                 break;
                 case('delete'):         //delete
                                         osc_csrf_check();
@@ -423,7 +423,7 @@
                                             $total = (int)$aData['iTotalDisplayRecords'];
                                             $maxPage = ceil( $total / (int)$aData['iDisplayLength'] );
 
-                                            $url = osc_admin_base_url(true).'?'.$_SERVER['QUERY_STRING'];
+                                            $url = osc_admin_base_url(true).'?'.Params::getServerParam('QUERY_STRING', false, false);
 
                                             if($maxPage==0) {
                                                 $url = preg_replace('/&iPage=(\d)+/', '&iPage=1', $url);
@@ -486,7 +486,7 @@
                                             $total = (int)$aData['iTotalDisplayRecords'];
                                             $maxPage = ceil( $total / (int)$aData['iDisplayLength'] );
 
-                                            $url = osc_admin_base_url(true).'?'.$_SERVER['QUERY_STRING'];
+                                            $url = osc_admin_base_url(true).'?'.Params::getServerParam('QUERY_STRING', false, false);
 
                                             if($maxPage==0) {
                                                 $url = preg_replace('/&iPage=(\d)+/', '&iPage=1', $url);
@@ -616,7 +616,7 @@
                                             $total = (int)$aData['iTotalDisplayRecords'];
                                             $maxPage = ceil( $total / (int)$aData['iDisplayLength'] );
 
-                                            $url = osc_admin_base_url(true).'?'.$_SERVER['QUERY_STRING'];
+                                            $url = osc_admin_base_url(true).'?'.Params::getServerParam('QUERY_STRING', false, false);
 
                                             if($maxPage==0) {
                                                 $url = preg_replace('/&iPage=(\d)+/', '&iPage=1', $url);

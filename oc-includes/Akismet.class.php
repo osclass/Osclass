@@ -100,10 +100,10 @@ class Akismet
 		
 		// Start to populate the comment data
 		$this->comment['blog'] = $blogURL;
-		$this->comment['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
+		$this->comment['user_agent'] = Params::getServerParam('HTTP_USER_AGENT');
 		
-		if(isset($_SERVER['HTTP_REFERER'])) {
-			$this->comment['referrer'] = $_SERVER['HTTP_REFERER'];
+		if(Params::existServerParam('HTTP_REFERER')) {
+			$this->comment['referrer'] = Params::getServerParam('HTTP_REFERER', false, false);
 		}
 		
 		/* 
@@ -114,7 +114,7 @@ class Akismet
 		 * Otherwise the user_ip appears as the IP address of the PHP4 server passing the requests to the 
 		 * PHP5 one...
 		 */
-		$this->comment['user_ip'] = $_SERVER['REMOTE_ADDR'] != getenv('SERVER_ADDR') ? $_SERVER['REMOTE_ADDR'] : getenv('HTTP_X_FORWARDED_FOR');
+		$this->comment['user_ip'] = Params::getServerParam('REMOTE_ADDR') != getenv('SERVER_ADDR') ? Params::getServerParam('REMOTE_ADDR') : getenv('HTTP_X_FORWARDED_FOR');
 	}
 	
 	/**

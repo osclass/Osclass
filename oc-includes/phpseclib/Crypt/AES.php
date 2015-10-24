@@ -7,6 +7,10 @@
  *
  * PHP versions 4 and 5
  *
+ * NOTE: Since AES.php is (for compatibility and phpseclib-historical reasons) virtually
+ * just a wrapper to Rijndael.php you may consider using Rijndael.php instead of
+ * to save one include_once().
+ *
  * If {@link Crypt_AES::setKeyLength() setKeyLength()} isn't called, it'll be calculated from
  * {@link Crypt_AES::setKey() setKey()}.  ie. if the key is 128-bits, the key length will be 128-bits.  If it's 136-bits
  * it'll be null-padded to 192-bits and 192 bits will be the key length until {@link Crypt_AES::setKey() setKey()}
@@ -56,7 +60,7 @@
  * @category  Crypt
  * @package   Crypt_AES
  * @author    Jim Wigginton <terrafrost@php.net>
- * @copyright MMVIII Jim Wigginton
+ * @copyright 2008 Jim Wigginton
  * @license   http://www.opensource.org/licenses/mit-license.html  MIT License
  * @link      http://phpseclib.sourceforge.net
  */
@@ -105,20 +109,6 @@ define('CRYPT_AES_MODE_CFB', CRYPT_MODE_CFB);
  * @link http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation#Output_feedback_.28OFB.29
  */
 define('CRYPT_AES_MODE_OFB', CRYPT_MODE_OFB);
-/**#@-*/
-
-/**#@+
- * @access private
- * @see Crypt_Base::Crypt_Base()
- */
-/**
- * Toggles the internal implementation
- */
-define('CRYPT_AES_MODE_INTERNAL', CRYPT_MODE_INTERNAL);
-/**
- * Toggles the mcrypt implementation
- */
-define('CRYPT_AES_MODE_MCRYPT', CRYPT_MODE_MCRYPT);
 /**#@-*/
 
 /**
@@ -201,7 +191,7 @@ class Crypt_AES extends Crypt_Rijndael
                 default:
                     $this->key_size = 32;
             }
-            $this->_setupEngine();
+            $this->_setEngine();
         }
     }
 }

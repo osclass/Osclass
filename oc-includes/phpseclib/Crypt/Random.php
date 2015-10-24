@@ -38,7 +38,7 @@
  * @category  Crypt
  * @package   Crypt_Random
  * @author    Jim Wigginton <terrafrost@php.net>
- * @copyright MMVII Jim Wigginton
+ * @copyright 2007 Jim Wigginton
  * @license   http://www.opensource.org/licenses/mit-license.html  MIT License
  * @link      http://phpseclib.sourceforge.net
  */
@@ -171,9 +171,9 @@ if (!function_exists('crypt_random_string')) {
                 ini_set('session.use_cookies', $old_use_cookies);
                 session_cache_limiter($old_session_cache_limiter);
             } else {
-               if ($_OLD_SESSION !== false) {
-                   $_SESSION = $_OLD_SESSION;
-                   unset($_OLD_SESSION);
+                if ($_OLD_SESSION !== false) {
+                    $_SESSION = $_OLD_SESSION;
+                    unset($_OLD_SESSION);
                 } else {
                     unset($_SESSION);
                 }

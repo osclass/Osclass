@@ -45,7 +45,7 @@
                 <p>
                     <label for="user_pass">
                         <span><?php _e('Password'); ?></span>
-                        <input type="password" name="password" id="user_pass" class="input" value="<?php if( defined('DEMO') ) { echo 'admin'; }?>" size="20" tabindex="20" />
+                        <input type="password" name="password" id="user_pass" class="input" value="<?php if( defined('DEMO') ) { echo 'admin'; }?>" size="20" tabindex="20" autocomplete="off" />
                     </label>
                 </p>
                 <?php osc_run_hook('login_admin_form'); ?>

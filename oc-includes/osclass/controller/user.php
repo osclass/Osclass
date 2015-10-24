@@ -120,7 +120,7 @@
 
                                                         $userManager = new User();
                                                         $userManager->update (
-                                                            array( 's_pass_code' => $code, 's_pass_date' => $date, 's_pass_ip' => $_SERVER['REMOTE_ADDR'] )
+                                                            array( 's_pass_code' => $code, 's_pass_date' => $date, 's_pass_ip' => Params::getServerParam('REMOTE_ADDR') )
                                                             ,array( 'pk_i_id' => Session::newInstance()->_get('userId') )
                                                         );
 
