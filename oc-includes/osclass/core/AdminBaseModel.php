@@ -21,7 +21,9 @@
         function __construct()
         {
             parent::__construct();
+            // @deprecated: to be removed
             osc_run_hook( 'init_admin' );
+            osc_run_hook( 'init_admin_insecure' );
         }
 
         function doModel() {}

@@ -68,10 +68,10 @@ function getServerParam($param, $htmlencode = false, $xss_check = true, $quotes_
  * @return string The url of the site
  */
 function get_absolute_url( ) {
-    $protocol = ( isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on' ) ? 'https' : 'http';
-    $pos      = strpos(getParam('REQUEST_URI'), 'oc-includes');
-    $URI      = rtrim( substr( getParam('REQUEST_URI'), 0, $pos ), '/' ) . '/';
-    return $protocol . '://' . getParam('HTTP_HOST') . $URI;
+    $protocol = ( getServerParam('HTTPS') == 'on' || getServerParam('HTTP_X_FORWARDED_PROTO')=='https') ? 'https' : 'http';
+    $pos      = strpos(getServerParam('REQUEST_URI'), 'oc-includes');
+    $URI      = rtrim( substr( getServerParam('REQUEST_URI'), 0, $pos ), '/' ) . '/';
+    return $protocol . '://' . getServerParam('HTTP_HOST') . $URI;
 }
 
 /*
