@@ -37,7 +37,7 @@
  * @category  File
  * @package   File_X509
  * @author    Jim Wigginton <terrafrost@php.net>
- * @copyright MMXII Jim Wigginton
+ * @copyright 2012 Jim Wigginton
  * @license   http://www.opensource.org/licenses/mit-license.html  MIT License
  * @link      http://phpseclib.sourceforge.net
  */
@@ -1505,6 +1505,16 @@ class File_X509
                     case 'rsaEncryption':
                         $cert['tbsCertificate']['subjectPublicKeyInfo']['subjectPublicKey']
                             = base64_encode("\0" . base64_decode(preg_replace('#-.+-|[\r\n]#', '', $cert['tbsCertificate']['subjectPublicKeyInfo']['subjectPublicKey'])));
+                        /* "[For RSA keys] the parameters field MUST have ASN.1 type NULL for this algorithm identifier."
+                           -- https://tools.ietf.org/html/rfc3279#section-2.3.1
+
+                           given that and the fact that RSA keys appear ot be the only key type for which the parameters field can be blank,
+                           it seems like perhaps the ASN.1 description ought not say the parameters field is OPTIONAL, but whatever.
+                         */
+                        $cert['tbsCertificate']['subjectPublicKeyInfo']['algorithm']['parameters'] = null;
+                        // https://tools.ietf.org/html/rfc3279#section-2.2.1
+                        $cert['signatureAlgorithm']['parameters'] = null;
+                        $cert['tbsCertificate']['signature']['parameters'] = null;
                 }
         }
 
@@ -1589,7 +1599,7 @@ class File_X509
                             }
                         }
                     }
-                } elseif ($map) {
+                } else {
                     $value = base64_encode($value);
                 }
             }
@@ -1612,6 +1622,10 @@ class File_X509
         if (is_array($extensions)) {
             $size = count($extensions);
             for ($i = 0; $i < $size; $i++) {
+                if (is_object($extensions[$i]) && strtolower(get_class($extensions[$i])) == 'file_asn1_element') {
+                    continue;
+                }
+
                 $id = $extensions[$i]['extnId'];
                 $value = &$extensions[$i]['extnValue'];
 
@@ -2509,7 +2523,7 @@ class File_X509
                 $asn1->loadFilters($filters);
                 $result = '';
                 foreach ($dn['rdnSequence'] as $rdn) {
-                    foreach ($rdn as $i=>$attr) {
+                    foreach ($rdn as $i => $attr) {
                         $attr = &$rdn[$i];
                         if (is_array($attr['value'])) {
                             foreach ($attr['value'] as $type => $v) {
@@ -2576,7 +2590,7 @@ class File_X509
                     break;
                 default:
                     $delim = '/';
-                    $desc = preg_replace('#.+-([^-]+)$#', '$1',  $prop) . '=';
+                    $desc = preg_replace('#.+-([^-]+)$#', '$1', $prop) . '=';
             }
 
             if (!$start) {
@@ -2733,7 +2747,7 @@ class File_X509
                 break;
             }
         }
-        foreach ($chain as $key=>$value) {
+        foreach ($chain as $key => $value) {
             $chain[$key] = new File_X509();
             $chain[$key]->loadX509($value);
         }
@@ -2917,7 +2931,7 @@ class File_X509
 
         switch (true) {
             case !($algorithm = $this->_subArray($csr, 'certificationRequestInfo/subjectPKInfo/algorithm/algorithm')):
-            case is_object($csr['certificationRequestInfo']['subjectPKInfo']['subjectPublicKey']);
+            case is_object($csr['certificationRequestInfo']['subjectPKInfo']['subjectPublicKey']):
                 break;
             default:
                 switch ($algorithm) {
@@ -3044,7 +3058,7 @@ class File_X509
         $algorithm = $this->_subArray($spkac, 'publicKeyAndChallenge/spki/algorithm/algorithm');
         switch (true) {
             case !$algorithm:
-            case is_object($spkac['publicKeyAndChallenge']['spki']['subjectPublicKey']);
+            case is_object($spkac['publicKeyAndChallenge']['spki']['subjectPublicKey']):
                 break;
             default:
                 switch ($algorithm) {
@@ -3198,9 +3212,9 @@ class File_X509
     {
         $year = @gmdate("Y", @strtotime($date)); // the same way ASN1.php parses this
         if ($year < 2050) {
-           return array('utcTime' => $date);
+            return array('utcTime' => $date);
         } else {
-           return array('generalTime' => $date);
+            return array('generalTime' => $date);
         }
     }
 
@@ -3254,7 +3268,7 @@ class File_X509
             if (isset($subject->domains)) {
                 $this->removeExtension('id-ce-subjectAltName');
             }
-        } else if (isset($subject->currentCert) && is_array($subject->currentCert) && isset($subject->currentCert['tbsCertList'])) {
+        } elseif (isset($subject->currentCert) && is_array($subject->currentCert) && isset($subject->currentCert['tbsCertList'])) {
             return false;
         } else {
             if (!isset($subject->publicKey)) {
@@ -3263,7 +3277,21 @@ class File_X509
 
             $startDate = !empty($this->startDate) ? $this->startDate : @date('D, d M Y H:i:s O');
             $endDate = !empty($this->endDate) ? $this->endDate : @date('D, d M Y H:i:s O', strtotime('+1 year'));
-            $serialNumber = !empty($this->serialNumber) ? $this->serialNumber : new Math_BigInteger();
+            if (!empty($this->serialNumber)) {
+                $serialNumber = $this->serialNumber;
+            } else {
+                if (!function_exists('crypt_random_string')) {
+                    include_once 'Crypt/Random.php';
+                }
+                /* "The serial number MUST be a positive integer"
+                   "Conforming CAs MUST NOT use serialNumber values longer than 20 octets."
+                    -- https://tools.ietf.org/html/rfc5280#section-4.1.2.2
+
+                   for the integer to be positive the leading bit needs to be 0 hence the
+                   application of a bitmap
+                */
+                $serialNumber = new Math_BigInteger(crypt_random_string(20) & ("\x7F" . str_repeat("\xFF", 19)), 256);
+            }
 
             $this->currentCert = array(
                 'tbsCertificate' =>
@@ -3279,8 +3307,8 @@ class File_X509
                         'subject' => $subject->dn,
                         'subjectPublicKeyInfo' => $subjectPublicKey
                     ),
-                'signatureAlgorithm' => array('algorithm' => $signatureAlgorithm),
-                'signature'          => false // this is going to be overwritten later
+                    'signatureAlgorithm' => array('algorithm' => $signatureAlgorithm),
+                    'signature'          => false // this is going to be overwritten later
             );
 
             // Copy extensions from CSR.
@@ -3301,8 +3329,7 @@ class File_X509
                     //    )
                     //),
                     'keyIdentifier' => $issuer->currentKeyIdentifier
-                )
-            );
+                ));
             //$extensions = &$this->currentCert['tbsCertificate']['extensions'];
             //if (isset($issuer->serialNumber)) {
             //    $extensions[count($extensions) - 1]['authorityCertSerialNumber'] = $issuer->serialNumber;
@@ -3345,7 +3372,8 @@ class File_X509
                 $keyUsage = array();
             }
 
-            $this->setExtension('id-ce-keyUsage',
+            $this->setExtension(
+                'id-ce-keyUsage',
                 array_values(array_unique(array_merge($keyUsage, array('cRLSign', 'keyCertSign'))))
             );
 
@@ -3354,8 +3382,11 @@ class File_X509
                 $basicConstraints = array();
             }
 
-            $this->setExtension('id-ce-basicConstraints',
-                array_unique(array_merge(array('cA' => true), $basicConstraints)), true);
+            $this->setExtension(
+                'id-ce-basicConstraints',
+                array_unique(array_merge(array('cA' => true), $basicConstraints)),
+                true
+            );
 
             if (!isset($subject->currentKeyIdentifier)) {
                 $this->setExtension('id-ce-subjectKeyIdentifier', base64_encode($this->computeKeyIdentifier($this->currentCert)), false, false);
@@ -3415,8 +3446,8 @@ class File_X509
                         'subject' => $this->dn,
                         'subjectPKInfo' => $publicKey
                     ),
-                'signatureAlgorithm' => array('algorithm' => $signatureAlgorithm),
-                'signature'          => false // this is going to be overwritten later
+                    'signatureAlgorithm' => array('algorithm' => $signatureAlgorithm),
+                    'signature'          => false // this is going to be overwritten later
             );
         }
 
@@ -3480,8 +3511,8 @@ class File_X509
                         // crypt_random_string(8) & str_repeat("\x7F", 8)
                         'challenge' => !empty($this->challenge) ? $this->challenge : ''
                     ),
-                'signatureAlgorithm' => array('algorithm' => $signatureAlgorithm),
-                'signature'          => false // this is going to be overwritten later
+                    'signatureAlgorithm' => array('algorithm' => $signatureAlgorithm),
+                    'signature'          => false // this is going to be overwritten later
             );
         }
 
@@ -3533,8 +3564,8 @@ class File_X509
                         'issuer' => false, // this is going to be overwritten later
                         'thisUpdate' => $this->_timeField($thisUpdate) // $this->setStartDate()
                     ),
-                'signatureAlgorithm' => array('algorithm' => $signatureAlgorithm),
-                'signature'          => false // this is going to be overwritten later
+                    'signatureAlgorithm' => array('algorithm' => $signatureAlgorithm),
+                    'signature'          => false // this is going to be overwritten later
             );
         }
 
@@ -3552,6 +3583,11 @@ class File_X509
             $crlNumber = $this->serialNumber;
         } else {
             $crlNumber = $this->getExtension('id-ce-cRLNumber');
+            // "The CRL number is a non-critical CRL extension that conveys a
+            //  monotonically increasing sequence number for a given CRL scope and
+            //  CRL issuer.  This extension allows users to easily determine when a
+            //  particular CRL supersedes another CRL."
+            // -- https://tools.ietf.org/html/rfc5280#section-5.2.3
             $crlNumber = $crlNumber !== false ? $crlNumber->add(new Math_BigInteger(1)) : null;
         }
 
@@ -3590,8 +3626,7 @@ class File_X509
                         //    )
                         //),
                         'keyIdentifier' => $issuer->currentKeyIdentifier
-                    )
-                );
+                    ));
                 //$extensions = &$tbsCertList['crlExtensions'];
                 //if (isset($issuer->serialNumber)) {
                 //    $extensions[count($extensions) - 1]['authorityCertSerialNumber'] = $issuer->serialNumber;
@@ -4124,7 +4159,7 @@ class File_X509
                     case $disposition == FILE_X509_ATTR_APPEND:
                         $last = $key;
                         break;
-                    case $disposition >= $n;
+                    case $disposition >= $n:
                         $disposition -= $n;
                         break;
                     default:
@@ -4382,7 +4417,6 @@ class File_X509
             if (is_array($rclist = &$this->_subArray($this->currentCert, 'tbsCertList/revokedCertificates', true))) {
                 if ($this->_revokedCertificate($rclist, $serial) === false) { // If not yet revoked
                     if (($i = $this->_revokedCertificate($rclist, $serial, true)) !== false) {
-
                         if (!empty($date)) {
                             $rclist[$i]['revocationDate'] = $this->_timeField($date);
                         }
@@ -4500,7 +4534,7 @@ class File_X509
 
         if (is_array($rclist = $this->_subArray($crl, 'tbsCertList/revokedCertificates'))) {
             if (($i = $this->_revokedCertificate($rclist, $serial)) !== false) {
-                return $this->_getExtension($id, $crl,  "tbsCertList/revokedCertificates/$i/crlEntryExtensions");
+                return $this->_getExtension($id, $crl, "tbsCertList/revokedCertificates/$i/crlEntryExtensions");
             }
         }
 

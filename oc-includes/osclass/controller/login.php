@@ -246,7 +246,7 @@
                                                 User::newInstance()->update(
                                                     array('s_pass_code' => osc_genRandomPassword(50)
                                                         , 's_pass_date' => date('Y-m-d H:i:s', 0)
-                                                        , 's_pass_ip' => $_SERVER['REMOTE_ADDR']
+                                                        , 's_pass_ip' => Params::getServerParam('REMOTE_ADDR')
                                                         , 's_password' => osc_hash_password(Params::getParam('new_password', false, false))
                                                     ), array('pk_i_id' => $user['pk_i_id'])
                                                 );

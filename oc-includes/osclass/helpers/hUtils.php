@@ -261,8 +261,10 @@ function osc_get_http_referer() {
         return $ref;
     } else if(Session::newInstance()->_getReferer()!='') {
         return Session::newInstance()->_getReferer();
-    } else if(isset($_SERVER['HTTP_REFERER'])){
-        return $_SERVER['HTTP_REFERER'];
+    } else if(Params::existServerParam('HTTP_REFERER')){
+        if(filter_var(Params::getServerParam('HTTP_REFERER', false, false), FILTER_VALIDATE_URL)) {
+            return Params::getServerParam('HTTP_REFERER', false, false);
+        }
     }
     return '';
 }

@@ -72,7 +72,7 @@
          */
         public function toArray()
         {
-            $domain = 'http://' . $_SERVER['HTTP_HOST'] . '/';
+            $domain = 'http://' . Params::getServerParam('HTTP_HOST') . '/';
             $this->siteInfo = $this->findByPrimaryKey($domain);
         }
 
