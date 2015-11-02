@@ -60,6 +60,7 @@
         public function add()
         {
             $aItem       = $this->data;
+            $aItem = osc_apply_filter('item_add_prepare_data', $aItem);
             $is_spam     = 0;
             $enabled     = 1;
             $code        = osc_genRandomPassword();
@@ -287,6 +288,7 @@
 
         function edit() {
             $aItem       = $this->data;
+            $aItem = osc_apply_filter('item_edit_prepare_data', $aItem);
             $flash_error = '';
 
             // Sanitize
@@ -1275,6 +1277,7 @@
                 $aItem['currency'] = null;
             }
 
+            $aItem = osc_apply_filter('item_prepare_data', $aItem);
             $this->data = $aItem;
         }
 
