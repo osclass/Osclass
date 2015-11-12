@@ -175,6 +175,9 @@ function meta_title() {
         case('contact'):
             $text = __('Contact');
         break;
+        case('custom'):
+            $text = Rewrite::newInstance()->get_title();
+        break;
         default:
             $text = osc_page_title();
         break;
