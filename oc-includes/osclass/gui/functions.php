@@ -18,12 +18,12 @@
      *      You should have received a copy of the GNU Affero General Public
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
-
-/**
-
-DEFINES
-
-*/
+    
+    /**
+    
+    DEFINES
+    
+    */
     if(!defined('BENDER_THEME_VERSION')) {
         define('BENDER_THEME_VERSION', '1.0.1');
     }
@@ -42,12 +42,12 @@ DEFINES
         osc_enqueue_style('bender-fine-uploader-css', osc_current_web_theme_url('css/ajax-uploader.css'));
     }
     osc_enqueue_script('jquery-fineuploader');
-
-/**
-
-FUNCTIONS
-
-*/
+    
+    /**
+    
+    FUNCTIONS
+    
+    */
 
     // install options
     if( !function_exists('bender_theme_install') ) {
@@ -651,6 +651,7 @@ FUNCTIONS
     CLASSES
     
     */
+
     if (!class_exists('benderBodyClass') ) {
         class benderBodyClass
         {
