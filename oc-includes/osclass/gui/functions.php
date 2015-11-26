@@ -62,6 +62,7 @@
             osc_reset_preferences();
         }
     }
+
     // update options
     if( !function_exists('bender_theme_update') ) {
         function bender_theme_update() {
@@ -83,6 +84,7 @@
             osc_reset_preferences();
         }
     }
+
     if(!function_exists('check_install_bender_theme')) {
         function check_install_bender_theme() {
             $current_version = osc_get_preference('version', 'bender_theme');
@@ -102,6 +104,7 @@
             return $classes;
         }
     }
+
     if(!function_exists('bender_body_class')) {
         function bender_body_class($echo = true){
             /**
@@ -119,6 +122,7 @@
             }
         }
     }
+
     if(!function_exists('bender_add_body_class')) {
         function bender_add_body_class($class){
             /**
@@ -130,6 +134,7 @@
             $benderBodyClass->add($class);
         }
     }
+
     if(!function_exists('bender_nofollow_construct')) {
         /**
         * Hook for header, meta tags robots nofollos
@@ -140,6 +145,7 @@
 
         }
     }
+
     if( !function_exists('bender_follow_construct') ) {
         /**
         * Hook for header, meta tags robots follow
@@ -150,6 +156,7 @@
 
         }
     }
+
     /* logo */
     if( !function_exists('logo_header') ) {
         function logo_header() {
@@ -162,6 +169,7 @@
             }
         }
     }
+
     /* logo */
     if( !function_exists('bender_logo_url') ) {
         function bender_logo_url() {
@@ -172,6 +180,7 @@
             return false;
         }
     }
+
     if( !function_exists('bender_draw_item') ) {
         function bender_draw_item($class = false,$admin = false, $premium = false) {
             $filename = 'loop-single';
@@ -181,6 +190,7 @@
             require WebThemes::newInstance()->getCurrentThemePath().$filename.'.php';
         }
     }
+
     if( !function_exists('bender_show_as') ){
         function bender_show_as(){
 
@@ -193,11 +203,13 @@
             return $p_sShowAs;
         }
     }
+
     if( !function_exists('bender_default_show_as') ){
         function bender_default_show_as(){
             return getPreference('defaultShowAs@all','bender_theme');
         }
     }
+
     if( !function_exists('bender_draw_categories_list') ) {
         function bender_draw_categories_list(){ ?>
         <?php if(!osc_is_home_page()){ echo '<div class="resp-wrapper">'; } ?>
@@ -258,11 +270,12 @@
         <?php
         }
     }
+
+    /**
+      *
+      * @return array
+      */
     if( !function_exists('bender_search_number') ) {
-        /**
-          *
-          * @return array
-          */
         function bender_search_number() {
             $search_from = ((osc_search_page() * osc_default_results_per_page_at_search()) + 1);
             $search_to   = ((osc_search_page() + 1) * osc_default_results_per_page_at_search());
@@ -277,6 +290,7 @@
             );
         }
     }
+
     /*
      * Helpers used at view
      */
@@ -556,6 +570,7 @@
     TRIGGER FUNCTIONS
     
     */
+
     check_install_bender_theme();
     if(osc_is_home_page()){
         osc_add_hook('inside-main','bender_draw_categories_list');
@@ -653,15 +668,15 @@
     
     */
 
+    /**
+    * Custom Class for add, remove or get body classes.
+    *
+    * @param string $instance used for singleton.
+    * @param array $class.
+    */
     if (!class_exists('benderBodyClass') ) {
         class benderBodyClass
         {
-            /**
-            * Custom Class for add, remove or get body classes.
-            *
-            * @param string $instance used for singleton.
-            * @param array $class.
-            */
             private static $instance;
             private $class;
         
@@ -695,6 +710,7 @@
     HELPERS
     
     */
+
     if( !function_exists('osc_uploads_url') ){
         function osc_uploads_url($item = ''){
             return osc_base_url().'oc-content/uploads/'.$item;
