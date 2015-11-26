@@ -24,6 +24,7 @@
     DEFINES
     
     */
+
     if(!defined('BENDER_THEME_VERSION')) {
         define('BENDER_THEME_VERSION', '1.0.1');
     }
