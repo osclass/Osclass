@@ -1125,14 +1125,14 @@
         );
 
         if( osc_notify_contact_item() ) {
-        	$admins = Admin::newInstance()->listAll();
-        	$adminEmails = array();
-        	foreach($admins as $admin) {
-        		if(!empty($admin['s_email'])) {
-        			$adminEmails[] = $admin['s_email'];
-        		}
-        	}
-        	$emailParams['add_bcc'] = $adminEmails;
+            $admins = Admin::newInstance()->listAll();
+            $adminEmails = array();
+            foreach($admins as $admin) {
+                if(!empty($admin['s_email'])) {
+                    $adminEmails[] = $admin['s_email'];
+                }
+            }
+            $emailParams['add_bcc'] = $adminEmails;
         }
 
         osc_sendMail($emailParams);
