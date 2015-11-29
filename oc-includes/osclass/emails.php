@@ -50,10 +50,10 @@
         $body  = osc_apply_filter('email_alert_validation_description_after', osc_mailBeauty($_body , $words), $alert, $email, $secret);
 
         $emailParams = array(
-            'subject'  => $title,
             'from'     => _osc_from_email_aux(),
             'to'       => $email,
             'to_name'  => $user['s_name'],
+            'subject'  => $title,
             'body'     => $body,
             'alt_body' => $body
         );
@@ -97,10 +97,10 @@
         $body  = osc_apply_filter('alert_email_hourly_description_after', osc_mailBeauty($_body, $words), $user, $ads, $s_search, $items, $totalItems);
 
         $emailParams = array(
-            'subject'  => $title,
             'from'     => _osc_from_email_aux(),
             'to'       => $user['s_email'],
             'to_name'  => $user['s_name'],
+            'subject'  => $title,
             'body'     => $body,
             'alt_body' => $body
         );
@@ -144,10 +144,10 @@
         $body  = osc_apply_filter('alert_email_daily_description_after', osc_mailBeauty($_body, $words), $user, $ads, $s_search, $items, $totalItems);
 
         $emailParams = array(
-            'subject'  => $title,
             'from'     => _osc_from_email_aux(),
             'to'       => $user['s_email'],
             'to_name'  => $user['s_name'],
+            'subject'  => $title,
             'body'     => $body,
             'alt_body' => $body
         );
@@ -191,10 +191,10 @@
         $body  = osc_apply_filter('alert_email_weekly_description_after', osc_mailBeauty($_body, $words), $user, $ads, $s_search, $items, $totalItems);
 
         $emailParams = array(
-            'subject'  => $title,
             'from'     => _osc_from_email_aux(),
             'to'       => $user['s_email'],
             'to_name'  => $user['s_name'],
+            'subject'  => $title,
             'body'     => $body,
             'alt_body' => $body
         );
@@ -238,10 +238,10 @@
         $body  = osc_apply_filter('alert_email_instant_description_after', osc_mailBeauty($_body, $words), $user, $ads, $s_search, $items, $totalItems);
 
         $emailParams = array(
-            'subject'  => $title,
             'from'     => _osc_from_email_aux(),
             'to'       => $user['s_email'],
             'to_name'  => $user['s_name'],
+            'subject'  => $title,
             'body'     => $body,
             'alt_body' => $body
         );
@@ -286,10 +286,10 @@
             $body = osc_apply_filter('email_comment_validated_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_comment_validated_description', $content['s_text'], $aComment)), $words), $aComment);
 
             $emailParams = array(
-                'subject'  => $title,
                 'from'     => _osc_from_email_aux(),
                 'to'       => $aComment['s_author_email'],
                 'to_name'  => $aComment['s_author_name'],
+                'subject'  => $title,
                 'body'     => $body,
                 'alt_body' => $body
             );
@@ -344,10 +344,10 @@
         $body    = osc_apply_filter('email_new_item_non_register_user_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_new_item_non_register_user_description', $content['s_text'],$item)), $words),$item);
 
         $emailParams = array(
-            'subject'  => $title,
             'from'     => _osc_from_email_aux(),
             'to'       => $item['s_contact_email'],
             'to_name'  => $item['s_contact_name'],
+            'subject'  => $title,
             'body'     => $body,
             'alt_body' => $body
         );
@@ -387,10 +387,10 @@
             $body = osc_apply_filter('email_user_forgot_password_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_user_forgot_password_description', $content['s_text'], $user, $password_url)), $words), $user, $password_url);
 
             $emailParams = array(
-                'subject'  => $title,
                 'from'     => _osc_from_email_aux(),
                 'to'       => $user['s_email'],
                 'to_name'  => $user['s_name'],
+                'subject'  => $title,
                 'body'     => $body,
                 'alt_body' => $body
             );
@@ -426,10 +426,10 @@
             $body  = osc_apply_filter('email_user_registration_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_user_registration_description', $content['s_text'], $user)), $words), $user);
 
             $emailParams = array(
-                'subject'  => $title,
                 'from'     => _osc_from_email_aux(),
                 'to'       => $user['s_email'],
                 'to_name'  => $user['s_name'],
+                'subject'  => $title,
                 'body'     => $body,
                 'alt_body' => $body
             );
@@ -468,10 +468,10 @@
             $body = osc_apply_filter('email_new_email_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_new_email_description', $content['s_text'], $new_email, $validation_url)), $words), $new_email, $validation_url);
 
             $emailParams = array(
-                'subject'  => $title,
                 'from'     => _osc_from_email_aux(),
                 'to'       => $new_email,
                 'to_name'  => Session::newInstance()->_get('userName'),
+                'subject'  => $title,
                 'body'     => $body,
                 'alt_body' => $body
             );
@@ -514,10 +514,10 @@
             $body = osc_apply_filter('email_user_validation_description_after', osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_user_validation_description', $content['s_text'], $user, $input)), $words), $user, $input);
 
             $emailParams = array(
-                'subject'  => $title,
                 'from'     => _osc_from_email_aux(),
                 'to'       => $user['s_email'],
                 'to_name'  => $user['s_name'],
+                'subject'  => $title,
                 'body'     => $body,
                 'alt_body' => $body
             );
