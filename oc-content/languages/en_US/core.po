@@ -6562,3 +6562,6 @@ msgstr ""
 msgid "The website is currently undergoing maintenance"
 msgstr ""
 
+#: model/Category.php:602
+msgid "Non-Existent Category"
+msgstr ""
