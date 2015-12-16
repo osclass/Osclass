@@ -259,8 +259,12 @@
             $input = array();
 
             if ( $is_add ) {
-                $input['s_secret']    = osc_genRandomPassword();
-                $input['dt_reg_date'] = date('Y-m-d H:i:s');
+                $date                    = date('Y-m-d H:i:s');
+                $input['dt_reg_date']    = $date;
+                $input['dt_mod_date']    = $date;
+                $input['dt_access_date'] = $date;
+                $input['s_secret']       = osc_genRandomPassword();
+                $input['s_access_ip']    = Params::getServerParam('REMOTE_ADDR');
             } else {
                 $input['dt_mod_date'] = date('Y-m-d H:i:s');
             }
