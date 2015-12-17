@@ -487,7 +487,7 @@ class Category extends DAO
      */
     public function findSubcategories($categoryID)
     {
-        $this->dao->where( 'fk_i_parent_id', $categoryID );
+        $this->dao->where( 'fk_i_parent_id', (int)($categoryID));
         return $this->listWhere();
     }
 
@@ -501,7 +501,7 @@ class Category extends DAO
      */
     public function findSubcategoriesEnabled($categoryID)
     {
-        $this->dao->where( 'fk_i_parent_id', $categoryID );
+        $this->dao->where( 'fk_i_parent_id', (int)($categoryID));
         $this->dao->where( 'a.b_enabled', '1' );
         return $this->listWhere();
     }
@@ -652,8 +652,8 @@ class Category extends DAO
      */
     public function deleteByPrimaryKey($pk)
     {
-        $items = Item::newInstance()->findByCategoryID($pk);
-        $subcats = $this->findSubcategories($pk);
+        $items = Item::newInstance()->findByCategoryID((int)($pk));
+            $subcats = $this->findSubcategories((int)($pk));
         if (count($subcats) > 0) {
             foreach ($subcats as $s) {
                 $this->deleteByPrimaryKey($s["pk_i_id"]);
@@ -666,13 +666,13 @@ class Category extends DAO
             }
         }
 
-        osc_run_hook('delete_category', $pk);
+        osc_run_hook('delete_category', (int)($pk));
 
-        $this->dao->delete( sprintf('%st_plugin_category', DB_TABLE_PREFIX), array('fk_i_category_id' => $pk) );
-        $this->dao->delete( sprintf('%st_category_description', DB_TABLE_PREFIX), array('fk_i_category_id' => $pk) );
-        $this->dao->delete( sprintf('%st_category_stats', DB_TABLE_PREFIX), array('fk_i_category_id' => $pk) );
-        $this->dao->delete( sprintf('%st_meta_categories', DB_TABLE_PREFIX), array('fk_i_category_id' => $pk) );
-        return $this->dao->delete( sprintf('%st_category', DB_TABLE_PREFIX), array('pk_i_id' => $pk) );
+        $this->dao->delete( sprintf('%st_plugin_category', DB_TABLE_PREFIX), array('fk_i_category_id' => (int)($pk)) );
+        $this->dao->delete( sprintf('%st_category_description', DB_TABLE_PREFIX), array('fk_i_category_id' => (int)($pk)) );
+        $this->dao->delete( sprintf('%st_category_stats', DB_TABLE_PREFIX), array('fk_i_category_id' => (int)($pk)) );
+        $this->dao->delete( sprintf('%st_meta_categories', DB_TABLE_PREFIX), array('fk_i_category_id' => (int)($pk)) );
+        return $this->dao->delete( sprintf('%st_category', DB_TABLE_PREFIX), array('pk_i_id' => (int)($pk)) );
     }
 
     /**
