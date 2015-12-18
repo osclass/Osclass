@@ -42,7 +42,7 @@
 
 										// e-mail or/and password is/are empty or incorrect
 										$wrongCredentials = false;
-										$email = Params::getParam('email');
+										$email = trim(Params::getParam('email'));
 										$password = Params::getParam('password', false, false);
 										if ( $email == '' ) {
 											osc_add_flash_error_message( _m('Please provide an email address') );
