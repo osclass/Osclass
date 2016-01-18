@@ -117,8 +117,20 @@
                         return;
                     }
 
-                    $itemsPerPage = Params::getParam('itemsPerPage')!='' ? Params::getParam('itemsPerPage') : 10;
-                    $page         = Params::getParam('iPage') > 0 ? Params::getParam('iPage') -1 : 0;
+                    $itemsPerPage = Params::getParam('itemsPerPage');
+                    if(is_numeric($itemsPerPage) && intval($itemsPerPage)>0) {
+                        $itemsPerPage = intval($itemsPerPage);
+                    } else {
+                        $itemsPerPage = 10;
+                    }
+
+                    $page = Params::getParam('iPage');
+                    if(is_numeric($page) && intval($page)>0) {
+                        $page = intval($page)-1;
+                    } else {
+                        $page = 0;
+                    }
+
                     $total_items  = Item::newInstance()->countItemTypesByUserID($user['pk_i_id'], 'active');
 
                     if($itemsPerPage == 'all') {
