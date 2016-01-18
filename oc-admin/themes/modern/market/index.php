@@ -32,6 +32,21 @@
 <div class="grid-market">
 
 </div>
+
+<div class="grid-market">
+    <h2 class="section-title"><?php _e('Recommended themes for You'); ?> <a href="<?php echo osc_admin_base_url(true).'?page=market&action=themes'; ?>"><?php echo sprintf(__('View all (%s)'), $count['themesTotal']); ?></a></h2>
+    <?php
+    foreach($aThemes as $item){
+        drawMarketItem($item,$colors[array_rand($colors)]);
+    }
+    if(count($aThemes)==0) {
+        ?>
+        <p class="flashmessage flashmessage-inline flashmessage-error"><?php _e('The connection with the Osclass market has failed. Try it later.'); ?></p>
+        <?php
+    }
+    ?>
+</div>
+
 <div class="grid-market">
     <h2 class="section-title"><?php _e('Recommended plugins for You'); ?><a href="<?php echo osc_admin_base_url(true).'?page=market&action=plugins'; ?>"><?php echo sprintf(__('View all (%s)'), $count['pluginsTotal']); ?></a>
 
@@ -61,19 +76,7 @@
     }
     ?>
 </div>
-<div class="grid-market">
-    <h2 class="section-title"><?php _e('Recommended themes for You'); ?> <a href="<?php echo osc_admin_base_url(true).'?page=market&action=themes'; ?>"><?php echo sprintf(__('View all (%s)'), $count['themesTotal']); ?></a></h2>
-    <?php
-    foreach($aThemes as $item){
-        drawMarketItem($item,$colors[array_rand($colors)]);
-    }
-    if(count($aThemes)==0) {
-    ?>
-    <p class="flashmessage flashmessage-inline flashmessage-error"><?php _e('The connection with the Osclass market has failed. Try it later.'); ?></p>
-    <?php
-    }
-    ?>
-</div>
+
 <?php if(count($aLanguages)>0) { ?>
 <div class="grid-market">
     <h2 class="section-title"><?php _e('Languages'); ?> <a href="<?php echo osc_admin_base_url(true).'?page=market&action=languages'; ?>"><?php echo sprintf(__('View all (%s)'), $count['languagesTotal']); ?></a></h2>
