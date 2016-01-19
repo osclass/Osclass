@@ -248,14 +248,16 @@
             }
         }
 
-        public function doWatermarkText($text, $color = 'ff0000') {
+        public function doWatermarkText($text, $color = 'ff0000', $fontsize = '30') {
             $this->_watermarked = true;
             $this->_font = osc_apply_filter('watermark_font_path', LIB_PATH . "osclass/assets/fonts/Arial.ttf");
+            $text = osc_apply_filter('watermark_text_value', $text);
+            $fontsize = osc_apply_filter('watermark_font_size', $fontsize);
             if(osc_use_imagick()) {
                 $draw = new ImagickDraw();
                 $draw->setFillColor("#".$color);
                 $draw->setFont($this->_font);
-                $draw->setFontSize( 30 );
+                $draw->setFontSize( $fontsize );
                 $metrics = $this->im->queryFontMetrics($draw, $text);
                 switch(osc_watermark_place()) {
                     case 'tl':
