@@ -164,14 +164,6 @@ function printLocaleDescription($locales = null, $item = null) {
         echo '<div><label for="description">' . __('Description') . ' *</label>';
         $description = (isset($item) && isset($item['locale'][$locale['pk_c_code']]) && isset($item['locale'][$locale['pk_c_code']]['s_description'])) ? $item['locale'][$locale['pk_c_code']]['s_description'] : '';
 
-        $description = (isset($item) && isset($item['locale'][$locale['pk_c_code']]) && isset($item['locale'][$locale['pk_c_code']]['s_description'])) ? $item['locale'][$locale['pk_c_code']]['s_description'] : '';
-
-        $description = (isset($item) && isset($item['locale'][$locale['pk_c_code']]) && isset($item['locale'][$locale['pk_c_code']]['s_description_html'])) ? $item['locale'][$locale['pk_c_code']]['s_description_html'] : '';
-
-        if ($description == '') {
-            $description = (isset($item) && isset($item['locale'][$locale['pk_c_code']]) && isset($item['locale'][$locale['pk_c_code']]['s_description'])) ? $item['locale'][$locale['pk_c_code']]['s_description'] : '';
-        }
-
         if( Session::newInstance()->_getForm('description') != "" ) {
             $description_ = Session::newInstance()->_getForm('description');
             if( $description_[$locale['pk_c_code']] != "" ){
