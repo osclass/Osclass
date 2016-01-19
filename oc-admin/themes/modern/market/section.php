@@ -54,9 +54,9 @@ if($section=='plugins' || $section=='themes') { ?>
 <div class="grid-market">
     <h2 class="section-title"><?php echo $title[$section]; ?>, <?php echo $array['total'].' '.$section; ?> <?php _e('and counting'); ?>
 
-    <?php if($section=='plugins' || $section=='themes') { ?>
-        <span style="<?php if($sort=='premium'){ echo "font-weight: bold;";}?>" class="sorting_desc"><a id="sort_premium" href="<?php echo $url_premium; ?>"><?php _e('Premium'); ?></a></span>
-        <span style="<?php if($sort=='all'){ echo "font-weight: bold;";}?>" class="sorting_desc"><a id="sort_all" href="<?php echo $url_all; ?>"><?php _e('All'); ?></a></span>
+    <?php if($section=='plugins' || $section=='themes') { echo $sort;?>
+        <a class="btn btn-mini btn-filter <?php if($sort=='premium'){ echo "btn-blue";}?>" id="sort_premium" href="<?php echo $url_premium; ?>"><?php _e('Premium'); ?></a>
+        <a class="btn btn-mini btn-filter <?php if($sort=='all'){ echo "btn-blue";}?>" id="sort_all" href="<?php echo $url_all; ?>"><?php _e('All'); ?></a>
     <?php } ?>
 
     <?php if($section=='plugins' || $section=='themes') { ?>
