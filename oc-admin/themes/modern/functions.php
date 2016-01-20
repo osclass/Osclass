@@ -126,7 +126,7 @@ function printLocaleTitle($locales = null, $item = null) {
                 $title = $title_[$locale['pk_c_code']];
             }
         }
-        $title = osc_apply_filter('admin_item_title', $title, $locale['pk_c_code'], $item, $locale);
+        $title = osc_apply_filter('admin_item_title', $title, $item, $locale);
 
         $name = 'title'. '[' . $locale['pk_c_code'] . ']';
         echo '<input id="' . $name . '" type="text" name="' . $name . '" value="' . osc_esc_html(htmlentities($title, ENT_COMPAT, "UTF-8")) . '"  />';
@@ -150,7 +150,7 @@ function printLocaleTitlePage($locales = null,$page = null) {
         }
         $name = $locale['pk_c_code'] . '#s_title';
 
-        $title = osc_apply_filter('admin_page_title', $title, $locale['pk_c_code'], $page, $locale);
+        $title = osc_apply_filter('admin_page_title', $title, $page, $locale);
 
         echo '<div class="input-has-placeholder input-title-wide"><label for="title">' . __('Enter title here') . ' *</label>';
         echo '<input id="' . $name . '" type="text" name="' . $name . '" value="' . osc_esc_html(htmlentities($title, ENT_COMPAT, "UTF-8")) . '"  />';
@@ -175,7 +175,7 @@ function printLocaleDescription($locales = null, $item = null) {
             }
         }
 
-        $description = osc_apply_filter('admin_item_description', $description, $locale['pk_c_code'], $item, $locale);
+        $description = osc_apply_filter('admin_item_description', $description, $item, $locale);
 
         echo '<textarea id="' . $name . '" name="' . $name . '" rows="10">' . $description . '</textarea></div>';
     }
@@ -195,7 +195,7 @@ function printLocaleDescriptionPage($locales = null, $page = null) {
             $description = $aFieldsDescription[$locale['pk_c_code']]['s_text'];
         }
 
-        $description = osc_apply_filter('admin_page_description', $description, $locale['pk_c_code'], $page, $locale);
+        $description = osc_apply_filter('admin_page_description', $description, $page, $locale);
 
         $name = $locale['pk_c_code'] . '#s_text';
         echo '<div><label for="description">' . __('Description') . ' *</label>';
