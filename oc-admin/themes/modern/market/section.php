@@ -27,19 +27,38 @@
 
     $sort       = __get('sort');
 
-    $order_download = __get('order_download');
-    $order_updated  = __get('order_updated');
+    $url_premium = __get('url_premium');
+    $url_all = __get('url_all');
 
-    $sort_download  = __get('sort_download');
-    $sort_updated   = __get('sort_updated');
+    $aFeatured = __get('aFeatured');
+    $colors = array_merge(gradienColors(),array_merge(gradienColors(),gradienColors()));
+
     $categories     = __get('market_categories');
     $categories     = isset($categories[$section])?$categories[$section]:array();
 
-?>
+
+if($section=='plugins' || $section=='themes') { ?>
+<div class="grid-market">
+
+    <h2 class="section-title"><?php _e('Featured'); ?></h2>
+
+        <?php foreach($aFeatured as $item){
+            drawMarketItem($item,$colors[array_rand($colors)]);
+        }
+        if(count($aFeatured)==0) { ?>
+            <p class="flashmessage flashmessage-inline flashmessage-error"><?php _e('The connection with the Osclass market has failed. Try it later.'); ?></p>
+        <?php } ?>
+</div>
+<?php } ?>
+
 <div class="grid-market">
     <h2 class="section-title"><?php echo $title[$section]; ?>, <?php echo $array['total'].' '.$section; ?> <?php _e('and counting'); ?>
 
-    <span style="<?php if($sort=='downloads'){ echo "font-weight: bold;";}?>" class="<?php echo ($order_download=='desc'?'sorting_desc':'sorting_asc') ?>"><a id="sort_download" href="<?php echo $sort_download; ?>"><?php _e('Downloads'); ?> </a></span>  <span style="<?php if($sort=='updated'){ echo "font-weight: bold;";}?>" class="<?php echo ($order_updated=='desc'?'sorting_desc':'sorting_asc') ?>"><a id="sort_updated" href="<?php echo $sort_updated; ?>"><?php _e('Last updates'); ?> </a></span>
+    <?php if($section=='plugins' || $section=='themes') { echo $sort;?>
+        <a class="btn btn-mini btn-filter <?php if($sort=='premium'){ echo "btn-blue";}?>" id="sort_premium" href="<?php echo $url_premium; ?>"><?php _e('Premium'); ?></a>
+        <a class="btn btn-mini btn-filter <?php if($sort=='all'){ echo "btn-blue";}?>" id="sort_all" href="<?php echo $url_all; ?>"><?php _e('All'); ?></a>
+    <?php } ?>
+
     <?php if($section=='plugins' || $section=='themes') { ?>
         <span class="wrapper_market_categories">
             <select id="market_categories">
@@ -52,10 +71,10 @@
     <?php }; ?>
     </h2>
     <?php
+
     // if there are data to be shown
     if(isset($array[$section]) ) {
         if(isset($array['total']) && (int)$array['total']>0) {
-            $colors = gradienColors();
             foreach ($array[$section] as $item) {
                 drawMarketItem($item, $colors[array_rand($colors)]);
             }

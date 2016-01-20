@@ -126,6 +126,8 @@ function printLocaleTitle($locales = null, $item = null) {
                 $title = $title_[$locale['pk_c_code']];
             }
         }
+        $title = osc_apply_filter('admin_item_title', $title, $item, $locale);
+
         $name = 'title'. '[' . $locale['pk_c_code'] . ']';
         echo '<input id="' . $name . '" type="text" name="' . $name . '" value="' . osc_esc_html(htmlentities($title, ENT_COMPAT, "UTF-8")) . '"  />';
         echo '</div>';
@@ -148,6 +150,8 @@ function printLocaleTitlePage($locales = null,$page = null) {
         }
         $name = $locale['pk_c_code'] . '#s_title';
 
+        $title = osc_apply_filter('admin_page_title', $title, $page, $locale);
+
         echo '<div class="input-has-placeholder input-title-wide"><label for="title">' . __('Enter title here') . ' *</label>';
         echo '<input id="' . $name . '" type="text" name="' . $name . '" value="' . osc_esc_html(htmlentities($title, ENT_COMPAT, "UTF-8")) . '"  />';
         echo '</div>';
@@ -163,12 +167,16 @@ function printLocaleDescription($locales = null, $item = null) {
 
         echo '<div><label for="description">' . __('Description') . ' *</label>';
         $description = (isset($item) && isset($item['locale'][$locale['pk_c_code']]) && isset($item['locale'][$locale['pk_c_code']]['s_description'])) ? $item['locale'][$locale['pk_c_code']]['s_description'] : '';
+
         if( Session::newInstance()->_getForm('description') != "" ) {
             $description_ = Session::newInstance()->_getForm('description');
             if( $description_[$locale['pk_c_code']] != "" ){
                 $description = $description_[$locale['pk_c_code']];
             }
         }
+
+        $description = osc_apply_filter('admin_item_description', $description, $item, $locale);
+
         echo '<textarea id="' . $name . '" name="' . $name . '" rows="10">' . $description . '</textarea></div>';
     }
 }
@@ -186,6 +194,9 @@ function printLocaleDescriptionPage($locales = null, $page = null) {
         if( isset($aFieldsDescription[$locale['pk_c_code']]) && isset($aFieldsDescription[$locale['pk_c_code']]['s_text']) &&$aFieldsDescription[$locale['pk_c_code']]['s_text'] != '' ) {
             $description = $aFieldsDescription[$locale['pk_c_code']]['s_text'];
         }
+
+        $description = osc_apply_filter('admin_page_description', $description, $page, $locale);
+
         $name = $locale['pk_c_code'] . '#s_text';
         echo '<div><label for="description">' . __('Description') . ' *</label>';
         echo '<textarea id="' . $name . '" name="' . $name . '" rows="10">' . $description . '</textarea></div>';
