@@ -1,3 +1,10 @@
+Osclass 3.6.0 2016-01-21
+------------------------
+
+- Fixed SQL injection vulnerability thanks to High-Tech Bridge Security Research Lab ( https://www.htbridge.com/ )
+- Fixed some minor details
+- Improvements in the market area
+
 Osclass 3.5.9 2015-10-16
 ------------------------
 
