@@ -126,6 +126,8 @@ function printLocaleTitle($locales = null, $item = null) {
                 $title = $title_[$locale['pk_c_code']];
             }
         }
+        $title = osc_apply_filter('admin_item_title', $title, $locale['pk_c_code'], $item, $locale);
+
         $name = 'title'. '[' . $locale['pk_c_code'] . ']';
         echo '<input id="' . $name . '" type="text" name="' . $name . '" value="' . osc_esc_html(htmlentities($title, ENT_COMPAT, "UTF-8")) . '"  />';
         echo '</div>';
@@ -147,6 +149,8 @@ function printLocaleTitlePage($locales = null,$page = null) {
             $title = $aFieldsDescription[$locale['pk_c_code']]['s_title'];
         }
         $name = $locale['pk_c_code'] . '#s_title';
+
+        $title = osc_apply_filter('admin_page_title', $title, $locale['pk_c_code'], $page, $locale);
 
         echo '<div class="input-has-placeholder input-title-wide"><label for="title">' . __('Enter title here') . ' *</label>';
         echo '<input id="' . $name . '" type="text" name="' . $name . '" value="' . osc_esc_html(htmlentities($title, ENT_COMPAT, "UTF-8")) . '"  />';
@@ -170,6 +174,9 @@ function printLocaleDescription($locales = null, $item = null) {
                 $description = $description_[$locale['pk_c_code']];
             }
         }
+
+        $description = osc_apply_filter('admin_item_description', $description, $locale['pk_c_code'], $item, $locale);
+
         echo '<textarea id="' . $name . '" name="' . $name . '" rows="10">' . $description . '</textarea></div>';
     }
 }
@@ -187,6 +194,9 @@ function printLocaleDescriptionPage($locales = null, $page = null) {
         if( isset($aFieldsDescription[$locale['pk_c_code']]) && isset($aFieldsDescription[$locale['pk_c_code']]['s_text']) &&$aFieldsDescription[$locale['pk_c_code']]['s_text'] != '' ) {
             $description = $aFieldsDescription[$locale['pk_c_code']]['s_text'];
         }
+
+        $description = osc_apply_filter('admin_page_description', $description, $locale['pk_c_code'], $page, $locale);
+
         $name = $locale['pk_c_code'] . '#s_text';
         echo '<div><label for="description">' . __('Description') . ' *</label>';
         echo '<textarea id="' . $name . '" name="' . $name . '" rows="10">' . $description . '</textarea></div>';
