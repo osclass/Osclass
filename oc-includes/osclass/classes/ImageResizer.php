@@ -57,7 +57,6 @@
                 if(function_exists('exif_Read_data')) {
                     $this->_exif = exif_read_data($imagePath);
                 }
-                $this->_exif = exif_read_data($imagePath);
 
 //                $this->autoRotate();
             }
