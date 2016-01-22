@@ -279,7 +279,7 @@ function drawMarketItem($item,$color = false){
     echo '    <div class="mk-info"><i class="flag"></i>';
     echo '        <h3>'.$item['s_title'].'</h3>';
     echo '        <span class="downloads"><strong>'.$item['i_total_downloads'].'</strong> '.__('downloads').'</span>';
-    echo '        <i>by '.$item['s_contact_name'].'</i>';
+    echo '        <i class="author">by '.$item['s_contact_name'].'</i>';
     echo '        <div class="market-actions">';
     echo '            <span class="more">'.__('View more').'</span>';
     if($item['i_price'] != '' && (float)$item['i_price'] > 0 && $item['b_paid'] == 0) {

@@ -80,6 +80,14 @@ a.has-update:hover .mk-item{
     -moz-border-radius:0 0 0 4px;
     -webkit-border-radius:0 0 0 4px;*/
 }
+
+.mk-item .mk-info i.author{
+    display: inline-block;
+    width: 110px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 .mk-item .mk-info span{
     display: block;
     float:left;
@@ -291,8 +299,9 @@ z-index: 88888;
     height: 160px
 }
 .market-dialog .mk-info .more,
-.market-dialog .mk-info .diag-buy,
+.market-dialog .mk-info .diag-buy
 {
+    cursor:pointer;
     display: block;
     font-size: 15px;
     text-align: center;
