@@ -52,7 +52,13 @@
                 $this->im = imagecreatefromstring($content);
                 $this->_width = imagesx($this->im);
                 $this->_height = imagesy($this->im);
+
+                $this->_exif = array();
+                if(function_exists('exif_Read_data')) {
+                    $this->_exif = exif_read_data($imagePath);
+                }
                 $this->_exif = exif_read_data($imagePath);
+
 //                $this->autoRotate();
             }
 
