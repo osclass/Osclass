@@ -190,7 +190,7 @@ $(function(){
                             +'<div class="mk-info">'
                             +'<table>'
                                 +'<tr>'
-                                    +'<td>'
+                                    +'<td style="max-width: 240px;">'
                                         +'<h3>'+item.s_title+'</h3>'
                                         +'<i>'+theme.langs.by+' '+item.s_contact_name+'</i>'
                                         +'<div class="description">'+description.substring(0,150)+dots+'</div>'
