@@ -54,7 +54,7 @@
                 $this->_height = imagesy($this->im);
 
                 $this->_exif = array();
-                if(function_exists('exif_Read_data')) {
+                if(function_exists('exif_read_data')) {
                     $this->_exif = exif_read_data($imagePath);
                 }
 
