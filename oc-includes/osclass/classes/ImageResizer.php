@@ -54,8 +54,10 @@
                 $this->_height = imagesy($this->im);
 
                 $this->_exif = array();
-                if(function_exists('exif_read_data')) {
-                    $this->_exif = exif_read_data($imagePath);
+                if($this->ext == 'jpg' || $this->ext == 'jpeg') {
+                    if(function_exists('exif_read_data')) {
+                        $this->_exif = exif_read_data($imagePath);
+                    }
                 }
 
 //                $this->autoRotate();
