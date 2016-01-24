@@ -37,9 +37,17 @@
 
 
         private function __construct($imagePath) {
-            if(!file_exists($imagePath)) { throw new Exception(sprintf(__("%s does not exist!"), $imagePath)); };
-            if(!is_readable($imagePath)) { throw new Exception(sprintf(__("%s is not readable!"), $imagePath)); };
-            if(filesize($imagePath)==0) { throw new Exception(sprintf(__("%s is corrupt or broken!"), $imagePath)); };
+            if(!file_exists($imagePath)) {
+                throw new Exception(sprintf(__("%s does not exist!"), $imagePath));
+            }
+
+            if(!is_readable($imagePath)) {
+                throw new Exception(sprintf(__("%s is not readable!"), $imagePath));
+            }
+
+            if(filesize($imagePath)==0) {
+                throw new Exception(sprintf(__("%s is corrupt or broken!"), $imagePath));
+            }
 
             if(osc_use_imagick()) {
                 $this->im = new Imagick($imagePath);
@@ -95,13 +103,25 @@
             }
 
             if(($this->_width/$this->_height)>=($width/$height)) {
-                if($upscale) { $newW = $width; } else { $newW = ($this->_width> $width)? $width : $this->_width; };
+                if($upscale) {
+                    $newW = $width;
+                } else {
+                    $newW = ($this->_width> $width) ? $width : $this->_width;
+                }
                 $newH = ceil($this->_height * ($newW / $this->_width));
-                if($force_aspect) { $height = $newH; }
+                if($force_aspect) {
+                    $height = $newH;
+                }
             } else {
-                if($upscale) { $newH = $height; } else { $newH = ($this->_height > $height)? $height : $this->_height; };
+                if($upscale) {
+                    $newH = $height;
+                } else {
+                    $newH = ($this->_height > $height)? $height : $this->_height;
+                }
                 $newW = ceil($this->_width* ($newH / $this->_height));
-                if($force_aspect) { $width = $newW; }
+                if($force_aspect) {
+                    $width = $newW;
+                }
             }
 
             if(osc_use_imagick()) {
@@ -130,9 +150,18 @@
         }
 
         public function saveToFile($imagePath, $ext = null) {
-            if(file_exists($imagePath) && !is_writable($imagePath)) { throw new Exception("$imagePath is not writable!"); };
-            if($ext==null) { $ext = $this->ext; };
-            if($ext!='png' && $ext!='gif') { $ext = 'jpeg'; };
+            if(file_exists($imagePath) && !is_writable($imagePath)) {
+                throw new Exception("$imagePath is not writable!");
+            }
+
+            if($ext==null) {
+                $ext = $this->ext;
+            }
+
+            if($ext!='png' && $ext!='gif') {
+                $ext = 'jpeg';
+            }
+
             if(osc_use_imagick()) {
                 if($ext=='jpeg' && ($this->ext!='jpeg' && $this->ext!='jpg')) {
                     $bg = new Imagick();
