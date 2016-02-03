@@ -50,7 +50,7 @@
     }
 
     $aMessages = array();
-    osc_set_preference('last_version_check', time());
+    //osc_set_preference('last_version_check', time());
 
     $conn = DBConnectionClass::newInstance();
     $c_db = $conn->getOsclassDb();
