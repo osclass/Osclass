@@ -596,7 +596,11 @@
                 $category = $result->row();
             }
 
-            return $category['s_name'];
+            if(isset($category['s_name'])) {
+                return $category['s_name'];
+            } else {
+                return __('Non-Existent Category');
+            }
         }
 
         /**
