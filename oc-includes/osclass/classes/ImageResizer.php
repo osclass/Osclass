@@ -42,6 +42,7 @@
             if(!is_readable($imagePath)) { throw new Exception(sprintf(__("%s is not readable!"), $imagePath)); };
             if(filesize($imagePath)==0) { throw new Exception(sprintf(__("%s is corrupt or broken!"), $imagePath)); };
 
+            $this->image_info = @getimagesize($imagePath);
             if(osc_use_imagick()) {
                 $this->im = new Imagick($imagePath);
                 $geometry = $this->im->getImageGeometry();
@@ -54,14 +55,12 @@
                 $this->_height = imagesy($this->im);
 
                 $this->_exif = array();
-                if(function_exists('exif_read_data')) {
+                if(@$this->image_info['mime']=='image/jpeg' && function_exists('exif_read_data')) {
                     $this->_exif = exif_read_data($imagePath);
                 }
 
-//                $this->autoRotate();
             }
 
-            $this->image_info = @getimagesize($imagePath);
             switch (@$this->image_info['mime']) {
                 case 'image/gif':
                 case 'image/png':

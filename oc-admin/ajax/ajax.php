@@ -663,7 +663,6 @@
                     } else {
                         $content = $json;
                     }
-
                     if($error==1) {
                         echo json_encode(array('error' => 1));
                     } else {

@@ -50,7 +50,7 @@
     }
 
     $aMessages = array();
-    osc_set_preference('last_version_check', time());
+    //osc_set_preference('last_version_check', time());
 
     $conn = DBConnectionClass::newInstance();
     $c_db = $conn->getOsclassDb();
@@ -513,7 +513,7 @@ CREATE TABLE %st_item_description_tmp (
         osc_set_preference('marketURL', 'http://market.osclass.org/api/v2/');
     }
 
-    osc_changeVersionTo(360);
+    osc_changeVersionTo(361);
 
     if(!defined('IS_AJAX') || !IS_AJAX) {
         if(empty($aMessages)) {
