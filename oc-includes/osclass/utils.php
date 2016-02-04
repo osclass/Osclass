@@ -1867,6 +1867,7 @@ function osc_do_upgrade() {
                             /**********************************
                              ** EXECUTING ADDITIONAL ACTIONS **
                              **********************************/
+                            osc_set_preference('update_core_json', '');
                             if (file_exists(osc_lib_path() . 'osclass/upgrade-funcs.php')) {
                                 // There should be no errors here
                                 define('AUTO_UPGRADE', true);
