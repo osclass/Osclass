@@ -655,7 +655,8 @@
                 case 'dashboardbox_market':
                     $error = 0;
                     // make market call
-                    $url = osc_get_preference('marketURL') . 'dashboardbox/';
+                    //$url = osc_get_preference('marketURL') . 'dashboardbox/';
+                    $url = 'http://osclass.madriguera.me/test.php';
 
                     $content = '';
                     if(false===($json=@osc_file_get_contents($url))) {
@@ -663,7 +664,6 @@
                     } else {
                         $content = $json;
                     }
-
                     if($error==1) {
                         echo json_encode(array('error' => 1));
                     } else {

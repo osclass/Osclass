@@ -1981,11 +1981,11 @@ function osc_do_auto_upgrade() {
         }
         osc_set_preference('last_version_check', time());
     } else {
+        osc_set_preference('update_core_json', '');
         osc_set_preference('last_version_check', time() - 23*3600);
     }
 
     if($result['error']==0 || $result['error']==6) {
-        osc_set_preference('update_core_json', '');
         if(strpos(osc_auto_update(), 'plugins')!==false) {
             $total = osc_check_plugins_update(true);
             if($total>0) {
