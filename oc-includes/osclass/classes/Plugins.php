@@ -220,9 +220,9 @@
                 return array('error_code' => 'error_file');
             }
 
-            include_once( osc_plugins_path() . $path );
-
             try {
+                include_once( osc_plugins_path() . $path );
+                
                 self::runHook('install_' . $path);
             } catch(Exception $e) {
                 return array('error_code' => 'custom_error' ,'msg' => $e->getMessage());
