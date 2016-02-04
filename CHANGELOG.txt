@@ -1,3 +1,10 @@
+Osclass 3.6.1 2016-02-04
+------------------------
+
+- Fixed an issue with image rotation
+- Fixed the upgrade available message not being displayed
+- Fixed some minor details
+
 Osclass 3.6.0 2016-01-21
 ------------------------
 
