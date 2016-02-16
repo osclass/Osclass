@@ -129,7 +129,7 @@
 
         function _count($key)
         {
-            if (is_array($this->aExported[$key])) {
+            if (isset($this->aExported[$key]) && is_array($this->aExported[$key])) {
                 return count($this->aExported[$key]);
             }
             return -1; // @TOFIX @FIXME ?? why ? why not 0 ?
