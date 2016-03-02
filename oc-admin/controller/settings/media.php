@@ -75,7 +75,7 @@
                                 if($watermark_file['error'] == UPLOAD_ERR_OK) {
                                     if($watermark_file['type']=='image/png') {
                                         $tmpName = $watermark_file['tmp_name'];
-                                        $path    = osc_content_path().'uploads/watermark.png';
+                                        $path    = osc_uploads_path().'/watermark.png';
                                         if( move_uploaded_file($tmpName, $path) ){
                                             $iUpdated += osc_set_preference('watermark_image', $path);
                                         } else {
