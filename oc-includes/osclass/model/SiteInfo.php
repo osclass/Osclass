@@ -72,7 +72,7 @@
          */
         public function toArray()
         {
-            $domain = 'http://' . Params::getServerParam('HTTP_HOST') . '/';
+            $domain = '//' . $_SERVER['HTTP_HOST'] . '/';
             $this->siteInfo = $this->findByPrimaryKey($domain);
         }
 
@@ -100,7 +100,7 @@
          * @return type
          */
         public function findByPrimaryKey($value)
-        { 
+        {
             $this->daoMetadata->select($this->getFields());
             $this->daoMetadata->from($this->getTableName());
             $this->daoMetadata->like('s_site', $value);

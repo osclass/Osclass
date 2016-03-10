@@ -65,6 +65,9 @@
      * @return string
      */
     function osc_multisite_url() {
+        if( getSiteInfo('s_site_mapping', '') !== '' ) {
+            return getSiteInfo('s_site_mapping', '');
+        }
         return getSiteInfo('s_site', '');
     }
 
