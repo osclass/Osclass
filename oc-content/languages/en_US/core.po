@@ -2133,7 +2133,7 @@ msgid "Donate"
 msgstr ""
 
 #: oc-admin/themes/modern/main/index.php:274
-msgid "Osclass is a free, open-source project, sustained by the community. Money received from donations will be used to further development and improve the project."
+msgid "Osclass is a free, open-source project, sustained by the community. Money received from donations will be used to further develop and improve the project."
 msgstr ""
 
 #: oc-admin/themes/modern/main/index.php:282
