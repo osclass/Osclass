@@ -236,6 +236,12 @@
                         $success = $mItems->edit();
 
                         if($success==1) {
+                            if(is_array($meta)) {
+                                foreach( $meta as $key => $value ) {
+                                    Session::newInstance()->_dropKeepForm('meta_'.$key);
+                                }
+                            }
+                            Session::newInstance()->_clearVariables();
                             osc_add_flash_ok_message( _m("Great! We've just updated your listing") );
                             View::newInstance()->_exportVariableToView("item", Item::newInstance()->findByPrimaryKey($id));
                             $this->redirectTo( osc_item_url() );
