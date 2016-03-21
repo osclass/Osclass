@@ -1,3 +1,9 @@
+Osclass 3.6.2 ---------
+------------------------
+
+- Multisite fixes and improvements
+- Fixed an issue with custom fields on edit item
+
 Osclass 3.6.1 2016-02-04
 ------------------------
 
