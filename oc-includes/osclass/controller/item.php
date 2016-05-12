@@ -484,6 +484,7 @@
                     break;
                 case 'add_comment':
                     osc_csrf_check();
+                    osc_run_hook('pre_item_comment_post', $item);
                     $mItem  = new ItemActions(false);
                     $status = $mItem->add_comment();
                     switch ($status) {
