@@ -484,7 +484,7 @@
                     break;
                 case 'add_comment':
                     osc_csrf_check();
-                    osc_run_hook('pre_item_comment_post', $item);
+                    osc_run_hook('pre_item_add_comment_post', $item);
                     $mItem  = new ItemActions(false);
                     $status = $mItem->add_comment();
                     switch ($status) {
@@ -519,6 +519,7 @@
                     break;
                 case 'delete_comment':
                     osc_csrf_check();
+                    osc_run_hook('pre_item_delete_comment_post', $item);
                     $mItem = new ItemActions(false);
                     $status = $mItem->add_comment(); // @TOFIX @FIXME $status never used + ?? need to add_comment() before deleting it??
 
