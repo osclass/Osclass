@@ -171,6 +171,8 @@ FB;
                         echo '<h6>'.$field['s_name'].'</h6>';
                         echo '<input id="meta_'.$field['s_slug'].'" type="text" name="meta['.$field['pk_i_id'].']" value="' . osc_esc_html((isset($field) && isset($field["s_value"])) ? $field["s_value"] : "") . '" />';
                     } else {
+			$field_textarea_value = (isset($field["s_value"])) ? $field["s_value"] : '';
+			$field_textarea_value = osc_apply_filter('osc_item_edit_meta_textarea_value_filter', $field_textarea_value, $field);
                         echo '<label for="meta_'.$field['s_slug'].'">'.$field['s_name'].': </label>';
                         echo '<textarea id="meta_' . $field['s_slug'] . '" name="meta['.$field['pk_i_id'].']" rows="10">' . ((isset($field) && isset($field["s_value"])) ? $field["s_value"] : "") . '</textarea>';
                     }
