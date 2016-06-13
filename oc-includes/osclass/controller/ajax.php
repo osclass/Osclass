@@ -293,9 +293,12 @@
                     $filename = uniqid("qqfile_").".".$original['extension'];
                     $result = $uploader->handleUpload(osc_content_path().'uploads/temp/'.$filename);
 
-                    // auto rotate
-                    $img = ImageResizer::fromFile(osc_content_path().'uploads/temp/'.$filename)->autoRotate();
-                    $img->saveToFile(osc_content_path().'uploads/temp/auto_'.$filename, $original['extension']);
+                    if (!isset($result['error'])) {
+                        $img = ImageResizer::fromFile(osc_content_path().'uploads/temp/'.$filename)->autoRotate();
+                        $img->saveToFile(osc_content_path().'uploads/temp/auto_'.$filename, $original['extension']);
+
+                        $result['uploadName'] = 'auto_'.$filename;
+                    }
 
                     $result['uploadName'] = 'auto_'.$filename;
                     echo htmlspecialchars(json_encode($result), ENT_NOQUOTES);
