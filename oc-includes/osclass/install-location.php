@@ -5,7 +5,12 @@ error_reporting(E_ERROR | E_CORE_ERROR | E_COMPILE_ERROR | E_PARSE);
 define( 'ABS_PATH', dirname(dirname(dirname(__FILE__))) . '/' );
 define( 'LIB_PATH', ABS_PATH . 'oc-includes/');
 
-require_once ABS_PATH . 'config.php';
+if(array_key_exists('HEROKU_URL', $_ENV)){
+    require_once ABS_PATH . 'config-heroku.php';
+}
+else {
+    require_once ABS_PATH . 'config.php';
+}
 
 require_once LIB_PATH . 'osclass/classes/database/DBConnectionClass.php';
 require_once LIB_PATH . 'osclass/classes/database/DBCommandClass.php';

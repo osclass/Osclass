@@ -284,8 +284,14 @@ function oc_install( ) {
         unset($comm);
         unset($master_conn);
     }
-
-    $conn      = new DBConnectionClass($dbhost, $username, $password, $dbname);
+    $conn = NULL;
+    if(array_key_exists('HEROKU_URL', $_ENV)){
+        require_once ABS_PATH . 'config-heroku.php';
+        $conn = new DBConnectionClass(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+    }
+    else {
+        $conn      = new DBConnectionClass($dbhost, $username, $password, $dbname);
+    }
     $error_num = $conn->getErrorConnectionLevel();
 
     if( $error_num == 0 ) {
@@ -310,34 +316,38 @@ function oc_install( ) {
             break;
         }
     }
-
-    if( file_exists(ABS_PATH . 'config.php') ) {
-        if( !is_writable(ABS_PATH . 'config.php') ) {
-            if( reportToOsclass() ) {
-                LogOsclassInstaller::instance()->error(__("Can't write in config.php file. Check if the file is writable.") , __FILE__."::".__LINE__);
+    if(!array_key_exists('HEROKU_URL', $_ENV)){
+        if( file_exists(ABS_PATH . 'config.php') ) {
+            if( !is_writable(ABS_PATH . 'config.php') ) {
+                if( reportToOsclass() ) {
+                    LogOsclassInstaller::instance()->error(__("Can't write in config.php file. Check if the file is writable.") , __FILE__."::".__LINE__);
+                }
+                return array('error' => __("Can't write in config.php file. Check if the file is writable."));
             }
-            return array('error' => __("Can't write in config.php file. Check if the file is writable."));
-        }
-        create_config_file($dbname, $username, $password, $dbhost, $tableprefix);
-    } else {
-        if( !file_exists(ABS_PATH . 'config-sample.php') ) {
-            if( reportToOsclass() ) {
-                LogOsclassInstaller::instance()->error(__("config-sample.php doesn't exist. Check if everything is decompressed correctly.") , __FILE__."::".__LINE__);
-            }
+            create_config_file($dbname, $username, $password, $dbhost, $tableprefix);
+        } else {
+            if( !file_exists(ABS_PATH . 'config-sample.php') ) {
+                if( reportToOsclass() ) {
+                    LogOsclassInstaller::instance()->error(__("config-sample.php doesn't exist. Check if everything is decompressed correctly.") , __FILE__."::".__LINE__);
+                }
 
-            return array('error' => __("config-sample.php doesn't exist. Check if everything is decompressed correctly."));
-        }
-        if( !is_writable(ABS_PATH) ) {
-            if( reportToOsclass() ) {
-                LogOsclassInstaller::instance()->error(__('Can\'t copy config-sample.php. Check if the root directory is writable.') , __FILE__."::".__LINE__);
+                return array('error' => __("config-sample.php doesn't exist. Check if everything is decompressed correctly."));
             }
+            if( !is_writable(ABS_PATH) ) {
+                if( reportToOsclass() ) {
+                    LogOsclassInstaller::instance()->error(__('Can\'t copy config-sample.php. Check if the root directory is writable.') , __FILE__."::".__LINE__);
+                }
 
-            return array('error' => __('Can\'t copy config-sample.php. Check if the root directory is writable.'));
+                return array('error' => __('Can\'t copy config-sample.php. Check if the root directory is writable.'));
+            }
+            copy_config_file($dbname, $username, $password, $dbhost, $tableprefix);
         }
-        copy_config_file($dbname, $username, $password, $dbhost, $tableprefix);
+
+        require_once ABS_PATH . 'config.php';
     }
-
-    require_once ABS_PATH . 'config.php';
+    else {
+        require_once ABS_PATH . 'config-heroku.php';
+    }
 
     $sql = file_get_contents( ABS_PATH . 'oc-includes/osclass/installer/struct.sql' );
 
@@ -615,11 +625,15 @@ function copy_config_file($dbname, $username, $password, $dbhost, $tableprefix) 
 
 
 function is_osclass_installed( ) {
-    if( !file_exists( ABS_PATH . 'config.php' ) ) {
-        return false;
+    if( array_key_exists('HEROKU_URL', $_ENV) ) {
+      require_once ABS_PATH . 'config-heroku.php';
     }
-
-    require_once ABS_PATH . 'config.php';
+    else {
+        if( !file_exists( ABS_PATH . 'config.php' ) ) {
+            return false;
+        }
+        require_once ABS_PATH . 'config.php';
+    }
 
     $conn = new DBConnectionClass( osc_db_host(), osc_db_user(), osc_db_password(), osc_db_name() );
     $c_db = $conn->getOsclassDb();
@@ -785,6 +799,9 @@ function display_target() {
     }
 
 
+    if( array_key_exists('HEROKU_URL', $_ENV)) {
+      echo "<h1>"._e("HEROKU_URL is set, please ensure env variables listed in config-heroku are set appropriately as settings below will be ignored.")."</h1>";
+    }
     ?>
     <form id="target_form" name="target_form" action="#" method="post" onsubmit="return false;">
         <h2 class="target"><?php _e('Information needed'); ?></h2>

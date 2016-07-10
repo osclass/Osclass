@@ -158,6 +158,11 @@ switch( $step ) {
                     <?php } ?>
                 </div>
                 <div id="content">
+                  <?php
+                  if( array_key_exists('HEROKU_URL', $_ENV)) {
+                    echo "<h1>"._e("HEROKU_URL is set, please ensure env variables listed in config-heroku are set appropriately as settings below will be ignored.")."</h1>";
+                  }
+                  ?>
                 <?php if($step == 1) { ?>
                     <h2 class="target"><?php _e('Welcome');?></h2>
                     <form action="install.php" method="post">
