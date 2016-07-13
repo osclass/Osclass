@@ -221,7 +221,6 @@
         $info = WebThemes::newInstance()->loadThemeInfo(WebThemes::newInstance()->getCurrentTheme());
         if (!file_exists(WebThemes::newInstance()->getCurrentThemePath() . $file) && $info['template'] != ''){
             WebThemes::newInstance()->setParentTheme();
-            return WebThemes::newInstance()->getCurrentThemeUrl() . $file;
         }
         return WebThemes::newInstance()->getCurrentThemeUrl() . $file;
     }
