@@ -27,11 +27,13 @@ class Dependencies {
      * @param type $dependencies mixed, it could be an array or a string
      */
     public function register($id, $url, $dependencies) {
-        $this->registered[$id] = array(
-            'key' => $id
+        if($id!='' && $url!='') {
+            $this->registered[$id] = array(
+                'key' => $id
             ,'url' => $url
             ,'dependencies' => $dependencies
-        );
+            );
+        }
     }
 
     /**
