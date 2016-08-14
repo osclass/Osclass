@@ -246,6 +246,33 @@
                         }
                     }
                 break;
+                case 'item_renew':
+                    $secret = Params::getParam('secret');
+                    $id     = Params::getParam('id');
+                    $item   = $this->itemManager->listWhere("i.pk_i_id = '%s' AND ((i.s_secret = '%s') OR (i.fk_i_user_id = '%d'))", addslashes($id), addslashes($secret), addslashes($this->userId));
+
+                    // item doesn't exist
+                    if( count($item) == 0 ) {
+                        $this->do404();
+                        return;
+                    }
+                    $datenow = new DateTime('NOW');
+                    $itemdate = new DateTime(substr($item[0]['dt_pub_date'],0,10));
+                    $ddate = date_diff($itemdate,$datenow)->days; 
+                    // TODO: SET PREF. NUMBER OF DAYS BEFORE ITEM CAN BE RENEWED.
+                    if ($ddate >= 2) { 
+                      $mItems = new ItemActions(false);
+                      $success = $mItems->renew( $item[0]['pk_i_id'], $item[0]['s_secret']);
+                      if( $success ) {
+                        osc_add_flash_ok_message( _m('The listing has been renewed') );
+                      } else {
+                        osc_add_flash_error_message( _m("The listing can't be renewed") );
+                      }
+                    } else {
+                      osc_add_flash_warning_message( _m('Listing must be at least 2 days old') );
+                    }
+                    $this->redirectTo(osc_user_list_items_url());
+                break;
                 case 'activate':
                     $secret = Params::getParam('secret');
                     $id     = Params::getParam('id');

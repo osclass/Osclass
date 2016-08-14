@@ -197,6 +197,7 @@
             $this->dao->from($this->getTableName().' i, '.DB_TABLE_PREFIX.'t_item_location l');
             $this->dao->where('l.fk_i_item_id = i.pk_i_id');
             $this->dao->where($sql);
+            $this->dao->orderBy('dt_pub_date', 'DESC');
             $result = $this->dao->get();
             if($result == false) {
                 return array();
