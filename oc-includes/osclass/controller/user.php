@@ -25,6 +25,7 @@
                 osc_add_flash_error_message( _m('Users not enabled') );
                 $this->redirectTo(osc_base_url());
             }
+            osc_run_hook( 'init_user' );
         }
 
         //Business Layer...

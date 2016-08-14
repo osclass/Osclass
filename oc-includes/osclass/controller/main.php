@@ -21,6 +21,7 @@
         function __construct()
         {
             parent::__construct();
+            osc_run_hook( 'init_main' );
         }
 
         //Business Layer...

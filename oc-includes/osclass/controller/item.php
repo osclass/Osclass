@@ -35,6 +35,7 @@
                 $this->userId = null;
                 $this->user = null;
             }
+            osc_run_hook( 'init_item' );
         }
 
         //Business Layer...

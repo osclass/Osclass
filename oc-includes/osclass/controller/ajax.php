@@ -24,6 +24,7 @@
         {
             parent::__construct();
             $this->ajax = true;
+            osc_run_hook( 'init_ajax' );
         }
 
         //Business Layer...
