@@ -914,7 +914,7 @@
      * @return int
      */
     function osc_item_spam_delay() {
-        return 60; // need to be changed
+        return getPreference('items_wait_time');
     }
 
     /**
