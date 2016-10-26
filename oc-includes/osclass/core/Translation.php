@@ -52,7 +52,7 @@
                 $domain = osc_theme();
                 $messages_file = osc_apply_filter('mo_theme_messages_path', osc_themes_path() . $domain . '/languages/' . $locale . '/messages.mo', $locale, $domain);
                 if(!file_exists($messages_file)) {
-                    $messages_file = osc_translations_path() . $locale . '/messages.mo';
+                    $messages_file = osc_apply_filter('mo_core_messages_path', osc_translations_path() . $locale . '/messages.mo', $locale);
                 }
                 $this->_load($messages_file, 'messages');
 
@@ -109,4 +109,3 @@
         }
     }
 
-?>
