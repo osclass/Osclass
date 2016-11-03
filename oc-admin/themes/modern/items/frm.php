@@ -255,7 +255,7 @@ function customPageHeader() { ?>
                                 <div class="input-has-placeholder input-separate-top">
                                     <?php ItemForm::expiration_input('add'); ?>
                                 </div>
-                                <label><?php _e('It could be an integer (days from now it will be expired, 0 to never expire) or a date in the format "yyyy-mm-dd hh:mm:ss"'); ?></label>
+                                <label><?php _e('It could be an integer (days from original publishing date it will be expired, 0 to never expire) or a date in the format "yyyy-mm-dd hh:mm:ss"'); ?></label>
                             <?php } else if( !$new_item ) { ?>
                                 <div class="input-separate-top">
                                     <label><input type="checkbox" id="update_expiration" name="update_expiration" style="width: inherit!important;"/> <?php _e('Update expiration?'); ?></label>
@@ -263,7 +263,7 @@ function customPageHeader() { ?>
                                         <div class="input-has-placeholder input-separate-top">
                                             <?php ItemForm::expiration_input('edit'); ?>
                                         </div>
-                                        <label><?php _e('It could be an integer (days from now it will be expired, 0 to never expire) or a date in the format "yyyy-mm-dd hh:mm:ss"'); ?></label>
+                                        <label><?php _e('It could be an integer (days from original publishing date it will be expired, 0 to never expire) or a date in the format "yyyy-mm-dd hh:mm:ss"'); ?></label>
                                     </div>
                                 </div>
                             <?php } ?>
