@@ -787,7 +787,6 @@
             osc_run_hook('before_delete_item', $itemId);
 
             if( $item['s_secret'] == $secret ) {
-                $this->deleteResourcesFromHD( $item['pk_i_id'] );
                 Log::newInstance()->insertLog( 'item', 'delete', $itemId, $item['s_title'], $this->is_admin ? 'admin' : 'user', $this->is_admin ? osc_logged_admin_id() : osc_logged_user_id() );
                 $result = $this->manager->deleteByPrimaryKey( $itemId );
                 if($result!==false) {
@@ -803,16 +802,16 @@
          * Delete resources from the hard drive
          * @param <type> $itemId
          */
-        public function deleteResourcesFromHD( $itemId )
+        static public function deleteResourcesFromHD( $itemId )
         {
             $resources = ItemResource::newInstance()->getAllResourcesFromItem($itemId);
-            Log::newInstance()->insertLog('itemActions', 'deleteResourcesFromHD', $itemId, $itemId, $this->is_admin?'admin':'user', $this->is_admin?osc_logged_admin_id():osc_logged_user_id());
+            Log::newInstance()->insertLog('itemActions', 'deleteResourcesFromHD', $itemId, $itemId, OC_ADMIN?'admin':'user', OC_ADMIN?osc_logged_admin_id():osc_logged_user_id());
             $log_ids = '';
             foreach($resources as $resource) {
-                osc_deleteResource($resource['pk_i_id'], $this->is_admin);
+                osc_deleteResource($resource['pk_i_id'], OC_ADMIN);
                 $log_ids .= $resource['pk_i_id'].",";
             }
-            Log::newInstance()->insertLog('itemActions', 'deleteResourcesFromHD', $itemId, substr($log_ids,0, 250), $this->is_admin?'admin':'user', $this->is_admin?osc_logged_admin_id():osc_logged_user_id());
+            Log::newInstance()->insertLog('itemActions', 'deleteResourcesFromHD', $itemId, substr($log_ids,0, 250), OC_ADMIN?'admin':'user', OC_ADMIN?osc_logged_admin_id():osc_logged_user_id());
         }
 
         /**
