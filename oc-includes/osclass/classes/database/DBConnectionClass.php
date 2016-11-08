@@ -145,9 +145,9 @@
          * Initializate database connection
          *
          * @param string $server Host name where it's located the mysql server
-         * @param string $database Default database to be used when performing queries
          * @param string $user MySQL user name
          * @param string $password MySQL password
+         * @param string $database Default database to be used when performing queries
          */
         public function __construct($server, $user, $password, $database)
         {
