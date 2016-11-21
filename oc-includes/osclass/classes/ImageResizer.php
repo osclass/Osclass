@@ -95,6 +95,8 @@
 
         public function getExt() { return $this->ext; }
         public function getMime() { return $this->mime; }
+        public function getWidth() { return $this->_width; }
+        public function getHeight() { return $this->_height; }
 
         public function resizeTo($width, $height, $force_aspect = null, $upscale = true) {
             if($force_aspect==null) {

@@ -240,13 +240,18 @@
                     break;
                 case 'error_plugin':
                     // force php errors and simulate plugin installation to show the errors in the iframe
+                    $plugin = Params::getParam('plugin');
+                    if(strpos($plugin, '../')!==false || strpos($plugin, '..\\')!==false) {
+                        osc_add_flash_error_message( _m('Invalid plugin file'), 'admin');
+                        $this->redirectTo(osc_admin_base_url(true)."?page=plugins");
+                    }
                     if( !OSC_DEBUG ) {
                         error_reporting( E_ALL | E_STRICT );
                     }
                     @ini_set( 'display_errors', 1 );
 
-                    include( osc_plugins_path() . Params::getParam('plugin') );
-                    Plugins::install(Params::getParam('plugin'));
+                    include( osc_plugins_path() . $plugin );
+                    Plugins::install($plugin);
                     exit;
                 break;
                 default:
