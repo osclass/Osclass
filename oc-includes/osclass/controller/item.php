@@ -236,6 +236,12 @@
                         $success = $mItems->edit();
 
                         if($success==1) {
+                            if(is_array($meta)) {
+                                foreach( $meta as $key => $value ) {
+                                    Session::newInstance()->_dropKeepForm('meta_'.$key);
+                                }
+                            }
+                            Session::newInstance()->_clearVariables();
                             osc_add_flash_ok_message( _m("Great! We've just updated your listing") );
                             View::newInstance()->_exportVariableToView("item", Item::newInstance()->findByPrimaryKey($id));
                             $this->redirectTo( osc_item_url() );
@@ -427,7 +433,7 @@
                         if( osc_reg_user_can_contact() && osc_is_web_user_logged_in() || !osc_reg_user_can_contact() ){
                             $this->doView('item-contact.php');
                         } else {
-                            osc_add_flash_error_message( _m("You can't contact the seller, only registered users can") );
+                            osc_add_flash_error_message( sprintf(_m("You can't contact the seller, only registered users can. <a href=\"%s\">Click here to sign-in.</a>"), osc_user_login_url()) );
                             $this->redirectTo( osc_item_url() );
                         }
                     }

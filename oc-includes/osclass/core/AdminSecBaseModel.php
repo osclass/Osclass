@@ -35,7 +35,7 @@
             $config_version = str_replace('.', '', OSCLASS_VERSION);
             $config_version = preg_replace('|-.*|', '', $config_version);
 
-            if( $config_version > osc_get_preference('version') ) {
+            if( $config_version > osc_get_preference('version') && MULTISITE==0) {
                 if(get_class($this) == 'CAdminTools') {
                 } else {
                     if(get_class($this) != 'CAdminUpgrade' )
