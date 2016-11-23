@@ -83,7 +83,7 @@
 
     /**
      * Validate $value is a number phone,
-     * with $count lenght
+     * with $count length
      *
      * @param string $value
      * @param int $count
@@ -252,36 +252,56 @@
      * @param boolean $required
      * @return boolean
      */
-    function osc_validate_email ($email, $required = true) {
+    function osc_validate_email ($email, $required = true)
+    {
         if ($required || strlen($email) > 0) {
-            $atIndex = strrpos($email, "@");
-            if (is_bool($atIndex) && !$atIndex) {
+            // Test for the minimum length the email can be
+            if (strlen($email) < 3) {
                 return false;
-            } else {
-                $domain = substr($email, $atIndex+1);
-                $local = substr($email, 0, $atIndex);
-                $localLen = strlen($local);
-                $domainLen = strlen($domain);
-
-                if ($localLen < 1 || $localLen > 64) {
-                    return false;
-                } else if ($domainLen < 1 || $domainLen > 255) {
-                    return false;
-                } else if ($local[0] == '.' || $local[$localLen-1] == '.') {
-                    return false;
-                } else if (preg_match('/\\.\\./', $local)) {
-                    return false;
-                } else if (!preg_match('/^[A-Za-z0-9\\-\\.]+$/', $domain)) {
-                    return false;
-                } else if (preg_match('/\\.\\./', $domain)) {
-                    return false;
-                } else if (!preg_match('/^(\\\\.|[A-Za-z0-9!#%&amp;`_=\\/$\'*+?^{}|~.-])+$/', str_replace("\\\\","",$local))) {
-                    if (!preg_match('/^"(\\\\"|[^"])+"$/', str_replace("\\\\","",$local))) {
-                        return false;
-                    }
-                }
-                return true;
             }
+
+            // Test for an @ character after the first position
+            if (strpos($email, '@', 1) === false) {
+                return false;
+            }
+
+            // Split out the local and domain parts
+            list($local, $domain) = explode('@', $email, 2);
+            
+            // LOCAL PART
+            // Test for invalid characters
+            if (!preg_match('/^[a-zA-Z0-9!#$%&\'*+\/=?^_`{|}~\.-]+$/', $local)) {
+                return false;
+            }
+
+            // DOMAIN PART
+            // Test for sequences of periods
+            if (preg_match('/\.{2,}/', $domain)) {
+                return false;
+            }
+            // Test for leading and trailing periods and whitespace
+            if (trim($domain, " \t\n\r\0\x0B.") !== $domain) {
+                return false;
+            }
+            // Split the domain into subs
+            $subs = explode('.', $domain);
+            // Assume the domain will have at least two subs
+            if (2 > count($subs)) {
+                return false;
+            }
+            // Loop through each sub
+            foreach ($subs as $sub) {
+                // Test for leading and trailing hyphens and whitespace
+                if (trim($sub, " \t\n\r\0\x0B-") !== $sub) {
+                    return false;
+                }
+                // Test for invalid characters
+                if (!preg_match('/^[a-z0-9-]+$/i', $sub)) {
+                    return false;
+                }
+            }
+            // Congratulations your email made it!
+            return true;
         }
         return true;
     }
