@@ -956,6 +956,17 @@
     }
 
     /**
+     * generic function to retrieve preferences
+     *
+     * @param string $section
+     * @return string
+     */
+    function osc_get_preference_section($section = 'osclass') {
+        $_P = Preference::newInstance();
+        return $_P->getSection($section);
+    }
+
+    /**
      * generic function to insert/update preferences
      *
      * @param string $key
@@ -1061,7 +1072,7 @@
         return getPreference('subdomain_host');
     }
 
-//PRIVATE FUNCTION (if there was a class :P)
+    //PRIVATE FUNCTION (if there was a class :P)
     /**
      * Gets preference
      *
@@ -1088,6 +1099,5 @@
      */
     function getPreference($key, $section = 'osclass') {
         $_P = Preference::newInstance();
-        return($_P->get($key, $section));
+        return $_P->get($key, $section);
     }
-?>
