@@ -131,7 +131,7 @@ function customPageHeader() { ?>
 <div id="pretty-form">
 <div class="grid-row no-bottom-margin">
     <div class="row-wrapper">
-        <h2 class="render-title"><?php echo customText('subtitle'); ?>  <span style="font-size: small;"><a href="<?php echo osc_item_url(); ?>">View listing on front</a></span></h2>
+        <h2 class="render-title"><?php echo customText('subtitle'); ?>  <span style="font-size: small;"><a href="<?php echo osc_item_url(); ?>"><?php _e('View listing on front'); ?></a></span></h2>
     </div>
 </div>
 <div class="grid-row no-bottom-margin float-right">
