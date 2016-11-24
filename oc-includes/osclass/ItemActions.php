@@ -991,16 +991,15 @@
                         User::newInstance()->update( array( 'i_comments' => $user['i_comments'] + 1)
                                                     ,array( 'pk_i_id'    => $user['pk_i_id'] ) );
                     }
+                    //Notify user (only if comment is active)
+                    if ( osc_notify_new_comment_user() ) {
+                        osc_run_hook('hook_email_new_comment_user', $aItem);
+                    }
                 }
 
                 //Notify admin
                 if ( osc_notify_new_comment() ) {
                     osc_run_hook('hook_email_new_comment_admin', $aItem);
-                }
-
-                //Notify user
-                if ( osc_notify_new_comment_user() ) {
-                    osc_run_hook('hook_email_new_comment_user', $aItem);
                 }
 
                 osc_run_hook( 'add_comment', $commentID );
