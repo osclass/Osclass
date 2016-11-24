@@ -100,7 +100,7 @@
 										$url_redirect = osc_get_http_referer();
                                         if(osc_rewrite_enabled() && $url_redirect!='') {
                                             // if comes from oc-admin/
-                                            if(strpos($url_redirect,'oc-admin')) {
+                                            if(strpos($url_redirect,'oc-admin')!==false) {
                                                 $url_redirect = osc_user_dashboard_url();
                                             } else {
                                                 $request_uri = urldecode(preg_replace('@^' . osc_base_url() . '@', "", $url_redirect));
