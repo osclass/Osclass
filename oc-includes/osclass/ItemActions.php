@@ -802,16 +802,16 @@
          * Delete resources from the hard drive
          * @param <type> $itemId
          */
-        static public function deleteResourcesFromHD( $itemId )
+        static public function deleteResourcesFromHD( $itemId, $is_admin = false )
         {
             $resources = ItemResource::newInstance()->getAllResourcesFromItem($itemId);
-            Log::newInstance()->insertLog('itemActions', 'deleteResourcesFromHD', $itemId, $itemId, OC_ADMIN?'admin':'user', OC_ADMIN?osc_logged_admin_id():osc_logged_user_id());
+            Log::newInstance()->insertLog('itemActions', 'deleteResourcesFromHD', $itemId, $itemId, $is_admin?'admin':'user', $is_admin?osc_logged_admin_id():osc_logged_user_id());
             $log_ids = '';
             foreach($resources as $resource) {
-                osc_deleteResource($resource['pk_i_id'], OC_ADMIN);
+                osc_deleteResource($resource['pk_i_id'], $is_admin);
                 $log_ids .= $resource['pk_i_id'].",";
             }
-            Log::newInstance()->insertLog('itemActions', 'deleteResourcesFromHD', $itemId, substr($log_ids,0, 250), OC_ADMIN?'admin':'user', OC_ADMIN?osc_logged_admin_id():osc_logged_user_id());
+            Log::newInstance()->insertLog('itemActions', 'deleteResourcesFromHD', $itemId, substr($log_ids,0, 250), $is_admin?'admin':'user', $is_admin?osc_logged_admin_id():osc_logged_user_id());
         }
 
         /**
