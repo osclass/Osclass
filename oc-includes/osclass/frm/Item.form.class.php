@@ -878,7 +878,7 @@
 
                         if(length > 0) {
 
-                            result += '<option value=""><?php echo osc_esc_js(__("Select a region...")); ?></option>';
+                            result += '<option selected value=""><?php echo osc_esc_js(__("Select a region...")); ?></option>';
                             for(key in data) {
                                 result += '<option value="' + data[key].pk_i_id + '">' + data[key].s_name + '</option>';
                             }
@@ -903,6 +903,8 @@
 
                         $("#regionId").html(result);
                         $("#cityId").html('<option selected value=""><?php echo osc_esc_js(__("Select a city...")); ?></option>');
+                        $("#regionId").trigger('change');
+                        $("#cityId").trigger('change');
                     }
                  });
 
@@ -965,6 +967,7 @@
                             $("#cityId").remove();
                         }
                         $("#cityId").html(result);
+                        $("#cityId").trigger('change');
                     }
                  });
              } else {
