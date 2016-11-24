@@ -109,11 +109,9 @@
             Log::newInstance()->insertLog('user', 'add', $userId, $input['s_email'], $this->is_admin ? 'admin' : 'user', $this->is_admin ? osc_logged_admin_id() : $userId);
 
             // update items with s_contact_email the same as new user email
-            $aItems = Item::newInstance()->findByEmail( $input['s_email'] );
-            foreach( $aItems as $aux ) {
-                if( Item::newInstance()->update(array('fk_i_user_id' => $userId, 's_contact_name' => $input['s_name']), array('pk_i_id' => $aux['pk_i_id']) ) ) {
-                    $this->manager->increaseNumItems($userId);
-                }
+            $items_updated = Item::newInstance()->update(array('fk_i_user_id' => $userId, 's_contact_name' => $input['s_name']), array('s_contact_email' => $input['s_email']) );
+            if($items_updated!==false && $items_updated>0) {
+                User::newInstance()->update('i_items = i_items + '. (int)$items_updated, array('pk_i_id' => $userId) );
             }
             // update alerts user id with the same email
             Alerts::newInstance()->update(array('fk_i_user_id' => $userId), array('s_email' => $input['s_email']));
