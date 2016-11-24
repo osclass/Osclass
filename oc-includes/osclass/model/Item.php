@@ -958,7 +958,7 @@
                 CityStats::newInstance()->decreaseNumItems($item['fk_i_city_id']);
             }
 
-            ItemActions::deleteResourcesFromHD($id);
+            ItemActions::deleteResourcesFromHD($id, OC_ADMIN);
 
             $this->dao->delete(DB_TABLE_PREFIX.'t_item_description', "fk_i_item_id = $id");
             $this->dao->delete(DB_TABLE_PREFIX.'t_item_comment' , "fk_i_item_id = $id");
