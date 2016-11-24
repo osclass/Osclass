@@ -226,9 +226,26 @@ switch( $step ) {
                         }
                     } elseif($step == 4) {
                         // ping engines
-                        ping_search_engines( $_COOKIE['osclass_ping_engines'] );
+                        ping_search_engines($_COOKIE['osclass_ping_engines']);
                         setcookie('osclass_save_stats', '', time() - 3600);
                         setcookie('osclass_ping_engines', '', time() - 3600);
+
+                        // copy robots.txt
+                        $source = LIB_PATH . 'osclass/installer/robots.txt';
+                        $destination = ABS_PATH . 'robots.txt';
+                        if (function_exists('copy')) {
+                            @copy($source, $destination);
+                        } else {
+                            $contentx = @file_get_contents($source);
+                            $openedfile = fopen($destination, "w");
+                            fwrite($openedfile, $contentx);
+                            fclose($openedfile);
+                            if ($contentx === FALSE) {
+                                $status = false;
+                            } else {
+                                $status = true;
+                            }
+                        }
                         display_finish($password);
                     }
                 ?>
