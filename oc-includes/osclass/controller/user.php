@@ -84,9 +84,9 @@
                                         foreach($aAlerts as $k => $a) {
                                             $array_conditions   = (array)json_decode($a['s_search']);
 
-//                                            $search = Search::newInstance();
                                             $search = new Search();
                                             $search->setJsonAlert($array_conditions);
+                                            $search->notFromUser(Session::newInstance()->_get('userId'));
                                             $search->limit(0, 3);
 
                                             $aAlerts[$k]['items'] = $search->doSearch();
