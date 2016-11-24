@@ -116,6 +116,16 @@
          */
         private $connErrorDesc  = 0;
 
+
+        /** A list of incompatible SQL modes.
+    	 *
+    	 * @since @TODO <-----
+    	 * @access protected
+    	 * @var array
+    	 */
+    	protected $incompatible_modes = array( 'NO_ZERO_DATE', 'ONLY_FULL_GROUP_BY',
+        			'STRICT_TRANS_TABLES', 'STRICT_ALL_TABLES', 'TRADITIONAL' );
+
         /**
          * It creates a new DBConnection object class or if it has been created before, it
          * returns the previous object
@@ -277,6 +287,8 @@
             }
 
             $this->_setCharset('utf8', $this->db);
+
+
 
             if( $this->dbName == '' ) {
                 return true;
@@ -451,9 +463,49 @@
             if ( $connId->connect_errno ) {
                 return false;
             }
-
+            $this->set_sql_mode(array(), $connId);
             return true;
         }
+
+        /**
+         *
+         *
+         * @param array $modes
+         */
+        public function set_sql_mode($modes = array(), &$connId)
+        {
+            if ( empty( $modes ) ) {
+                $res = mysqli_query($connId, 'SELECT @@SESSION.sql_mode');
+
+                if (empty($res)) {
+                    return;
+                }
+
+                $modes_array = mysqli_fetch_array($res);
+                if (empty($modes_array[0])) {
+                    return;
+                }
+                $modes_str = $modes_array[0];
+
+
+                if (empty($modes_str)) {
+                    return;
+                }
+
+                $modes = explode(',', $modes_str);
+            }
+
+            $modes = array_change_key_case( $modes, CASE_UPPER );
+            $incompatible_modes = $this->incompatible_modes;
+			foreach ( $modes as $i => $mode ) {
+				if ( in_array( $mode, $incompatible_modes ) ) {
+                    unset( $modes[ $i ] );
+				}
+			}
+
+			$modes_str = implode( ',', $modes );
+            mysqli_query($connId, "SET SESSION sql_mode='$modes_str'" );
+		}
 
         /**
          * At the end of the execution it prints the database debug if it's necessary

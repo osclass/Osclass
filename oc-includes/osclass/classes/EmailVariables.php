@@ -64,9 +64,10 @@
                 '{COMMENT_AUTHOR}'  => __('Comment author name'),
                 '{COMMENT_EMAIL}'   => __('Comment author email'),
                 '{COMMENT_TITLE}'   => __('Comment title'),
-                'COMMENT_TEXT'      => __('Comment text content'),
+                '{COMMENT_TEXT}'      => __('Comment text content'),
                 '{COMMENT_BODY}'    => __('Comment body'),
                 '{ITEM_URL}'        => __('Listing url'),
+                '{ITEM_EXPIRATION_DATE}' => __('Item expiration date'),
                 '{ITEM_LINK}'       => __('Listing list'),
                 '{ITEM_TITLE}'      => __('Listing title'),
                 '{ITEM_ID}'         => __('Listing id'),
@@ -87,7 +88,10 @@
                 '{ITEM_PRICE}'        => __('Listing price'), 
                 '{ITEM_COUNTRY}'      => __('Listing country'), 
                 '{ITEM_REGION}'       => __('Listing region'), 
-                '{ITEM_CITY}'         => __('Listing city')
+                '{ITEM_CITY}'         => __('Listing city'),
+                '{SELLER_NAME}'       => __('Seller name'),
+                '{SELLER_EMAIL}'      => __('Seller email'),
+                '{CONTACT_EMAIL}'     => __('Contact name'),
             );
         }
 
