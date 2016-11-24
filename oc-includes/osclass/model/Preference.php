@@ -160,7 +160,7 @@
          */
         public function getSection($section = "osclass")
         {
-            if (isset($this->pref[$section]) && isset($this->pref[$section]) && is_array($this->pref[$section])) {
+            if (isset($this->pref[$section]) && is_array($this->pref[$section])) {
                 return $this->pref[$section];
             }
             return array();
