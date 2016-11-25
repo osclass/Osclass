@@ -550,6 +550,14 @@
             $server_signature = Session::newInstance()->_set('alert_signature', $signature);
 
             $this->_exportVariableToView('search_alert', $encoded_alert);
+            $alerts_sub = 0;
+            if(osc_is_web_user_logged_in()) {
+                $alerts = Alerts::newInstance()->findBySearchAndUser($json, osc_logged_user_id());
+                if(count($alerts)>0) {
+                    $alerts_sub = 1;
+                }
+            }
+            $this->_exportVariableToView('search_alert_subscribed', $alerts_sub);
 
             // calling the view...
             if( count($aItems) === 0 ) {

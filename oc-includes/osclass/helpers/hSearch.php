@@ -62,6 +62,15 @@
      *
      * @return int
      */
+    function osc_search_alert_subscribed() {
+        return View::newInstance()->_get('search_alert_subscribed')==1;
+    }
+
+    /**
+     * Gets current search page
+     *
+     * @return int
+     */
     function osc_search_page() {
         return View::newInstance()->_get('search_page');
     }
