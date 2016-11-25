@@ -515,7 +515,9 @@ CREATE TABLE %st_item_description_tmp (
 
     if(osc_version() < 370) {
         osc_set_preference('marketURL', 'https://market.osclass.org/api/v2/');
+        $comm->query(sprintf("ALTER TABLE  %st_category_description MODIFY s_slug VARCHAR(255) NOT NULL", DB_TABLE_PREFIX));
     }
+
     osc_changeVersionTo(370);
 
     if(!defined('IS_AJAX') || !IS_AJAX) {
