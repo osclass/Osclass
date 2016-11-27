@@ -128,7 +128,7 @@
                             $meta .= $k.'="'.$v.'" ';
                     }
                     echo '<div id="osc_toolbar_'.$value->id.'" '.$style.'><a '.$meta.' href="'.$value->href.'" ' . ((isset($value->target)) ? 'target="' . $value->target . '"' : '') . '>'.$value->title.'</a>';
-
+                                  
                     if (isset($value->submenu) && is_array($value->submenu)) {
                         echo '<nav class="osc_admin_submenu" id="osc_toolbar_sub_'.$value->id.'"><ul>';
                         foreach($value->submenu as $subvalue) {
@@ -142,21 +142,7 @@
                             }
                         }
                         echo '</ul>
-                            </nav>
-                        <style>
-                        #osc_toolbar_'.$value->id.' {
-                            position: relative;
-                        }
-                        #osc_toolbar_'.$value->id.' > a {
-                            min-width: 100px;
-                            text-align: center;
-                        }
-                        #osc_toolbar_'.$value->id.':hover nav#osc_toolbar_sub_'.$value->id.' {
-                            visibility: visible;
-                            opacity: 1;
-                        }
-                        </style>
-                        ';
+                          </nav>';
                     }
                     echo '</div>';                     
                 }
