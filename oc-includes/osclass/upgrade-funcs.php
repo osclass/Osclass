@@ -515,6 +515,7 @@ CREATE TABLE %st_item_description_tmp (
 
     if(osc_version() < 370) {
         osc_set_preference('marketURL', 'https://market.osclass.org/api/v2/');
+        osc_set_preference('recaptcha_version', 'v1', 'STRING');
         $comm->query(sprintf("ALTER TABLE  %st_category_description MODIFY s_slug VARCHAR(255) NOT NULL", DB_TABLE_PREFIX));
         $comm->query(sprintf("ALTER TABLE  %st_preference MODIFY s_section VARCHAR(128) NOT NULL", DB_TABLE_PREFIX));
         $comm->query(sprintf("ALTER TABLE  %st_preference MODIFY s_name VARCHAR(128) NOT NULL", DB_TABLE_PREFIX));

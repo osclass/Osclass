@@ -100,6 +100,7 @@ INSERT INTO /*TABLE_PREFIX*/t_preference VALUES
     ,('osclass', 'seo_url_search_prefix', '', 'STRING')
     ,('osclass', 'subdomain_type', '', 'STRING')
     ,('osclass', 'subdomain_host', '', 'STRING')
+    ,('osclass', 'recaptcha_version', 'v2', 'STRING')
     ,('osclass', 'enableField#f_price@items', '1', 'BOOLEAN')
     ,('osclass', 'enableField#images@items', '1', 'BOOLEAN')
     ,('osclass', 'numImages@items', '4', 'INTEGER')
