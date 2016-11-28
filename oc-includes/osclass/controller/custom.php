@@ -49,7 +49,7 @@
             }
 
             // check if the file exists
-            if( !file_exists(osc_plugins_path() . $file) && !file_exists(osc_themes_path() . $file) ) {
+            if( !file_exists(osc_plugins_path() . $file) && !file_exists(WebThemes::newInstance()->getCurrentThemePath() . "plugins/" . $file) ) {
                 $this->do404();
                 return;
             }

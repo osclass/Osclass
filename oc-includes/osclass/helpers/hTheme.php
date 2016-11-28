@@ -39,8 +39,8 @@
         // Clean $file to prevent hacking of some type
         osc_sanitize_url($file);
         $file = str_replace("../", "", str_replace("..\\", "", str_replace("://", "", preg_replace("|http([s]*)|", "", $file))));
-        if(file_exists(osc_theme() . $file)) {
-            include osc_themes_path() . $file;
+        if(file_exists(WebThemes::newInstance()->getCurrentThemePath() . "plugins/" . $file)) {
+            include WebThemes::newInstance()->getCurrentThemePath() . "plugins/" . $file;
         } else if(file_exists(osc_plugins_path() . $file)) {
             include osc_plugins_path() . $file;
         }
