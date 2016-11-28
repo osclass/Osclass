@@ -270,7 +270,7 @@
                         <input type="hidden" name="custom" value="<?php echo osc_admin_base_url(); ?>?donation=successful&source=dashboard">
                         <fieldset>
                             <div class="form">
-                                <p><?php _e('Osclass is a free, open-source project, sustained by the community. Money received from donations will be used to further development and improve the project.'); ?></p>
+                                <p><?php _e('Osclass is a free, open-source project, sustained by the community. Money received from donations will be used to further develop and improve the project.'); ?></p>
                                 <div class="form-row">
                                     <div class="form-controls">
                                         <select name="amount" class="select-box-medium">
