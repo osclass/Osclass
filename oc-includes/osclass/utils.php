@@ -1546,7 +1546,7 @@ function osc_update_location_stats($force = false, $limit = 1000) {
     $workToDo = $loctmp->count();
 
     if( $workToDo > 0 ) {
-        // there are wotk to do
+        // there is work to do
         if($limit=='auto') {
             $total_cities = City::newInstance()->count();
             $limit = max(1000, ceil($total_cities/22));
@@ -1581,7 +1581,7 @@ function osc_update_location_stats($force = false, $limit = 1000) {
             }
         }
     } else if($force) {
-        // we need populate location tmp table
+        // we need to populate location tmp table
         $aCountry  = Country::newInstance()->listAll();
 
         foreach($aCountry as $country) {
