@@ -202,7 +202,9 @@
                 case 'item_edit_post':
                     // SAVE form data before CSRF CHECK
                     $mItems = new ItemActions(false);
-                    $mItems->prepareData(true);
+                    // prepare data for ADD ITEM
+                    $mItems->prepareData(false);
+                    // set all parameters into session
                     foreach( $mItems->data as $key => $value ) {
                         Session::newInstance()->_setForm($key,$value);
                     }
@@ -214,7 +216,7 @@
                             Session::newInstance()->_keepForm('meta_'.$key);
                         }
                     }
-
+                    
                     osc_csrf_check();
 
                     $secret = Params::getParam('secret');
