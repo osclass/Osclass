@@ -30,6 +30,11 @@
             return self::$instance;
         }
 
+        public static function init() {
+            self::$instance = new self();
+            return self::$instance;
+        }
+
         function __construct($install = false) {
             if(!$install) {
                 // get user/admin locale
@@ -40,19 +45,19 @@
                 }
 
                 // load core
-                $core_file = osc_translations_path() . $locale . '/core.mo';
+                $core_file = osc_apply_filter('mo_core_path', osc_translations_path() . $locale . '/core.mo', $locale);
                 $this->_load($core_file, 'core');
 
                 // load messages
-                $messages_file = osc_themes_path() . osc_theme() . '/languages/' . $locale . '/messages.mo';
+                $domain = osc_theme();
+                $messages_file = osc_apply_filter('mo_theme_messages_path', osc_themes_path() . $domain . '/languages/' . $locale . '/messages.mo', $locale, $domain);
                 if(!file_exists($messages_file)) {
-                    $messages_file = osc_translations_path() . $locale . '/messages.mo';
+                    $messages_file = osc_apply_filter('mo_core_messages_path', osc_translations_path() . $locale . '/messages.mo', $locale);
                 }
                 $this->_load($messages_file, 'messages');
 
                 // load theme
-                $domain = osc_theme();
-                $theme_file = osc_themes_path() . $domain . '/languages/' . $locale . '/theme.mo';
+                $theme_file = osc_apply_filter('mo_theme_path', osc_themes_path() . $domain . '/languages/' . $locale . '/theme.mo', $locale, $domain);
                 if(!file_exists($theme_file)) {
                     if(!file_exists(osc_themes_path() . $domain)) {
                         $domain = 'modern';
@@ -65,7 +70,7 @@
                 $aPlugins = Plugins::listEnabled();
                 foreach($aPlugins as $plugin) {
                     $domain = preg_replace('|/.*|', '', $plugin);
-                    $plugin_file = osc_plugins_path() . $domain . '/languages/' . $locale . '/messages.mo';
+                    $plugin_file = osc_apply_filter('mo_plugin_path', osc_plugins_path() . $domain . '/languages/' . $locale . '/messages.mo', $locale, $domain);
                     if(file_exists($plugin_file) ) {
                         $this->_load($plugin_file, $domain);
                     }
@@ -104,4 +109,3 @@
         }
     }
 
-?>
