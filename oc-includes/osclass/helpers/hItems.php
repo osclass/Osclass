@@ -821,6 +821,16 @@
     }
 
     /**
+     * Gets medium url of current resource
+     *
+     * @since 3.7.0
+     * @return string
+     */
+    function osc_resource_medium_url() {
+        return (string) osc_apply_filter('resource_medium_url', osc_resource_path().osc_resource_id()."_medium.".osc_resource_field("s_extension"));
+    }
+
+    /**
      * Gets original resource url of current resource
      *
      * @return string
