@@ -327,9 +327,6 @@
                     echo json_encode(array('error' => __('no action defined')));
                 break;
             }
-            // clear all keep variables into session
-            Session::newInstance()->_dropKeepForm();
-            Session::newInstance()->_clearVariables();
         }
 
         //hopefully generic...
