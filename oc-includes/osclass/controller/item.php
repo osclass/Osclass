@@ -95,7 +95,6 @@
                     $this->doView('item-post.php');
                 break;
                 case 'item_add_post': //post_item
-                    osc_csrf_check();
                     if( osc_reg_user_post() && $this->user == null ) {
                         osc_add_flash_warning_message( _m('Only registered users are allowed to post listings') );
                         $this->redirectTo( osc_base_url(true) );
@@ -200,8 +199,6 @@
                                     }
                 break;
                 case 'item_edit_post':
-                    osc_csrf_check();
-
                     $secret = Params::getParam('secret');
                     $id     = Params::getParam('id');
                     $item   = $this->itemManager->listWhere("i.pk_i_id = %d AND ((i.s_secret = %s AND i.fk_i_user_id IS NULL) OR (i.fk_i_user_id = %d))", (int)($id), $secret, (int)($this->userId));
