@@ -299,6 +299,9 @@
                     case 'ENABLE':
                         $this->dao->where('i.b_enabled', 1);
                         break;
+                    case 'ENABLED':
+                        $this->dao->where('i.b_enabled', 1);
+                        break;
                     case 'DISABLED':
                         $this->dao->where('i.b_enabled', 0);
                         break;
