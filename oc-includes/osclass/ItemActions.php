@@ -90,7 +90,7 @@
                 $flash_error .= _m("Image with an incorrect extension.") . PHP_EOL;
             }
             if ( !$this->checkSize($aItem['photos']) ) {
-                $flash_error .= _m("Image is too big. Max. size") . osc_max_size_kb() ." Kb" . PHP_EOL;
+                $flash_error .= _m("Image is too big. Max. size") . ': ' . osc_max_size_kb() . ' Kb' . PHP_EOL;
             }
 
             $title_message = '';
@@ -303,7 +303,7 @@
                 $flash_error .= _m("Image with an incorrect extension.") . PHP_EOL;
             }
             if ( !$this->checkSize($aItem['photos']) ) {
-                $flash_error .= _m("Image is too big. Max. size") . osc_max_size_kb() . " Kb" . PHP_EOL;
+                $flash_error .= _m("Image is too big. Max. size") . ': ' . osc_max_size_kb() . ' Kb' . PHP_EOL;
             }
 
             $title_message  = '';
@@ -1396,6 +1396,11 @@
                             }
                             $img->saveToFile($path, $extension);
 
+                            // Create medium
+                            $path = $tmpName."_medium";
+                            $size = explode('x', osc_medium_dimensions());
+                            ImageResizer::fromFile($normal_path)->resizeTo($size[0], $size[1])->saveToFile($path, $extension);
+
                             // Create preview
                             $path = $tmpName."_preview";
                             $size = explode('x', osc_preview_dimensions());
@@ -1419,6 +1424,7 @@
                                 }
                             }
                             osc_copy($tmpName.'_normal', $folder.$resourceId.'.'.$extension);
+                            osc_copy($tmpName.'_medium', $folder.$resourceId.'_medium.'.$extension);
                             osc_copy($tmpName.'_preview', $folder.$resourceId.'_preview.'.$extension);
                             osc_copy($tmpName.'_thumbnail', $folder.$resourceId.'_thumbnail.'.$extension);
                             if( osc_keep_original_image() ) {
@@ -1426,6 +1432,7 @@
                                 osc_copy($tmpName, $path);
                             }
                             @unlink($tmpName."_normal");
+							@unlink($tmpName."_medium");
                             @unlink($tmpName."_preview");
                             @unlink($tmpName."_thumbnail");
                             @unlink($tmpName);
