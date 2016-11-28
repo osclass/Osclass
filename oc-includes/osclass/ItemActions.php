@@ -1432,7 +1432,7 @@
                                 osc_copy($tmpName, $path);
                             }
                             @unlink($tmpName."_normal");
-							@unlink($tmpName."_medium");
+                            @unlink($tmpName."_medium");
                             @unlink($tmpName."_preview");
                             @unlink($tmpName."_thumbnail");
                             @unlink($tmpName);
