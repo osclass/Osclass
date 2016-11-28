@@ -47,6 +47,7 @@
                     $maxSizeKb         = Params::getParam('maxSizeKb');
                     $dimThumbnail      = strtolower(Params::getParam('dimThumbnail'));
                     $dimPreview        = strtolower(Params::getParam('dimPreview'));
+                    $dimMedium         = strtolower(Params::getParam('dimMedium'));
                     $dimNormal         = strtolower(Params::getParam('dimNormal'));
                     $keepOriginalImage = Params::getParam('keep_original_image');
                     $forceAspectImage  = Params::getParam('force_aspect_image');
@@ -103,6 +104,7 @@
                     $maxSizeKb         = trim(strip_tags($maxSizeKb));
                     $dimThumbnail      = trim(strip_tags($dimThumbnail));
                     $dimPreview        = trim(strip_tags($dimPreview));
+                    $dimMedium         = trim(strip_tags($dimMedium));
                     $dimNormal         = trim(strip_tags($dimNormal));
                     $keepOriginalImage = ($keepOriginalImage != '' ? true : false);
                     $forceAspectImage  = ($forceAspectImage != '' ? true : false);
@@ -114,6 +116,9 @@
                     }
                     if(!preg_match('|([0-9]+)x([0-9]+)|', $dimPreview, $match)) {
                         $dimPreview = is_numeric($dimPreview)?$dimPreview."x".$dimPreview:"100x100";
+                    }
+                    if(!preg_match('|([0-9]+)x([0-9]+)|', $dimMedium, $match)) {
+                        $dimMedium = is_numeric($dimMedium)?$dimMedium."x".$dimMedium:"100x100";
                     }
                     if(!preg_match('|([0-9]+)x([0-9]+)|', $dimNormal, $match)) {
                         $dimNormal = is_numeric($dimNormal)?$dimNormal."x".$dimNormal:"100x100";
@@ -141,6 +146,7 @@
                     $iUpdated += osc_set_preference('maxSizeKb', $maxSizeKb);
                     $iUpdated += osc_set_preference('dimThumbnail', $dimThumbnail);
                     $iUpdated += osc_set_preference('dimPreview', $dimPreview);
+                    $iUpdated += osc_set_preference('dimMedium', $dimMedium);
                     $iUpdated += osc_set_preference('dimNormal', $dimNormal);
                     $iUpdated += osc_set_preference('keep_original_image', $keepOriginalImage);
                     $iUpdated += osc_set_preference('force_aspect_image', $forceAspectImage);
@@ -202,6 +208,11 @@
                                 }
                             }
                             $img->saveToFile($path);
+
+                            // Create medium
+                            $path = osc_base_path().$resource['s_path'].$resource['pk_i_id'].'_medium.'.$resource['s_extension'];
+                            $size = explode('x', osc_medium_dimensions());
+                            ImageResizer::fromFile($path_normal)->resizeTo($size[0], $size[1])->saveToFile($path);
 
                             // Create preview
                             $path = osc_base_path().$resource['s_path'].$resource['pk_i_id'].'_preview.'.$resource['s_extension'];
