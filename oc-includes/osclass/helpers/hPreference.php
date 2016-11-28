@@ -1072,6 +1072,15 @@
         return getPreference('subdomain_host');
     }
 
+    /**
+     * Return version of recaptcha
+     *
+     * @return string
+     */
+    function osc_recaptcha_version() {
+        return getPreference('recaptcha_version');
+    }
+
     //PRIVATE FUNCTION (if there was a class :P)
     /**
      * Gets preference
