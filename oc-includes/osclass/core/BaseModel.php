@@ -53,7 +53,7 @@
             $this->page   = Params::getParam('page');
             $this->action = Params::getParam('action');
             $this->ajax   = false;
-            $this->time   = list($sm, $ss) = explode(' ', microtime());
+            $this->time   = microtime(true);
             WebThemes::newInstance();
             osc_run_hook( 'init' );
         }
@@ -112,8 +112,8 @@
 
         function getTime()
         {
-            $timeEnd = list($em, $es) = explode(' ', microtime());
-            return ($timeEnd[0] + $timeEnd[1]) - ($this->time[0] + $this->time[1]);
+            $timeEnd = microtime(true);
+            return $timeEnd - $this->time;
         }
 
         private function subdomain_params($host) {
