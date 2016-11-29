@@ -254,6 +254,7 @@ osc_register_script('jquery-fineuploader', osc_assets_url('js/fineuploader/jquer
 
 
 Plugins::init();
+Translation::init();
 osc_csrfguard_start();
 
 if( OC_ADMIN ) {
