@@ -51,11 +51,11 @@
                 $this->_load($messages_file, 'messages');
 
                 // load theme
-                $domain = osc_theme();
+                $domain = osc_apply_filter('theme', osc_theme());
                 $theme_file = osc_themes_path() . $domain . '/languages/' . $locale . '/theme.mo';
                 if(!file_exists($theme_file)) {
                     if(!file_exists(osc_themes_path() . $domain)) {
-                        $domain = 'modern';
+                        $domain = osc_theme();
                     }
                     $theme_file = osc_translations_path() . $locale . '/theme.mo';
                 }
