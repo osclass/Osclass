@@ -56,7 +56,7 @@
 
                 $this->_exif = array();
                 if(@$this->image_info['mime']=='image/jpeg' && function_exists('exif_read_data')) {
-                    $this->_exif = exif_read_data($imagePath);
+                    $this->_exif = @exif_read_data($imagePath);
                 }
 
             }
