@@ -3110,6 +3110,14 @@ msgstr ""
 msgid "Preview size: is not in the correct format"
 msgstr ""
 
+#: /oc-admin/themes/modern/settings/media.php:70
+msgid "Medium size: this field is required"
+msgstr ""
+
+#: /oc-admin/themes/modern/settings/media.php:71
+msgid "Medium size: is not in the correct format"
+msgstr ""
+
 #: oc-admin/themes/modern/settings/media.php:67
 msgid "Normal size: this field is required"
 msgstr ""

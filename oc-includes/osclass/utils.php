@@ -61,10 +61,11 @@ function osc_deleteResource( $id , $admin) {
 
         Log::newInstance()->insertLog('item', 'delete resource backtrace', $resource['pk_i_id'], $backtracel, $admin?'admin':'user', $admin ? osc_logged_admin_id() : osc_logged_user_id());
 
-        @unlink(osc_base_path() . $resource['s_path'] .$resource['pk_i_id'].".".$resource['s_extension']);
-        @unlink(osc_base_path() . $resource['s_path'] .$resource['pk_i_id']."_original.".$resource['s_extension']);
-        @unlink(osc_base_path() . $resource['s_path'] .$resource['pk_i_id']."_thumbnail.".$resource['s_extension']);
-        @unlink(osc_base_path() . $resource['s_path'] .$resource['pk_i_id']."_preview.".$resource['s_extension']);
+        @unlink(osc_base_path() . $resource['s_path'] . $resource['pk_i_id'] . "." . $resource['s_extension']);
+        @unlink(osc_base_path() . $resource['s_path'] . $resource['pk_i_id'] . "_original." . $resource['s_extension']);
+        @unlink(osc_base_path() . $resource['s_path'] . $resource['pk_i_id'] . "_medium." . $resource['s_extension']);
+        @unlink(osc_base_path() . $resource['s_path'] . $resource['pk_i_id'] . "_thumbnail." . $resource['s_extension']);
+        @unlink(osc_base_path() . $resource['s_path'] . $resource['pk_i_id'] . "_preview." . $resource['s_extension']);
         osc_run_hook('delete_resource', $resource);
     }
 }

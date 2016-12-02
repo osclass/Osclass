@@ -442,6 +442,15 @@
     }
 
     /**
+     * Gets medium images' dimensions
+     *
+     * @return string
+     */
+    function osc_medium_dimensions() {
+        return (getPreference('dimMedium'));
+    }
+
+    /**
      * Gets normal size images' dimensions
      *
      * @return string

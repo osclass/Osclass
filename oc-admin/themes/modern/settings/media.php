@@ -44,6 +44,10 @@
                             required: true,
                             regexp: /^[0-9]+x[0-9]+$/i
                         },
+                        dimMedium: {
+                            required: true,
+                            regexp: /^[0-9]+x[0-9]+$/i
+                        },
                         dimNormal: {
                             required: true,
                             regexp: /^[0-9]+x[0-9]+$/i
@@ -61,6 +65,10 @@
                         dimPreview: {
                             required: '<?php echo osc_esc_js( __("Preview size: this field is required")); ?>',
                             regexp: '<?php echo osc_esc_js( __("Preview size: is not in the correct format")); ?>'
+                        },
+                        dimMedium: {
+                            required: '<?php echo osc_esc_js( __("Medium size: this field is required")); ?>',
+                            regexp: '<?php echo osc_esc_js( __("Medium size: is not in the correct format")); ?>'
                         },
                         dimNormal: {
                             required: '<?php echo osc_esc_js( __("Normal size: this field is required")); ?>',
@@ -180,6 +188,10 @@
                 <div class="form-row">
                     <div class="form-label"><?php _e('Preview size'); ?></div>
                     <div class="form-controls"><input type="text" class="input-medium" name="dimPreview" value="<?php echo osc_esc_html( osc_preview_dimensions() ); ?>" /></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label"><?php _e('Medium size'); ?></div>
+                    <div class="form-controls"><input type="text" class="input-medium" name="dimMedium" value="<?php echo osc_esc_html( osc_medium_dimensions() ); ?>" /></div>
                 </div>
                 <div class="form-row">
                     <div class="form-label"><?php _e('Normal size'); ?></div>
