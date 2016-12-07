@@ -256,7 +256,7 @@ switch( $step ) {
                             <a href="<?php echo get_absolute_url(); ?>/oc-includes/osclass/installer/readme.php" target="_blank" hreflang="en"><?php _e('Readme'); ?></a>
                         </li>
                         <li>
-                            <a href="http://admin.osclass.org/feedback.php" target="_blank" hreflang="en"><?php _e('Feedback'); ?></a>
+                            <a href="https://osclass.org/contact" target="_blank" hreflang="en"><?php _e('Feedback'); ?></a>
                         </li>
                         <li>
                             <a href="http://forums.osclass.org/index.php" target="_blank" hreflang="en"><?php _e('Forums');?></a>
