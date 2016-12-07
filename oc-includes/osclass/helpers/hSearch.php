@@ -449,6 +449,9 @@
         $countP = count($params);
 
         if(osc_rewrite_enabled()) {
+            foreach($params as $kp => $vp ) {
+                $params[$kp] = osc_remove_slash($vp);
+            }
             $url = $base_url.osc_get_preference('rewrite_search_url');
             // CANONICAL URLS
             if(isset($params['sCategory']) && !is_array($params['sCategory']) && strpos($params['sCategory'], ',')===false && ($countP==1 || ($countP==2 && isset($params['iPage'])))) {
@@ -624,6 +627,17 @@
             }
         }
         return str_replace('%2C', ',', $url);
+    }
+
+    function osc_remove_slash($var) {
+        if(is_array($var)) {
+            foreach($var as $k => $v) {
+                $var[$k] = osc_remove_slash($v);
+            }
+        } else {
+            $var = str_ireplace("/", " ", $var);
+        }
+        return $var;
     }
 
     /**
