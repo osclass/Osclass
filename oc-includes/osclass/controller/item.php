@@ -216,7 +216,7 @@
                             Session::newInstance()->_keepForm('meta_'.$key);
                         }
                     }
-                    
+
                     osc_csrf_check();
 
                     $secret = Params::getParam('secret');
