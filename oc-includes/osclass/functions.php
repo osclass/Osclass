@@ -643,4 +643,28 @@ function osc_admin_toolbar_update_languages($force = false)
         }
     }
 }
+
+function osc_check_market_connect()
+{
+    return (getPreference('marketAPIConnect')=='') ? false : true;
+}
+
+
+function osc_admin_toolbar_market_connect() {
+
+    if( !osc_is_moderator() ) {
+        error_log('osc_admin_toolbar_market_connect');
+        $connected = osc_check_market_connect();
+        AdminToolbar::newInstance()->remove_menu('market_connect');
+
+        if(!$connected) {
+            AdminToolbar::newInstance()->add_menu(
+                array('id'    => 'market_connect',
+                    'title' => __('Connect Market'),
+                    'href'  => osc_admin_base_url(true) . "?page=market&open_market_connect=true",
+                    'meta'  => array('class' => 'action-btn', 'style' => 'color:black;')
+                ) );
+        }
+    }
+}
 ?>
