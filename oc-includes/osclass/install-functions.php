@@ -972,7 +972,9 @@ function display_finish($password) {
             </tbody>
         </table>
     </div>
-
+    <div class="form-table" style="margin-top:1em;">
+        <p><?php _e('Do not forget to connect your site with Osclass Market in order to download free and paid themes or plugins. You should connect your site as soon as your log in to your new site.'); ?>
+    </div>
     <div class="form-table" style="margin-top:1em;">
         <h3 style="font-weight: 300;"><?php _e('Do you know Osclass Free, the Osclass cloud solution?'); ?></h3>
         <p><?php _e('With Osclass Free you can create your classifieds page without any technical knowledge and in less than one minute.'); ?></p>
