@@ -228,7 +228,7 @@ function drawMarketItem($item,$color = false){
     }
 
     $downloaded = false;
-    if(in_array($item['s_update_url'], $items_downloaded)) {
+    if(is_array($items_downloaded) && in_array($item['s_update_url'], $items_downloaded)) {
         if (in_array($item['s_update_url'], $items_to_update)) {
             $updateClass = 'has-update';
             $updateData  = ' data-update="true"';

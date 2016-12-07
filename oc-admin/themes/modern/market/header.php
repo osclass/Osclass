@@ -63,7 +63,7 @@
                     $('#connect_wait').show();
                     $.getJSON(
                         '<?php echo osc_admin_base_url(true); ?>?page=ajax&action=market_connect',
-                        {'s_email' : $('#connect_user').attr('value'), 's_password' : $('#connect_password').attr('value')},
+                        {'s_email' : document.getElementById("connect_user").value, 's_password' : document.getElementById("connect_password").value},
                         function(data){
                             if(data==null) {
                                 $('#connect_form').show();
@@ -94,6 +94,12 @@
                 $("#market_connect").on('click', function() {
                     $('#dialog-connect').dialog('open');
                 });
+
+                <?php if(Params::getParam('open_market_connect')!='') { ?>
+
+                        $('#dialog-connect').dialog('open');
+
+                <?php } ?>
 
                 <?php }; ?>
 
@@ -134,6 +140,11 @@
 ?>
 <?php if(osc_market_api_connect()=='') { ?>
 <div id="dialog-connect" title="<?php _e('Connect'); ?>" class="has-form-actions hide">
+    <?php if(ini_get('allow_url_fopen')==="0") { ?>
+        <h1 class="header-title-market"><?php _e('MARKET CONNECT FAILED'); ?></h1>
+        <p><?php _e('You need to enable <b>allow_url_fopen = On</b> at php.ini.');?> </p>
+        <p><?php _e('If you need more information please contact your hosting provider.'); ?></p>
+    <?php } else { ?>
     <div class="form-horizontal hide" id="connect_wait">
         <div class="form-row">
             <p>
@@ -160,5 +171,6 @@
             </div>
         </div>
     </div>
+    <?php } ?>
 </div>
 <?php }; ?>

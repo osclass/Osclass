@@ -425,7 +425,6 @@ function oc_install( ) {
 
     oc_install_example_data();
 
-
     if( reportToOsclass() ) {
         set_allow_report_osclass( true );
     } else {
@@ -761,6 +760,7 @@ function display_database_config() {
         <div class="clear"></div>
         <p class="margin20">
             <input type="submit" class="button" name="submit" value="Next" />
+            <a style="float:right;" href="https://osclass.org/page/hosting"><?php _e('Discover the best hosting providers for Osclass'); ?></a>
         </p>
         <div class="clear"></div>
     </form>
@@ -826,6 +826,13 @@ function display_target() {
                     <th><label for="email"><?php _e('Contact e-mail'); ?></label></th>
                     <td><input type="text" id="email" name="email" size="25" /></td>
                     <td><span id="email-error" class="error" style="display:none;"><?php _e('Put your e-mail here'); ?></span></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <input type="checkbox" checked="checked" id="createmarketaccount" name="createmarketaccount" value="1" /><label for="createmarketaccount"><?php _e('Create market.osclass.org account'); ?></label>
+                        <img class="vtip" src="<?php echo get_absolute_url(); ?>oc-includes/images/question.png" title="<?php echo osc_esc_html(__("Create a market.osclass.org account and download free themes and plugins.")); ?>" alt="" />
+                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -965,6 +972,13 @@ function display_finish($password) {
             </tbody>
         </table>
     </div>
+
+    <div class="form-table" style="margin-top:1em;">
+        <h3 style="font-weight: 300;"><?php _e('Do you know Osclass Free, the Osclass cloud solution?'); ?></h3>
+        <p><?php _e('With Osclass Free you can create your classifieds page without any technical knowledge and in less than one minute.'); ?></p>
+        <input style="padding: 8px 14px;background-color: white;" type="button" class="button" onclick="document.location = 'https://osclass.org/hosted/start'" value="<?php echo osc_esc_html( __('Try Osclass Free'));?>" />
+    </div>
+
     <p class="margin20">
         <a target="_blank" href="<?php echo get_absolute_url() ?>oc-admin/index.php" class="button"><?php _e('Finish and go to the administration panel');?></a>
     </p>
