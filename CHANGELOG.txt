@@ -1,8 +1,24 @@
-Osclass 3.6.2 ---------
+Osclass 3.7.0 ---------
 ------------------------
 
 - Multisite fixes and improvements
 - Fixed an issue with custom fields on edit item
+- Mysql 5.7 compatibility
+- Comment email notification only if comment moderation is disabled
+- Use https in order to prevent warnings
+- Remove temporal unremoved files (auto_qqfile_*)
+- Cron skipping issues has been fixed
+- New hooks, pre_item_add_error and pre_item_edit_error. Plugins can add FlashMessages.
+- Prevent subscribe to searches twice (Alerts)
+- Increase PHP minimum version to 5.6.0
+- Robots.txt overwrite has been fixed
+- Improved helper function osc_validate_email()
+- Added new noCaptcha ReCaptcha
+- Added listings link at item add / item edit (oc-admin)
+- Fixed Authenticated cross-site scripting issues.
+  Found by Robin Peraglie with the help of the RIPS code analyser <https://www.ripstech.com>
+- Osclass core fixed and improvements
+- Bender theme minor fixes
 
 Osclass 3.6.1 2016-02-04
 ------------------------
