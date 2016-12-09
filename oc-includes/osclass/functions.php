@@ -653,7 +653,6 @@ function osc_check_market_connect()
 function osc_admin_toolbar_market_connect() {
 
     if( !osc_is_moderator() ) {
-        error_log('osc_admin_toolbar_market_connect');
         $connected = osc_check_market_connect();
         AdminToolbar::newInstance()->remove_menu('market_connect');
 

@@ -785,7 +785,7 @@
             if($result!==false) {
                 $item   = $result->row();
                 $expired_old = osc_isExpired($item['dt_expiration']);
-                if(preg_match('|^([0-9]+)$|', $expiration_time, $match)) {
+                if(ctype_digit($expiration_time)) {
                     if($expiration_time > 0) {
                         $sql =  sprintf("UPDATE %s SET dt_expiration = ", $this->getTableName());
                         $sql .= sprintf(' date_add(%s.dt_pub_date, INTERVAL %d DAY) ', $this->getTableName(), $expiration_time);

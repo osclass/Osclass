@@ -1185,8 +1185,25 @@
                 $dt_expiration = Params::getParam('dt_expiration');
                 if($dt_expiration==-1) {
                     $aItem['dt_expiration'] = '';
-                } else if($dt_expiration!='' && (preg_match('|^([0-9]+)$|', $dt_expiration, $match) || preg_match('|([0-9]{4})-([0-9]{2})-([0-9]{2}) ([0-9]{2}):([0-9]{2}):([0-9]{2})|', $dt_expiration, $match))) {
+                } else if($dt_expiration!='' &&
+                    (ctype_digit($dt_expiration) ||
+                        preg_match('|^([0-9]{4})-([0-9]{2})-([0-9]{2}) ([0-9]{2}):([0-9]{2}):([0-9]{2})$|', $dt_expiration, $match) ||
+                        preg_match('|^([0-9]{4})-([0-9]{2})-([0-9]{2})$|', $dt_expiration, $match)
+                    )) {
                     $aItem['dt_expiration'] = $dt_expiration;
+                    $_category = Category::newInstance()->findByPrimaryKey($aItem['catId']);
+                    if(ctype_digit($dt_expiration)) {
+                        if(!$this->is_admin && $dt_expiration>$_category['i_expiration_days']) {
+                            $aItem['dt_expiration'] = $_category['i_expiration_days'];
+                        }
+                    } else {
+                        if(preg_match('|^([0-9]{4})-([0-9]{2})-([0-9]{2})$|', $dt_expiration, $match)) {
+                            $aItem['dt_expiration'] .= " 23:59:59";
+                        }
+                        if(!$this->is_admin && strtotime($dt_expiration)>(time()+$_category['i_expiration_days']*24*3600)) {
+                            $aItem['dt_expiration'] = $_category['i_expiration_days'];
+                        }
+                    }
                 } else {
                     $_category = Category::newInstance()->findByPrimaryKey($aItem['catId']);
                     $aItem['dt_expiration'] = $_category['i_expiration_days'];
