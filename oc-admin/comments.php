@@ -47,7 +47,7 @@
                                                                                 $iUpdated = $this->itemCommentManager->delete(array(
                                                                                     'pk_i_id' => $_id
                                                                                 ));
-                                                                                osc_add_hook("delete_comment", $_id);
+                                                                                osc_run_hook("delete_comment", $_id);
                                                                             }
                                                                             osc_add_flash_ok_message( _m('The comments have been deleted'), 'admin');
                                                     break;
@@ -60,7 +60,7 @@
                                                                                 if($iUpdated) {
                                                                                     $this->sendCommentActivated($_id);
                                                                                 }
-                                                                                osc_add_hook("activate_comment", $_id);
+                                                                                osc_run_hook("activate_comment", $_id);
                                                                             }
                                                                             osc_add_flash_ok_message( _m('The comments have been approved'), 'admin');
                                                     break;
@@ -70,7 +70,7 @@
                                                                                     array('b_active' => 0),
                                                                                     array('pk_i_id' => $_id)
                                                                                 );
-                                                                                osc_add_hook("deactivate_comment", $_id);
+                                                                                osc_run_hook("deactivate_comment", $_id);
                                                                             }
                                                                             osc_add_flash_ok_message( _m('The comments have been disapproved'), 'admin');
                                                     break;
@@ -83,7 +83,7 @@
                                                                                 if($iUpdated) {
                                                                                     $this->sendCommentActivated($_id);
                                                                                 }
-                                                                                osc_add_hook("enable_comment", $_id);
+                                                                                osc_run_hook("enable_comment", $_id);
                                                                             }
                                                                             osc_add_flash_ok_message( _m('The comments have been unblocked'), 'admin' );
                                                     break;
@@ -93,7 +93,7 @@
                                                                                     array('b_enabled' => 0),
                                                                                     array('pk_i_id' => $_id)
                                                                                 );
-                                                                                osc_add_hook("disable_comment", $_id);
+                                                                                osc_run_hook("disable_comment", $_id);
                                                                             }
                                                                             osc_add_flash_ok_message( _m('The comments have been blocked'), 'admin');
                                                     break;
@@ -124,28 +124,28 @@
                                                 if($iUpdated) {
                                                     $this->sendCommentActivated($id);
                                                 }
-                                                osc_add_hook("activate_comment", $id);
+                                                osc_run_hook("activate_comment", $id);
                                                 osc_add_flash_ok_message( _m('The comment has been approved'), 'admin');
                                             } else if($value=='INACTIVE') {
                                                 $iUpdated = $this->itemCommentManager->update(
                                                         array('b_active' => 0)
                                                         ,array('pk_i_id' => $id)
                                                 );
-                                                osc_add_hook("deactivate_comment", $id);
+                                                osc_run_hook("deactivate_comment", $id);
                                                 osc_add_flash_ok_message( _m('The comment has been disapproved'), 'admin');
                                             } else if($value=='ENABLE') {
                                                 $iUpdated = $this->itemCommentManager->update(
                                                         array('b_enabled' => 1)
                                                         ,array('pk_i_id' => $id)
                                                 );
-                                                osc_add_hook("enable_comment", $id);
+                                                osc_run_hook("enable_comment", $id);
                                                 osc_add_flash_ok_message( _m('The comment has been enabled'), 'admin');
                                             } else if($value=='DISABLE') {
                                                 $iUpdated = $this->itemCommentManager->update(
                                                         array('b_enabled' => 0)
                                                         ,array('pk_i_id' => $id)
                                                 );
-                                                osc_add_hook("disable_comment", $id);
+                                                osc_run_hook("disable_comment", $id);
                                                 osc_add_flash_ok_message( _m('The comment has been disabled'), 'admin');
                                             }
 

@@ -202,12 +202,9 @@ FB;
                         if(isset($field) && isset($field['s_options'])) {
                             $options = explode(",", $field['s_options']);
                             if(count($options)>0) {
-                                echo '<select name="meta['.$field['pk_i_id'].']" id="meta_' . $field['s_slug'] . '">';
-                                echo '<option value=""></option>';
-                                foreach($options as $option) {
-                                    echo '<option value="'.osc_esc_html($option).'"'.($field['s_value']==$option?' selected="selected"':'').'>'.$option.'</option>';
+                                foreach($options as $key => $option) {
+                                    echo '<label for="meta_' . $field['s_slug'] . '_'.$key.'"><input type="radio" name="meta['.$field['pk_i_id'].']" id="meta_' . $field['s_slug'] . '_'.$key.'" value="'.osc_esc_html($option).'"'.($field['s_value']==$option?' checked="checked"':'').' />'.$option.'</label><br/>';
                                 }
-                                echo '</select>';
                             }
                         }
                     } else {
@@ -292,6 +289,8 @@ FB;
                         echo '<div class="row two_input">';
                     } else if($field['e_type']=='CHECKBOX') {
                         echo '<div class="row checkbox">';
+                    } else if($field['e_type']=='RADIO') {
+                        echo '<div class="row radio">';
                     } else {
                         echo '<div class="row one_input">';
                     }

@@ -66,7 +66,6 @@
                 type: 'POST',
                 url: $(this).attr('action'),
                 data: $(this).serialize(),
-                // show server request response message
                 success: function(data) {
                     var ret = eval( "(" + data + ")");
                     var message = "";

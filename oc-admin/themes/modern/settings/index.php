@@ -166,7 +166,7 @@
                         <div class="form-label"><?php _e('Page description'); ?></div>
                         <div class="form-controls"><input type="text" class="xlarge" name="pageDesc" value="<?php echo osc_esc_html( osc_page_description() ); ?>" /></div></div>
                     <div class="form-row">
-                        <div class="form-label"><?php _e('Admin e-mail'); ?></div>
+                        <div class="form-label"><?php _e('Contact e-mail'); ?></div>
                         <div class="form-controls"><input type="text" class="large" name="contactEmail" value="<?php echo osc_esc_html( osc_contact_email() ); ?>" /></div></div>
                     <div class="form-row">
                         <div class="form-label"><?php _e('Default language'); ?></div>

@@ -144,10 +144,26 @@
          */
         public function get($key, $section = "osclass")
         {
-            if ( !isset($this->pref[$section][$key]) ) {
-                return '';
+            if (isset($this->pref[$section]) && isset($this->pref[$section][$key])) {
+                return $this->pref[$section][$key];
             }
-            return $this->pref[$section][$key];
+            return '';
+        }
+
+        /**
+         * Get value, given a preference name and a section name.
+         *
+         * @access public
+         * @since unknown
+         * @param string $section
+         * @return array
+         */
+        public function getSection($section = "osclass")
+        {
+            if (isset($this->pref[$section]) && is_array($this->pref[$section])) {
+                return $this->pref[$section];
+            }
+            return array();
         }
 
         /**
@@ -189,4 +205,3 @@
     }
 
     /* file end: ./oc-includes/osclass/model/Preference.php */
-?>

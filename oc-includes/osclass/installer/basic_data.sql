@@ -4,7 +4,7 @@ INSERT INTO /*TABLE_PREFIX*/t_currency (pk_c_code, s_name, s_description, b_enab
     ('EUR', 'European Union euro', 'Euro €', true);
 
 INSERT INTO /*TABLE_PREFIX*/t_preference VALUES
-    ('osclass', 'version', 359, 'INTEGER')
+    ('osclass', 'version', 361, 'INTEGER')
     ,('osclass', 'theme', 'bender', 'STRING')
     ,('osclass', 'admin_language', 'en_US', 'STRING')
     ,('osclass', 'language', 'en_US', 'STRING')
@@ -100,6 +100,7 @@ INSERT INTO /*TABLE_PREFIX*/t_preference VALUES
     ,('osclass', 'seo_url_search_prefix', '', 'STRING')
     ,('osclass', 'subdomain_type', '', 'STRING')
     ,('osclass', 'subdomain_host', '', 'STRING')
+    ,('osclass', 'recaptcha_version', '2', 'STRING')
     ,('osclass', 'enableField#f_price@items', '1', 'BOOLEAN')
     ,('osclass', 'enableField#images@items', '1', 'BOOLEAN')
     ,('osclass', 'numImages@items', '4', 'INTEGER')
@@ -120,7 +121,7 @@ INSERT INTO /*TABLE_PREFIX*/t_preference VALUES
     ,('osclass', 'reg_user_post_comments', '0', 'BOOLEAN')
     ,('osclass', 'reg_user_can_contact', '0', 'BOOLEAN')
     ,('osclass', 'marketAllowExternalSources', '0', 'BOOLEAN')
-    ,('osclass', 'marketURL', 'http://market.osclass.org/api/v2/', 'STRING')
+    ,('osclass', 'marketURL', 'https://market.osclass.org/api/v2/', 'STRING')
     ,('osclass', 'marketAPIConnect', '', 'STRING')
     ,('osclass', 'marketCategories', '', 'STRING')
     ,('osclass', 'marketDataUpdate', '0', 'INTEGER')

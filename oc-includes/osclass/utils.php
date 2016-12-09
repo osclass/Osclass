@@ -1196,17 +1196,26 @@ function _zip_folder_pclzip($archive_folder, $archive_name) {
 }
 
 function osc_check_recaptcha() {
+    if(osc_recaptcha_version()=="2") {
+        if ( Params::getParam("g-recaptcha-response") != '') {
+            require_once osc_lib_path() . 'recaptchalib/autoload.php';
+            $recaptcha = new \ReCaptcha\ReCaptcha(osc_recaptcha_private_key());
+            $resp = $recaptcha->verify(Params::getParam("g-recaptcha-response"), Params::getServerParam('REMOTE_ADDR'));
+            if ($resp->isSuccess()) {
+                return true;
+            }
+        }
+    } else {
+        require_once osc_lib_path() . 'recaptchalib.php';
+        if ( Params::getParam("recaptcha_challenge_field") != '') {
+            $resp = recaptcha_check_answer (osc_recaptcha_private_key()
+                ,Params::getServerParam("REMOTE_ADDR")
+                ,Params::getParam("recaptcha_challenge_field")
+                ,Params::getParam("recaptcha_response_field"));
 
-    require_once osc_lib_path() . 'recaptchalib.php';
-    if ( Params::getParam("recaptcha_challenge_field") != '') {
-        $resp = recaptcha_check_answer (osc_recaptcha_private_key()
-                                        ,Params::getServerParam("REMOTE_ADDR")
-                                        ,Params::getParam("recaptcha_challenge_field")
-                                        ,Params::getParam("recaptcha_response_field"));
-
-        return $resp->is_valid;
+            return $resp->is_valid;
+        }
     }
-
     return false;
 }
 
@@ -1855,6 +1864,7 @@ function osc_do_upgrade() {
                             /**********************************
                              ** EXECUTING ADDITIONAL ACTIONS **
                              **********************************/
+                            osc_set_preference('update_core_json', '');
                             if (file_exists(osc_lib_path() . 'osclass/upgrade-funcs.php')) {
                                 // There should be no errors here
                                 define('AUTO_UPGRADE', true);
@@ -1937,37 +1947,43 @@ function osc_do_auto_upgrade() {
     $data = preg_replace('|^\?\((.*?)\);$|', '$01', $data);
     $json = json_decode($data);
     $result['error'] = 0;
-    if($json->version>osc_version() && osc_check_dir_writable()) {
-        osc_set_preference('update_core_json', $data);
-        if(substr($json->version,0,1)!=substr(osc_version(),0,1)) {
-            // NEW BRANCH
-            if(strpos(osc_auto_update(), 'branch')!==false) {
-                osc_run_hook('before_auto_upgrade');
-                $result = osc_do_upgrade();
-                osc_run_hook('after_auto_upgrade', $result);
+    if(isset($json->version)) {
+        if ($json->version > osc_version()) {
+            osc_set_preference('update_core_json', $data);
+            if (osc_check_dir_writable()) {
+                if (substr($json->version, 0, 1) != substr(osc_version(), 0, 1)) {
+                    // NEW BRANCH
+                    if (strpos(osc_auto_update(), 'branch') !== false) {
+                        osc_run_hook('before_auto_upgrade');
+                        $result = osc_do_upgrade();
+                        osc_run_hook('after_auto_upgrade', $result);
+                    }
+                } else if (substr($json->version, 1, 1) != substr(osc_version(), 1, 1)) {
+                    // MAJOR RELEASE
+                    if (strpos(osc_auto_update(), 'branch') !== false || strpos(osc_auto_update(), 'major') !== false) {
+                        osc_run_hook('before_auto_upgrade');
+                        $result = osc_do_upgrade();
+                        osc_run_hook('after_auto_upgrade', $result);
+                    }
+                } else if (substr($json->version, 2, 1) != substr(osc_version(), 2, 1)) {
+                    // MINOR RELEASE
+                    if (strpos(osc_auto_update(), 'branch') !== false || strpos(osc_auto_update(), 'major') !== false || strpos(osc_auto_update(), 'minor') !== false) {
+                        osc_run_hook('before_auto_upgrade');
+                        $result = osc_do_upgrade();
+                        osc_run_hook('after_auto_upgrade', $result);
+                    }
+                }
             }
-        } else if(substr($json->version,1,1)!=substr(osc_version(),1,1)) {
-            // MAJOR RELEASE
-            if(strpos(osc_auto_update(), 'branch')!==false || strpos(osc_auto_update(), 'major')!==false) {
-                osc_run_hook('before_auto_upgrade');
-                $result = osc_do_upgrade();
-                osc_run_hook('after_auto_upgrade', $result);
-            }
-        } else if(substr($json->version,2,1)!=substr(osc_version(),2,1)) {
-            // MINOR RELEASE
-            if(strpos(osc_auto_update(), 'branch')!==false || strpos(osc_auto_update(), 'major')!==false || strpos(osc_auto_update(), 'minor')!==false) {
-                osc_run_hook('before_auto_upgrade');
-                $result = osc_do_upgrade();
-                osc_run_hook('after_auto_upgrade', $result);
-            }
+        } else {
+            osc_set_preference('update_core_json', '');
         }
+        osc_set_preference('last_version_check', time());
     } else {
         osc_set_preference('update_core_json', '');
+        osc_set_preference('last_version_check', time() - 23*3600);
     }
-    osc_set_preference('last_version_check', time());
 
     if($result['error']==0 || $result['error']==6) {
-        osc_set_preference('update_core_json', '');
         if(strpos(osc_auto_update(), 'plugins')!==false) {
             $total = osc_check_plugins_update(true);
             if($total>0) {

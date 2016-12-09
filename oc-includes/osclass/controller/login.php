@@ -99,17 +99,19 @@
 										osc_run_hook('before_login');
 
 										$url_redirect = osc_get_http_referer();
-										$page_redirect = '';
-										if(osc_rewrite_enabled()) {
-											if($url_redirect!='') {
-												$request_uri = urldecode(preg_replace('@^' . osc_base_url() . '@', "", $url_redirect));
-												$tmp_ar = explode("?", $request_uri);
-												$request_uri = $tmp_ar[0];
-												$rules = Rewrite::newInstance()->listRules();
-												foreach($rules as $match => $uri) {
-													if(preg_match('#'.$match.'#', $request_uri, $m)) {
-														$request_uri = preg_replace('#'.$match.'#', $uri, $request_uri);
-														if(preg_match('|([&?]{1})page=([^&]*)|', '&'.$request_uri.'&', $match)) {
+                                        if(osc_rewrite_enabled() && $url_redirect!='') {
+                                            // if comes from oc-admin/
+                                            if(strpos($url_redirect,'oc-admin')!==false) {
+                                                $url_redirect = osc_user_dashboard_url();
+                                            } else {
+                                                $request_uri = urldecode(preg_replace('@^' . osc_base_url() . '@', "", $url_redirect));
+                                                $tmp_ar = explode("?", $request_uri);
+                                                $request_uri = $tmp_ar[0];
+                                                $rules = Rewrite::newInstance()->listRules();
+                                                foreach($rules as $match => $uri) {
+                                                    if(preg_match('#'.$match.'#', $request_uri, $m)) {
+                                                        $request_uri = preg_replace('#'.$match.'#', $uri, $request_uri);
+                                                        if(preg_match('|([&?]{1})page=([^&]*)|', '&'.$request_uri.'&', $match)) {
 															$page_redirect = $match[2];
 															if($page_redirect=='' || $page_redirect=='login') {
 																$url_redirect = osc_user_dashboard_url();

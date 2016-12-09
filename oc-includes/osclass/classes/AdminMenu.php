@@ -49,6 +49,11 @@
         {
             $this->add_menu( __('Dashboard'), osc_admin_base_url(), 'dash', 'moderator');
 
+            $this->add_menu( __('Market'), osc_admin_base_url(true) .'?page=market', 'market', 'administrator');
+            $this->add_submenu( 'market', __('Themes'), osc_admin_base_url(true) .'?page=market&action=themes', 'market_view_themes', 'administrator');
+            $this->add_submenu( 'market', __('Plugins'), osc_admin_base_url(true).'?page=market&action=plugins', 'market_view_plugins', 'administrator');
+            $this->add_submenu( 'market', __('Languages'), osc_admin_base_url(true).'?page=market&action=languages', 'market_view_languages', 'administrator');
+
             $this->add_menu( __('Listings'), osc_admin_base_url(true).'?page=items', 'items', 'moderator');
             $this->add_submenu( 'items', __('Manage listings'), osc_admin_base_url(true).'?page=items', 'items_manage', 'moderator');
             $this->add_submenu( 'items', __('Reported listings'), osc_admin_base_url(true).'?page=items&action=items_reported', 'items_reported', 'moderator');
@@ -56,11 +61,6 @@
             $this->add_submenu( 'items', __('Comments'), osc_admin_base_url(true).'?page=comments', 'items_comments', 'moderator');
             $this->add_submenu( 'items', __('Custom fields'), osc_admin_base_url(true).'?page=cfields', 'items_cfields', 'administrator');
             $this->add_submenu( 'items', __('Settings'), osc_admin_base_url(true).'?page=items&action=settings', 'items_settings', 'administrator');
-
-            $this->add_menu( __('Market'), osc_admin_base_url(true) .'?page=market', 'market', 'administrator');
-            $this->add_submenu( 'market', __('Themes'), osc_admin_base_url(true) .'?page=market&action=themes', 'market_view_themes', 'administrator');
-            $this->add_submenu( 'market', __('Plugins'), osc_admin_base_url(true).'?page=market&action=plugins', 'market_view_plugins', 'administrator');
-            $this->add_submenu( 'market', __('Languages'), osc_admin_base_url(true).'?page=market&action=languages', 'market_view_languages', 'administrator');
 
             $this->add_menu( __('Appearance'), osc_admin_base_url(true) .'?page=appearance', 'appearance', 'administrator');
             $this->add_submenu( 'appearance', __('Manage themes'), osc_admin_base_url(true) .'?page=appearance', 'appearance_manage', 'administrator');

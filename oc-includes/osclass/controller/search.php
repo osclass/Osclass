@@ -167,7 +167,11 @@
             $uriParams = Params::getParamsAsArray();
             $searchUri = osc_search_url($uriParams);
             if($this->uri!='feed') {
-                if (str_replace("%20", '+', $searchUri) != str_replace("%20", '+', (WEB_PATH . $this->uri))) {
+                $_base_url = WEB_PATH;
+                if( MULTISITE==1 ) {
+                    $_base_url = osc_multisite_url();
+                }
+                if (str_replace("%20", '+', $searchUri) != str_replace("%20", '+', ($_base_url . $this->uri))) {
                     $this->redirectTo($searchUri, 301);
                 }
             }
@@ -546,6 +550,14 @@
             $server_signature = Session::newInstance()->_set('alert_signature', $signature);
 
             $this->_exportVariableToView('search_alert', $encoded_alert);
+            $alerts_sub = 0;
+            if(osc_is_web_user_logged_in()) {
+                $alerts = Alerts::newInstance()->findBySearchAndUser($json, osc_logged_user_id());
+                if(count($alerts)>0) {
+                    $alerts_sub = 1;
+                }
+            }
+            $this->_exportVariableToView('search_alert_subscribed', $alerts_sub);
 
             // calling the view...
             if( count($aItems) === 0 ) {
@@ -568,35 +580,26 @@
 
                     if(osc_count_items()>0) {
                         while(osc_has_items()) {
-                            if(osc_count_item_resources() > 0){
+
+                            $itemArray = array(
+                                'title' => osc_item_title(),
+                                'link' => htmlentities( osc_item_url() , ENT_COMPAT, "UTF-8"),
+                                'description' => osc_item_description(),
+                                'country' => osc_item_country(),
+                                'region' => osc_item_region(),
+                                'city' => osc_item_city(),
+                                'city_area' => osc_item_city_area(),
+                                'category' => osc_item_category(),
+                                'dt_pub_date' => osc_item_pub_date()
+                            );
+
+                            if(osc_count_item_resources() > 0) {
                                 osc_has_item_resources();
-                                $feed->addItem(array(
+                                $itemArray['image'] = array('url' => htmlentities(osc_resource_thumbnail_url(), ENT_COMPAT, "UTF-8"),
                                     'title' => osc_item_title(),
-                                    'link' => htmlentities( osc_item_url(),  ENT_COMPAT, "UTF-8" ),
-                                    'description' => osc_item_description(),
-                                    'country' => osc_item_country(),
-                                    'region' => osc_item_region(),
-                                    'city' => osc_item_city(),
-                                    'city_area' => osc_item_city_area(),
-                                    'category' => osc_item_category(),
-                                    'dt_pub_date' => osc_item_pub_date(),
-                                    'image'     => array(  'url'    => htmlentities(osc_resource_thumbnail_url(),  ENT_COMPAT, "UTF-8"),
-                                                           'title'  => osc_item_title(),
-                                                           'link'   => htmlentities( osc_item_url() ,  ENT_COMPAT, "UTF-8") )
-                                ));
-                            } else {
-                                $feed->addItem(array(
-                                    'title' => osc_item_title(),
-                                    'link' => htmlentities( osc_item_url() , ENT_COMPAT, "UTF-8"),
-                                    'description' => osc_item_description(),
-                                    'country' => osc_item_country(),
-                                    'region' => osc_item_region(),
-                                    'city' => osc_item_city(),
-                                    'city_area' => osc_item_city_area(),
-                                    'category' => osc_item_category(),
-                                    'dt_pub_date' => osc_item_pub_date()
-                                ));
+                                    'link' => htmlentities(osc_item_url(), ENT_COMPAT, "UTF-8"));
                             }
+                            $feed->addItem($itemArray);
                         }
                     }
 

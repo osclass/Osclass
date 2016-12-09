@@ -218,12 +218,12 @@
     }
 
     /**
-     * Gets formated price of current premium
+     * Gets formatted price of current premium
      *
      * @return string
      */
     function osc_premium_formated_price() {
-        return (string) osc_format_price( osc_premium_price() );
+        return (string) osc_format_price( osc_premium_price(), osc_premium_currency_symbol() );
     }
 
     /**

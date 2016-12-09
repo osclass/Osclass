@@ -110,7 +110,7 @@
             return "";
         }
 
-        static function getParamsAsArray($what = "", $xss_check = true)
+        static function getParamsAsArray($what = "", $htmlencode = false, $xss_check = true, $quotes_encode = true)
         {
             switch ($what) {
                 case("get"):
@@ -133,7 +133,7 @@
                 break;
             }
 
-            $value = self::_purify($value, $xss_check);
+            $value = self::_purify($value, $htmlencode, $xss_check, $quotes_encode);
 
             if(get_magic_quotes_gpc()) {
                 return strip_slashes_extended($value);

@@ -77,7 +77,7 @@
             }
 
             $info = $this->loadThemeInfo($this->theme);
-            if($info['template'] != '' ) {
+            if(isset($info['template']) && $info['template'] != '' ) {
 				//$this->setCurrentTheme($info['template']);
 				$parent_functions_path = osc_base_path() . 'oc-content/themes/' . $info['template'] . '/functions.php';
 				if( file_exists($parent_functions_path) ) {

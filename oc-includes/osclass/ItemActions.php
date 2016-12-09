@@ -60,6 +60,7 @@
         public function add()
         {
             $aItem       = $this->data;
+            $aItem = osc_apply_filter('item_add_prepare_data', $aItem);
             $is_spam     = 0;
             $enabled     = 1;
             $code        = osc_genRandomPassword();
@@ -166,7 +167,8 @@
             // hook pre add or edit
             // DEPRECATED: pre_item_post will be removed in 3.4
             osc_run_hook('pre_item_post');
-            osc_run_hook('pre_item_add', $aItem);
+            osc_run_hook('pre_item_add', $aItem, $flash_error);
+            osc_apply_filter('pre_item_add_error', $flash_error, $aItem);
 
             // Handle error
             if ($flash_error) {
@@ -287,6 +289,7 @@
 
         function edit() {
             $aItem       = $this->data;
+            $aItem = osc_apply_filter('item_edit_prepare_data', $aItem);
             $flash_error = '';
 
             // Sanitize
@@ -369,7 +372,8 @@
             // hook pre add or edit
             // DEPRECATED : preitem_psot will be removed in 3.4
             osc_run_hook('pre_item_post');
-            osc_run_hook('pre_item_edit', $aItem);
+            osc_run_hook('pre_item_edit', $aItem, $flash_error);
+            osc_apply_filter('pre_item_edit_error', $flash_error, $aItem);
 
             // Handle error
             if ($flash_error) {
@@ -785,7 +789,6 @@
             osc_run_hook('before_delete_item', $itemId);
 
             if( $item['s_secret'] == $secret ) {
-                $this->deleteResourcesFromHD( $item['pk_i_id'] );
                 Log::newInstance()->insertLog( 'item', 'delete', $itemId, $item['s_title'], $this->is_admin ? 'admin' : 'user', $this->is_admin ? osc_logged_admin_id() : osc_logged_user_id() );
                 $result = $this->manager->deleteByPrimaryKey( $itemId );
                 if($result!==false) {
@@ -801,16 +804,16 @@
          * Delete resources from the hard drive
          * @param <type> $itemId
          */
-        public function deleteResourcesFromHD( $itemId )
+        static public function deleteResourcesFromHD( $itemId, $is_admin = false )
         {
             $resources = ItemResource::newInstance()->getAllResourcesFromItem($itemId);
-            Log::newInstance()->insertLog('itemActions', 'deleteResourcesFromHD', $itemId, $itemId, $this->is_admin?'admin':'user', $this->is_admin?osc_logged_admin_id():osc_logged_user_id());
+            Log::newInstance()->insertLog('itemActions', 'deleteResourcesFromHD', $itemId, $itemId, $is_admin?'admin':'user', $is_admin?osc_logged_admin_id():osc_logged_user_id());
             $log_ids = '';
             foreach($resources as $resource) {
-                osc_deleteResource($resource['pk_i_id'], $this->is_admin);
+                osc_deleteResource($resource['pk_i_id'], $is_admin);
                 $log_ids .= $resource['pk_i_id'].",";
             }
-            Log::newInstance()->insertLog('itemActions', 'deleteResourcesFromHD', $itemId, substr($log_ids,0, 250), $this->is_admin?'admin':'user', $this->is_admin?osc_logged_admin_id():osc_logged_user_id());
+            Log::newInstance()->insertLog('itemActions', 'deleteResourcesFromHD', $itemId, substr($log_ids,0, 250), $is_admin?'admin':'user', $is_admin?osc_logged_admin_id():osc_logged_user_id());
         }
 
         /**
@@ -990,16 +993,15 @@
                         User::newInstance()->update( array( 'i_comments' => $user['i_comments'] + 1)
                                                     ,array( 'pk_i_id'    => $user['pk_i_id'] ) );
                     }
+                    //Notify user (only if comment is active)
+                    if ( osc_notify_new_comment_user() ) {
+                        osc_run_hook('hook_email_new_comment_user', $aItem);
+                    }
                 }
 
                 //Notify admin
                 if ( osc_notify_new_comment() ) {
                     osc_run_hook('hook_email_new_comment_admin', $aItem);
-                }
-
-                //Notify user
-                if ( osc_notify_new_comment_user() ) {
-                    osc_run_hook('hook_email_new_comment_user', $aItem);
                 }
 
                 osc_run_hook( 'add_comment', $commentID );
@@ -1183,8 +1185,25 @@
                 $dt_expiration = Params::getParam('dt_expiration');
                 if($dt_expiration==-1) {
                     $aItem['dt_expiration'] = '';
-                } else if($dt_expiration!='' && (preg_match('|^([0-9]+)$|', $dt_expiration, $match) || preg_match('|([0-9]{4})-([0-9]{2})-([0-9]{2}) ([0-9]{2}):([0-9]{2}):([0-9]{2})|', $dt_expiration, $match))) {
+                } else if($dt_expiration!='' &&
+                    (ctype_digit($dt_expiration) ||
+                        preg_match('|^([0-9]{4})-([0-9]{2})-([0-9]{2}) ([0-9]{2}):([0-9]{2}):([0-9]{2})$|', $dt_expiration, $match) ||
+                        preg_match('|^([0-9]{4})-([0-9]{2})-([0-9]{2})$|', $dt_expiration, $match)
+                    )) {
                     $aItem['dt_expiration'] = $dt_expiration;
+                    $_category = Category::newInstance()->findByPrimaryKey($aItem['catId']);
+                    if(ctype_digit($dt_expiration)) {
+                        if(!$this->is_admin && $dt_expiration>$_category['i_expiration_days']) {
+                            $aItem['dt_expiration'] = $_category['i_expiration_days'];
+                        }
+                    } else {
+                        if(preg_match('|^([0-9]{4})-([0-9]{2})-([0-9]{2})$|', $dt_expiration, $match)) {
+                            $aItem['dt_expiration'] .= " 23:59:59";
+                        }
+                        if(!$this->is_admin && strtotime($dt_expiration)>(time()+$_category['i_expiration_days']*24*3600)) {
+                            $aItem['dt_expiration'] = $_category['i_expiration_days'];
+                        }
+                    }
                 } else {
                     $_category = Category::newInstance()->findByPrimaryKey($aItem['catId']);
                     $aItem['dt_expiration'] = $_category['i_expiration_days'];
@@ -1275,6 +1294,7 @@
                 $aItem['currency'] = null;
             }
 
+            $aItem = osc_apply_filter('item_prepare_data', $aItem);
             $this->data = $aItem;
         }
 
@@ -1388,7 +1408,9 @@
                             // Create normal size
                             $normal_path = $path = $tmpName."_normal";
                             $size = explode('x', osc_normal_dimensions());
-                            $img = ImageResizer::fromFile($tmpName)->autoRotate()->resizeTo($size[0], $size[1]);
+                            $img = $imgres->autoRotate();
+                            
+                            $img = $img->resizeTo($size[0], $size[1]);
                             if( osc_is_watermark_text() ) {
                                 $img->doWatermarkText(osc_watermark_text(), osc_watermark_text_color());
                             } else if ( osc_is_watermark_image() ){

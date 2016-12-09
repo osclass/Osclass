@@ -33,6 +33,7 @@
         private $_color;
         private $_width;
         private $_height;
+        private $_exif;
         private $_watermarked = false;
 
 
@@ -49,6 +50,7 @@
                 throw new Exception(sprintf(__("%s is corrupt or broken!"), $imagePath));
             }
 
+            $this->image_info = @getimagesize($imagePath);
             if(osc_use_imagick()) {
                 $this->im = new Imagick($imagePath);
                 $geometry = $this->im->getImageGeometry();
@@ -59,9 +61,14 @@
                 $this->im = imagecreatefromstring($content);
                 $this->_width = imagesx($this->im);
                 $this->_height = imagesy($this->im);
+
+                $this->_exif = array();
+                if(@$this->image_info['mime']=='image/jpeg' && function_exists('exif_read_data')) {
+                    $this->_exif = @exif_read_data($imagePath);
+                }
+
             }
 
-            $this->image_info = @getimagesize($imagePath);
             switch (@$this->image_info['mime']) {
                 case 'image/gif':
                 case 'image/png':
@@ -96,6 +103,8 @@
 
         public function getExt() { return $this->ext; }
         public function getMime() { return $this->mime; }
+        public function getWidth() { return $this->_width; }
+        public function getHeight() { return $this->_height; }
 
         public function resizeTo($width, $height, $force_aspect = null, $upscale = true) {
             if($force_aspect==null) {
@@ -187,40 +196,45 @@
                         }
                         imagejpeg($this->im, $imagePath);
                         break;
-                }               
+                }
             }
         }
 
         public function autoRotate() {
             if(osc_use_imagick()) {
                 switch($this->im->getImageOrientation()) {
-                    case 1:
+                    case imagick::ORIENTATION_TOPRIGHT:
+                        $this->im->flopImage();
+                        break;
+
+                    case imagick::ORIENTATION_BOTTOMRIGHT:
+                        $this->im->rotateimage(new ImagickPixel('none'), 180); // rotate 180 degrees
+                        break;
+
+                    case imagick::ORIENTATION_BOTTOMLEFT:
+                        $this->im->flopImage();
+                        $this->im->rotateImage(new ImagickPixel('none'), 180);
+                        break;
+
+                    case imagick::ORIENTATION_LEFTTOP:
+                        $this->im->flopImage();
+                        $this->im->rotateImage(new ImagickPixel('none'), -90);
+                        break;
+
+                    case imagick::ORIENTATION_RIGHTTOP:
+                        $this->im->rotateimage(new ImagickPixel('none'), 90); // rotate 90 degrees CW
+                        break;
+
+                    case imagick::ORIENTATION_RIGHTBOTTOM:
+                        $this->im->flopImage();
+                        $this->im->rotateImage(new ImagickPixel('none'), 90);
+                        break;
+
+                    case imagick::ORIENTATION_LEFTBOTTOM:
+                        $this->im->rotateimage(new ImagickPixel('none'), -90); // rotate 90 degrees CCW
+                        break;
                     default:
                         // DO NOTHING, THE IMAGE IS OK OR WE DON'T KNOW IF IT'S ROTATED
-                        break;
-                    case 2:
-                        $this->im->flipImage();
-                        break;
-                    case 3:
-                        $this->im->rotateImage(new ImagickPixel('none'), 180);
-                        break;
-                    case 4:
-                        $this->im->flipImage();
-                        $this->im->rotateImage(new ImagickPixel('none'), 180);
-                        break;
-                    case 5:
-                        $this->im->flipImage();
-                        $this->im->rotateImage(new ImagickPixel('none'), 90);
-                        break;
-                    case 6:
-                        $this->im->rotateImage(new ImagickPixel('none'), 90);
-                        break;
-                    case 7:
-                        $this->im->flipImage();
-                        $this->im->rotateImage(new ImagickPixel('none'), 270);
-                        break;
-                    case 8:
-                        $this->im->rotateImage(new ImagickPixel('none'), 270);
                         break;
                 }
             } else {
@@ -231,30 +245,44 @@
                             // DO NOTHING, THE IMAGE IS OK OR WE DON'T KNOW IF IT'S ROTATED
                             break;
                         case 2:
-                            $this->im = imageflip($this->im, IMG_FLIP_HORIZONTAL);
+                            imageflip($this->im, IMG_FLIP_HORIZONTAL);
                             break;
                         case 3:
                             $this->im = imagerotate($this->im, 180, 0);
                             break;
                         case 4:
                             $this->im = imagerotate($this->im, 180, 0);
-                            $this->im = imageflip($this->im, IMG_FLIP_HORIZONTAL);
+                            imageflip($this->im, IMG_FLIP_HORIZONTAL);
                             break;
                         case 5:
-                            $this->im = imagerotate($this->im, 90, 0);
-                            $this->im = imageflip($this->im, IMG_FLIP_HORIZONTAL);
+                            $this->im = imagerotate($this->im, 270, 0);
+                            imageflip($this->im, IMG_FLIP_HORIZONTAL);
+                            $aux = $this->_height;
+                            $this->_height = $this->_width;
+                            $this->_width = $aux;
                             break;
                         case 6:
-                            $this->im = imagerotate($this->im, 90, 0);
+                            $this->im = imagerotate($this->im, -90, 0);
+                            $aux = $this->_height;
+                            $this->_height = $this->_width;
+                            $this->_width = $aux;
                             break;
                         case 7:
-                            $this->im = imagerotate($this->im, 270, 0);
-                            $this->im = imageflip($this->im, IMG_FLIP_HORIZONTAL);
+                            $this->im = imagerotate($this->im, 90, 0);
+                            imageflip($this->im, IMG_FLIP_HORIZONTAL);
+                            $aux = $this->_height;
+                            $this->_height = $this->_width;
+                            $this->_width = $aux;
                             break;
                         case 8:
-                            $this->im = imagerotate($this->im, 270, 0);
+                            $this->im = imagerotate($this->im, 90, 0);
+                            $aux = $this->_height;
+                            $this->_height = $this->_width;
+                            $this->_width = $aux;
                             break;
                     }
+                    $this->_exif['Orientation'] = 1;
+
                 }
             }
             return $this;

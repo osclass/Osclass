@@ -78,7 +78,7 @@
             <tbody><tr valign="top">
                 <td width="85" style="width: 85px;"><img src="http://static.osclass.org/mailing/20130730/images/t_1.gif" width="85" height="48" alt=""></td>
                 <td width="420" style="width: 420px;">
-                    <div style="font-size:25px;line-height:25px;border-bottom:solid 1px #dbdbdb;padding-bottom:5px;padding-top:5px"><a href="http://osclass.org/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=version_340_RC&amp;utm_content=sub-title" style="color:#555555;text-decoration:none;">Osclass 3.5 highlights</a></div><img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="420" height="25" alt="">
+                    <div style="font-size:25px;line-height:25px;border-bottom:solid 1px #dbdbdb;padding-bottom:5px;padding-top:5px"><a href="http://osclass.org/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=version_340_RC&amp;utm_content=sub-title" style="color:#555555;text-decoration:none;">Osclass 3.6 highlights</a></div><img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="420" height="25" alt="">
                     <div style="font-size:13px; line-height:15px;color:#555555;">
                         <ul style="color:#555555;margin: 0;padding: 0;padding-left: 16px; list-style-type: disc !important;">
                             <li>Connect your website with <a href="http://market.osclass.org/">Osclass' Market</a></li>

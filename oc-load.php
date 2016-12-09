@@ -16,7 +16,7 @@
  */
 
 
-define('OSCLASS_VERSION', '3.5.9');
+define('OSCLASS_VERSION', '3.6.1');
 
 if( !defined('ABS_PATH') ) {
     define( 'ABS_PATH', str_replace('\\', '/', dirname(__FILE__) . '/' ));
@@ -254,6 +254,7 @@ osc_register_script('jquery-fineuploader', osc_assets_url('js/fineuploader/jquer
 
 
 Plugins::init();
+Translation::init();
 osc_csrfguard_start();
 
 if( OC_ADMIN ) {

@@ -50,7 +50,7 @@
     }
 
     $aMessages = array();
-    osc_set_preference('last_version_check', time());
+    //osc_set_preference('last_version_check', time());
 
     $conn = DBConnectionClass::newInstance();
     $c_db = $conn->getOsclassDb();
@@ -513,7 +513,15 @@ CREATE TABLE %st_item_description_tmp (
         osc_set_preference('marketURL', 'http://market.osclass.org/api/v2/');
     }
 
-    osc_changeVersionTo(359);
+    if(osc_version() < 370) {
+        osc_set_preference('marketURL', 'https://market.osclass.org/api/v2/');
+        osc_set_preference('recaptcha_version', '1', 'STRING');
+        $comm->query(sprintf("ALTER TABLE  %st_category_description MODIFY s_slug VARCHAR(255) NOT NULL", DB_TABLE_PREFIX));
+        $comm->query(sprintf("ALTER TABLE  %st_preference MODIFY s_section VARCHAR(128) NOT NULL", DB_TABLE_PREFIX));
+        $comm->query(sprintf("ALTER TABLE  %st_preference MODIFY s_name VARCHAR(128) NOT NULL", DB_TABLE_PREFIX));
+    }
+
+    osc_changeVersionTo(370);
 
     if(!defined('IS_AJAX') || !IS_AJAX) {
         if(empty($aMessages)) {

@@ -2718,7 +2718,7 @@ msgid "Page description"
 msgstr ""
 
 #: oc-admin/themes/modern/settings/index.php:162
-msgid "Admin e-mail"
+msgid "Contact e-mail"
 msgstr ""
 
 #: oc-admin/themes/modern/settings/index.php:165

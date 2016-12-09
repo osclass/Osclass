@@ -19,10 +19,28 @@
     $numItems            = __get('numItems');
     $numUsers            = __get('numUsers');
 
+
+    $aFeatured            = __get('aFeatured');
+
+    osc_enqueue_script('fancybox');
+    osc_enqueue_style('fancybox', osc_assets_url('js/fancybox/jquery.fancybox.css'));
+    osc_register_script('market-js', osc_current_admin_theme_js_url('market.js'), array('jquery', 'jquery-ui'));
+    osc_enqueue_script('market-js');
+
+    osc_add_hook('admin_header','add_market_jsvariables');
+
     osc_add_filter('render-wrapper','render_offset');
     function render_offset() {
         return 'row-offset';
     }
+
+    osc_add_filter('admin_body_class','addBodyClass');
+    if(!function_exists('addBodyClass')){
+        function addBodyClass($array){
+            $array[] = 'dashboard';
+            return $array;
+        }
+}
 
     osc_add_hook('admin_page_header','customPageHeader');
     function customPageHeader() { ?>
@@ -234,57 +252,44 @@
             </div>
         </div>
     </div>
+    <style>
+        .mk-item {
+            width: 90%;
+            margin:5%;
+            margin-top: 3%;
+        }
+        .mk-item-plugin {
+            height: 225px;
+        }
+        .mk-item .mk-info {
+            width:auto;
+        }
+        .mk-item-plugin .banner ,
+        .mk-item-theme .banner {
+            width: 90%;
+            height: 155px;
+            border-radius: 5px 5px 0 0;
+            -webkit-border-radius: 5px 5px 0 0;
+            -moz-border-radius: 5px 5px 0 0;
+        }
+
+        .mk-item-plugin .mk-info {
+            height: 40px;
+            padding: 170px 15px 15px;
+        }
+
+    </style>
     <div class="grid-row grid-first-row grid-50">
         <div class="row-wrapper">
             <div class="widget-box  widget-box-project">
-                <div class="widget-box-title"><h3><?php _e('Osclass'); ?></h3></div>
+                <div class="widget-box-title"><h3><?php _e('Featured products'); ?></h3></div>
                 <div class="widget-box-content widget-box-content-no-wrapp">
-                    <h4 class="first-title"><?php _e('Newsletter'); ?></h4>
-                    <form name="subscribe_form" action="http://osclass.org/" method="post" class="dash-widget-form">
-                        <input type="hidden" name="subscribe" value="submit" />
-                        <input type="hidden" name="return_path" value="<?php echo osc_admin_base_url(); ?>" />
-                        <input type="hidden" name="source" value="osclass" />
-                        <fieldset>
-                            <div class="form">
-                                <p>
-                                    <?php _e('Want the latest tips and updates delivered to your inbox? <strong>Sign up now!</strong>'); ?>
-                                </p>
-                                <div class="form-row">
-                                    <div class="form-controls">
-                                        <input type="text" class="xlarge" name="email" value="">
-                                        <input type="submit" class="btn btn-mini" name="submit" value="<?php echo osc_esc_html(__('Subscribe')); ?>" />
-                                    </div>
-                                </div>
-                            </div>
-                        </fieldset>
-                    </form>
-                    <h4><?php _e('Donate'); ?></h4>
-                    <form name="_xclick" action="https://www.paypal.com/in/cgi-bin/webscr" method="post" class="dash-widget-form">
-                        <input type="hidden" name="cmd" value="_donations">
-                        <input type="hidden" name="rm" value="2">
-                        <input type="hidden" name="business" value="info@osclass.org">
-                        <input type="hidden" name="item_name" value="Osclass project">
-                        <input type="hidden" name="return" value="http://osclass.org/paypal/">
-                        <input type="hidden" name="currency_code" value="USD">
-                        <input type="hidden" name="lc" value="US" />
-                        <input type="hidden" name="custom" value="<?php echo osc_admin_base_url(); ?>?donation=successful&source=dashboard">
-                        <fieldset>
-                            <div class="form">
-                                <p><?php _e('Osclass is a free, open-source project, sustained by the community. Money received from donations will be used to further develop and improve the project.'); ?></p>
-                                <div class="form-row">
-                                    <div class="form-controls">
-                                        <select name="amount" class="select-box-medium">
-                                            <option value="50">50$</option>
-                                            <option value="25">25$</option>
-                                            <option value="10" selected>10$</option>
-                                            <option value="5">5$</option>
-                                            <option value=""><?php _e('Custom'); ?></option>
-                                        </select><input type="submit" class="btn btn-mini" name="submit" value="<?php echo osc_esc_html(__('Donate')); ?>">
-                                    </div>
-                                </div>
-                            </div>
-                        </fieldset>
-                    </form>
+                    <?php foreach($aFeatured['themes'] as $p) {
+                        drawMarketItem($p);
+                    } ?>
+                    <?php foreach($aFeatured['plugins'] as $p) {
+                        drawMarketItem($p);
+                    } ?>
                 </div>
             </div>
         </div>

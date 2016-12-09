@@ -13,63 +13,7 @@
     osc_enqueue_script('market-js');
 
     osc_add_hook('admin_header','add_market_jsvariables');
-    function add_market_jsvariables(){
-        $marketPage = Params::getParam("mPage");
-        $version_length = strlen(osc_version());
-        $main_version = substr(osc_version(),0, $version_length-2).".".substr(osc_version(),$version_length-2, 1);
 
-
-        if($marketPage>=1) $marketPage--;
-        $action = Params::getParam("action");
-
-        $js_lang = array(
-                'by'                 => __('by'),
-                'ok'                 => __('Ok'),
-                'error_item'         => __('There was a problem, try again later please'),
-                'wait_download'      => __('Please wait until the download is completed'),
-                'downloading'        => __('Downloading'),
-                'close'              => __('Close'),
-                'download'           => __('Download'),
-                'update'             => __('Update'),
-                'last_update'        => __('Last update'),
-                'downloads'          => __('Downloads'),
-                'requieres_version'  => __('Requires at least'),
-                'compatible_with'    => __('Compatible up to'),
-                'screenshots'        => __('Screenshots'),
-                'preview_theme'      => __('Preview theme'),
-                'download_manually'  => __('Download manually'),
-                'buy'                => __('Buy'),
-                'proceed_anyway'     => sprintf(__('Warning! This package is not compatible with your current version of Osclass (%s)'), $main_version),
-                'sure'               => __('Are you sure?'),
-                'proceed_anyway_btn' => __('Ok, proceed anyway'),
-                'not_compatible'     => sprintf(__('Warning! This theme is not compatible with your current version of Osclass (%s)'), $main_version),
-                'themes'             => array(
-                                         'download_ok' => __('The theme has been downloaded correctly, proceed to activate or preview it.')
-                                     ),
-                'plugins'            => array(
-                                         'download_ok' => __('The plugin has been downloaded correctly, proceed to install and configure.')
-                                     ),
-                'languages'          => array(
-                                         'download_ok' => __('The language has been downloaded correctly, proceed to activate.')
-                                     )
-
-            );
-        ?>
-        <script type="text/javascript">
-            var theme = window.theme || {};
-            theme.adminBaseUrl  = "<?php echo osc_admin_base_url(true); ?>";
-            theme.marketAjaxUrl = "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=market&<?php echo osc_csrf_token_url(); ?>";
-            theme.marketCurrentURL = "<?php echo osc_admin_base_url(true); ?>?page=market&action=<?php echo Params::getParam('action'); ?>";
-            theme.themUrl       = "<?php echo osc_current_admin_theme_url(); ?>";
-            theme.langs         = <?php echo json_encode($js_lang); ?>;
-            theme.CSRFToken     = "<?php echo osc_csrf_token_url(); ?>";
-
-            var osc_market = {};
-            osc_market.main_version = <?php echo $main_version; ?>;
-
-        </script>
-        <?php
-    }
     function gradienColors(){
         $letters = str_split('abgi');
         shuffle($letters);
@@ -119,7 +63,7 @@
                     $('#connect_wait').show();
                     $.getJSON(
                         '<?php echo osc_admin_base_url(true); ?>?page=ajax&action=market_connect',
-                        {'s_email' : $('#connect_user').attr('value'), 's_password' : $('#connect_password').attr('value')},
+                        {'s_email' : document.getElementById("connect_user").value, 's_password' : document.getElementById("connect_password").value},
                         function(data){
                             if(data==null) {
                                 $('#connect_form').show();
@@ -150,6 +94,12 @@
                 $("#market_connect").on('click', function() {
                     $('#dialog-connect').dialog('open');
                 });
+
+                <?php if(Params::getParam('open_market_connect')!='') { ?>
+
+                        $('#dialog-connect').dialog('open');
+
+                <?php } ?>
 
                 <?php }; ?>
 
@@ -190,6 +140,11 @@
 ?>
 <?php if(osc_market_api_connect()=='') { ?>
 <div id="dialog-connect" title="<?php _e('Connect'); ?>" class="has-form-actions hide">
+    <?php if(ini_get('allow_url_fopen')==="0") { ?>
+        <h1 class="header-title-market"><?php _e('MARKET CONNECT FAILED'); ?></h1>
+        <p><?php _e('You need to enable <b>allow_url_fopen = On</b> at php.ini.');?> </p>
+        <p><?php _e('If you need more information please contact your hosting provider.'); ?></p>
+    <?php } else { ?>
     <div class="form-horizontal hide" id="connect_wait">
         <div class="form-row">
             <p>
@@ -216,5 +171,6 @@
             </div>
         </div>
     </div>
+    <?php } ?>
 </div>
 <?php }; ?>

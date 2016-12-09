@@ -171,7 +171,7 @@
                     $stringToSign     = osc_get_alert_public_key() . $encoded_alert;
                     $signature        = hex2b64(hmacsha1(osc_get_alert_private_key(), $stringToSign));
                     $server_signature = Session::newInstance()->_get('alert_signature');
-                    
+
                     if($server_signature != $signature) {
                         echo '-2';
                         return false;
@@ -293,7 +293,13 @@
                     $original = pathinfo($uploader->getOriginalName());
                     $filename = uniqid("qqfile_").".".$original['extension'];
                     $result = $uploader->handleUpload(osc_content_path().'uploads/temp/'.$filename);
-                    $result['uploadName'] = $filename;
+
+                    // auto rotate
+                    $img = ImageResizer::fromFile(osc_content_path().'uploads/temp/'.$filename)->autoRotate();
+                    $img->saveToFile(osc_content_path().'uploads/temp/auto_'.$filename, $original['extension']);
+                    $img->saveToFile(osc_content_path().'uploads/temp/'.$filename, $original['extension']);
+
+                    $result['uploadName'] = 'auto_'.$filename;
                     echo htmlspecialchars(json_encode($result), ENT_NOQUOTES);
                     break;
                 case 'ajax_validate':
@@ -322,9 +328,6 @@
                     echo json_encode(array('error' => __('no action defined')));
                 break;
             }
-            // clear all keep variables into session
-            Session::newInstance()->_dropKeepForm();
-            Session::newInstance()->_clearVariables();
         }
 
         //hopefully generic...

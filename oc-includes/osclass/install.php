@@ -167,31 +167,31 @@ switch( $step ) {
                                     <label for="install_locale"><?php _e('Choose language'); ?></label>
                                     <select name="install_locale" id="install_locale" onchange="window.location.href='?install_locale='+document.getElementById(this.id).value">
                                         <?php foreach($locales as $k => $locale) {?>
-                                        <option value="<?php echo osc_esc_html($k); ?>" <?php if( $k == $current_locale ) { echo 'selected="selected"'; } ?>><?php echo $locale['name']; ?></option>
+                                            <option value="<?php echo osc_esc_html($k); ?>" <?php if( $k == $current_locale ) { echo 'selected="selected"'; } ?>><?php echo $locale['name']; ?></option>
                                         <?php } ?>
                                     </select>
                                 </div>
                             <?php } ?>
                             <?php if($error) { ?>
-                            <p><?php _e('Check the next requirements:');?></p>
-                            <div class="requirements_help">
-                                <p><b><?php _e('Requirements help:'); ?></b></p>
-                                <ul>
-                                <?php foreach($requirements as $k => $v) { ?>
-                                    <?php  if(!$v['fn'] && $v['solution'] != ''){ ?>
-                                    <li><?php echo $v['solution']; ?></li>
-                                    <?php } ?>
-                                <?php } ?>
-                                    <li><a href="http://forums.osclass.org/" hreflang="en"><?php _e('Need more help?');?></a></li>
-                                </ul>
-                            </div>
+                                <p><?php _e('Check the next requirements:');?></p>
+                                <div class="requirements_help">
+                                    <p><b><?php _e('Requirements help:'); ?></b></p>
+                                    <ul>
+                                        <?php foreach($requirements as $k => $v) { ?>
+                                            <?php  if(!$v['fn'] && $v['solution'] != ''){ ?>
+                                                <li><?php echo $v['solution']; ?></li>
+                                            <?php } ?>
+                                        <?php } ?>
+                                        <li><a href="http://forums.osclass.org/" hreflang="en"><?php _e('Need more help?');?></a></li>
+                                    </ul>
+                                </div>
                             <?php } else { ?>
-                            <p><?php _e('All right! All the requirements have met:');?></p>
+                                <p><?php _e('All right! All the requirements have met:');?></p>
                             <?php } ?>
                             <ul>
-                            <?php foreach($requirements as $k => $v) { ?>
-                                <li><?php echo $v['requirement']; ?> <img src="<?php echo get_absolute_url(); ?>oc-includes/images/<?php echo $v['fn'] ? 'tick.png' : 'cross.png'; ?>" alt="" title="" /></li>
-                            <?php } ?>
+                                <?php foreach($requirements as $k => $v) { ?>
+                                    <li><?php echo $v['requirement']; ?> <img src="<?php echo get_absolute_url(); ?>oc-includes/images/<?php echo $v['fn'] ? 'tick.png' : 'cross.png'; ?>" alt="" title="" /></li>
+                                <?php } ?>
                             </ul>
                             <div class="more-stats">
                                 <input type="checkbox" name="ping_engines" id="ping_engines" checked="checked" value="1" />
@@ -207,14 +207,14 @@ switch( $step ) {
                             </div>
                         </div>
                         <?php if($error) { ?>
-                        <p class="margin20">
-                            <input type="button" class="button" onclick="document.location = 'install.php?step=1'" value="<?php echo osc_esc_html( __('Try again'));?>" />
-                        </p>
+                            <p class="margin20">
+                                <input type="button" class="button" onclick="document.location = 'install.php?step=1'" value="<?php echo osc_esc_html( __('Try again'));?>" />
+                            </p>
                         <?php } else { ?>
-                        <p class="margin20">
-                            <input type="submit" class="button" value="<?php echo osc_esc_html( __('Run the install'));?>" />
-                        </p>
-                    <?php } ?>
+                            <p class="margin20">
+                                <input type="submit" class="button" value="<?php echo osc_esc_html( __('Run the install'));?>" />
+                            </p>
+                        <?php } ?>
                     </form>
                 <?php } elseif($step == 2) {
                          display_database_config();
@@ -226,9 +226,26 @@ switch( $step ) {
                         }
                     } elseif($step == 4) {
                         // ping engines
-                        ping_search_engines( $_COOKIE['osclass_ping_engines'] );
+                        ping_search_engines($_COOKIE['osclass_ping_engines']);
                         setcookie('osclass_save_stats', '', time() - 3600);
                         setcookie('osclass_ping_engines', '', time() - 3600);
+
+                        // copy robots.txt
+                        $source = LIB_PATH . 'osclass/installer/robots.txt';
+                        $destination = ABS_PATH . 'robots.txt';
+                        if (function_exists('copy')) {
+                            @copy($source, $destination);
+                        } else {
+                            $contentx = @file_get_contents($source);
+                            $openedfile = fopen($destination, "w");
+                            fwrite($openedfile, $contentx);
+                            fclose($openedfile);
+                            if ($contentx === FALSE) {
+                                $status = false;
+                            } else {
+                                $status = true;
+                            }
+                        }
                         display_finish($password);
                     }
                 ?>
@@ -239,7 +256,7 @@ switch( $step ) {
                             <a href="<?php echo get_absolute_url(); ?>/oc-includes/osclass/installer/readme.php" target="_blank" hreflang="en"><?php _e('Readme'); ?></a>
                         </li>
                         <li>
-                            <a href="http://admin.osclass.org/feedback.php" target="_blank" hreflang="en"><?php _e('Feedback'); ?></a>
+                            <a href="https://osclass.org/contact" target="_blank" hreflang="en"><?php _e('Feedback'); ?></a>
                         </li>
                         <li>
                             <a href="http://forums.osclass.org/index.php" target="_blank" hreflang="en"><?php _e('Forums');?></a>

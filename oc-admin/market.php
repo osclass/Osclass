@@ -55,7 +55,7 @@
                     $data = json_decode($json, true);
                     osc_redirect_to(Params::getParam('url') . '?token=' . @$data['token']);
                     break;
-                case('purchases');
+                case('purchases'):
                 case('plugins'):
                 case('themes'):
                 case('languages'):
@@ -69,54 +69,24 @@
 
 
                     // page number
-                    $marketPage     = Params::getParam("mPage");
-                    $url_actual     = osc_admin_base_url(true) . '?page=market&action='.$section.'&mPage='.$marketPage;
-                    if($marketPage>=1) $marketPage--;
+                    $marketPage     = Params::getParam("mPage")!=''?Params::getParam("mPage"):0;
+                    $url_actual     = osc_admin_base_url(true) . '?page=market&action='.$section;
+
+                    $url_premium  = $url_actual.'&sort=premium';
+                    $url_all   = $url_actual.'&sort=all';
+                    $sort = Params::getParam('sort')!='all'?'premium':'all';
+                    $sort_actual = '&sort=' . $sort;
+
+                    $url_actual .= '&mPage=' . $marketPage;
+
+                    if($marketPage>=1) {
+                        $marketPage--;
+                    }
 
                     // api
-                    $url            = osc_market_url($section).(Params::getParam('sCategory')!=''?'category/'.Params::getParam('sCategory').'/':'')."page/".$marketPage.'/length/9/';
-                    // default sort
-                    $sort_actual    = '';
-                    $sort_download  = $url_actual.'&sort=downloads&order=desc';
-                    $sort_updated   = $url_actual.'&sort=updated&order=desc';
+                    $url = osc_market_url($section).(Params::getParam('sCategory')!=''?'category/'.Params::getParam('sCategory').'/':'')."page/".$marketPage.'/length/9/';
+                    $url .= 'order/'. $sort . '/desc';
 
-                    // sorting options (default)
-                    $_order         = 'desc';
-                    $order_download = $_order;
-                    $order_updated  = $_order;
-
-                    $sort           = Params::getParam("sort");
-                    $order          = Params::getParam("order");
-
-                    if($sort=='') {
-                        $sort = 'updated';
-                    }
-                    if($order=='') {
-                        $order = $_order;
-                    }
-
-                    $aux = ($order=='desc')?'asc':'desc';
-
-                    switch ($sort) {
-                        case 'downloads':
-                            $sort_actual    = '&sort=downloads&order=';
-                            $sort_download  = $url_actual.$sort_actual.$aux;
-                            $sort_actual   .= $order;
-                            $order_download = $order;
-                            // market api call
-                            $url .= 'order/downloads/'.$order;
-                        break;
-                        case 'updated':
-                            $sort_actual    = '&sort=updated&order=';
-                            $sort_updated   = $url_actual.$sort_actual.$aux;
-                            $sort_actual   .= $order;
-                            $order_updated  = $order;
-                            // market api call
-                            $url .= 'order/updated/'.$order;
-                        break;
-                        default:
-                        break;
-                    }
 
                     // pageSize or length attribute is hardcoded
                     $out    = osc_file_get_contents($url, array('api_key' => osc_market_api_connect()));
@@ -139,17 +109,27 @@
                         $array['total'] = 0;
                     }
 
+
+                    $aFeatured = array();
+                    if($section=='plugins' || $section=='themes') {
+                        $out_featured = osc_file_get_contents(osc_market_featured_url($this->action, 3));
+                        $array_featured = json_decode($out_featured, true);
+                        if (isset($array_featured)) {
+                            $aFeatured = $array_featured[$section];
+                        }
+                    }
+                    $this->_exportVariableToView("aFeatured", $aFeatured);
+
+
+
                     // export variable to view
-                    $this->_exportVariableToView("sort"      , $sort);
                     $this->_exportVariableToView("title"     , $title);
                     $this->_exportVariableToView("section"   , $section);
                     $this->_exportVariableToView("array"     , $array);
 
-                    $this->_exportVariableToView("sort_download"     , $sort_download);
-                    $this->_exportVariableToView("sort_updated"      , $sort_updated);
-
-                    $this->_exportVariableToView("order_download"     , $order_download);
-                    $this->_exportVariableToView("order_updated"      , $order_updated);
+                    $this->_exportVariableToView("url_premium"        , $url_premium);
+                    $this->_exportVariableToView("url_all"            , $url_all);
+                    $this->_exportVariableToView("sort"               , $sort);
 
                     $this->_exportVariableToView("market_categories"  , json_decode(osc_market_categories(), true));
 
@@ -162,7 +142,7 @@
                     $aThemes        = array();
                     $aLanguages     = array();
 
-                    $out_plugin     = osc_file_get_contents(osc_market_featured_url('plugins', 6) );
+                    $out_plugin     = osc_file_get_contents(osc_market_featured_url('plugins', 9) );
                     $array_plugins  = json_decode($out_plugin, true);
                     if(isset($array_plugins)) {
                         $aPlugins = $array_plugins['plugins'];

@@ -62,7 +62,7 @@
                                             $this->redirectTo(osc_contact_url());
                                         }
 
-                                        if( !preg_match('|.*?@.{2,}\..{2,}|',$yourEmail) ) {
+                                        if ( !osc_validate_email($yourEmail, true) ) {
                                             osc_add_flash_error_message( _m('Please enter a correct email') );
                                             Session::newInstance()->_setForm('yourName', $yourName);
                                             Session::newInstance()->_setForm('subject', $subject);

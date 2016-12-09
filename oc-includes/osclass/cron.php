@@ -16,8 +16,10 @@
  * limitations under the License.
  */
 
+    $shift_seconds = 60;
     $d_now = date('Y-m-d H:i:s');
     $i_now = strtotime($d_now);
+    $i_now_truncated = strtotime(date('Y-m-d H:i:00'));
     if ( ! defined('CLI')) {
         define('CLI', (PHP_SAPI==='cli'));
     }
@@ -27,9 +29,9 @@
     if( is_array($cron) ) {
         $i_next = strtotime($cron['d_next_exec']);
 
-        if( (CLI && (Params::getParam('cron-type') === 'hourly')) || ((($i_now - $i_next) >= 0) && !CLI) ) {
+        if( (CLI && (Params::getParam('cron-type') === 'hourly')) || ((($i_now - $i_next + $shift_seconds) >= 0) && !CLI) ) {
             // update the next execution time in t_cron
-            $d_next = date('Y-m-d H:i:s', $i_now + 3600);
+            $d_next = date('Y-m-d H:i:s', $i_now_truncated + 3600);
             Cron::newInstance()->update(array('d_last_exec' => $d_now, 'd_next_exec' => $d_next),
                                         array('e_type'      => 'HOURLY'));
             
@@ -53,7 +55,6 @@
                 }
             }
 
-            // cleanup temp directory | FineUploader
             $qqfiles = glob(osc_content_path().'uploads/temp/qqfile_*');
             if(is_array($qqfiles)) {
                 foreach($qqfiles as $qqfile) {
@@ -80,9 +81,9 @@
     if( is_array($cron) ) {
         $i_next = strtotime($cron['d_next_exec']);
 
-        if( (CLI && (Params::getParam('cron-type') === 'daily')) || ((($i_now - $i_next) >= 0) && !CLI) ) {
+        if( (CLI && (Params::getParam('cron-type') === 'daily')) || ((($i_now - $i_next + $shift_seconds) >= 0) && !CLI) ) {
             // update the next execution time in t_cron
-            $d_next = date('Y-m-d H:i:s', $i_now + (24 * 3600));
+            $d_next = date('Y-m-d H:i:s', $i_now_truncated + (24 * 3600));
             Cron::newInstance()->update(array('d_last_exec' => $d_now, 'd_next_exec' => $d_next),
                 array('e_type'      => 'DAILY'));
 
@@ -116,9 +117,9 @@
     if(is_array($cron)) {
         $i_next = strtotime($cron['d_next_exec']);
 
-        if( (CLI && (Params::getParam('cron-type') === 'weekly')) || ((($i_now - $i_next) >= 0) && !CLI) ) {
+        if( (CLI && (Params::getParam('cron-type') === 'weekly')) || ((($i_now - $i_next + $shift_seconds) >= 0) && !CLI) ) {
             // update the next execution time in t_cron
-            $d_next = date('Y-m-d H:i:s', $i_now + (7 * 24 * 3600));
+            $d_next = date('Y-m-d H:i:s', $i_now_truncated + (7 * 24 * 3600));
             Cron::newInstance()->update(array('d_last_exec' => $d_now, 'd_next_exec' => $d_next),
                                         array('e_type'      => 'WEEKLY'));
             
@@ -134,4 +135,3 @@
     }
 
     osc_run_hook('cron');
-    /* file end: ./oc-includes/osclass/cron.php */
