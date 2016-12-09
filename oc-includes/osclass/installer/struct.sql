@@ -45,7 +45,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_region (
     pk_i_id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
     fk_c_country_code CHAR(2) NOT NULL,
     s_name VARCHAR(60) NOT NULL,
-    s_slug VARCHAR(60) NOT NULL DEFAULT '',
+    s_slug VARCHAR(300) NOT NULL DEFAULT '',
     b_active TINYINT(1) NOT NULL DEFAULT 1,
 
         PRIMARY KEY (pk_i_id),
@@ -60,7 +60,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_city (
     pk_i_id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
     fk_i_region_id INT(10) UNSIGNED NOT NULL,
     s_name VARCHAR(60) NOT NULL,
-    s_slug VARCHAR(60) NOT NULL DEFAULT '',
+    s_slug VARCHAR(300) NOT NULL DEFAULT '',
     fk_c_country_code CHAR(2) NULL,
     b_active TINYINT(1) NOT NULL DEFAULT 1,
 
@@ -191,7 +191,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_category_description (
     fk_c_locale_code CHAR(5) NOT NULL,
     s_name VARCHAR(100) NULL DEFAULT NULL,
     s_description TEXT NULL,
-    s_slug VARCHAR(100) NOT NULL,
+    s_slug VARCHAR(300) NOT NULL,
 
         PRIMARY KEY (fk_i_category_id, fk_c_locale_code),
         INDEX idx_s_slug (s_slug),
