@@ -636,7 +636,9 @@
                                         $enabledFieldImagesItems    = Params::getParam('enableField#images@items');
                                         $enabledFieldImagesItems    = (($enabledFieldImagesItems != '') ? true : false);
                                         $numImagesItems             = Params::getParam('numImages@items');
-                                        if($numImagesItems=='') { $numImagesItems = 0; }
+                                        if($numImagesItems=='') {
+                                            $numImagesItems = 0;
+                                        }
                                         $regUserCanContact          = Params::getParam('reg_user_can_contact');
                                         $regUserCanContact          = (($regUserCanContact != '') ? true : false);
                                         $contactItemAttachment      = Params::getParam('item_attachment');
@@ -645,10 +647,10 @@
                                         $warnExpiration             = (int) $warnExpiration;
                                         $titleLength				= Params::getParam('max_chars_per_title');
                                         $descriptionLength			= Params::getParam('max_chars_per_description');
-
-
+                                        $selectableParent           = Params::getParam('selectable_parent_categories');
 
                                         $msg = '';
+
                                         if(!osc_validate_int(Params::getParam("items_wait_time"))) {
                                             $msg .= _m("Wait time must only contain numeric characters")."<br/>";
                                         }
@@ -672,14 +674,14 @@
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=items&action=settings');
                                         }
 
-
-
                                         $iUpdated += osc_set_preference('enabled_recaptcha_items', $enabledRecaptchaItems);
+
                                         if($moderateItems) {
                                             $iUpdated += osc_set_preference('moderate_items', $numModerateItems);
                                         } else {
                                             $iUpdated += osc_set_preference('moderate_items', '-1');
                                         }
+
                                         $iUpdated += osc_set_preference('logged_user_item_validation', $loggedUserItemValidation);
                                         $iUpdated += osc_set_preference('reg_user_post', $regUserPost);
                                         $iUpdated += osc_set_preference('notify_new_item', $notifyNewItem);
@@ -694,6 +696,7 @@
                                         $iUpdated += osc_set_preference('warn_expiration', $warnExpiration);
                                         $iUpdated += osc_set_preference('title_character_length', $titleLength);
                                         $iUpdated += osc_set_preference('description_character_length', $descriptionLength);
+                                        $iUpdated += osc_set_preference('selectable_parent_categories', $selectableParent);
 
                                         if($iUpdated > 0) {
                                             osc_add_flash_ok_message( _m("Listings' settings have been updated"), 'admin');

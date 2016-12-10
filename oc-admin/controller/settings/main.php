@@ -57,7 +57,6 @@
                     $maxLatestItems    = Params::getParam('max_latest_items_at_home');
                     $numItemsSearch    = Params::getParam('default_results_per_page');
                     $contactAttachment = Params::getParam('enabled_attachment');
-                    $selectableParent  = Params::getParam('selectable_parent_categories');
                     $bAutoCron         = Params::getParam('auto_cron');
                     $bMarketSources    = (Params::getParam('market_external_sources') != '' ? true: false);
                     $sAutoUpdate       = join("|", Params::getParam('auto_update'));
@@ -79,6 +78,7 @@
                     $error = "";
 
                     $msg = '';
+
                     if(!osc_validate_text($sPageTitle)) {
                         $msg .= _m("Page title field is required")."<br/>";
                     }
@@ -105,6 +105,7 @@
                     if( !defined('DEMO') ) {
                         $iUpdated += osc_set_preference('contactEmail', $sContactEmail);
                     }
+
                     $iUpdated += osc_set_preference('language', $sLanguage);
                     $iUpdated += osc_set_preference('dateFormat', $sDateFormat);
                     $iUpdated += osc_set_preference('currency', $sCurrency);
@@ -113,6 +114,7 @@
                     $iUpdated += osc_set_preference('timezone', $sTimezone);
                     $iUpdated += osc_set_preference('marketAllowExternalSources', $bMarketSources);
                     $iUpdated += osc_set_preference('auto_update', $sAutoUpdate);
+
                     if(is_int($sNumRssItems)) {
                         $iUpdated += osc_set_preference('num_rss_items', $sNumRssItems);
                     } else {
@@ -130,7 +132,6 @@
                     $iUpdated += osc_set_preference('defaultResultsPerPage@search', $numItemsSearch);
                     $iUpdated += osc_set_preference('contact_attachment', $contactAttachment);
                     $iUpdated += osc_set_preference('auto_cron', $bAutoCron);
-                    $iUpdated += osc_set_preference('selectable_parent_categories', $selectableParent);
 
                     if( $iUpdated > 0 ) {
                         if( $error != '' ) {
