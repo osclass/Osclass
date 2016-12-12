@@ -1,4 +1,4 @@
-Osclass 3.7.0 ---------
+Osclass 3.7.0 2016-12-12
 ------------------------
 
 - Multisite fixes and improvements
