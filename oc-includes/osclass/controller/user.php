@@ -25,6 +25,7 @@
                 osc_add_flash_error_message( _m('Users not enabled') );
                 $this->redirectTo(osc_base_url());
             }
+            osc_run_hook( 'init_user' );
         }
 
         //Business Layer...
@@ -84,9 +85,9 @@
                                         foreach($aAlerts as $k => $a) {
                                             $array_conditions   = (array)json_decode($a['s_search']);
 
-//                                            $search = Search::newInstance();
                                             $search = new Search();
                                             $search->setJsonAlert($array_conditions);
+                                            $search->notFromUser(Session::newInstance()->_get('userId'));
                                             $search->limit(0, 3);
 
                                             $aAlerts[$k]['items'] = $search->doSearch();

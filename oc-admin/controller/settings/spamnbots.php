@@ -67,9 +67,12 @@
                     $recaptchaPrivKey = trim($recaptchaPrivKey);
                     $recaptchaPubKey  = Params::getParam('recaptchaPubKey');
                     $recaptchaPubKey  = trim($recaptchaPubKey);
+                    $recaptchaVersion = Params::getParam('recaptchaVersion');
+                    $recaptchaVersion = trim($recaptchaVersion);
 
                     $iUpdated += osc_set_preference('recaptchaPrivKey', $recaptchaPrivKey);
                     $iUpdated += osc_set_preference('recaptchaPubKey', $recaptchaPubKey);
+                    $iUpdated += osc_set_preference('recaptcha_version', $recaptchaVersion);
 
                     if( $recaptchaPubKey == '' ) {
                         osc_add_flash_info_message(_m('Your reCAPTCHA key has been cleared'), 'admin');

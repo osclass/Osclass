@@ -82,6 +82,18 @@
                                         }
                                     }
 
+                                    // market featured products
+                                    $aFeatured = array();
+                                    $out_featured = osc_file_get_contents(osc_market_featured_url('plugins', 3));
+                                    $array_featured_plugins = json_decode($out_featured, true);
+
+                                    $out_featured = osc_file_get_contents(osc_market_featured_url('themes', 3));
+                                    $array_featured_themes = json_decode($out_featured, true);
+
+
+                                    $this->_exportVariableToView("aFeatured", array_merge($array_featured_plugins, $array_featured_themes));
+
+
                                     $this->_exportVariableToView("item_stats", $items);
                                     $this->_exportVariableToView("user_stats", $users);
                                     //calling the view...

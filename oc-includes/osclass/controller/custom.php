@@ -22,6 +22,7 @@
         {
             parent::__construct();
             //specific things for this class
+            osc_run_hook( 'init_custom' );
         }
 
         //Business Layer...
@@ -49,7 +50,7 @@
             }
 
             // check if the file exists
-            if( !file_exists(osc_plugins_path() . $file) && !file_exists(osc_themes_path() . $file) ) {
+            if( !file_exists(osc_plugins_path() . $file) && !file_exists(osc_themes_path() . osc_theme() . "/plugins/" . $file) ) {
                 $this->do404();
                 return;
             }

@@ -87,7 +87,7 @@ if($section=='plugins' || $section=='themes') { ?>
     } else {
     ?>
     <div>
-        <p class="flashmessage flashmessage-inline flashmessage-error"><?php _e('Cannot get information form market.osclass.org, sorry for the inconvenience'); ?></p>
+        <p class="flashmessage flashmessage-inline flashmessage-error"><?php _e('Cannot get information from market.osclass.org, sorry for the inconvenience'); ?></p>
     </div>
     <?php } ?>
 </div>

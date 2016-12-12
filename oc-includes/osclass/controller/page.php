@@ -25,6 +25,7 @@
             parent::__construct();
 
             $this->pageManager = Page::newInstance();
+            osc_run_hook( 'init_page' );
         }
 
         function doModel()

@@ -166,6 +166,35 @@
         }
 
         /**
+         * Searches for alerts, given an user and a s_search.
+         * If type don't match return empty array.
+         *
+         * @access public
+         * @since unknown
+         * @param string $search
+         * @param string $user
+         * @return array
+         *
+         * WARNIGN doble where!
+         */
+        function findBySearchAndUser($search, $user, $unsub = false)
+        {
+            $this->dao->select();
+            $this->dao->from($this->getTableName());
+            $this->dao->where('fk_i_user_id', $user);
+            $this->dao->where('s_search', $search);
+            if(!$unsub) {
+                $this->dao->where('dt_unsub_date IS NULL');
+            }
+            $result = $this->dao->get();
+
+            if($result == false) {
+                return array();
+            }
+            return $result->result();
+        }
+
+        /**
          * Searches for alerts, given a type group and a s_search.
          * If type don't match return empty array.
          *

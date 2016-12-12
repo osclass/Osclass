@@ -42,7 +42,7 @@ module.exports = function(grunt) {
             },
             files: {
                 'sass/colors.scss': ['sass/colors.scss.tpl'],
-                'index.php': ['index.php.tpl'],
+                'index.php': ['index.php.tpl']
             }
         });
 
@@ -104,6 +104,10 @@ module.exports = function(grunt) {
                 {
                     from: 'BENDER_THEME_VERSION',
                     to: theme.slug.toUpperCase() + '_THEME_VERSION'
+                },
+                {
+                    from: 'BENDER_THEME_MARKET_SLUG',
+                    to: theme.slug
                 }
             ]
         });
@@ -119,7 +123,7 @@ module.exports = function(grunt) {
         grunt.registerTask('dist:' + key, ['template:' + key, 'sass', 'copy:' + key, 'copy:screenshoot_' + key, 'replace:' + key, 'shell:compress_' + key]);
     }
 
-    grunt.registerTask('dist', ['dist:red', 'dist:blue', 'dist:black', 'dist:purple'])
+    grunt.registerTask('dist', ['dist:red', 'dist:black', 'dist:purple', 'dist:blue'])
 
     // Actually load this plugin's task(s).
     grunt.loadTasks('tasks');

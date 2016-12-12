@@ -17,29 +17,29 @@
  */
 
     /**
-     * 
+     *
      */
     class LogDatabase
     {
         /**
          *
-         * @var type 
+         * @var type
          */
         private static $instance;
         /**
          *
-         * @var type 
+         * @var type
          */
         var $messages;
         /**
          *
-         * @var type 
+         * @var type
          */
         var $explain_messages;
 
         /**
          *
-         * @return type 
+         * @return type
          */
         public static function newInstance()
         {
@@ -50,7 +50,7 @@
         }
 
         /**
-         * 
+         *
          */
         public function _construct()
         {
@@ -63,7 +63,7 @@
          * @param type $sql
          * @param type $time
          * @param type $errorLevel
-         * @param type $errorDescription 
+         * @param type $errorDescription
          */
         public function addMessage($sql, $time, $errorLevel, $errorDescription)
         {
@@ -80,7 +80,7 @@
          * @param type $sql
          * @param type $time
          * @param type $errorLevel
-         * @param type $errorDescription 
+         * @param type $errorDescription
          */
         public function addExplainMessage($sql, $results)
         {
@@ -91,7 +91,7 @@
         }
 
         /**
-         * 
+         *
          */
         public function printMessages()
         {
@@ -137,13 +137,17 @@
             }
 
             fwrite($fp, '==================================================' . PHP_EOL);
-            fwrite($fp, '=' . str_pad('Date: ' . date(osc_date_format()!=''?osc_date_format():'Y-m-d').' '.date(osc_time_format()!=''?osc_date_format():'H:i:s'), 48, " ", STR_PAD_BOTH) . '=' . PHP_EOL);
+            if(MULTISITE) {
+                fwrite($fp, '=' . str_pad('Date: ' . date('Y-m-d').' '.date('H:i:s'), 48, " ", STR_PAD_BOTH) . '=' . PHP_EOL);
+            } else {
+                fwrite($fp, '=' . str_pad('Date: ' . date(osc_date_format()!=''?osc_date_format():'Y-m-d').' '.date(osc_time_format()!=''?osc_date_format():'H:i:s'), 48, " ", STR_PAD_BOTH) . '=' . PHP_EOL);
+            }
             fwrite($fp, '=' . str_pad('Total queries: ' . $this->getTotalNumberQueries(), 48, " ", STR_PAD_BOTH) . '=' . PHP_EOL);
             fwrite($fp, '=' . str_pad('Total queries time: ' . $this->getTotalQueriesTime(), 48, " ", STR_PAD_BOTH) . '='  . PHP_EOL);
             fwrite($fp, '==================================================' . PHP_EOL . PHP_EOL);
 
             foreach($this->messages as $msg) {
-                fwrite($fp, $msg['query_time'] . PHP_EOL);
+                fwrite($fp, 'QUERY TIME' . ' ' . $msg['query_time'] . PHP_EOL);
                 if( $msg['errno'] != 0 ) {
                     fwrite($fp, 'Error number: ' . $msg['errno'] . PHP_EOL);
                     fwrite($fp, 'Error description: ' . $msg['error'] . PHP_EOL);
@@ -173,7 +177,11 @@
             }
 
             fwrite($fp, '==================================================' . PHP_EOL);
-            fwrite($fp, '=' . str_pad('Date: ' . date(osc_date_format()?osc_date_format():'Y-m-d').' '.date(osc_time_format()?osc_date_format():'H:i:s'), 48, " ", STR_PAD_BOTH) . '=' . PHP_EOL);
+            if(MULTISITE) {
+                fwrite($fp, '=' . str_pad('Date: ' . date('Y-m-d').' '.date('H:i:s'), 48, " ", STR_PAD_BOTH) . '=' . PHP_EOL);
+            } else {
+                fwrite($fp, '=' . str_pad('Date: ' . date(osc_date_format()?osc_date_format():'Y-m-d').' '.date(osc_time_format()?osc_time_format():'H:i:s'), 48, " ", STR_PAD_BOTH) . '=' . PHP_EOL);
+            }
             fwrite($fp, '==================================================' . PHP_EOL . PHP_EOL);
 
             $title  = '|' . str_pad('id', 3, " ", STR_PAD_BOTH) . '|';

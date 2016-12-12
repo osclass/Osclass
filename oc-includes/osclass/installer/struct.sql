@@ -191,7 +191,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_category_description (
     fk_c_locale_code CHAR(5) NOT NULL,
     s_name VARCHAR(100) NULL DEFAULT NULL,
     s_description TEXT NULL,
-    s_slug VARCHAR(100) NOT NULL,
+    s_slug VARCHAR(255) NOT NULL,
 
         PRIMARY KEY (fk_i_category_id, fk_c_locale_code),
         INDEX idx_s_slug (s_slug),
@@ -324,8 +324,8 @@ CREATE TABLE /*TABLE_PREFIX*/t_item_comment (
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
 
 CREATE TABLE /*TABLE_PREFIX*/t_preference (
-    s_section VARCHAR(40) NOT NULL,
-    s_name VARCHAR(40) NOT NULL,
+    s_section VARCHAR(128) NOT NULL,
+    s_name VARCHAR(128) NOT NULL,
     s_value LONGTEXT NOT NULL,
     e_type ENUM('STRING', 'INTEGER', 'BOOLEAN') NOT NULL,
 

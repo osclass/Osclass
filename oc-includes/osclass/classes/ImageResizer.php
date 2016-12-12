@@ -38,9 +38,17 @@
 
 
         private function __construct($imagePath) {
-            if(!file_exists($imagePath)) { throw new Exception(sprintf(__("%s does not exist!"), $imagePath)); };
-            if(!is_readable($imagePath)) { throw new Exception(sprintf(__("%s is not readable!"), $imagePath)); };
-            if(filesize($imagePath)==0) { throw new Exception(sprintf(__("%s is corrupt or broken!"), $imagePath)); };
+            if(!file_exists($imagePath)) {
+                throw new Exception(sprintf(__("%s does not exist!"), $imagePath));
+            }
+
+            if(!is_readable($imagePath)) {
+                throw new Exception(sprintf(__("%s is not readable!"), $imagePath));
+            }
+
+            if(filesize($imagePath)==0) {
+                throw new Exception(sprintf(__("%s is corrupt or broken!"), $imagePath));
+            }
 
             $this->image_info = @getimagesize($imagePath);
             if(osc_use_imagick()) {
@@ -56,7 +64,7 @@
 
                 $this->_exif = array();
                 if(@$this->image_info['mime']=='image/jpeg' && function_exists('exif_read_data')) {
-                    $this->_exif = exif_read_data($imagePath);
+                    $this->_exif = @exif_read_data($imagePath);
                 }
 
             }
@@ -95,6 +103,8 @@
 
         public function getExt() { return $this->ext; }
         public function getMime() { return $this->mime; }
+        public function getWidth() { return $this->_width; }
+        public function getHeight() { return $this->_height; }
 
         public function resizeTo($width, $height, $force_aspect = null, $upscale = true) {
             if($force_aspect==null) {
@@ -102,13 +112,25 @@
             }
 
             if(($this->_width/$this->_height)>=($width/$height)) {
-                if($upscale) { $newW = $width; } else { $newW = ($this->_width> $width)? $width : $this->_width; };
+                if($upscale) {
+                    $newW = $width;
+                } else {
+                    $newW = ($this->_width> $width) ? $width : $this->_width;
+                }
                 $newH = ceil($this->_height * ($newW / $this->_width));
-                if($force_aspect) { $height = $newH; }
+                if($force_aspect) {
+                    $height = $newH;
+                }
             } else {
-                if($upscale) { $newH = $height; } else { $newH = ($this->_height > $height)? $height : $this->_height; };
+                if($upscale) {
+                    $newH = $height;
+                } else {
+                    $newH = ($this->_height > $height)? $height : $this->_height;
+                }
                 $newW = ceil($this->_width* ($newH / $this->_height));
-                if($force_aspect) { $width = $newW; }
+                if($force_aspect) {
+                    $width = $newW;
+                }
             }
 
             if(osc_use_imagick()) {
@@ -137,9 +159,18 @@
         }
 
         public function saveToFile($imagePath, $ext = null) {
-            if(file_exists($imagePath) && !is_writable($imagePath)) { throw new Exception("$imagePath is not writable!"); };
-            if($ext==null) { $ext = $this->ext; };
-            if($ext!='png' && $ext!='gif') { $ext = 'jpeg'; };
+            if(file_exists($imagePath) && !is_writable($imagePath)) {
+                throw new Exception("$imagePath is not writable!");
+            }
+
+            if($ext==null) {
+                $ext = $this->ext;
+            }
+
+            if($ext!='png' && $ext!='gif') {
+                $ext = 'jpeg';
+            }
+
             if(osc_use_imagick()) {
                 if($ext=='jpeg' && ($this->ext!='jpeg' && $this->ext!='jpg')) {
                     $bg = new Imagick();
@@ -149,6 +180,7 @@
                     $this->im = $bg;
                     $this->ext = 'jpeg';
                 }
+                $this->im->setImageDepth(8);
                 $this->im->setImageFileName($imagePath);
                 $this->im->setImageFormat($ext);
                 $this->im->writeImage($imagePath);
@@ -273,14 +305,16 @@
             }
         }
 
-        public function doWatermarkText($text, $color = 'ff0000') {
+        public function doWatermarkText($text, $color = 'ff0000', $fontsize = '30') {
             $this->_watermarked = true;
             $this->_font = osc_apply_filter('watermark_font_path', LIB_PATH . "osclass/assets/fonts/Arial.ttf");
+            $text = osc_apply_filter('watermark_text_value', $text);
+            $fontsize = osc_apply_filter('watermark_font_size', $fontsize);
             if(osc_use_imagick()) {
                 $draw = new ImagickDraw();
                 $draw->setFillColor("#".$color);
                 $draw->setFont($this->_font);
-                $draw->setFontSize( 30 );
+                $draw->setFontSize( $fontsize );
                 $metrics = $this->im->queryFontMetrics($draw, $text);
                 switch(osc_watermark_place()) {
                     case 'tl':

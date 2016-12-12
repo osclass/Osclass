@@ -127,7 +127,7 @@
                             $.ajax({
                                 type: 'POST',
                                 url: "<?php echo osc_admin_base_url(true) . "?page=ajax&action=categories_order&" . osc_csrf_token_url(); ?>",
-                                data: {'list' : plist},
+                                data: {'list' : JSON.stringify(plist)},
                                 context: document.body,
                                 success: function(res){
                                     var ret = eval( "(" + res + ")");

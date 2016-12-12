@@ -131,7 +131,7 @@ function customPageHeader() { ?>
 <div id="pretty-form">
 <div class="grid-row no-bottom-margin">
     <div class="row-wrapper">
-        <h2 class="render-title"><?php echo customText('subtitle'); ?></h2>
+        <h2 class="render-title"><?php echo customText('subtitle'); ?>  <span style="font-size: small;"><a href="<?php echo osc_item_url(); ?>"><?php _e('View listing on front'); ?></a></span></h2>
     </div>
 </div>
 <div class="grid-row no-bottom-margin float-right">
@@ -255,7 +255,7 @@ function customPageHeader() { ?>
                                 <div class="input-has-placeholder input-separate-top">
                                     <?php ItemForm::expiration_input('add'); ?>
                                 </div>
-                                <label><?php _e('It could be an integer (days from now it will be expired, 0 to never expire) or a date in the format "yyyy-mm-dd hh:mm:ss"'); ?></label>
+                                <label><?php _e('It could be an integer (days from original publishing date it will be expired, 0 to never expire) or a date in the format "yyyy-mm-dd hh:mm:ss"'); ?></label>
                             <?php } else if( !$new_item ) { ?>
                                 <div class="input-separate-top">
                                     <label><input type="checkbox" id="update_expiration" name="update_expiration" style="width: inherit!important;"/> <?php _e('Update expiration?'); ?></label>
@@ -263,7 +263,7 @@ function customPageHeader() { ?>
                                         <div class="input-has-placeholder input-separate-top">
                                             <?php ItemForm::expiration_input('edit'); ?>
                                         </div>
-                                        <label><?php _e('It could be an integer (days from now it will be expired, 0 to never expire) or a date in the format "yyyy-mm-dd hh:mm:ss"'); ?></label>
+                                        <label><?php _e('It could be an integer (days from original publishing date it will be expired, 0 to never expire) or a date in the format "yyyy-mm-dd hh:mm:ss"'); ?></label>
                                     </div>
                                 </div>
                             <?php } ?>

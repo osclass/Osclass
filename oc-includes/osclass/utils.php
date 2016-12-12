@@ -561,8 +561,6 @@ function osc_copy($source, $dest, $options=array('folderPermission'=>0755,'fileP
     return $result;
 }
 
-
-
 function osc_copyemz($file1,$file2){
     $contentx =@file_get_contents($file1);
     $openedfile = fopen($file2, "w");
@@ -1098,7 +1096,6 @@ function _unzip_file_pclzip($zip_file, $to) {
     return 1;
 }
 
-
 /**
  * Common interface to zip a specified folder to a file using ziparchive or pclzip
  *
@@ -1199,17 +1196,26 @@ function _zip_folder_pclzip($archive_folder, $archive_name) {
 }
 
 function osc_check_recaptcha() {
+    if(osc_recaptcha_version()=="2") {
+        if ( Params::getParam("g-recaptcha-response") != '') {
+            require_once osc_lib_path() . 'recaptchalib/autoload.php';
+            $recaptcha = new \ReCaptcha\ReCaptcha(osc_recaptcha_private_key());
+            $resp = $recaptcha->verify(Params::getParam("g-recaptcha-response"), Params::getServerParam('REMOTE_ADDR'));
+            if ($resp->isSuccess()) {
+                return true;
+            }
+        }
+    } else {
+        require_once osc_lib_path() . 'recaptchalib.php';
+        if ( Params::getParam("recaptcha_challenge_field") != '') {
+            $resp = recaptcha_check_answer (osc_recaptcha_private_key()
+                ,Params::getServerParam("REMOTE_ADDR")
+                ,Params::getParam("recaptcha_challenge_field")
+                ,Params::getParam("recaptcha_response_field"));
 
-    require_once osc_lib_path() . 'recaptchalib.php';
-    if ( Params::getParam("recaptcha_challenge_field") != '') {
-        $resp = recaptcha_check_answer (osc_recaptcha_private_key()
-                                        ,Params::getServerParam("REMOTE_ADDR")
-                                        ,Params::getParam("recaptcha_challenge_field")
-                                        ,Params::getParam("recaptcha_response_field"));
-
-        return $resp->is_valid;
+            return $resp->is_valid;
+        }
     }
-
     return false;
 }
 
@@ -1331,7 +1337,6 @@ function osc_save_permissions( $dir = ABS_PATH ) {
     return $perms;
 }
 
-
 function osc_prepare_price($price) {
     return number_format($price/1000000, osc_locale_num_dec(), osc_locale_dec_point(), osc_locale_thousands_sep());
 }
@@ -1437,7 +1442,6 @@ function _need_update($uri, $version) {
 }
 // END -- Market util functions
 
-
 /**
  * Returns
  *      0  if both are equal,
@@ -1540,7 +1544,6 @@ function osc_update_cat_stats_id($id)
     }
 }
 
-
 /**
  * Update locations stats. I moved this function from cron.daily.php:update_location_stats
  *
@@ -1552,7 +1555,7 @@ function osc_update_location_stats($force = false, $limit = 1000) {
     $workToDo = $loctmp->count();
 
     if( $workToDo > 0 ) {
-        // there are wotk to do
+        // there is work to do
         if($limit=='auto') {
             $total_cities = City::newInstance()->count();
             $limit = max(1000, ceil($total_cities/22));
@@ -1587,7 +1590,7 @@ function osc_update_location_stats($force = false, $limit = 1000) {
             }
         }
     } else if($force) {
-        // we need populate location tmp table
+        // we need to populate location tmp table
         $aCountry  = Country::newInstance()->listAll();
 
         foreach($aCountry as $country) {
@@ -1650,7 +1653,6 @@ function osc_translate_categories($locale) {
 
 }
 
-
 function get_ip() {
     if( Params::getServerParam('HTTP_CLIENT_IP')!='' ) {
         return Params::getServerParam('HTTP_CLIENT_IP');
@@ -1665,7 +1667,6 @@ function get_ip() {
 
     return Params::getServerParam('REMOTE_ADDR');
 }
-
 
 /***********************
  * CSRFGUARD functions *
@@ -1695,7 +1696,6 @@ function osc_csrfguard_generate_token() {
     return array($unique_token_name, $token);
 }
 
-
 function osc_csrfguard_validate_token($unique_form_name, $token_value) {
     $name = Session::newInstance()->_get('token_name');
     $token = Session::newInstance()->_get($unique_form_name);
@@ -1706,7 +1706,6 @@ function osc_csrfguard_validate_token($unique_form_name, $token_value) {
     }
     return $result;
 }
-
 
 function osc_csrfguard_replace_forms($form_data_html) {
     $count = preg_match_all("/<form(.*?)>/is", $form_data_html, $matches, PREG_SET_ORDER);
@@ -1719,13 +1718,11 @@ function osc_csrfguard_replace_forms($form_data_html) {
     return $form_data_html;
 }
 
-
 function osc_csrfguard_inject() {
     $data = ob_get_clean();
     $data = osc_csrfguard_replace_forms($data);
     echo $data;
 }
-
 
 function osc_csrfguard_start() {
     ob_start();
@@ -2052,8 +2049,6 @@ function osc_is_update_compatible($section, $element, $osclass_version = OSCLASS
     }
     return false;
 }
-
-
 
 function osc_market($section, $code) {
     $plugin  = false;

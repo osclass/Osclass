@@ -20,7 +20,7 @@
      */
 
     // meta tag robots
-    if( osc_count_items() == 0 || stripos(Params::getServerParam('REQUEST_URI', false, false), 'search') ) {
+    if( osc_count_items() == 0 || stripos($_SERVER['REQUEST_URI'], 'search') ) {
         osc_add_hook('header','bender_nofollow_construct');
     } else {
         osc_add_hook('header','bender_follow_construct');
@@ -122,6 +122,7 @@
             View::newInstance()->_exportVariableToView("listType", 'premiums');
             View::newInstance()->_exportVariableToView("listClass",$listClass.' premium-list');
             osc_current_web_theme_path('loop.php');
+            echo '<div style="clear:both;"></div><br/>';
             }
         ?>
      <?php if(osc_count_items() > 0) {

@@ -1,0 +1,67 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Osclass 2.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-08-17 09:54+0200\n"
+"PO-Revision-Date: \n"
+"Last-Translator: carlos <carlos@osclass.org>\n"
+"Language-Team: Osclass <info@osclass.org>\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: _e;__\n"
+"X-Poedit-Basepath: .\n"
+"X-Generator: Poedit 1.8.7\n"
+"X-Poedit-SearchPath-0: /Users/ssuareza/htdocs/wallapop/oc-content/plugins/"
+"google_maps\n"
+
+#: /Users/ssuareza/htdocs/wallapop/oc-content/plugins/google_maps/admin/settings.php:7
+msgid "Settings updated correctly"
+msgstr "Preferencias actualizadas correctamente\t"
+
+#: /Users/ssuareza/htdocs/wallapop/oc-content/plugins/google_maps/admin/settings.php:15
+msgid "Javascript"
+msgstr "Javascript"
+
+#: /Users/ssuareza/htdocs/wallapop/oc-content/plugins/google_maps/admin/settings.php:17
+msgid "Load Google Maps javascript library."
+msgstr "Cargar librería Google Maps javascript"
+
+#: /Users/ssuareza/htdocs/wallapop/oc-content/plugins/google_maps/admin/settings.php:20
+msgid "load/unload"
+msgstr "Cargar/No cargar"
+
+#: /Users/ssuareza/htdocs/wallapop/oc-content/plugins/google_maps/admin/settings.php:22
+msgid ""
+"Some plugins already load the Google Maps library and can be loaded twice or "
+"more. Disable this option if you don't want to load google maps library."
+msgstr ""
+"Algunos plugins cargan la librería de Google Maps y puede llegar a cargase "
+"dos veces. Deshabilitar esta opción si no se queire cargar la librería de "
+"Google Maps.  "
+
+#: /Users/ssuareza/htdocs/wallapop/oc-content/plugins/google_maps/admin/settings.php:27
+msgid "Google Maps API key."
+msgstr "Google Maps API key."
+
+#: /Users/ssuareza/htdocs/wallapop/oc-content/plugins/google_maps/admin/settings.php:32
+msgid ""
+"Create an API key as per instructions here: <a href=\"https://developers."
+"google.com/maps/documentation/javascript/get-api-key\">Get api key</a>"
+msgstr ""
+"Crea una API key siguiendo las instrucciones: <a href=\"https://developers."
+"google.com/maps/documentation/javascript/get-api-key\">Obtener api key</a>"
+
+#: /Users/ssuareza/htdocs/wallapop/oc-content/plugins/google_maps/admin/settings.php:37
+msgid "Save changes"
+msgstr "Guardar cambios"
+
+#: /Users/ssuareza/htdocs/wallapop/oc-content/plugins/google_maps/index.php:58
+msgid "Settings"
+msgstr "Preferencias"
+
+#: /Users/ssuareza/htdocs/wallapop/oc-content/plugins/google_maps/index.php:66
+msgid "Google Maps Plugin"
+msgstr "Google Maps Plugin"

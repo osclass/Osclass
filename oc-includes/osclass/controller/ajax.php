@@ -24,6 +24,7 @@
         {
             parent::__construct();
             $this->ajax = true;
+            osc_run_hook( 'init_ajax' );
         }
 
         //Business Layer...
@@ -296,6 +297,7 @@
                     // auto rotate
                     $img = ImageResizer::fromFile(osc_content_path().'uploads/temp/'.$filename)->autoRotate();
                     $img->saveToFile(osc_content_path().'uploads/temp/auto_'.$filename, $original['extension']);
+                    $img->saveToFile(osc_content_path().'uploads/temp/'.$filename, $original['extension']);
 
                     $result['uploadName'] = 'auto_'.$filename;
                     echo htmlspecialchars(json_encode($result), ENT_NOQUOTES);
@@ -326,9 +328,6 @@
                     echo json_encode(array('error' => __('no action defined')));
                 break;
             }
-            // clear all keep variables into session
-            Session::newInstance()->_dropKeepForm();
-            Session::newInstance()->_clearVariables();
         }
 
         //hopefully generic...

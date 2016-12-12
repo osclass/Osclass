@@ -85,11 +85,11 @@
                 break;
                 case 'categories_order': // Save the order of the categories
                     osc_csrf_check(false);
-                    $aIds        = Params::getParam('list');
-                    $order = array();
+                    $aIds        = json_decode(Params::getParam('list'), true);
+                    $order       = array();
                     $error       = 0;
 
-                    $catManager = Category::newInstance();
+                    $catManager  = Category::newInstance();
                     $aRecountCat = array();
 
                     foreach($aIds as $cat) {

@@ -62,6 +62,15 @@
      *
      * @return int
      */
+    function osc_search_alert_subscribed() {
+        return View::newInstance()->_get('search_alert_subscribed')==1;
+    }
+
+    /**
+     * Gets current search page
+     *
+     * @return int
+     */
     function osc_search_page() {
         return View::newInstance()->_get('search_page');
     }
@@ -440,6 +449,9 @@
         $countP = count($params);
 
         if(osc_rewrite_enabled()) {
+            foreach($params as $kp => $vp ) {
+                $params[$kp] = osc_remove_slash($vp);
+            }
             $url = $base_url.osc_get_preference('rewrite_search_url');
             // CANONICAL URLS
             if(isset($params['sCategory']) && !is_array($params['sCategory']) && strpos($params['sCategory'], ',')===false && ($countP==1 || ($countP==2 && isset($params['iPage'])))) {
@@ -595,15 +607,15 @@
             $url = $base_url . 'index.php?page=search';
             if($params!=null && is_array($params)) {
                 foreach($params as $k => $v) {
-                    if($k=='meta') {
+                    if($k=='meta' || substr($k, 0, 5)=='meta[') {
                         if( is_array($v) ) {
                             foreach($v as $_k => $aux) {
                                 if(is_array($aux)) {
                                     foreach( array_keys($aux) as $aux_k ) {
-                                        $url .= "&" . $k . "[$_k][$aux_k]=" . urlencode($aux[$aux_k]);
+                                        $url .= "&meta[$_k][$aux_k]=" . urlencode($aux[$aux_k]);
                                     }
                                 } else {
-                                    $url .= "&" . $_k . "[]=" . urlencode($aux);
+                                    $url .= "&meta[" . $_k . "]=" . urlencode($aux);
                                 }
                             }
                         }
@@ -615,6 +627,17 @@
             }
         }
         return str_replace('%2C', ',', $url);
+    }
+
+    function osc_remove_slash($var) {
+        if(is_array($var)) {
+            foreach($var as $k => $v) {
+                $var[$k] = osc_remove_slash($v);
+            }
+        } else {
+            $var = str_ireplace("/", " ", $var);
+        }
+        return $var;
     }
 
     /**

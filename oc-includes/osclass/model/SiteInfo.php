@@ -57,7 +57,7 @@
         {
             $this->setTableName('tbl_sites');
             $this->setPrimaryKey('s_site');
-            $this->setFields( array('s_site', 'dt_date', 'fk_i_user_id', 's_db_name', 's_db_host', 's_db_user', 's_db_password', 's_upload_path') );
+            $this->setFields( array('s_site', 'dt_date', 's_site_mapping', 'fk_i_user_id', 's_db_name', 's_db_host', 's_db_user', 's_db_password', 's_upload_path') );
 
             $conn = new DBConnectionClass(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
             $conn->connectToMetadataDb();
@@ -72,7 +72,7 @@
          */
         public function toArray()
         {
-            $domain = 'http://' . Params::getServerParam('HTTP_HOST') . '/';
+            $domain = '//' . $_SERVER['HTTP_HOST'] . '/';
             $this->siteInfo = $this->findByPrimaryKey($domain);
         }
 
@@ -103,7 +103,8 @@
         {
             $this->daoMetadata->select($this->getFields());
             $this->daoMetadata->from($this->getTableName());
-            $this->daoMetadata->where('s_site', $value);
+            $this->daoMetadata->like('s_site', $value);
+            $this->daoMetadata->orLike('s_site_mapping', $value);
             $result = $this->daoMetadata->get();
 
             if( $result == false ) {

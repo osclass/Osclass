@@ -938,7 +938,7 @@
             }
 
             $this->queries[] = $sql;
-            $timeStart = list($sm, $ss) = explode(' ', microtime());
+            $timeStart = microtime(true);
 
             $this->resultId = $this->_execute($sql);
 
@@ -950,13 +950,13 @@
                 return false;
             }
 
-            $timeEnd = list($em, $es) = explode(' ', microtime());
-            $this->queryTimes[] = ($em + $es) - ($sm + $ss);
+            $timeEnd = microtime(true);
+            $this->queryTimes[] = $timeEnd - $timeStart;
 
             $this->queryCount++;
 
             if( OSC_DEBUG_DB ) {
-                $this->log->addMessage($sql, ($em + $es) - ($sm + $ss), $this->errorLevel, $this->errorDesc);
+                $this->log->addMessage($sql, $timeEnd - $timeStart, $this->errorLevel, $this->errorDesc);
             }
 
             if( $this->isWriteType($sql) === true ) {

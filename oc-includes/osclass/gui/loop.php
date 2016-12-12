@@ -56,6 +56,7 @@ if(View::newInstance()->_exists('listClass')){
                 }
             }
         } else {
+            search_ads_listing_top_fn();
             while(osc_has_items()) {
                 $i++;
                 $class = false;
@@ -68,6 +69,16 @@ if(View::newInstance()->_exists('listClass')){
                 }
 
                 bender_draw_item($class,$admin);
+
+                if(bender_show_as()=='gallery') {
+                    if($i%8 == 0){
+                        osc_run_hook('search_ads_listing_medium');
+                    }
+                } else if(bender_show_as()=='list') {
+                    if($i%6 == 0){
+                        osc_run_hook('search_ads_listing_medium');
+                    }
+                }
           }
         }
     ?>

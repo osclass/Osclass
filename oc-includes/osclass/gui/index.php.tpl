@@ -26,8 +26,8 @@ Description: <%- pkg.description %>
 Version: <%- pkg.version %>
 Author: <%- pkg.author %>
 Author URI: http://osclass.org/
-Widgets:
-Theme update URI:
+Widgets:  header, footer
+Theme update URI: bender
 */
 
     function bender_theme_info() {

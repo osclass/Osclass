@@ -244,7 +244,7 @@
             foreach($params as $k => $v) {
                 $url_params[] = sprintf('%s=%s', $k, $v);
             }
-            $url .= implode('&', $url_params);
+            $url .= '&' . implode('&', $url_params);
         }
 
         return $url;

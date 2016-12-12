@@ -53,3 +53,10 @@ div#recaptcha_image > img{width:100% !important;}
 @import "responsive/list.scss";
 @import "responsive/item.scss";
 @import "responsive/structure.scss";
+
+#header .ads_header,
+.ads_300,
+.ads_728,
+.ads_468{
+    display:none;
+}

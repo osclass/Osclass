@@ -122,3 +122,23 @@ body.not-found #query{
     line-height: 30px;
     font-size:1em;
 }
+
+.ads_300,
+.ads_728,
+.ads_468{
+    background-color: #FDF6E5;
+    display: block;
+    margin:15px 0;
+}
+.ads_300{
+    width: 300px;
+    min-height: 250px;
+}
+.ads_728{
+    width: 728px;
+    min-height: 90px;
+}
+.ads_468{
+    width: 468px;
+    min-height: 60px;
+}

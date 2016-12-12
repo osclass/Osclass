@@ -35,6 +35,7 @@
                 $this->userId = null;
                 $this->user = null;
             }
+            osc_run_hook( 'init_item' );
         }
 
         //Business Layer...
@@ -94,17 +95,10 @@
 
                     $this->doView('item-post.php');
                 break;
-                case 'item_add_post': //post_item
-                    osc_csrf_check();
-                    if( osc_reg_user_post() && $this->user == null ) {
-                        osc_add_flash_warning_message( _m('Only registered users are allowed to post listings') );
-                        $this->redirectTo( osc_base_url(true) );
-                    }
-
+                case 'item_add_post':
+                    // SAVE form data before CSRF CHECK
                     $mItems = new ItemActions(false);
-                    // prepare data for ADD ITEM
                     $mItems->prepareData(true);
-                    // set all parameters into session
                     foreach( $mItems->data as $key => $value ) {
                         Session::newInstance()->_setForm($key,$value);
                     }
@@ -115,6 +109,13 @@
                             Session::newInstance()->_setForm('meta_'.$key, $value);
                             Session::newInstance()->_keepForm('meta_'.$key);
                         }
+                    }
+
+                    osc_csrf_check();
+
+                    if( osc_reg_user_post() && $this->user == null ) {
+                        osc_add_flash_warning_message( _m('Only registered users are allowed to post listings') );
+                        $this->redirectTo( osc_base_url(true) );
                     }
 
                     if(osc_recaptcha_items_enabled() && osc_recaptcha_private_key() != '') {
@@ -200,6 +201,23 @@
                                     }
                 break;
                 case 'item_edit_post':
+                    // SAVE form data before CSRF CHECK
+                    $mItems = new ItemActions(false);
+                    // prepare data for ADD ITEM
+                    $mItems->prepareData(false);
+                    // set all parameters into session
+                    foreach( $mItems->data as $key => $value ) {
+                        Session::newInstance()->_setForm($key,$value);
+                    }
+
+                    $meta = Params::getParam('meta');
+                    if(is_array($meta)) {
+                        foreach( $meta as $key => $value ) {
+                            Session::newInstance()->_setForm('meta_'.$key, $value);
+                            Session::newInstance()->_keepForm('meta_'.$key);
+                        }
+                    }
+
                     osc_csrf_check();
 
                     $secret = Params::getParam('secret');
@@ -208,22 +226,6 @@
 
                     if (count($item) == 1) {
                         $this->_exportVariableToView('item', $item[0]);
-
-                        $mItems = new ItemActions(false);
-                        // prepare data for ADD ITEM
-                        $mItems->prepareData(false);
-                        // set all parameters into session
-                        foreach( $mItems->data as $key => $value ) {
-                            Session::newInstance()->_setForm($key,$value);
-                        }
-
-                        $meta = Params::getParam('meta');
-                        if(is_array($meta)) {
-                            foreach( $meta as $key => $value ) {
-                                Session::newInstance()->_setForm('meta_'.$key, $value);
-                                Session::newInstance()->_keepForm('meta_'.$key);
-                            }
-                        }
 
                         if(osc_recaptcha_items_enabled() && osc_recaptcha_private_key() != '') {
                             if( !osc_check_recaptcha() ) {
@@ -236,6 +238,12 @@
                         $success = $mItems->edit();
 
                         if($success==1) {
+                            if(is_array($meta)) {
+                                foreach( $meta as $key => $value ) {
+                                    Session::newInstance()->_dropKeepForm('meta_'.$key);
+                                }
+                            }
+                            Session::newInstance()->_clearVariables();
                             osc_add_flash_ok_message( _m("Great! We've just updated your listing") );
                             View::newInstance()->_exportVariableToView("item", Item::newInstance()->findByPrimaryKey($id));
                             $this->redirectTo( osc_item_url() );
@@ -427,7 +435,7 @@
                         if( osc_reg_user_can_contact() && osc_is_web_user_logged_in() || !osc_reg_user_can_contact() ){
                             $this->doView('item-contact.php');
                         } else {
-                            osc_add_flash_error_message( _m("You can't contact the seller, only registered users can") );
+                            osc_add_flash_error_message( sprintf(_m("You can't contact the seller, only registered users can. <a href=\"%s\">Click here to sign-in.</a>"), osc_user_login_url()) );
                             $this->redirectTo( osc_item_url() );
                         }
                     }

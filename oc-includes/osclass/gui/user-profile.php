@@ -54,6 +54,7 @@
                     <?php UserForm::is_company_select(osc_user()); ?>
                 </div>
             </div>
+
             <div class="control-group">
                 <label class="control-label" for="phoneMobile"><?php _e('Cell phone', 'bender'); ?></label>
                 <div class="controls">

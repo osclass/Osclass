@@ -39,7 +39,7 @@
 <div class="form-container form-horizontal">
     <div class="resp-wrapper">
         <ul id="error_list"></ul>
-        <form action="<?php echo osc_base_url(true); ?>" method="post">
+        <form id="change-email" action="<?php echo osc_base_url(true); ?>" method="post">
             <input type="hidden" name="page" value="user" />
             <input type="hidden" name="action" value="change_email_post" />
             <div class="control-group">
@@ -73,7 +73,7 @@
             },
             messages: {
                 new_email: {
-                    required: '?php echo osc_esc_js(__("Email: this field is required", "bender")); ?>.',
+                    required: '<?php echo osc_esc_js(__("Email: this field is required", "bender")); ?>.',
                     email: '<?php echo osc_esc_js(__("Invalid email address", "bender")); ?>.'
                 }
             },

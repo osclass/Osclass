@@ -36,6 +36,15 @@
             </select>
         </form>
     <?php } ?>
+
+    <?php if( osc_get_preference('sidebar-300x250', 'bender') != '') {?>
+    <!-- sidebar ad 350x250 -->
+    <div class="ads_300">
+        <?php echo osc_get_preference('sidebar-300x250', 'bender'); ?>
+    </div>
+    <!-- /sidebar ad 350x250 -->
+    <?php } ?>
+
     <div id="contact" class="widget-box form-container form-vertical">
         <h2><?php _e("Contact publisher", 'bender'); ?></h2>
         <?php if( osc_item_is_expired () ) { ?>
@@ -107,7 +116,10 @@
                                 custom_theme_widget: 'recaptcha_widget'
                             };
                         </script>
-                        <style type="text/css"> div#recaptcha_widget, div#recaptcha_image > img { width:280px; } </style>
+                        <style type="text/css">
+                          div#recaptcha_widget, div#recaptcha_image > img { width:240px; margin-top: 5px; }
+                          div#recaptcha_image { margin-bottom: 15px; }
+                        </style>
                         <div id="recaptcha_widget">
                             <div id="recaptcha_image"><img /></div>
                             <span class="recaptcha_only_if_image"><?php _e('Enter the words above','bender'); ?>:</span>
