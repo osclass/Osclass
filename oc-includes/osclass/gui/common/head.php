@@ -63,7 +63,7 @@
 <link rel="apple-touch-icon-precomposed" href="<?php echo osc_current_web_theme_url('favicon/favicon-57.png'); ?>">
 <!-- /favicon -->
 
-<link href="<?php echo osc_current_web_theme_url('js/jquery-ui/jquery-ui-1.10.2.custom.min.css') ; ?>?<?php echo rand(0, pow(10, 5)); ?>" rel="stylesheet" type="text/css" />
+<link href="<?php echo osc_current_web_theme_url('js/jquery-ui/jquery-ui-1.10.2.custom.min.css') ; ?>" rel="stylesheet" type="text/css" />
 
 <script type="text/javascript">
     var bender = window.bender || {};
@@ -73,5 +73,5 @@
     bender.fancybox_next = '<?php echo osc_esc_js( __('Next image','bender')) ?>';
     bender.fancybox_closeBtn = '<?php echo osc_esc_js( __('Close','bender')) ?>';
 </script>
-<link href="<?php echo osc_current_web_theme_url('css/main.css') ; ?>?<?php echo rand(0, pow(10, 5)); ?>" rel="stylesheet" type="text/css" />
+<link href="<?php echo osc_current_web_theme_url('css/main.css') ; ?>" rel="stylesheet" type="text/css" />
 <?php osc_run_hook('header') ; ?>

@@ -56,22 +56,28 @@ $(document).ready(function(){
 </script>
 
 <div class="alert_form">
-    <h3>
-        <strong><?php _e('Subscribe to this search', 'bender'); ?></strong>
-    </h3>
-    <form action="<?php echo osc_base_url(true); ?>" method="post" name="sub_alert" id="sub_alert" class="nocsrf">
-            <?php AlertForm::page_hidden(); ?>
-            <?php AlertForm::alert_hidden(); ?>
+    <?php if(function_exists('osc_search_alert_subscribed') && osc_search_alert_subscribed()) { ?>
+        <h3>
+            <strong><?php _e('Already subscribed to this search', 'bender'); ?></strong>
+        </h3>
+    <?php } else { ?>
+        <h3>
+            <strong><?php _e('Subscribe to this search', 'bender'); ?></strong>
+        </h3>
+        <form action="<?php echo osc_base_url(true); ?>" method="post" name="sub_alert" id="sub_alert" class="nocsrf">
+                <?php AlertForm::page_hidden(); ?>
+                <?php AlertForm::alert_hidden(); ?>
 
-            <?php if(osc_is_web_user_logged_in()) { ?>
-                <?php AlertForm::user_id_hidden(); ?>
-                <?php AlertForm::email_hidden(); ?>
+                <?php if(osc_is_web_user_logged_in()) { ?>
+                    <?php AlertForm::user_id_hidden(); ?>
+                    <?php AlertForm::email_hidden(); ?>
 
-            <?php } else { ?>
-                <?php AlertForm::user_id_hidden(); ?>
-                <?php AlertForm::email_text(); ?>
+                <?php } else { ?>
+                    <?php AlertForm::user_id_hidden(); ?>
+                    <?php AlertForm::email_text(); ?>
 
-            <?php }; ?>
-            <button type="submit" class="sub_button" ><?php _e('Subscribe now', 'bender'); ?>!</button>
-    </form>
+                <?php }; ?>
+                <button type="submit" class="sub_button" ><?php _e('Subscribe now', 'bender'); ?>!</button>
+        </form>
+    <?php } ?>
 </div>

@@ -15,6 +15,12 @@ body.has-searchbox #header{
 #header .wrapper{
     position:relative
 }
+#header .ads_header {
+    width: 728px;
+    margin-left: auto;
+    margin-right: auto;
+    padding:10px 0px 10px 0px;
+}
 #header #logo{
     $contrasted-lightness-threshold:65%;
     @include constrasted-text($maincolor);

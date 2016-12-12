@@ -26,14 +26,20 @@
     bender_add_body_class('item item-post');
     $action = 'item_add_post';
     $edit = false;
-    if(Params::getParam('action') == 'item_edit'){
+    if(Params::getParam('action') == 'item_edit') {
         $action = 'item_edit_post';
         $edit = true;
     }
 
     ?>
 <?php osc_current_web_theme_path('header.php') ; ?>
-<?php ItemForm::location_javascript_new(); ?>
+        <?php
+    if (bender_default_location_show_as() == 'dropdown') {
+        ItemForm::location_javascript();
+    } else {
+        ItemForm::location_javascript_new();
+    }
+    ?>
     <div class="form-container form-horizontal">
         <div class="resp-wrapper">
             <div class="header">
@@ -56,15 +62,15 @@
                             </div>
                         </div>
                         <div class="control-group">
-                            <label class="control-label" for="title[<?php echo osc_locale_code(); ?>]"><?php _e('Title', 'bender'); ?></label>
+                            <label class="control-label" for="title[<?php echo osc_current_user_locale(); ?>]"><?php _e('Title', 'bender'); ?></label>
                             <div class="controls">
-                                <?php ItemForm::title_input('title',osc_locale_code(), osc_esc_html( bender_item_title() )); ?>
+                                <?php ItemForm::title_input('title',osc_current_user_locale(), osc_esc_html( bender_item_title() )); ?>
                             </div>
                         </div>
                         <div class="control-group">
-                            <label class="control-label" for="description[<?php echo osc_locale_code(); ?>]"><?php _e('Description', 'bender'); ?></label>
+                            <label class="control-label" for="description[<?php echo osc_current_user_locale(); ?>]"><?php _e('Description', 'bender'); ?></label>
                             <div class="controls">
-                                <?php ItemForm::description_textarea('description',osc_locale_code(), osc_esc_html( bender_item_description() )); ?>
+                                <?php ItemForm::description_textarea('description',osc_current_user_locale(), osc_esc_html( bender_item_description() )); ?>
                             </div>
                         </div>
                         <?php if( osc_price_enabled_at_items() ) { ?>
@@ -81,7 +87,7 @@
                          } ?>
                         <div class="box location">
                             <h2><?php _e('Listing Location', 'bender'); ?></h2>
-
+                            <?php if(count(osc_get_countries()) > 1) { ?>
                             <div class="control-group">
                                 <label class="control-label" for="country"><?php _e('Country', 'bender'); ?></label>
                                 <div class="controls">
@@ -89,15 +95,67 @@
                                 </div>
                             </div>
                             <div class="control-group">
+                                <label class="control-label" for="regionId"><?php _e('Region', 'bender'); ?></label>
+                                <div class="controls">
+                                    <?php
+                                    if (bender_default_location_show_as() == 'dropdown') {
+                                        if($edit) {
+                                            ItemForm::region_select(osc_get_regions(osc_item_country_code()), osc_item());
+                                        } else {
+                                            ItemForm::region_select(osc_get_regions(osc_user_field('fk_c_country_code')), osc_user());
+                                        }
+                                    } else {
+                                        if($edit) {
+                                            ItemForm::region_text(osc_item());
+                                        } else {
+                                            ItemForm::region_text(osc_user());
+                                        }
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                            <?php
+                            } else {
+                                $aCountries = osc_get_countries();
+                                $aRegions = osc_get_regions($aCountries[0]['pk_c_code']);
+                                ?>
+                            <input type="hidden" id="countryId" name="countryId" value="<?php echo osc_esc_html($aCountries[0]['pk_c_code']); ?>"/>
+                            <div class="control-group">
                                 <label class="control-label" for="region"><?php _e('Region', 'bender'); ?></label>
                                 <div class="controls">
-                                  <?php ItemForm::region_text(osc_user()); ?>
+                                  <?php
+                                    if (bender_default_location_show_as() == 'dropdown') {
+                                        if($edit) {
+                                            ItemForm::region_select($aRegions, osc_item());
+                                        } else {
+                                            ItemForm::region_select($aRegions, osc_user());
+                                        }
+                                    } else {
+                                        if($edit) {
+                                            ItemForm::region_text(osc_item());
+                                        } else {
+                                            ItemForm::region_text(osc_user());
+                                        }
+                                    }
+                                    ?>
                                 </div>
-                                    </div>
-                                    <div class="control-group">
+                            </div>
+                            <?php } ?>
+
+                            <div class="control-group">
                                 <label class="control-label" for="city"><?php _e('City', 'bender'); ?></label>
                                 <div class="controls">
-                                    <?php ItemForm::city_text(osc_user()); ?>
+                                    <?php
+                                    if (bender_default_location_show_as() == 'dropdown') {
+                                        if($edit) {
+                                            ItemForm::city_select(null, osc_item());
+                                        } else { // add new item
+                                            ItemForm::city_select(osc_get_cities(osc_user_region_id()), osc_user());
+                                        }
+                                    } else {
+                                        ItemForm::city_text(osc_user());
+                                    }
+                                    ?>
                                 </div>
                             </div>
                             <div class="control-group">

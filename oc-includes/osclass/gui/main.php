@@ -61,6 +61,13 @@
 </div>
 </div><!-- main -->
 <div id="sidebar">
+    <?php if( osc_get_preference('sidebar-300x250', 'bender') != '') {?>
+    <!-- sidebar ad 350x250 -->
+    <div class="ads_300">
+        <?php echo osc_get_preference('sidebar-300x250', 'bender'); ?>
+    </div>
+    <!-- /sidebar ad 350x250 -->
+    <?php } ?>
     <div class="widget-box">
         <?php if(osc_count_list_regions() > 0 ) { ?>
         <div class="box location">
@@ -75,4 +82,11 @@
     </div>
 </div>
 <div class="clear"><!-- do not close, use main clossing tag for this case -->
+<?php if( osc_get_preference('homepage-728x90', 'bender') != '') { ?>
+<!-- homepage ad 728x60-->
+<div class="ads_728">
+    <?php echo osc_get_preference('homepage-728x90', 'bender'); ?>
+</div>
+<!-- /homepage ad 728x60-->
+<?php } ?>
 <?php osc_current_web_theme_path('footer.php') ; ?>

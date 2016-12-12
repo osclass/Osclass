@@ -108,6 +108,15 @@ ul.user_menu li{
     .plugin-hooks .row{
         margin-bottom:10px
     }
+    .plugin-hooks .row.radio{
+        label {
+            padding: 4px 0px;
+            display: inline-block;
+            input {
+                margin-right: 5px;
+            }
+        }
+    }
     .select-box{
          width: 100%;
     }

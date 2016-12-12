@@ -43,6 +43,7 @@
         <fieldset>
             <h3><?php _e('City', 'bender'); ?></h3>
             <div class="row">
+                <input class="input-text" type="hidden" id="sRegion" name="sRegion" value="<?php echo osc_esc_html(Params::getParam('sRegion')); ?>" />
                 <input class="input-text" type="text" id="sCity" name="sCity" value="<?php echo osc_esc_html(osc_search_city()); ?>" />
             </div>
         </fieldset>
