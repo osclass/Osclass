@@ -830,7 +830,8 @@ function display_target() {
                 <tr>
                     <td></td>
                     <td>
-                        <input type="checkbox" checked="checked" id="createmarketaccount" name="createmarketaccount" value="1" /><label for="createmarketaccount"><?php _e('Create market.osclass.org account'); ?></label>
+                        <input type="checkbox" checked="checked" id="createmarketaccount" name="createmarketaccount" value="1" /><label for="createmarketaccount"><?php _e('Create market.osclass.org account'); ?>
+                            <br><?php _e("(You agree to our <a href=\"https://osclass.org/page/legal-note\">Terms & Conditions</a>)"); ?></label>
                         <img class="vtip" src="<?php echo get_absolute_url(); ?>oc-includes/images/question.png" title="<?php echo osc_esc_html(__("Create a market.osclass.org account and download free themes and plugins.")); ?>" alt="" />
                     </td>
                 </tr>
