@@ -174,7 +174,7 @@
          */
         public function __destruct()
         {
-            $printFrontend = osc_is_admin_user_logged_in();
+            $printFrontend = OSC_DEBUG?osc_is_admin_user_logged_in():false;
             $this->releaseOsclassDb();
             $this->releaseMetadataDb();
             $this->debug($printFrontend);
