@@ -187,7 +187,7 @@
             $uri_array = explode('?', $uri);
             $length_i = count($uri_array);
             for($var_i = 1;$var_i<$length_i;$var_i++) {
-                $aValues = preg_split('/&[a-z0-9]+=/i', '&'.$uri_array[$var_i], -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
+                $aValues = preg_split('/&[^=]+=/i', '&'.$uri_array[$var_i], -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
                 if(preg_match_all('|&([^=]+)=|', '&'.$uri_array[$var_i], $matches)) {
                     $length = count($matches[1]);
                     for($var_k = 0;$var_k<$length;$var_k++) {
