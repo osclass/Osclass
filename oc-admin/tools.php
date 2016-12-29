@@ -79,6 +79,10 @@
                                         $this->redirectTo( osc_admin_base_url(true) . '?page=tools&action=locations' );
                 break;
                 case('upgrade'):
+                                        if( defined('DEMO') ) {
+                                            osc_add_flash_warning_message( _m("This action cannot be done because it is a demo site"), 'admin');
+                                            $this->redirectTo(osc_admin_base_url(true));
+                                        }
                                         $this->doView('tools/upgrade.php');
                 break;
                 case 'version':         $this->doView('tools/version.php');

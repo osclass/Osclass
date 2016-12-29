@@ -110,7 +110,7 @@
                     $this->http_referer = $ref_match[1];
                     $_SERVER['REQUEST_URI'] = preg_replace('|[\?&]{1}http_referer=(.*)$|', "", urldecode(Params::getServerParam('REQUEST_URI', false, false)));
                 }
-                $request_uri = preg_replace('@^' . REL_WEB_URL . '@', "", urldecode(Params::getServerParam('REQUEST_URI', false, false)));
+                $request_uri = preg_replace('@^' . REL_WEB_URL . '@', "", Params::getServerParam('REQUEST_URI', false, false));
                 $this->raw_request_uri = $request_uri;
                 $route_used = false;
                 foreach($this->routes as $id => $route) {
@@ -187,12 +187,9 @@
             $uri_array = explode('?', $uri);
             $length_i = count($uri_array);
             for($var_i = 1;$var_i<$length_i;$var_i++) {
-                $aValues = preg_split('/&[a-z0-9]+=/i', '&'.$uri_array[$var_i], -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
-                if(preg_match_all('|&([^=]+)=|', '&'.$uri_array[$var_i], $matches)) {
-                    $length = count($matches[1]);
-                    for($var_k = 0;$var_k<$length;$var_k++) {
-                        Params::setParam($matches[1][$var_k], $aValues[$var_k]);
-                    }
+                parse_str($uri_array[$var_i], $parsedVars);
+                foreach($parsedVars as $k => $v) {
+                    Params::setParam($k, urldecode($v));
                 }
             }
         }

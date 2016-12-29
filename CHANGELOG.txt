@@ -1,3 +1,10 @@
+Osclass 3.7.1 2016-12-27
+------------------------
+
+- Fixed URL params error
+- Blocked upgrade on demo sites
+- Fixed some minor details
+
 Osclass 3.7.0 2016-12-12
 ------------------------
 

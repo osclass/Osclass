@@ -533,12 +533,18 @@
                  ******************************/
                 case 'upgrade': // AT THIS POINT WE KNOW IF THERE'S AN UPDATE OR NOT
                     osc_csrf_check();
-                    $result = osc_do_upgrade();
-                    if(!defined('__FROM_CRON__') || !__FROM_CRON__) {
-                        if($result['error']==0) {
-                            osc_add_flash_ok_message($result['message'], 'admin');
-                        } else if($result['error']==6) {
-                            osc_add_flash_warning_message($result['message'], 'admin');
+                    if( defined('DEMO') ) {
+                        $msg = __("This action cannot be done because it is a demo site");
+                        $result = array("error" => 6, "message" => $msg);
+                        osc_add_flash_warning_message( $msg, 'admin');
+                    } else {
+                        $result = osc_do_upgrade();
+                        if (!defined('__FROM_CRON__') || !__FROM_CRON__) {
+                            if ($result['error'] == 0) {
+                                osc_add_flash_ok_message($result['message'], 'admin');
+                            } else if ($result['error'] == 6) {
+                                osc_add_flash_warning_message($result['message'], 'admin');
+                            }
                         }
                     }
                     echo json_encode($result);
