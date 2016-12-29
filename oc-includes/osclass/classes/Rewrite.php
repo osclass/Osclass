@@ -108,7 +108,7 @@
             if(Params::existServerParam('REQUEST_URI')) {
                 if(preg_match('|[\?&]{1}http_referer=(.*)$|', urldecode(Params::getServerParam('REQUEST_URI', false, false)), $ref_match)) {
                     $this->http_referer = $ref_match[1];
-                    $_SERVER['REQUEST_URI'] = preg_replace('|[\?&]{1}http_referer=(.*)$|', "", urldecode(Params::getServerParam('REQUEST_URI', false, false)));
+                    $_SERVER['REQUEST_URI'] = preg_replace('|[\?&]{1}http_referer=(.*)$|', "", Params::getServerParam('REQUEST_URI', false, false));
                 }
                 $request_uri = preg_replace('@^' . REL_WEB_URL . '@', "", Params::getServerParam('REQUEST_URI', false, false));
                 $this->raw_request_uri = $request_uri;
