@@ -139,7 +139,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_user (
     b_company TINYINT(1) NOT NULL DEFAULT 0,
     i_items INT(10) UNSIGNED NULL DEFAULT 0,
     i_comments INT(10) UNSIGNED NULL DEFAULT 0,
-    dt_access_date DATETIME NOT NULL DEFAULT  '0000-00-00 00:00:00',
+    dt_access_date DATETIME NOT NULL DEFAULT '2000-01-01 00:00:00',
     s_access_ip VARCHAR(15) NOT NULL DEFAULT '',
 
         PRIMARY KEY (pk_i_id),
