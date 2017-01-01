@@ -101,7 +101,7 @@
      * @return string
      */
     function _mn($single_key, $plural_key, $count) {
-        return _n($single_key, $plural_key, $count, 'messages');
+    	return __( ($count==1) ? $single_key : $plural_key, 'messages');
     }
 
     /* file end: ./oc-includes/osclass/helpers/hTranslations.php */
