@@ -521,7 +521,7 @@ CREATE TABLE %st_item_description_tmp (
         $comm->query(sprintf("ALTER TABLE  %st_preference MODIFY s_name VARCHAR(128) NOT NULL", DB_TABLE_PREFIX));
     }
 
-    osc_changeVersionTo(371);
+    osc_changeVersionTo(372);
 
     if(!defined('IS_AJAX') || !IS_AJAX) {
         if(empty($aMessages)) {
