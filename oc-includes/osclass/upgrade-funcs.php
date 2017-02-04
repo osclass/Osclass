@@ -523,7 +523,6 @@ CREATE TABLE %st_item_description_tmp (
 
     if(osc_version() < 372) {
 	osc_delete_preference('recaptcha_version', '1', 'STRING');
-        osc_set_preference('recaptcha_version', '1');
     }
 
     osc_changeVersionTo(372);
