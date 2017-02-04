@@ -521,6 +521,11 @@ CREATE TABLE %st_item_description_tmp (
         $comm->query(sprintf("ALTER TABLE  %st_preference MODIFY s_name VARCHAR(128) NOT NULL", DB_TABLE_PREFIX));
     }
 
+    if(osc_version() < 372) {
+	osc_delete_preference('recaptcha_version', '1', 'STRING');
+        osc_set_preference('recaptcha_version', '1');
+    }
+
     osc_changeVersionTo(372);
 
     if(!defined('IS_AJAX') || !IS_AJAX) {
