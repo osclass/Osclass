@@ -267,7 +267,7 @@ function osc_search_footer_links() {
     }
 
     $categoryID = osc_search_category_id();
-    if( !empty($categoryID) ) {
+    if( isset($tmp) ) {
 
         if( Category::newInstance()->isRoot( current($categoryID) ) ) {
             $cat = Category::newInstance()->findSubcategories(current($categoryID));
