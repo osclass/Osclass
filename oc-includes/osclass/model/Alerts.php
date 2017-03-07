@@ -181,7 +181,7 @@
         {
             $this->dao->select();
             $this->dao->from($this->getTableName());
-            $this->dao->where('fk_i_user_id', $user);
+            $this->dao->where('pk_i_id', $user);
             $this->dao->where('s_search', $search);
             if(!$unsub) {
                 $this->dao->where('dt_unsub_date IS NULL');
