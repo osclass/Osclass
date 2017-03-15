@@ -277,6 +277,12 @@
         osc_set_alert_private_key(); // renew private key and
         osc_set_alert_public_key();  // public key
         $key = hash("sha256", osc_get_alert_private_key(), true);
+
+        if(Cryptor::Usable()) {
+            return Cryptor::Encrypt($string, $key, 0);
+        }
+
+        // START DEPRECATED : To be removed in future versions
         if(function_exists('mcrypt_module_open')) {
             $cipher = mcrypt_module_open(MCRYPT_RIJNDAEL_256, '', MCRYPT_MODE_CBC, '');
             $cipherText = '';
@@ -286,7 +292,9 @@
             }
             return $cipherText;
         };
+        // END DEPRECATED : To be removed in future versions
 
+        // COMPATIBILITY
         while (strlen($string) % 32 != 0) {
             $string .= "\0";
         }
@@ -301,6 +309,12 @@
 
     function osc_decrypt_alert($string) {
         $key = hash("sha256", osc_get_alert_private_key(), true);
+
+        if(Cryptor::Usable()) {
+            return Cryptor::Decrypt($string, $key, 0);
+        }
+
+        // START DEPRECATED : To be removed in future versions
         if(function_exists('mcrypt_module_open')) {
             $cipher = mcrypt_module_open(MCRYPT_RIJNDAEL_256, '', MCRYPT_MODE_CBC, '');
             $cipherText = '';
@@ -310,6 +324,9 @@
             }
             return trim(substr($cipherText, 32));
         };
+        // END DEPRECATED : To be removed in future versions
+
+        // COMPATIBILITY
         require_once LIB_PATH . 'phpseclib/Crypt/Rijndael.php';
         $cipher = new Crypt_Rijndael(CRYPT_RIJNDAEL_MODE_CBC);
         $cipher->disablePadding();
@@ -318,6 +335,7 @@
         $cipher->setIV($key);
         return trim(substr($cipher->decrypt($string), 32));
     }
+
 
     function osc_set_alert_public_key() {
         if(!View::newInstance()->_exists('alert_public_key')) {
@@ -342,12 +360,6 @@
     function osc_random_string($length) {
         $buffer = '';
         $buffer_valid = false;
-        if (function_exists('mcrypt_create_iv') && !defined('PHALANGER')) {
-            $buffer = mcrypt_create_iv($length, MCRYPT_DEV_URANDOM);
-            if ($buffer) {
-                $buffer_valid = true;
-            }
-        }
         if (!$buffer_valid && function_exists('openssl_random_pseudo_bytes')) {
             $buffer = openssl_random_pseudo_bytes($length);
             if ($buffer) {
@@ -366,6 +378,16 @@
                 $buffer_valid = true;
             }
         }
+
+        // START DEPRECATED: To be removed in future releases
+        if (function_exists('mcrypt_create_iv') && !defined('PHALANGER')) {
+            $buffer = mcrypt_create_iv($length, MCRYPT_DEV_URANDOM);
+            if ($buffer) {
+                $buffer_valid = true;
+            }
+        }
+        // END DEPRECATED: To be removed in future releases
+
         if (!$buffer_valid || strlen($buffer) < $length) {
             $bl = strlen($buffer);
             for ($i = 0; $i < $length; $i++) {

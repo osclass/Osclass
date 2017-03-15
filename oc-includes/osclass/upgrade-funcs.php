@@ -569,5 +569,3 @@ CREATE TABLE %st_item_description_tmp (
             }
         }
     }
-
-?>
