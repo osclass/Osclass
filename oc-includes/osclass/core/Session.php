@@ -43,11 +43,13 @@
                 true
             );
 
-            session_name('osclass');
-            session_start();
+            if( !isset($_SESSION) ) {
+                session_name('osclass');
+                session_start();
+            }
 
             $this->session = $_SESSION;
-            if ($this->_get('messages') == '') {
+            if( $this->_get('messages') == '' ) {
                 $this->_set( 'messages', array() );
             }
             if( $this->_get('keepForm') == '' ){
