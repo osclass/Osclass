@@ -44,7 +44,7 @@ function osc_get_param($key) {
 
 /**
  * Generic function for view layer, return the $field of $item
- * with specific $locate
+ * with specific $locale
  *
  * @param array $item
  * @param string $field
