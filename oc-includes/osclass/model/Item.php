@@ -1217,6 +1217,7 @@
 //                $this->dao->where(DB_TABLE_PREFIX.'t_item_stats.fk_i_item_id', $item['pk_i_id']);
                 $this->dao->where('s.fk_i_item_id', $item['pk_i_id']);
                 $this->dao->where('cd.fk_i_category_id', $item['fk_i_category_id']);
+                $this->dao->where('cd.fk_c_locale_code', $prefLocale);
                 // group by item_id
                 $this->dao->groupBy('fk_i_item_id');
 
