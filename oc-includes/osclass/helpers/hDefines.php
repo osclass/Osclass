@@ -618,21 +618,40 @@
      * @param int $page
      * @return string
      */
-    function osc_user_list_items_url($page = '', $typeItem = '') {
-        if ( osc_rewrite_enabled() ) {
-
-            if($page=='') {
-                $typeItem = $typeItem != '' ? "?itemType=" . $typeItem : "";
-                return osc_base_url() . osc_get_preference('rewrite_user_items') . $typeItem ;
+    function osc_user_list_items_url($page = '', $typeItem = '',$showAs = '') {
+        $prmcnt = 0;
+        if($page != '') {
+            $prm = 'iPage='.$page;
+            $prmcnt = 1;
+        }
+        if($typeItem != '') {
+            if ($prmcnt == 0) {
+                $prm  = 'itemType=' . $typeItem;
             } else {
-                $typeItem = $typeItem != '' ? "&itemType=" . $typeItem  : "";
-                return osc_base_url() . osc_get_preference('rewrite_user_items') . "?iPage=" . $page . $typeItem ;
+                $prm .= '&itemType=' . $typeItem;
+            }
+            $prmcnt += 1;
+        }
+        if($showAs != '') {
+            if ($prmcnt == 0) {
+                $prm  = 'sShowAs=' . $showAs;
+            } else {
+                $prm .= '&sShowAs=' . $showAs;
+            }
+            $prmcnt += 1;
+        }
+      
+        if ( osc_rewrite_enabled() ) {
+            if ($prmcnt == 0) {
+                return osc_base_url() . osc_get_preference('rewrite_user_items');
+            } else {
+                return osc_base_url() . osc_get_preference('rewrite_user_items').'?'.$prm;
             }
         } else {
-            if($page=='') {
+            if ($prmcnt == 0) {
                 return osc_base_url(true) . '?page=user&action=items';
             } else {
-                return osc_base_url(true) . '?page=user&action=items&iPage='.$page;
+                return osc_base_url(true) . '?page=user&action=items&'.$prm;
             }
         }
     }
