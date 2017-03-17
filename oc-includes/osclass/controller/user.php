@@ -253,6 +253,7 @@
                     $secret = Params::getParam('secret');
                     if(osc_is_web_user_logged_in()) {
                         $user = User::newInstance()->findByPrimaryKey(osc_logged_user_id());
+                        osc_run_hook('before_user_delete', $user);
                         View::newInstance()->_exportVariableToView('user', $user);
                         if(!empty($user) && osc_logged_user_id()==$id && $secret==$user['s_secret']) {
                             User::newInstance()->deleteUser(osc_logged_user_id());

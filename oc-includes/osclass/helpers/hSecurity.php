@@ -285,7 +285,7 @@
                 mcrypt_generic_deinit($cipher);
             }
             return $cipherText;
-        };
+        }
 
         while (strlen($string) % 32 != 0) {
             $string .= "\0";
@@ -309,7 +309,7 @@
                 mcrypt_generic_deinit($cipher);
             }
             return trim(substr($cipherText, 32));
-        };
+        }
         require_once LIB_PATH . 'phpseclib/Crypt/Rijndael.php';
         $cipher = new Crypt_Rijndael(CRYPT_RIJNDAEL_MODE_CBC);
         $cipher->disablePadding();
