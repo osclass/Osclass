@@ -70,7 +70,7 @@
          */
         public function insertLog($section, $action, $id, $data, $who, $whoId)
         {
-            if (!isset($_SERVER) || (isset($_SERVER) && !isset($_SERVER['REMOTE_ADDR']))) {
+            if (Params::getServerParam('REMOTE_ADDR')=="") {
                 // CRON.
                 $_SERVER['REMOTE_ADDR']= '127.0.0.1';
             }
