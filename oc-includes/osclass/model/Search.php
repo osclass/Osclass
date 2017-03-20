@@ -811,6 +811,8 @@
          */
         private function _makeSQLPremium($num = 2)
         {
+            $arrayConditions    = $this->_conditions();
+            
             if ($this->withPattern ) {
                 // sub select for JOIN ----------------------
                 $this->dao->select('distinct d.fk_i_item_id');
