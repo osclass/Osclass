@@ -543,22 +543,6 @@
             // json
             $json           = $this->mSearch->toJson();
             $encoded_alert  = base64_encode(osc_encrypt_alert($json));
-            print_r($json);
-            print_r(PHP_EOL);
-            print_r(PHP_EOL);
-            print_r(PHP_EOL);
-            print_r(PHP_EOL);
-            print_r($encoded_alert);
-            print_r(PHP_EOL);
-            print_r(PHP_EOL);
-            print_r(PHP_EOL);
-            print_r(PHP_EOL);
-            print_r(osc_decrypt_alert(base64_decode($encoded_alert)));
-            print_r(PHP_EOL);
-            print_r(PHP_EOL);
-            print_r(PHP_EOL);
-            print_r(PHP_EOL);
-            die;
 
             // Create the HMAC signature and convert the resulting hex hash into base64
             $stringToSign     = osc_get_alert_public_key() . $encoded_alert;
