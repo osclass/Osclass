@@ -16,14 +16,14 @@
  * limitations under the License.
  */
 
-    if(!defined('BCRYPT_COST')) { define('BCRYPT_COST', 15); };
-
     /**
     * Helper Security
     * @package Osclass
     * @subpackage Helpers
     * @author Osclass
     */
+
+    if(!defined('BCRYPT_COST')) { define('BCRYPT_COST', 15); }
 
     /**
      * Creates a random password.
@@ -65,11 +65,10 @@
     }
 
     /**
-     * Check is CSRF token is valid, die in other case
+     * Check if CSRF token is valid, die in other case
      *
      * @since 3.1
      */
-
     function osc_csrf_check() {
         $error      = false;
         $str_error  = '';
@@ -95,7 +94,7 @@
             }
         }
 
-        // ¿ check if is ajax request ?
+        // check ajax request
         if($error) {
             if(OC_ADMIN) {
                 osc_add_flash_error_message($str_error, 'admin');
@@ -104,7 +103,7 @@
             }
 
             $url = osc_get_http_referer();
-            // be sure that drop session referer
+            // drop session referer
             Session::newInstance()->_dropReferer();
             if($url!='') {
                 osc_redirect_to($url);
@@ -119,7 +118,7 @@
     }
 
     /**
-     * Check is an email and IP are banned
+     * Check if an email and/or IP are banned
      *
      * @param string $email
      * @param string $ip
@@ -141,7 +140,7 @@
     }
 
     /**
-     * Check is an email and IP are banned
+     * Check if IP is banned
      *
      * @param string $ip
      * @param string $rules (optional, to savetime and resources)
@@ -181,7 +180,7 @@
     }
 
     /**
-     * Check is an email and IP are banned
+     * Check if email is banned
      *
      * @param string $email
      * @param string $rules (optional, to savetime and resources)
@@ -210,7 +209,7 @@
     }
 
     /**
-     * Check is an username is blacklisted
+     * Check if username is blacklisted
      *
      * @param string $username
      * @since 3.1
@@ -291,7 +290,7 @@
                 mcrypt_generic_deinit($cipher);
             }
             return $cipherText;
-        };
+        }
         // END DEPRECATED : To be removed in future versions
 
         // COMPATIBILITY
@@ -323,7 +322,7 @@
                 mcrypt_generic_deinit($cipher);
             }
             return trim(substr($cipherText, 32));
-        };
+        }
         // END DEPRECATED : To be removed in future versions
 
         // COMPATIBILITY
@@ -335,7 +334,6 @@
         $cipher->setIV($key);
         return trim(substr($cipher->decrypt($string), 32));
     }
-
 
     function osc_set_alert_public_key() {
         if(!View::newInstance()->_exists('alert_public_key')) {
@@ -360,12 +358,14 @@
     function osc_random_string($length) {
         $buffer = '';
         $buffer_valid = false;
+
         if (!$buffer_valid && function_exists('openssl_random_pseudo_bytes')) {
             $buffer = openssl_random_pseudo_bytes($length);
             if ($buffer) {
                 $buffer_valid = true;
             }
         }
+
         if (!$buffer_valid && is_readable('/dev/urandom')) {
             $f = fopen('/dev/urandom', 'r');
             $read = strlen($buffer);
@@ -398,6 +398,7 @@
                 }
             }
         }
+
         if(!$buffer_valid) {
             $buffer = osc_genRandomPassword(2*$length);
         }
