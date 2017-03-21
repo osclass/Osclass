@@ -58,7 +58,7 @@
                 $this->_use_imagick = true;
             }
             
-            if(osc_use_imagick()) {
+            if($this->_use_imagick) {
                 $this->im = new Imagick($imagePath);
                 $geometry = $this->im->getImageGeometry();
                 $this->_width = $geometry['width'];
