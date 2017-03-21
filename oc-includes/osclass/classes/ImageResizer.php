@@ -35,6 +35,8 @@
         private $_height;
         private $_exif;
         private $_watermarked = false;
+        
+        private $_use_imagick = false;
 
 
         private function __construct($imagePath) {
@@ -51,6 +53,11 @@
             }
 
             $this->image_info = @getimagesize($imagePath);
+            
+            if(extension_loaded('imagick') && osc_use_imagick()) {
+                $this->_use_imagick = true;
+            }
+            
             if(osc_use_imagick()) {
                 $this->im = new Imagick($imagePath);
                 $geometry = $this->im->getImageGeometry();
@@ -78,7 +85,7 @@
                 default:
                     $this->ext = 'jpg';
                     $this->mime = 'image/jpeg';
-                    if(!osc_use_imagick()) {
+                    if(!$this->_use_imagick) {
                         $bg = imagecreatetruecolor($this->_width, $this->_height);
                         imagefill($bg, 0, 0, imagecolorallocatealpha($bg, 255, 255, 255, 127));
                         imagesavealpha($bg, true);
@@ -94,7 +101,7 @@
         }
 
         public function __destruct() {
-            if(osc_use_imagick()) {
+            if($this->_use_imagick) {
                 $this->im->destroy();
             } else {
                 imagedestroy($this->im);
@@ -133,7 +140,7 @@
                 }
             }
 
-            if(osc_use_imagick()) {
+            if($this->_use_imagick) {
                 $bg = new Imagick();
                 if($this->ext=='jpg') {
                     $bg->newImage($width, $height, 'white');
@@ -171,7 +178,7 @@
                 $ext = 'jpeg';
             }
 
-            if(osc_use_imagick()) {
+            if($this->_use_imagick) {
                 if($ext=='jpeg' && ($this->ext!='jpeg' && $this->ext!='jpg')) {
                     $bg = new Imagick();
                     $bg->newImage($this->_width, $this->_height, 'white');
@@ -201,7 +208,7 @@
         }
 
         public function autoRotate() {
-            if(osc_use_imagick()) {
+            if($this->_use_imagick) {
                 switch($this->im->getImageOrientation()) {
                     case imagick::ORIENTATION_TOPRIGHT:
                         $this->im->flopImage();
@@ -291,7 +298,7 @@
         public function show() {
             header('Content-Disposition: Attachment;filename=image.'.$this->ext);
             header('Content-type: '.$this->mime);
-            if(osc_use_imagick()) {
+            if($this->_use_imagick) {
             } else {
                 switch ($this->ext) {
                     case 'gif':
@@ -310,7 +317,7 @@
             $this->_font = osc_apply_filter('watermark_font_path', LIB_PATH . "osclass/assets/fonts/Arial.ttf");
             $text = osc_apply_filter('watermark_text_value', $text);
             $fontsize = osc_apply_filter('watermark_font_size', $fontsize);
-            if(osc_use_imagick()) {
+            if($this->_use_imagick) {
                 $draw = new ImagickDraw();
                 $draw->setFillColor("#".$color);
                 $draw->setFont($this->_font);
@@ -430,7 +437,7 @@
         {
             $this->_watermarked = true;
             $path_watermark = osc_uploads_path() . 'watermark.png';
-            if(osc_use_imagick()) {
+            if($this->_use_imagick) {
                 $wm = new Imagick($path_watermark);
                 $wgeo = $wm->getImageGeometry();
 
