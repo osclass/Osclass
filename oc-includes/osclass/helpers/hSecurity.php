@@ -359,7 +359,7 @@
         $buffer = '';
         $buffer_valid = false;
 
-        if (!$buffer_valid && function_exists('openssl_random_pseudo_bytes')) {
+        if (function_exists('openssl_random_pseudo_bytes')) {
             $buffer = openssl_random_pseudo_bytes($length);
             if ($buffer) {
                 $buffer_valid = true;
@@ -380,7 +380,7 @@
         }
 
         // START DEPRECATED: To be removed in future releases
-        if (function_exists('mcrypt_create_iv') && !defined('PHALANGER')) {
+        if (!$buffer_valid && function_exists('mcrypt_create_iv') && !defined('PHALANGER')) {
             $buffer = mcrypt_create_iv($length, MCRYPT_DEV_URANDOM);
             if ($buffer) {
                 $buffer_valid = true;
