@@ -295,14 +295,15 @@
                     $result = $uploader->handleUpload(osc_content_path().'uploads/temp/'.$filename);
 
                     // auto rotate
-                    if(file_exists(osc_content_path() . 'uploads/temp/' . $filename)) {
-                        $img = ImageResizer::fromFile(osc_content_path() . 'uploads/temp/' . $filename)->autoRotate();
+                    try {
+                        $img = ImageResizer::fromFile(osc_content_path() . 'uploads/temp/' . $filename);
+                        $img->autoRotate();
                         $img->saveToFile(osc_content_path() . 'uploads/temp/auto_' . $filename, $original['extension']);
                         $img->saveToFile(osc_content_path() . 'uploads/temp/' . $filename, $original['extension']);
 
                         $result['uploadName'] = 'auto_' . $filename;
                         echo htmlspecialchars(json_encode($result), ENT_NOQUOTES);
-                    } else {
+                    } catch (Exception $e) {
                         echo "";
                     }
                     break;
