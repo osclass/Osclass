@@ -508,8 +508,8 @@
          */
         public function priceRange( $price_min = 0, $price_max = 0)
         {
-            $this->price_min = 1000000*$price_min;
-            $this->price_max = 1000000*$price_max;
+            $this->price_min = 1000000*((int)$price_min);
+            $this->price_max = 1000000*((int)$price_max);
         }
 
         private function _priceRange()
