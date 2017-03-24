@@ -1368,6 +1368,9 @@
                 case 'id':
                     $mSearch->addItemId($value);
                     break;
+                case 'pattern':
+                    $mSearch->addPattern($value);
+                    break;
                 case 'author':
                     $tmp = explode(",", $value);
                     foreach($tmp as $t) {
