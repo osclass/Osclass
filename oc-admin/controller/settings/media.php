@@ -193,7 +193,7 @@
                             // Create normal size
                             $path_normal = $path = osc_base_path().$resource['s_path'].$resource['pk_i_id'].'.'.$resource['s_extension'];
                             $size = explode('x', osc_normal_dimensions());
-                            $img = ImageResizer::fromFile($image_tmp)->resizeTo($size[0], $size[1]);
+                            $img = ImageProcessing::fromFile($image_tmp)->resizeTo($size[0], $size[1]);
                             if($use_original) {
                                 if( osc_is_watermark_text() ) {
                                     $img->doWatermarkText(osc_watermark_text(), osc_watermark_text_color());
@@ -206,12 +206,12 @@
                             // Create preview
                             $path = osc_base_path().$resource['s_path'].$resource['pk_i_id'].'_preview.'.$resource['s_extension'];
                             $size = explode('x', osc_preview_dimensions());
-                            ImageResizer::fromFile($path_normal)->resizeTo($size[0], $size[1])->saveToFile($path);
+                            ImageProcessing::fromFile($path_normal)->resizeTo($size[0], $size[1])->saveToFile($path);
 
                             // Create thumbnail
                             $path = osc_base_path().$resource['s_path'].$resource['pk_i_id'].'_thumbnail.'.$resource['s_extension'];
                             $size = explode('x', osc_thumbnail_dimensions());
-                            ImageResizer::fromFile($path_normal)->resizeTo($size[0], $size[1])->saveToFile($path);
+                            ImageProcessing::fromFile($path_normal)->resizeTo($size[0], $size[1])->saveToFile($path);
 
                             osc_run_hook('regenerated_image', ItemResource::newInstance()->findByPrimaryKey($resource['pk_i_id']));
                         } else {

@@ -18,10 +18,10 @@
     /**
      * This class represents a utility to load and resize images easily.
      */
-    class ImageResizer {
+    class ImageProcessing {
 
         public static function fromFile($imagePath) {
-            return new ImageResizer($imagePath);
+            return new ImageProcessing($imagePath);
         }
 
         private $im;
