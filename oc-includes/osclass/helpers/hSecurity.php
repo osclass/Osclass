@@ -278,7 +278,7 @@
         $key = hash("sha256", osc_get_alert_private_key(), true);
 
         if(Cryptor::Usable()) {
-            //return Cryptor::Encrypt($string, $key, 0);
+            return Cryptor::Encrypt($string, $key, 0);
         }
 
         // START DEPRECATED : To be removed in future versions
@@ -289,7 +289,7 @@
                 $cipherText = mcrypt_generic($cipher, $string);
                 mcrypt_generic_deinit($cipher);
             }
-            //return $cipherText;
+            return $cipherText;
         }
         // END DEPRECATED : To be removed in future versions
 
@@ -317,7 +317,7 @@
         $key = hash("sha256", osc_get_alert_private_key(), true);
 
         if(Cryptor::Usable()) {
-            //return Cryptor::Decrypt($string, $key, 0);
+            return Cryptor::Decrypt($string, $key, 0);
         }
 
         // START DEPRECATED : To be removed in future versions
@@ -328,7 +328,7 @@
                 $cipherText = mdecrypt_generic($cipher, $string);
                 mcrypt_generic_deinit($cipher);
             }
-            //return trim(substr($cipherText, 32));
+            return trim(substr($cipherText, 32));
         }
         // END DEPRECATED : To be removed in future versions
 
