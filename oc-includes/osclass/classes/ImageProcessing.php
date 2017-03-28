@@ -60,6 +60,13 @@
             
             if($this->_use_imagick) {
                 $this->im = new Imagick($imagePath);
+                // animated GIF set frame 0
+                if ($this->im->getNumberImages() > 1) {
+                    foreach($this->im as $frame) {
+                        $frame = $this->im;
+                        break;
+                    }
+                }
                 $geometry = $this->im->getImageGeometry();
                 $this->_width = $geometry['width'];
                 $this->_height = $geometry['height'];
