@@ -111,7 +111,6 @@ require_once LIB_PATH . 'osclass/core/Translation.php';
 require_once LIB_PATH . 'osclass/Themes.php';
 require_once LIB_PATH . 'osclass/AdminThemes.php';
 require_once LIB_PATH . 'osclass/WebThemes.php';
-require_once LIB_PATH . 'osclass/compatibility.php';
 require_once LIB_PATH . 'osclass/utils.php';
 require_once LIB_PATH . 'osclass/formatting.php';
 require_once LIB_PATH . 'osclass/locales.php';
@@ -193,6 +192,8 @@ require_once LIB_PATH . 'osclass/core/iObject_Cache.php';
 require_once LIB_PATH . 'osclass/core/Object_Cache_Factory.php';
 require_once LIB_PATH . 'osclass/helpers/hCache.php';
 require_once LIB_PATH . 'openssl-cryptor/Cryptor.php';
+require_once LIB_PATH . 'osclass/compatibility.php';
+
 
 
 if( !defined('OSC_CRYPT_KEY') ) {
