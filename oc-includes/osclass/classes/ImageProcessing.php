@@ -16,7 +16,7 @@
  */
 
     /**
-     * This class represents a utility to load and resize images easily.
+     * This class represents a utility to load, resize, rotate and process images easily.
      */
     class ImageProcessing {
 
