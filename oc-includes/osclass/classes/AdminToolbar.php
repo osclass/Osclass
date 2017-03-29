@@ -78,17 +78,50 @@
          */
         function add_menu( $array )
         {
+            if(isset($array['id'])) {
                 $this->nodes[ $array['id'] ] = (object) $array;
+            }
+        }
+        
+        /**
+         * Add a submenu to the menu.
+         *
+         * @param array $args - The arguments for each subitem.
+         * - id         - string    - The ID of the mainitem.
+         * - parentid   - string    - The ID of the parent item.
+         * - title      - string    - The title of the node.
+         * - href       - string    - The link for the item. Optional.
+         * - meta       - array     - Meta data including the following keys: html, class, onclick, target, title, tabindex.
+         * - target     - string    - _blank
+         */
+        function add_submenu($array)
+        {
+            if(isset($array['parentid']) && isset($array['id'])) {
+                $this->nodes[$array['parentid']]->submenu[$array['id']] = (object)$array;
+            }
         }
 
         /**
          * Remove entry with id $id
          *
-         * @param type $id
+         * @param string $id
          */
         function remove_menu( $id )
         {
             unset( $this->nodes[ $id ] );
+        }
+
+        /**
+         * Remove entry with id $id
+         *
+         * @param string $parentid
+         * @param string $id
+         */
+        function remove_submenu( $parentid, $id )
+        {
+            if(isset($this->nodes[$parentid]) && isset($this->nodes[$parentid]->submenu[$id])) {
+                unset($this->nodes[$parentid]->submenu[$id]);
+            }
         }
 
         /**
@@ -100,18 +133,34 @@
          */
         public function render()
         {
-            if( count($this->nodes) > 0) {
+            if (count($this->nodes) > 0) {
                 echo '<div id="header" class="navbar"><div class="header-wrapper">';
-                foreach( $this->nodes as $value ) {
+                foreach($this->nodes as $value) {
                     $meta = "";
-                    if( isset($value->meta) ) {
+                    if (isset($value->meta)) {
                         foreach($value->meta as $k => $v)
                             $meta .= $k.'="'.$v.'" ';
                     }
-                    echo '<a id="osc_toolbar_'.$value->id.'" '.$meta.' href="'.$value->href.'" ' . ((isset($value->target)) ? 'target="' . $value->target . '"' : '') . '>'.$value->title.'</a>';
+                    echo '<div id="osc_toolbar_'.$value->id.'" ><a '.$meta.' href="'.$value->href.'" ' . ((isset($value->target)) ? 'target="' . $value->target . '"' : '') . '>'.$value->title.'</a>';
+                                  
+                    if (isset($value->submenu) && is_array($value->submenu)) {
+                        echo '<nav class="osc_admin_submenu" id="osc_toolbar_sub_'.$value->id.'"><ul>';
+                        foreach($value->submenu as $subvalue) {
+                            if (isset($subvalue->subid)) {                                
+                                $submeta = "";
+                                if (isset($subvalue->meta)) {
+                                    foreach($subvalue->meta as $sk => $sv)
+                                        $submeta .= $sk.'="'.$sv.'" ';
+                                }
+                                echo '<li><a '.$submeta.' href="'.$subvalue->href.'" ' . ((isset($subvalue->target)) ? 'target="' . $subvalue->target . '"' : '') . '>'.$subvalue->title.'</a><li>';    
+                            }
+                        }
+                        echo '</ul></nav>';
+                    }
+                    echo '</div>';                     
                 }
                 osc_run_hook('render_admintoolbar');
-                echo '</div></div>';
+                echo '<div style="clear: both;"></div></div></div>';
             }
         }
     }
