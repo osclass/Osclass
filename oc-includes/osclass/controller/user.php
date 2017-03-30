@@ -55,6 +55,10 @@
                                         } else if( count($aRegions) > 0 ) {
                                             $aCities = City::newInstance()->findByRegion($aRegions[0]['pk_i_id']);
                                         }
+                                        $aLocale = $aUser['locale'];
+                                        foreach ($aLocale as $locale => $aInfo) {
+                                            $aUser['locale'][$locale]['s_info'] = osc_apply_filter('user_profile_info', $aInfo['s_info'], $aUser['pk_i_id'], $aInfo['fk_c_locale_code']);
+                                        }
 
                                         //calling the view...
                                         $this->_exportVariableToView('countries', $aCountries);
