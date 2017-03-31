@@ -40,7 +40,7 @@ class Cryptor
      * @param string $hash_algo   Key hashing algorithm.
      * @param [type] $fmt         Format of the encrypted data.
      */
-    public function __construct($cipher_algo = 'aes-256-ctr', $hash_algo = 'sha256', $fmt = Cryptor::FORMAT_B64)
+    public function __construct($cipher_algo = CIPHER_ALGO, $hash_algo = HASH_ALGO, $fmt = Cryptor::FORMAT_B64)
     {
         $this->cipher_algo = $cipher_algo;
         $this->hash_algo = $hash_algo;
