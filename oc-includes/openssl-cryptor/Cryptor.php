@@ -98,7 +98,8 @@ class Cryptor
         }
         else if ($fmt == Cryptor::FORMAT_HEX)
         {
-            $res = unpack('H*', $res)[1];
+            $tmp = unpack('H*', $res);
+            $res = $tmp[1];
         }
 
         return $res;
