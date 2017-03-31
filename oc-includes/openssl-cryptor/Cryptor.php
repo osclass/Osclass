@@ -189,7 +189,9 @@ class Cryptor
     {
         return (function_exists('openssl_digest') &&
         function_exists('openssl_encrypt') &&
-        function_exists('openssl_decrypt'));
+        function_exists('openssl_decrypt') &&
+        in_array(CIPHER_ALGO, openssl_get_cipher_methods(true)) &&
+        in_array(HASH_ALGO, openssl_get_md_methods(true)));
     }
 
 }
