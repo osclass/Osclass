@@ -89,18 +89,17 @@
                 $this->dao->where( $where );
             }
 
-            $this->dao->select( sprintf("a.*, b.*, c.i_num_items, FIELD(fk_c_locale_code, '%s') as locale_order", $this->dao->connId->real_escape_string($this->_language) ) );
+            $this->dao->select("a.*, b.*, c.i_num_items");
             $this->dao->from( $this->getTableName().' as a' );
-            $this->dao->join(DB_TABLE_PREFIX.'t_category_description as b', 'a.pk_i_id = b.fk_i_category_id', 'INNER');
+            $this->dao->join(
+                DB_TABLE_PREFIX.'t_category_description as b',
+                sprintf(
+                    '(a.pk_i_id = b.fk_i_category_id AND b.fk_c_locale_code = "%s")',
+                    $this->dao->connId->real_escape_string($this->_language)
+                ),
+                'INNER'
+            );
             $this->dao->join(DB_TABLE_PREFIX.'t_category_stats  as c ', 'a.pk_i_id = c.fk_i_category_id', 'LEFT');
-            $this->dao->where("b.s_name != ''");
-            $this->dao->orderBy('locale_order', 'DESC');
-            $subquery = $this->dao->_getSelect();
-            $this->dao->_resetSelect();
-
-            $this->dao->select();
-            $this->dao->from( sprintf( '(%s) dummytable', $subquery ) ); // $subselect.'  dummytable');
-            $this->dao->groupBy('pk_i_id');
             $this->dao->orderBy('i_position', 'ASC');
             $rs = $this->dao->get();
 
@@ -124,31 +123,10 @@
          */
         public function listEnabled()
         {
-            $this->dao->select( sprintf("a.*, b.*, c.i_num_items, FIELD(fk_c_locale_code, '%s') as locale_order", $this->dao->connId->real_escape_string($this->_language) ) );
-            $this->dao->from( $this->getTableName().' as a' );
-            $this->dao->join(DB_TABLE_PREFIX.'t_category_description as b', 'a.pk_i_id = b.fk_i_category_id', 'INNER');
-            $this->dao->join(DB_TABLE_PREFIX.'t_category_stats  as c ', 'a.pk_i_id = c.fk_i_category_id', 'LEFT');
             $this->dao->where("b.s_name != ''");
             $this->dao->where("a.b_enabled = 1");
-            $this->dao->orderBy('locale_order', 'DESC');
-            $subquery = $this->dao->_getSelect();
-            $this->dao->_resetSelect();
 
-            $this->dao->select();
-            $this->dao->from( sprintf( '(%s) dummytable', $subquery ) ); // $subselect.'  dummytable');
-            $this->dao->groupBy('pk_i_id');
-            $this->dao->orderBy('i_position', 'ASC');
-            $rs = $this->dao->get();
-
-            if( $rs === false ) {
-                return array();
-            }
-
-            if( $rs->numRows() == 0 ) {
-                return array();
-            }
-
-            return $rs->result();
+            return $this->listWhere();
         }
 
         /**
