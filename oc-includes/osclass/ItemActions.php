@@ -1315,7 +1315,7 @@
         {
             $success = true;
 
-            if($aResources != '') {
+            if(!empty($aResources)) {
                 // get allowedExt
                 $maxSize = osc_max_size_kb() * 1024;
                 foreach ($aResources['error'] as $key => $error) {
@@ -1338,7 +1338,7 @@
         {
             $success = true;
             require LIB_PATH . 'osclass/mimes.php';
-            if($aResources != '') {
+            if(!empty($aResources)) {
                 // get allowedExt
                 $aMimesAllowed = array();
                 $aExt = explode(',', osc_allowed_extension() );
@@ -1391,7 +1391,7 @@
 
         public function uploadItemResources($aResources,$itemId)
         {
-            if($aResources != '') {
+            if(!empty($aResources)) {
                 $itemResourceManager = ItemResource::newInstance();
                 $folder = osc_uploads_path().(floor($itemId/100))."/";
 
