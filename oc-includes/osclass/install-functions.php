@@ -111,10 +111,10 @@ function get_requirements( ) {
             'fn' => extension_loaded('gd'),
             'solution' => __('GD extension is required. How to <a target="_blank" href="http://www.php.net/manual/en/image.setup.php">install/configure</a>.')),
 
-        #'MB extension for PHP' => array(
-        #    'requirement' => __('Mbstring extension for PHP'),
-        #    'fn' => extension_loaded('mbstring'),
-        #    'solution' => __('Mbstring extension is required. How to <a target="_blank" href="http://php.net/manual/en/mbstring.setup.php">install/configure</a>.')),
+        'MB extension for PHP' => array(
+            'requirement' => __('Mbstring extension for PHP'),
+            'fn' => extension_loaded('mbstring'),
+            'solution' => __('Mbstring extension is required. How to <a target="_blank" href="http://php.net/manual/en/mbstring.setup.php">install/configure</a>.')),
 
         'Folder <code>oc-content/uploads</code> exists' => array(
             'requirement' => __('Folder <code>oc-content/uploads</code> exists'),
