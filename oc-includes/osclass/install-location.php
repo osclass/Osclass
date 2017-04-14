@@ -5,6 +5,9 @@ error_reporting(E_ERROR | E_CORE_ERROR | E_COMPILE_ERROR | E_PARSE);
 define( 'ABS_PATH', dirname(dirname(dirname(__FILE__))) . '/' );
 define( 'LIB_PATH', ABS_PATH . 'oc-includes/');
 
+// Load vendor
+require ABS_PATH . '/vendor/autoload.php';
+
 require_once ABS_PATH . 'config.php';
 
 require_once LIB_PATH . 'osclass/classes/database/DBConnectionClass.php';

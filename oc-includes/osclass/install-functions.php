@@ -778,6 +778,7 @@ function display_target() {
         $region_list = json_decode(substr($region_list, 1, strlen($region_list)-2), true);
     }
 
+    $internet_error = false;
     if(!isset($country_list[0]) || !isset($country_list[0]['s_name'])) {
         $internet_error = true;
     }
