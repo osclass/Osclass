@@ -21,7 +21,8 @@
     "ezyang/htmlpurifier": "dev-master",
     "smmoosavi/php-gettext": "dev-master",
     "pclzip/pclzip": "dev-master",
-    "phpmailer/phpmailer": "dev-master"
+    "phpmailer/phpmailer": "dev-master",
+    "phpseclib/phpseclib": "2.0.*"
   },
   "require-dev": {
     "phpunit/phpunit": "~4.2",

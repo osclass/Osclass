@@ -290,8 +290,8 @@
         while (strlen($string) % 32 != 0) {
             $string .= "\0";
         }
-        require_once LIB_PATH . 'phpseclib/Crypt/Rijndael.php';
-        $cipher = new Crypt_Rijndael(CRYPT_RIJNDAEL_MODE_CBC);
+
+        $cipher = new \phpseclib\Crypt\Rijndael(CRYPT_RIJNDAEL_MODE_CBC);
         $cipher->disablePadding();
         $cipher->setBlockLength(256);
         $cipher->setKey($key);
@@ -310,8 +310,8 @@
             }
             return trim(substr($cipherText, 32));
         };
-        require_once LIB_PATH . 'phpseclib/Crypt/Rijndael.php';
-        $cipher = new Crypt_Rijndael(CRYPT_RIJNDAEL_MODE_CBC);
+
+        $cipher = new \phpseclib\Crypt\Rijndael(CRYPT_RIJNDAEL_MODE_CBC);
         $cipher->disablePadding();
         $cipher->setBlockLength(256);
         $cipher->setKey($key);
