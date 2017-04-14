@@ -37,6 +37,9 @@ if( !file_exists(ABS_PATH . 'config.php') ) {
     osc_die($title, $message);
 }
 
+// Load vendor
+require __DIR__ . '/vendor/autoload.php';
+
 // load database configuration
 require_once ABS_PATH . 'config.php';
 require_once LIB_PATH . 'osclass/default-constants.php';

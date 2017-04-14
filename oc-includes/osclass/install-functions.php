@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-
-require_once dirname(dirname(__FILE__)) . '/htmlpurifier/HTMLPurifier.auto.php';
 function _purify($value, $xss_check)
 {
     if( !$xss_check ) {
@@ -25,7 +23,7 @@ function _purify($value, $xss_check)
 
     $_config = HTMLPurifier_Config::createDefault();
     $_config->set('HTML.Allowed', '');
-    $_config->set('Cache.SerializerPath', dirname(dirname(dirname(dirname(__FILE__)))) . '/oc-content/uploads/');
+    $_config->set('Cache.SerializerPath', ABS_PATH . '/oc-content/uploads/');
 
     $_purifier = new HTMLPurifier($_config);
 

@@ -14,7 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+ini_set("display_errors",1);
+ini_set("display_startup_errors",1);
+error_reporting(E_ALL);
     define('ABS_PATH', str_replace('\\', '/', dirname($_SERVER['SCRIPT_FILENAME']) . '/'));
     if(PHP_SAPI==='cli') {
         define('CLI', true);
