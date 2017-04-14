@@ -32,8 +32,7 @@
                     $akismet_key    = osc_akismet_key();
                     $akismet_status = 3;
                     if( $akismet_key != '' ) {
-                        require_once( osc_lib_path() . 'Akismet.class.php' );
-                        $akismet_obj    = new Akismet(osc_base_url(), $akismet_key);
+                        $akismet_obj    = new \ServiceScout\Akismet\Akismet(osc_base_url(), $akismet_key);
                         $akismet_status = 2;
                         if( $akismet_obj->isKeyValid() ) {
                             $akismet_status = 1;
