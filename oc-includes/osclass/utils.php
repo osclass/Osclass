@@ -1059,9 +1059,6 @@ function _unzip_file_pclzip($zip_file, $to) {
         return false;
     }
 
-    // first, we load the library
-    require_once LIB_PATH . 'pclzip/pclzip.lib.php';
-
     $archive = new PclZip($zip_file);
     if (($files = $archive->extract(PCLZIP_OPT_EXTRACT_AS_STRING)) == false) {
         return 2;
@@ -1168,9 +1165,6 @@ function _zip_folder_pclzip($archive_folder, $archive_name) {
     if(strpos($archive_folder, "../")!==false || strpos($archive_name,"../")!==false || strpos($archive_folder, "..\\")!==false || strpos($archive_name,"..\\")!==false) {
         return false;
     }
-
-    // first, we load the library
-    require_once LIB_PATH . 'pclzip/pclzip.lib.php';
 
     $zip = new PclZip($archive_name);
     if($zip) {
