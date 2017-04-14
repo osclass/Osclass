@@ -17,6 +17,7 @@
     "ext-gd": "*",
     "ext-curl": "*",
     "ext-mysqli": "*",
+    "ext-json": "*",
     "ezyang/htmlpurifier": "dev-master",
     "smmoosavi/php-gettext": "dev-master",
     "pclzip/pclzip": "dev-master",
