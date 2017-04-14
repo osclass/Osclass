@@ -119,16 +119,16 @@ ul#nav {
 }
 
 .past {
-    background: url("../../images/past.gif") repeat-x scroll 0 32px transparent;
+    background: url("../assets/images/past.gif") repeat-x scroll 0 32px transparent;
 }
 
 .actual {
-    background: url("../../images/past.gif") repeat-x scroll 0 32px transparent;
+    background: url("../assets/images/past.gif") repeat-x scroll 0 32px transparent;
     font-weight: bold;
 }
 
 .next {
-    background: url("../../images/next.gif") repeat-x scroll 0 32px transparent;
+    background: url("../assets/images/next.gif") repeat-x scroll 0 32px transparent;
 }
 
 .form-table {
@@ -192,11 +192,11 @@ ul#nav {
 }
 
 #advanced_install.shrink {
-    background: url('../../images/arrow_noexpanded.png') no-repeat;
+    background: url('../assets/images/arrow_noexpanded.png') no-repeat;
 }
 
 #advanced_install.expanded {
-    background: url('../../images/arrow_expanded.png') no-repeat;
+    background: url('../assets/images/arrow_expanded.png') no-repeat;
 }
 
 #advanced_install .text {

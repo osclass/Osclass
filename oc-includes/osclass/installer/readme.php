@@ -69,7 +69,7 @@ function osc_getAbsoluteWebURL() {
         <div id="header" class="readme">
             <h1 id="logo">
                 <a href="http://osclass.org/" target="_blank">
-                    <img src="<?php echo osc_getAbsoluteWebURL(); ?>/oc-includes/images/osclass-logo.png" alt="Osclass" title="Osclass" />
+                    <img src="<?php echo osc_getAbsoluteWebURL(); ?>/oc-includes/osclass/assets/images/osclass-logo.png" alt="Osclass" title="Osclass" />
                 </a>
                 <br/>
                 Version 3.3.0
