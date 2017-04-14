@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "9899f0be70f1c645f04451a51df239cb",
+    "content-hash": "e637bb2179a6f534a4f6581b1c98fd4d",
     "packages": [
         {
             "name": "ezyang/htmlpurifier",
@@ -52,6 +52,74 @@
                 "html"
             ],
             "time": "2017-03-22 00:50:26"
+        },
+        {
+            "name": "smmoosavi/php-gettext",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/smmoosavi/php-gettext.git",
+                "reference": "861a39e59ec2efa4deaa6a098957a506e610cf59"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/smmoosavi/php-gettext/zipball/861a39e59ec2efa4deaa6a098957a506e610cf59",
+                "reference": "861a39e59ec2efa4deaa6a098957a506e610cf59",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0",
+                "smmoosavi/php-gettext-core": "1.0.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "smmoosavi": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Seyyed Morteza Moosavi",
+                    "email": "se.mo.moosavi@gmail.com"
+                }
+            ],
+            "description": "Wrapper for php-gettext by danilo segan. This library provides PHP functions to read MO files even when gettext is not compiled in or when appropriate locale is not present on the system.",
+            "time": "2015-10-28 17:41:32"
+        },
+        {
+            "name": "smmoosavi/php-gettext-core",
+            "version": "v1.0.11-patch1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/smmoosavi/php-gettext-core.git",
+                "reference": "bfa049b1f1a4e7b8141c95780c51aba90e484188"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/smmoosavi/php-gettext-core/zipball/bfa049b1f1a4e7b8141c95780c51aba90e484188",
+                "reference": "bfa049b1f1a4e7b8141c95780c51aba90e484188",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/gettext.php",
+                    "src/streams.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Seyyed Morteza Moosavi",
+                    "email": "se.mo.moosavi@gmail.com"
+                }
+            ],
+            "description": "php-gettext by danilo segan. This library provides PHP functions to read MO files even when gettext is not compiled in or when appropriate locale is not present on the system.",
+            "time": "2015-10-27T19:27:20+00:00"
         }
     ],
     "packages-dev": [
@@ -1524,6 +1592,7 @@
     "minimum-stability": "alpha",
     "stability-flags": {
         "ezyang/htmlpurifier": 20,
+        "smmoosavi/php-gettext": 20,
         "phpmd/phpmd": 0
     },
     "prefer-stable": true,
