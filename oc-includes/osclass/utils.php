@@ -290,7 +290,6 @@ function osc_sendMail($params) {
     $mail = osc_apply_filter('init_send_mail', $mail, $params);
 
     if( osc_mailserver_pop() ) {
-        require_once osc_lib_path() . 'phpmailer/class.pop3.php';
         $pop = new POP3();
 
         $pop3_host = osc_mailserver_host();

@@ -129,7 +129,6 @@ function basic_info() {
     }
 
     try{
-        require_once LIB_PATH . 'phpmailer/class.phpmailer.php';
         $mail = new PHPMailer(true);
         $mail->CharSet  = "utf-8";
         $mail->Host     = "localhost";

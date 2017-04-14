@@ -19,7 +19,8 @@
     "ext-mysqli": "*",
     "ezyang/htmlpurifier": "dev-master",
     "smmoosavi/php-gettext": "dev-master",
-    "pclzip/pclzip": "dev-master"
+    "pclzip/pclzip": "dev-master",
+    "phpmailer/phpmailer": "dev-master"
   },
   "require-dev": {
     "phpunit/phpunit": "~4.2",
