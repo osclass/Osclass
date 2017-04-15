@@ -1,16 +1,14 @@
 {
-  "name": "osclass/platform",
-  "description": "OSclass platform",
+  "name": "osclass/Osclass",
+  "description": "Osclass is your one-stop shop to building your own classifieds marketplace",
   "license": "Apache-2.0",
   "type": "project",
-  "autoload": {
-    "psr-0": {
-      "": "src/"
-    },
-    "exclude-from-classmap": [
-      "**/Test/**"
-    ]
-  },
+  "authors": [
+    {
+      "name": "Christopher Silva",
+      "email": "xiris@xiris.com.br"
+    }
+  ],
   "repositories": [
     {
       "type": "git",
@@ -36,6 +34,14 @@
     "squizlabs/php_codesniffer": "1.5.3",
     "phpmd/phpmd": "@stable",
     "pdepend/pdepend": "2.4.0"
+  },
+  "autoload": {
+    "psr-0": {
+      "": "src/"
+    },
+    "exclude-from-classmap": [
+      "**/Test/**"
+    ]
   },
   "minimum-stability": "alpha",
   "prefer-stable": true
