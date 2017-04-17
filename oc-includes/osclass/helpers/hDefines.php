@@ -522,7 +522,7 @@
             for ($i = (count($cat)); $i > 0; $i--) {
                 $sanitized_categories[] = $cat[$i - 1]['s_slug'];
             }
-            $url = str_replace('{CATEGORIES}', implode("/", $sanitized_categories), str_replace('{ITEM_ID}', osc_premium_id(), str_replace('{ITEM_TITLE}', osc_sanitizeString(osc_premium_title()), osc_get_preference('rewrite_item_url'))));
+            $url = str_replace('{CATEGORIES}', implode("/", $sanitized_categories), str_replace('{ITEM_ID}', osc_premium_id(), str_replace('{ITEM_TITLE}', osc_sanitizeString(str_replace(',', '-', osc_premium_title())), osc_get_preference('rewrite_item_url'))));
             if($locale!='') {
                 $path = osc_base_url().$locale."/".$url;
             } else {
