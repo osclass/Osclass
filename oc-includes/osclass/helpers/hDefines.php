@@ -496,7 +496,7 @@
             }
             $url = str_replace('{ITEM_ID}', osc_sanitizeString($item['pk_i_id']), $url);
             $url = str_replace('{ITEM_CITY}', osc_sanitizeString($item['s_city']), $url);
-            $url = str_replace('{ITEM_TITLE}', osc_sanitizeString($item['s_title']), $url);
+            $url = str_replace('{ITEM_TITLE}', osc_sanitizeString(str_replace(',', '-', $item['s_title'])), $url);
             $url = str_replace('?', '', $url);
             if($locale!='') {
                 $path = osc_base_url().$locale."/".$url;
