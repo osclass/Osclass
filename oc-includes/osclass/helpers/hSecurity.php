@@ -317,7 +317,7 @@
         $key = hash("sha256", osc_get_alert_private_key(), true);
 
         if(Cryptor::Usable()) {
-            return Cryptor::Decrypt($string, $key, 0);
+            return trim(substr(Cryptor::Decrypt($string, $key, 0), 32));
         }
 
         // START DEPRECATED : To be removed in future versions

@@ -152,7 +152,7 @@ class Cryptor
         {
             throw new \Exception('Cryptor::decryptString - decryption failed: ' . openssl_error_string());
         }
-        return substr($res, 2*$this->iv_num_bytes);
+        return $res;
     }
 
     /**
