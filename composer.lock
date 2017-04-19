@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "476efe0a2188c32dc4e39b423b0f2098",
+    "content-hash": "2a288ac1f785c79e688a3266105c2619",
     "packages": [
         {
             "name": "eddieantonio/bcrypt",
@@ -396,6 +396,41 @@
             ],
             "description": "php-gettext by danilo segan. This library provides PHP functions to read MO files even when gettext is not compiled in or when appropriate locale is not present on the system.",
             "time": "2015-10-27T19:27:20+00:00"
+        },
+        {
+            "name": "xiris/osclass-ajaxuploader",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:xiris/osclass-ajaxuploader.git",
+                "reference": "6471daae9f2b2a19499f85fe7bdcdca3ebe9681f"
+            },
+            "require": {
+                "php": ">=5.6"
+            },
+            "require-dev": {
+                "pdepend/pdepend": "2.4.0",
+                "phpmd/phpmd": "@stable",
+                "phpunit/phpunit": "~4.2",
+                "squizlabs/php_codesniffer": "1.5.3"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Christopher Silva",
+                    "email": "xiris@xiris.com.br"
+                }
+            ],
+            "description": "OSclass Ajaxuploader library",
+            "time": "2017-04-19T12:50:09+00:00"
         }
     ],
     "packages-dev": [
