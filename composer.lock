@@ -4,8 +4,44 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "f70fa35d89d37f9b6e18280ffbab69b5",
+    "content-hash": "476efe0a2188c32dc4e39b423b0f2098",
     "packages": [
+        {
+            "name": "eddieantonio/bcrypt",
+            "version": "0.3.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/eddieantonio/bcrypt.git",
+                "reference": "275141d7dcb56cd95928b0302ca2586c5865d090"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/eddieantonio/bcrypt/zipball/275141d7dcb56cd95928b0302ca2586c5865d090",
+                "reference": "275141d7dcb56cd95928b0302ca2586c5865d090",
+                "shasum": ""
+            },
+            "require-dev": {
+                "vierbergenlars/simpletest": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Bcrypt": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "CC0-1.0"
+            ],
+            "authors": [
+                {
+                    "name": "Eddie Antonio Santos",
+                    "email": "easantos@ualberta.ca"
+                }
+            ],
+            "description": "Bcrypt class stolen from the internet, for use with Composer.",
+            "time": "2013-02-25T21:01:33+00:00"
+        },
         {
             "name": "ezyang/htmlpurifier",
             "version": "dev-master",
@@ -96,12 +132,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPMailer/PHPMailer.git",
-                "reference": "9a0e074e109242b11943278a885fcd4fe6686eaf"
+                "reference": "48261992765204ea5e3772b003075ad053937155"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/9a0e074e109242b11943278a885fcd4fe6686eaf",
-                "reference": "9a0e074e109242b11943278a885fcd4fe6686eaf",
+                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/48261992765204ea5e3772b003075ad053937155",
+                "reference": "48261992765204ea5e3772b003075ad053937155",
                 "shasum": ""
             },
             "require": {
@@ -164,7 +200,7 @@
                 }
             ],
             "description": "PHPMailer is a full-featured email creation and transfer class for PHP",
-            "time": "2017-04-13 10:24:19"
+            "time": "2017-04-18 15:47:46"
         },
         {
             "name": "phpseclib/phpseclib",

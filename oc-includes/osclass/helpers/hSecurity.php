@@ -243,9 +243,8 @@
             return password_verify($password, $hash)?true:(sha1($password)==$hash);
         }
 
-        require_once LIB_PATH . 'Bcrypt.php';
         if(CRYPT_BLOWFISH==1) {
-            $bcrypt = new Bcrypt(BCRYPT_COST);
+            $bcrypt = new \Bcrypt\Bcrypt(BCRYPT_COST);
             return $bcrypt->verify($password, $hash)?true:(sha1($password)==$hash);
         }
         return (sha1($password)==$hash);
@@ -264,9 +263,8 @@
             return password_hash($password, PASSWORD_BCRYPT, $options);
         }
 
-        require_once LIB_PATH . 'Bcrypt.php';
         if(CRYPT_BLOWFISH==1) {
-            $bcrypt = new Bcrypt(BCRYPT_COST);
+            $bcrypt = new \Bcrypt\Bcrypt(BCRYPT_COST);
             return $bcrypt->hash($password);
         }
         return sha1($password);
