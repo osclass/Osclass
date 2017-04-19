@@ -242,7 +242,7 @@
                 }
             }
 
-            $p_sPattern   = trim(strip_tags(Params::getParam('sPattern')));
+            $p_sPattern   = osc_apply_filter('search_pattern', trim(strip_tags(Params::getParam('sPattern'))));
 
             // ADD TO THE LIST OF LAST SEARCHES
             if(osc_save_latest_searches() && (!Params::existParam('iPage') || Params::getParam('iPage')==1)) {
