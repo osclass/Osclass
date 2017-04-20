@@ -217,7 +217,11 @@ function customPageHeader() { ?>
                                     <label><?php _e('Ip Address'); ?></label>
                                     <input id="ipAddress" type="text" name="ipAddress" value="<?php echo osc_item_ip(); ?>" class="valid" readonly="readonly">
                                 </div>
-                                <?php }; ?>
+                                <?php } ?>
+                                <div class="input-separate-top">
+                                    <label><?php _e('Show e-mail on the listing page'); ?></label>
+                                    <?php ItemForm::show_email_checkbox(); ?>
+                                </div>
                             </div>
                         </div>
 
