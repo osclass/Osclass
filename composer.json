@@ -33,6 +33,8 @@
     "phpseclib/phpseclib": "2.0.*",
     "servicescout/akismet": "0.5.2",
     "eddieantonio/bcrypt": "0.3.3",
+    "google/recaptcha": "1.1.3",
+    "freefri/recaptcha-php": "0.1.0",
     "xiris/osclass-ajaxuploader": "0.1.0"
   },
   "require-dev": {

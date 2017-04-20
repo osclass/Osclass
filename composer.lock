@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "2a288ac1f785c79e688a3266105c2619",
+    "content-hash": "7594377d0deb272b470bd2a7d863edc7",
     "packages": [
         {
             "name": "eddieantonio/bcrypt",
@@ -88,6 +88,74 @@
                 "html"
             ],
             "time": "2017-03-22 00:50:26"
+        },
+        {
+            "name": "freefri/recaptcha-php",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/freefri/recaptcha-php.git",
+                "reference": "0c49d22e5f95c5aeabb4de121b069bf05f50c1d0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/freefri/recaptcha-php/zipball/0c49d22e5f95c5aeabb4de121b069bf05f50c1d0",
+                "reference": "0c49d22e5f95c5aeabb4de121b069bf05f50c1d0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "recaptchalib.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "time": "2014-01-16T10:24:56+00:00"
+        },
+        {
+            "name": "google/recaptcha",
+            "version": "1.1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/google/recaptcha.git",
+                "reference": "5a56d15ca10a7b75158178752b2ad8f755eb4f78"
+            },
+            "require": {
+                "php": ">=5.5"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "ReCaptcha\\": "src/ReCaptcha"
+                }
+            },
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Client library for reCAPTCHA, a free service that protect websites from spam and abuse.",
+            "homepage": "http://www.google.com/recaptcha/",
+            "keywords": [
+                "abuse",
+                "captcha",
+                "recaptcha",
+                "spam"
+            ],
+            "support": {
+                "forum": "https://groups.google.com/forum/#!forum/recaptcha",
+                "source": "https://github.com/google/recaptcha"
+            },
+            "time": "2017-03-09T18:44:34+00:00"
         },
         {
             "name": "pclzip/pclzip",

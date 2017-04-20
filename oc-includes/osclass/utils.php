@@ -1191,7 +1191,6 @@ function _zip_folder_pclzip($archive_folder, $archive_name) {
 function osc_check_recaptcha() {
     if(osc_recaptcha_version()=="2") {
         if ( Params::getParam("g-recaptcha-response") != '') {
-            require_once osc_lib_path() . 'recaptchalib/autoload.php';
             $recaptcha = new \ReCaptcha\ReCaptcha(osc_recaptcha_private_key());
             $resp = $recaptcha->verify(Params::getParam("g-recaptcha-response"), Params::getServerParam('REMOTE_ADDR'));
             if ($resp->isSuccess()) {
@@ -1199,7 +1198,6 @@ function osc_check_recaptcha() {
             }
         }
     } else {
-        require_once osc_lib_path() . 'recaptchalib.php';
         if ( Params::getParam("recaptcha_challenge_field") != '') {
             $resp = recaptcha_check_answer (osc_recaptcha_private_key()
                 ,Params::getServerParam("REMOTE_ADDR")
