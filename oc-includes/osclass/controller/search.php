@@ -485,6 +485,8 @@
                 $_cache['iTotalItems'] = $iTotalItems;
                 osc_cache_set($key, $_cache, OSC_CACHE_TTL);
             }
+            
+            $aItems = osc_apply_filter('pre_show_items', $aItems);
 
             $iStart    = $p_iPage * $p_iPageSize;
             $iEnd      = min(($p_iPage+1) * $p_iPageSize, $iTotalItems);

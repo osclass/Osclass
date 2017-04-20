@@ -435,7 +435,7 @@
                         if( osc_reg_user_can_contact() && osc_is_web_user_logged_in() || !osc_reg_user_can_contact() ){
                             $this->doView('item-contact.php');
                         } else {
-                            osc_add_flash_error_message( sprintf(_m("You can't contact the seller, only registered users can. <a href=\"%s\">Click here to sign-in.</a>"), osc_user_login_url()) );
+                            osc_add_flash_warning_message( _m("You can't contact the seller, only registered users can").'. <br />'.sprintf( _m("<a href=\"%s\">Click here to sign-in</a>"), osc_user_login_url() ) );
                             $this->redirectTo( osc_item_url() );
                         }
                     }

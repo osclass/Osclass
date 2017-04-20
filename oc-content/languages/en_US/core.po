@@ -1559,6 +1559,10 @@ msgstr ""
 msgid "Ip Address"
 msgstr ""
 
+#: oc-admin/themes/modern/items/frm.php:222
+msgid "Show e-mail"
+msgstr ""
+
 #: oc-admin/themes/modern/items/frm.php:225
 #: oc-admin/themes/modern/users/frm.php:259
 #: oc-includes/osclass/classes/datatables/ItemsDataTable.php:140
@@ -4251,7 +4255,7 @@ msgid "Upgrade &raquo; %s"
 msgstr ""
 
 #: oc-admin/themes/modern/tools/upgrade.php:108
-msgid "Your Osclass installation can be auto-upgraded. Please, back up your database and the folder oc-content before attempting to upgrade your Osclass installation. You can also upgrade Osclass manaully, more information in the %s"
+msgid "Your Osclass installation can be auto-upgraded. Please, back up your database and the folder oc-content before attempting to upgrade your Osclass installation. You can also upgrade Osclass manually, more information in the %s"
 msgstr ""
 
 #: oc-admin/themes/modern/tools/upgrade.php:112

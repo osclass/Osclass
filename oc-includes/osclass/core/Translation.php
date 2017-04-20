@@ -49,7 +49,7 @@
                 $this->_load($core_file, 'core');
 
                 // load messages
-                $domain = osc_theme();
+                $domain = osc_apply_filter('theme', osc_theme());
                 $messages_file = osc_apply_filter('mo_theme_messages_path', osc_themes_path() . $domain . '/languages/' . $locale . '/messages.mo', $locale, $domain);
                 if(!file_exists($messages_file)) {
                     $messages_file = osc_apply_filter('mo_core_messages_path', osc_translations_path() . $locale . '/messages.mo', $locale);
@@ -60,7 +60,7 @@
                 $theme_file = osc_apply_filter('mo_theme_path', osc_themes_path() . $domain . '/languages/' . $locale . '/theme.mo', $locale, $domain);
                 if(!file_exists($theme_file)) {
                     if(!file_exists(osc_themes_path() . $domain)) {
-                        $domain = 'modern';
+                        $domain = osc_theme();
                     }
                     $theme_file = osc_translations_path() . $locale . '/theme.mo';
                 }

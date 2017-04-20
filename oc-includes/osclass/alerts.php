@@ -16,6 +16,7 @@
  */
 
     function osc_runAlert($type = null, $last_exec = null) {
+        $mUser = User::newInstance();
         if ( !in_array($type, array('HOURLY', 'DAILY', 'WEEKLY', 'INSTANT')) ) {
             return;
         }
@@ -65,18 +66,27 @@
             if( count($items) > 0 ) {
                 // If we have new items from last check
                 // Catch the user subscribed to this search
-                $users = Alerts::newInstance()->findUsersBySearchAndType($s_search['s_search'], $type, $active);
+                $alerts = Alerts::newInstance()->findUsersBySearchAndType($s_search['s_search'], $type, $active);
 
-                if( count($users) > 0 ) {
+                if( count($alerts) > 0 ) {
                     $ads = '';
                     foreach($items as $item) {
                         $ads .= '<a href="'. osc_item_url_ns($item['pk_i_id']).'">' . $item['s_title'] . '</a><br/>';
                     }
 
-                    foreach($users as $user) {
-                        $alert = Alerts::newInstance()->findBySearchAndUser($s_search['s_search'], $user['pk_i_id']);
+                    foreach($alerts as $alert) {
+                        $user = array();
+                        if($alert['fk_i_user_id']!=0) {
+                            $user = $mUser->findByPrimaryKey($alert['fk_i_user_id']);
+                        }
+                        if(!isset($user['s_name'])) {
+                            $user = array(
+                                's_name' => $alert['s_email'],
+                                's_email' => $alert['s_email']
+                            );
+                        }
                         if(count($alert)>0) {
-                            osc_run_hook('hook_'.$internal_name, $user, $ads, $alert[0], $items, $totalItems);
+                            osc_run_hook('hook_'.$internal_name, $user, $ads, $alert, $items, $totalItems);
                             AlertsStats::newInstance()->increase(date('Y-m-d'));
                         }
                     }

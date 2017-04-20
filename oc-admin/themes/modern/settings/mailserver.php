@@ -132,7 +132,7 @@
                             <div class="form-row">
                                 <div class="form-label"><?php _e('Password'); ?></div>
                                 <div class="form-controls">
-                                    <input type="text" class="input-large" name="mailserver_password" value="<?php echo osc_esc_html(osc_mailserver_password()); ?>" />
+                                    <input type="password" class="input-large" name="mailserver_password" value="<?php echo osc_esc_html(osc_mailserver_password()); ?>" />
                                 </div>
                             </div>
                             <div class="form-row">

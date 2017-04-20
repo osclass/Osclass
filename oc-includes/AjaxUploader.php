@@ -51,6 +51,9 @@ class AjaxUploader {
                 return array('error' => sprintf(__('File has an invalid extension, it should be one of %s.'), $this->_allowedExtensions));
             }
             $files = Session::newInstance()->_get('ajax_files');
+            if(!is_array($files)) {
+                $files = array();
+            }
             $files[Params::getParam('qquuid')] = $uuid['basename'];
             Session::newInstance()->_set('ajax_files', $files);
             return array('success' => true);
@@ -146,4 +149,3 @@ class AjaxUploadedFileForm {
     public function getOriginalName() { return $this->_file['name']; }
     public function getSize() { return $this->_file['size']; }
 }
-?>

@@ -44,7 +44,7 @@ function osc_get_param($key) {
 
 /**
  * Generic function for view layer, return the $field of $item
- * with specific $locate
+ * with specific $locale
  *
  * @param array $item
  * @param string $field
@@ -195,7 +195,7 @@ function osc_private_user_menu($options = null)
 {
     if($options == null) {
         $options = array();
-        $options[] = array('name' => __('Public Profile'), 'url' => osc_user_public_profile_url(), 'class' => 'opt_publicprofile');
+        $options[] = array('name' => __('Public Profile'), 'url' => osc_user_public_profile_url(osc_logged_user_id()), 'class' => 'opt_publicprofile');
         $options[] = array('name' => __('Dashboard'), 'url' => osc_user_dashboard_url(), 'class' => 'opt_dashboard');
         $options[] = array('name' => __('Manage your listings'), 'url' => osc_user_list_items_url(), 'class' => 'opt_items');
         $options[] = array('name' => __('Manage your alerts'), 'url' => osc_user_alerts_url(), 'class' => 'opt_alerts');

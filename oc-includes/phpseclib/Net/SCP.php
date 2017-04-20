@@ -3,141 +3,119 @@
 /**
  * Pure-PHP implementation of SCP.
  *
- * PHP versions 4 and 5
+ * PHP version 5
  *
  * The API for this library is modeled after the API from PHP's {@link http://php.net/book.ftp FTP extension}.
  *
  * Here's a short example of how to use this library:
  * <code>
  * <?php
- *    include 'Net/SCP.php';
- *    include 'Net/SSH2.php';
+ *    include 'vendor/autoload.php';
  *
- *    $ssh = new Net_SSH2('www.domain.tld');
+ *    $ssh = new \phpseclib\Net\SSH2('www.domain.tld');
  *    if (!$ssh->login('username', 'password')) {
  *        exit('bad login');
  *    }
+ *    $scp = new \phpseclib\Net\SCP($ssh);
  *
- *    $scp = new Net_SCP($ssh);
  *    $scp->put('abcd', str_repeat('x', 1024*1024));
  * ?>
  * </code>
  *
- * LICENSE: Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
  * @category  Net
- * @package   Net_SCP
+ * @package   SCP
  * @author    Jim Wigginton <terrafrost@php.net>
  * @copyright 2010 Jim Wigginton
  * @license   http://www.opensource.org/licenses/mit-license.html  MIT License
  * @link      http://phpseclib.sourceforge.net
  */
 
-/**#@+
- * @access public
- * @see Net_SCP::put()
- */
-/**
- * Reads data from a local file.
- */
-define('NET_SCP_LOCAL_FILE', 1);
-/**
- * Reads data from a string.
- */
-define('NET_SCP_STRING',  2);
-/**#@-*/
+namespace phpseclib\Net;
 
-/**#@+
- * @access private
- * @see Net_SCP::_send()
- * @see Net_SCP::_receive()
- */
-/**
- * SSH1 is being used.
- */
-define('NET_SCP_SSH1', 1);
-/**
- * SSH2 is being used.
- */
-define('NET_SCP_SSH2',  2);
-/**#@-*/
+use phpseclib\Exception\FileNotFoundException;
+use phpseclib\Common\Functions\Strings;
+use phpseclib\Common\Functions\Objects;
 
 /**
  * Pure-PHP implementations of SCP.
  *
- * @package Net_SCP
+ * @package SCP
  * @author  Jim Wigginton <terrafrost@php.net>
  * @access  public
  */
-class Net_SCP
+class SCP
 {
+    /**#@+
+     * @access public
+     * @see \phpseclib\Net\SCP::put()
+     */
+    /**
+     * Reads data from a local file.
+     */
+    const SOURCE_LOCAL_FILE = 1;
+    /**
+     * Reads data from a string.
+     */
+    const SOURCE_STRING = 2;
+    /**#@-*/
+
+    /**#@+
+     * @access private
+     * @see \phpseclib\Net\SCP::_send()
+     * @see \phpseclib\Net\SCP::_receive()
+    */
+    /**
+     * SSH1 is being used.
+     */
+    const MODE_SSH1 = 1;
+    /**
+     * SSH2 is being used.
+     */
+    const MODE_SSH2 =  2;
+    /**#@-*/
+
     /**
      * SSH Object
      *
-     * @var Object
+     * @var object
      * @access private
      */
-    var $ssh;
+    private $ssh;
 
     /**
      * Packet Size
      *
-     * @var Integer
+     * @var int
      * @access private
      */
-    var $packet_size;
+    private $packet_size;
 
     /**
      * Mode
      *
-     * @var Integer
+     * @var int
      * @access private
      */
-    var $mode;
+    private $mode;
 
     /**
      * Default Constructor.
      *
      * Connects to an SSH server
      *
-     * @param String $host
-     * @param optional Integer $port
-     * @param optional Integer $timeout
-     * @return Net_SCP
+     * @param \phpseclib\Net\SSH1|\phpseclib\Net\SSH2 $ssh
+     * @return \phpseclib\Net\SCP
      * @access public
      */
-    function Net_SCP($ssh)
+    public function __construct($ssh)
     {
-        if (!is_object($ssh)) {
+        if ($ssh instanceof SSH2) {
+            $this->mode = self::MODE_SSH2;
+        } elseif ($ssh instanceof SSH1) {
+            $this->packet_size = 50000;
+            $this->mode = self::MODE_SSH1;
+        } else {
             return;
-        }
-
-        switch (strtolower(get_class($ssh))) {
-            case 'net_ssh2':
-                $this->mode = NET_SCP_SSH2;
-                break;
-            case 'net_ssh1':
-                $this->packet_size = 50000;
-                $this->mode = NET_SCP_SSH1;
-                break;
-            default:
-                return;
         }
 
         $this->ssh = $ssh;
@@ -146,25 +124,26 @@ class Net_SCP
     /**
      * Uploads a file to the SCP server.
      *
-     * By default, Net_SCP::put() does not read from the local filesystem.  $data is dumped directly into $remote_file.
-     * So, for example, if you set $data to 'filename.ext' and then do Net_SCP::get(), you will get a file, twelve bytes
+     * By default, \phpseclib\Net\SCP::put() does not read from the local filesystem.  $data is dumped directly into $remote_file.
+     * So, for example, if you set $data to 'filename.ext' and then do \phpseclib\Net\SCP::get(), you will get a file, twelve bytes
      * long, containing 'filename.ext' as its contents.
      *
-     * Setting $mode to NET_SCP_LOCAL_FILE will change the above behavior.  With NET_SCP_LOCAL_FILE, $remote_file will
+     * Setting $mode to self::SOURCE_LOCAL_FILE will change the above behavior.  With self::SOURCE_LOCAL_FILE, $remote_file will
      * contain as many bytes as filename.ext does on your local filesystem.  If your filename.ext is 1MB then that is how
      * large $remote_file will be, as well.
      *
      * Currently, only binary mode is supported.  As such, if the line endings need to be adjusted, you will need to take
      * care of that, yourself.
      *
-     * @param String $remote_file
-     * @param String $data
-     * @param optional Integer $mode
-     * @param optional Callable $callback
-     * @return Boolean
+     * @param string $remote_file
+     * @param string $data
+     * @param int $mode
+     * @param callable $callback
+     * @throws \phpseclib\Exception\FileNotFoundException if you're uploading via a file and the file doesn't exist
+     * @return bool
      * @access public
      */
-    function put($remote_file, $data, $mode = NET_SCP_STRING, $callback = null)
+    public function put($remote_file, $data, $mode = self::SOURCE_STRING, $callback = null)
     {
         if (!isset($this->ssh)) {
             return false;
@@ -174,23 +153,22 @@ class Net_SCP
             return false;
         }
 
-        $temp = $this->_receive();
+        $temp = $this->receive();
         if ($temp !== chr(0)) {
             return false;
         }
 
-        if ($this->mode == NET_SCP_SSH2) {
-            $this->packet_size = $this->ssh->packet_size_client_to_server[NET_SSH2_CHANNEL_EXEC] - 4;
+        if ($this->mode == self::MODE_SSH2) {
+            $this->packet_size = Objects::getVar($this->ssh, 'packet_size_client_to_server')[SSH2::CHANNEL_EXEC] - 4;
         }
 
         $remote_file = basename($remote_file);
 
-        if ($mode == NET_SCP_STRING) {
+        if ($mode == self::SOURCE_STRING) {
             $size = strlen($data);
         } else {
             if (!is_file($data)) {
-                user_error("$data is not a valid file", E_USER_NOTICE);
-                return false;
+                throw new FileNotFoundException("$data is not a valid file");
             }
 
             $fp = @fopen($data, 'rb');
@@ -200,26 +178,26 @@ class Net_SCP
             $size = filesize($data);
         }
 
-        $this->_send('C0644 ' . $size . ' ' . $remote_file . "\n");
+        $this->send('C0644 ' . $size . ' ' . $remote_file . "\n");
 
-        $temp = $this->_receive();
+        $temp = $this->receive();
         if ($temp !== chr(0)) {
             return false;
         }
 
         $sent = 0;
         while ($sent < $size) {
-            $temp = $mode & NET_SCP_STRING ? substr($data, $sent, $this->packet_size) : fread($fp, $this->packet_size);
-            $this->_send($temp);
+            $temp = $mode & self::SOURCE_STRING ? substr($data, $sent, $this->packet_size) : fread($fp, $this->packet_size);
+            $this->send($temp);
             $sent+= strlen($temp);
 
             if (is_callable($callback)) {
                 call_user_func($callback, $sent);
             }
         }
-        $this->_close();
+        $this->close();
 
-        if ($mode != NET_SCP_STRING) {
+        if ($mode != self::SOURCE_STRING) {
             fclose($fp);
         }
 
@@ -233,12 +211,12 @@ class Net_SCP
      * the operation was unsuccessful.  If $local_file is defined, returns true or false depending on the success of the
      * operation
      *
-     * @param String $remote_file
-     * @param optional String $local_file
-     * @return Mixed
+     * @param string $remote_file
+     * @param string $local_file
+     * @return mixed
      * @access public
      */
-    function get($remote_file, $local_file = false)
+    public function get($remote_file, $local_file = false)
     {
         if (!isset($this->ssh)) {
             return false;
@@ -248,13 +226,13 @@ class Net_SCP
             return false;
         }
 
-        $this->_send("\0");
+        $this->send("\0");
 
-        if (!preg_match('#(?<perms>[^ ]+) (?<size>\d+) (?<name>.+)#', rtrim($this->_receive()), $info)) {
+        if (!preg_match('#(?<perms>[^ ]+) (?<size>\d+) (?<name>.+)#', rtrim($this->receive()), $info)) {
             return false;
         }
 
-        $this->_send("\0");
+        $this->send("\0");
 
         $size = 0;
 
@@ -267,7 +245,7 @@ class Net_SCP
 
         $content = '';
         while ($size < $info['size']) {
-            $data = $this->_receive();
+            $data = $this->receive();
             // SCP usually seems to split stuff out into 16k chunks
             $size+= strlen($data);
 
@@ -278,7 +256,7 @@ class Net_SCP
             }
         }
 
-        $this->_close();
+        $this->close();
 
         if ($local_file !== false) {
             fclose($fp);
@@ -291,52 +269,55 @@ class Net_SCP
     /**
      * Sends a packet to an SSH server
      *
-     * @param String $data
+     * @param string $data
      * @access private
      */
-    function _send($data)
+    private function send($data)
     {
         switch ($this->mode) {
-            case NET_SCP_SSH2:
-                $this->ssh->_send_channel_packet(NET_SSH2_CHANNEL_EXEC, $data);
+            case self::MODE_SSH2:
+                Objects::callFunc($this->ssh, 'send_channel_packet', [SSH2::CHANNEL_EXEC, $data]);
                 break;
-            case NET_SCP_SSH1:
+            case self::MODE_SSH1:
                 $data = pack('CNa*', NET_SSH1_CMSG_STDIN_DATA, strlen($data), $data);
-                $this->ssh->_send_binary_packet($data);
+                Objects::callFunc($this->ssh, 'send_binary_packet', [$data]);
         }
     }
 
     /**
      * Receives a packet from an SSH server
      *
-     * @return String
+     * @return string
+     * @throws \UnexpectedValueException on receipt of an unexpected packet
      * @access private
      */
-    function _receive()
+    private function receive()
     {
         switch ($this->mode) {
-            case NET_SCP_SSH2:
-                return $this->ssh->_get_channel_packet(NET_SSH2_CHANNEL_EXEC, true);
-            case NET_SCP_SSH1:
-                if (!$this->ssh->bitmap) {
+            case self::MODE_SSH2:
+                return Objects::callFunc($this->ssh, 'get_channel_packet', [SSH2::CHANNEL_EXEC, true]);
+            case self::MODE_SSH1:
+                if (!Objects::getVar($this->ssh, 'bitmap')) {
                     return false;
                 }
                 while (true) {
-                    $response = $this->ssh->_get_binary_packet();
-                    switch ($response[NET_SSH1_RESPONSE_TYPE]) {
+                    $response = Objects::getFunc($this->ssh, 'get_binary_packet');
+                    switch ($response[SSH1::RESPONSE_TYPE]) {
                         case NET_SSH1_SMSG_STDOUT_DATA:
-                            extract(unpack('Nlength', $response[NET_SSH1_RESPONSE_DATA]));
-                            return $this->ssh->_string_shift($response[NET_SSH1_RESPONSE_DATA], $length);
+                            if (strlen($response[SSH1::RESPONSE_DATA]) < 4) {
+                                return false;
+                            }
+                            extract(unpack('Nlength', $response[SSH1::RESPONSE_DATA]));
+                            return Strings::shift($response[SSH1::RESPONSE_DATA], $length);
                         case NET_SSH1_SMSG_STDERR_DATA:
                             break;
                         case NET_SSH1_SMSG_EXITSTATUS:
-                            $this->ssh->_send_binary_packet(chr(NET_SSH1_CMSG_EXIT_CONFIRMATION));
-                            fclose($this->ssh->fsock);
-                            $this->ssh->bitmap = 0;
+                            Objects::callFunc($this->ssh, 'send_binary_packet', [chr(NET_SSH1_CMSG_EXIT_CONFIRMATION)]);
+                            fclose(Objects::getVar($this->ssh, 'fsock'));
+                            Objects::setVar($this->ssh, 'bitmap', 0);
                             return false;
                         default:
-                            user_error('Unknown packet received', E_USER_NOTICE);
-                            return false;
+                            throw new \UnexpectedValueException('Unknown packet received');
                     }
                 }
         }
@@ -347,14 +328,14 @@ class Net_SCP
      *
      * @access private
      */
-    function _close()
+    private function close()
     {
         switch ($this->mode) {
-            case NET_SCP_SSH2:
-                $this->ssh->_close_channel(NET_SSH2_CHANNEL_EXEC, true);
+            case self::MODE_SSH2:
+                Objects::callFunc($this->ssh, 'close_channel', [SSH2::CHANNEL_EXEC, true]);
                 break;
-            case NET_SCP_SSH1:
-                $this->ssh->disconnect();
+            case self::MODE_SSH1:
+                Objects::callFunc($this->ssh, 'disconnect');
         }
     }
 }

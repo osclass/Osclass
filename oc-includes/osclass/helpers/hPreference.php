@@ -956,6 +956,21 @@
     }
 
     /**
+     * generic function to retrieve preferences as bool
+     *
+     * @param string $key
+     * @param string $section
+     * @return string
+     */
+    function osc_get_bool_preference($key, $section = 'osclass') {
+        $var = getPreference($key, $section);
+        if($var==1 || $var=="1" || $var=="true" || $var==true) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * generic function to retrieve preferences
      *
      * @param string $section
