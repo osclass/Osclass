@@ -175,6 +175,9 @@ function meta_title() {
         case('contact'):
             $text = __('Contact');
         break;
+        case('custom'):
+            $text = Rewrite::newInstance()->get_title();
+        break;
         default:
             $text = osc_page_title();
         break;
@@ -338,7 +341,7 @@ function osc_footer_link_url($f = null) {
     }
     $params = array();
     $tmp = osc_search_category_id();
-    if( !empty($tmp) ) {
+    if( isset($tmp) ) {
         $params['sCategory'] = $f['fk_i_category_id'];
     }
 

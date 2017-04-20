@@ -242,7 +242,7 @@
                 }
             }
 
-            $p_sPattern   = trim(strip_tags(Params::getParam('sPattern')));
+            $p_sPattern   = osc_apply_filter('search_pattern', trim(strip_tags(Params::getParam('sPattern'))));
 
             // ADD TO THE LIST OF LAST SEARCHES
             if(osc_save_latest_searches() && (!Params::existParam('iPage') || Params::getParam('iPage')==1)) {
@@ -485,6 +485,8 @@
                 $_cache['iTotalItems'] = $iTotalItems;
                 osc_cache_set($key, $_cache, OSC_CACHE_TTL);
             }
+            
+            $aItems = osc_apply_filter('pre_show_items', $aItems);
 
             $iStart    = $p_iPage * $p_iPageSize;
             $iEnd      = min(($p_iPage+1) * $p_iPageSize, $iTotalItems);

@@ -43,11 +43,17 @@
                 true
             );
 
-            session_name('osclass');
-            session_start();
+            if( !isset($_SESSION) ) {
+                session_name('osclass');
+                if(!$this->_session_start()) {
+                    session_id( uniqid() );
+                    session_start();
+                    session_regenerate_id();
+                }
+            }
 
             $this->session = $_SESSION;
-            if ($this->_get('messages') == '') {
+            if( $this->_get('messages') == '' ) {
                 $this->_set( 'messages', array() );
             }
             if( $this->_get('keepForm') == '' ){
@@ -56,6 +62,23 @@
             if( $this->_get('form') == '' ){
                 $this->_set( 'form', array() );
             }
+        }
+
+        function _session_start()
+        {
+            $sn = session_name();
+            if (isset($_COOKIE[$sn])) {
+                $sessid = $_COOKIE[$sn];
+            } else if (isset($_GET[$sn])) {
+                $sessid = $_GET[$sn];
+            } else {
+                return session_start();
+            }
+
+            if (!preg_match('/^[a-zA-Z0-9,\-]{22,40}$/', $sessid)) {
+                return false;
+            }
+            return session_start();
         }
 
         function session_destroy() {

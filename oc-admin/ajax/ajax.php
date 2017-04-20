@@ -386,6 +386,8 @@
                         }
                     }
 
+                    osc_run_hook('edited_category', (int)($id), $error);
+
                     if($error==0) {
                         $msg = __("Category updated correctly");
                     } else if($error==1) {

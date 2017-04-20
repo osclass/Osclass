@@ -16,7 +16,7 @@
  */
 
 
-define('OSCLASS_VERSION', '3.7.1');
+define('OSCLASS_VERSION', '3.7.2');
 
 if( !defined('ABS_PATH') ) {
     define( 'ABS_PATH', str_replace('\\', '/', dirname(__FILE__) . '/' ));
@@ -114,7 +114,6 @@ require_once LIB_PATH . 'osclass/core/Translation.php';
 require_once LIB_PATH . 'osclass/Themes.php';
 require_once LIB_PATH . 'osclass/AdminThemes.php';
 require_once LIB_PATH . 'osclass/WebThemes.php';
-require_once LIB_PATH . 'osclass/compatibility.php';
 require_once LIB_PATH . 'osclass/utils.php';
 require_once LIB_PATH . 'osclass/formatting.php';
 require_once LIB_PATH . 'osclass/locales.php';
@@ -156,7 +155,7 @@ require_once LIB_PATH . 'osclass/model/BanRule.php';
 require_once LIB_PATH . 'osclass/model/LocationsTmp.php';
 
 require_once LIB_PATH . 'osclass/classes/Cache.php';
-require_once LIB_PATH . 'osclass/classes/ImageResizer.php';
+require_once LIB_PATH . 'osclass/classes/ImageProcessing.php';
 require_once LIB_PATH . 'osclass/classes/RSSFeed.php';
 require_once LIB_PATH . 'osclass/classes/Sitemap.php';
 require_once LIB_PATH . 'osclass/classes/Pagination.php';
@@ -195,6 +194,10 @@ require_once LIB_PATH . 'osclass/helpers/hAdminMenu.php';
 require_once LIB_PATH . 'osclass/core/iObject_Cache.php';
 require_once LIB_PATH . 'osclass/core/Object_Cache_Factory.php';
 require_once LIB_PATH . 'osclass/helpers/hCache.php';
+require_once LIB_PATH . 'openssl-cryptor/Cryptor.php';
+require_once LIB_PATH . 'osclass/compatibility.php';
+
+
 
 if( !defined('OSC_CRYPT_KEY') ) {
     define('OSC_CRYPT_KEY', osc_get_preference('crypt_key'));

@@ -38,6 +38,7 @@
                                                     $user = $userManager->findByPrimaryKey( Params::getParam('userId') );
 
                                                     if( $user['s_pass_code'] == Params::getParam('code') && $user['b_enabled']==1) {
+                                                        $userOldEmail = $user['s_email'];
                                                         $userEmailTmp = UserEmailTmp::newInstance()->findByPrimaryKey( Params::getParam('userId') );
                                                         $code = osc_genRandomPassword(50);
                                                         $userManager->update(
@@ -49,6 +50,9 @@
                                                         Alerts::newInstance()->update(array('s_email' => $userEmailTmp['s_new_email']), array('fk_i_user_id' => $userEmailTmp['fk_i_user_id']));
                                                         Session::newInstance()->_set('userEmail', $userEmailTmp['s_new_email']);
                                                         UserEmailTmp::newInstance()->delete(array('s_new_email' => $userEmailTmp['s_new_email']));
+                                                        
+                                                        osc_run_hook('change_email_confirm', Params::getParam('userId'), $userOldEmail, $userEmailTmp['s_new_email']);
+                                                        
                                                         osc_add_flash_ok_message( _m('Your email has been changed successfully'));
                                                         $this->redirectTo( osc_user_profile_url() );
                                                     } else {

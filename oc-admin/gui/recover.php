@@ -38,7 +38,7 @@
                 <?php _e('You will receive a new password via e-mail'); ?>.
             </div>
 
-            <form action="<?php echo osc_admin_base_url(true); ?>" method="post">
+            <form id="recoverform" name="recoverform" action="<?php echo osc_admin_base_url(true); ?>" method="post">
                 <input type="hidden" name="page" value="login"/>
                 <input type="hidden" name="action" value="recover_post"/>
                 <p>
@@ -72,5 +72,6 @@
                 $("#user_email").focus();
             });
         </script>
+        <?php osc_run_hook('admin_login_footer'); ?>
     </body>
 </html>

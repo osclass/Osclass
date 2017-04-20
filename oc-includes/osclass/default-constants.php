@@ -32,20 +32,40 @@
         define('CONTENT_PATH', ABS_PATH . 'oc-content/');
     }
 
+    if( !defined('CONTENT_WEB_PATH') ) {
+        define('CONTENT_WEB_PATH', WEB_PATH . 'oc-content/');
+    }
+
     if( !defined('THEMES_PATH') ) {
         define('THEMES_PATH', CONTENT_PATH . 'themes/');
+    }
+
+    if( !defined('THEMES_WEB_PATH') ) {
+        define('THEMES_WEB_PATH', CONTENT_WEB_PATH . 'themes/');
     }
 
     if( !defined('PLUGINS_PATH') ) {
         define('PLUGINS_PATH', CONTENT_PATH . 'plugins/');
     }
 
+    if( !defined('PLUGINS_WEB_PATH') ) {
+        define('PLUGINS_WEB_PATH', CONTENT_WEB_PATH . 'plugins/');
+    }
+
     if( !defined('TRANSLATIONS_PATH') ) {
         define('TRANSLATIONS_PATH', CONTENT_PATH . 'languages/');
     }
 
+    if( !defined('TRANSLATIONS_WEB_PATH') ) {
+        define('TRANSLATIONS_WEB_PATH', CONTENT_WEB_PATH . 'languages/');
+    }
+
     if( !defined('UPLOADS_PATH') ) {
         define('UPLOADS_PATH', CONTENT_PATH . 'uploads/');
+    }
+
+    if( !defined('UPLOADS_WEB_PATH') ) {
+        define('UPLOADS_WEB_PATH', CONTENT_WEB_PATH . 'uploads/');
     }
 
     if( !defined('OSC_DEBUG_DB') ) {
@@ -70,6 +90,14 @@
 
     if( !defined('OSC_MEMORY_LIMIT') ) {
         define('OSC_MEMORY_LIMIT', '32M');
+    }
+
+    if( !defined('CIPHER_ALGO') ) {
+        define('CIPHER_ALGO', 'aes-256-ctr');
+    }
+
+    if( !defined('HASH_ALGO') ) {
+        define('HASH_ALGO', 'sha256');
     }
 
     if( function_exists('memory_get_usage') && ( (int) @ini_get('memory_limit') < abs(intval(OSC_MEMORY_LIMIT)) ) ) {

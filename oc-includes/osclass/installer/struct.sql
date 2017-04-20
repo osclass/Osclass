@@ -49,7 +49,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_region (
     b_active TINYINT(1) NOT NULL DEFAULT 1,
 
         PRIMARY KEY (pk_i_id),
-        INDEX (fk_c_country_code),
+        INDEX fk_c_country_code (fk_c_country_code),
         INDEX idx_s_name (s_name),
         INDEX idx_s_slug (s_slug),
         FOREIGN KEY (fk_c_country_code) REFERENCES /*TABLE_PREFIX*/t_country (pk_c_code)
@@ -65,7 +65,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_city (
     b_active TINYINT(1) NOT NULL DEFAULT 1,
 
         PRIMARY KEY (pk_i_id),
-        INDEX (fk_i_region_id),
+        INDEX fk_i_region_id (fk_i_region_id),
         INDEX idx_s_name (s_name),
         INDEX idx_s_slug (s_slug),
         FOREIGN KEY (fk_i_region_id) REFERENCES /*TABLE_PREFIX*/t_region (pk_i_id),
@@ -78,7 +78,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_city_area (
     s_name VARCHAR(255) NOT NULL,
 
         PRIMARY KEY (pk_i_id),
-        INDEX (fk_i_city_id),
+        INDEX fk_i_city_id (fk_i_city_id),
         INDEX idx_s_name (s_name),
         FOREIGN KEY (fk_i_city_id) REFERENCES /*TABLE_PREFIX*/t_city (pk_i_id)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
@@ -181,8 +181,8 @@ CREATE TABLE /*TABLE_PREFIX*/t_category (
     s_icon VARCHAR(250) NULL,
 
         PRIMARY KEY (pk_i_id),
-        INDEX (fk_i_parent_id),
-        INDEX (i_position),
+        INDEX fk_i_parent_id (fk_i_parent_id),
+        INDEX i_position (i_position),
         FOREIGN KEY (fk_i_parent_id) REFERENCES /*TABLE_PREFIX*/t_category (pk_i_id)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
 
@@ -232,11 +232,11 @@ CREATE TABLE /*TABLE_PREFIX*/t_item (
         FOREIGN KEY (fk_i_category_id) REFERENCES /*TABLE_PREFIX*/t_category (pk_i_id),
         FOREIGN KEY (fk_c_currency_code) REFERENCES /*TABLE_PREFIX*/t_currency (pk_c_code),
 
-        INDEX (fk_i_user_id),
+        INDEX fk_i_user_id (fk_i_user_id),
         INDEX idx_b_premium (b_premium),
         INDEX idx_s_contact_email (s_contact_email(10)),
-        INDEX (fk_i_category_id),
-        INDEX (fk_c_currency_code),
+        INDEX fk_i_category_id (fk_i_category_id),
+        INDEX fk_c_currency_code (fk_c_currency_code),
         INDEX idx_pub_date (dt_pub_date),
         INDEX idx_price (i_price)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
@@ -286,7 +286,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_item_stats (
     dt_date DATE NOT NULL,
 
         PRIMARY KEY (fk_i_item_id, dt_date),
-        INDEX (dt_date, fk_i_item_id),
+        INDEX dt_date_fk_i_item_id (dt_date, fk_i_item_id),
         FOREIGN KEY (fk_i_item_id) REFERENCES /*TABLE_PREFIX*/t_item (pk_i_id)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
 
@@ -299,7 +299,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_item_resource (
     s_path VARCHAR(250) NULL,
 
         PRIMARY KEY (pk_i_id),
-        INDEX (fk_i_item_id),
+        INDEX fk_i_item_id (fk_i_item_id),
         INDEX idx_s_content_type (pk_i_id,s_content_type(10)),
         FOREIGN KEY (fk_i_item_id) REFERENCES /*TABLE_PREFIX*/t_item (pk_i_id)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
@@ -318,7 +318,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_item_comment (
     fk_i_user_id INT(10) UNSIGNED NULL,
 
         PRIMARY KEY (pk_i_id),
-        INDEX (fk_i_item_id),
+        INDEX fk_i_item_id (fk_i_item_id),
         FOREIGN KEY (fk_i_item_id) REFERENCES /*TABLE_PREFIX*/t_item (pk_i_id),
         FOREIGN KEY (fk_i_user_id) REFERENCES /*TABLE_PREFIX*/t_user (pk_i_id)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
@@ -360,7 +360,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_plugin_category (
     s_plugin_name VARCHAR(40) NOT NULL,
     fk_i_category_id INT(10) UNSIGNED NOT NULL,
 
-        INDEX (fk_i_category_id),
+        INDEX fk_i_category_id (fk_i_category_id),
         FOREIGN KEY (fk_i_category_id) REFERENCES /*TABLE_PREFIX*/t_category (pk_i_id)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
 
@@ -401,8 +401,8 @@ CREATE TABLE /*TABLE_PREFIX*/t_keywords (
     fk_i_city_id INT(10) UNSIGNED NULL,
 
         PRIMARY KEY (s_md5, fk_c_locale_code),
-        INDEX (fk_i_category_id),
-        INDEX (fk_i_city_id),
+        INDEX fk_i_category_id (fk_i_category_id),
+        INDEX fk_i_city_id (fk_i_city_id),
         FOREIGN KEY (fk_i_category_id) REFERENCES /*TABLE_PREFIX*/t_category (pk_i_id),
         FOREIGN KEY (fk_i_city_id) REFERENCES /*TABLE_PREFIX*/t_city (pk_i_id),
         FOREIGN KEY (fk_c_locale_code) REFERENCES /*TABLE_PREFIX*/t_locale (pk_c_code)

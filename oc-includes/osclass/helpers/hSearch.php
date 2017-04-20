@@ -340,9 +340,12 @@
             osc_prune_array($params);
         }
         $countP = count($params);
-        if ($countP == 0) { $params['page'] = 'search'; };
+        if ($countP == 0) {$params['page'] = 'search';}
         $base_url = osc_base_url();
         $http_url = osc_is_ssl()?"https://":"http://";
+        if (!empty($params['sPattern'])) {
+            $params['sPattern'] = osc_apply_filter('search_pattern', $params['sPattern']);
+        }
         if(osc_subdomain_type()=='category' && isset($params['sCategory'])) {
             if($params['sCategory']!=Params::getParam('sCategory')) {
                 if(is_array($params['sCategory'])) {

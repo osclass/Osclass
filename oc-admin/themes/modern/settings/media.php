@@ -230,7 +230,7 @@
                     <div class="form-label"><?php _e('ImageMagick'); ?></div>
                     <div class="form-controls">
                         <div class="form-label-checkbox">
-                            <input type="checkbox" name="use_imagick" value="1" <?php echo ( osc_use_imagick()?'checked="checked"':'' ); ?> <?php if( !$imagickLoaded ) echo 'disabled="disabled"'; ?> />
+                            <input type="checkbox" name="use_imagick" value="1" <?php echo ( ($imagickLoaded && osc_use_imagick())?'checked="checked"':'' ); ?> <?php if( !$imagickLoaded ) echo 'disabled="disabled"'; ?> />
                             <label for="use_imagick"><?php _e('Use ImageMagick instead of GD library'); ?></label>
                         </div>
                         <?php if( !$imagickLoaded ) { ?>

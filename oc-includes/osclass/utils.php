@@ -846,7 +846,7 @@ function osc_downloadFile($sourceFile, $downloadedFile, $post_data = null)
         $fp = @fopen (osc_content_path() . 'downloads/' . $downloadedFile, 'w+');
         if($fp) {
             $ch = curl_init($sourceFile);
-            @curl_setopt($ch, CURLOPT_TIMEOUT, 50);
+            @curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
             curl_setopt($ch, CURLOPT_USERAGENT, Params::getServerParam('HTTP_USER_AGENT') . ' Osclass (v.' . osc_version() . ')');
             curl_setopt($ch, CURLOPT_FILE, $fp);
             @curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
@@ -882,6 +882,7 @@ function osc_file_get_contents($url, $post_data = null)
     if( testCurl() ) {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
+        @curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
         curl_setopt($ch, CURLOPT_USERAGENT, Params::getServerParam('HTTP_USER_AGENT') . ' Osclass (v.' . osc_version() . ')');
         if( !defined('CURLOPT_RETURNTRANSFER') ) define('CURLOPT_RETURNTRANSFER', 1);
         @curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);

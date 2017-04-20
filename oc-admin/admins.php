@@ -221,6 +221,9 @@
                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=admins&action=edit&id=' . $adminId);
                                                 }
                                             }
+                                        } else if($sOldPassword == '' && $sPassword != '') {
+                                            osc_add_flash_warning_message( _m("Password wasn't updated, current password is requried"), 'admin');
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=admins&action=edit&id=' . $adminId);
                                         }
                                     } else {
                                         if( $sPassword!='') {
