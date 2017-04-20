@@ -525,7 +525,7 @@ CREATE TABLE %st_item_description_tmp (
 	osc_delete_preference('recaptcha_version', 'STRING');
     }
 
-    osc_changeVersionTo(372);
+    osc_changeVersionTo(373);
 
     if(!defined('IS_AJAX') || !IS_AJAX) {
         if(empty($aMessages)) {
