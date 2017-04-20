@@ -1560,7 +1560,7 @@ msgid "Ip Address"
 msgstr ""
 
 #: oc-admin/themes/modern/items/frm.php:222
-msgid "Show e-mail on the listing page"
+msgid "Show e-mail"
 msgstr ""
 
 #: oc-admin/themes/modern/items/frm.php:225
