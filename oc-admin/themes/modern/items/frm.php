@@ -220,7 +220,6 @@ function customPageHeader() { ?>
                                 <?php } ?>
                                 <div class="input-separate-top">
                                     <label><?php ItemForm::show_email_checkbox(); ?><?php _e('Show e-mail'); ?></label>
-
                                 </div>
                             </div>
                         </div>
