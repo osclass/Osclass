@@ -28,6 +28,16 @@ $> git clone --recursive git@github.com:osclass/Osclass.git
 
 Go to [our site][installing] to get detailed information on installing Osclass.
 
+## Heroku
+
+If you are using _Heroku_, you will need to:
+
+1. Set the `HEROKU_URL` environment variable to the root of your application (eg: `https://foo.herokuapp.com`)
+2. Provision a MySQL database and then set one of `CLEARDB_DATABASE_URL`, `JAWSDB_DATABASE_URL` or `DATABASE_URL`
+3. Set `OSCLASS_MULTISITE` (eg: `0`)
+4. Push this code to heroku
+5. Visit the app and follow the original web installation guide.
+
 [osclass]: http://osclass.org/
 [preview]: http://osclass.org/wp-content/uploads/2011/01/single_job_board-1024x729.png
 [code]: https://github.com/osclass/Osclass

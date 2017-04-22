@@ -28,17 +28,32 @@ define('THEMES_PATH', CONTENT_PATH . 'themes/');
 define('PLUGINS_PATH', CONTENT_PATH . 'plugins/');
 define('TRANSLATIONS_PATH', CONTENT_PATH . 'languages/');
 
-if( !file_exists(ABS_PATH . 'config.php') ) {
-    require_once LIB_PATH . 'osclass/helpers/hErrors.php';
+if(array_key_exists('HEROKU_URL', $_ENV)){
+    if( !file_exists(ABS_PATH . 'config-heroku.php') ) {
+        require_once LIB_PATH . 'osclass/helpers/hErrors.php';
 
-    $title   = 'Osclass &raquo; Error';
-    $message = 'There doesn\'t seem to be a <code>config.php</code> file. Osclass isn\'t installed. <a href="http://forums.osclass.org/">Need more help?</a></p>';
-    $message .= '<p><a class="button" href="' . osc_get_absolute_url() .'oc-includes/osclass/install.php">Install</a></p>';
-    osc_die($title, $message);
+        $title   = 'Osclass &raquo; Error';
+        $message = 'There doesn\'t seem to be a <code>config-heroku.php</code> file. Osclass isn\'t installed. <a href="http://forums.osclass.org/">Need more help?</a></p>';
+        $message .= '<p><a class="button" href="' . osc_get_absolute_url() .'oc-includes/osclass/install.php">Install</a></p>';
+        osc_die($title, $message);
+    }
+
+    // load database configuration
+    require_once ABS_PATH . 'config-heroku.php';
 }
+else {
+    if( !file_exists(ABS_PATH . 'config.php') ) {
+        require_once LIB_PATH . 'osclass/helpers/hErrors.php';
 
-// load database configuration
-require_once ABS_PATH . 'config.php';
+        $title   = 'Osclass &raquo; Error';
+        $message = 'There doesn\'t seem to be a <code>config.php</code> file. Osclass isn\'t installed. <a href="http://forums.osclass.org/">Need more help?</a></p>';
+        $message .= '<p><a class="button" href="' . osc_get_absolute_url() .'oc-includes/osclass/install.php">Install</a></p>';
+        osc_die($title, $message);
+    }
+
+    // load database configuration
+    require_once ABS_PATH . 'config.php';
+}
 require_once LIB_PATH . 'osclass/default-constants.php';
 
 // Sets PHP error handling
