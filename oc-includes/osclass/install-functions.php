@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-
-require_once dirname(dirname(__FILE__)) . '/htmlpurifier/HTMLPurifier.auto.php';
 function _purify($value, $xss_check)
 {
     if( !$xss_check ) {
@@ -25,7 +23,7 @@ function _purify($value, $xss_check)
 
     $_config = HTMLPurifier_Config::createDefault();
     $_config->set('HTML.Allowed', '');
-    $_config->set('Cache.SerializerPath', dirname(dirname(dirname(dirname(__FILE__)))) . '/oc-content/uploads/');
+    $_config->set('Cache.SerializerPath', ABS_PATH . '/oc-content/uploads/');
 
     $_purifier = new HTMLPurifier($_config);
 
@@ -780,6 +778,7 @@ function display_target() {
         $region_list = json_decode(substr($region_list, 1, strlen($region_list)-2), true);
     }
 
+    $internet_error = false;
     if(!isset($country_list[0]) || !isset($country_list[0]['s_name'])) {
         $internet_error = true;
     }
@@ -812,7 +811,7 @@ function display_target() {
             </table>
             <div class="admin-user">
                 <?php _e('A password will be automatically generated for you if you leave this blank.'); ?>
-                <img src="<?php echo get_absolute_url() ?>oc-includes/images/question.png" class="question-skip vtip" title="<?php echo osc_esc_html(__('You can modify username and password if you like, just change the input value.')); ?>" alt="" />
+                <img src="<?php echo get_absolute_url() ?>oc-includes/osclass/assets/images/question.png" class="question-skip vtip" title="<?php echo osc_esc_html(__('You can modify username and password if you like, just change the input value.')); ?>" alt="" />
             </div>
             <h2 class="title"><?php _e('Contact information'); ?></h2>
             <table class="contact-info">
@@ -832,7 +831,7 @@ function display_target() {
                     <td>
                         <input type="checkbox" checked="checked" id="createmarketaccount" name="createmarketaccount" value="1" /><label for="createmarketaccount"><?php _e('Create market.osclass.org account'); ?>
                             <br><?php _e("(You agree to our <a href=\"https://osclass.org/page/legal-note\">Terms & Conditions</a>)"); ?></label>
-                        <img class="vtip" src="<?php echo get_absolute_url(); ?>oc-includes/images/question.png" title="<?php echo osc_esc_html(__("Create a market.osclass.org account and download free themes and plugins.")); ?>" alt="" />
+                        <img class="vtip" src="<?php echo get_absolute_url(); ?>oc-includes/osclass/assets/images/question.png" title="<?php echo osc_esc_html(__("Create a market.osclass.org account and download free themes and plugins.")); ?>" alt="" />
                     </td>
                 </tr>
                 </tbody>
@@ -840,7 +839,7 @@ function display_target() {
             <h2 class="title"><?php _e('Location'); ?></h2>
             <p class="space-left-25 left no-bottom"><?php _e('Choose countries/cities where your target users are located'); ?></p>
             <div id="location-question" class="left question">
-                <img class="vtip" src="<?php echo get_absolute_url(); ?>oc-includes/images/question.png" title="<?php echo osc_esc_html(__("Once you type a country, you'll be able to choose region and city as well. Therefore, the installation will be more specific.")); ?>" alt="" />
+                <img class="vtip" src="<?php echo get_absolute_url(); ?>oc-includes/osclass/assets/images/question.png" title="<?php echo osc_esc_html(__("Once you type a country, you'll be able to choose region and city as well. Therefore, the installation will be more specific.")); ?>" alt="" />
             </div>
             <div class="clear"></div>
             <div id="location">
@@ -889,7 +888,7 @@ function display_target() {
     </form>
     <div id="lightbox" style="display:none;">
         <div class="center">
-            <img src="<?php echo get_absolute_url(); ?>oc-includes/images/loading.gif" alt="<?php echo osc_esc_html(__("Loading...")); ?>" title="" />
+            <img src="<?php echo get_absolute_url(); ?>oc-includes/osclass/assets/images/loading.gif" alt="<?php echo osc_esc_html(__("Loading...")); ?>" title="" />
         </div>
     </div>
 <?php

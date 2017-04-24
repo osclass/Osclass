@@ -16,9 +16,6 @@
  * limitations under the License.
  */
 
-    require_once osc_lib_path() . 'php-gettext/streams.php';
-    require_once osc_lib_path() . 'php-gettext/gettext.php';
-
     class Translation {
         private $messages;
         private static $instance;

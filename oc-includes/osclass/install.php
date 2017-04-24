@@ -14,14 +14,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+ini_set("display_errors",1);
+ini_set("display_startup_errors",1);
+error_reporting(E_ALL);
 
-error_reporting(E_ERROR | E_CORE_ERROR | E_COMPILE_ERROR | E_PARSE);
+
 
 define( 'ABS_PATH', dirname(dirname(dirname(__FILE__))) . '/' );
 define( 'LIB_PATH', ABS_PATH . 'oc-includes/' );
 define( 'CONTENT_PATH', ABS_PATH . 'oc-content/' );
 define( 'TRANSLATIONS_PATH', CONTENT_PATH . 'languages/' );
 define( 'OSC_INSTALLING', 1 );
+
+// Load vendor
+require ABS_PATH . '/vendor/autoload.php';
 
 if(extension_loaded('mysqli')) {
     require_once LIB_PATH . 'osclass/Logger/Logger.php';
@@ -147,7 +153,7 @@ switch( $step ) {
             <div id="container">
                 <div id="header" class="installation">
                     <h1 id="logo">
-                        <img src="<?php echo get_absolute_url(); ?>oc-includes/images/osclass-logo.png" alt="Osclass" title="Osclass" />
+                        <img src="<?php echo get_absolute_url(); ?>oc-includes/osclass/assets/images/osclass-logo.png" alt="Osclass" title="Osclass" />
                     </h1>
                     <?php if(in_array($step, array(2,3))) { ?>
                     <ul id="nav">
@@ -190,7 +196,7 @@ switch( $step ) {
                             <?php } ?>
                             <ul>
                                 <?php foreach($requirements as $k => $v) { ?>
-                                    <li><?php echo $v['requirement']; ?> <img src="<?php echo get_absolute_url(); ?>oc-includes/images/<?php echo $v['fn'] ? 'tick.png' : 'cross.png'; ?>" alt="" title="" /></li>
+                                    <li><?php echo $v['requirement']; ?> <img src="<?php echo get_absolute_url(); ?>oc-includes/osclass/assets/images/<?php echo $v['fn'] ? 'tick.png' : 'cross.png'; ?>" alt="" title="" /></li>
                                 <?php } ?>
                             </ul>
                             <div class="more-stats">

@@ -37,6 +37,9 @@ if( !file_exists(ABS_PATH . 'config.php') ) {
     osc_die($title, $message);
 }
 
+// Load vendor
+require __DIR__ . '/vendor/autoload.php';
+
 // load database configuration
 require_once ABS_PATH . 'config.php';
 require_once LIB_PATH . 'osclass/default-constants.php';
@@ -271,10 +274,4 @@ if( OC_ADMIN ) {
     Rewrite::newInstance()->init();
 }
 
-if( !class_exists('PHPMailer') ) {
-    require_once osc_lib_path() . 'phpmailer/class.phpmailer.php';
-}
-if( !class_exists('SMTP') ) {
-    require_once osc_lib_path() . 'phpmailer/class.smtp.php';
-}
-
+/* file end: ./oc-load.php */

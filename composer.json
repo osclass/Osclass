@@ -1,0 +1,56 @@
+{
+  "name": "osclass/Osclass",
+  "description": "Osclass is your one-stop shop to building your own classifieds marketplace",
+  "license": "Apache-2.0",
+  "type": "project",
+  "authors": [
+    {
+      "name": "Christopher Silva",
+      "email": "xiris@xiris.com.br"
+    }
+  ],
+  "repositories": [
+    {
+      "type": "git",
+      "url": "git@github.com:servicescout/akismet.git"
+    },
+    {
+      "type": "git",
+      "url": "git@github.com:xiris/osclass-ajaxuploader.git"
+    }
+  ],
+  "require": {
+    "php": ">=5.6.3",
+    "ext-mbstring": "*",
+    "ext-gd": "*",
+    "ext-curl": "*",
+    "ext-mysqli": "*",
+    "ext-json": "*",
+    "ezyang/htmlpurifier": "dev-master",
+    "smmoosavi/php-gettext": "dev-master",
+    "pclzip/pclzip": "dev-master",
+    "phpmailer/phpmailer": "dev-master",
+    "phpseclib/phpseclib": "2.0.*",
+    "servicescout/akismet": "0.5.2",
+    "eddieantonio/bcrypt": "0.3.3",
+    "google/recaptcha": "1.1.3",
+    "freefri/recaptcha-php": "0.1.0",
+    "xiris/osclass-ajaxuploader": "0.1.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~4.2",
+    "squizlabs/php_codesniffer": "1.5.3",
+    "phpmd/phpmd": "@stable",
+    "pdepend/pdepend": "2.4.0"
+  },
+  "autoload": {
+    "psr-0": {
+      "": "src/"
+    },
+    "exclude-from-classmap": [
+      "**/Test/**"
+    ]
+  },
+  "minimum-stability": "alpha",
+  "prefer-stable": true
+}

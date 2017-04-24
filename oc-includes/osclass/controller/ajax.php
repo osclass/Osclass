@@ -288,7 +288,6 @@
                 break;
                 case 'ajax_upload':
                     // Include the uploader class
-                    require_once(LIB_PATH."AjaxUploader.php");
                     $uploader = new AjaxUploader();
                     $original = pathinfo($uploader->getOriginalName());
                     $filename = uniqid("qqfile_").".".$original['extension'];

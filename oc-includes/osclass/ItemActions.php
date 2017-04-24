@@ -35,8 +35,7 @@
                 $_description   = $description[$k];
                 $content        = $_title. ' ' .$_description;
                 if (osc_akismet_key()) {
-                    require_once LIB_PATH . 'Akismet.class.php';
-                    $akismet = new Akismet(osc_base_url(), osc_akismet_key());
+                    $akismet = new \ServiceScout\Akismet\Akismet(osc_base_url(), osc_akismet_key());
 
                     $akismet->setCommentContent($content);
                     $akismet->setCommentAuthor($author);
@@ -959,8 +958,7 @@
             }
 
             if (osc_akismet_key()) {
-                require_once LIB_PATH . 'Akismet.class.php';
-                $akismet = new Akismet(osc_base_url(), osc_akismet_key());
+                $akismet = new \ServiceScout\Akismet\Akismet(osc_base_url(), osc_akismet_key());
                 $akismet->setCommentAuthor($authorName);
                 $akismet->setCommentAuthorEmail($authorEmail);
                 $akismet->setCommentContent($body);

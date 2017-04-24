@@ -290,7 +290,6 @@ function osc_sendMail($params) {
     $mail = osc_apply_filter('init_send_mail', $mail, $params);
 
     if( osc_mailserver_pop() ) {
-        require_once osc_lib_path() . 'phpmailer/class.pop3.php';
         $pop = new POP3();
 
         $pop3_host = osc_mailserver_host();
@@ -1060,9 +1059,6 @@ function _unzip_file_pclzip($zip_file, $to) {
         return false;
     }
 
-    // first, we load the library
-    require_once LIB_PATH . 'pclzip/pclzip.lib.php';
-
     $archive = new PclZip($zip_file);
     if (($files = $archive->extract(PCLZIP_OPT_EXTRACT_AS_STRING)) == false) {
         return 2;
@@ -1170,9 +1166,6 @@ function _zip_folder_pclzip($archive_folder, $archive_name) {
         return false;
     }
 
-    // first, we load the library
-    require_once LIB_PATH . 'pclzip/pclzip.lib.php';
-
     $zip = new PclZip($archive_name);
     if($zip) {
         $dir = preg_replace('/[\/]{2,}/', '/', $archive_folder."/");
@@ -1199,7 +1192,6 @@ function _zip_folder_pclzip($archive_folder, $archive_name) {
 function osc_check_recaptcha() {
     if(osc_recaptcha_version()=="2") {
         if ( Params::getParam("g-recaptcha-response") != '') {
-            require_once osc_lib_path() . 'recaptchalib/autoload.php';
             $recaptcha = new \ReCaptcha\ReCaptcha(osc_recaptcha_private_key());
             $resp = $recaptcha->verify(Params::getParam("g-recaptcha-response"), Params::getServerParam('REMOTE_ADDR'));
             if ($resp->isSuccess()) {
@@ -1207,7 +1199,6 @@ function osc_check_recaptcha() {
             }
         }
     } else {
-        require_once osc_lib_path() . 'recaptchalib.php';
         if ( Params::getParam("recaptcha_challenge_field") != '') {
             $resp = recaptcha_check_answer (osc_recaptcha_private_key()
                 ,Params::getServerParam("REMOTE_ADDR")
