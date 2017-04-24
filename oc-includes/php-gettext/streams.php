@@ -114,6 +114,9 @@ class FileReader {
         $chunk  = fread($this->_fd, $bytes);
         $data  .= $chunk;
         $bytes -= strlen($chunk);
+        if(strlen($chunk)==0) {
+            break;
+        }
       }
       $this->_pos = ftell($this->_fd);
 

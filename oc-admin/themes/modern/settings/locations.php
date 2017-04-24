@@ -404,8 +404,8 @@
             </div>
         </div>
     </form>
-<?php if(Params::getParam('country')!='' && Params::getParam('country_code')!='') { ?>
     <script type="text/javascript">
+    <?php if(Params::getParam('country')!='' && Params::getParam('country_code')!='') { ?>
         show_region('<?php echo osc_esc_js(Params::getParam('country_code')); ?>', '<?php echo osc_esc_js(Params::getParam('country')); ?>');
         function hook_load_cities() {
             <?php if(Params::getParam('region')!='') { ?>
@@ -413,6 +413,8 @@
             hook_load_cities = function() { };
             <?php }; ?>
         };
+    <?php } else {
+        echo 'function hook_load_cities() { };';
+    }; ?>
     </script>
-<?php }; ?>
 <?php osc_current_admin_theme_path('parts/footer.php'); ?>

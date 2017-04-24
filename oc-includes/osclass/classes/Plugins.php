@@ -201,6 +201,10 @@
         static function register($path, $function)
         {
             $path = str_replace(osc_plugins_path(), '', $path);
+            $tmp = explode("oc-content/plugins/", $path);
+            if(count($tmp)==2) {
+                $path = $tmp[1];
+            }
             self::addHook('install_' . $path, $function);
         }
 

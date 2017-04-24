@@ -297,4 +297,13 @@ if (!defined('PASSWORD_DEFAULT')) {
 }
 
 
-?>
+
+/**
+ * DEPRECATED: Plugins and themes should stop using "ImageResizer" and start using "ImageProcessing"
+ */
+if(version_compare(PHP_VERSION, '5.3.0')>=0) {
+    class_alias("ImageProcessing", "ImageResizer");
+} else {
+    // we did not ship this file, if you are using PHP 5.2.x you have it from previous installations
+    require_once LIB_PATH . 'osclass/classes/ImageResizer.php';
+}

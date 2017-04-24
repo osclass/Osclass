@@ -295,12 +295,17 @@
                     $result = $uploader->handleUpload(osc_content_path().'uploads/temp/'.$filename);
 
                     // auto rotate
-                    $img = ImageResizer::fromFile(osc_content_path().'uploads/temp/'.$filename)->autoRotate();
-                    $img->saveToFile(osc_content_path().'uploads/temp/auto_'.$filename, $original['extension']);
-                    $img->saveToFile(osc_content_path().'uploads/temp/'.$filename, $original['extension']);
+                    try {
+                        $img = ImageProcessing::fromFile(osc_content_path() . 'uploads/temp/' . $filename);
+                        $img->autoRotate();
+                        $img->saveToFile(osc_content_path() . 'uploads/temp/auto_' . $filename, $original['extension']);
+                        $img->saveToFile(osc_content_path() . 'uploads/temp/' . $filename, $original['extension']);
 
-                    $result['uploadName'] = 'auto_'.$filename;
-                    echo htmlspecialchars(json_encode($result), ENT_NOQUOTES);
+                        $result['uploadName'] = 'auto_' . $filename;
+                        echo htmlspecialchars(json_encode($result), ENT_NOQUOTES);
+                    } catch (Exception $e) {
+                        echo "";
+                    }
                     break;
                 case 'ajax_validate':
                     $id = Params::getParam('id');

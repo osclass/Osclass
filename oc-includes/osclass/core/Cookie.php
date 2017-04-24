@@ -34,19 +34,26 @@
         function __construct()
 		{
 			$this->val = array();
-            $web_pat = (MULTISITE) ? osc_multisite_url() : WEB_PATH;
-			$this->name = substr( md5($web_pat), 0, 5 );
+			$web_path = (MULTISITE) ? osc_multisite_url() : WEB_PATH;
+			$this->name = md5($web_path);
 			$this->expires = time() + 3600; // 1 hour by default
 			if ( isset( $_COOKIE[$this->name] ) )
             {
-			    list($vars, $vals) = explode("&", $_COOKIE[$this->name]);
+			    $tmp = explode("&", $_COOKIE[$this->name]);
+			    $vars = $tmp[0];
+			    $vals = isset($tmp[1])?$tmp[1]:array();
 			    $vars = explode("._.", $vars);
 			    $vals = explode("._.", $vals);
-			    while(list($key, $var) = each($vars))
-			    {
-				    $this->val["$var"] = $vals[$key];
-				    $_COOKIE["$var"] = $vals[$key];
-			    }
+
+			    foreach($vars as $key => $var) {
+			        if($var!="" && isset($vals[$key])) {
+                        $this->val["$var"] = $vals[$key];
+                        $_COOKIE["$var"] = $vals[$key];
+                    } else {
+                        $this->val["$var"] = "";
+                        $_COOKIE["$var"] = "";
+                    }
+                }
             }
 		}
 		
