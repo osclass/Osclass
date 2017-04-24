@@ -307,7 +307,7 @@
                                                             osc_add_flash_error_message( sprintf( _m("Directory '%s' couldn't be removed;)"), $code), 'admin');
                                                         }
                                                     } else {
-                                                        osc_add_flash_error_message( sprintf( _m("Directory '%s' couldn't be removed because it's the default language. Set another language as default first and try again"), $code), 'admin');
+                                                        osc_add_flash_error_message( sprintf( _m("Directory '%s' couldn't be removed because it's the default language. <a href=\"%s\">Set another language</a> as default first and try again"), $code, osc_admin_base_url(true) . "?page=settings"), 'admin');
                                                     }
                                                 }
                                             }

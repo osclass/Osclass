@@ -1244,6 +1244,8 @@
             $value = nl2br(htmlentities($value));
             $value = osc_apply_filter('osc_item_meta_textarea_value_filter', $value, $meta);
             return $value;
+        } else if($meta['e_type']=="DROPDOWN" || $meta['e_type']=="RADIO") {
+            return osc_field(osc_item_meta(), 's_value', '');
         } else {
             $value = nl2br(htmlentities($value));
             $value = osc_apply_filter('osc_item_meta_value_filter', $value, $meta);
