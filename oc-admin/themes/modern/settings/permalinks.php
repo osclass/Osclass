@@ -396,7 +396,7 @@
                                 <div id="show_hide" ><a href="#" onclick="javascript:showhide();"><?php _e('Show rules'); ?></a></div>
                                 <div id="inner_rules" class="hide">
                                     <div class="form-row">
-                                        <div class="form-label"><?php _e('Listing URL:'); ?></div>
+                                        <div class="form-label"><?php _e('Item URL:'); ?></div>
                                         <div class="form-controls">
                                             <input type="text" class="input-large" name="rewrite_item_url" value="<?php echo osc_esc_html(osc_get_preference('rewrite_item_url')); ?>" />
                                             <div class="help-box">
