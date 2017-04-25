@@ -186,7 +186,7 @@
                 if(osc_selectable_parent_categories()) {
                     return true;
                 } else {
-                    if($data['fk_i_parent_id']!=null && count($subs)>0) {
+                    if($data['fk_i_parent_id']!=null) {
                         return true;
                     } else if($data['fk_i_parent_id']==null && count($subs)==0) {
                         return true;
