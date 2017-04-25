@@ -181,11 +181,14 @@
     function osc_validate_category ($value) {
         if ( osc_validate_nozero($value) ) {
             $data = Category::newInstance()->findByPrimaryKey($value);
+            $subs = Category::newInstance()->findSubcategoriesEnabled($value);
             if (isset($data['b_enabled']) && $data['b_enabled'] == 1) {
-                if(osc_selectable_parent_categories()){
+                if(osc_selectable_parent_categories()) {
                     return true;
                 } else {
-                    if($data['fk_i_parent_id']!=null) {
+                    if($data['fk_i_parent_id'] != null) {
+                        return true;
+                    } else if($data['fk_i_parent_id'] == null && count($subs) == 0) {
                         return true;
                     }
                 }
@@ -267,7 +270,7 @@
 
             // Split out the local and domain parts
             list($local, $domain) = explode('@', $email, 2);
-            
+
             // LOCAL PART
             // Test for invalid characters
             if (!preg_match('/^[a-zA-Z0-9!#$%&\'*+\/=?^_`{|}~\.-]+$/', $local)) {
