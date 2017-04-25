@@ -57,6 +57,7 @@
                     if(isset($c['categories']) && is_array($c['categories']) && count($c['categories'])>0) {
                         ItemForm::subcategory_select($c['categories'], $item, $default_item, 1);
                     } else {
+			$selected = ( (isset($item["fk_i_category_id"]) && $item["fk_i_category_id"] == $c['pk_i_id']) || (isset($catId) && $catId == $c['pk_i_id']) );
                         echo '<option value="' . $c['pk_i_id'] . '"' . ($selected ? ' selected="selected"' : '' ). '>' . $c['s_name'] . '</option>';
                     }
                 } else {
