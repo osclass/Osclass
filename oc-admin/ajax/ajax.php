@@ -123,6 +123,8 @@
                         $result = array( 'ok' => __("Order saved"));
                     }
 
+                    osc_run_hook('edited_category_order', $error);
+
                     echo json_encode($result);
                 break;
                 case 'category_edit_iframe':

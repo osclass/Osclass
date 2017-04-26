@@ -1308,7 +1308,11 @@
             $aImages = array();
             if( Session::newInstance()->_getForm('photos') != '' ) {
                 $aImages = Session::newInstance()->_getForm('photos');
-                $aImages = $aImages['name'];
+                if (isset($aImages['name'])) {
+                    $aImages = $aImages['name'];
+                } else {
+                    $aImages = array();
+                }
                 Session::newInstance()->_drop('photos');
                 Session::newInstance()->_dropKeepForm('photos');
             }
