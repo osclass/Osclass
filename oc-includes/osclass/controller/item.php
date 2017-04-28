@@ -481,7 +481,8 @@
                     $result = $mItem->contact();
 
                     osc_run_hook('post_item_contact_post', $item);
-                    if(is_string($result)){
+
+                    if(is_string($result)) {
                         osc_add_flash_error_message( $result );
                     } else {
                         osc_add_flash_ok_message( _m("We've just sent an e-mail to the seller") );
@@ -528,6 +529,8 @@
                     }
 
                     // View::newInstance()->_exportVariableToView('item', Item::newInstance()->findByPrimaryKey(Params::getParam('id')));
+
+                    osc_run_hook('post_item_add_comment_post', $item);
                     $this->redirectTo( osc_item_url() );
                     break;
                 case 'delete_comment':
@@ -572,9 +575,10 @@
                         $this->redirectTo( osc_item_url() );
                     }
 
-                     $commentManager->deleteByPrimaryKey($commentId);
-                     osc_add_flash_ok_message( _m('The comment has been deleted' ) );
-                     $this->redirectTo( osc_item_url() );
+                    $commentManager->deleteByPrimaryKey($commentId);
+                    osc_add_flash_ok_message( _m('The comment has been deleted' ) );
+                    osc_run_hook('post_item_delete_comment_post', $item, $commentId);
+                    $this->redirectTo( osc_item_url() );
                 break;
                 default:
                     // if there isn't ID, show an error 404
