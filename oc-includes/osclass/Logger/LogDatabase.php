@@ -136,45 +136,61 @@
                 return false;
             }
 
-            if(OSC_DEBUG_DB_LOG_ERROR) {
-                foreach($this->messages as $msg) {
-                    if( $msg['errno'] > 0 ) {
-                        fwrite($fp, '--------------------------------------------------' . PHP_EOL);
-                        fwrite($fp, 'QUERY TIME' . ' ' . $msg['query_time'] . PHP_EOL);
-                        fwrite($fp, 'Error number: ' . $msg['errno'] . PHP_EOL);
-                        fwrite($fp, 'Error description: ' . $msg['error'] . PHP_EOL);
-                        fwrite($fp, '**************************************************' . PHP_EOL);
-                        fwrite($fp, $msg['query'] . PHP_EOL);
-                        fwrite($fp, '--------------------------------------------------' . PHP_EOL);
-                        fwrite($fp, PHP_EOL . PHP_EOL);
-                    }
-                }
-                fclose($fp);
+            fwrite($fp, '==================================================' . PHP_EOL);
+            if(MULTISITE) {
+                fwrite($fp, '=' . str_pad('Date: ' . date('Y-m-d').' '.date('H:i:s'), 48, " ", STR_PAD_BOTH) . '=' . PHP_EOL);
             } else {
-                fwrite($fp, '==================================================' . PHP_EOL);
-                if(MULTISITE) {
-                    fwrite($fp, '=' . str_pad('Date: ' . date('Y-m-d').' '.date('H:i:s'), 48, " ", STR_PAD_BOTH) . '=' . PHP_EOL);
-                } else {
-                    fwrite($fp, '=' . str_pad('Date: ' . date(osc_date_format()!=''?osc_date_format():'Y-m-d').' '.date(osc_time_format()!=''?osc_date_format():'H:i:s'), 48, " ", STR_PAD_BOTH) . '=' . PHP_EOL);
-                }
-                fwrite($fp, '=' . str_pad('Total queries: ' . $this->getTotalNumberQueries(), 48, " ", STR_PAD_BOTH) . '=' . PHP_EOL);
-                fwrite($fp, '=' . str_pad('Total queries time: ' . $this->getTotalQueriesTime(), 48, " ", STR_PAD_BOTH) . '='  . PHP_EOL);
-                fwrite($fp, '==================================================' . PHP_EOL . PHP_EOL);
+                fwrite($fp, '=' . str_pad('Date: ' . date(osc_date_format()!=''?osc_date_format():'Y-m-d').' '.date(osc_time_format()!=''?osc_date_format():'H:i:s'), 48, " ", STR_PAD_BOTH) . '=' . PHP_EOL);
+            }
+            fwrite($fp, '=' . str_pad('Total queries: ' . $this->getTotalNumberQueries(), 48, " ", STR_PAD_BOTH) . '=' . PHP_EOL);
+            fwrite($fp, '=' . str_pad('Total queries time: ' . $this->getTotalQueriesTime(), 48, " ", STR_PAD_BOTH) . '='  . PHP_EOL);
+            fwrite($fp, '==================================================' . PHP_EOL . PHP_EOL);
 
-                foreach($this->messages as $msg) {
+            foreach($this->messages as $msg) {
+                fwrite($fp, 'QUERY TIME' . ' ' . $msg['query_time'] . PHP_EOL);
+                if( $msg['errno'] != 0 ) {
+                    fwrite($fp, 'Error number: ' . $msg['errno'] . PHP_EOL);
+                    fwrite($fp, 'Error description: ' . $msg['error'] . PHP_EOL);
+                }
+                fwrite($fp, '**************************************************' . PHP_EOL);
+                fwrite($fp, $msg['query'] . PHP_EOL);
+                fwrite($fp, '--------------------------------------------------' . PHP_EOL);
+            }
+
+            fwrite($fp, PHP_EOL . PHP_EOL . PHP_EOL);
+            fclose($fp);
+
+            return true;
+        }
+
+        function writeErrorMessages()
+        {
+            $filename = CONTENT_PATH . 'queries.log';
+
+            if( !file_exists($filename) || !is_writable($filename) ) {
+                return false;
+            }
+
+            $fp = fopen($filename, 'a');
+
+            if( $fp == false ) {
+                return false;
+            }
+
+            foreach($this->messages as $msg) {
+                if( $msg['errno'] > 0 ) {
+                    fwrite($fp, '--------------------------------------------------' . PHP_EOL);
                     fwrite($fp, 'QUERY TIME' . ' ' . $msg['query_time'] . PHP_EOL);
-                    if( $msg['errno'] != 0 ) {
-                        fwrite($fp, 'Error number: ' . $msg['errno'] . PHP_EOL);
-                        fwrite($fp, 'Error description: ' . $msg['error'] . PHP_EOL);
-                    }
+                    fwrite($fp, 'Error number: ' . $msg['errno'] . PHP_EOL);
+                    fwrite($fp, 'Error description: ' . $msg['error'] . PHP_EOL);
                     fwrite($fp, '**************************************************' . PHP_EOL);
                     fwrite($fp, $msg['query'] . PHP_EOL);
                     fwrite($fp, '--------------------------------------------------' . PHP_EOL);
+                    fwrite($fp, PHP_EOL . PHP_EOL);
                 }
-
-                fwrite($fp, PHP_EOL . PHP_EOL . PHP_EOL);
-                fclose($fp);
             }
+
+            fclose($fp);
 
             return true;
         }
