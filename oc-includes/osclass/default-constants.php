@@ -76,6 +76,10 @@
         define('OSC_DEBUG_DB_LOG', false);
     }
 
+    if( !defined('OSC_DEBUG_DB_LOG_ERROR') ) {
+        define('OSC_DEBUG_DB_LOG_ERROR', false);
+    }
+
     if( !defined('OSC_DEBUG_DB_EXPLAIN') ) {
         define('OSC_DEBUG_DB_EXPLAIN', false);
     }
