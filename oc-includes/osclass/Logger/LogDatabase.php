@@ -157,8 +157,41 @@
                 fwrite($fp, '--------------------------------------------------' . PHP_EOL);
             }
 
-            fwrite($fp, PHP_EOL . PHP_EOL. PHP_EOL);
+            fwrite($fp, PHP_EOL . PHP_EOL . PHP_EOL);
             fclose($fp);
+
+            return true;
+        }
+
+        function writeErrorMessages()
+        {
+            $filename = CONTENT_PATH . 'queries.log';
+
+            if( !file_exists($filename) || !is_writable($filename) ) {
+                return false;
+            }
+
+            $fp = fopen($filename, 'a');
+
+            if( $fp == false ) {
+                return false;
+            }
+
+            foreach($this->messages as $msg) {
+                if( $msg['errno'] > 0 ) {
+                    fwrite($fp, '--------------------------------------------------' . PHP_EOL);
+                    fwrite($fp, 'QUERY TIME' . ' ' . $msg['query_time'] . PHP_EOL);
+                    fwrite($fp, 'Error number: ' . $msg['errno'] . PHP_EOL);
+                    fwrite($fp, 'Error description: ' . $msg['error'] . PHP_EOL);
+                    fwrite($fp, '**************************************************' . PHP_EOL);
+                    fwrite($fp, $msg['query'] . PHP_EOL);
+                    fwrite($fp, '--------------------------------------------------' . PHP_EOL);
+                    fwrite($fp, PHP_EOL . PHP_EOL);
+                }
+            }
+
+            fclose($fp);
+
             return true;
         }
 
@@ -239,6 +272,3 @@
             return count($this->messages);
         }
     }
-
-    /* file end: ./oc-includes/osclass/Logger/LogDatabase.php */
-?>

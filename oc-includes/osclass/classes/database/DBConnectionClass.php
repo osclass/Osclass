@@ -118,13 +118,13 @@
 
 
         /** A list of incompatible SQL modes.
-    	 *
-    	 * @since @TODO <-----
-    	 * @access protected
-    	 * @var array
-    	 */
-    	protected $incompatible_modes = array( 'NO_ZERO_DATE', 'ONLY_FULL_GROUP_BY',
-        			'STRICT_TRANS_TABLES', 'STRICT_ALL_TABLES', 'TRADITIONAL' );
+         *
+         * @since @TODO <-----
+         * @access protected
+         * @var array
+         */
+        protected $incompatible_modes = array( 'NO_ZERO_DATE', 'ONLY_FULL_GROUP_BY',
+                    'STRICT_TRANS_TABLES', 'STRICT_ALL_TABLES', 'TRADITIONAL' );
 
         /**
          * It creates a new DBConnection object class or if it has been created before, it
@@ -276,7 +276,7 @@
             if ( $conn == false ) {
                 $this->errorConnection();
                 $this->releaseOsclassDb();
-                
+
                 if(MULTISITE) {
                     return false;
                 }
@@ -498,15 +498,15 @@
 
             $modes = array_change_key_case( $modes, CASE_UPPER );
             $incompatible_modes = $this->incompatible_modes;
-			foreach ( $modes as $i => $mode ) {
-				if ( in_array( $mode, $incompatible_modes ) ) {
+            foreach ( $modes as $i => $mode ) {
+                if ( in_array( $mode, $incompatible_modes ) ) {
                     unset( $modes[ $i ] );
-				}
-			}
+                }
+            }
 
-			$modes_str = implode( ',', $modes );
+            $modes_str = implode( ',', $modes );
             mysqli_query($connId, "SET SESSION sql_mode='$modes_str'" );
-		}
+        }
 
         /**
          * At the end of the execution it prints the database debug if it's necessary
@@ -530,7 +530,9 @@
                 return false;
             }
 
-            if( OSC_DEBUG_DB_LOG ) {
+            if( OSC_DEBUG_DB_LOG_ERROR ) {
+                $log->writeErrorMessages();
+            } else if( OSC_DEBUG_DB_LOG ) {
                 $log->writeMessages();
             } else if($printFrontend) {
                 $log->printMessages();
@@ -615,7 +617,4 @@
 
             return false;
         }
-	}
-
-    /* file end: ./oc-includes/osclass/classes/database/DBConnectionClass.php */
-?>
+    }
