@@ -532,7 +532,7 @@
 
             if( OSC_DEBUG_DB_LOG ) {
                 $log->writeMessages();
-            } else if( OSC_DEBUG_DB_LOG ) {
+            } else if( OSC_DEBUG_DB_LOG_ERROR ) {
                 $log->writeErrorMessages();
             } else if($printFrontend) {
                 $log->printMessages();
