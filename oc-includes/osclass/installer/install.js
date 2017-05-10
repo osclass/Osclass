@@ -158,7 +158,7 @@ function get_regions(country) {
         $('#no_region_text').hide();
     } else {
         $.getJSON(
-            "http://geo.osclass.org/newgeo.services.php?callback=?&action=regions",
+            "https://geo.osclass.org/newgeo.services.php?callback=?&action=regions",
             {'country' : country},
             function(json) {
                 if( json.length > 0 ) {
@@ -185,7 +185,7 @@ function get_cities(region) {
         $('#no_city_text').hide();
     } else {
         $.getJSON(
-            "http://geo.osclass.org/newgeo.services.php?callback=?&action=cities",
+            "https://geo.osclass.org/newgeo.services.php?callback=?&action=cities",
             {'region' : region},
             function(json) {
                 if( json.length > 0 ) {

@@ -170,7 +170,7 @@
         $("#country").autocomplete({
             source: function( text, add ) {
                 $.ajax({
-                    "url": "http://geo.osclass.org/newgeo.services.php?callback=?&action=country",
+                    "url": "https://geo.osclass.org/newgeo.services.php?callback=?&action=country",
                     "dataType": "jsonp",
                     "data": text,
                     "success": function(json) {
@@ -210,7 +210,7 @@
             source: function( text, add ) {
                 text.country = $('input[name=country_c_parent]').val();
                 $.ajax({
-                    "url": "http://geo.osclass.org/newgeo.services.php?callback=?&action=region",
+                    "url": "https://geo.osclass.org/newgeo.services.php?callback=?&action=region",
                     "dataType": "jsonp",
                     "data": text,
                     "success": function(json) {
@@ -250,7 +250,7 @@
             source: function( text, add ) {
                 text.region = $('input[name=region_parent]').val();
                 $.ajax({
-                    "url": "http://geo.osclass.org/newgeo.services.php?callback=?&action=city",
+                    "url": "https://geo.osclass.org/newgeo.services.php?callback=?&action=city",
                     "dataType": "jsonp",
                     "data": text,
                     "success": function(json) {
