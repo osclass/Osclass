@@ -283,6 +283,15 @@
                 'alt_body' => $body
             );
             osc_sendMail($emailParams);
+
+            $aItem = array(
+                'authorName'  => $aComment['s_author_name'],
+                'authorEmail' => $aComment['s_author_email'],
+                'body'        => $aComment['s_body'],
+                'title'       => $aComment['s_title'],
+                'id'          => $aComment['fk_i_item_id']
+            );
+            fn_email_new_comment_user($aItem);
         }
     }
     osc_add_hook('hook_email_comment_validated', 'fn_email_comment_validated');
@@ -1301,6 +1310,3 @@
         $tmp = osc_mailserver_mail_from();
         return !empty($tmp)?$tmp:osc_contact_email();
     }
-
-
-/* file end: ./oc-includes/osclass/emails.php */
