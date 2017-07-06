@@ -15,8 +15,7 @@ class Dependencies {
 
     public function __construct()
     {
-        $registered = array();
-        $queue      = array();
+
     }
 
     /**
@@ -26,7 +25,7 @@ class Dependencies {
      * @param type $url
      * @param type $dependencies mixed, it could be an array or a string
      */
-    public function register($id, $url, $dependencies) {
+    public function register($id, $url, $dependencies = null) {
         if($id!='' && $url!='') {
             $this->registered[$id] = array(
                 'key' => $id
@@ -44,6 +43,26 @@ class Dependencies {
     public function unregister($id)
     {
         unset($this->registered[$id]);
+    }
+    
+    /**
+     * Enqueu to be loaded
+     *
+     * @param string $id
+     */
+    public function enqueu($id)
+    {
+        $this->queue[$id] = $id;
+    }
+
+    /**
+     * Remove to not be loaded
+     *
+     * @param type $id
+     */
+    public function remove($id)
+    {
+        unset($this->queue[$id]);
     }
 
     /**

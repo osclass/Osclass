@@ -1,0 +1,19 @@
+{
+  "name": "osclass/Osclass",
+  "description": "Osclass is your one-stop shop to building your own classifieds marketplace",
+  "license": "Apache-2.0",
+  "type": "project",
+  "authors": [
+    {
+      "name": "Christopher Silva",
+      "email": "xiris@xiris.com.br"
+    },
+    {
+      "name": "Blackleg",
+      "email": "hectorespertpardo@gmail.com"
+    }
+  ],
+  "require-dev": {
+    "phpunit/phpunit": "^6.1"
+  }
+}
