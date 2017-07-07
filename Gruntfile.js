@@ -38,8 +38,9 @@ module.exports = function (grunt) {
             },
             target: {
                 files: {
-                    'oc-includes/osclass/assets/js/date.min.js': ['oc-includes/osclass/assets/js/date.js'],
-                    'oc-includes/osclass/assets/js/jquery.json.min.js': ['oc-includes/osclass/assets/js/jquery.json.js']
+                    'oc-includes/osclass/assets/js/date.min.js': 'oc-includes/osclass/assets/js/date.js',
+                    'oc-includes/osclass/assets/js/jquery.json.min.js': 'oc-includes/osclass/assets/js/jquery.json.js',
+                    'oc-includes/osclass/assets/js/jquery.treeview.min.js': 'oc-includes/osclass/assets/js/jquery.treeview.js'
                 }
             }
         }

@@ -244,7 +244,7 @@ osc_add_hook('header', 'osc_load_scripts', 10);
 osc_register_script('jquery', osc_assets_url('js/jquery.min.js'));
 osc_register_script('jquery-ui', osc_assets_url('js/jquery-ui.min.js'), 'jquery');
 osc_register_script('jquery-json', osc_assets_url('js/jquery.json.min.js'), 'jquery');
-osc_register_script('jquery-treeview', osc_assets_url('js/jquery.treeview.js'), 'jquery');
+osc_register_script('jquery-treeview', osc_assets_url('js/jquery.treeview.min.js'), 'jquery');
 osc_register_script('jquery-nested', osc_assets_url('js/jquery.ui.nestedSortable.js'), 'jquery');
 osc_register_script('jquery-validate', osc_assets_url('js/jquery.validate.min.js'), 'jquery');
 osc_register_script('tabber', osc_assets_url('js/tabber-minimized.js'), 'jquery');
