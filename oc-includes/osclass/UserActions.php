@@ -229,7 +229,7 @@
             $user = User::newInstance()->findByEmail( Params::getParam('s_email') );
             Session::newInstance()->_set( 'recover_time', time() );
 
-            if ( (osc_recaptcha_private_key() != '') ) {
+            if ( (osc_recaptcha_private_key() != '') && Session::newInstance()->_get('recover_captcha_not_set')!=1) {
                 if( !osc_check_recaptcha() ) {
                     return 2; // BREAK THE PROCESS, THE RECAPTCHA IS WRONG
                 }
