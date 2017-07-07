@@ -252,7 +252,7 @@ osc_register_script('tiny_mce', osc_assets_url('js/tinymce/tinymce.min.js'));
 osc_register_script('colorpicker', osc_assets_url('js/colorpicker/js/colorpicker.js'));
 osc_register_script('fancybox', osc_assets_url('js/fancybox/jquery.fancybox.pack.js'), array('jquery'));
 osc_register_script('jquery-migrate', osc_assets_url('js/jquery-migrate.min.js'), array('jquery'));
-osc_register_script('php-date', osc_assets_url('js/date.js'));
+osc_register_script('php-date', osc_assets_url('js/date.min.js'));
 osc_register_script('jquery-fineuploader', osc_assets_url('js/fineuploader/jquery.fineuploader.min.js'), 'jquery');
 
 
