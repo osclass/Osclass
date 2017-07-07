@@ -74,6 +74,9 @@ class DependenciesTest extends TestCase {
         $this->assertArrayHasKey("dependencie", $dependencies->queue);
         $dependencies->enqueu("dependencie_two");
         $this->assertArrayHasKey("dependencie_two", $dependencies->queue);   
+        
+        $this->assertNotEmpty($dependencies->queue);
+        $this->assertEquals(["dependencie" => "dependencie", "dependencie_two" => "dependencie_two"], $dependencies->queue);
     }
     
     public function testRemove()
@@ -82,6 +85,7 @@ class DependenciesTest extends TestCase {
         $dependencies->enqueu("dependencie"); 
         $dependencies->enqueu("dependencie_two");
         $this->assertNotEmpty($dependencies->queue);
+        $this->assertEquals(["dependencie" => "dependencie", "dependencie_two" => "dependencie_two"], $dependencies->queue);
         
         $dependencies->remove("dependencie_two");
         $this->assertArrayNotHasKey("dependencie_two", $dependencies->queue);
