@@ -12,6 +12,7 @@ $loader = require __DIR__.'/../vendor/autoload.php';
  */
 require_once __DIR__.'/../oc-includes/osclass/classes/Dependencies.php';
 require_once __DIR__.'/../oc-includes/osclass/classes/Scripts.php';
+require_once __DIR__.'/../oc-includes/osclass/classes/Styles.php';
 
 
 return $loader;
