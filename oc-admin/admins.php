@@ -101,7 +101,10 @@
 
 
                                     $currentAdmin = $this->adminManager->findByPrimaryKey(osc_logged_admin_id());
-                                    if( !isset($currentAdmin["s_password"]) || $currentAdmin["s_password"]=="" || !osc_verify_password($sCurrentPassword, $currentAdmin['s_password'])) {
+                                    if( $sCurrentPassword=="" ||
+                                        !isset($currentAdmin["s_password"]) ||
+                                        $currentAdmin["s_password"]=="" ||
+                                        !osc_verify_password($sCurrentPassword, $currentAdmin['s_password'])) {
                                         osc_add_flash_warning_message( _m("Incorrent current password"), 'admin');
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=admins&action=add');
                                     }
@@ -217,35 +220,25 @@
                                     $conditions = array('pk_i_id' => $adminId);
                                     $array      = array();
 
-                                    if(osc_logged_admin_id()==$adminId) {
-                                        if($sOldPassword != '' ) {
-                                            if( $sPassword=='' ) {
-                                                osc_add_flash_warning_message( _m("Password invalid"), 'admin');
-                                                $this->redirectTo(osc_admin_base_url(true) . '?page=admins&action=edit&id=' . $adminId);
-                                            } else {
-                                                $firstCondition  = osc_verify_password($sOldPassword, $aAdmin['s_password']);
-                                                $secondCondition = ( $sPassword == $sPassword2 );
-                                                if( $firstCondition && $secondCondition ) {
-                                                    $array['s_password'] = osc_hash_password($sPassword);
-                                                } else {
-                                                    osc_add_flash_warning_message( _m("The password couldn't be updated. Passwords don't match"), 'admin');
-                                                    $this->redirectTo(osc_admin_base_url(true) . '?page=admins&action=edit&id=' . $adminId);
-                                                }
-                                            }
-                                        } else if($sOldPassword == '' && $sPassword != '') {
-                                            osc_add_flash_warning_message( _m("Password wasn't updated, current password is requried"), 'admin');
+                                    if( $sPassword!='') {
+                                        if($sPassword == $sPassword2) {
+                                            $array['s_password'] = osc_hash_password($sPassword);
+                                        } else {
+                                            osc_add_flash_warning_message( _m("The password couldn't be updated. Passwords don't match"), 'admin');
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=admins&action=edit&id=' . $adminId);
                                         }
-                                    } else {
-                                        if( $sPassword!='') {
-                                            if($sPassword == $sPassword2) {
-                                                $array['s_password'] = osc_hash_password($sPassword);
-                                            } else {
-                                                osc_add_flash_warning_message( _m("The password couldn't be updated. Passwords don't match"), 'admin');
-                                                $this->redirectTo(osc_admin_base_url(true) . '?page=admins&action=edit&id=' . $adminId);
-                                            }
-                                        }
                                     }
+
+
+                                    $currentAdmin = $this->adminManager->findByPrimaryKey(osc_logged_admin_id());
+                                    if( $sOldPassword=="" ||
+                                        !isset($currentAdmin["s_password"]) ||
+                                        $currentAdmin["s_password"]=="" ||
+                                        !osc_verify_password($sOldPassword, $currentAdmin['s_password'])) {
+                                        osc_add_flash_warning_message( _m("Incorrent current password"), 'admin');
+                                        $this->redirectTo(osc_admin_base_url(true) . '?page=admins&action=edit&id=' . $adminId);
+                                    }
+
 
                                     if($adminId!=osc_logged_admin_id()) {
                                         $array['b_moderator'] = $bModerator;
