@@ -104,6 +104,19 @@
                         </div>
                     <?php } ?>
                 </div>
+
+                <?php if(!$aux['admin_edit']) { ?>
+                    <hr/>
+                    <div class="form-row">
+                        <div class="form-label"><?php _e('Your current password'); ?></div>
+                        <div class="form-controls">
+                            <?php AdminForm::old_password_text(); ?>
+                            <p class="help-inline"><em><?php _e('For security, type <b>your password</b>, not the one for the new admin'); ?></em></p>
+                        </div>
+                    </div>
+                <?php }; ?>
+
+
                 <?php osc_run_hook('admin_profile_form', $admin); ?>
                 <div class="clear"></div>
                 <div class="form-actions">

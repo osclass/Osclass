@@ -53,6 +53,7 @@
                                     osc_csrf_check();
                                     // adding a new admin
                                     $sPassword = Params::getParam('s_password', false, false);
+                                    $sCurrentPassword = Params::getParam('old_password', false, false);
                                     $sName     = Params::getParam('s_name');
                                     $sEmail    = Params::getParam('s_email');
                                     $sUserName = Params::getParam('s_username');
@@ -61,6 +62,8 @@
                                     // cleaning parameters
                                     $sPassword = strip_tags($sPassword);
                                     $sPassword = trim($sPassword);
+                                    $sCurrentPassword = strip_tags($sCurrentPassword);
+                                    $sCurrentPassword = trim($sCurrentPassword);
                                     $sName     = strip_tags($sName);
                                     $sName     = trim($sName);
                                     $sEmail    = strip_tags($sEmail);
@@ -95,6 +98,14 @@
                                         osc_add_flash_warning_message( _m("Username already in use"), 'admin');
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=admins&action=add');
                                     }
+
+
+                                    $currentAdmin = $this->adminManager->findByPrimaryKey(osc_logged_admin_id());
+                                    if( !isset($currentAdmin["s_password"]) || $currentAdmin["s_password"]=="" || !osc_verify_password($sCurrentPassword, $currentAdmin['s_password'])) {
+                                        osc_add_flash_warning_message( _m("Incorrent current password"), 'admin');
+                                        $this->redirectTo(osc_admin_base_url(true) . '?page=admins&action=add');
+                                    }
+
 
                                     $array = array(
                                         's_password'    =>  osc_hash_password($sPassword),
