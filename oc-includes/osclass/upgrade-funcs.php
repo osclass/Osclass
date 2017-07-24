@@ -522,10 +522,14 @@ CREATE TABLE %st_item_description_tmp (
     }
 
     if(osc_version() < 372) {
-	osc_delete_preference('recaptcha_version', 'STRING');
+	    osc_delete_preference('recaptcha_version', 'STRING');
     }
 
-    osc_changeVersionTo(373);
+    if(osc_version() < 374) {
+        osc_set_preference('marketURL', 'http://market.osclass.org/api/v3/');
+    }
+
+    osc_changeVersionTo(374);
 
     if(!defined('IS_AJAX') || !IS_AJAX) {
         if(empty($aMessages)) {

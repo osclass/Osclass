@@ -291,7 +291,7 @@
                 if(data.error == 0) { // no errors
                     content += '<p><?php echo osc_esc_js(__('The plugin has been downloaded correctly, proceed to install and configure.')); ?></p>';
                     content += "<p>";
-                    content += '<a class="btn btn-mini btn-green" href="<?php echo osc_admin_base_url(true); ?>?page=plugins&marketError='+data.error+'&slug='+data.data['s_update_url']+'"><?php echo osc_esc_js(__('Close')); ?></a>';
+                    content += '<a class="btn btn-mini btn-green" href="<?php echo osc_admin_base_url(true); ?>?page=plugins&marketError='+data.error+'&slug='+oscEscapeHTML(data.data['s_update_url'])+'"><?php echo osc_esc_js(__('Close')); ?></a>';
                     content += "</p>";
                 } else {
                     content += '<a class="btn btn-mini btn-green" onclick=\'$(".ui-dialog-content").dialog("close");\'><?php echo osc_esc_js(__('Close')); ?>...</a>';
@@ -310,11 +310,11 @@
                 if(data!=null) {
                     $("#market_thumb").attr('src',data.s_thumbnail);
                     $("#market_code").attr("value", data.s_update_url);
-                    $("#market_name").html(data.s_title);
-                    $("#market_version").html(data.s_version);
-                    $("#market_author").html(data.s_contact_name);
+                    $("#market_name").text(data.s_title);
+                    $("#market_version").text(data.s_version);
+                    $("#market_author").text(data.s_contact_name);
                     $("#market_url").attr('href',data.s_source_file);
-                    $('#market_install').html("<?php echo osc_esc_js( __('Update') ); ?>");
+                    $('#market_install').text("<?php echo osc_esc_js( __('Update') ); ?>");
 
                     $('#market_installer').dialog({
                         modal:true,

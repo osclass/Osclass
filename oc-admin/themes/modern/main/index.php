@@ -312,10 +312,10 @@
         $.getJSON(
             '<?php echo osc_admin_base_url(true); ?>?page=ajax&action=dashboardbox_market',
             function(data){
-                if(data.error==1) {
+                if(data.error===0) {
+                    $('<a href="'+oscEscapeHTML(data.url)+'" target="_blank"><div style="height: 100%; width: 100%; background: url('+oscEscapeHTML(data.banner)+') no-repeat;"></div></a>').insertAfter('#banner_market');
+                }else {
                     $('<p style="text-align:center; padding-top:15px;"><?php _e('Has been a problem loading the contents, sorry for the inconvenience'); ?></p>').insertAfter('#banner_market');
-                } else {
-                    $(data.html).insertAfter('#banner_market');
                 }
             });
         });
