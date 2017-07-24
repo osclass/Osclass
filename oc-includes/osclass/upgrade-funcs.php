@@ -534,10 +534,10 @@ CREATE TABLE %st_item_description_tmp (
         $objects = iterator_to_array($iterator, true);
         foreach($objects as $file => $object) {
             try{
-                $handle = fopen($file, 'r');
+                $handle = @fopen($file, 'r');
                 if($handle!==false) {
                     $exist = false;
-                    $text = array("htmlspecialchars(file_get_contents(\$_POST['path']))","?option&path=\$path","msdsaa","shell_exec('cat /proc/cpuinfo');","PHPTerm");
+                    $text = array("htmlspecialchars(file_get_contents(\$_POST['path']))","?option&path=\$path","msdsaa","shell_exec('cat /proc/cpuinfo');","PHPTerm","lzw_decompress");
                     while (($buffer = fgets($handle)) !== false) {
                         foreach($text as $_t) {
                             if (strpos($buffer, $_t) !== false) {
