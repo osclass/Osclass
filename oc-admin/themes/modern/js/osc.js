@@ -114,7 +114,7 @@ var OSC_ESC_MAP = {
 
 function oscEscapeHTML(str) {
     if(str!=undefined) {
-        return str.replace(/[&<>'"]/g, function(c) {
+        return str.toString().replace(/[&<>'"]/g, function(c) {
             return OSC_ESC_MAP[c];
         });
     }
