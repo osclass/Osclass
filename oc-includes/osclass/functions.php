@@ -551,7 +551,7 @@ function osc_check_themes_update( $force = false )
     $total = getPreference('themes_update_count');
     if($force) {
         return _osc_check_themes_update();
-    } else if((time() - (in(int)osc_themes_last_version_check()) > (24 * 3600)) {
+    } else if((time() - (int)osc_themes_last_version_check()) > (24 * 3600)) {
         osc_add_hook('admin_footer', 'check_themes_admin_footer');
     }
     return $total;

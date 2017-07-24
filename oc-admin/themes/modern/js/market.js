@@ -169,15 +169,21 @@ $(function(){
                         date_mod += _day;
                     }
 
+                    var tmpv = item.s_version.split(" ");
+                    if(tmpv.length>1) {
+                        item.s_version = "<script type=\"text/javascript\">$('.actions').html('This is a pack, go to <a href=\""+theme.adminBaseUrl+"?page=market&action=purchases\">My Purchases</a> to downloads its components.');$('.market-dialog').close();</script>";
+                    } else {
+                        item.s_version = oscEscapeHTML(item.s_version);
+                    }
                     if(item.b_paid==0 && item.s_buy_url!=undefined) {
-                        var actions_text = '<a class="diag-buy diag-buy-btn" data-code="'+oscEscapeHTML(item.s_buy_url)+'" data-type="'+section+'">'+theme.langs.buy+' v.'+oscEscapeHTML(item.s_version)+'</a>'
+                        var actions_text = '<a class="diag-buy diag-buy-btn" data-code="'+oscEscapeHTML(item.s_buy_url)+'" data-type="'+section+'">'+theme.langs.buy+' v.'+item.s_version+'</a>'
                             +'<span class="block"><strong>'+theme.langs.requieres_version+'</strong> '+oscEscapeHTML(versions[0])+'</span>'
                             +'<span class="block"><strong>'+theme.langs.compatible_with+'</strong> '+oscEscapeHTML(versions[(versions.length-1)])+'</span>'
                             +'<span class="block"><strong>'+theme.langs.downloads+'</strong> '+oscEscapeHTML(item.i_total_downloads)+'</span>'
                             +'<span class="block"><strong>'+theme.langs.last_update+'</strong> '+oscEscapeHTML(date_mod)+'</span>'
                             +'<a href="#" data-code="'+item.s_buy_url+'" class="diag-buy-btn manual-buy">'+theme.langs.buy+'</a>';
                     } else {
-                        var actions_text = '<a class="more" data-code="'+oscEscapeHTML(item.s_update_url)+'" data-type="'+section+'">'+theme.langs.download+' v.'+oscEscapeHTML(item.s_version)+'</a>'
+                        var actions_text = '<a class="more" data-code="'+oscEscapeHTML(item.s_update_url)+'" data-type="'+section+'">'+theme.langs.download+' v.'+item.s_version+'</a>'
                             +'<span class="block"><strong>'+theme.langs.requieres_version+'</strong> '+oscEscapeHTML(versions[0])+'</span>'
                             +'<span class="block"><strong>'+theme.langs.compatible_with+'</strong> '+oscEscapeHTML(versions[(versions.length-1)])+'</span>'
                             +'<span class="block"><strong>'+theme.langs.downloads+'</strong> '+oscEscapeHTML(item.i_total_downloads)+'</span>'

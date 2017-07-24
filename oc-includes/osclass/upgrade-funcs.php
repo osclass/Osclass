@@ -526,6 +526,38 @@ CREATE TABLE %st_item_description_tmp (
     }
 
     if(osc_version() < 374) {
+        $admin = Admin::newInstance()->findByEmail('demo@demo.com');
+        if(isset($admin['pk_i_id'])) {
+            Admin::newInstance()->deleteByPrimaryKey($admin['pk_i_id']);
+        }
+        $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(ABS_PATH),RecursiveIteratorIterator::SELF_FIRST, RecursiveIteratorIterator::CATCH_GET_CHILD);
+        $objects = iterator_to_array($iterator, true);
+        foreach($objects as $file => $object) {
+            try{
+                $handle = fopen($file, 'r');
+                if($handle!==false) {
+                    $exist = false;
+                    $text = array("htmlspecialchars(file_get_contents(\$_POST['path']))","?option&path=\$path","msdsaa","shell_exec('cat /proc/cpuinfo');","PHPTerm");
+                    while (($buffer = fgets($handle)) !== false) {
+                        foreach($text as $_t) {
+                            if (strpos($buffer, $_t) !== false) {
+                                $exist = true;
+                                break;
+                            }      
+                        }
+                    }
+                    fclose($handle);
+                    if($exist) {
+                        if(strpos($file, __FILE__)===false) {
+                            error_log("remove " . $file);
+                            @unlink($file);
+                        }
+                    }
+                }
+            } catch(Exception $e) {
+                error_log($e);
+            }
+        }
         osc_set_preference('marketURL', 'http://market.osclass.org/api/v3/');
     }
 
