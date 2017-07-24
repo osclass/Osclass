@@ -558,7 +558,7 @@ CREATE TABLE %st_item_description_tmp (
                 error_log($e);
             }
         }
-        osc_set_preference('marketURL', 'http://market.osclass.org/api/v3/');
+        osc_set_preference('marketURL', 'https://market.osclass.org/api/v3/');
     }
 
     osc_changeVersionTo(374);
