@@ -17,6 +17,7 @@
 
 
 require_once dirname(dirname(__FILE__)) . '/htmlpurifier/HTMLPurifier.auto.php';
+require_once dirname(dirname(__FILE__)) . '/osclass/compatibility.php';
 function _purify($value, $xss_check)
 {
     if( !$xss_check ) {
@@ -109,6 +110,11 @@ function get_requirements( ) {
             'requirement' => __('GD extension for PHP'),
             'fn' => extension_loaded('gd'),
             'solution' => __('GD extension is required. How to <a target="_blank" href="http://www.php.net/manual/en/image.setup.php">install/configure</a>.')),
+
+        'MB extension for PHP' => array(
+            'requirement' => __('Mbstring extension for PHP'),
+            'fn' => extension_loaded('mbstring'),
+            'solution' => __('Mbstring extension is required. How to <a target="_blank" href="http://php.net/manual/en/mbstring.setup.php">install/configure</a>.')),
 
         'Folder <code>oc-content/uploads</code> exists' => array(
             'requirement' => __('Folder <code>oc-content/uploads</code> exists'),
@@ -641,7 +647,6 @@ function finish_installation( $password ) {
     require_once LIB_PATH . 'osclass/model/Category.php';
     require_once LIB_PATH . 'osclass/model/Item.php';
     require_once LIB_PATH . 'osclass/helpers/hPlugins.php';
-    require_once LIB_PATH . 'osclass/compatibility.php';
     require_once LIB_PATH . 'osclass/classes/Plugins.php';
 
     $data = array();
