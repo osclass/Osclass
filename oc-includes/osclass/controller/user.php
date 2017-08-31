@@ -137,6 +137,7 @@
                                                 $this->doView('user-change_username.php');
                 break;
                 case('change_username_post'):   //change username
+                                                osc_csrf_check();
                                                 $username = osc_sanitize_username(Params::getParam('s_username'));
                                                 osc_run_hook('before_username_change', Session::newInstance()->_get('userId'), $username);
                                                 if($username!='') {
