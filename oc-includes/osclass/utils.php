@@ -1023,6 +1023,9 @@ function _unzip_file_ziparchive($file, $to) {
         if (substr($file['name'], 0, 9) === '__MACOSX/') {
             continue;
         }
+        if (strpos($file['name'], '../')!==false) {
+            continue;
+        }
 
         if (substr($file['name'], -1) == '/') {
             @mkdir($to . $file['name'], 0777);
@@ -1076,6 +1079,9 @@ function _unzip_file_pclzip($zip_file, $to) {
     // Extract the files from the zip
     foreach ($files as $file) {
         if (substr($file['filename'], 0, 9) === '__MACOSX/') {
+            continue;
+        }
+        if (strpos($file['filename'], "../")!==false) {
             continue;
         }
 
