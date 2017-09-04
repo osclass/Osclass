@@ -104,7 +104,7 @@ FB;
         }
 
         static public function options_input_text($field = null) {
-            parent::generic_input_text("s_options", (isset($field) && isset($field["s_options"])) ? $field["s_options"] : "", null, false);
+            parent::generic_input_text("s_options", (isset($field) && isset($field["s_options"])) ? html_entity_decode($field["s_options"]) : "", null, false);
             return true;
         }
 

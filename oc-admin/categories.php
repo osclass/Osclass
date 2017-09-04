@@ -59,6 +59,8 @@
                                         }
                                         $this->categoryManager->updateOrder($categoryId,'0');
 
+                                        osc_run_hook('add_category', (int)($categoryId));
+
                                         $this->redirectTo(osc_admin_base_url(true).'?page=categories');
                 break;
                 default:                //

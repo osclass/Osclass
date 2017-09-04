@@ -110,7 +110,7 @@
         $_title = osc_apply_filter('email_title', osc_apply_filter('alert_email_daily_title', $page_description[$prefLocale]['s_title'], $user, $ads, $s_search, $items, $totalItems));
         $_body  = osc_apply_filter('email_description', osc_apply_filter('alert_email_daily_description', $page_description[$prefLocale]['s_text'], $user, $ads, $s_search, $items, $totalItems));
 
-        if( $user['fk_i_user_id'] != 0 ) {
+        if( isset($user['fk_i_user_id']) && $user['fk_i_user_id'] != 0 ) {
             $user = User::newInstance()->findByPrimaryKey($user['fk_i_user_id']);
         } else {
             $user['s_name'] = $user['s_email'];

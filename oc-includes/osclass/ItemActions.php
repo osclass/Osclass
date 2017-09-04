@@ -143,7 +143,7 @@
                 ((!osc_validate_max($aItem['cityArea'], 50)) ? _m("Municipality too long.") . PHP_EOL : '' ) .
                 ((!osc_validate_text($aItem['address'], 3, false)) ? _m("Address too short.") . PHP_EOL : '' ) .
                 ((!osc_validate_max($aItem['address'], 100)) ? _m("Address too long.") . PHP_EOL : '' ) .
-                ((((time() - Session::newInstance()->_get('last_submit_item')) < osc_items_wait_time()) && !$this->is_admin) ? _m("Too fast. You should wait a little to publish your ad.") . PHP_EOL : '' );
+                ((((time() - (int)Session::newInstance()->_get('last_submit_item')) < osc_items_wait_time()) && !$this->is_admin) ? _m("Too fast. You should wait a little to publish your ad.") . PHP_EOL : '' );
 
             $_meta = Field::newInstance()->findByCategory($aItem['catId']);
             $meta = Params::getParam("meta");
@@ -1315,7 +1315,7 @@
         {
             $success = true;
 
-            if($aResources != '') {
+            if(!empty($aResources)) {
                 // get allowedExt
                 $maxSize = osc_max_size_kb() * 1024;
                 foreach ($aResources['error'] as $key => $error) {
@@ -1338,7 +1338,7 @@
         {
             $success = true;
             require LIB_PATH . 'osclass/mimes.php';
-            if($aResources != '') {
+            if(!empty($aResources)) {
                 // get allowedExt
                 $aMimesAllowed = array();
                 $aExt = explode(',', osc_allowed_extension() );
@@ -1391,7 +1391,7 @@
 
         public function uploadItemResources($aResources,$itemId)
         {
-            if($aResources != '') {
+            if(!empty($aResources)) {
                 $itemResourceManager = ItemResource::newInstance();
                 $folder = osc_uploads_path().(floor($itemId/100))."/";
 
@@ -1401,7 +1401,7 @@
                     if($numImagesItems==0 || ($numImagesItems>0 && $numImages<$numImagesItems)) {
                         if ($error == UPLOAD_ERR_OK) {
                             $tmpName = $aResources['tmp_name'][$key];
-                            $imgres = ImageResizer::fromFile($tmpName);
+                            $imgres = ImageProcessing::fromFile($tmpName);
                             $extension = osc_apply_filter('upload_image_extension', $imgres->getExt());
                             $mime = osc_apply_filter('upload_image_mime', $imgres->getMime());
 
@@ -1421,12 +1421,12 @@
                             // Create preview
                             $path = $tmpName."_preview";
                             $size = explode('x', osc_preview_dimensions());
-                            ImageResizer::fromFile($normal_path)->resizeTo($size[0], $size[1])->saveToFile($path, $extension);
+                            ImageProcessing::fromFile($normal_path)->resizeTo($size[0], $size[1])->saveToFile($path, $extension);
 
                             // Create thumbnail
                             $path = $tmpName."_thumbnail";
                             $size = explode('x', osc_thumbnail_dimensions());
-                            ImageResizer::fromFile($normal_path)->resizeTo($size[0], $size[1])->saveToFile($path, $extension);
+                            ImageProcessing::fromFile($normal_path)->resizeTo($size[0], $size[1])->saveToFile($path, $extension);
 
                             $numImages++;
 

@@ -41,11 +41,11 @@
                 var fileToUnzip = '';
                 steps.innerHTML += '<?php echo osc_esc_js( sprintf( __('Checking for updates (Current version %s)'), osc_version() )); ?> ';
 
-                $.getJSON("http://osclass.org/latest_version_v1.php?callback=?", function(data) {
+                $.getJSON("https://osclass.org/latest_version_v1.php?callback=?", function(data) {
                     if(data.version <= version) {
                         steps.innerHTML += '<?php echo osc_esc_js( __('Congratulations! Your Osclass installation is up to date!')); ?>';
                     } else {
-                        steps.innerHTML += '<?php echo osc_esc_js( __('New version to update:')); ?> ' + data.version + "<br />";
+                        steps.innerHTML += '<?php echo osc_esc_js( __('New version to update:')); ?> ' + oscEscapeHTML(data.version); + "<br />";
                         <?php if(Params::getParam('confirm')=='true') {?>
                             steps.innerHTML += '<img id="loading_image" src="<?php echo osc_current_admin_theme_url('images/loading.gif'); ?>" /><?php echo osc_esc_js(__('Upgrading your Osclass installation (this could take a while):')); ?>';
 
@@ -57,7 +57,7 @@
                                 }
                                 var loading_image = document.getElementById('loading_image');
                                 loading_image.style.display = "none";
-                                steps.innerHTML += data.message+"<br />";
+                                steps.innerHTML += $("<div>").text(data.message).html();+"<br />";
                             });
                         <?php } else { ?>
                             steps.innerHTML += '<input type="button" value="<?php echo osc_esc_html( __('Upgrade')); ?>" onclick="window.location.href=\'<?php echo osc_admin_base_url(true); ?>?page=tools&action=upgrade&confirm=true\';" />';
@@ -105,7 +105,7 @@
                                 <div class="tools upgrade">
                                 <?php if( $ok ) { ?>
                                     <p class="text">
-                                        <?php printf( __('Your Osclass installation can be auto-upgraded. Please, back up your database and the folder oc-content before attempting to upgrade your Osclass installation. You can also upgrade Osclass manaully, more information in the %s'), '<a href="http://doc.osclass.org/">Wiki</a>'); ?>
+                                        <?php printf( __('Your Osclass installation can be auto-upgraded. Please, back up your database and the folder oc-content before attempting to upgrade your Osclass installation. You can also upgrade Osclass manually, more information in the %s'), '<a href="http://doc.osclass.org/">Wiki</a>'); ?>
                                     </p>
                                 <?php } else { ?>
                                     <p class="text">

@@ -768,7 +768,7 @@ function display_database_config() {
 }
 
 function display_target() {
-    $country_list = osc_file_get_contents('http://geo.osclass.org/newgeo.services.php?action=countries');
+    $country_list = osc_file_get_contents('https://geo.osclass.org/newgeo.services.php?action=countries');
     $country_list = json_decode(substr($country_list, 1, strlen($country_list)-2), true);
 
     $region_list = array();
@@ -776,7 +776,7 @@ function display_target() {
     $country_ip = '';
     if(preg_match('|([a-z]{2})-([A-Z]{2})|', Params::getServerParam('HTTP_ACCEPT_LANGUAGE'), $match)) {
         $country_ip = $match[2];
-        $region_list = osc_file_get_contents('http://geo.osclass.org/newgeo.services.php?action=regions&country='.$match[2]);
+        $region_list = osc_file_get_contents('https://geo.osclass.org/newgeo.services.php?action=regions&country='.$match[2]);
         $region_list = json_decode(substr($region_list, 1, strlen($region_list)-2), true);
     }
 

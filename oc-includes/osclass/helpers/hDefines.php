@@ -218,6 +218,10 @@
      * @return string
      */
     function osc_current_web_theme_url($file = '') {
+        $info = WebThemes::newInstance()->loadThemeInfo(WebThemes::newInstance()->getCurrentTheme());
+        if (!file_exists(WebThemes::newInstance()->getCurrentThemePath() . $file) && $info['template'] != ''){
+            WebThemes::newInstance()->setParentTheme();
+        }
         return WebThemes::newInstance()->getCurrentThemeUrl() . $file;
     }
 
@@ -492,7 +496,7 @@
             }
             $url = str_replace('{ITEM_ID}', osc_sanitizeString($item['pk_i_id']), $url);
             $url = str_replace('{ITEM_CITY}', osc_sanitizeString($item['s_city']), $url);
-            $url = str_replace('{ITEM_TITLE}', osc_sanitizeString($item['s_title']), $url);
+            $url = str_replace('{ITEM_TITLE}', osc_sanitizeString(str_replace(',', '-', $item['s_title'])), $url);
             $url = str_replace('?', '', $url);
             if($locale!='') {
                 $path = osc_base_url().$locale."/".$url;
@@ -518,7 +522,7 @@
             for ($i = (count($cat)); $i > 0; $i--) {
                 $sanitized_categories[] = $cat[$i - 1]['s_slug'];
             }
-            $url = str_replace('{CATEGORIES}', implode("/", $sanitized_categories), str_replace('{ITEM_ID}', osc_premium_id(), str_replace('{ITEM_TITLE}', osc_sanitizeString(osc_premium_title()), osc_get_preference('rewrite_item_url'))));
+            $url = str_replace('{CATEGORIES}', implode("/", $sanitized_categories), str_replace('{ITEM_ID}', osc_premium_id(), str_replace('{ITEM_TITLE}', osc_sanitizeString(str_replace(',', '-', osc_premium_title())), osc_get_preference('rewrite_item_url'))));
             if($locale!='') {
                 $path = osc_base_url().$locale."/".$url;
             } else {

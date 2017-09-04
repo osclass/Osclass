@@ -8,9 +8,12 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2016-12-12 04:46++0100\n"
+"PO-Revision-Date: 2017-04-24 09:01+0100\n"
 "Last-Translator: Translations <translations@osclass.org>\n"
 "Language-Team: Translations <translations@osclass.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: en_US\n"
+"X-Generator: Poedit 1.6.10\n"
 
 #: index.php:50 oc-admin/themes/modern/tools/maintenance.php:38
 msgid "Maintenance &raquo; %s"
@@ -37,9 +40,9 @@ msgid "Edit"
 msgstr ""
 
 #: oc-admin/admins.php:323 oc-admin/admins.php:363 oc-admin/comments.php:257
-#: oc-admin/items.php:822 oc-admin/languages.php:366 oc-admin/languages.php:422
-#: oc-admin/media.php:135 oc-admin/pages.php:277 oc-admin/plugins.php:338
-#: oc-admin/themes/modern/admins/index.php:175
+#: oc-admin/items.php:822 oc-admin/languages.php:366
+#: oc-admin/languages.php:422 oc-admin/media.php:135 oc-admin/pages.php:277
+#: oc-admin/plugins.php:338 oc-admin/themes/modern/admins/index.php:175
 #: oc-admin/themes/modern/admins/index.php:186
 #: oc-admin/themes/modern/appearance/index.php:107
 #: oc-admin/themes/modern/appearance/widgets.php:87
@@ -320,7 +323,8 @@ msgstr ""
 msgid "Type your new password"
 msgstr ""
 
-#: oc-admin/gui/forgot_password.php:46 oc-admin/themes/modern/admins/frm.php:96
+#: oc-admin/gui/forgot_password.php:46
+#: oc-admin/themes/modern/admins/frm.php:96
 #: oc-admin/themes/modern/users/frm.php:298
 msgid "New password"
 msgstr ""
@@ -353,7 +357,8 @@ msgstr ""
 msgid "Username"
 msgstr ""
 
-#: oc-admin/gui/login.php:47 oc-admin/themes/modern/settings/mailserver.php:133
+#: oc-admin/gui/login.php:47
+#: oc-admin/themes/modern/settings/mailserver.php:133
 #: oc-admin/themes/modern/users/frm.php:296
 #: oc-includes/osclass/install-functions.php:695
 #: oc-includes/osclass/install-functions.php:805
@@ -578,7 +583,10 @@ msgid "Admin type <em>(required)</em>"
 msgstr ""
 
 #: oc-admin/themes/modern/admins/frm.php:82
-msgid "Administrators have total control over all aspects of your installation, while moderators are only allowed to moderate listings, comments and media files"
+msgid ""
+"Administrators have total control over all aspects of your installation, "
+"while moderators are only allowed to moderate listings, comments and media "
+"files"
 msgstr ""
 
 #: oc-admin/themes/modern/admins/frm.php:88
@@ -586,7 +594,9 @@ msgid "Current password"
 msgstr ""
 
 #: oc-admin/themes/modern/admins/frm.php:91
-msgid "If you want to change your password, type your current password here. Otherwise, leave this blank."
+msgid ""
+"If you want to change your password, type your current password here. "
+"Otherwise, leave this blank."
 msgstr ""
 
 #: oc-admin/themes/modern/admins/frm.php:103
@@ -648,7 +658,10 @@ msgid "Cancel"
 msgstr ""
 
 #: oc-admin/themes/modern/admins/index.php:19
-msgid "Add users who can manage your page. You can add admins or moderators: admins have access to the whole admin panel while moderators can only modify listings and see stats."
+msgid ""
+"Add users who can manage your page. You can add admins or moderators: admins "
+"have access to the whole admin panel while moderators can only modify "
+"listings and see stats."
 msgstr ""
 
 #: oc-admin/themes/modern/admins/index.php:24
@@ -737,7 +750,9 @@ msgid "Are you sure you want to delete this admin?"
 msgstr ""
 
 #: oc-admin/themes/modern/appearance/add.php:19
-msgid "Manually add Osclass themes in .zip format. If you prefer, you can manually upload the decompressed theme to <em>oc-content/themes</em>."
+msgid ""
+"Manually add Osclass themes in .zip format. If you prefer, you can manually "
+"upload the decompressed theme to <em>oc-content/themes</em>."
 msgstr ""
 
 #: oc-admin/themes/modern/appearance/add.php:25
@@ -775,13 +790,18 @@ msgid "Can't install a new theme"
 msgstr ""
 
 #: oc-admin/themes/modern/appearance/add.php:65
-msgid "The theme folder is not writable on your server so you can't upload themes from the administration panel. Please make the theme folder writable and try again."
+msgid ""
+"The theme folder is not writable on your server so you can't upload themes "
+"from the administration panel. Please make the theme folder writable and try "
+"again."
 msgstr ""
 
 #: oc-admin/themes/modern/appearance/add.php:68
 #: oc-admin/themes/modern/languages/add.php:61
 #: oc-admin/themes/modern/plugins/add.php:68
-msgid "To make the directory writable under UNIX execute this command from the shell:"
+msgid ""
+"To make the directory writable under UNIX execute this command from the "
+"shell:"
 msgstr ""
 
 #: oc-admin/themes/modern/appearance/add.php:83
@@ -931,7 +951,11 @@ msgid "Delete theme"
 msgstr ""
 
 #: oc-admin/themes/modern/appearance/index.php:48
-msgid "Change your site's look and feel by activating a theme among those available. You can download new themes from the <a href=\"%s\">market</a>. <strong>Be careful</strong>: if your theme has been customized, you'll lose all changes if you change to a new theme."
+msgid ""
+"Change your site's look and feel by activating a theme among those "
+"available. You can download new themes from the <a href=\"%s\">market</a>. "
+"<strong>Be careful</strong>: if your theme has been customized, you'll lose "
+"all changes if you change to a new theme."
 msgstr ""
 
 #: oc-admin/themes/modern/appearance/index.php:56
@@ -968,7 +992,8 @@ msgid "Update"
 msgstr ""
 
 #: oc-admin/themes/modern/appearance/index.php:173
-msgid "This action can not be undone. Are you sure you want to delete the theme?"
+msgid ""
+"This action can not be undone. Are you sure you want to delete the theme?"
 msgstr ""
 
 #: oc-admin/themes/modern/appearance/index.php:194
@@ -988,7 +1013,8 @@ msgstr ""
 #: oc-admin/themes/modern/appearance/index.php:201
 #: oc-admin/themes/modern/functions.php:345
 #: oc-admin/themes/modern/languages/index.php:245
-msgid "The theme has been downloaded correctly, proceed to activate or preview it."
+msgid ""
+"The theme has been downloaded correctly, proceed to activate or preview it."
 msgstr ""
 
 #: oc-admin/themes/modern/appearance/index.php:203
@@ -1011,7 +1037,9 @@ msgid "Close"
 msgstr ""
 
 #: oc-admin/themes/modern/appearance/widgets.php:23
-msgid "Modify your site's header or footer here. Only works with compatible themes, such as those available in the market."
+msgid ""
+"Modify your site's header or footer here. Only works with compatible themes, "
+"such as those available in the market."
 msgstr ""
 
 #: oc-admin/themes/modern/appearance/widgets.php:42
@@ -1063,7 +1091,8 @@ msgid "Enable / Disable the price field"
 msgstr ""
 
 #: oc-admin/themes/modern/categories/iframe.php:40
-msgid "Apply the expiration date and price field changes to children categories"
+msgid ""
+"Apply the expiration date and price field changes to children categories"
 msgstr ""
 
 #: oc-admin/themes/modern/categories/iframe.php:91
@@ -1072,7 +1101,11 @@ msgid "Ajax error, please try again."
 msgstr ""
 
 #: oc-admin/themes/modern/categories/index.php:24
-msgid "Add, edit or delete the categories or subcategories in which users can post listings. Reorder sections by dragging and dropping, or nest a subcategory in an expanded category. <strong>Be careful</strong>: If you delete a category, all listings associated will also be deleted!"
+msgid ""
+"Add, edit or delete the categories or subcategories in which users can post "
+"listings. Reorder sections by dragging and dropping, or nest a subcategory "
+"in an expanded category. <strong>Be careful</strong>: If you delete a "
+"category, all listings associated will also be deleted!"
 msgstr ""
 
 #: oc-admin/themes/modern/categories/index.php:29
@@ -1101,7 +1134,9 @@ msgid "Ajax error, try again."
 msgstr ""
 
 #: oc-admin/themes/modern/categories/index.php:363
-msgid "Drag&drop the categories to reorder them the way you like. Click on edit link to edit the category"
+msgid ""
+"Drag&drop the categories to reorder them the way you like. Click on edit "
+"link to edit the category"
 msgstr ""
 
 #: oc-admin/themes/modern/categories/index.php:378
@@ -1109,7 +1144,9 @@ msgid "Delete category"
 msgstr ""
 
 #: oc-admin/themes/modern/categories/index.php:381
-msgid "<strong>WARNING</strong>: This will also delete the listings under that category. This action cannot be undone. Are you sure you want to continue?"
+msgid ""
+"<strong>WARNING</strong>: This will also delete the listings under that "
+"category. This action cannot be undone. Are you sure you want to continue?"
 msgstr ""
 
 #: oc-admin/themes/modern/comments/frm.php:25
@@ -1209,7 +1246,9 @@ msgid "Comment"
 msgstr ""
 
 #: oc-admin/themes/modern/comments/index.php:19
-msgid "Manage the comments that users publish on the listings on your site. You can also edit, delete, activate or block comments."
+msgid ""
+"Manage the comments that users publish on the listings on your site. You can "
+"also edit, delete, activate or block comments."
 msgstr ""
 
 #: oc-admin/themes/modern/comments/index.php:25
@@ -1297,7 +1336,10 @@ msgid "Legend"
 msgstr ""
 
 #: oc-admin/themes/modern/emails/index.php:19
-msgid "Modify the emails your site's users receive when they join your site, when someone shows interest in their ad, to recover their password... <strong>Be careful</strong>: don't modify any of the words that appear within brackets."
+msgid ""
+"Modify the emails your site's users receive when they join your site, when "
+"someone shows interest in their ad, to recover their password... <strong>Be "
+"careful</strong>: don't modify any of the words that appear within brackets."
 msgstr ""
 
 #: oc-admin/themes/modern/emails/index.php:32
@@ -1363,7 +1405,10 @@ msgid "At least one option is required."
 msgstr ""
 
 #: oc-admin/themes/modern/fields/index.php:25
-msgid "Create new fields for users to fill out when they publish a listing. You can require extra  information such as the number of bedrooms in real estate listings or fuel type in car listings, for example."
+msgid ""
+"Create new fields for users to fill out when they publish a listing. You can "
+"require extra  information such as the number of bedrooms in real estate "
+"listings or fuel type in car listings, for example."
 msgstr ""
 
 #: oc-admin/themes/modern/fields/index.php:32
@@ -1483,7 +1528,9 @@ msgid "Buy"
 msgstr ""
 
 #: oc-admin/themes/modern/functions.php:340
-msgid "Warning! This package is not compatible with your current version of Osclass (%s)"
+msgid ""
+"Warning! This package is not compatible with your current version of Osclass "
+"(%s)"
 msgstr ""
 
 #: oc-admin/themes/modern/functions.php:341
@@ -1495,12 +1542,15 @@ msgid "Ok, proceed anyway"
 msgstr ""
 
 #: oc-admin/themes/modern/functions.php:343
-msgid "Warning! This theme is not compatible with your current version of Osclass (%s)"
+msgid ""
+"Warning! This theme is not compatible with your current version of Osclass "
+"(%s)"
 msgstr ""
 
 #: oc-admin/themes/modern/functions.php:348
 #: oc-admin/themes/modern/plugins/index.php:292
-msgid "The plugin has been downloaded correctly, proceed to install and configure."
+msgid ""
+"The plugin has been downloaded correctly, proceed to install and configure."
 msgstr ""
 
 #: oc-admin/themes/modern/functions.php:351
@@ -1557,6 +1607,10 @@ msgstr ""
 
 #: oc-admin/themes/modern/items/frm.php:217
 msgid "Ip Address"
+msgstr ""
+
+#: oc-admin/themes/modern/items/frm.php:222
+msgid "Show e-mail"
 msgstr ""
 
 #: oc-admin/themes/modern/items/frm.php:225
@@ -1616,7 +1670,9 @@ msgstr ""
 
 #: oc-admin/themes/modern/items/frm.php:258
 #: oc-admin/themes/modern/items/frm.php:266
-msgid "It could be an integer (days from original publishing date it will be expired, 0 to never expire) or a date in the format \"yyyy-mm-dd hh:mm:ss\""
+msgid ""
+"It could be an integer (days from original publishing date it will be "
+"expired, 0 to never expire) or a date in the format \"yyyy-mm-dd hh:mm:ss\""
 msgstr ""
 
 #: oc-admin/themes/modern/items/frm.php:261
@@ -1624,7 +1680,10 @@ msgid "Update expiration?"
 msgstr ""
 
 #: oc-admin/themes/modern/items/index.php:21
-msgid "Manage all the listings on your site: edit, delete or block the latest listings published. You can also filter by several parameters: user, region, city, etc."
+msgid ""
+"Manage all the listings on your site: edit, delete or block the latest "
+"listings published. You can also filter by several parameters: user, region, "
+"city, etc."
 msgstr ""
 
 #: oc-admin/themes/modern/items/index.php:26
@@ -1755,7 +1814,10 @@ msgid "Are you sure you want to delete this listing?"
 msgstr ""
 
 #: oc-admin/themes/modern/items/reported.php:19
-msgid "From here, you can edit or delete the listings reported by users (spam, misclassified, duplicate, expired, offensive). You can also delete the report if you consider it mistaken."
+msgid ""
+"From here, you can edit or delete the listings reported by users (spam, "
+"misclassified, duplicate, expired, offensive). You can also delete the "
+"report if you consider it mistaken."
 msgstr ""
 
 #: oc-admin/themes/modern/items/reported.php:32
@@ -1772,7 +1834,8 @@ msgid "Are you sure you want to %s the selected items?"
 msgstr ""
 
 #: oc-admin/themes/modern/items/reported.php:140
-msgid "Are you sure you want to clear all the reportings of the selected items?"
+msgid ""
+"Are you sure you want to clear all the reportings of the selected items?"
 msgstr ""
 
 #: oc-admin/themes/modern/items/reported.php:140
@@ -1781,7 +1844,8 @@ msgid "Clear All"
 msgstr ""
 
 #: oc-admin/themes/modern/items/reported.php:141
-msgid "Are you sure you want to clear the spam reportings of the selected items?"
+msgid ""
+"Are you sure you want to clear the spam reportings of the selected items?"
 msgstr ""
 
 #: oc-admin/themes/modern/items/reported.php:141
@@ -1790,7 +1854,9 @@ msgid "Clear Spam"
 msgstr ""
 
 #: oc-admin/themes/modern/items/reported.php:142
-msgid "Are you sure you want to clear the misclassified reportings of the selected items?"
+msgid ""
+"Are you sure you want to clear the misclassified reportings of the selected "
+"items?"
 msgstr ""
 
 #: oc-admin/themes/modern/items/reported.php:142
@@ -1798,7 +1864,9 @@ msgid "Clear Missclassified"
 msgstr ""
 
 #: oc-admin/themes/modern/items/reported.php:143
-msgid "Are you sure you want to clear the duplicated reportings of the selected items?"
+msgid ""
+"Are you sure you want to clear the duplicated reportings of the selected "
+"items?"
 msgstr ""
 
 #: oc-admin/themes/modern/items/reported.php:143
@@ -1807,7 +1875,8 @@ msgid "Clear Duplicated"
 msgstr ""
 
 #: oc-admin/themes/modern/items/reported.php:144
-msgid "Are you sure you want to clear the expired reportings of the selected items?"
+msgid ""
+"Are you sure you want to clear the expired reportings of the selected items?"
 msgstr ""
 
 #: oc-admin/themes/modern/items/reported.php:144
@@ -1816,7 +1885,9 @@ msgid "Clear Expired"
 msgstr ""
 
 #: oc-admin/themes/modern/items/reported.php:145
-msgid "Are you sure you want to clear the offensive reportings of the selected items?"
+msgid ""
+"Are you sure you want to clear the offensive reportings of the selected "
+"items?"
 msgstr ""
 
 #: oc-admin/themes/modern/items/reported.php:145
@@ -1825,7 +1896,10 @@ msgid "Clear Offensive"
 msgstr ""
 
 #: oc-admin/themes/modern/items/settings.php:19
-msgid "Modify the general settings for your listings. Decide if users have to register in order to publish something, the number of pictures allowed for each listing, etc."
+msgid ""
+"Modify the general settings for your listings. Decide if users have to "
+"register in order to publish something, the number of pictures allowed for "
+"each listing, etc."
 msgstr ""
 
 #: oc-admin/themes/modern/items/settings.php:57
@@ -1853,7 +1927,9 @@ msgid "Users have to validate their listings"
 msgstr ""
 
 #: oc-admin/themes/modern/items/settings.php:94
-msgid "After %s validated listings the user doesn't need to validate the listings any more"
+msgid ""
+"After %s validated listings the user doesn't need to validate the listings "
+"any more"
 msgstr ""
 
 #: oc-admin/themes/modern/items/settings.php:96
@@ -1911,7 +1987,9 @@ msgid "days"
 msgstr ""
 
 #: oc-admin/themes/modern/items/settings.php:161
-msgid "This option will send an email X days before an ad expires to the author. 0 for no email."
+msgid ""
+"This option will send an email X days before an ad expires to the author. 0 "
+"for no email."
 msgstr ""
 
 #: oc-admin/themes/modern/items/settings.php:164
@@ -1965,7 +2043,10 @@ msgid "Can't install a new language"
 msgstr ""
 
 #: oc-admin/themes/modern/languages/add.php:58
-msgid "The translations folder is not writable on your server so you can't upload translations from the administration panel. Please make the translation folder writable and try again."
+msgid ""
+"The translations folder is not writable on your server so you can't upload "
+"translations from the administration panel. Please make the translation "
+"folder writable and try again."
 msgstr ""
 
 #: oc-admin/themes/modern/languages/frm.php:28
@@ -2014,7 +2095,9 @@ msgid "Enabled for the backoffice (oc-admin)"
 msgstr ""
 
 #: oc-admin/themes/modern/languages/index.php:19
-msgid "Add, edit or delete the language in which your Osclass is displayed, both the part that's viewable by users and the admin panel."
+msgid ""
+"Add, edit or delete the language in which your Osclass is displayed, both "
+"the part that's viewable by users and the admin panel."
 msgstr ""
 
 #: oc-admin/themes/modern/languages/index.php:33
@@ -2171,12 +2254,17 @@ msgid "Disconnect from Market"
 msgstr ""
 
 #: oc-admin/themes/modern/market/header.php:73
-msgid "Sorry, the market is currently unavailable. Please try again in a few moments."
+msgid ""
+"Sorry, the market is currently unavailable. Please try again in a few "
+"moments."
 msgstr ""
 
 #: oc-admin/themes/modern/market/header.php:115
 #: oc-admin/themes/modern/settings/index.php:88
-msgid "You are going to be disconnected from the Market, all your plugins and themes downloaded will remain installed and configured but you will not be able to update or download new plugins and themes. Are you sure?"
+msgid ""
+"You are going to be disconnected from the Market, all your plugins and "
+"themes downloaded will remain installed and configured but you will not be "
+"able to update or download new plugins and themes. Are you sure?"
 msgstr ""
 
 #: oc-admin/themes/modern/market/header.php:144
@@ -2196,11 +2284,15 @@ msgid "Connecting... please wait"
 msgstr ""
 
 #: oc-admin/themes/modern/market/header.php:157
-msgid "Connect your oc-admin to your <a target=\"_blank\" href=\"%s\">Market account!</a>"
+msgid ""
+"Connect your oc-admin to your <a target=\"_blank\" href=\"%s\">Market "
+"account!</a>"
 msgstr ""
 
 #: oc-admin/themes/modern/market/header.php:159
-msgid "Your purchased items on Osclass Market will automatically appear on My Purchases tab."
+msgid ""
+"Your purchased items on Osclass Market will automatically appear on My "
+"Purchases tab."
 msgstr ""
 
 #: oc-admin/themes/modern/market/header.php:162
@@ -2213,7 +2305,10 @@ msgstr ""
 
 #: oc-admin/themes/modern/market/index.php:18
 #: oc-admin/themes/modern/market/section.php:18
-msgid "Browse and download available Osclass plugins, from a constantly-updated selection. After downloading a plugin, you have to install it and configure it to get it up and running."
+msgid ""
+"Browse and download available Osclass plugins, from a constantly-updated "
+"selection. After downloading a plugin, you have to install it and configure "
+"it to get it up and running."
 msgstr ""
 
 #: oc-admin/themes/modern/market/index.php:37
@@ -2253,11 +2348,15 @@ msgid "There are no %s that matches your search"
 msgstr ""
 
 #: oc-admin/themes/modern/market/section.php:90
-msgid "Cannot get information from market.osclass.org, sorry for the inconvenience"
+msgid ""
+"Cannot get information from market.osclass.org, sorry for the inconvenience"
 msgstr ""
 
 #: oc-admin/themes/modern/media/index.php:19
-msgid "Manage the images that users have uploaded along with their listings. You can delete them without deleting the whole listing if the image is inappropriate or doesn’t match the listing."
+msgid ""
+"Manage the images that users have uploaded along with their listings. You "
+"can delete them without deleting the whole listing if the image is "
+"inappropriate or doesn’t match the listing."
 msgstr ""
 
 #: oc-admin/themes/modern/media/index.php:24
@@ -2308,7 +2407,10 @@ msgid "Show a link in footer"
 msgstr ""
 
 #: oc-admin/themes/modern/pages/index.php:19
-msgid "With Osclass you can create static pages on which information can be stored, such as \"About Us\" or \"Info\" pages. From here you can create, edit or delete your site's static pages."
+msgid ""
+"With Osclass you can create static pages on which information can be stored, "
+"such as \"About Us\" or \"Info\" pages. From here you can create, edit or "
+"delete your site's static pages."
 msgstr ""
 
 #: oc-admin/themes/modern/pages/index.php:26
@@ -2370,7 +2472,9 @@ msgid "Select subcategory"
 msgstr ""
 
 #: oc-admin/themes/modern/plugins/add.php:19
-msgid "Manually upload Osclass plugins in .zip format. If you prefer, you can manually upload the decompressed plugin to <em>oc-content/plugins</em>."
+msgid ""
+"Manually upload Osclass plugins in .zip format. If you prefer, you can "
+"manually upload the decompressed plugin to <em>oc-content/plugins</em>."
 msgstr ""
 
 #: oc-admin/themes/modern/plugins/add.php:32
@@ -2395,7 +2499,10 @@ msgid "Cannot install new plugin"
 msgstr ""
 
 #: oc-admin/themes/modern/plugins/add.php:65
-msgid "The plugin folder is not writable on your server so you cannot upload plugins from the administration panel. Please make the folder writable and try again."
+msgid ""
+"The plugin folder is not writable on your server so you cannot upload "
+"plugins from the administration panel. Please make the folder writable and "
+"try again."
 msgstr ""
 
 #: oc-admin/themes/modern/plugins/configuration.php:58
@@ -2409,7 +2516,9 @@ msgid "Select the categories where you want to apply these attribute:"
 msgstr ""
 
 #: oc-admin/themes/modern/plugins/index.php:19
-msgid "Install or uninstall the plugins available in your installation. In some cases, you'll have to configure the plugin in order to get it to work."
+msgid ""
+"Install or uninstall the plugins available in your installation. In some "
+"cases, you'll have to configure the plugin in order to get it to work."
 msgstr ""
 
 #: oc-admin/themes/modern/plugins/index.php:24
@@ -2417,7 +2526,9 @@ msgid "Manage Plugins"
 msgstr ""
 
 #: oc-admin/themes/modern/plugins/index.php:33
-msgid "Plugin couldn't be installed because it triggered a <strong>fatal error</strong>"
+msgid ""
+"Plugin couldn't be installed because it triggered a <strong>fatal error</"
+"strong>"
 msgstr ""
 
 #: oc-admin/themes/modern/plugins/index.php:68
@@ -2440,15 +2551,20 @@ msgid "%d plugins"
 msgstr ""
 
 #: oc-admin/themes/modern/plugins/index.php:258
-msgid "This action can not be undone. Uninstalling plugins may result in a permanent loss of data. Are you sure you want to continue?"
+msgid ""
+"This action can not be undone. Uninstalling plugins may result in a "
+"permanent loss of data. Are you sure you want to continue?"
 msgstr ""
 
 #: oc-admin/themes/modern/plugins/index.php:331
-msgid "You are about to delete the files of the plugin. Do you want to continue?"
+msgid ""
+"You are about to delete the files of the plugin. Do you want to continue?"
 msgstr ""
 
 #: oc-admin/themes/modern/settings/advanced.php:39
-msgid "Change advanced configuration of your Osclass. <strong>Be careful</strong> when modifying default values if you're not sure what you're doing!"
+msgid ""
+"Change advanced configuration of your Osclass. <strong>Be careful</strong> "
+"when modifying default values if you're not sure what you're doing!"
 msgstr ""
 
 #: oc-admin/themes/modern/settings/advanced.php:55
@@ -2531,7 +2647,9 @@ msgid "Comments per page: this field must only contain numeric characters"
 msgstr ""
 
 #: oc-admin/themes/modern/settings/comments.php:79
-msgid "Modify the options that allow your users to publish comments on your site's listings."
+msgid ""
+"Modify the options that allow your users to publish comments on your site's "
+"listings."
 msgstr ""
 
 #: oc-admin/themes/modern/settings/comments.php:92
@@ -2559,7 +2677,9 @@ msgid "A comment is being held for moderation"
 msgstr ""
 
 #: oc-admin/themes/modern/settings/comments.php:125
-msgid "Before a comment appears, comment author must have at least %s previously approved comments"
+msgid ""
+"Before a comment appears, comment author must have at least %s previously "
+"approved comments"
 msgstr ""
 
 #: oc-admin/themes/modern/settings/comments.php:126
@@ -2595,7 +2715,9 @@ msgid "There's a new comment on his listing"
 msgstr ""
 
 #: oc-admin/themes/modern/settings/currencies.php:19
-msgid "Add new currencies or edit existing currencies so users can publish listings in their country's currency."
+msgid ""
+"Add new currencies or edit existing currencies so users can publish listings "
+"in their country's currency."
 msgstr ""
 
 #: oc-admin/themes/modern/settings/currencies.php:33
@@ -2657,7 +2779,9 @@ msgid "Currency Code"
 msgstr ""
 
 #: oc-admin/themes/modern/settings/currency_form.php:115
-msgid "Must be a three-character code according to the <a href=\"%s\" target=\"_blank\">ISO 4217</a>"
+msgid ""
+"Must be a three-character code according to the <a href=\"%s\" target="
+"\"_blank\">ISO 4217</a>"
 msgstr ""
 
 #: oc-admin/themes/modern/settings/currency_form.php:119
@@ -2699,7 +2823,8 @@ msgid "Listings shown in RSS feed: this field is required"
 msgstr ""
 
 #: oc-admin/themes/modern/settings/index.php:65
-msgid "Listings shown in RSS feed: this field must only contain numeric characters"
+msgid ""
+"Listings shown in RSS feed: this field must only contain numeric characters"
 msgstr ""
 
 #: oc-admin/themes/modern/settings/index.php:68
@@ -2719,7 +2844,11 @@ msgid "The search page shows: this field must only contain numeric characters"
 msgstr ""
 
 #: oc-admin/themes/modern/settings/index.php:133
-msgid "Change the basic configuration of your Osclass. From here, you can modify variables such as the site’s name, the default currency or how lists of listings are displayed. <strong>Be careful</strong> when modifying default values if you're not sure what you're doing!"
+msgid ""
+"Change the basic configuration of your Osclass. From here, you can modify "
+"variables such as the site’s name, the default currency or how lists of "
+"listings are displayed. <strong>Be careful</strong> when modifying default "
+"values if you're not sure what you're doing!"
 msgstr ""
 
 #: oc-admin/themes/modern/settings/index.php:146
@@ -2843,7 +2972,9 @@ msgid "Parent categories"
 msgstr ""
 
 #: oc-admin/themes/modern/settings/index.php:295
-msgid "Allow users to select a parent category as a category when inserting or editing a listing "
+msgid ""
+"Allow users to select a parent category as a category when inserting or "
+"editing a listing "
 msgstr ""
 
 #: oc-admin/themes/modern/settings/index.php:300
@@ -2867,11 +2998,15 @@ msgid "Automatic cron process"
 msgstr ""
 
 #: oc-admin/themes/modern/settings/index.php:319
-msgid "Allow Osclass to run a built-in <a href=\"%s\" target=\"_blank\">cron</a> automatically without setting crontab"
+msgid ""
+"Allow Osclass to run a built-in <a href=\"%s\" target=\"_blank\">cron</a> "
+"automatically without setting crontab"
 msgstr ""
 
 #: oc-admin/themes/modern/settings/index.php:322
-msgid "It is <b>recommended</b> to have this option enabled, because some features require it."
+msgid ""
+"It is <b>recommended</b> to have this option enabled, because some features "
+"require it."
 msgstr ""
 
 #: oc-admin/themes/modern/settings/index.php:326
@@ -2985,7 +3120,11 @@ msgid "Add new city"
 msgstr ""
 
 #: oc-admin/themes/modern/settings/locations.php:151
-msgid "Add, edit or delete the countries, regions and cities installed on your Osclass. <strong>Be careful</strong>: modifying locations can cause your statistics to be incorrect until they're recalculated. Modify only if you're sure what you're doing!"
+msgid ""
+"Add, edit or delete the countries, regions and cities installed on your "
+"Osclass. <strong>Be careful</strong>: modifying locations can cause your "
+"statistics to be incorrect until they're recalculated. Modify only if you're "
+"sure what you're doing!"
 msgstr ""
 
 #: oc-admin/themes/modern/settings/locations.php:164
@@ -3048,11 +3187,18 @@ msgid "Cities"
 msgstr ""
 
 #: oc-admin/themes/modern/settings/locations.php:397
-msgid "This action can't be undone. Items associated to this location will be deleted. Users from this location will be unlinked, but not deleted. Are you sure you want to continue?"
+msgid ""
+"This action can't be undone. Items associated to this location will be "
+"deleted. Users from this location will be unlinked, but not deleted. Are you "
+"sure you want to continue?"
 msgstr ""
 
 #: oc-admin/themes/modern/settings/mailserver.php:65
-msgid "Modify the settings of the mail server from which your site's emails are sent. <strong>Be careful</strong>: these settings can vary depending on your hosting or server. If you run into any issues, check your hosting's help section."
+msgid ""
+"Modify the settings of the mail server from which your site's emails are "
+"sent. <strong>Be careful</strong>: these settings can vary depending on your "
+"hosting or server. If you run into any issues, check your hosting's help "
+"section."
 msgstr ""
 
 #: oc-admin/themes/modern/settings/mailserver.php:78
@@ -3160,7 +3306,10 @@ msgid "Maximum size: this field must only contain numeric characters"
 msgstr ""
 
 #: oc-admin/themes/modern/settings/media.php:147
-msgid "Manage the options for the images users can upload along with their listings. You can limit their size, the number of images per ad, include a watermark, etc."
+msgid ""
+"Manage the options for the images users can upload along with their "
+"listings. You can limit their size, the number of images per ad, include a "
+"watermark, etc."
 msgstr ""
 
 #: oc-admin/themes/modern/settings/media.php:160
@@ -3176,7 +3325,9 @@ msgid "Image sizes"
 msgstr ""
 
 #: oc-admin/themes/modern/settings/media.php:176
-msgid "The sizes listed below determine the maximum dimensions in pixels to use when uploading a image. Format: <b>Width</b> x <b>Height</b>."
+msgid ""
+"The sizes listed below determine the maximum dimensions in pixels to use "
+"when uploading a image. Format: <b>Width</b> x <b>Height</b>."
 msgstr ""
 
 #: oc-admin/themes/modern/settings/media.php:177
@@ -3216,7 +3367,9 @@ msgid "Force JPEG extension."
 msgstr ""
 
 #: oc-admin/themes/modern/settings/media.php:205
-msgid "Uploaded images will be saved in JPG/JPEG format, it saves space but images will not have transparent background."
+msgid ""
+"Uploaded images will be saved in JPG/JPEG format, it saves space but images "
+"will not have transparent background."
 msgstr ""
 
 #: oc-admin/themes/modern/settings/media.php:210
@@ -3277,7 +3430,9 @@ msgid "Text"
 msgstr ""
 
 #: oc-admin/themes/modern/settings/media.php:257
-msgid "Freetype library is required. How to <a target=\"_blank\" href=\"%s\">install/configure</a>"
+msgid ""
+"Freetype library is required. How to <a target=\"_blank\" href=\"%s"
+"\">install/configure</a>"
 msgstr ""
 
 #: oc-admin/themes/modern/settings/media.php:263
@@ -3340,7 +3495,10 @@ msgid "Regenerate images"
 msgstr ""
 
 #: oc-admin/themes/modern/settings/media.php:324
-msgid "You can regenerate different image dimensions. If you have changed the dimension of thumbnails, preview or normal images, you might want to regenerate your images."
+msgid ""
+"You can regenerate different image dimensions. If you have changed the "
+"dimension of thumbnails, preview or normal images, you might want to "
+"regenerate your images."
 msgstr ""
 
 #: oc-admin/themes/modern/settings/media.php:326
@@ -3352,7 +3510,9 @@ msgid "Recommendation"
 msgstr ""
 
 #: oc-admin/themes/modern/settings/media.php:340
-msgid "We highly recommend you have the 'Keep original image' option active when you use watermarks."
+msgid ""
+"We highly recommend you have the 'Keep original image' option active when "
+"you use watermarks."
 msgstr ""
 
 #: oc-admin/themes/modern/settings/permalinks.php:174
@@ -3551,7 +3711,10 @@ msgid "Hide rules"
 msgstr ""
 
 #: oc-admin/themes/modern/settings/permalinks.php:360
-msgid "Activate this option if you want your site's URLs to be more attractive to search engines and intelligible for users. <strong>Be careful</strong>: depending on your hosting service, this might not work correctly."
+msgid ""
+"Activate this option if you want your site's URLs to be more attractive to "
+"search engines and intelligible for users. <strong>Be careful</strong>: "
+"depending on your hosting service, this might not work correctly."
 msgstr ""
 
 #: oc-admin/themes/modern/settings/permalinks.php:372
@@ -3564,7 +3727,10 @@ msgid "Permalinks"
 msgstr ""
 
 #: oc-admin/themes/modern/settings/permalinks.php:381
-msgid "By default Osclass uses web URLs which have question marks and lots of numbers in them. However, Osclass offers you friendly urls. This can improve the aesthetics, usability, and forward-compatibility of your links"
+msgid ""
+"By default Osclass uses web URLs which have question marks and lots of "
+"numbers in them. However, Osclass offers you friendly urls. This can improve "
+"the aesthetics, usability, and forward-compatibility of your links"
 msgstr ""
 
 #: oc-admin/themes/modern/settings/permalinks.php:389
@@ -3756,7 +3922,10 @@ msgid "Custom number: this field cannot be left empty"
 msgstr ""
 
 #: oc-admin/themes/modern/settings/searches.php:69
-msgid "Save the searches users do on your site. In this way, you can get information on what they're most interested in. From here, you can manage the options on how much information you want to save."
+msgid ""
+"Save the searches users do on your site. In this way, you can get "
+"information on what they're most interested in. From here, you can manage "
+"the options on how much information you want to save."
 msgstr ""
 
 #: oc-admin/themes/modern/settings/searches.php:82
@@ -3809,11 +3978,16 @@ msgid "Store %s queries"
 msgstr ""
 
 #: oc-admin/themes/modern/settings/searches.php:134
-msgid "This feature can generate a lot of data. It's recommended to purge this data periodically."
+msgid ""
+"This feature can generate a lot of data. It's recommended to purge this data "
+"periodically."
 msgstr ""
 
 #: oc-admin/themes/modern/settings/spamNbots.php:23
-msgid "Keep spammers from publishing on your site by configuring reCAPTCHA and Akismet. Be careful: in order to use these services, you must register on their sites first and follow their instructions."
+msgid ""
+"Keep spammers from publishing on your site by configuring reCAPTCHA and "
+"Akismet. Be careful: in order to use these services, you must register on "
+"their sites first and follow their instructions."
 msgstr ""
 
 #: oc-admin/themes/modern/settings/spamNbots.php:36
@@ -3830,7 +4004,10 @@ msgid "Akismet"
 msgstr ""
 
 #: oc-admin/themes/modern/settings/spamNbots.php:45
-msgid "Akismet is a hosted web service that saves you time by automatically detecting comment and trackback spam. It's hosted on our servers, but we give you access to it through plugins and our API."
+msgid ""
+"Akismet is a hosted web service that saves you time by automatically "
+"detecting comment and trackback spam. It's hosted on our servers, but we "
+"give you access to it through plugins and our API."
 msgstr ""
 
 #: oc-admin/themes/modern/settings/spamNbots.php:52
@@ -3846,7 +4023,9 @@ msgid "The key you entered is invalid. Please double-check it"
 msgstr ""
 
 #: oc-admin/themes/modern/settings/spamNbots.php:70
-msgid "Akismet is disabled, please enter an API key. <a href=\"%s\" target=\"_blank\">(Get your key)</a>"
+msgid ""
+"Akismet is disabled, please enter an API key. <a href=\"%s\" target=\"_blank"
+"\">(Get your key)</a>"
 msgstr ""
 
 #: oc-admin/themes/modern/settings/spamNbots.php:87
@@ -3854,7 +4033,10 @@ msgid "reCAPTCHA"
 msgstr ""
 
 #: oc-admin/themes/modern/settings/spamNbots.php:88
-msgid "reCAPTCHA helps prevent automated abuse of your site by using a CAPTCHA to ensure that only humans perform certain actions. <a href=\"%s\" target=\"_blank\">Get your key</a>"
+msgid ""
+"reCAPTCHA helps prevent automated abuse of your site by using a CAPTCHA to "
+"ensure that only humans perform certain actions. <a href=\"%s\" target="
+"\"_blank\">Get your key</a>"
 msgstr ""
 
 #: oc-admin/themes/modern/settings/spamNbots.php:95
@@ -3866,7 +4048,9 @@ msgid "Use reCaptcha v2."
 msgstr ""
 
 #: oc-admin/themes/modern/settings/spamNbots.php:100
-msgid "If you were using v1, you need to <a href=\"%s\">re-generate your reCaptcha keys</a>."
+msgid ""
+"If you were using v1, you need to <a href=\"%s\">re-generate your reCaptcha "
+"keys</a>."
 msgstr ""
 
 #: oc-admin/themes/modern/settings/spamNbots.php:105
@@ -3878,7 +4062,9 @@ msgid "Secret key"
 msgstr ""
 
 #: oc-admin/themes/modern/settings/spamNbots.php:118
-msgid "If you see the reCAPTCHA form it means that you have correctly entered the public key"
+msgid ""
+"If you see the reCAPTCHA form it means that you have correctly entered the "
+"public key"
 msgstr ""
 
 #: oc-admin/themes/modern/stats/comments.php:25
@@ -3915,7 +4101,8 @@ msgid "Last 10 days"
 msgstr ""
 
 #: oc-admin/themes/modern/stats/comments.php:40
-msgid "See how many comments the listings published on your site have received."
+msgid ""
+"See how many comments the listings published on your site have received."
 msgstr ""
 
 #: oc-admin/themes/modern/stats/comments.php:53
@@ -3948,7 +4135,9 @@ msgid "There're no statistics yet"
 msgstr ""
 
 #: oc-admin/themes/modern/stats/items.php:48
-msgid "Quickly find out how many new listings have been published on your site and how many visits each of the listings gets."
+msgid ""
+"Quickly find out how many new listings have been published on your site and "
+"how many visits each of the listings gets."
 msgstr ""
 
 #: oc-admin/themes/modern/stats/items.php:61
@@ -4012,7 +4201,9 @@ msgid "Number of new subscribers"
 msgstr ""
 
 #: oc-admin/themes/modern/stats/reports.php:37
-msgid "See how many listings from your site have been reported as spam, expired, duplicate, etc."
+msgid ""
+"See how many listings from your site have been reported as spam, expired, "
+"duplicate, etc."
 msgstr ""
 
 #: oc-admin/themes/modern/stats/reports.php:50
@@ -4048,7 +4239,10 @@ msgid "Total number of reports"
 msgstr ""
 
 #: oc-admin/themes/modern/stats/users.php:43
-msgid "Stay up-to-date on the number of users registered on your site. You can also see a breakdown of the countries and regions where users live among those available on your site."
+msgid ""
+"Stay up-to-date on the number of users registered on your site. You can also "
+"see a breakdown of the countries and regions where users live among those "
+"available on your site."
 msgstr ""
 
 #: oc-admin/themes/modern/stats/users.php:56
@@ -4091,7 +4285,9 @@ msgid "%s listings per user"
 msgstr ""
 
 #: oc-admin/themes/modern/tools/backup.php:36
-msgid "Save a backup of all of your site's information: listings, users and configuration. You can save a backup on your server or on your computer."
+msgid ""
+"Save a backup of all of your site's information: listings, users and "
+"configuration. You can save a backup on your server or on your computer."
 msgstr ""
 
 #: oc-admin/themes/modern/tools/backup.php:42
@@ -4118,11 +4314,15 @@ msgid "Backup folder"
 msgstr ""
 
 #: oc-admin/themes/modern/tools/backup.php:68
-msgid "<strong>WARNING</strong>: If you don't specify a backup folder, the backup files will be created in the root of your Osclass installation."
+msgid ""
+"<strong>WARNING</strong>: If you don't specify a backup folder, the backup "
+"files will be created in the root of your Osclass installation."
 msgstr ""
 
 #: oc-admin/themes/modern/tools/backup.php:70
-msgid "This is the folder in which your backups will be created. We recommend that you choose a non-public path."
+msgid ""
+"This is the folder in which your backups will be created. We recommend that "
+"you choose a non-public path."
 msgstr ""
 
 #: oc-admin/themes/modern/tools/backup.php:75
@@ -4147,7 +4347,9 @@ msgid "Category stats"
 msgstr ""
 
 #: oc-admin/themes/modern/tools/category.php:39
-msgid "You can recalculate stats by category, useful if the stats seem to be incorrect."
+msgid ""
+"You can recalculate stats by category, useful if the stats seem to be "
+"incorrect."
 msgstr ""
 
 #: oc-admin/themes/modern/tools/category.php:47
@@ -4155,7 +4357,10 @@ msgid "Calculate category stats"
 msgstr ""
 
 #: oc-admin/themes/modern/tools/import.php:25
-msgid "Upload registers from other Osclass installations or upload new geographic information to your site. <strong>Be careful</strong>: don’t use this option if you're not 100% sure what you're doing."
+msgid ""
+"Upload registers from other Osclass installations or upload new geographic "
+"information to your site. <strong>Be careful</strong>: don’t use this option "
+"if you're not 100% sure what you're doing."
 msgstr ""
 
 #: oc-admin/themes/modern/tools/import.php:37
@@ -4188,7 +4393,9 @@ msgid "Complete"
 msgstr ""
 
 #: oc-admin/themes/modern/tools/locations.php:86
-msgid "You can recalculate your location stats. This is useful if you upgrade from versions older than Osclass 2.4"
+msgid ""
+"You can recalculate your location stats. This is useful if you upgrade from "
+"versions older than Osclass 2.4"
 msgstr ""
 
 #: oc-admin/themes/modern/tools/locations.php:94
@@ -4196,7 +4403,9 @@ msgid "Calculate location stats"
 msgstr ""
 
 #: oc-admin/themes/modern/tools/maintenance.php:25
-msgid "Show a \"Site in maintenance mode\" message to your users while you're updating your site or modifying its configuration."
+msgid ""
+"Show a \"Site in maintenance mode\" message to your users while you're "
+"updating your site or modifying its configuration."
 msgstr ""
 
 #: oc-admin/themes/modern/tools/maintenance.php:46
@@ -4204,7 +4413,10 @@ msgid "Maintenance"
 msgstr ""
 
 #: oc-admin/themes/modern/tools/maintenance.php:51
-msgid "While in maintenance mode, users can't access your website. Useful if you need to make changes on your website. Use the following button to toggle maintenance mode ON/OFF."
+msgid ""
+"While in maintenance mode, users can't access your website. Useful if you "
+"need to make changes on your website. Use the following button to toggle "
+"maintenance mode ON/OFF."
 msgstr ""
 
 #: oc-admin/themes/modern/tools/maintenance.php:53
@@ -4243,7 +4455,9 @@ msgid "Upgrade"
 msgstr ""
 
 #: oc-admin/themes/modern/tools/upgrade.php:79
-msgid "Check to see if you're using the latest version of Osclass. If you're not, the system will let you know so you can update and use the newest features."
+msgid ""
+"Check to see if you're using the latest version of Osclass. If you're not, "
+"the system will let you know so you can update and use the newest features."
 msgstr ""
 
 #: oc-admin/themes/modern/tools/upgrade.php:92
@@ -4251,11 +4465,21 @@ msgid "Upgrade &raquo; %s"
 msgstr ""
 
 #: oc-admin/themes/modern/tools/upgrade.php:108
-msgid "Your Osclass installation can be auto-upgraded. Please, back up your database and the folder oc-content before attempting to upgrade your Osclass installation. You can also upgrade Osclass manaully, more information in the %s"
+msgid ""
+"Your Osclass installation can be auto-upgraded. Please, back up your "
+"database and the folder oc-content before attempting to upgrade your Osclass "
+"installation. You can also upgrade Osclass manually, more information in the "
+"%s"
 msgstr ""
 
 #: oc-admin/themes/modern/tools/upgrade.php:112
-msgid "Your Osclass installation can't be auto-upgraded. Files and folders need to be writable. You can apply write permissions via SSH with the command \"chmod -R a+w *\" (without quotes) or via an FTP client, it depends on the program so we can not provide more information. You can also upgrade Osclass by downloading the upgrade package, unzipping it and replacing the files on your server with the ones in the package."
+msgid ""
+"Your Osclass installation can't be auto-upgraded. Files and folders need to "
+"be writable. You can apply write permissions via SSH with the command "
+"\"chmod -R a+w *\" (without quotes) or via an FTP client, it depends on the "
+"program so we can not provide more information. You can also upgrade Osclass "
+"by downloading the upgrade package, unzipping it and replacing the files on "
+"your server with the ones in the package."
 msgstr ""
 
 #: oc-admin/themes/modern/tools/version.php:20
@@ -4271,7 +4495,9 @@ msgid "Upgrading your Osclass installation (this could take a while): "
 msgstr ""
 
 #: oc-admin/themes/modern/upgrade/index.php:63
-msgid "You have uploaded a new version of Osclass, you need to upgrade Osclass for it to work correctly."
+msgid ""
+"You have uploaded a new version of Osclass, you need to upgrade Osclass for "
+"it to work correctly."
 msgstr ""
 
 #: oc-admin/themes/modern/upgrade/index.php:65
@@ -4311,7 +4537,9 @@ msgid "Are you sure you want to delete this alert?"
 msgstr ""
 
 #: oc-admin/themes/modern/users/ban.php:19
-msgid "Add, edit or delete ban rules. Keep in mind that ban rules prevent users to register, publish or comment on listings."
+msgid ""
+"Add, edit or delete ban rules. Keep in mind that ban rules prevent users to "
+"register, publish or comment on listings."
 msgstr ""
 
 #: oc-admin/themes/modern/users/ban.php:35
@@ -4439,7 +4667,9 @@ msgid "(twice, required)"
 msgstr ""
 
 #: oc-admin/themes/modern/users/frm.php:302
-msgid "If you'd like to change the password, type a new one. Otherwise leave this blank"
+msgid ""
+"If you'd like to change the password, type a new one. Otherwise leave this "
+"blank"
 msgstr ""
 
 #: oc-admin/themes/modern/users/frm.php:346
@@ -4462,7 +4692,9 @@ msgid "<b>Categories:</b> %s"
 msgstr ""
 
 #: oc-admin/themes/modern/users/index.php:19
-msgid "Add, edit or delete information associated to registered users. Keep in mind that deleting a user also deletes all the listings the user published."
+msgid ""
+"Add, edit or delete information associated to registered users. Keep in mind "
+"that deleting a user also deletes all the listings the user published."
 msgstr ""
 
 #: oc-admin/themes/modern/users/index.php:34
@@ -4489,7 +4721,10 @@ msgid "Are you sure you want to delete this user?"
 msgstr ""
 
 #: oc-admin/themes/modern/users/settings.php:19
-msgid "Manage the options related to users on your site. Here, you can decide if users must register or if email confirmation is necessary, among other options."
+msgid ""
+"Manage the options related to users on your site. Here, you can decide if "
+"users must register or if email confirmation is necessary, among other "
+"options."
 msgstr ""
 
 #: oc-admin/themes/modern/users/settings.php:32
@@ -5053,15 +5288,20 @@ msgid "{WEB_TITLE} - Your site has upgraded to Osclass {VERSION}"
 msgstr ""
 
 #: oc-includes/osclass/emails.php:1261
-msgid "<p>Your site at {WEB_LINK} has been updated automatically to Osclass {VERSION}</p>"
+msgid ""
+"<p>Your site at {WEB_LINK} has been updated automatically to Osclass "
+"{VERSION}</p>"
 msgstr ""
 
 #: oc-includes/osclass/emails.php:1263
-msgid "<p>There were some minor errors removing temporary files. Please manually remove the \"oc-content/downloads/oc-temp\" folder</p>"
+msgid ""
+"<p>There were some minor errors removing temporary files. Please manually "
+"remove the \"oc-content/downloads/oc-temp\" folder</p>"
 msgstr ""
 
 #: oc-includes/osclass/emails.php:1266
-msgid "{WEB_TITLE} - We failed trying to upgrade your site to Osclass {VERSION}"
+msgid ""
+"{WEB_TITLE} - We failed trying to upgrade your site to Osclass {VERSION}"
 msgstr ""
 
 #: oc-includes/osclass/frm/Admin.form.class.php:51
@@ -5471,11 +5711,13 @@ msgid "Images already uploaded"
 msgstr ""
 
 #: oc-includes/osclass/frm/Item.form.class.php:1456
-msgid "Too many items ({netItems}) would be uploaded. Item limit is {itemLimit}."
+msgid ""
+"Too many items ({netItems}) would be uploaded. Item limit is {itemLimit}."
 msgstr ""
 
 #: oc-includes/osclass/frm/Item.form.class.php:1457
-msgid "The files are being uploaded, if you leave now the upload will be cancelled."
+msgid ""
+"The files are being uploaded, if you leave now the upload will be cancelled."
 msgstr ""
 
 #: oc-includes/osclass/frm/Item.form.class.php:1458
@@ -5716,7 +5958,9 @@ msgid "PHP version >= 5.6.x"
 msgstr ""
 
 #: oc-includes/osclass/install-functions.php:101
-msgid "At least PHP5.6 (PHP 7.0 or higher recommended) is required to run Osclass. You may talk with your hosting to upgrade your PHP version."
+msgid ""
+"At least PHP5.6 (PHP 7.0 or higher recommended) is required to run Osclass. "
+"You may talk with your hosting to upgrade your PHP version."
 msgstr ""
 
 #: oc-includes/osclass/install-functions.php:104
@@ -5724,7 +5968,9 @@ msgid "MySQLi extension for PHP"
 msgstr ""
 
 #: oc-includes/osclass/install-functions.php:106
-msgid "MySQLi extension is required. How to <a target=\"_blank\" href=\"http://www.php.net/manual/en/mysqli.setup.php\">install/configure</a>."
+msgid ""
+"MySQLi extension is required. How to <a target=\"_blank\" href=\"http://www."
+"php.net/manual/en/mysqli.setup.php\">install/configure</a>."
 msgstr ""
 
 #: oc-includes/osclass/install-functions.php:109
@@ -5732,7 +5978,9 @@ msgid "GD extension for PHP"
 msgstr ""
 
 #: oc-includes/osclass/install-functions.php:111
-msgid "GD extension is required. How to <a target=\"_blank\" href=\"http://www.php.net/manual/en/image.setup.php\">install/configure</a>."
+msgid ""
+"GD extension is required. How to <a target=\"_blank\" href=\"http://www.php."
+"net/manual/en/image.setup.php\">install/configure</a>."
 msgstr ""
 
 #: oc-includes/osclass/install-functions.php:114
@@ -5740,7 +5988,9 @@ msgid "Folder <code>oc-content/uploads</code> exists"
 msgstr ""
 
 #: oc-includes/osclass/install-functions.php:116
-msgid "You have to create <code>uploads</code> folder, i.e.: <code>mkdir %soc-content/uploads/</code>"
+msgid ""
+"You have to create <code>uploads</code> folder, i.e.: <code>mkdir %soc-"
+"content/uploads/</code>"
 msgstr ""
 
 #: oc-includes/osclass/install-functions.php:119
@@ -5748,7 +5998,9 @@ msgid "<code>oc-content/uploads</code> folder is writable"
 msgstr ""
 
 #: oc-includes/osclass/install-functions.php:121
-msgid "<code>uploads</code> folder has to be writable, i.e.: <code>chmod a+w %soc-content/uploads/</code>"
+msgid ""
+"<code>uploads</code> folder has to be writable, i.e.: <code>chmod a+w %soc-"
+"content/uploads/</code>"
 msgstr ""
 
 #: oc-includes/osclass/install-functions.php:124
@@ -5756,7 +6008,9 @@ msgid "Folder <code>oc-content/downloads</code> exists"
 msgstr ""
 
 #: oc-includes/osclass/install-functions.php:126
-msgid "You have to create <code>downloads</code> folder, i.e.: <code>mkdir %soc-content/downloads/</code>"
+msgid ""
+"You have to create <code>downloads</code> folder, i.e.: <code>mkdir %soc-"
+"content/downloads/</code>"
 msgstr ""
 
 #: oc-includes/osclass/install-functions.php:129
@@ -5764,7 +6018,9 @@ msgid "<code>oc-content/downloads</code> folder is writable"
 msgstr ""
 
 #: oc-includes/osclass/install-functions.php:131
-msgid "<code>downloads</code> folder has to be writable, i.e.: <code>chmod a+w %soc-content/downloads/</code>"
+msgid ""
+"<code>downloads</code> folder has to be writable, i.e.: <code>chmod a+w %soc-"
+"content/downloads/</code>"
 msgstr ""
 
 #: oc-includes/osclass/install-functions.php:134
@@ -5772,7 +6028,9 @@ msgid "Folder <code>oc-content/languages</code> folder exists"
 msgstr ""
 
 #: oc-includes/osclass/install-functions.php:136
-msgid "You have to create the <code>languages</code> folder, i.e.: <code>mkdir %soc-content/languages/</code>"
+msgid ""
+"You have to create the <code>languages</code> folder, i.e.: <code>mkdir %soc-"
+"content/languages/</code>"
 msgstr ""
 
 #: oc-includes/osclass/install-functions.php:139
@@ -5780,7 +6038,9 @@ msgid "<code>oc-content/languages</code> folder is writable"
 msgstr ""
 
 #: oc-includes/osclass/install-functions.php:141
-msgid "<code>languages</code> folder has to be writable, i.e.: <code>chmod a+w %soc-content/languages/</code>"
+msgid ""
+"<code>languages</code> folder has to be writable, i.e.: <code>chmod a+w %soc-"
+"content/languages/</code>"
 msgstr ""
 
 #: oc-includes/osclass/install-functions.php:152
@@ -5788,7 +6048,9 @@ msgid "<code>config.php</code> file is writable"
 msgstr ""
 
 #: oc-includes/osclass/install-functions.php:154
-msgid "<code>config.php</code> file has to be writable, i.e.: <code>chmod a+w %sconfig.php</code>"
+msgid ""
+"<code>config.php</code> file has to be writable, i.e.: <code>chmod a+w "
+"%sconfig.php</code>"
 msgstr ""
 
 #: oc-includes/osclass/install-functions.php:160
@@ -5804,7 +6066,9 @@ msgid "<code>config-sample.php</code> file exists"
 msgstr ""
 
 #: oc-includes/osclass/install-functions.php:170
-msgid "<code>config-sample.php</code> file is required, you should re-download Osclass."
+msgid ""
+"<code>config-sample.php</code> file is required, you should re-download "
+"Osclass."
 msgstr ""
 
 #: oc-includes/osclass/install-functions.php:248
@@ -5816,7 +6080,9 @@ msgstr ""
 
 #: oc-includes/osclass/install-functions.php:252
 #: oc-includes/osclass/install-functions.php:301
-msgid "The database doesn't exist. You should check the \"Create DB\" checkbox and fill in a username and password with the right privileges"
+msgid ""
+"The database doesn't exist. You should check the \"Create DB\" checkbox and "
+"fill in a username and password with the right privileges"
 msgstr ""
 
 #: oc-includes/osclass/install-functions.php:254
@@ -5826,7 +6092,9 @@ msgstr ""
 
 #: oc-includes/osclass/install-functions.php:256
 #: oc-includes/osclass/install-functions.php:305
-msgid "Cannot connect to the database. Check if the username and password are correct."
+msgid ""
+"Cannot connect to the database. Check if the username and password are "
+"correct."
 msgstr ""
 
 #: oc-includes/osclass/install-functions.php:258
@@ -5840,7 +6108,9 @@ msgid "Can't create the database. Error number: %s"
 msgstr ""
 
 #: oc-includes/osclass/install-functions.php:277
-msgid "Can't create the database. Check if the admin username and password are correct."
+msgid ""
+"Can't create the database. Check if the admin username and password are "
+"correct."
 msgstr ""
 
 #: oc-includes/osclass/install-functions.php:317
@@ -5850,7 +6120,9 @@ msgstr ""
 
 #: oc-includes/osclass/install-functions.php:325
 #: oc-includes/osclass/install-functions.php:328
-msgid "config-sample.php doesn't exist. Check if everything is decompressed correctly."
+msgid ""
+"config-sample.php doesn't exist. Check if everything is decompressed "
+"correctly."
 msgstr ""
 
 #: oc-includes/osclass/install-functions.php:332
@@ -5864,7 +6136,9 @@ msgid "Can't create the database structure. Error number: %s"
 msgstr ""
 
 #: oc-includes/osclass/install-functions.php:356
-msgid "There are tables with the same name in the database. Change the table prefix or the database and try again."
+msgid ""
+"There are tables with the same name in the database. Change the table prefix "
+"or the database and try again."
 msgstr ""
 
 #: oc-includes/osclass/install-functions.php:397
@@ -5878,7 +6152,9 @@ msgid "Can't insert basic configuration. Error number: %s"
 msgstr ""
 
 #: oc-includes/osclass/install-functions.php:415
-msgid "Can't insert basic configuration. This user has no privileges to 'INSERT' into the database."
+msgid ""
+"Can't insert basic configuration. This user has no privileges to 'INSERT' "
+"into the database."
 msgstr ""
 
 #: oc-includes/osclass/install-functions.php:675
@@ -5914,7 +6190,9 @@ msgid "Table prefix"
 msgstr ""
 
 #: oc-includes/osclass/install-functions.php:702
-msgid "If you want to run multiple Osclass installations in a single database, change this"
+msgid ""
+"If you want to run multiple Osclass installations in a single database, "
+"change this"
 msgstr ""
 
 #: oc-includes/osclass/install-functions.php:744
@@ -5954,11 +6232,14 @@ msgid "Admin user is required"
 msgstr ""
 
 #: oc-includes/osclass/install-functions.php:814
-msgid "A password will be automatically generated for you if you leave this blank."
+msgid ""
+"A password will be automatically generated for you if you leave this blank."
 msgstr ""
 
 #: oc-includes/osclass/install-functions.php:815
-msgid "You can modify username and password if you like, just change the input value."
+msgid ""
+"You can modify username and password if you like, just change the input "
+"value."
 msgstr ""
 
 #: oc-includes/osclass/install-functions.php:817
@@ -5978,11 +6259,14 @@ msgid "Create market.osclass.org account"
 msgstr ""
 
 #: oc-includes/osclass/install-functions.php:834
-msgid "(You agree to our <a href=\"https://osclass.org/page/legal-note\">Terms & Conditions</a>)"
+msgid ""
+"(You agree to our <a href=\"https://osclass.org/page/legal-note\">Terms & "
+"Conditions</a>)"
 msgstr ""
 
 #: oc-includes/osclass/install-functions.php:835
-msgid "Create a market.osclass.org account and download free themes and plugins."
+msgid ""
+"Create a market.osclass.org account and download free themes and plugins."
 msgstr ""
 
 #: oc-includes/osclass/install-functions.php:841
@@ -5990,7 +6274,9 @@ msgid "Choose countries/cities where your target users are located"
 msgstr ""
 
 #: oc-includes/osclass/install-functions.php:843
-msgid "Once you type a country, you'll be able to choose region and city as well. Therefore, the installation will be more specific."
+msgid ""
+"Once you type a country, you'll be able to choose region and city as well. "
+"Therefore, the installation will be more specific."
 msgstr ""
 
 #: oc-includes/osclass/install-functions.php:855
@@ -6018,7 +6304,9 @@ msgid "There are no cities available for this region"
 msgstr ""
 
 #: oc-includes/osclass/install-functions.php:878
-msgid "No internet connection. You can continue the installation and insert countries later."
+msgid ""
+"No internet connection. You can continue the installation and insert "
+"countries later."
 msgstr ""
 
 #: oc-includes/osclass/install-functions.php:892
@@ -6038,7 +6326,9 @@ msgid "Congratulations!"
 msgstr ""
 
 #: oc-includes/osclass/install-functions.php:951
-msgid "Osclass has been installed. Were you expecting more steps? Sorry to disappoint you!"
+msgid ""
+"Osclass has been installed. Were you expecting more steps? Sorry to "
+"disappoint you!"
 msgstr ""
 
 #: oc-includes/osclass/install-functions.php:952
@@ -6046,7 +6336,10 @@ msgid "An e-mail with the password for oc-admin has been sent to: %s"
 msgstr ""
 
 #: oc-includes/osclass/install-functions.php:977
-msgid "Do not forget to connect your site with Osclass Market in order to download free and paid themes or plugins. You should connect your site as soon as your log in to your new site."
+msgid ""
+"Do not forget to connect your site with Osclass Market in order to download "
+"free and paid themes or plugins. You should connect your site as soon as "
+"your log in to your new site."
 msgstr ""
 
 #: oc-includes/osclass/install-functions.php:980
@@ -6054,7 +6347,9 @@ msgid "Do you know Osclass Free, the Osclass cloud solution?"
 msgstr ""
 
 #: oc-includes/osclass/install-functions.php:981
-msgid "With Osclass Free you can create your classifieds page without any technical knowledge and in less than one minute."
+msgid ""
+"With Osclass Free you can create your classifieds page without any technical "
+"knowledge and in less than one minute."
 msgstr ""
 
 #: oc-includes/osclass/install-functions.php:982
@@ -6070,7 +6365,9 @@ msgid "Hi %s,"
 msgstr ""
 
 #: oc-includes/osclass/install-location.php:113
-msgid "Your Osclass installation at %s is up and running. You can access the administration panel with these details:"
+msgid ""
+"Your Osclass installation at %s is up and running. You can access the "
+"administration panel with these details:"
 msgstr ""
 
 #: oc-includes/osclass/install-location.php:115
@@ -6082,11 +6379,17 @@ msgid "password: %s"
 msgstr ""
 
 #: oc-includes/osclass/install-location.php:118
-msgid "Remember that for any doubts you might have you can consult our <a href=\"%1$s\">documentation</a>, <a href=\"%2$s\">forum</a> or <a href=\"%3$s\">blog</a>."
+msgid ""
+"Remember that for any doubts you might have you can consult our <a href="
+"\"%1$s\">documentation</a>, <a href=\"%2$s\">forum</a> or <a href=\"%3$s"
+"\">blog</a>."
 msgstr ""
 
 #: oc-includes/osclass/install-location.php:119
-msgid "Osclass doesn’t run any developments but we can put you in touch with third party developers through a Premium Support. And hey, if you would like to contribute to Osclass - learn how <a href=\"%1$s\">here</a>!"
+msgid ""
+"Osclass doesn’t run any developments but we can put you in touch with third "
+"party developers through a Premium Support. And hey, if you would like to "
+"contribute to Osclass - learn how <a href=\"%1$s\">here</a>!"
 msgstr ""
 
 #: oc-includes/osclass/install-location.php:120
@@ -6098,7 +6401,9 @@ msgid "The <a href=\"http://osclass.org/\">Osclass</a> team"
 msgstr ""
 
 #: oc-includes/osclass/install.php:89
-msgid "Looks like you've already installed Osclass. To reinstall please clear your old database tables first."
+msgid ""
+"Looks like you've already installed Osclass. To reinstall please clear your "
+"old database tables first."
 msgstr ""
 
 #: oc-includes/osclass/install.php:135
@@ -6134,7 +6439,9 @@ msgid "Allow my site to appear in search engines like Google."
 msgstr ""
 
 #: oc-includes/osclass/install.php:205
-msgid "Help make Osclass better by automatically sending usage statistics and crash reports to Osclass."
+msgid ""
+"Help make Osclass better by automatically sending usage statistics and crash "
+"reports to Osclass."
 msgstr ""
 
 #: oc-includes/osclass/install.php:211
@@ -6534,7 +6841,9 @@ msgid "Example Ad"
 msgstr ""
 
 #: oc-includes/osclass/installer/basic_data.php:105
-msgid "Description of the example ad. Insert here some usefull description of your ad."
+msgid ""
+"Description of the example ad. Insert here some usefull description of your "
+"ad."
 msgstr ""
 
 #: oc-includes/osclass/installer/basic_data.php:106
@@ -6562,7 +6871,9 @@ msgid "Example page title"
 msgstr ""
 
 #: oc-includes/osclass/installer/basic_data.php:116
-msgid "This is an example page description. This is a good place to put your Terms of Service or any other help information."
+msgid ""
+"This is an example page description. This is a good place to put your Terms "
+"of Service or any other help information."
 msgstr ""
 
 #: oc-includes/osclass/model/Category.php:602
@@ -6582,15 +6893,22 @@ msgid "Osclass &raquo; Has some errors"
 msgstr ""
 
 #: oc-includes/osclass/upgrade-funcs.php:44
-msgid "We've encountered some problems while updating the database structure. The following queries failed:"
+msgid ""
+"We've encountered some problems while updating the database structure. The "
+"following queries failed:"
 msgstr ""
 
 #: oc-includes/osclass/upgrade-funcs.php:46
-msgid "These errors could be false-positive errors. If you're sure that is the case, you can <a href=\"%s\">continue with the upgrade</a>, or <a href=\"http://forums.osclass.org/\">ask in our forums</a>."
+msgid ""
+"These errors could be false-positive errors. If you're sure that is the "
+"case, you can <a href=\"%s\">continue with the upgrade</a>, or <a href="
+"\"http://forums.osclass.org/\">ask in our forums</a>."
 msgstr ""
 
 #: oc-includes/osclass/upgrade-funcs.php:286
-msgid "You need to calculate location stats, please go to admin panel, tools, recalculate location stats or click"
+msgid ""
+"You need to calculate location stats, please go to admin panel, tools, "
+"recalculate location stats or click"
 msgstr ""
 
 #: oc-includes/osclass/upgrade-funcs.php:286
@@ -6602,7 +6920,9 @@ msgid "Osclass &raquo; Updated correctly"
 msgstr ""
 
 #: oc-includes/osclass/upgrade-funcs.php:533
-msgid "Osclass has been updated successfully. <a href=\"http://forums.osclass.org/\">Need more help?</a>"
+msgid ""
+"Osclass has been updated successfully. <a href=\"http://forums.osclass.org/"
+"\">Need more help?</a>"
 msgstr ""
 
 #: oc-includes/osclass/utils.php:1898
@@ -6610,7 +6930,10 @@ msgid "Everything looks good! Your Osclass installation is up-to-date"
 msgstr ""
 
 #: oc-includes/osclass/utils.php:1901
-msgid "Nearly everything looks good! Your Osclass installation is up-to-date, but there were some errors removing temporary files. Please manually remove the \"oc-content/downloads/oc-temp\" folder"
+msgid ""
+"Nearly everything looks good! Your Osclass installation is up-to-date, but "
+"there were some errors removing temporary files. Please manually remove the "
+"\"oc-content/downloads/oc-temp\" folder"
 msgstr ""
 
 #: oc-includes/osclass/utils.php:1907
@@ -6638,7 +6961,8 @@ msgid "Missing download URL"
 msgstr ""
 
 #: oc-includes/osclass/utils.php:1936
-msgid "We had some errors upgrading your database. The follwing queries failed:"
+msgid ""
+"We had some errors upgrading your database. The follwing queries failed:"
 msgstr ""
 
 #: oc-includes/osclass/utils.php:2184
@@ -6646,15 +6970,20 @@ msgid "Everything looks good!"
 msgstr ""
 
 #: oc-includes/osclass/utils.php:2187
-msgid "Nearly everything looks good! but there were some errors removing temporary files. Please manually remove the \\\"oc-content/downloads/oc-temp\\\" folder"
+msgid ""
+"Nearly everything looks good! but there were some errors removing temporary "
+"files. Please manually remove the \\\"oc-content/downloads/oc-temp\\\" folder"
 msgstr ""
 
 #: oc-includes/osclass/utils.php:2196
-msgid "NOTE: Web user and destination folder user is not the same, you might have an issue there. <br/>Do this in your console:<br/>chown -R %s:%s %s"
+msgid ""
+"NOTE: Web user and destination folder user is not the same, you might have "
+"an issue there. <br/>Do this in your console:<br/>chown -R %s:%s %s"
 msgstr ""
 
 #: oc-includes/osclass/utils.php:2215
-msgid "This is a paid item, you need to buy it before you are able to download it"
+msgid ""
+"This is a paid item, you need to buy it before you are able to download it"
 msgstr ""
 
 #: oc-includes/osclass/utils.php:2218

@@ -128,7 +128,7 @@
             $country = trim($country);
             $this->dao->select('a.pk_i_id as id, a.s_name as label, a.s_name as value');
             $this->dao->from($this->getTableName() . ' as a');
-            $this->dao->like('s_name', $query, 'after');
+            $this->dao->like('a.s_name', $query, 'after');
             if($country != null ) {
                 if(strlen($country)==2) {
                     $this->dao->where('a.fk_c_country_code', strtolower($country));

@@ -102,3 +102,21 @@ osc.tooltip = function(message, options){
 
 //extend
 $.fn.osc_tooltip = osc.tooltip
+
+
+var OSC_ESC_MAP = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;'
+};
+
+function oscEscapeHTML(str) {
+    if(str!=undefined) {
+        return str.toString().replace(/[&<>'"]/g, function(c) {
+            return OSC_ESC_MAP[c];
+        });
+    }
+    return "";
+}

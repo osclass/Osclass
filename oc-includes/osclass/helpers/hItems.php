@@ -1239,6 +1239,8 @@
             } else {
                 return '';
             }
+        } else if($meta['e_type']=="DROPDOWN" || $meta['e_type']=="RADIO") {
+            return osc_field(osc_item_meta(), 's_value', '');
         } else {
             return nl2br(htmlentities(osc_field(osc_item_meta(), 's_value', ''), ENT_COMPAT, "UTF-8"));
         }
@@ -1367,6 +1369,9 @@
             switch($key) {
                 case 'id':
                     $mSearch->addItemId($value);
+                    break;
+                case 'pattern':
+                    $mSearch->addPattern($value);
                     break;
                 case 'author':
                     $tmp = explode(",", $value);

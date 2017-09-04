@@ -847,7 +847,7 @@ function osc_downloadFile($sourceFile, $downloadedFile, $post_data = null)
         $fp = @fopen (osc_content_path() . 'downloads/' . $downloadedFile, 'w+');
         if($fp) {
             $ch = curl_init($sourceFile);
-            @curl_setopt($ch, CURLOPT_TIMEOUT, 50);
+            @curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
             curl_setopt($ch, CURLOPT_USERAGENT, Params::getServerParam('HTTP_USER_AGENT') . ' Osclass (v.' . osc_version() . ')');
             curl_setopt($ch, CURLOPT_FILE, $fp);
             @curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
@@ -883,6 +883,7 @@ function osc_file_get_contents($url, $post_data = null)
     if( testCurl() ) {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
+        @curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
         curl_setopt($ch, CURLOPT_USERAGENT, Params::getServerParam('HTTP_USER_AGENT') . ' Osclass (v.' . osc_version() . ')');
         if( !defined('CURLOPT_RETURNTRANSFER') ) define('CURLOPT_RETURNTRANSFER', 1);
         @curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
@@ -1810,7 +1811,7 @@ function osc_do_upgrade() {
     /***********************
      **** DOWNLOAD FILE ****
      ***********************/
-    $data = osc_file_get_contents("http://osclass.org/latest_version_v1.php");
+    $data = osc_file_get_contents("https://osclass.org/latest_version_v1.php");
     $data = json_decode(substr($data, 1, strlen($data)-3), true);
     $source_file = $data['url'];
     if ($source_file != '') {
@@ -1943,7 +1944,7 @@ function osc_do_upgrade() {
 }
 
 function osc_do_auto_upgrade() {
-    $data = osc_file_get_contents('http://osclass.org/latest_version_v1.php?callback=?');
+    $data = osc_file_get_contents('https://osclass.org/latest_version_v1.php?callback=?');
     $data = preg_replace('|^\?\((.*?)\);$|', '$01', $data);
     $json = json_decode($data);
     $result['error'] = 0;

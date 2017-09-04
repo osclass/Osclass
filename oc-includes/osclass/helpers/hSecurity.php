@@ -16,14 +16,14 @@
  * limitations under the License.
  */
 
-    if(!defined('BCRYPT_COST')) { define('BCRYPT_COST', 15); };
-
     /**
     * Helper Security
     * @package Osclass
     * @subpackage Helpers
     * @author Osclass
     */
+
+    if(!defined('BCRYPT_COST')) { define('BCRYPT_COST', 15); }
 
     /**
      * Creates a random password.
@@ -65,11 +65,10 @@
     }
 
     /**
-     * Check is CSRF token is valid, die in other case
+     * Check if CSRF token is valid, die in other case
      *
      * @since 3.1
      */
-
     function osc_csrf_check() {
         $error      = false;
         $str_error  = '';
@@ -95,7 +94,7 @@
             }
         }
 
-        // ¿ check if is ajax request ?
+        // check ajax request
         if($error) {
             if(OC_ADMIN) {
                 osc_add_flash_error_message($str_error, 'admin');
@@ -104,7 +103,7 @@
             }
 
             $url = osc_get_http_referer();
-            // be sure that drop session referer
+            // drop session referer
             Session::newInstance()->_dropReferer();
             if($url!='') {
                 osc_redirect_to($url);
@@ -119,7 +118,7 @@
     }
 
     /**
-     * Check is an email and IP are banned
+     * Check if an email and/or IP are banned
      *
      * @param string $email
      * @param string $ip
@@ -141,7 +140,7 @@
     }
 
     /**
-     * Check is an email and IP are banned
+     * Check if IP is banned
      *
      * @param string $ip
      * @param string $rules (optional, to savetime and resources)
@@ -181,7 +180,7 @@
     }
 
     /**
-     * Check is an email and IP are banned
+     * Check if email is banned
      *
      * @param string $email
      * @param string $rules (optional, to savetime and resources)
@@ -195,6 +194,7 @@
         $email = strtolower($email);
         foreach($rules as $rule) {
             $rule = str_replace("*", ".*", str_replace(".", "\.", strtolower($rule['s_email'])));
+            $rule = str_replace("|", "\\", $rule);
             if($rule!='') {
                 if(substr($rule,0,1)=="!") {
                     $rule = '|^((?'.$rule.').*)$|';
@@ -210,7 +210,7 @@
     }
 
     /**
-     * Check is an username is blacklisted
+     * Check if username is blacklisted
      *
      * @param string $username
      * @since 3.1
@@ -277,6 +277,12 @@
         osc_set_alert_private_key(); // renew private key and
         osc_set_alert_public_key();  // public key
         $key = hash("sha256", osc_get_alert_private_key(), true);
+
+        if(Cryptor::Usable()) {
+            return Cryptor::Encrypt($string, $key, 0);
+        }
+
+        // START DEPRECATED : To be removed in future versions
         if(function_exists('mcrypt_module_open')) {
             $cipher = mcrypt_module_open(MCRYPT_RIJNDAEL_256, '', MCRYPT_MODE_CBC, '');
             $cipherText = '';
@@ -285,13 +291,22 @@
                 mcrypt_generic_deinit($cipher);
             }
             return $cipherText;
-        };
+        }
+        // END DEPRECATED : To be removed in future versions
 
+        // COMPATIBILITY
         while (strlen($string) % 32 != 0) {
             $string .= "\0";
         }
-        require_once LIB_PATH . 'phpseclib/Crypt/Rijndael.php';
-        $cipher = new Crypt_Rijndael(CRYPT_RIJNDAEL_MODE_CBC);
+
+        require_once LIB_PATH . 'phpseclib/autoload.php';
+        require_once LIB_PATH . 'phpseclib/bootstrap.php';
+        $loader = new \Composer\Autoload\ClassLoader();
+        $loader->addPsr4('phpseclib\\', LIB_PATH . 'phpseclib');
+        $loader->register();
+
+
+        $cipher = new phpseclib\Crypt\Rijndael(phpseclib\Crypt\Common\SymmetricKey::MODE_CBC);
         $cipher->disablePadding();
         $cipher->setBlockLength(256);
         $cipher->setKey($key);
@@ -301,6 +316,12 @@
 
     function osc_decrypt_alert($string) {
         $key = hash("sha256", osc_get_alert_private_key(), true);
+
+        if(Cryptor::Usable()) {
+            return trim(substr(Cryptor::Decrypt($string, $key, 0), 32));
+        }
+
+        // START DEPRECATED : To be removed in future versions
         if(function_exists('mcrypt_module_open')) {
             $cipher = mcrypt_module_open(MCRYPT_RIJNDAEL_256, '', MCRYPT_MODE_CBC, '');
             $cipherText = '';
@@ -309,9 +330,18 @@
                 mcrypt_generic_deinit($cipher);
             }
             return trim(substr($cipherText, 32));
-        };
-        require_once LIB_PATH . 'phpseclib/Crypt/Rijndael.php';
-        $cipher = new Crypt_Rijndael(CRYPT_RIJNDAEL_MODE_CBC);
+        }
+        // END DEPRECATED : To be removed in future versions
+
+        // COMPATIBILITY
+        require_once LIB_PATH . 'phpseclib/autoload.php';
+        require_once LIB_PATH . 'phpseclib/bootstrap.php';
+        $loader = new \Composer\Autoload\ClassLoader();
+        $loader->addPsr4('phpseclib\\', LIB_PATH . 'phpseclib');
+        $loader->register();
+
+
+        $cipher = new phpseclib\Crypt\Rijndael(phpseclib\Crypt\Common\SymmetricKey::MODE_CBC);
         $cipher->disablePadding();
         $cipher->setBlockLength(256);
         $cipher->setKey($key);
@@ -342,18 +372,14 @@
     function osc_random_string($length) {
         $buffer = '';
         $buffer_valid = false;
-        if (function_exists('mcrypt_create_iv') && !defined('PHALANGER')) {
-            $buffer = mcrypt_create_iv($length, MCRYPT_DEV_URANDOM);
-            if ($buffer) {
-                $buffer_valid = true;
-            }
-        }
-        if (!$buffer_valid && function_exists('openssl_random_pseudo_bytes')) {
+
+        if (function_exists('openssl_random_pseudo_bytes')) {
             $buffer = openssl_random_pseudo_bytes($length);
             if ($buffer) {
                 $buffer_valid = true;
             }
         }
+
         if (!$buffer_valid && is_readable('/dev/urandom')) {
             $f = fopen('/dev/urandom', 'r');
             $read = strlen($buffer);
@@ -366,6 +392,16 @@
                 $buffer_valid = true;
             }
         }
+
+        // START DEPRECATED: To be removed in future releases
+        if (!$buffer_valid && function_exists('mcrypt_create_iv') && !defined('PHALANGER')) {
+            $buffer = mcrypt_create_iv($length, MCRYPT_DEV_URANDOM);
+            if ($buffer) {
+                $buffer_valid = true;
+            }
+        }
+        // END DEPRECATED: To be removed in future releases
+
         if (!$buffer_valid || strlen($buffer) < $length) {
             $bl = strlen($buffer);
             for ($i = 0; $i < $length; $i++) {
@@ -376,6 +412,7 @@
                 }
             }
         }
+
         if(!$buffer_valid) {
             $buffer = osc_genRandomPassword(2*$length);
         }

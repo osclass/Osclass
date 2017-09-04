@@ -75,9 +75,8 @@
                             if(data.error==1) {
                                 $('#connect_form').show();
                                 $('#connect_wait').hide();
-                                alert(data.msg);
                                 var flash = $("#flash_js");
-                                var message = $('<div>').addClass('pubMessages').addClass(class_type).attr('id', 'flashmessage').html(data.msg);
+                                var message = $('<div>').addClass('pubMessages').addClass(class_type).attr('id', 'flashmessage').text(data.msg);
                                 flash.html(message);
                                 $("#flashmessage").slideDown('slow').delay(3000).slideUp('slow');
                             } else {
@@ -121,9 +120,8 @@
                 $.getJSON(
                     '<?php echo osc_admin_base_url(true); ?>?page=ajax&action=market_header',
                     function(data){
-                        if(data.error==1) {
-                        } else {
-                            $('#content-head div.banner-market').html(data.html);
+                        if(data.error===0) {
+                            $('#content-head div.banner-market').html('<a target="_blank" href="'+oscEscapeHTML(data.url)+'"><img src="'+oscEscapeHTML(data.banner)+'"/></a>');
                         }
                     });
             });

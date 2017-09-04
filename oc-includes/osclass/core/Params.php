@@ -107,7 +107,7 @@
                 return ($_FILES[$param]);
             }
 
-            return "";
+            return array();
         }
 
         static function getParamsAsArray($what = "", $htmlencode = false, $xss_check = true, $quotes_encode = true)

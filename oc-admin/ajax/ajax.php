@@ -123,6 +123,8 @@
                         $result = array( 'ok' => __("Order saved"));
                     }
 
+                    osc_run_hook('edited_category_order', $error);
+
                     echo json_encode($result);
                 break;
                 case 'category_edit_iframe':
@@ -386,6 +388,8 @@
                         }
                     }
 
+                    osc_run_hook('edited_category', (int)($id), $error);
+
                     if($error==0) {
                         $msg = __("Category updated correctly");
                     } else if($error==1) {
@@ -498,7 +502,7 @@
                     }
                     break;
                 case 'check_version':
-                    $data = osc_file_get_contents('http://osclass.org/latest_version_v1.php?callback=?');
+                    $data = osc_file_get_contents('https://osclass.org/latest_version_v1.php?callback=?');
                     $data = preg_replace('|^\?\((.*?)\);$|', '$01', $data);
                     $json = json_decode($data);
                     if(isset($json->version)) {
@@ -626,28 +630,6 @@
                     echo 'var market_data = window.market_data || {}; market_data.'.$section.' = '.json_encode($data).';';
 
                     break;
-                case 'local_market': // AVOID CROSS DOMAIN PROBLEMS OF AJAX REQUEST
-                    $marketPage = Params::getParam("mPage");
-                    if($marketPage>=1) $marketPage--;
-
-                    $out    = osc_file_get_contents(osc_market_url(Params::getParam("section"))."page/".$marketPage, array('api_key' => osc_market_api_connect()));
-                    $array  = json_decode($out, true);
-                    // do pagination
-                    $pageActual = $array['page'];
-                    $totalPages = ceil( $array['total'] / $array['sizePage'] );
-                    $params     = array(
-                        'total'    => $totalPages,
-                        'selected' => $pageActual,
-                        'url'      => '#{PAGE}',
-                        'sides'    => 5
-                    );
-                    // set pagination
-                    $pagination = new Pagination($params);
-                    $aux = $pagination->doPagination();
-                    $array['pagination_content'] = $aux;
-                    // encode to json
-                    echo json_encode($array);
-                    break;
                 case 'market_connect':
                     $json = osc_file_get_contents(osc_market_url() . 'connect/', array('s_email' => Params::getParam('s_email'), 's_password' => Params::getParam('s_password')));
                     $data = json_decode($json, true);
@@ -658,42 +640,30 @@
                     }
                     echo $json;
                     break;
+                case 'market_header':
                 case 'dashboardbox_market':
                     $error = 0;
                     // make market call
                     $url = osc_get_preference('marketURL') . 'dashboardbox/';
-
+                    if(Params::getParam("action")=="market_header") {
+                        $url = osc_get_preference('marketURL') . 'market_header/';
+                    }
                     $content = '';
                     if(false===($json=@osc_file_get_contents($url))) {
                         $error = 1;
                     } else {
-                        $content = $json;
+                        $content = json_decode($json, true);
                     }
-                    if($error==1) {
+                    if(!isset($content["banner"]) || !isset($content["url"]) || $error==1) {
                         echo json_encode(array('error' => 1));
                     } else {
                         // replace content with correct urls
-                        $content = str_replace('{URL_MARKET_THEMES}'    , osc_admin_base_url(true).'?page=market&action=themes' , $content);
-                        $content = str_replace('{URL_MARKET_PLUGINS}'   , osc_admin_base_url(true).'?page=market&action=plugins', $content);
-                        echo json_encode(array('html' => $content) );
-                    }
-                    break;
-                case 'market_header':
-                    $error = 0;
-                    // make market call
-                    $url = osc_get_preference('marketURL') . 'market_header/';
-
-                    $content = '';
-                    if(false===($json=@osc_file_get_contents($url))) {
-                        $error = 1;
-                    } else {
-                        $content = $json;
-                    }
-
-                    if($error==1) {
-                        echo json_encode(array('error' => 1));
-                    } else {
-                        echo json_encode(array('html' => $content) );
+                        $content["url"] = str_replace('{URL_MARKET_THEMES}'    , osc_admin_base_url(true).'?page=market&action=themes' , $content["url"]);
+                        $content["url"] = str_replace('{URL_MARKET_PLUGINS}'   , osc_admin_base_url(true).'?page=market&action=plugins', $content["url"]);
+                        $content["url"] = osc_esc_html(osc_sanitize_url($content["url"]));
+                        $content["banner"] = osc_esc_html(osc_sanitize_url($content["banner"]));
+                        $content["error"] = 0;
+                        echo json_encode($content);
                     }
                     break;
                 case 'location_stats':
