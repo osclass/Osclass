@@ -202,7 +202,7 @@
      * @param boolean $required
      * @return boolean
      */
-    function osc_validate_url ($value, $required = false) {
+    function osc_validate_url ($value, $required = false, $get_headers = false) {
         if ($required || mb_strlen($value, 'UTF-8') > 0) {
             $value = osc_sanitize_url($value);
             if(!function_exists('filter_var')) {
@@ -211,9 +211,11 @@
                 $success = filter_var($value, FILTER_VALIDATE_URL);
             }
             if ($success) {
-                @$headers = get_headers($value);
-                if (!preg_match('/^HTTP\/\d\.\d\s+(200|301|302)/', $headers[0])) {
-                    return false;
+                if($get_headers) {
+                    @$headers = get_headers($value);
+                    if (!preg_match('/^HTTP\/\d\.\d\s+(200|301|302)/', $headers[0])) {
+                        return false;
+                    }
                 }
             } else {
                 return false;
