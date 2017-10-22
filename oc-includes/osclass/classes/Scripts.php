@@ -51,7 +51,7 @@ class Scripts extends Dependencies {
      */
     public function enqueuScript($id)
     {
-        $this->queue[$id] = $id;
+        $this->enqueu($id);
     }
 
     /**
@@ -61,7 +61,7 @@ class Scripts extends Dependencies {
      */
     public function removeScript($id)
     {
-        unset($this->queue[$id]);
+        $this->remove($id);
     }
 
     /**
