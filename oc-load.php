@@ -243,16 +243,16 @@ osc_add_hook('header', 'osc_load_scripts', 10);
 // register scripts
 osc_register_script('jquery', osc_assets_url('js/jquery.min.js'));
 osc_register_script('jquery-ui', osc_assets_url('js/jquery-ui.min.js'), 'jquery');
-osc_register_script('jquery-json', osc_assets_url('js/jquery.json.js'), 'jquery');
-osc_register_script('jquery-treeview', osc_assets_url('js/jquery.treeview.js'), 'jquery');
-osc_register_script('jquery-nested', osc_assets_url('js/jquery.ui.nestedSortable.js'), 'jquery');
+osc_register_script('jquery-json', osc_assets_url('js/jquery.json.min.js'), 'jquery');
+osc_register_script('jquery-treeview', osc_assets_url('js/jquery.treeview.min.js'), 'jquery');
+osc_register_script('jquery-nested', osc_assets_url('js/jquery.ui.nestedSortable.min.js'), 'jquery');
 osc_register_script('jquery-validate', osc_assets_url('js/jquery.validate.min.js'), 'jquery');
 osc_register_script('tabber', osc_assets_url('js/tabber-minimized.js'), 'jquery');
 osc_register_script('tiny_mce', osc_assets_url('js/tinymce/tinymce.min.js'));
 osc_register_script('colorpicker', osc_assets_url('js/colorpicker/js/colorpicker.js'));
 osc_register_script('fancybox', osc_assets_url('js/fancybox/jquery.fancybox.pack.js'), array('jquery'));
 osc_register_script('jquery-migrate', osc_assets_url('js/jquery-migrate.min.js'), array('jquery'));
-osc_register_script('php-date', osc_assets_url('js/date.js'));
+osc_register_script('php-date', osc_assets_url('js/date.min.js'));
 osc_register_script('jquery-fineuploader', osc_assets_url('js/fineuploader/jquery.fineuploader.min.js'), 'jquery');
 
 
