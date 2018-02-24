@@ -345,7 +345,7 @@
                     if($error) {
                         $result = array( 'error' => $message);
                     } else {
-                        $result = array( 'ok' => __("Saved") );
+                        $result = array( 'ok' => $message );
                     }
                     echo json_encode($result);
 
