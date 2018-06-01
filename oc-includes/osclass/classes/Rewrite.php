@@ -189,10 +189,10 @@
             for($var_i = 1;$var_i<$length_i;$var_i++) {
                 parse_str($uri_array[$var_i], $parsedVars);
                 foreach($parsedVars as $k => $v) {
-                    if(is_array($v)) {
-                        Params::setParam($k, $v);
-                    } else {
+                    if(!is_array($v)) {
                         Params::setParam($k, urldecode($v));
+                    } else {
+                        Params::setParam($k, array_map('urldecode', $v));
                     }
                 }
             }
