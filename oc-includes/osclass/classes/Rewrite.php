@@ -189,7 +189,11 @@
             for($var_i = 1;$var_i<$length_i;$var_i++) {
                 parse_str($uri_array[$var_i], $parsedVars);
                 foreach($parsedVars as $k => $v) {
-                    Params::setParam($k, urldecode($v));
+                    if(is_array($v)) {
+                        Params::setParam($k, $v);
+                    } else {
+                        Params::setParam($k, urldecode($v));
+                    }
                 }
             }
         }
