@@ -152,7 +152,7 @@ function meta_title() {
         break;
         case('login'):
             switch ($section) {
-                case('recover'): $text = __('Recover your password');
+                case('recover'): $text = __('Recover your password'); break;
                 default:         $text = __('Login');
             }
         break;
