@@ -248,7 +248,7 @@
             <form method="get" action="<?php echo osc_admin_base_url(true); ?>"  class="inline nocsrf">
                 <?php foreach( Params::getParamsAsArray('get') as $key => $value ) { ?>
                 <?php if( $key != 'iDisplayLength' ) { ?>
-                <input type="hidden" name="<?php echo $key; ?>" value="<?php echo osc_esc_html($value); ?>" />
+                <input type="hidden" name="<?php echo osc_esc_html($key); ?>" value="<?php echo osc_esc_html($value); ?>" />
                 <?php } } ?>
                 <select name="iDisplayLength" class="select-box-extra select-box-medium float-left" onchange="this.form.submit();" >
                     <option value="10"><?php printf(__('%d Users'), 10); ?></option>
