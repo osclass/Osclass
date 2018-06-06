@@ -153,6 +153,7 @@ function meta_title() {
         case('login'):
             switch ($section) {
                 case('recover'): $text = __('Recover your password'); break;
+                case('forgot'):  $text = __('Recover my password'); break;
                 default:         $text = __('Login');
             }
         break;
@@ -169,7 +170,6 @@ function meta_title() {
                 case('change_email'):    $text = __('Change my email'); break;
                 case('change_username'): $text = __('Change my username'); break;
                 case('change_password'): $text = __('Change my password'); break;
-                case('forgot'):          $text = __('Recover my password'); break;
             }
         break;
         case('contact'):
