@@ -17,6 +17,7 @@
 
 
 require_once dirname(dirname(__FILE__)) . '/htmlpurifier/HTMLPurifier.auto.php';
+require_once dirname(dirname(__FILE__)) . '/osclass/compatibility.php';
 function _purify($value, $xss_check)
 {
     if( !$xss_check ) {
@@ -641,7 +642,6 @@ function finish_installation( $password ) {
     require_once LIB_PATH . 'osclass/model/Category.php';
     require_once LIB_PATH . 'osclass/model/Item.php';
     require_once LIB_PATH . 'osclass/helpers/hPlugins.php';
-    require_once LIB_PATH . 'osclass/compatibility.php';
     require_once LIB_PATH . 'osclass/classes/Plugins.php';
 
     $data = array();
