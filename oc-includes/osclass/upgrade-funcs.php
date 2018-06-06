@@ -526,6 +526,8 @@ CREATE TABLE %st_item_description_tmp (
     }
 
     if(osc_version() < 374) {
+        osc_set_preference('marketURL', 'https://market.osclass.org/api/v3/');
+        osc_changeVersionTo(374);
         $admin = Admin::newInstance()->findByEmail('demo@demo.com');
         if(isset($admin['pk_i_id'])) {
             Admin::newInstance()->deleteByPrimaryKey($admin['pk_i_id']);
@@ -558,7 +560,6 @@ CREATE TABLE %st_item_description_tmp (
                 error_log($e);
             }
         }
-        osc_set_preference('marketURL', 'http://market.osclass.org/api/v3/');
     }
 
     osc_changeVersionTo(374);
