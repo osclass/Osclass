@@ -168,7 +168,7 @@
             // DEPRECATED: pre_item_post will be removed in 3.4
             osc_run_hook('pre_item_post');
             osc_run_hook('pre_item_add', $aItem, $flash_error);
-            osc_apply_filter('pre_item_add_error', $flash_error, $aItem);
+            $flash_error = osc_apply_filter('pre_item_add_error', $flash_error, $aItem);
 
             // Handle error
             if ($flash_error) {
@@ -373,7 +373,7 @@
             // DEPRECATED : preitem_psot will be removed in 3.4
             osc_run_hook('pre_item_post');
             osc_run_hook('pre_item_edit', $aItem, $flash_error);
-            osc_apply_filter('pre_item_edit_error', $flash_error, $aItem);
+            $flash_error = osc_apply_filter('pre_item_edit_error', $flash_error, $aItem);
 
             // Handle error
             if ($flash_error) {
