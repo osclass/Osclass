@@ -138,6 +138,7 @@
                         break;
                     }
                 }
+
                 if(!$route_used) {
                     if(osc_rewrite_enabled()) {
                         $tmp_ar = explode("?", $request_uri);
@@ -162,8 +163,10 @@
                                 break;
                             }
                         }
+
+                        $this->extractParams($request_uri);
                     }
-                    $this->extractParams($request_uri);
+
                     $this->request_uri = $request_uri;
 
                     if(Params::getParam('page')!='') { $this->location = Params::getParam('page'); };
