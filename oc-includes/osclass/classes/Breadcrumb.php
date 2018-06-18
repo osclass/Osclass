@@ -134,7 +134,16 @@
                             }
 
                             if( $b_city ) {
-                                $aCity = City::newInstance()->findByName($city);
+                                $aCity = array();
+                                if($b_region) {
+                                    $_region = Region::newInstance()->findByName($region);
+                                    if(isset($_region['pk_i_id'])) {
+                                        $aCity = City::newInstance()->findByName($city, $_region['pk_i_id']);
+                                    }
+                                } else {
+                                    $aCity = City::newInstance()->findByName($city);
+                                }
+
                                 if( count($aCity) == 0 ) {
                                     $params['sCity'] = $city;
                                     $l = array(
