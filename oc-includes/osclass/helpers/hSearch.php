@@ -335,7 +335,7 @@
      * @params array $params
      * @return string
      */
-    function osc_search_url($params = null) {
+    function osc_search_url($params = array()) {
         if(is_array($params)) {
             osc_prune_array($params);
         }
