@@ -29,10 +29,10 @@
             switch($this->action) {
                 case('media'):
                     // calling the media view
-                    $max_upload   = (int)( ini_get('upload_max_filesize') );
-                    $max_post     = (int)( ini_get('post_max_size') );
-                    $memory_limit = (int)( ini_get('memory_limit') );
-                    $upload_mb    = min($max_upload, $max_post, $memory_limit) * 1024;
+                    $max_upload   = $this->_sizeToKB( ini_get('upload_max_filesize') );
+                    $max_post     = $this->_sizeToKB( ini_get('post_max_size') );
+                    $memory_limit = $this->_sizeToKB( ini_get('memory_limit') );
+                    $upload_mb    = min($max_upload, $max_post, $memory_limit);
 
                     $this->_exportVariableToView('max_size_upload', $upload_mb);
                     $this->doView('settings/media.php');
@@ -224,6 +224,27 @@
                     $this->redirectTo(osc_admin_base_url(true).'?page=settings&action=media');
                 break;
             }
+        }
+
+        function _sizeToKB($sSize)
+        {
+            $sSuffix = strtoupper(substr($sSize, -1));
+            if (!in_array($sSuffix,array('P','T','G','M','K'))){
+                return (int)$sSize;
+            }
+            $iValue = substr($sSize, 0, -1);
+            switch ($sSuffix) {
+                case 'P':
+                    $iValue *= 1024;
+                case 'T':
+                    $iValue *= 1024;
+                case 'G':
+                    $iValue *= 1024;
+                case 'M':
+                    $iValue *= 1024;
+                    break;
+            }
+            return (int)$iValue;
         }
     }
 
