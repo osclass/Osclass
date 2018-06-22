@@ -106,8 +106,8 @@ function osc_show_widgets_by_description($description) {
  * @return void
  */
 function osc_show_recaptcha($section = '') {
-    if(osc_recaptcha_version()=="2") {
-        if( osc_recaptcha_public_key() ) {
+    if( osc_recaptcha_public_key() ) {
+        if(osc_recaptcha_version()=="2") {
             switch($section) {
                 case('recover_password'):
                     Session::newInstance()->_set('recover_captcha_not_set',0);
@@ -124,9 +124,7 @@ function osc_show_recaptcha($section = '') {
                     echo _osc_recaptcha_get_html(osc_recaptcha_public_key(), substr(osc_language(), 0, 2))."<br />";
                     break;
             }
-        }
-    } else {
-        if( osc_recaptcha_public_key() ) {
+        } else {
             require_once osc_lib_path() . 'recaptchalib.php';
             switch($section) {
                 case('recover_password'):
