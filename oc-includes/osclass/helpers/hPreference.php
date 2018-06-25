@@ -78,9 +78,9 @@
     }
 
     /**
-     * Gets comments per page
+     * Gets timezone
      *
-     * @return int
+     * @return string
      */
     function osc_timezone() {
         return (getPreference('timezone'));
