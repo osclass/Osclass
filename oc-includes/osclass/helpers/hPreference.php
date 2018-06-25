@@ -29,7 +29,7 @@
      * @return int
      */
     function osc_time_cookie() {
-        return ( 31536000 ); // one year in seconds
+        return (int)( 31536000 ); // one year in seconds
     }
 
     /**
@@ -74,7 +74,7 @@
      * @return int
      */
     function osc_warn_expiration() {
-        return (getPreference('warn_expiration'));
+        return (int)(getPreference('warn_expiration'));
     }
 
     /**
@@ -245,7 +245,7 @@
      * @return int
      */
     function osc_items_wait_time() {
-        return (getPreference('items_wait_time'));
+        return (int)(getPreference('items_wait_time'));
     }
 
     /**
@@ -290,7 +290,7 @@
      * @return int
      */
     function osc_max_images_per_item() {
-        return (getPreference('numImages@items'));
+        return (int)(getPreference('numImages@items'));
     }
 
     /**
@@ -402,7 +402,7 @@
      * @return int
      */
     function osc_max_size_kb() {
-        return (getPreference('maxSizeKb'));
+        return (int)(getPreference('maxSizeKb'));
     }
 
     /**
@@ -429,7 +429,7 @@
      * @return string
      */
     function osc_thumbnail_dimensions() {
-        return (getPreference('dimThumbnail'));
+        return (int)(getPreference('dimThumbnail'));
     }
 
     /**
@@ -438,7 +438,7 @@
      * @return string
      */
     function osc_preview_dimensions() {
-        return (getPreference('dimPreview'));
+        return (int)(getPreference('dimPreview'));
     }
 
     /**
@@ -447,7 +447,7 @@
      * @return string
      */
     function osc_normal_dimensions() {
-        return (getPreference('dimNormal'));
+        return (int)(getPreference('dimNormal'));
     }
 
     /**
@@ -456,7 +456,7 @@
      * @return string
      */
     function osc_last_version_check() {
-        return (getPreference('last_version_check'));
+        return (int)(getPreference('last_version_check'));
     }
 
     /**
@@ -465,7 +465,7 @@
      * @return string
      */
     function osc_themes_last_version_check() {
-        return (getPreference('themes_last_version_check'));
+        return (int)(getPreference('themes_last_version_check'));
     }
 
     /**
@@ -474,7 +474,7 @@
      * @return string
      */
     function osc_plugins_last_version_check() {
-        return (getPreference('plugins_last_version_check'));
+        return (int)(getPreference('plugins_last_version_check'));
     }
 
     /**
@@ -483,7 +483,7 @@
      * @return string
      */
     function osc_languages_last_version_check() {
-        return (getPreference('languages_last_version_check'));
+        return (int)(getPreference('languages_last_version_check'));
     }
 
     /**
@@ -501,7 +501,7 @@
      * @return int
      */
     function osc_version() {
-        return (getPreference('version'));
+        return (int)(getPreference('version'));
     }
 
     /**
@@ -519,7 +519,7 @@
      * @return string
      */
     function osc_language() {
-        return(getPreference('language'));
+        return (getPreference('language'));
     }
 
     /**
@@ -528,7 +528,7 @@
      * @return string
      */
     function osc_admin_language() {
-        return(getPreference('admin_language'));
+        return (getPreference('admin_language'));
     }
 
     /**
@@ -537,7 +537,7 @@
      * @return string
      */
     function osc_theme() {
-        return(getPreference('theme'));
+        return (getPreference('theme'));
     }
 
     /**
@@ -546,7 +546,7 @@
      * @return string
      */
     function osc_admin_theme() {
-        return(getPreference('admin_theme'));
+        return (getPreference('admin_theme'));
     }
 
     /**
@@ -555,7 +555,7 @@
      * @return string
      */
     function osc_page_description() {
-        return(getPreference('pageDesc'));
+        return (getPreference('pageDesc'));
     }
 
     /**
@@ -564,7 +564,7 @@
      * @return string
      */
     function osc_contact_email() {
-        return(getPreference('contactEmail'));
+        return (getPreference('contactEmail'));
     }
 
     /**
@@ -573,7 +573,7 @@
      * @return string
      */
     function osc_date_format() {
-        return(getPreference('dateFormat'));
+        return (getPreference('dateFormat'));
     }
 
     /**
@@ -582,7 +582,7 @@
      * @return string
      */
     function osc_time_format() {
-        return(getPreference('timeFormat'));
+        return (getPreference('timeFormat'));
     }
 
     /**
@@ -591,7 +591,7 @@
      * @return string
      */
     function osc_week_starts_at() {
-        return(getPreference('weekStart'));
+        return (getPreference('weekStart'));
     }
 
     /**
@@ -600,7 +600,7 @@
      * @return int
      */
     function osc_num_rss_items() {
-        return(getPreference('num_rss_items'));
+        return (int)(getPreference('num_rss_items'));
     }
 
     /**
@@ -609,7 +609,7 @@
      * @return string
      */
     function osc_currency() {
-        return(getPreference('currency'));
+        return (getPreference('currency'));
     }
 
     /**
@@ -675,7 +675,7 @@
      * @return string
      */
     function osc_market_api_connect() {
-        return(getPreference('marketAPIConnect'));
+        return (getPreference('marketAPIConnect'));
     }
 
     /**
@@ -721,7 +721,7 @@
      * @return int
      */
     function osc_market_external_sources() {
-        return(getBoolPreference('marketAllowExternalSources'));
+        return (getBoolPreference('marketAllowExternalSources'));
     }
 
     /**
@@ -730,7 +730,7 @@
      * @return int
      */
     function osc_market_categories() {
-        return(getPreference('marketCategories'));
+        return (getPreference('marketCategories'));
     }
 
     /**
@@ -739,7 +739,7 @@
      * @return int
      */
     function osc_market_data_update() {
-        return(getPreference('marketDataUpdate'));
+        return (getPreference('marketDataUpdate'));
     }
 
     /**
@@ -748,7 +748,7 @@
      * @return string
      */
     function osc_recaptcha_public_key() {
-        return(getPreference('recaptchaPubKey'));
+        return (getPreference('recaptchaPubKey'));
     }
 
     /**
@@ -757,7 +757,7 @@
      * @return string
      */
     function osc_mailserver_type() {
-        return(getPreference('mailserver_type'));
+        return (getPreference('mailserver_type'));
     }
 
     /**
@@ -766,7 +766,7 @@
      * @return string
      */
     function osc_mailserver_host() {
-        return(getPreference('mailserver_host'));
+        return (getPreference('mailserver_host'));
     }
 
     /**
@@ -775,7 +775,7 @@
      * @return int
      */
     function osc_mailserver_port() {
-        return(getPreference('mailserver_port'));
+        return (int)(getPreference('mailserver_port'));
     }
 
     /**
@@ -784,7 +784,7 @@
     * @return string
     */
     function osc_mailserver_mail_from() {
-        return(getPreference('mailserver_mail_from'));
+        return (getPreference('mailserver_mail_from'));
     }
 
     /**
@@ -793,7 +793,7 @@
     * @return string
     */
     function osc_mailserver_name_from() {
-        return(getPreference('mailserver_name_from'));
+        return (getPreference('mailserver_name_from'));
     }
 
     /**
@@ -802,7 +802,7 @@
      * @return string
      */
     function osc_mailserver_username() {
-        return(getPreference('mailserver_username'));
+        return (getPreference('mailserver_username'));
     }
 
     /**
@@ -811,7 +811,7 @@
      * @return string
      */
     function osc_mailserver_password() {
-        return(getPreference('mailserver_password'));
+        return (getPreference('mailserver_password'));
     }
 
     /**
@@ -820,7 +820,7 @@
      * @return boolean
      */
     function osc_mailserver_ssl() {
-        return(getPreference('mailserver_ssl'));
+        return (getPreference('mailserver_ssl'));
     }
 
     /**
@@ -829,7 +829,7 @@
      * @return string
      */
     function osc_active_plugins() {
-        return(getPreference('active_plugins'));
+        return (getPreference('active_plugins'));
     }
 
     /**
@@ -838,7 +838,7 @@
      * @return string
      */
     function osc_installed_plugins() {
-        return(getPreference('installed_plugins'));
+        return (getPreference('installed_plugins'));
     }
 
     /**
@@ -847,7 +847,7 @@
      * @return string
      */
     function osc_default_order_field_at_search() {
-        return(getPreference('defaultOrderField@search'));
+        return (getPreference('defaultOrderField@search'));
     }
 
     /**
@@ -856,7 +856,7 @@
      * @return string
      */
     function osc_default_order_type_at_search() {
-        return(getPreference('defaultOrderType@search'));
+        return (getPreference('defaultOrderType@search'));
     }
 
     /**
@@ -865,7 +865,7 @@
      * @return string
      */
     function osc_default_show_as_at_search() {
-        return(getPreference('defaultShowAs@search'));
+        return (getPreference('defaultShowAs@search'));
     }
 
     /**
@@ -874,7 +874,7 @@
      * @return int
      */
     function osc_max_results_per_page_at_search() {
-        return(getPreference('maxResultsPerPage@search'));
+        return (int)(getPreference('maxResultsPerPage@search'));
     }
 
     /**
@@ -883,7 +883,7 @@
      * @return int
      */
     function osc_default_results_per_page_at_search() {
-        return(getPreference('defaultResultsPerPage@search'));
+        return (int)(getPreference('defaultResultsPerPage@search'));
     }
 
     /**
@@ -892,7 +892,7 @@
      * @return int
      */
     function osc_max_latest_items() {
-        return(getPreference('maxLatestItems@home'));
+        return (int)(getPreference('maxLatestItems@home'));
     }
 
     /**
@@ -901,11 +901,11 @@
      * @return boolean
      */
     function osc_save_latest_searches() {
-        return(getBoolPreference('save_latest_searches'));
+        return (getBoolPreference('save_latest_searches'));
     }
 
     function osc_purge_latest_searches() {
-        return(getPreference('purge_latest_searches'));
+        return (getPreference('purge_latest_searches'));
     }
 
     /**
@@ -914,7 +914,7 @@
      * @return int
      */
     function osc_item_spam_delay() {
-        return 60; // need to be changed
+        return (int)60; // need to be changed
     }
 
     /**
@@ -923,7 +923,7 @@
      * @return int
      */
     function osc_comment_spam_delay() {
-        return 60; // need to be changed
+        return (int)60; // need to be changed
     }
 
     /**
@@ -932,7 +932,7 @@
      * @return boolean
      */
     function osc_selectable_parent_categories() {
-        return(getPreference('selectable_parent_categories'));
+        return (getPreference('selectable_parent_categories'));
     }
 
     /**
@@ -941,7 +941,7 @@
      * @return int
      */
     function osc_max_latest_items_at_home() {
-        return(getPreference('maxLatestItems@home'));
+        return (int)(getPreference('maxLatestItems@home'));
     }
 
     /**
