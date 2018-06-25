@@ -177,7 +177,7 @@ function osc_format_date($date, $dateformat = null) {
 
 
 /**
- * Scapes letters and numbers of a string
+ * Escapes letters and numbers of a string
  *
  * @since 2.4
  * @param string $string
