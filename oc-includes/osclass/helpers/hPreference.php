@@ -74,7 +74,7 @@
      * @return int
      */
     function osc_warn_expiration() {
-        return (getPreference('warn_expiration'));
+        return (int)(getPreference('warn_expiration'));
     }
 
     /**
