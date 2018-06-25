@@ -775,7 +775,7 @@
      * @return int
      */
     function osc_mailserver_port() {
-        return (getPreference('mailserver_port'));
+        return (int)(getPreference('mailserver_port'));
     }
 
     /**
