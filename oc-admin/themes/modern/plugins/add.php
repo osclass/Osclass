@@ -67,7 +67,7 @@
             <p class="text">
                 <?php _e('To make the directory writable under UNIX execute this command from the shell:'); ?>
             </p>
-            <pre>chmod a+w <?php echo osc_plugins_path(); ?></pre>
+            <pre>chmod 0755 <?php echo osc_plugins_path(); ?></pre>
         <?php } ?>
         </div>
     </div>

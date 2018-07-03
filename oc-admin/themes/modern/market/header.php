@@ -2,7 +2,7 @@
 
     // check requirements
     if( !is_writable( ABS_PATH . 'oc-content/downloads/' ) ) {
-        osc_add_flash_error_message( sprintf(_m('<code>downloads</code> folder has to be writable, i.e.: <code>chmod a+w %soc-content/downloads/</code>'), ABS_PATH), 'admin');
+        osc_add_flash_error_message( sprintf(_m('<code>downloads</code> folder has to be writable, i.e.: <code>chmod 0755 %soc-content/downloads/</code>'), ABS_PATH), 'admin');
     }
 
     // fancybox

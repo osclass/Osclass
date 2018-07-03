@@ -984,7 +984,7 @@ msgstr ""
 
 #: oc-admin/themes/modern/market/header.php:5
 msgid ""
-"<code>downloads</code> folder has to be writable, i.e.: <code>chmod a+w %soc-"
+"<code>downloads</code> folder has to be writable, i.e.: <code>chmod 0755 %soc-"
 "content/downloads/</code>"
 msgstr ""
 

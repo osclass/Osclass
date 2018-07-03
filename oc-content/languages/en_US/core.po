@@ -4476,7 +4476,7 @@ msgstr ""
 msgid ""
 "Your Osclass installation can't be auto-upgraded. Files and folders need to "
 "be writable. You can apply write permissions via SSH with the command "
-"\"chmod -R a+w *\" (without quotes) or via an FTP client, it depends on the "
+"\"chmod -R 0755 *\" (without quotes) or via an FTP client, it depends on the "
 "program so we can not provide more information. You can also upgrade Osclass "
 "by downloading the upgrade package, unzipping it and replacing the files on "
 "your server with the ones in the package."
@@ -5999,7 +5999,7 @@ msgstr ""
 
 #: oc-includes/osclass/install-functions.php:121
 msgid ""
-"<code>uploads</code> folder has to be writable, i.e.: <code>chmod a+w %soc-"
+"<code>uploads</code> folder has to be writable, i.e.: <code>chmod 0755 %soc-"
 "content/uploads/</code>"
 msgstr ""
 
@@ -6019,7 +6019,7 @@ msgstr ""
 
 #: oc-includes/osclass/install-functions.php:131
 msgid ""
-"<code>downloads</code> folder has to be writable, i.e.: <code>chmod a+w %soc-"
+"<code>downloads</code> folder has to be writable, i.e.: <code>chmod 0755 %soc-"
 "content/downloads/</code>"
 msgstr ""
 
@@ -6039,7 +6039,7 @@ msgstr ""
 
 #: oc-includes/osclass/install-functions.php:141
 msgid ""
-"<code>languages</code> folder has to be writable, i.e.: <code>chmod a+w %soc-"
+"<code>languages</code> folder has to be writable, i.e.: <code>chmod 0755 %soc-"
 "content/languages/</code>"
 msgstr ""
 
@@ -6049,7 +6049,7 @@ msgstr ""
 
 #: oc-includes/osclass/install-functions.php:154
 msgid ""
-"<code>config.php</code> file has to be writable, i.e.: <code>chmod a+w "
+"<code>config.php</code> file has to be writable, i.e.: <code>chmod 0755 "
 "%sconfig.php</code>"
 msgstr ""
 
@@ -6058,7 +6058,7 @@ msgid "Root directory is writable"
 msgstr ""
 
 #: oc-includes/osclass/install-functions.php:162
-msgid "Root folder has to be writable, i.e.: <code>chmod a+w %s</code>"
+msgid "Root folder has to be writable, i.e.: <code>chmod 0755 %s</code>"
 msgstr ""
 
 #: oc-includes/osclass/install-functions.php:168

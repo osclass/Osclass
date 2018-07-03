@@ -70,7 +70,7 @@ function osc_deleteResource( $id , $admin) {
 }
 
 /**
- * Tries to delete the directory recursivaly.
+ * Tries to delete the directory recursively.
  * @return true on success.
  */
 function osc_deleteDir($path) {
@@ -90,7 +90,7 @@ function osc_deleteDir($path) {
     while ($file = @readdir($fd)) {
         if ($file != '.' && $file != '..') {
             if (!is_dir($path . '/' . $file)) {
-                @chmod($path."/".$file, 0777);
+                @chmod($path."/".$file, 0755);
                 if (!@unlink($path . '/' . $file)) {
                     closedir($fd);
                     return false;
@@ -975,7 +975,7 @@ function osc_unzip_file($file, $to) {
         }
     }
 
-    @chmod($to, 0777);
+    @chmod($to, 0755);
 
     if (!is_writable($to)) {
         return 0;
@@ -1280,7 +1280,7 @@ function osc_change_permissions( $dir = ABS_PATH ) {
             if($file!="." && $file!=".." && substr($file,0,1)!="." ) {
                 if(is_dir(str_replace("//", "/", $dir . "/" . $file))) {
                     if(!is_writable(str_replace("//", "/", $dir . "/" . $file))) {
-                        $res = @chmod( str_replace("//", "/", $dir . "/" . $file), 0777);
+                        $res = @chmod( str_replace("//", "/", $dir . "/" . $file), 0755);
                         if(!$res) { return false; };
                     }
                     if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/themes")) {
@@ -1306,7 +1306,7 @@ function osc_change_permissions( $dir = ABS_PATH ) {
                     }
                 } else {
                     if(!is_writable(str_replace("//", "/", $dir . "/" . $file))) {
-                        return @chmod( str_replace("//", "/", $dir . "/" . $file), 0777);
+                        return @chmod( str_replace("//", "/", $dir . "/" . $file), 0755);
                     } else {
                         return true;
                     }

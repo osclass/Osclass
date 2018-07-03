@@ -119,7 +119,7 @@ function get_requirements( ) {
         'Folder <code>oc-content/uploads</code> is writable' => array(
             'requirement' => __('<code>oc-content/uploads</code> folder is writable'),
             'fn' => is_writable( ABS_PATH . 'oc-content/uploads/' ),
-            'solution' => sprintf(__('<code>uploads</code> folder has to be writable, i.e.: <code>chmod a+w %soc-content/uploads/</code>'), ABS_PATH)),
+            'solution' => sprintf(__('<code>uploads</code> folder has to be writable, i.e.: <code>chmod 0755 %soc-content/uploads/</code>'), ABS_PATH)),
         // oc-content/downlods
         'Folder <code>oc-content/downloads</code> exists' => array(
             'requirement' => __('Folder <code>oc-content/downloads</code> exists'),
@@ -129,7 +129,7 @@ function get_requirements( ) {
         'Folder <code>oc-content/downloads</code> is writable' => array(
             'requirement' => __('<code>oc-content/downloads</code> folder is writable'),
             'fn' => is_writable( ABS_PATH . 'oc-content/downloads/' ),
-            'solution' => sprintf(__('<code>downloads</code> folder has to be writable, i.e.: <code>chmod a+w %soc-content/downloads/</code>'), ABS_PATH)),
+            'solution' => sprintf(__('<code>downloads</code> folder has to be writable, i.e.: <code>chmod 0755 %soc-content/downloads/</code>'), ABS_PATH)),
         // oc-content/languages
         'Folder <code>oc-content/languages</code> exists' => array(
             'requirement' => __('Folder <code>oc-content/languages</code> folder exists'),
@@ -139,7 +139,7 @@ function get_requirements( ) {
         'Folder <code>oc-content/languages</code> is writable' => array(
             'requirement' => __('<code>oc-content/languages</code> folder is writable'),
             'fn' => is_writable( ABS_PATH . 'oc-content/languages/' ),
-            'solution' => sprintf(__('<code>languages</code> folder has to be writable, i.e.: <code>chmod a+w %soc-content/languages/</code>'), ABS_PATH)),
+            'solution' => sprintf(__('<code>languages</code> folder has to be writable, i.e.: <code>chmod 0755 %soc-content/languages/</code>'), ABS_PATH)),
     );
 
     $config_writable = false;
@@ -152,7 +152,7 @@ function get_requirements( ) {
         $array['File <code>config.php</code> is writable'] = array(
             'requirement' => __('<code>config.php</code> file is writable'),
             'fn' => $config_writable,
-            'solution' => sprintf(__('<code>config.php</code> file has to be writable, i.e.: <code>chmod a+w %sconfig.php</code>'), ABS_PATH));
+            'solution' => sprintf(__('<code>config.php</code> file has to be writable, i.e.: <code>chmod 0755 %sconfig.php</code>'), ABS_PATH));
     } else {
         if (is_writable(ABS_PATH) ) {
             $root_writable = true;
@@ -160,7 +160,7 @@ function get_requirements( ) {
         $array['Root directory is writable'] = array(
             'requirement' => __('Root directory is writable'),
             'fn' => $root_writable,
-            'solution' => sprintf(__('Root folder has to be writable, i.e.: <code>chmod a+w %s</code>'), ABS_PATH));
+            'solution' => sprintf(__('Root folder has to be writable, i.e.: <code>chmod 0755 %s</code>'), ABS_PATH));
 
         if( file_exists(ABS_PATH . 'config-sample.php') ) {
             $config_sample = true;
