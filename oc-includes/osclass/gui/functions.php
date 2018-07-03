@@ -24,7 +24,7 @@
 DEFINES
 
 */
-    define('BENDER_THEME_VERSION', '314');
+    define('BENDER_THEME_VERSION', '315');
     if( (string)osc_get_preference('keyword_placeholder', 'bender')=="" ) {
         Params::setParam('keyword_placeholder', __('ie. PHP Programmer', 'bender') ) ;
     }
@@ -74,7 +74,7 @@ FUNCTIONS
             $temp_name     = WebThemes::newInstance()->getCurrentThemePath() . 'images/logo.jpg';
             if( file_exists( $temp_name ) && !$logo_prefence) {
 
-                $img = ImageProcessing::fromFile($temp_name);
+                $img = ImageResizer::fromFile($temp_name);
                 $ext = $img->getExt();
                 $logo_name .= '.'.$ext;
                 $img->saveToFile(osc_uploads_path().$logo_name);
@@ -87,7 +87,7 @@ FUNCTIONS
                 osc_set_preference('defaultLocationShowAs', 'dropdown', 'bender');
                 osc_set_preference('version', '313', 'bender');
             }
-            osc_set_preference('version', '314', 'bender');
+            osc_set_preference('version', '315', 'bender');
             osc_reset_preferences();
         }
     }
@@ -243,7 +243,7 @@ FUNCTIONS
                     $_name      = osc_category_name();
                     $_total_items = osc_category_total_items();
                     if ( osc_count_subcategories() > 0 ) { ?>
-                    <span class="collapse resp-toogle"><i class="fa fa-caret-right fa-lg"></i></span>
+                    <span class="collapse resp-toggle"><i class="fa fa-caret-right fa-lg"></i></span>
                     <?php } ?>
                     <?php if($_total_items > 0) { ?>
                     <a class="category <?php echo $_slug; ?>" href="<?php echo $_url; ?>"><?php echo $_name ; ?></a> <span>(<?php echo $_total_items ; ?>)</span>
@@ -521,7 +521,7 @@ FUNCTIONS
             case('upload_logo'):
                 $package = Params::getFiles('logo');
                 if( $package['error'] == UPLOAD_ERR_OK ) {
-                    $img = ImageProcessing::fromFile($package['tmp_name']);
+                    $img = ImageResizer::fromFile($package['tmp_name']);
                     $ext = $img->getExt();
                     $logo_name     = 'bender_logo';
                     $logo_name    .= '.'.$ext;

@@ -37,6 +37,9 @@
     }
 
     $location = array();
+    if( osc_item_address() !== '' ) {
+        $location[] = osc_item_address();
+    }
     if( osc_item_city_area() !== '' ) {
         $location[] = osc_item_city_area();
     }
@@ -116,7 +119,7 @@
             <?php if( !osc_item_is_expired () ) { ?>
             <?php if( !( ( osc_logged_user_id() == osc_item_user_id() ) && osc_logged_user_id() != 0 ) ) { ?>
                 <?php     if(osc_reg_user_can_contact() && osc_is_web_user_logged_in() || !osc_reg_user_can_contact() ) { ?>
-                    <a href="#contact" class="ui-button ui-button-middle ui-button-main resp-toogle"><?php _e('Contact seller', 'bender'); ?></a>
+                    <a href="#contact" class="ui-button ui-button-middle ui-button-main resp-toggle"><?php _e('Contact seller', 'bender'); ?></a>
                 <?php     } ?>
             <?php     } ?>
             <?php } ?>

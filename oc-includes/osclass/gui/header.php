@@ -80,7 +80,7 @@
                 <button class="ui-button ui-button-big js-submit"><?php _e("Search", 'bender');?></button>
             </div>
         </div>
-        <div id="message-seach"></div>
+        <div id="message-search"></div>
     </form>
     <?php } ?>
 </div>
