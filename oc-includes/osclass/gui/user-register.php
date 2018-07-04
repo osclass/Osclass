@@ -38,13 +38,23 @@
             <div class="control-group">
                 <label class="control-label" for="name"><?php _e('Name', 'bender'); ?></label>
                 <div class="controls">
-                    <?php UserForm::name_text(); ?>
+                    <?php
+                    $user_s_name = '';
+                    if( Session::newInstance()->_getForm('user_s_name') != '' ) {
+                        $user_s_name = Session::newInstance()->_getForm('user_s_name');
+                    }
+                    UserForm::name_text(array('s_name' => $user_s_name)); ?>
                 </div>
             </div>
             <div class="control-group">
                 <label class="control-label" for="email"><?php _e('E-mail', 'bender'); ?></label>
                 <div class="controls">
-                    <?php UserForm::email_text(); ?>
+                    <?php 
+                    $user_s_email = '';
+                    if( Session::newInstance()->_getForm('user_s_email') != '' ) {
+                        $user_s_email = Session::newInstance()->_getForm('user_s_email');
+                    }
+                    UserForm::email_text(array('s_email' => $user_s_email)); ?>
                 </div>
             </div>
             <div class="control-group">
