@@ -98,7 +98,10 @@
 
             $this->manager->insert($input);
             $userId = $this->manager->dao->insertedId();
-
++            
++           // new hook - post add - passes $userId
++           osc_run_hook('user_post_add', $userId);
+            
             if($input['s_username']=='') {
                 $this->manager->update(
                                  array('s_username' => $userId)
@@ -177,7 +180,9 @@
             if($flash_error!='') {
                 return $flash_error;
             }
-
++            
++           // new hook - post edit - passes $userId
++           osc_run_hook('user_post_edit', $userId);
             $this->manager->update($input, array('pk_i_id' => $userId));
 
             if($this->is_admin) {
