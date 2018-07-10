@@ -159,7 +159,7 @@ switch( $step ) {
                 </div>
                 <div id="content">
                 <?php if($step == 1) { ?>
-                    <h2 class="target"><?php _e('Welcome');?></h2>
+                    <h2 class="target"><?php _e('Welcome');?><a style="font-size:0.7em;padding: 4px 0px;text-decoration: underline;float: right;" href="https://osclass.org/page/hosting">Discover the best hosting providers for Osclass</a></h2>
                     <form action="install.php" method="post">
                         <div class="form-table">
                             <?php if( count($locales) > 1 ) { ?>
@@ -194,15 +194,16 @@ switch( $step ) {
                                 <?php } ?>
                             </ul>
                             <div class="more-stats">
-                                <input type="checkbox" name="ping_engines" id="ping_engines" checked="checked" value="1" />
+                                <input type="checkbox" name="ping_engines" id="ping_engines" value="1" />
                                 <label for="ping_engines">
                                     <?php _e('Allow my site to appear in search engines like Google.');?>
                                 </label>
                                 <br />
-                                <input type="checkbox" name="save_stats" id="save_stats" checked="checked" value="1" />
+                                <input type="checkbox" name="save_stats" id="save_stats" value="1" />
                                 <input type="hidden" name="step" value="2" />
                                 <label for="save_stats">
                                     <?php _e('Help make Osclass better by automatically sending usage statistics and crash reports to Osclass.');?>
+                                    </br><span style="margin-left: 24px;"><?php _e("I accept Osclass SL’s <a href=\"https://osclass.org/page/legal-note\">Terms of Use</a> and <a href=\"https://osclass.org/page/cookies\">Cookies Policy</a> and grant them permission to manage my data."); ?></span>
                                 </label>
                             </div>
                         </div>

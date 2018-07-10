@@ -78,23 +78,17 @@
             <tbody><tr valign="top">
                 <td width="85" style="width: 85px;"><img src="http://static.osclass.org/mailing/20130730/images/t_1.gif" width="85" height="48" alt=""></td>
                 <td width="420" style="width: 420px;">
-                    <div style="font-size:25px;line-height:25px;border-bottom:solid 1px #dbdbdb;padding-bottom:5px;padding-top:5px"><a href="http://osclass.org/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=version_370C&amp;utm_content=sub-title" style="color:#555555;text-decoration:none;">Osclass 3.7 highlights</a></div><img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="420" height="25" alt="">
+                    <div style="font-size:25px;line-height:25px;border-bottom:solid 1px #dbdbdb;padding-bottom:5px;padding-top:5px"><a href="http://osclass.org/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=version_375C&amp;utm_content=sub-title" style="color:#555555;text-decoration:none;">Osclass 3.7.5 highlights</a></div><img src="<?php echo osc_base_url().'oc-includes/osclass/assets/'; ?>images/t.gif" width="420" height="25" alt="">
                     <div style="font-size:13px; line-height:15px;color:#555555;">
                         <ul style="color:#555555;margin: 0;padding: 0;padding-left: 16px; list-style-type: disc !important;">
-                            <li>Improved compatibility with MySQL 5.7</li>
-                            <li>Comment email notification only if comment moderation is disabled</li>
-                            <li>Use https in order to prevent warnings</li>
-                            <li>Remove temporal unremoved files (auto_qqfile_*)</li>
-                            <li>Cron skipping issues has been fixed</li>
-                            <li>Improved market area. Connect your website with <a href="http://market.osclass.org/">Osclass' Market</a></li>
-                            <li>New hooks, pre_item_add_error and pre_item_edit_error. Plugins can add FlashMessages.</li>
-                            <li>Prevent subscribe to searches twice (Alerts)</li>
-                            <li>Increase PHP minimum version to 5.6.0 (for new installations)</li>
-                            <li>Robots.txt overwrite has been fixed</li>
-                            <li>Improved helper function osc_validate_email()</li>
-                            <li>Added new noCaptcha ReCaptcha</li>
-                            <li>Added listings link at item add / item edit (oc-admin)</li>
-                            <li>Minor bug fixes and improvements</li>
+                            <li>Fixed several vulnerabilities found by Zekvan Arslan ( https://www.netsparker.com )</li>
+                            <li>mb_strlen missing at installation has been fixed</li>
+                            <li>meta_title() fixed missing page (recover & forgot)</li>
+                            <li>fixed issue with filter 'pre_item_add_error' </li>
+                            <li>Updated HTML Purifier to 4.10.0</li>
+                            <li>Fixed DateInterval custom field issues</li>
+                            <li>Invalid email address verification on resend password request has been fixed</li>
+                            <li>Minor fixes and improvements</li>
                         </ul>
                     </div>
                 </td>

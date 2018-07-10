@@ -30,7 +30,7 @@
         <h1><?php _e('Access to your account', 'bender'); ?></h1>
     </div>
     <div class="resp-wrapper">
-        <form action="<?php echo osc_base_url(true); ?>" method="post" >
+        <form name="login" id="login" action="<?php echo osc_base_url(true); ?>" method="post" >
             <input type="hidden" name="page" value="login" />
             <input type="hidden" name="action" value="login_post" />
 

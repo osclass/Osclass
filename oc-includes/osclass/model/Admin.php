@@ -185,7 +185,7 @@
             $this->dao->select();
             $this->dao->from($this->getTableName());
             $conditions = array( 'pk_i_id'  => $id,
-                                 's_password' => $secret);
+                                 's_password' => $password);
             $this->dao->where($conditions);
             $result = $this->dao->get();
 

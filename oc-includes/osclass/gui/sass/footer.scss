@@ -28,12 +28,12 @@
     margin-bottom:5px;
     font-size: 0.725em;
 }
-#footer .resp-toogle .publish{
+#footer .resp-toggle .publish{
     padding:0;
     margin:15px 0;
     display: block;
 }
-#footer .resp-toogle .publish a{
+#footer .resp-toggle .publish a{
     @include button-style(complement($maincolor));
     width:100%;
     @include prefixer(box-sizing, border-box, webkit moz ms o spec);

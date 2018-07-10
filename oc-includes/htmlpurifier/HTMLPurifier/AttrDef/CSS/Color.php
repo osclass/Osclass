@@ -6,56 +6,137 @@
 class HTMLPurifier_AttrDef_CSS_Color extends HTMLPurifier_AttrDef
 {
 
-    public function validate($color, $config, $context) {
+    /**
+     * @type HTMLPurifier_AttrDef_CSS_AlphaValue
+     */
+    protected $alpha;
 
+    public function __construct()
+    {
+        $this->alpha = new HTMLPurifier_AttrDef_CSS_AlphaValue();
+    }
+
+    /**
+     * @param string $color
+     * @param HTMLPurifier_Config $config
+     * @param HTMLPurifier_Context $context
+     * @return bool|string
+     */
+    public function validate($color, $config, $context)
+    {
         static $colors = null;
-        if ($colors === null) $colors = $config->get('Core.ColorKeywords');
+        if ($colors === null) {
+            $colors = $config->get('Core.ColorKeywords');
+        }
 
         $color = trim($color);
-        if ($color === '') return false;
+        if ($color === '') {
+            return false;
+        }
 
         $lower = strtolower($color);
-        if (isset($colors[$lower])) return $colors[$lower];
+        if (isset($colors[$lower])) {
+            return $colors[$lower];
+        }
 
-        if (strpos($color, 'rgb(') !== false) {
-            // rgb literal handling
+        if (preg_match('#(rgb|rgba|hsl|hsla)\(#', $color, $matches) === 1) {
             $length = strlen($color);
-            if (strpos($color, ')') !== $length - 1) return false;
-            $triad = substr($color, 4, $length - 4 - 1);
-            $parts = explode(',', $triad);
-            if (count($parts) !== 3) return false;
-            $type = false; // to ensure that they're all the same type
+            if (strpos($color, ')') !== $length - 1) {
+                return false;
+            }
+
+            // get used function : rgb, rgba, hsl or hsla
+            $function = $matches[1];
+
+            $parameters_size = 3;
+            $alpha_channel = false;
+            if (substr($function, -1) === 'a') {
+                $parameters_size = 4;
+                $alpha_channel = true;
+            }
+
+            /*
+             * Allowed types for values :
+             * parameter_position => [type => max_value]
+             */
+            $allowed_types = array(
+                1 => array('percentage' => 100, 'integer' => 255),
+                2 => array('percentage' => 100, 'integer' => 255),
+                3 => array('percentage' => 100, 'integer' => 255),
+            );
+            $allow_different_types = false;
+
+            if (strpos($function, 'hsl') !== false) {
+                $allowed_types = array(
+                    1 => array('integer' => 360),
+                    2 => array('percentage' => 100),
+                    3 => array('percentage' => 100),
+                );
+                $allow_different_types = true;
+            }
+
+            $values = trim(str_replace($function, '', $color), ' ()');
+
+            $parts = explode(',', $values);
+            if (count($parts) !== $parameters_size) {
+                return false;
+            }
+
+            $type = false;
             $new_parts = array();
+            $i = 0;
+
             foreach ($parts as $part) {
+                $i++;
                 $part = trim($part);
-                if ($part === '') return false;
-                $length = strlen($part);
-                if ($part[$length - 1] === '%') {
-                    // handle percents
-                    if (!$type) {
-                        $type = 'percentage';
-                    } elseif ($type !== 'percentage') {
+
+                if ($part === '') {
+                    return false;
+                }
+
+                // different check for alpha channel
+                if ($alpha_channel === true && $i === count($parts)) {
+                    $result = $this->alpha->validate($part, $config, $context);
+
+                    if ($result === false) {
                         return false;
                     }
-                    $num = (float) substr($part, 0, $length - 1);
-                    if ($num < 0) $num = 0;
-                    if ($num > 100) $num = 100;
-                    $new_parts[] = "$num%";
+
+                    $new_parts[] = (string)$result;
+                    continue;
+                }
+
+                if (substr($part, -1) === '%') {
+                    $current_type = 'percentage';
                 } else {
-                    // handle integers
-                    if (!$type) {
-                        $type = 'integer';
-                    } elseif ($type !== 'integer') {
-                        return false;
-                    }
-                    $num = (int) $part;
-                    if ($num < 0) $num = 0;
-                    if ($num > 255) $num = 255;
-                    $new_parts[] = (string) $num;
+                    $current_type = 'integer';
+                }
+
+                if (!array_key_exists($current_type, $allowed_types[$i])) {
+                    return false;
+                }
+
+                if (!$type) {
+                    $type = $current_type;
+                }
+
+                if ($allow_different_types === false && $type != $current_type) {
+                    return false;
+                }
+
+                $max_value = $allowed_types[$i][$current_type];
+
+                if ($current_type == 'integer') {
+                    // Return value between range 0 -> $max_value
+                    $new_parts[] = (int)max(min($part, $max_value), 0);
+                } elseif ($current_type == 'percentage') {
+                    $new_parts[] = (float)max(min(rtrim($part, '%'), $max_value), 0) . '%';
                 }
             }
-            $new_triad = implode(',', $new_parts);
-            $color = "rgb($new_triad)";
+
+            $new_values = implode(',', $new_parts);
+
+            $color = $function . '(' . $new_values . ')';
         } else {
             // hexadecimal handling
             if ($color[0] === '#') {
@@ -65,12 +146,14 @@ class HTMLPurifier_AttrDef_CSS_Color extends HTMLPurifier_AttrDef
                 $color = '#' . $color;
             }
             $length = strlen($hex);
-            if ($length !== 3 && $length !== 6) return false;
-            if (!ctype_xdigit($hex)) return false;
+            if ($length !== 3 && $length !== 6) {
+                return false;
+            }
+            if (!ctype_xdigit($hex)) {
+                return false;
+            }
         }
-
         return $color;
-
     }
 
 }

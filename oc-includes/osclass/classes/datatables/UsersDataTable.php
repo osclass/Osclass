@@ -35,6 +35,7 @@
 
         public function __construct()
         {
+            parent::__construct();
             osc_add_filter('datatable_user_class', array(&$this, 'row_class'));
         }
 

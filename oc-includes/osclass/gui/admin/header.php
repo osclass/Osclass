@@ -85,7 +85,7 @@
             <?php _e('To make a directory writable under UNIX execute this command from the shell:','bender'); ?>
         </p>
         <p class="command">
-            chmod a+w <?php echo WebThemes::newInstance()->getCurrentThemePath() ."images/"; ?>
+            chmod 0755 <?php echo WebThemes::newInstance()->getCurrentThemePath() ."images/"; ?>
         </p>
     </div>
 <?php } ?>

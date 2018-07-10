@@ -75,7 +75,7 @@
                 printf(__('%1$d - %2$d of %3$d listings', 'bender'), $search_number['from'], $search_number['to'], $search_number['of']);
             ?></span>
             <div class="actions">
-              <a href="#" data-bclass-toggle="display-filters" class="resp-toogle show-filters-btn"><?php _e('Show filters','bender'); ?></a>
+              <a href="#" data-bclass-toggle="display-filters" class="resp-toggle show-filters-btn"><?php _e('Show filters','bender'); ?></a>
               <span class="doublebutton <?php echo $buttonClass; ?>">
                    <a href="<?php echo osc_esc_html(osc_update_search_url(array('sShowAs'=> 'list'))); ?>" class="list-button" data-class-toggle="listing-grid" data-destination="#listing-card-list"><span><?php _e('List','bender'); ?></span></a>
                    <a href="<?php echo osc_esc_html(osc_update_search_url(array('sShowAs'=> 'gallery'))); ?>" class="grid-button" data-class-toggle="listing-grid" data-destination="#listing-card-list"><span><?php _e('Grid','bender'); ?></span></a>

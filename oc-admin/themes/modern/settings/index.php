@@ -99,9 +99,9 @@
             {"format" : date_format},
             function(data){
                 if(data.str_formatted!='') {
-                    $("#custom_date").html(' <?php _e('Preview'); ?>: ' + data.str_formatted)
+                    $("#custom_date").text(' <?php _e('Preview'); ?>: ' + data.str_formatted)
                 } else {
-                    $("#custom_date").html('');
+                    $("#custom_date").text('');
                 }
             }
         );
@@ -113,9 +113,9 @@
             {"format" : time_format},
             function(data){
                 if(data.str_formatted!='') {
-                    $("#custom_time").html(' <?php _e('Preview'); ?>: ' + data.str_formatted)
+                    $("#custom_time").text(' <?php _e('Preview'); ?>: ' + data.str_formatted)
                 } else {
-                    $("#custom_time").html('');
+                    $("#custom_time").text('');
                 }
             }
         );

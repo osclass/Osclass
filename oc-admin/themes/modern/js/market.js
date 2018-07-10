@@ -19,9 +19,9 @@ function installMarketItem(thatItem){
             var content  = data.message;
             var messages = theme.langs[marketType];
             if(data.error == 0) { // no errors
-                content += '<h3>'+messages.download_ok+'</h3>';
+                content += '<h3>'+oscEscapeHTML(messages.download_ok)+'</h3>';
                 content += "<p>";
-                content += '<a class="btn btn-mini btn-green" href="'+theme.adminBaseUrl+'?page='+pageRedirect+'&marketError='+data.error+'&slug='+data.data['s_update_url']+'">'+theme.langs.ok+'</a>';
+                content += '<a class="btn btn-mini btn-green" href="'+theme.adminBaseUrl+'?page='+pageRedirect+'&marketError='+oscEscapeHTML(data.error)+'&slug='+oscEscapeHTML(data.data['s_update_url'])+'">'+theme.langs.ok+'</a>';
                 content += '<a class="btn btn-mini" href="javascript:location.reload(true)">'+theme.langs.close+'</a>';
                 content += "</p>";
             } else {
@@ -135,7 +135,7 @@ $(function(){
                             screenshots = '<tr>'
                                 +'<td colspan="3"><h4>'+theme.langs.screenshots+'</h4>';
                                 for(i = 0; i < item.a_images.length; i++){
-                                    screenshots += '<a class="fancybox screenshot" data-fancybox-group="'+item.s_title+'" href="'+item.a_images[i]['s_image']+'" ><img src="'+item.a_images[i]['s_thumbnail']+'" /></a>';
+                                    screenshots += '<a class="fancybox screenshot" data-fancybox-group="'+oscEscapeHTML(item.s_title)+'" href="'+oscEscapeHTML(item.a_images[i]['s_image'])+'" ><img src="'+oscEscapeHTML(item.a_images[i]['s_thumbnail'])+'" /></a>';
                                     if(i == 2) break;
                                 }
                              screenshots += '</td></tr>';
@@ -169,31 +169,37 @@ $(function(){
                         date_mod += _day;
                     }
 
+                    var tmpv = item.s_version.split(" ");
+                    if(tmpv.length>1) {
+                        item.s_version = "<script type=\"text/javascript\">$('.actions').html('This is a pack, go to <a href=\""+theme.adminBaseUrl+"?page=market&action=purchases\">My Purchases</a> to downloads its components.');$('.market-dialog').close();</script>";
+                    } else {
+                        item.s_version = oscEscapeHTML(item.s_version);
+                    }
                     if(item.b_paid==0 && item.s_buy_url!=undefined) {
-                        var actions_text = '<a class="diag-buy diag-buy-btn" data-code="'+item.s_buy_url+'" data-type="'+section+'">'+theme.langs.buy+' v.'+item.s_version+'</a>'
-                            +'<span class="block"><strong>'+theme.langs.requieres_version+'</strong> '+versions[0]+'</span>'
-                            +'<span class="block"><strong>'+theme.langs.compatible_with+'</strong> '+versions[(versions.length-1)]+'</span>'
-                            +'<span class="block"><strong>'+theme.langs.downloads+'</strong> '+item.i_total_downloads+'</span>'
-                            +'<span class="block"><strong>'+theme.langs.last_update+'</strong> '+date_mod+'</span>'
+                        var actions_text = '<a class="diag-buy diag-buy-btn" data-code="'+oscEscapeHTML(item.s_buy_url)+'" data-type="'+section+'">'+theme.langs.buy+' v.'+item.s_version+'</a>'
+                            +'<span class="block"><strong>'+theme.langs.requieres_version+'</strong> '+oscEscapeHTML(versions[0])+'</span>'
+                            +'<span class="block"><strong>'+theme.langs.compatible_with+'</strong> '+oscEscapeHTML(versions[(versions.length-1)])+'</span>'
+                            +'<span class="block"><strong>'+theme.langs.downloads+'</strong> '+oscEscapeHTML(item.i_total_downloads)+'</span>'
+                            +'<span class="block"><strong>'+theme.langs.last_update+'</strong> '+oscEscapeHTML(date_mod)+'</span>'
                             +'<a href="#" data-code="'+item.s_buy_url+'" class="diag-buy-btn manual-buy">'+theme.langs.buy+'</a>';
                     } else {
-                        var actions_text = '<a class="more" data-code="'+item.s_update_url+'" data-type="'+section+'">'+theme.langs.download+' v.'+item.s_version+'</a>'
-                            +'<span class="block"><strong>'+theme.langs.requieres_version+'</strong> '+versions[0]+'</span>'
-                            +'<span class="block"><strong>'+theme.langs.compatible_with+'</strong> '+versions[(versions.length-1)]+'</span>'
-                            +'<span class="block"><strong>'+theme.langs.downloads+'</strong> '+item.i_total_downloads+'</span>'
-                            +'<span class="block"><strong>'+theme.langs.last_update+'</strong> '+date_mod+'</span>'
+                        var actions_text = '<a class="more" data-code="'+oscEscapeHTML(item.s_update_url)+'" data-type="'+section+'">'+theme.langs.download+' v.'+item.s_version+'</a>'
+                            +'<span class="block"><strong>'+theme.langs.requieres_version+'</strong> '+oscEscapeHTML(versions[0])+'</span>'
+                            +'<span class="block"><strong>'+theme.langs.compatible_with+'</strong> '+oscEscapeHTML(versions[(versions.length-1)])+'</span>'
+                            +'<span class="block"><strong>'+theme.langs.downloads+'</strong> '+oscEscapeHTML(item.i_total_downloads)+'</span>'
+                            +'<span class="block"><strong>'+theme.langs.last_update+'</strong> '+oscEscapeHTML(date_mod)+'</span>'
                             +'<a href="'+item.s_source_file+'" class="manual">'+theme.langs.download_manually+'</a>';
                     }
 
                     print = '<div class="mk-item mk-item-'+section+'">'
-                            +'<div class="banner" style="background-image:url('+banner+');">'+str_letter+'</div>'
+                            +'<div class="banner" style="background-image:url('+oscEscapeHTML(banner)+');">'+oscEscapeHTML(str_letter)+'</div>'
                             +'<div class="mk-info">'
                             +'<table>'
                                 +'<tr>'
                                     +'<td style="max-width: 240px;">'
-                                        +'<h3>'+item.s_title+'</h3>'
-                                        +'<i>'+theme.langs.by+' '+item.s_contact_name+'</i>'
-                                        +'<div class="description">'+description.substring(0,150)+dots+'</div>'
+                                        +'<h3>'+oscEscapeHTML(item.s_title)+'</h3>'
+                                        +'<i>'+theme.langs.by+' '+oscEscapeHTML(item.s_contact_name)+'</i>'
+                                        +'<div class="description">'+oscEscapeHTML(description).substring(0,150)+dots+'</div>'
                                         +'<p>'+preview+'</p>'
                                     +'</td>'
                                     +'<td class="spacer">'

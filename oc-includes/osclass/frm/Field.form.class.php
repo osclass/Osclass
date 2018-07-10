@@ -150,8 +150,9 @@ FB;
                             $field['s_value']   = $temp;
                         }
                     } else {
-                        $temp['from']   = Params::getParam('meta['.$field['pk_i_id'].'][from]');
-                        $temp['to']     = Params::getParam('meta['.$field['pk_i_id'].'][to]');
+                        $_meta = Params::getParam('meta');
+                        $temp['from']   = @(int)$_meta[$field['pk_i_id']]['from'];
+                        $temp['to']     = @(int)$_meta[$field['pk_i_id']]['to'];
                         $field['s_value'] = $temp;
                     }
                 }

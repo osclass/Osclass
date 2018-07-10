@@ -83,15 +83,6 @@
                         </div>
                     </div>
                 <?php } ?>
-                <?php if($aux['admin_edit'] && osc_logged_admin_id()==$admin['pk_i_id']) { ?>
-                    <div class="form-row">
-                        <div class="form-label"><?php _e('Current password'); ?></div>
-                        <div class="form-controls">
-                            <?php AdminForm::old_password_text($admin); ?>
-                            <p class="help-inline"><em><?php _e('If you want to change your password, type your current password here. Otherwise, leave this blank.'); ?></em></p>
-                        </div>
-                    </div>
-                <?php } ?>
                 <div class="form-row">
                     <div class="form-label"><?php _e('New password'); ?></div>
                     <div class="form-controls">
@@ -104,6 +95,17 @@
                         </div>
                     <?php } ?>
                 </div>
+
+                <hr/>
+                <div class="form-row">
+                    <div class="form-label"><?php _e('Your current password'); ?></div>
+                    <div class="form-controls">
+                        <?php AdminForm::old_password_text(); ?>
+                        <p class="help-inline"><em><?php _e('For security, type <b>your current password</b>'); ?></em></p>
+                    </div>
+                </div>
+
+
                 <?php osc_run_hook('admin_profile_form', $admin); ?>
                 <div class="clear"></div>
                 <div class="form-actions">

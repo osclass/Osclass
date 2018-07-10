@@ -17,6 +17,7 @@
 
 
 require_once dirname(dirname(__FILE__)) . '/htmlpurifier/HTMLPurifier.auto.php';
+require_once dirname(dirname(__FILE__)) . '/osclass/compatibility.php';
 function _purify($value, $xss_check)
 {
     if( !$xss_check ) {
@@ -118,7 +119,7 @@ function get_requirements( ) {
         'Folder <code>oc-content/uploads</code> is writable' => array(
             'requirement' => __('<code>oc-content/uploads</code> folder is writable'),
             'fn' => is_writable( ABS_PATH . 'oc-content/uploads/' ),
-            'solution' => sprintf(__('<code>uploads</code> folder has to be writable, i.e.: <code>chmod a+w %soc-content/uploads/</code>'), ABS_PATH)),
+            'solution' => sprintf(__('<code>uploads</code> folder has to be writable, i.e.: <code>chmod 0755 %soc-content/uploads/</code>'), ABS_PATH)),
         // oc-content/downlods
         'Folder <code>oc-content/downloads</code> exists' => array(
             'requirement' => __('Folder <code>oc-content/downloads</code> exists'),
@@ -128,7 +129,7 @@ function get_requirements( ) {
         'Folder <code>oc-content/downloads</code> is writable' => array(
             'requirement' => __('<code>oc-content/downloads</code> folder is writable'),
             'fn' => is_writable( ABS_PATH . 'oc-content/downloads/' ),
-            'solution' => sprintf(__('<code>downloads</code> folder has to be writable, i.e.: <code>chmod a+w %soc-content/downloads/</code>'), ABS_PATH)),
+            'solution' => sprintf(__('<code>downloads</code> folder has to be writable, i.e.: <code>chmod 0755 %soc-content/downloads/</code>'), ABS_PATH)),
         // oc-content/languages
         'Folder <code>oc-content/languages</code> exists' => array(
             'requirement' => __('Folder <code>oc-content/languages</code> folder exists'),
@@ -138,7 +139,7 @@ function get_requirements( ) {
         'Folder <code>oc-content/languages</code> is writable' => array(
             'requirement' => __('<code>oc-content/languages</code> folder is writable'),
             'fn' => is_writable( ABS_PATH . 'oc-content/languages/' ),
-            'solution' => sprintf(__('<code>languages</code> folder has to be writable, i.e.: <code>chmod a+w %soc-content/languages/</code>'), ABS_PATH)),
+            'solution' => sprintf(__('<code>languages</code> folder has to be writable, i.e.: <code>chmod 0755 %soc-content/languages/</code>'), ABS_PATH)),
     );
 
     $config_writable = false;
@@ -151,7 +152,7 @@ function get_requirements( ) {
         $array['File <code>config.php</code> is writable'] = array(
             'requirement' => __('<code>config.php</code> file is writable'),
             'fn' => $config_writable,
-            'solution' => sprintf(__('<code>config.php</code> file has to be writable, i.e.: <code>chmod a+w %sconfig.php</code>'), ABS_PATH));
+            'solution' => sprintf(__('<code>config.php</code> file has to be writable, i.e.: <code>chmod 0755 %sconfig.php</code>'), ABS_PATH));
     } else {
         if (is_writable(ABS_PATH) ) {
             $root_writable = true;
@@ -159,7 +160,7 @@ function get_requirements( ) {
         $array['Root directory is writable'] = array(
             'requirement' => __('Root directory is writable'),
             'fn' => $root_writable,
-            'solution' => sprintf(__('Root folder has to be writable, i.e.: <code>chmod a+w %s</code>'), ABS_PATH));
+            'solution' => sprintf(__('Root folder has to be writable, i.e.: <code>chmod 0755 %s</code>'), ABS_PATH));
 
         if( file_exists(ABS_PATH . 'config-sample.php') ) {
             $config_sample = true;
@@ -641,7 +642,6 @@ function finish_installation( $password ) {
     require_once LIB_PATH . 'osclass/model/Category.php';
     require_once LIB_PATH . 'osclass/model/Item.php';
     require_once LIB_PATH . 'osclass/helpers/hPlugins.php';
-    require_once LIB_PATH . 'osclass/compatibility.php';
     require_once LIB_PATH . 'osclass/classes/Plugins.php';
 
     $data = array();
@@ -768,7 +768,7 @@ function display_database_config() {
 }
 
 function display_target() {
-    $country_list = osc_file_get_contents('http://geo.osclass.org/newgeo.services.php?action=countries');
+    $country_list = osc_file_get_contents('https://geo.osclass.org/newgeo.services.php?action=countries');
     $country_list = json_decode(substr($country_list, 1, strlen($country_list)-2), true);
 
     $region_list = array();
@@ -776,7 +776,7 @@ function display_target() {
     $country_ip = '';
     if(preg_match('|([a-z]{2})-([A-Z]{2})|', Params::getServerParam('HTTP_ACCEPT_LANGUAGE'), $match)) {
         $country_ip = $match[2];
-        $region_list = osc_file_get_contents('http://geo.osclass.org/newgeo.services.php?action=regions&country='.$match[2]);
+        $region_list = osc_file_get_contents('https://geo.osclass.org/newgeo.services.php?action=regions&country='.$match[2]);
         $region_list = json_decode(substr($region_list, 1, strlen($region_list)-2), true);
     }
 
@@ -830,9 +830,9 @@ function display_target() {
                 <tr>
                     <td></td>
                     <td>
-                        <input type="checkbox" checked="checked" id="createmarketaccount" name="createmarketaccount" value="1" /><label for="createmarketaccount"><?php _e('Create market.osclass.org account'); ?>
-                            <br><?php _e("(You agree to our <a href=\"https://osclass.org/page/legal-note\">Terms & Conditions</a>)"); ?></label>
+                        <input type="checkbox" id="createmarketaccount" name="createmarketaccount" value="1" /><label for="createmarketaccount"><?php _e('Create a Market.osclass.org account'); ?>
                         <img class="vtip" src="<?php echo get_absolute_url(); ?>oc-includes/images/question.png" title="<?php echo osc_esc_html(__("Create a market.osclass.org account and download free themes and plugins.")); ?>" alt="" />
+                        <br><?php _e("I accept Osclass SL’s <a href=\"https://osclass.org/page/legal-note\">Terms of Use</a> and <a href=\"https://osclass.org/page/cookies\">Cookies Policy</a> and grant them permission to manage my data."); ?></label>
                     </td>
                 </tr>
                 </tbody>

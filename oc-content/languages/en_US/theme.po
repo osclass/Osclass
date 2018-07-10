@@ -1,135 +1,18 @@
-# Translation of Bender in Bosnian
-# This file is distributed under the same license as the Bender package.
+# Copyright (C) 2017 Osclass
+# This file is distributed under the same license as the {package-name} package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2016-12-12 10:45:38+0000\n"
+"Project-Id-Version: Osclass\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-04-24 06:56:52+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: GlotPress/0.1\n"
-"Project-Id-Version: Bender\n"
-
-#: admin/settings.php:76
-msgid "Location input"
-msgstr ""
-
-#: admin/settings.php:80
-msgid "Show location input as:"
-msgstr ""
-
-#: admin/settings.php:83
-msgid "Dropdown"
-msgstr ""
-
-#: admin/settings.php:84
-msgid "Autocomplete"
-msgstr ""
-
-#: alert-form.php:61
-msgid "Already subscribed to this search"
-msgstr ""
-
-#: admin/settings.php:91
-msgid "Ads management"
-msgstr ""
-
-#: admin/settings.php:95
-msgid "In this section you can configure your site to display ads and start generating revenue."
-msgstr ""
-
-#: admin/settings.php:95
-msgid "If you are using an online advertising platform, such as Google Adsense, copy and paste here the provided code for ads."
-msgstr ""
-
-#: admin/settings.php:101
-msgid "Header 728x90"
-msgstr ""
-
-#: admin/settings.php:105
-msgid "This ad will be shown at the top of your website, next to the site title and above the search results. Note that the size of the ad has to be 728x90 pixels."
-msgstr ""
-
-#: admin/settings.php:109
-msgid "Homepage 728x90"
-msgstr ""
-
-#: admin/settings.php:113
-msgid "This ad will be shown on the main site of your website. It will appear both at the top and bottom of your site homepage. Note that the size of the ad has to be 728x90 pixels."
-msgstr ""
-
-#: admin/settings.php:117
-msgid "Search results 728x90 (top of the page)"
-msgstr ""
-
-#: admin/settings.php:121
-msgid "This ad will be shown on top of the search results of your site. Note that the size of the ad has to be 728x90 pixels."
-msgstr ""
-
-#: admin/settings.php:125
-msgid "Search results 728x90 (middle of the page)"
-msgstr ""
-
-#: admin/settings.php:129
-msgid "This ad will be shown among the search results of your site. Note that the size of the ad has to be 728x90 pixels."
-msgstr ""
-
-#: admin/settings.php:133
-msgid "Sidebar 300x250"
-msgstr ""
-
-#: admin/settings.php:137
-msgid "This ad will be shown at the right sidebar of your website, on the product detail page. Note that the size of the ad has to be 300x350 pixels."
-msgstr ""
-
-#: user-change_email.php:76
-msgid "Email: this field is required"
-msgstr ""
-
-#: common/head.php:74
-msgid "Close"
-msgstr ""
-
-#: common/head.php:73
-msgid "Next image"
-msgstr ""
-
-#: common/head.php:72
-msgid "Previous image"
-msgstr ""
-
-#: footer.php:69
-msgid "This website is proudly using the <a title=\"Osclass web\" href=\"%s\">classifieds scripts</a> software <strong>Osclass</strong>"
-msgstr ""
-
-#: functions.php:418
-msgid "Public Profile"
-msgstr ""
-
-#: item-sidebar.php:104
-msgid "Attachment"
-msgstr ""
-
-#: main.php:41
-msgid "There aren't listings available at this moment"
-msgstr ""
-
-#: search.php:75
-msgid "%1$d - %2$d of %3$d listings"
-msgstr ""
-
-#: search.php:121
-msgid "Premium listings"
-msgstr ""
-
-msgid "http://osclass.org/"
-msgstr ""
-
-msgid "Bender theme"
-msgstr ""
-
-msgid "Osclass"
-msgstr ""
+"PO-Revision-Date: 2017-04-24 09:03+0100\n"
+"Last-Translator: Translations <translations@osclass.org>\n"
+"Language-Team: Translations <translations@osclass.org>\n"
+"Language: en_US\n"
+"X-Generator: Poedit 1.6.10\n"
 
 #: 404.php:30
 msgid "Sorry but I can't find the page you're looking for"
@@ -176,7 +59,9 @@ msgid "The preferred size of the logo is 600x100."
 msgstr ""
 
 #: admin/header.php:55
-msgid "<strong>Note:</strong> Uploading another logo will overwrite the current logo."
+msgid ""
+"<strong>Note:</strong> Uploading another logo will overwrite the current "
+"logo."
 msgstr ""
 
 #: admin/header.php:63
@@ -200,11 +85,13 @@ msgid "Please make the aforementioned image folder writable."
 msgstr ""
 
 #: admin/header.php:85
-msgid "To make a directory writable under UNIX execute this command from the shell:"
+msgid ""
+"To make a directory writable under UNIX execute this command from the shell:"
 msgstr ""
 
 #: admin/settings.php:36
-msgid "I would like to contribute to the development of Osclass with a donation of"
+msgid ""
+"I would like to contribute to the development of Osclass with a donation of"
 msgstr ""
 
 #: admin/settings.php:41
@@ -240,11 +127,99 @@ msgid "Footer link"
 msgstr ""
 
 #: admin/settings.php:68
-msgid "I want to help Osclass by linking to <a href=\"http://osclass.org/\" target=\"_blank\">osclass.org</a> from my site with the following text:"
+msgid ""
+"I want to help Osclass by linking to <a href=\"http://osclass.org/\" target="
+"\"_blank\">osclass.org</a> from my site with the following text:"
 msgstr ""
 
 #: admin/settings.php:69
-msgid "This website is proudly using the <a title=\"Osclass web\" href=\"http://osclass.org/\">classifieds scripts</a> software <strong>Osclass</strong>"
+msgid ""
+"This website is proudly using the <a title=\"Osclass web\" href=\"http://"
+"osclass.org/\">classifieds scripts</a> software <strong>Osclass</strong>"
+msgstr ""
+
+#: admin/settings.php:76
+msgid "Location input"
+msgstr ""
+
+#: admin/settings.php:80
+msgid "Show location input as:"
+msgstr ""
+
+#: admin/settings.php:83
+msgid "Dropdown"
+msgstr ""
+
+#: admin/settings.php:84
+msgid "Autocomplete"
+msgstr ""
+
+#: admin/settings.php:91
+msgid "Ads management"
+msgstr ""
+
+#: admin/settings.php:95
+msgid ""
+"In this section you can configure your site to display ads and start "
+"generating revenue."
+msgstr ""
+
+#: admin/settings.php:95
+msgid ""
+"If you are using an online advertising platform, such as Google Adsense, "
+"copy and paste here the provided code for ads."
+msgstr ""
+
+#: admin/settings.php:101
+msgid "Header 728x90"
+msgstr ""
+
+#: admin/settings.php:105
+msgid ""
+"This ad will be shown at the top of your website, next to the site title and "
+"above the search results. Note that the size of the ad has to be 728x90 "
+"pixels."
+msgstr ""
+
+#: admin/settings.php:109
+msgid "Homepage 728x90"
+msgstr ""
+
+#: admin/settings.php:113
+msgid ""
+"This ad will be shown on the main site of your website. It will appear both "
+"at the top and bottom of your site homepage. Note that the size of the ad "
+"has to be 728x90 pixels."
+msgstr ""
+
+#: admin/settings.php:117
+msgid "Search results 728x90 (top of the page)"
+msgstr ""
+
+#: admin/settings.php:121
+msgid ""
+"This ad will be shown on top of the search results of your site. Note that "
+"the size of the ad has to be 728x90 pixels."
+msgstr ""
+
+#: admin/settings.php:125
+msgid "Search results 728x90 (middle of the page)"
+msgstr ""
+
+#: admin/settings.php:129
+msgid ""
+"This ad will be shown among the search results of your site. Note that the "
+"size of the ad has to be 728x90 pixels."
+msgstr ""
+
+#: admin/settings.php:133
+msgid "Sidebar 300x250"
+msgstr ""
+
+#: admin/settings.php:137
+msgid ""
+"This ad will be shown at the right sidebar of your website, on the product "
+"detail page. Note that the size of the ad has to be 300x350 pixels."
 msgstr ""
 
 #: admin/settings.php:141
@@ -261,6 +236,10 @@ msgstr ""
 
 #: alert-form.php:29
 msgid "There was a problem with the alert"
+msgstr ""
+
+#: alert-form.php:61
+msgid "Already subscribed to this search"
 msgstr ""
 
 #: alert-form.php:65
@@ -280,6 +259,18 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
+#: common/head.php:72
+msgid "Previous image"
+msgstr ""
+
+#: common/head.php:73
+msgid "Next image"
+msgstr ""
+
+#: common/head.php:74
+msgid "Close"
+msgstr ""
+
 #: contact.php:31
 msgid "Contact us"
 msgstr ""
@@ -289,7 +280,8 @@ msgstr ""
 msgid "Your name"
 msgstr ""
 
-#: contact.php:41 contact.php:54 item-sidebar.php:93 user-public-sidebar.php:41
+#: contact.php:41 contact.php:54 item-sidebar.php:93
+#: user-public-sidebar.php:41
 msgid "optional"
 msgstr ""
 
@@ -337,6 +329,12 @@ msgstr ""
 
 #: footer.php:65 functions.php:395 user-public-sidebar.php:26
 msgid "Contact"
+msgstr ""
+
+#: footer.php:69
+msgid ""
+"This website is proudly using the <a title=\"Osclass web\" href=\"%s"
+"\">classifieds scripts</a> software <strong>Osclass</strong>"
 msgstr ""
 
 #: footer.php:74
@@ -416,6 +414,10 @@ msgstr ""
 
 #: functions.php:394
 msgid "Create a new account"
+msgstr ""
+
+#: functions.php:418
+msgid "Public Profile"
 msgstr ""
 
 #: functions.php:453 user-sidebar.php:28
@@ -503,7 +505,8 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
-#: item-post.php:185 user-login.php:38 user-recover.php:37 user-register.php:45
+#: item-post.php:185 user-login.php:38 user-recover.php:37
+#: user-register.php:45
 msgid "E-mail"
 msgstr ""
 
@@ -569,7 +572,8 @@ msgid "It's your own listing, you can't contact the publisher."
 msgstr ""
 
 #: item-sidebar.php:60
-msgid "You must log in or register a new account in order to contact the advertiser"
+msgid ""
+"You must log in or register a new account in order to contact the advertiser"
 msgstr ""
 
 #: item-sidebar.php:70
@@ -590,6 +594,10 @@ msgstr ""
 
 #: item-sidebar.php:93 user-public-sidebar.php:41
 msgid "Phone number"
+msgstr ""
+
+#: item-sidebar.php:104
+msgid "Attachment"
 msgstr ""
 
 #: item-sidebar.php:125 user-public-sidebar.php:63
@@ -637,15 +645,21 @@ msgid "Avoid scams by acting locally or paying with PayPal"
 msgstr ""
 
 #: item.php:132
-msgid "Never pay with Western Union, Moneygram or other anonymous payment services"
+msgid ""
+"Never pay with Western Union, Moneygram or other anonymous payment services"
 msgstr ""
 
 #: item.php:133
-msgid "Don't buy or sell outside of your country. Don't accept cashier cheques from outside your country"
+msgid ""
+"Don't buy or sell outside of your country. Don't accept cashier cheques from "
+"outside your country"
 msgstr ""
 
 #: item.php:134
-msgid "This site is never involved in any transaction, and does not handle payments, shipping, guarantee transactions, provide escrow services, or offer \"buyer protection\" or \"seller certification\""
+msgid ""
+"This site is never involved in any transaction, and does not handle "
+"payments, shipping, guarantee transactions, provide escrow services, or "
+"offer \"buyer protection\" or \"seller certification\""
 msgstr ""
 
 #: item.php:141
@@ -682,6 +696,10 @@ msgstr ""
 
 #: main.php:38
 msgid "Latest Listings"
+msgstr ""
+
+#: main.php:41
+msgid "There aren't listings available at this moment"
 msgstr ""
 
 #: main.php:46 search.php:81
@@ -732,12 +750,20 @@ msgstr ""
 msgid "There are no results matching \"%s\""
 msgstr ""
 
+#: search.php:75
+msgid "%1$d - %2$d of %3$d listings"
+msgstr ""
+
 #: search.php:78
 msgid "Show filters"
 msgstr ""
 
 #: search.php:85
 msgid "Sort by"
+msgstr ""
+
+#: search.php:121
+msgid "Premium listings"
 msgstr ""
 
 #: search.php:142
@@ -770,6 +796,10 @@ msgstr ""
 
 #: user-change_email.php:52
 msgid "New e-mail"
+msgstr ""
+
+#: user-change_email.php:76
+msgid "Email: this field is required"
 msgstr ""
 
 #: user-change_password.php:45
@@ -896,5 +926,14 @@ msgstr ""
 msgid "Are you sure you want to delete your account?"
 msgstr ""
 
+#. Theme Name of the plugin/theme
 msgid "bender"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "Bender theme"
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Osclass"
 msgstr ""

@@ -200,7 +200,7 @@
                 if(data.error == 0) { // no errors
                     content += '<h3><?php echo osc_esc_js(__('The theme has been downloaded correctly, proceed to activate or preview it.')); ?></h3>';
                     content += "<p>";
-                    content += '<a class="btn btn-mini btn-green" href="<?php echo osc_admin_base_url(true); ?>?page=appearance&marketError='+data.error+'&slug='+data.data['s_update_url']+'"><?php echo osc_esc_js(__('Ok')); ?></a>';
+                    content += '<a class="btn btn-mini btn-green" href="<?php echo osc_admin_base_url(true); ?>?page=appearance&marketError='+data.error+'&slug='+oscEscapeHTML(data.data['s_update_url'])+'"><?php echo osc_esc_js(__('Ok')); ?></a>';
                     content += '<a class="btn btn-mini" href="javascript:location.reload(true)"><?php echo osc_esc_js(__('Close')); ?></a>';
                     content += "</p>";
                 } else {
@@ -218,13 +218,14 @@
             {"code" : $(this).attr('href').replace('#',''), 'section' : 'themes'},
             function(data){
                 if(data!=null) {
-                    $("#market_thumb").attr('src',data.s_thumbnail);
+                    $("#market_thumb").attr('src', data.s_thumbnail);
                     $("#market_code").attr("value", data.s_update_url);
-                    $("#market_name").html(data.s_title);
-                    $("#market_version").html(data.s_version);
-                    $("#market_author").html(data.s_contact_name);
+                    $("#market_name").text(data.s_title);
+                    $("#market_version").text(data.s_version);
+                    $("#market_author").text(data.s_contact_name);
                     $("#market_url").attr('href',data.s_source_file);
-                    $('#market_install').html("<?php echo osc_esc_js( __('Update') ); ?>");
+
+                    $('#market_install').text("<?php echo osc_esc_js( __('Update') ); ?>");
 
                     $('#market_installer').dialog({
                         modal:true,

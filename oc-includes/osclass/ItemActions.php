@@ -143,7 +143,7 @@
                 ((!osc_validate_max($aItem['cityArea'], 50)) ? _m("Municipality too long.") . PHP_EOL : '' ) .
                 ((!osc_validate_text($aItem['address'], 3, false)) ? _m("Address too short.") . PHP_EOL : '' ) .
                 ((!osc_validate_max($aItem['address'], 100)) ? _m("Address too long.") . PHP_EOL : '' ) .
-                ((((time() - Session::newInstance()->_get('last_submit_item')) < osc_items_wait_time()) && !$this->is_admin) ? _m("Too fast. You should wait a little to publish your ad.") . PHP_EOL : '' );
+                ((((time() - (int)Session::newInstance()->_get('last_submit_item')) < osc_items_wait_time()) && !$this->is_admin) ? _m("Too fast. You should wait a little to publish your ad.") . PHP_EOL : '' );
 
             $_meta = Field::newInstance()->findByCategory($aItem['catId']);
             $meta = Params::getParam("meta");
@@ -168,7 +168,7 @@
             // DEPRECATED: pre_item_post will be removed in 3.4
             osc_run_hook('pre_item_post');
             osc_run_hook('pre_item_add', $aItem, $flash_error);
-            osc_apply_filter('pre_item_add_error', $flash_error, $aItem);
+            $flash_error = osc_apply_filter('pre_item_add_error', $flash_error, $aItem);
 
             // Handle error
             if ($flash_error) {
@@ -373,7 +373,7 @@
             // DEPRECATED : preitem_psot will be removed in 3.4
             osc_run_hook('pre_item_post');
             osc_run_hook('pre_item_edit', $aItem, $flash_error);
-            osc_apply_filter('pre_item_edit_error', $flash_error, $aItem);
+            $flash_error = osc_apply_filter('pre_item_edit_error', $flash_error, $aItem);
 
             // Handle error
             if ($flash_error) {
