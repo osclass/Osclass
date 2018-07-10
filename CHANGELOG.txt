@@ -1,14 +1,18 @@
-Osclass 3.7.5 2018-06-XX
+Osclass 3.8.0 2018-06-XX
 ------------------------
 
 - Fixed several vulnerabilities found by Zekvan Arslan ( https://www.netsparker.com )
+- Support for MariaDB (mysql community) for Categories
+- Hooks at category insert & edit ('edited_category', 'add_category')
+- Filter at search page ('search_pattern')
 - mb_strlen missing at installation has been fixed
 - meta_title() fixed missing page (recover & forgot)
 - fixed issue with filter 'pre_item_add_error' 
 - Updated HTML Purifier to 4.10.0
+- Updated PHPMailer to 5.2-stable
 - Fixed DateInterval custom field issues
 - Invalid email address verification on resend password request has been fixed
-- Minor fixes and improvements
+- Multiple minor fixes and improvements
 
 Osclass 3.7.4 2017-07-24
 ------------------------
