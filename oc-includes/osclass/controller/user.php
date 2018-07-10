@@ -41,26 +41,32 @@
                                         $this->doView('user-dashboard.php');
                 break;
                 case('profile'):        //profile...
-                                        $user = User::newInstance()->findByPrimaryKey( osc_logged_user_id() );
+                                        $aUser = User::newInstance()->findByPrimaryKey( osc_logged_user_id() );
                                         $aCountries = Country::newInstance()->listAll();
                                         $aRegions = array();
-                                        if( $user['fk_c_country_code'] != '' ) {
-                                            $aRegions = Region::newInstance()->findByCountry( $user['fk_c_country_code'] );
+                                        if( $aUser['fk_c_country_code'] != '' ) {
+                                            $aRegions = Region::newInstance()->findByCountry( $aUser['fk_c_country_code'] );
                                         } elseif( count($aCountries) > 0 ) {
                                             $aRegions = Region::newInstance()->findByCountry( $aCountries[0]['pk_c_code'] );
                                         }
                                         $aCities = array();
-                                        if( $user['fk_i_region_id'] != '' ) {
-                                            $aCities = City::newInstance()->findByRegion($user['fk_i_region_id']);
+                                        if( $aUser['fk_i_region_id'] != '' ) {
+                                            $aCities = City::newInstance()->findByRegion($aUser['fk_i_region_id']);
                                         } else if( count($aRegions) > 0 ) {
                                             $aCities = City::newInstance()->findByRegion($aRegions[0]['pk_i_id']);
                                         }
 
+                                        // user profile info description | user-profile.php @ frontend
+                                        $aLocale = $aUser['locale'];
+                                        foreach ($aLocale as $locale => $aInfo) {
+                                            $aUser['locale'][$locale]['s_info'] = osc_apply_filter('user_profile_info', $aInfo['s_info'], $aUser['pk_i_id'], $aInfo['fk_c_locale_code']);
+                                        }
+
                                         //calling the view...
+                                        $this->_exportVariableToView('user', $aUser);
                                         $this->_exportVariableToView('countries', $aCountries);
                                         $this->_exportVariableToView('regions', $aRegions);
                                         $this->_exportVariableToView('cities', $aCities);
-                                        $this->_exportVariableToView('user', $user);
                                         $this->_exportVariableToView('locales', OSCLocale::newInstance()->listAllEnabled() );
 
                                         $this->doView('user-profile.php');

@@ -760,6 +760,7 @@
                     minlength: 3,
                     maxlength: 100
                 }
+                <?php osc_run_hook('item_form_new_validation_rules'); ?>
             },
             messages: {
                 catId: "<?php echo osc_esc_js(__('Choose one category')); ?>.",
@@ -788,6 +789,7 @@
                     minlength: "<?php echo osc_esc_js(__("Address: enter at least 3 characters")); ?>.",
                     maxlength: "<?php echo osc_esc_js(__("Address: no more than 100 characters")); ?>."
                 }
+                <?php osc_run_hook('item_form_new_validation_messages'); ?>
             },
             errorLabelContainer: "#error_list",
             wrapper: "li",
@@ -1049,6 +1051,7 @@
                     minlength: 3,
                     maxlength: 100
                 }
+                <?php osc_run_hook('item_form_validation_rules'); ?>
             },
             messages: {
                 catId: "<?php echo osc_esc_js(__('Choose one category')); ?>.",
@@ -1083,6 +1086,7 @@
                     minlength: "<?php echo osc_esc_js(__("Address: enter at least 3 characters")); ?>.",
                     maxlength: "<?php echo osc_esc_js(__("Address: no more than 100 characters")); ?>."
                 }
+                <?php osc_run_hook('item_form_validation_messages'); ?>
             },
             errorLabelContainer: "#error_list",
             wrapper: "li",

@@ -54,7 +54,7 @@
                     <p>
                         <select name="locale" id="user_language">
                         <?php foreach($locales as $locale) { ?>
-                            <option value="<?php echo $locale ['pk_c_code']; ?>" <?php if(osc_admin_language() == $locale['pk_c_code']) echo 'selected="selected"'; ?>><?php echo $locale['s_short_name']; ?></option>
+                            <option value="<?php echo $locale ['pk_c_code']; ?>" <?php if(osc_admin_language() == $locale['pk_c_code']) echo 'selected="selected"'; ?>><?php echo $locale['s_name']; ?></option>
                         <?php } ?>
                         </select>
                     </p>
@@ -105,5 +105,6 @@
                 $("#user_login").focus();
             });
         </script>
+        <?php osc_run_hook('admin_login_footer'); ?>
     </body>
 </html>

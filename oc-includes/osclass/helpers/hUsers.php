@@ -309,14 +309,20 @@
      * @return string
      */
     function osc_user_info($locale = "") {
-        if ($locale == "") $locale = osc_current_user_locale();
+        $userId = osc_user_id();
+        if ($locale == "") {
+            $locale = osc_current_user_locale();
+        }
         $info = osc_user_field("s_info", $locale);
+        $info = osc_apply_filter('user_info', $info, $userId, $locale);
         if($info == '') {
             $info = osc_user_field("s_info", osc_language());
+            $info = osc_apply_filter('user_info', $info, $userId, osc_language());
             if($info=='') {
                 $aLocales = osc_get_locales();
                 foreach($aLocales as $locale) {
                     $info = osc_user_field("s_info", $locale['pk_c_code']);
+                    $info = osc_apply_filter('user_info', $info, $userId, $locale['pk_c_code']);
                     if($info!='') {
                         break;
                     }

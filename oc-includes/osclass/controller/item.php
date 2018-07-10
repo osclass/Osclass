@@ -491,8 +491,15 @@
                     break;
                 case 'add_comment':
                     osc_csrf_check();
-                    $mItem  = new ItemActions(false);
-                    $status = $mItem->add_comment();
+
+                    $itemId    = Params::getParam('id');
+                    $item      = Item::newInstance()->findByPrimaryKey($itemId);
+
+                    osc_run_hook('pre_item_add_comment_post', $item);
+
+                    $mItem     = new ItemActions(false);
+                    $status    = $mItem->add_comment();
+
                     switch ($status) {
                         case -1: $msg = _m('Sorry, we could not save your comment. Try again later');
                                  osc_add_flash_error_message($msg);
@@ -520,18 +527,20 @@
                             break;
                     }
 
-                    //View::newInstance()->_exportVariableToView('item', Item::newInstance()->findByPrimaryKey(Params::getParam('id')));
+                    // View::newInstance()->_exportVariableToView('item', Item::newInstance()->findByPrimaryKey(Params::getParam('id')));
                     $this->redirectTo( osc_item_url() );
                     break;
                 case 'delete_comment':
                     osc_csrf_check();
+
+                    $commentId = Params::getParam('comment');
+                    $itemId    = Params::getParam('id');
+                    $item      = Item::newInstance()->findByPrimaryKey($itemId);
+
+                    osc_run_hook('pre_item_delete_comment_post', $item, $commentId);
+
                     $mItem = new ItemActions(false);
                     $status = $mItem->add_comment(); // @TOFIX @FIXME $status never used + ?? need to add_comment() before deleting it??
-
-                    $itemId    = Params::getParam('id');
-                    $commentId = Params::getParam('comment');
-
-                    $item = Item::newInstance()->findByPrimaryKey($itemId);
 
                     if( count($item) == 0 ) {
                         osc_add_flash_error_message( _m("This listing doesn't exist") );

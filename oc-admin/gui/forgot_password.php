@@ -81,5 +81,6 @@
                 $("#new_password").focus();
             });
         </script>
+        <?php osc_run_hook('admin_login_footer'); ?>
     </body>
 </html>

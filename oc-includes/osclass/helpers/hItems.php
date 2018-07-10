@@ -809,7 +809,7 @@
      * @return string
      */
     function osc_resource_url() {
-        return (string) osc_resource_path().osc_resource_id().".".osc_resource_field("s_extension");
+        return (string) osc_apply_filter('resource_url', osc_resource_path().osc_resource_id().".".osc_resource_field("s_extension"));
     }
 
     /**
@@ -818,7 +818,7 @@
      * @return string
      */
     function osc_resource_thumbnail_url() {
-        return (string) osc_resource_path().osc_resource_id()."_thumbnail.".osc_resource_field("s_extension");
+        return (string) osc_apply_filter('resource_thumbnail_url', osc_resource_path().osc_resource_id()."_thumbnail.".osc_resource_field("s_extension"));
     }
 
     /**
@@ -828,7 +828,7 @@
      * @return string
      */
     function osc_resource_preview_url() {
-        return (string) osc_resource_path().osc_resource_id()."_preview.".osc_resource_field("s_extension");
+        return (string) osc_apply_filter('resource_preview_url', osc_resource_path().osc_resource_id()."_preview.".osc_resource_field("s_extension"));
     }
 
     /**
@@ -837,7 +837,7 @@
      * @return string
      */
     function osc_resource_original_url() {
-        return (string) osc_resource_path().osc_resource_id()."_original.".osc_resource_field("s_extension");
+        return (string) osc_apply_filter('resource_original_url', osc_resource_path().osc_resource_id()."_original.".osc_resource_field("s_extension"));
     }
 
     /**
@@ -1205,8 +1205,9 @@
      */
     function osc_item_meta_value() {
         $meta = osc_item_meta();
+        $value = osc_field($meta, 's_value', '');
+        $value = osc_apply_filter('osc_item_meta_value_pre_filter', $value, $meta);
         if($meta['e_type']=="DATEINTERVAL" || $meta['e_type']=="DATE") {
-            $value = osc_field(osc_item_meta(), 's_value', '');
             if(is_array($value)) {
                 // from [date_from] to [date_to]
                 if(isset($value['from']) && $value['from']!='' && is_numeric($value['from']) && isset($value['to']) && $value['to']!='' && is_numeric($value['to'])) {
@@ -1224,25 +1225,31 @@
                 }
             }
         } else if($meta['e_type']=="CHECKBOX") {
-            if(osc_field(osc_item_meta(), 's_value', '')==1) {
+            if($value==1) {
                 return '<img src="'.osc_current_web_theme_url('images/tick.png').'" alt="" title=""/>';
             } else {
                 return '<img src="'.osc_current_web_theme_url('images/cross.png').'" alt="" title=""/>';
             }
         } else if($meta['e_type']=="URL") {
-            if(osc_field(osc_item_meta(), 's_value', '')!='') {
-                if(stripos(osc_field(osc_item_meta(), 's_value', ''),'http://')!==false || stripos(osc_field(osc_item_meta(), 's_value', ''),'https://')!==false) {
-                    return '<a href="'.html_entity_decode(osc_field(osc_item_meta(), 's_value', ''), ENT_COMPAT, "UTF-8").'" >'.html_entity_decode(osc_field(osc_item_meta(), 's_value', ''), ENT_COMPAT, "UTF-8").'</a>';
+            if($value!='') {
+                if(stripos($value,'http://')!==false || stripos($value,'https://')!==false) {
+                    return '<a href="'.html_entity_decode($value, ENT_COMPAT, "UTF-8").'" >'.html_entity_decode($value, ENT_COMPAT, "UTF-8").'</a>';
                 } else {
-                    return '<a href="http://'.html_entity_decode(osc_field(osc_item_meta(), 's_value', ''), ENT_COMPAT, "UTF-8").'" >'.html_entity_decode(osc_field(osc_item_meta(), 's_value', ''), ENT_COMPAT, "UTF-8").'</a>';
+                    return '<a href="http://'.html_entity_decode($value, ENT_COMPAT, "UTF-8").'" >'.html_entity_decode($value, ENT_COMPAT, "UTF-8").'</a>';
                 }
             } else {
                 return '';
             }
+        } else if($meta['e_type']=="TEXTAREA") {
+            $value = nl2br(htmlentities($value));
+            $value = osc_apply_filter('osc_item_meta_textarea_value_filter', $value, $meta);
+            return $value;
         } else if($meta['e_type']=="DROPDOWN" || $meta['e_type']=="RADIO") {
             return osc_field(osc_item_meta(), 's_value', '');
         } else {
-            return nl2br(htmlentities(osc_field(osc_item_meta(), 's_value', ''), ENT_COMPAT, "UTF-8"));
+            $value = nl2br(htmlentities($value));
+            $value = osc_apply_filter('osc_item_meta_value_filter', $value, $meta);
+            return $value;
         }
     }
 
