@@ -23,10 +23,16 @@
         }
 
         static public function name_text($user = null) {
+            if( Session::newInstance()->_getForm('user_s_name') != '' ) {
+                $user['s_name'] = Session::newInstance()->_getForm('user_s_name');
+            }
             parent::generic_input_text("s_name", isset($user['s_name'])? $user['s_name'] : '', null, false);
         }
 
         static public function username_text($user = null) {
+            if( Session::newInstance()->_getForm('user_s_username') != '' ) {
+                $user['s_username'] = Session::newInstance()->_getForm('user_s_username');
+            }
             parent::generic_input_text("s_username", isset($user['s_username'])? $user['s_username'] : '', null, false);
         }
 
@@ -55,6 +61,9 @@
         }
 
         static public function email_text($user = null) {
+            if( Session::newInstance()->_getForm('user_s_email') != '' ) {
+                $user['s_email'] = Session::newInstance()->_getForm('user_s_email');
+            }
             parent::generic_input_text("s_email", isset($user['s_email'])? $user['s_email'] : '', null, false);
         }
 
@@ -63,10 +72,16 @@
         }
 
         static public function mobile_text($user = null) {
+            if( Session::newInstance()->_getForm('user_s_phone_mobile') != '' ) {
+                $user['s_phone_mobile'] = Session::newInstance()->_getForm('user_s_phone_mobile');
+            }
             parent::generic_input_text("s_phone_mobile", isset($user['s_phone_mobile'])? $user['s_phone_mobile'] : '', null, false);
         }
 
         static public function phone_land_text($user = null) {
+            if( Session::newInstance()->_getForm('user_s_phone_land') != '' ) {
+                $user['s_phone_land'] = Session::newInstance()->_getForm('user_s_phone_land');
+            }
             parent::generic_input_text("s_phone_land", isset($user['s_phone_land'])? $user['s_phone_land'] : '', null, false);
         }
 

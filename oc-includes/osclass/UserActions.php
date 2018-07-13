@@ -83,10 +83,10 @@
             $flash_error = osc_apply_filter('user_add_flash_error', $flash_error);
             if($flash_error!='') {
                 Session::newInstance()->_setForm('user_s_name', $input['s_name']);
-                Session::newInstance()->_setForm('user_s_email', $input['s_email']);
                 Session::newInstance()->_setForm('user_s_username', $input['s_username']);
-                $phone = ($input['s_phone_mobile'])? $input['s_phone_mobile'] : $input['s_phone_land'];
-                Session::newInstance()->_setForm('user_s_phone', $phone);
+                Session::newInstance()->_setForm('user_s_email', $input['s_email']);
+                Session::newInstance()->_setForm('user_s_phone_land', $input['s_phone_land']);
+                Session::newInstance()->_setForm('user_s_phone_mobile', $input['s_phone_mobile']);
 
                 osc_run_hook('user_register_failed', $error);
                 return $flash_error;
