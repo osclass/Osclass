@@ -102,10 +102,8 @@ switch( $step ) {
             setcookie('osclass_save_stats', 0, time() + (24*60*60) );
         }
 
-        if( Params::getParam('ping_engines') == '1' || isset($_COOKIE['osclass_ping_engines']) ) {
+        if( isset($_COOKIE['osclass_ping_engines']) ) {
             setcookie('osclass_ping_engines', 1, time() + (24*60*60) );
-        } else {
-            setcookie('osclass_ping_engines', 0, time()+ (24*60*60) );
         }
 
         break;
@@ -159,7 +157,26 @@ switch( $step ) {
                 </div>
                 <div id="content">
                 <?php if($step == 1) { ?>
-                    <h2 class="target"><?php _e('Welcome');?><a style="font-size:0.7em;padding: 4px 0px;text-decoration: underline;float: right;" href="https://osclass.org/page/hosting">Discover the best hosting providers for Osclass</a></h2>
+                    <h2 class="target"><?php _e('Welcome');?></h2>
+
+                    <?php if($error) { ?>
+                    <div class="form-table">
+                        <h3 style="font-weight: 400;font-size: 1.2rem;margin: 0;margin-bottom: .5em;"><?php _e('Oops! You need a compatible Hosting');?></h3>
+                        <span style="color: red;font-weight: 300;font-size: 1.09em;"><?php _e('Your hosting seems to be not compatible, check your settings.');?></span>
+                        <p><?php _e('We have a partnership with the best hosting companies, check our promotions and get Osclass plugins and themes for free!');?></p>
+                        <p><a href="https://osclass.org/page/hosting?utm_source=installation-hosting-page&amp;utm_medium=installation&amp;utm_campaign=hosting_page" target="_blank" class="button"/><?php _e('Get Hosting!');?></a></p>
+                    </div>
+                    <br>
+                    <?php } else { ?>
+                    <div class="form-table">
+                        <h3 style="font-weight: 400;font-size: 1.2rem;margin: 0;margin-bottom: .5em;"><?php _e('Discover the best hosting providers and promotions for Osclass');?></h3>
+                        <p style="line-height: 1.5em"><?php _e('We have a partnership with the best hosting companies, check our promotions and get premium Osclass plugins and themes for free!');?></p>
+                    </div>
+                    <br>
+                    <p><a href="https://osclass.org/page/hosting?utm_source=installation-hosting-page&utm_medium=installation&utm_campaign=hosting_page" target="_blank" class="button"/><?php _e('Get Hosting!');?></a></p>
+                    <br>
+                    <?php } ?>
+
                     <form action="install.php" method="post">
                         <div class="form-table">
                             <?php if( count($locales) > 1 ) { ?>
@@ -178,11 +195,11 @@ switch( $step ) {
                                     <p><b><?php _e('Requirements help:'); ?></b></p>
                                     <ul>
                                         <?php foreach($requirements as $k => $v) { ?>
-                                            <?php  if(!$v['fn'] && $v['solution'] != ''){ ?>
+                                            <?php if(!$v['fn'] && $v['solution'] != ''){ ?>
                                                 <li><?php echo $v['solution']; ?></li>
                                             <?php } ?>
                                         <?php } ?>
-                                        <li><a href="http://forums.osclass.org/" hreflang="en"><?php _e('Need more help?');?></a></li>
+                                        <li><a href="https://osclass.org/page/hosting?utm_source=installation-hosting-page&utm_medium=installation&utm_campaign=hosting_page" hreflang="en"><?php _e('Need more help?');?></a></li>
                                     </ul>
                                 </div>
                             <?php } else { ?>
@@ -194,11 +211,6 @@ switch( $step ) {
                                 <?php } ?>
                             </ul>
                             <div class="more-stats">
-                                <input type="checkbox" name="ping_engines" id="ping_engines" value="1" />
-                                <label for="ping_engines">
-                                    <?php _e('Allow my site to appear in search engines like Google.');?>
-                                </label>
-                                <br />
                                 <input type="checkbox" name="save_stats" id="save_stats" value="1" />
                                 <input type="hidden" name="step" value="2" />
                                 <label for="save_stats">
