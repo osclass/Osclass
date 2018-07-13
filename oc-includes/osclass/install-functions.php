@@ -975,12 +975,7 @@ function display_finish($password) {
     </div>
     <div class="form-table" style="margin-top:1em;">
         <p><?php _e('Do not forget to connect your site with Osclass Market in order to download free and paid themes or plugins. You should connect your site as soon as your log in to your new site.'); ?>
-    </div>
-    <div class="form-table" style="margin-top:1em;">
-        <h3 style="font-weight: 300;"><?php _e('Do you know Osclass Free, the Osclass cloud solution?'); ?></h3>
-        <p><?php _e('With Osclass Free you can create your classifieds page without any technical knowledge and in less than one minute.'); ?></p>
-        <input style="padding: 8px 14px;background-color: white;" type="button" class="button" onclick="document.location = 'https://osclass.org/hosted/start'" value="<?php echo osc_esc_html( __('Try Osclass Free'));?>" />
-    </div>
+    </div> 
 
     <p class="margin20">
         <a target="_blank" href="<?php echo get_absolute_url() ?>oc-admin/index.php" class="button"><?php _e('Finish and go to the administration panel');?></a>
