@@ -26,7 +26,7 @@
             parent::__construct();
 
             //specific things for this class
-            $this->categoryManager = Category::newInstance();
+            $this->categoryManager = Category::newInstance( osc_current_admin_locale() );
         }
 
         //Business Layer...
