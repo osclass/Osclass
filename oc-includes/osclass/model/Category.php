@@ -34,10 +34,10 @@
         private $_emptyTree;
         private $_slugs;
 
-        public static function newInstance()
+        public static function newInstance($l = '')
         {
             if( !self::$instance instanceof self ) {
-                self::$instance = new self;
+                self::$instance = new self($l);
             }
             return self::$instance;
         }
@@ -83,10 +83,24 @@
          * @param mixed
          * @return array
          */
-        public function listWhere($where = '')
+        public function listWhere()
         {
-            if( $where !== '') {
-                $this->dao->where( $where );
+
+            $argv = func_get_args();
+            $sql = null;
+            switch (func_num_args ()) {
+                case 0: return array();
+                    break;
+                case 1: $sql = $argv[0];
+                    break;
+                default:
+                    $args = func_get_args();
+                    $format = array_shift($args);
+                    foreach($args as $k => $v) {
+                        $args[$k] = $this->dao->escape($v);
+                    }
+                    $sql = vsprintf($format, $args);
+                    break;
             }
 
             $this->dao->select("a.*, b.*, c.i_num_items");
@@ -100,18 +114,82 @@
                 'INNER'
             );
             $this->dao->join(DB_TABLE_PREFIX.'t_category_stats  as c ', 'a.pk_i_id = c.fk_i_category_id', 'LEFT');
+            if( $sql != null ) {
+                $this->dao->where( $sql );
+            }
             $this->dao->orderBy('i_position', 'ASC');
             $rs = $this->dao->get();
 
             if( $rs === false ) {
-                return array();
+                $aux = array();
             }
 
             if( $rs->numRows() == 0 ) {
-                return array();
+                $aux = array();
             }
-
-            return $rs->result();
+            
+            $aux = $rs->result();
+            
+            // (missing translations #mariadb)
+            // get all category IDs 
+            $this->dao->select("a.pk_i_id, a.i_position, b.*");
+            $this->dao->from( $this->getTableName().' as a' );
+            $this->dao->join(DB_TABLE_PREFIX.'t_category_description as b', 'a.pk_i_id = b.fk_i_category_id','INNER');
+            if( $sql != null ) {
+                $this->dao->where( $sql );
+            }
+            $this->dao->orderBy('i_position', 'ASC');
+            $this->dao->groupBy('a.pk_i_id');
+            $rs = $this->dao->get();
+            
+            $_categories = array();
+            if( $rs === false ) {
+                $_categories = array();
+            } else {
+                if( $rs->numRows() == 0 ) {
+                    $_categories = array();
+                } else {
+                    $_categories = $rs->result();
+                }
+            }
+            // END - get all category IDs
+            
+            if(count($aux)<count($_categories)) {
+                $finalArray = array(); 
+                // $missing_categories = (int)count($_categories) - (int)count($aux);
+                $mapIndexArray = array_column($aux, 'pk_i_id');
+                foreach($_categories as $key => $current) { 
+                    $index = array_search($current['pk_i_id'], $mapIndexArray);
+                    if($index!==false) {
+                        $finalArray[$key] = $aux[$index];
+                    } else { // current category doesn't exist in the current category array, (missing translation)
+                        $finalArray[$key] = array();
+                        $this->dao->select("a.*, b.*, c.i_num_items");
+                        $this->dao->from( $this->getTableName().' as a' );
+                        $this->dao->join(DB_TABLE_PREFIX.'t_category_description as b', 'a.pk_i_id = b.fk_i_category_id','INNER');
+                        $this->dao->join(DB_TABLE_PREFIX.'t_category_stats  as c ', 'a.pk_i_id = c.fk_i_category_id', 'LEFT');
+                        $this->dao->where('pk_i_id', (int)$current['pk_i_id']);
+                        $this->dao->where('s_name <> ""');
+                        $this->dao->limit(1);
+                        
+                        $rs = $this->dao->get();
+                        if( $rs === false ) {
+                            $_categoryInfo = array();
+                        } else {
+                            if( $rs->numRows() == 0 ) {
+                                $_categoryInfo = array();
+                            } else {
+                                $category_element_array = $rs->row();
+                                $category_element_array['fk_c_locale_code'] = $this->_language;
+                                $_categoryInfo = $category_element_array;
+                            }
+                        }
+                        $finalArray[$key] = $_categoryInfo;
+                    } 
+                }
+                $aux = $finalArray;
+            }
+            return $aux ;
         }
 
         /**
@@ -123,10 +201,10 @@
          */
         public function listEnabled()
         {
-            $this->dao->where("b.s_name != ''");
-            $this->dao->where("a.b_enabled = 1");
+            // $this->dao->where("b.s_name != ''");
+            // $this->dao->where("a.b_enabled = 1");
 
-            return $this->listWhere();
+            return $this->listWhere("b.s_name != '' AND a.b_enabled = 1");
         }
 
         /**
@@ -228,10 +306,10 @@
         public function findRootCategories()
         {
             // juanramon: specific condition
-            $this->dao->where( 'a.fk_i_parent_id IS NULL' );
+            // $this->dao->where( 'a.fk_i_parent_id IS NULL' );
             // end specific condition
 
-            return $this->listWhere();
+            return $this->listWhere('a.fk_i_parent_id IS NULL');
         }
 
         /**
@@ -244,11 +322,11 @@
         public function findRootCategoriesEnabled()
         {
             // juanramon: specific condition
-            $this->dao->where( 'a.fk_i_parent_id IS NULL' );
-            $this->dao->where( 'a.b_enabled', '1' );
+            // $this->dao->where( 'a.fk_i_parent_id IS NULL' );
+            // $this->dao->where( 'a.b_enabled', '1' );
             // end specific condition
 
-            return $this->listWhere();
+            return $this->listWhere('a.fk_i_parent_id IS NULL AND a.b_enabled = 1');
         }
 
         /**
@@ -275,7 +353,7 @@
         }
 
         /**
-         * Lit all categories
+         * List all categories
          *
          * @access public
          * @since unknown
@@ -284,10 +362,10 @@
         public function listAll($description = true)
         {
             // juanramon: specific condition
-            $this->dao->where( '1 = 1' );
+            // $this->dao->where( '1 = 1' );
             // end specific condition
 
-            return $this->listWhere();
+            return $this->listWhere('1 = 1');
         }
 
         /**
@@ -359,11 +437,11 @@
         public function findRootCategory($categoryID)
         {
             // juanramon: specific condition
-            $this->dao->where( 'a.fk_i_parent_id IS NOT NULL' );
-            $this->dao->where( 'a.pk_i_id', $categoryID );
+            // $this->dao->where( 'a.fk_i_parent_id IS NOT NULL' );
+            // $this->dao->where( 'a.pk_i_id', $categoryID );
             // end specific condition
 
-            $results = $this->listWhere();
+            $results = $this->listWhere('a.fk_i_parent_id IS NOT NULL AND a.pk_i_id = %d', (int)$categoryID);
 
             if( count($results) > 0 ) {
                 return $this->findRootCategory( $results[0]['fk_i_parent_id'] );
@@ -388,10 +466,10 @@
                     return $this->findByPrimaryKey($this->_slugs[$slug]);
                 }
                 $slug = urlencode($slug);
-                $this->dao->where('b.s_slug', $slug);
+                // $this->dao->where('b.s_slug', $slug);
                 // end specific condition
 
-                $results = $this->listWhere();
+                $results = $this->listWhere('b.s_slug = %s', $slug);
                 if (count($results) > 0) {
                     $this->_slugs[$slug] = $results[0]['pk_i_id'];
                     return $results[0];
@@ -424,11 +502,11 @@
         public function isRoot($categoryID)
         {
             // juanramon: specific condition
-            $this->dao->where( 'fk_i_parent_id IS NULL' );
-            $this->dao->where( 'pk_i_id', $categoryID );
+            // $this->dao->where( 'fk_i_parent_id IS NULL' );
+            // $this->dao->where( 'pk_i_id', $categoryID );
             // end specific condition
 
-            $results = $this->listWhere();
+            $results = $this->listWhere('a.fk_i_parent_id IS NULL AND a.pk_i_id = %d', (int)$categoryID);
 
             if( count($results) > 0 ) {
                 return true;
@@ -447,8 +525,8 @@
          */
         public function findSubcategories($categoryID)
         {
-            $this->dao->where( 'fk_i_parent_id', (int)($categoryID));
-            return $this->listWhere();
+            // $this->dao->where( 'fk_i_parent_id', (int)($categoryID));
+            return $this->listWhere('fk_i_parent_id = %d', (int)$categoryID);
         }
 
         /**
@@ -461,9 +539,9 @@
          */
         public function findSubcategoriesEnabled($categoryID)
         {
-            $this->dao->where( 'fk_i_parent_id', (int)($categoryID));
-            $this->dao->where( 'a.b_enabled', '1' );
-            return $this->listWhere();
+            // $this->dao->where( 'fk_i_parent_id', (int)($categoryID));
+            // $this->dao->where( 'a.b_enabled', '1' );
+            return $this->listWhere('a.fk_i_parent_id = %s AND a.b_enabled = 1', (int)$categoryID);
         }
 
         /**
@@ -500,8 +578,8 @@
                         return $category;
                     }
                 } else {
-                    $this->dao->where('pk_i_id', $categoryID);
-                    $category = $this->listWhere();
+                    // $this->dao->where('pk_i_id', $categoryID);
+                    $category = $this->listWhere('a.pk_i_id = %d', (int)$categoryID);
 
                     if(!isset($category[0]) || !isset($category[0]['pk_i_id'])) {
                         return false;
