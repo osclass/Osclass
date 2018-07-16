@@ -105,7 +105,7 @@
                                         !isset($currentAdmin["s_password"]) ||
                                         $currentAdmin["s_password"]=="" ||
                                         !osc_verify_password($sCurrentPassword, $currentAdmin['s_password'])) {
-                                        osc_add_flash_warning_message( _m("Incorrent current password"), 'admin');
+                                        osc_add_flash_warning_message( _m("Incorrect current password"), 'admin');
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=admins&action=add');
                                     }
 
@@ -235,7 +235,7 @@
                                         !isset($currentAdmin["s_password"]) ||
                                         $currentAdmin["s_password"]=="" ||
                                         !osc_verify_password($sOldPassword, $currentAdmin['s_password'])) {
-                                        osc_add_flash_warning_message( _m("Incorrent current password"), 'admin');
+                                        osc_add_flash_warning_message( _m("Incorrect current password"), 'admin');
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=admins&action=edit&id=' . $adminId);
                                     }
 
