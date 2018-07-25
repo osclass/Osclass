@@ -1,4 +1,4 @@
-Osclass 3.8.0 2018-06-XX
+Osclass 3.8.0 2018-07-25
 ------------------------
 
 - Fixed several vulnerabilities found by Zekvan Arslan ( https://www.netsparker.com )
