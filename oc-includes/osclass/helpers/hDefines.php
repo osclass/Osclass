@@ -91,7 +91,8 @@
     * @return string
     */
     function osc_admin_base_path() {
-        return(osc_base_path() . "oc-admin/");
+    	$path  = osc_base_path() . "oc-admin/";
+        return osc_apply_filter('admin_base_path', $path);
     }
 
     /**
