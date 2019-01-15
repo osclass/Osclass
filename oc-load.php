@@ -16,7 +16,7 @@
  */
 
 
-define('OSCLASS_VERSION', '3.7.5');
+define('OSCLASS_VERSION', '3.8.0');
 
 if( !defined('ABS_PATH') ) {
     define( 'ABS_PATH', str_replace('\\', '/', dirname(__FILE__) . '/' ));
@@ -34,6 +34,12 @@ if( !file_exists(ABS_PATH . 'config.php') ) {
     $title   = 'Osclass &raquo; Error';
     $message = 'There doesn\'t seem to be a <code>config.php</code> file. Osclass isn\'t installed. <a href="http://forums.osclass.org/">Need more help?</a></p>';
     $message .= '<p><a class="button" href="' . osc_get_absolute_url() .'oc-includes/osclass/install.php">Install</a></p>';
+    $message .= '<hr><br>';
+    $message .= '<div class="form-table" style="text-align:center">';
+    $message .= '<h3 style="font-weight: 400;font-size: 1.1rem;margin: 0;margin-bottom: 10px;">Discover the best hosting providers and promotions for Osclass</h3>';
+    $message .= '<p style="line-height: 1.5em; margin:0px;">We have a partnership with the best hosting companies, check our promotions and get premium Osclass plugins and themes for free!</p>';
+    $message .= '<p><a href="https://osclass.org/page/hosting?utm_source=installation-hosting-page&utm_medium=installation-error&utm_campaign=hosting_page" target="_blank" class="button"/>Get Hosting!</a></p>';
+    $message .= '</div>';
     osc_die($title, $message);
 }
 
@@ -272,9 +278,11 @@ if( OC_ADMIN ) {
 }
 
 if( !class_exists('PHPMailer') ) {
-    require_once osc_lib_path() . 'phpmailer/class.phpmailer.php';
+    require_once osc_lib_path() . 'PHPMailer-master/src/PHPMailer.php';
 }
 if( !class_exists('SMTP') ) {
-    require_once osc_lib_path() . 'phpmailer/class.smtp.php';
+    require_once osc_lib_path() . 'PHPMailer-master/src/SMTP.php';
 }
-
+if( !class_exists('Exception') ) {
+    require_once osc_lib_path() . 'PHPMailer-master/src/Exception.php';
+}
