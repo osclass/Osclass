@@ -15,7 +15,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+//Namespace declarations to use new PHPMailer 6 Master
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\PHPMailer;
 
 /**
  * check if the item is expired
@@ -254,7 +256,7 @@ function osc_doRequest($url, $_data) {
         // open a socket connection on port 80
         // use localhost in case of issues with NATs (hairpinning)
         $fp = @fsockopen($host, 80);
-        
+
         if($fp===false) { return false; };
 
         $data = http_build_query($_data);
@@ -290,7 +292,7 @@ function osc_sendMail($params) {
     $mail = osc_apply_filter('init_send_mail', $mail, $params);
 
     if( osc_mailserver_pop() ) {
-        require_once osc_lib_path() . 'phpmailer/class.pop3.php';
+        require_once osc_lib_path() . 'PHPMailer-master/src/POP3.php';
         $pop = new POP3();
 
         $pop3_host = osc_mailserver_host();
@@ -395,7 +397,7 @@ function osc_sendMail($params) {
     foreach($to as $to_email => $to_name) {
         try {
             $mail->addAddress($to_email, $to_name);
-        } catch (phpmailerException $e) {
+        } catch (Exception $e) {
             continue;
         }
     }
@@ -417,7 +419,7 @@ function osc_sendMail($params) {
     if( array_key_exists('reply_to', $params) ) {
         try {
             $mail->AddReplyTo($params['reply_to']);
-        } catch (phpmailerException $e) {
+        } catch (Exception $e) {
             //continue;
         }
     }
@@ -439,7 +441,7 @@ function osc_sendMail($params) {
                 } else {
                     $mail->AddAttachment($attachment);
                 }
-            } catch (phpmailerException $e) {
+            } catch (Exception $e) {
                 continue;
             }
         }
@@ -453,7 +455,7 @@ function osc_sendMail($params) {
     // send email!
     try {
         $mail->Send();
-    } catch (phpmailerException $e) {
+    } catch (Exception $e) {
         return false;
     }
 
