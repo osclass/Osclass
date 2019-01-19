@@ -471,7 +471,7 @@
      */
     function osc_item_url($locale = '')
     {
-        return osc_item_url_from_item(osc_item(), $locale);
+        return osc_apply_filter('item_url', osc_item_url_from_item(osc_item(), $locale));
     }
 
     /**
