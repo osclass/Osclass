@@ -22,6 +22,7 @@
         protected $action;
         protected $ajax;
         protected $time;
+        protected $is_admin;
 
         function __construct()
         {
@@ -53,17 +54,18 @@
             }
 
             $this->subdomain_params($current_host);
-            $this->page   = Params::getParam('page');
-            $this->action = Params::getParam('action');
-            $this->ajax   = false;
-            $this->time   = microtime(true);
+            $this->page     = Params::getParam('page');
+            $this->action   = Params::getParam('action');
+            $this->ajax     = false;
+            $this->time     = microtime(true);
+            $this->is_admin = osc_is_admin_user_logged_in();
             WebThemes::newInstance();
             osc_run_hook( 'init' );
         }
 
         function __destruct()
         {
-            if( !$this->ajax && OSC_DEBUG ) {
+            if( !$this->ajax && OSC_DEBUG && $this->is_admin ) {
                 echo '<!-- ' . $this->getTime() . ' seg. -->';
             }
         }
