@@ -63,7 +63,7 @@
 
         function __destruct()
         {
-            if( !$this->ajax && OSC_DEBUG ) {
+            if( !$this->ajax && OSC_DEBUG && osc_is_admin_user_logged_in() ) {
                 echo '<!-- ' . $this->getTime() . ' seg. -->';
             }
         }
