@@ -239,8 +239,15 @@
                 return 1;
             }
 
-            $code = osc_genRandomPassword(30);
             $date = date('Y-m-d H:i:s');
+            $pass_date = $user['s_pass_date'];
+
+            if( !empty($user['s_pass_code']) && ((strtotime($date) - strtotime($pass_date)) < 60*60*24) ) {
+                return 3;
+            }
+
+            $code = osc_genRandomPassword(30);
+
             User::newInstance()->update(
                 array('s_pass_code' => $code, 's_pass_date' => $date, 's_pass_ip' => Params::getServerParam('REMOTE_ADDR')),
                 array('pk_i_id'     => $user['pk_i_id'])
