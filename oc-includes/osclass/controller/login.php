@@ -224,6 +224,10 @@
                                                      osc_add_flash_error_message( _m('The recaptcha code is wrong'));
                                                      $this->redirectTo( osc_recover_user_password_url() );
                                                      break;
+                                            case(3): // prevent multiple requests in 24 hours interval
+                                                     osc_add_flash_error_message( _m('You have already requested a password reset. Please wait 24 hours to make another one.'));
+                                                     $this->redirectTo( osc_user_login_url() );
+                                                     break;
                                         }
                 break;
                 case('forgot'):         //form to recover the password (in this case we have the form in /gui/)
