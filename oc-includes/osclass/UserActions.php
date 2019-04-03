@@ -239,8 +239,8 @@
                 return 1;
             }
 
-            $date = date('Y-m-d H:i:s'); error_log($date);
-            $pass_date = $user['s_pass_date']; error_log($pass_date);
+            $date = date('Y-m-d H:i:s');
+            $pass_date = $user['s_pass_date'];
 
             if( !empty($user['s_pass_code']) && ((strtotime($date) - strtotime($pass_date)) < 60*60*24) ) {
                 return 3;
