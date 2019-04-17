@@ -768,24 +768,52 @@ function download_fsockopen($sourceFile, $fileout = null, $post_data = null)
     if ('localhost' == strtolower($host))
         $host = '127.0.0.1';
 
-    $link = $aUrl['path'] . ( isset($aUrl['query']) ? '?' . $aUrl['query'] : '' );
+    $path = $aUrl['path'];
+    $query = $aUrl['query'];
 
+    $link = $aUrl['path'] . ( isset($aUrl['query']) ? '?' . $aUrl['query'] : '' );
     if (empty($link))
         $link .= '/';
 
-    $fp = @fsockopen($host, 80, $errno, $errstr, 30);
+    /*
+    *   Old code doesn't work with HTTPS
+    */
+    //$fp = @fsockopen($host, 80, $errno, $errstr, 30);
+    $port = 80;
+    if (preg_match("/^https:/i", $sourceFile)) {
+        $ishttps = true;
+        $host_ssl = "ssl://" .$host;
+        $port = 443; 
+        $fp = @fsockopen($host_ssl, $port, $errno, $errstr, 30);        
+    } else {
+        $fp = @fsockopen($host, $port, $errno, $errstr, 30);
+    }
+
     if (!$fp) {
-        return false;
+        return false;        
     } else {
         $ua  = Params::getServerParam('HTTP_USER_AGENT') . ' Osclass (v.' . osc_version() . ')';
-        $out = ($post_data!=null && is_array($post_data)?"POST":"GET") . " $link HTTP/1.1\r\n";
+        //$out = ($post_data!=null && is_array($post_data)?"POST":"GET") . " $link HTTP/1.1\r\n";
+        $out = ($ishttps || $post_data!=null && is_array($post_data)?"POST":"GET") . ($ishttps ? " $path" : " $link") ." HTTP/1.1\r\n";        
         $out .= "Host: $host\r\n";
         $out .= "User-Agent: $ua\r\n";
+
+        $out .= "Content-type: application/x-www-form-urlencoded\r\n";
+        $out .= "Content-length: ".strlen($query)."\r\n";        
+
         $out .= "Connection: Close\r\n\r\n";
-        $out .= "\r\n";
+        $out .= ($ishttps ? $query ."\r\n" : "");
+        $out .= "\r\n";        
         if($post_data!=null && is_array($post_data)) {
             $out .= http_build_query($post_data);
         }
+
+# To debug value when function is called recursively stopping it at this point on second call
+/* 
+if ($fileout != null) {
+    die($out);
+}
+*/        
         fwrite($fp, $out);
 
         $contents = '';
@@ -800,7 +828,8 @@ function download_fsockopen($sourceFile, $fileout = null, $post_data = null)
         $aResult = processResponse($contents);
         $headers = processHeaders($aResult['headers']);
 
-        $location = @$headers['location'];
+        $location = @$headers['location'];     
+
         if (isset($location) && $location != "") {
             $aUrl = parse_url($headers['location']);
 
@@ -809,21 +838,28 @@ function download_fsockopen($sourceFile, $fileout = null, $post_data = null)
                 $host = '127.0.0.1';
 
             $requestPath = $aUrl['path'] . ( isset($aUrl['query']) ? '?' . $aUrl['query'] : '' );
-
             if (empty($requestPath))
                 $requestPath .= '/';
-
-            download_fsockopen($host, $requestPath, $fileout);
+            
+            
+            /*
+            *  Old code pass three args but $fileout must be the second, not the third
+            *  Seems that the "," between $host and $requestPath wanted to be a "."
+            *  But it doesn't serve us because we need the entire url to know if is HTTPS or not.
+            *  So we pass the whole new url.
+            */
+            //download_fsockopen($host, $requestPath, $fileout);
+            download_fsockopen($location, $fileout);
         } else {
             $body = $aResult['body'];
-            $transferEncoding = @$headers['transfer-encoding'];
+            $transferEncoding = @$headers['transfer-encoding'];                        
             if($transferEncoding == 'chunked' ) {
                 $body = http_chunked_decode($aResult['body']);
             }
             if($fileout!=null) {
                 $ff = @fopen($fileout, 'w+');
                 if($ff!==FALSE) {
-                    fwrite($ff, $body);
+                    fwrite($ff, $body);                    
                     fclose($ff);
                     return true;
                 } else {
@@ -838,6 +874,7 @@ function download_fsockopen($sourceFile, $fileout = null, $post_data = null)
 
 function osc_downloadFile($sourceFile, $downloadedFile, $post_data = null)
 {
+
     if(strpos($downloadedFile, "../")!==false || strpos($downloadedFile, "..\\")!==false) {
         return false;
     }
@@ -870,9 +907,9 @@ function osc_downloadFile($sourceFile, $downloadedFile, $post_data = null)
             return false;
         }
     } else if (testFsockopen()) { // test curl/fsockopen
-        $downloadedFile = osc_content_path() . 'downloads/' . $downloadedFile;
+        $downloadedFile = osc_content_path() . 'downloads/' . $downloadedFile;        
         download_fsockopen($sourceFile, $downloadedFile);
-        return true;
+        return true;        
     }
     return false;
 }
@@ -981,10 +1018,9 @@ function osc_unzip_file($file, $to) {
         return 0;
     }
 
-    if (class_exists('ZipArchive')) {
+    if (class_exists('ZipArchive')) {   
         return _unzip_file_ziparchive($file, $to);
     }
-
     // if ZipArchive class doesn't exist, we use PclZip
     return _unzip_file_pclzip($file, $to);
 }
@@ -1004,9 +1040,9 @@ function _unzip_file_ziparchive($file, $to) {
     $zip = new ZipArchive();
     $zipopen = $zip->open($file, 4);
 
-    if ($zipopen !== true) {
+    if ($zipopen !== true) {        
         return 2;
-    }
+    }    
     // The zip is empty
     if($zip->numFiles==0) {
         return 2;
@@ -1045,7 +1081,6 @@ function _unzip_file_ziparchive($file, $to) {
         @fwrite($fp, $content);
         @fclose($fp);
     }
-
     $zip->close();
 
     return 1;
@@ -2086,7 +2121,6 @@ function osc_market($section, $code) {
          **** DOWNLOAD FILE ****
          ***********************/
         if( isset($data['s_update_url']) && isset($data['s_source_file']) && isset($data['e_type'])) {
-
             if($data['e_type']=='THEME') {
                 $folder = 'themes/';
             } else if($data['e_type']=='LANGUAGE') {
@@ -2105,14 +2139,13 @@ function osc_market($section, $code) {
 
             $filename = date('YmdHis')."_".osc_sanitize_string($data['s_title'])."_".$data['s_version'].".zip";
             $url_source_file = $data['s_source_file'];
-
             $result   = osc_downloadFile($url_source_file, $filename, $download_post_data);
-
             if ($result) { // Everything is OK, continue
                 /**********************
                  ***** UNZIP FILE *****
                  **********************/
                 @mkdir(osc_content_path() . 'downloads/oc-temp/');
+
                 $res = osc_unzip_file(osc_content_path() . 'downloads/' . $filename, osc_content_path() . 'downloads/oc-temp/');
                 if ($res == 1) { // Everything is OK, continue
                     /**********************
