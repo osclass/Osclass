@@ -775,10 +775,6 @@ function download_fsockopen($sourceFile, $fileout = null, $post_data = null)
     if (empty($link))
         $link .= '/';
 
-    /*
-    *   Old code doesn't work with HTTPS
-    */
-    //$fp = @fsockopen($host, 80, $errno, $errstr, 30);
     $port = 80;
     if (preg_match("/^https:/i", $sourceFile)) {
         $ishttps = true;
@@ -808,12 +804,6 @@ function download_fsockopen($sourceFile, $fileout = null, $post_data = null)
             $out .= http_build_query($post_data);
         }
 
-# To debug value when function is called recursively stopping it at this point on second call
-/* 
-if ($fileout != null) {
-    die($out);
-}
-*/        
         fwrite($fp, $out);
 
         $contents = '';
@@ -841,14 +831,6 @@ if ($fileout != null) {
             if (empty($requestPath))
                 $requestPath .= '/';
             
-            
-            /*
-            *  Old code pass three args but $fileout must be the second, not the third
-            *  Seems that the "," between $host and $requestPath wanted to be a "."
-            *  But it doesn't serve us because we need the entire url to know if is HTTPS or not.
-            *  So we pass the whole new url.
-            */
-            //download_fsockopen($host, $requestPath, $fileout);
             download_fsockopen($location, $fileout);
         } else {
             $body = $aResult['body'];
