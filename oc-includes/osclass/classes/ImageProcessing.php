@@ -214,6 +214,14 @@
             }
         }
 
+        public function resetOrientation() {
+            if($this->_use_imagick) {
+                $this->im->setImageOrientation(1);
+            } else {
+                $this->_exif['Orientation'] = 1;
+            }
+        }
+
         public function autoRotate() {
             if($this->_use_imagick) {
                 switch($this->im->getImageOrientation()) {
