@@ -298,6 +298,7 @@
                     try {
                         $img = ImageProcessing::fromFile(osc_content_path() . 'uploads/temp/' . $filename);
                         $img->autoRotate();
+                        $img->resetOrientation();
                         $img->saveToFile(osc_content_path() . 'uploads/temp/auto_' . $filename, $original['extension']);
                         $img->saveToFile(osc_content_path() . 'uploads/temp/' . $filename, $original['extension']);
 
