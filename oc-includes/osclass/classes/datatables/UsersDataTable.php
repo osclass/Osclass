@@ -128,7 +128,7 @@
                     $row['email'] = '<a href="' . osc_admin_base_url(true) . '?page=items&userId='. $aRow['pk_i_id'] .'&user='. $aRow['s_name'] .'">' . $aRow['s_email'] . '</a>'. $actions;
                     $row['username'] = $aRow['s_username'];
                     $row['name'] = $aRow['s_name'];
-                    $row['date'] = osc_format_date($aRow['dt_mod_date'], osc_date_format() . ' ' . osc_time_format());
+                    $row['date'] = osc_format_date($aRow['dt_reg_date'], osc_date_format() . ' ' . osc_time_format());
                     $row['items'] = $aRow['i_items'];
                     $row['update_date'] = ($aRow['dt_mod_date'] != NULL) ? osc_format_date($aRow['dt_mod_date'], osc_date_format() . ' ' . osc_time_format() ) : '';
 
