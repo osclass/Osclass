@@ -126,7 +126,7 @@
             if(count($aRows)===0) {
                 return $rows;
             }
-            foreach($this->aRows as $row) {
+            foreach($aRows as $row) {
                 $aux_row = array();
                 foreach($columns as $k => $v) {
                     if(isset($row[$k])) {
