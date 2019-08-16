@@ -121,8 +121,9 @@
         public function sortedRows()
         {
             $rows = array();
-            $columns = $this->sortedColumns();
-            if(count($this->aRows)===0) {
+            $aRows = (array) $this->aRows;
+            $columns = (array) $this->sortedColumns();
+            if(count($aRows)===0) {
                 return $rows;
             }
             foreach($this->aRows as $row) {
