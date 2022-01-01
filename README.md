@@ -28,6 +28,8 @@ $> git clone --recursive git@github.com:osclass/Osclass.git
 
 Go to [our site][installing] to get detailed information on installing Osclass.
 
+Or Run without installation [![TeamCode try-it-now](https://static01.teamcode.com/badge/teamcode-badge-run-in-cloud-en.svg)](https://www.teamcode.com/tin/clone?applicationId=276114027119550464)
+
 [osclass]: http://osclass.org/
 [preview]: http://osclass.org/wp-content/uploads/2011/01/single_job_board-1024x729.png
 [code]: https://github.com/osclass/Osclass
